@@ -1,0 +1,3692 @@
+[
+    {
+        "id": 1,
+        "name": "Fones de Ouvido Sem Fio",
+        "category": "eletrônicos",
+        "price": 129.99,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "áudio"
+    },
+    {
+        "id": 2,
+        "name": "Relógio Inteligente",
+        "category": "eletrônicos",
+        "price": 199.99,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 3,
+        "name": "Caixa de Som Bluetooth",
+        "category": "eletrônicos",
+        "price": 89.99,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "áudio"
+    },
+    {
+        "id": 4,
+        "name": "Camiseta Estampada",
+        "category": "vestuário",
+        "price": 49.99,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 5,
+        "name": "Calça Jeans Slim",
+        "category": "vestuário",
+        "price": 99.99,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 6,
+        "name": "Tênis Esportivo",
+        "category": "calçados",
+        "price": 149.99,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "fitness"
+    },
+    {
+        "id": 7,
+        "name": "Sandália Casual",
+        "category": "calçados",
+        "price": 69.99,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 8,
+        "name": "Boné Estiloso",
+        "category": "acessórios",
+        "price": 39.99,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 9,
+        "name": "Mochila Executiva",
+        "category": "acessórios",
+        "price": 159.99,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 10,
+        "name": "Óculos de Sol",
+        "category": "acessórios",
+        "price": 89.99,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 11,
+        "name": "Camiseta Polo",
+        "category": "vestuário",
+        "price": 266.58,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 12,
+        "name": "Blusa Feminina",
+        "category": "vestuário",
+        "price": 39.24,
+        "color": "prata",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 13,
+        "name": "Jaqueta de Couro",
+        "category": "vestuário",
+        "price": 131.75,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 14,
+        "name": "Calça Cargo",
+        "category": "vestuário",
+        "price": 112.58,
+        "color": "branco",
+        "sexo": "masculino",
+        "estilo": "streetwear"
+    },
+    {
+        "id": 15,
+        "name": "Bermuda Estampada",
+        "category": "vestuário",
+        "price": 302.48,
+        "color": "vermelho",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 16,
+        "name": "Vestido Longo",
+        "category": "vestuário",
+        "price": 280.37,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 17,
+        "name": "Saia Midi",
+        "category": "vestuário",
+        "price": 360.1,
+        "color": "cinza",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 18,
+        "name": "Moletom Básico",
+        "category": "vestuário",
+        "price": 62.16,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 19,
+        "name": "Regata Fitness",
+        "category": "vestuário",
+        "price": 186.1,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "fitness"
+    },
+    {
+        "id": 20,
+        "name": "Camisa Social",
+        "category": "vestuário",
+        "price": 41.01,
+        "color": "rosa",
+        "sexo": "masculino",
+        "estilo": "social"
+    },
+    {
+        "id": 21,
+        "name": "Casaco de Lã",
+        "category": "vestuário",
+        "price": 110.89,
+        "color": "amarelo",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 22,
+        "name": "Suéter Tricot",
+        "category": "vestuário",
+        "price": 216.97,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 23,
+        "name": "Cardigan Alongado",
+        "category": "vestuário",
+        "price": 39.81,
+        "color": "laranja",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 24,
+        "name": "Macacão Jeans",
+        "category": "vestuário",
+        "price": 103.56,
+        "color": "dourado",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 25,
+        "name": "Shorts Esportivo",
+        "category": "vestuário",
+        "price": 270.45,
+        "color": "preto",
+        "sexo": "masculino",
+        "estilo": "fitness"
+    },
+    {
+        "id": 26,
+        "name": "Pijama Confortável",
+        "category": "vestuário",
+        "price": 231.62,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "beleza"
+    },
+    {
+        "id": 27,
+        "name": "Cueca Boxer",
+        "category": "vestuário",
+        "price": 111.55,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "íntimo"
+    },
+    {
+        "id": 28,
+        "name": "Calcinha Renda",
+        "category": "vestuário",
+        "price": 248.02,
+        "color": "branco",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 29,
+        "name": "Meia Esportiva",
+        "category": "vestuário",
+        "price": 329.48,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "fitness"
+    },
+    {
+        "id": 30,
+        "name": "Legging Fitness",
+        "category": "vestuário",
+        "price": 32.39,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "fitness"
+    },
+    {
+        "id": 31,
+        "name": "Blazer Alfaiataria",
+        "category": "vestuário",
+        "price": 328.14,
+        "color": "cinza",
+        "sexo": "masculino",
+        "estilo": "social"
+    },
+    {
+        "id": 32,
+        "name": "Colete Social",
+        "category": "vestuário",
+        "price": 288.3,
+        "color": "marrom",
+        "sexo": "masculino",
+        "estilo": "social"
+    },
+    {
+        "id": 33,
+        "name": "Camisa Linho",
+        "category": "vestuário",
+        "price": 155.88,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 34,
+        "name": "Camiseta Básica Algodão",
+        "category": "vestuário",
+        "price": 87.52,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 35,
+        "name": "Top Cropped",
+        "category": "vestuário",
+        "price": 384.16,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 36,
+        "name": "Kimono Floral",
+        "category": "vestuário",
+        "price": 154.53,
+        "color": "roxo",
+        "sexo": "feminino",
+        "estilo": "boho"
+    },
+    {
+        "id": 37,
+        "name": "Macaquinho Jeans",
+        "category": "vestuário",
+        "price": 64.31,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 38,
+        "name": "Saia Plissada",
+        "category": "vestuário",
+        "price": 65.78,
+        "color": "dourado",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 39,
+        "name": "Calça Alfaiataria",
+        "category": "vestuário",
+        "price": 343.56,
+        "color": "preto",
+        "sexo": "masculino",
+        "estilo": "social"
+    },
+    {
+        "id": 40,
+        "name": "Bermuda Sarja",
+        "category": "vestuário",
+        "price": 253.37,
+        "color": "prata",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 41,
+        "name": "Jaqueta Bomber",
+        "category": "vestuário",
+        "price": 328.63,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "streetwear"
+    },
+    {
+        "id": 42,
+        "name": "Parka Impermeável",
+        "category": "vestuário",
+        "price": 299.99,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 43,
+        "name": "Capa de Chuva",
+        "category": "vestuário",
+        "price": 228.39,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 44,
+        "name": "Camiseta Longline",
+        "category": "vestuário",
+        "price": 390.04,
+        "color": "bege",
+        "sexo": "masculino",
+        "estilo": "streetwear"
+    },
+    {
+        "id": 45,
+        "name": "Regata Nadador",
+        "category": "vestuário",
+        "price": 170.05,
+        "color": "cinza",
+        "sexo": "masculino",
+        "estilo": "fitness"
+    },
+    {
+        "id": 46,
+        "name": "Camisa Xadrez",
+        "category": "vestuário",
+        "price": 234.25,
+        "color": "marrom",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 47,
+        "name": "Camisa Jeans",
+        "category": "vestuário",
+        "price": 336.87,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 48,
+        "name": "Blusa Canelada",
+        "category": "vestuário",
+        "price": 258.84,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 49,
+        "name": "Body Manga Longa",
+        "category": "vestuário",
+        "price": 348.82,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "íntimo"
+    },
+    {
+        "id": 50,
+        "name": "Corset Moderno",
+        "category": "vestuário",
+        "price": 243.61,
+        "color": "roxo",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 51,
+        "name": "Saia Lápis",
+        "category": "vestuário",
+        "price": 290.68,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 52,
+        "name": "Saia Longa Fluida",
+        "category": "vestuário",
+        "price": 46.95,
+        "color": "dourado",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 53,
+        "name": "Vestido Tubinho",
+        "category": "vestuário",
+        "price": 114.31,
+        "color": "preto",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 54,
+        "name": "Vestido Midi Floral",
+        "category": "vestuário",
+        "price": 137.06,
+        "color": "prata",
+        "sexo": "feminino",
+        "estilo": "boho"
+    },
+    {
+        "id": 55,
+        "name": "Macacão Longo",
+        "category": "vestuário",
+        "price": 59.51,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 56,
+        "name": "Conjunto Moletom",
+        "category": "vestuário",
+        "price": 116.12,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 57,
+        "name": "Agasalho Treino",
+        "category": "vestuário",
+        "price": 67.36,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "fitness"
+    },
+    {
+        "id": 58,
+        "name": "Jaqueta Jeans Oversized",
+        "category": "vestuário",
+        "price": 132.84,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "streetwear"
+    },
+    {
+        "id": 59,
+        "name": "Colete Puffer",
+        "category": "vestuário",
+        "price": 265.19,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "streetwear"
+    },
+    {
+        "id": 60,
+        "name": "Jaqueta Corta-Vento",
+        "category": "vestuário",
+        "price": 164.98,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "streetwear"
+    },
+    {
+        "id": 61,
+        "name": "Calça Legging Push Up",
+        "category": "vestuário",
+        "price": 166.96,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "fitness"
+    },
+    {
+        "id": 62,
+        "name": "Calça Wide Leg",
+        "category": "vestuário",
+        "price": 107.51,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 63,
+        "name": "Calça Pantalona",
+        "category": "vestuário",
+        "price": 128.77,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 64,
+        "name": "Shorts Jeans Destroyed",
+        "category": "vestuário",
+        "price": 376.55,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "streetwear"
+    },
+    {
+        "id": 65,
+        "name": "Bermuda Tactel",
+        "category": "vestuário",
+        "price": 269.76,
+        "color": "laranja",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 66,
+        "name": "Sunga Estampada",
+        "category": "vestuário",
+        "price": 255.37,
+        "color": "dourado",
+        "sexo": "masculino",
+        "estilo": "praia"
+    },
+    {
+        "id": 67,
+        "name": "Maiô Esportivo",
+        "category": "vestuário",
+        "price": 93.31,
+        "color": "preto",
+        "sexo": "feminino",
+        "estilo": "fitness"
+    },
+    {
+        "id": 68,
+        "name": "Biquíni Cortininha",
+        "category": "vestuário",
+        "price": 299.77,
+        "color": "prata",
+        "sexo": "feminino",
+        "estilo": "praia"
+    },
+    {
+        "id": 69,
+        "name": "Robe Cetim",
+        "category": "vestuário",
+        "price": 90.45,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 70,
+        "name": "Camisola Renda",
+        "category": "vestuário",
+        "price": 170.39,
+        "color": "branco",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 71,
+        "name": "Camiseta Tie-Dye",
+        "category": "vestuário",
+        "price": 396.11,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 72,
+        "name": "Camiseta Listrada Marinheiro",
+        "category": "vestuário",
+        "price": 266.79,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 73,
+        "name": "Polo Piquet",
+        "category": "vestuário",
+        "price": 236.06,
+        "color": "cinza",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 74,
+        "name": "Camisa Polo Manga Longa",
+        "category": "vestuário",
+        "price": 283.3,
+        "color": "marrom",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 75,
+        "name": "Suéter Gola V",
+        "category": "vestuário",
+        "price": 341.85,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 76,
+        "name": "Suéter Gola Alta",
+        "category": "vestuário",
+        "price": 317.11,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 77,
+        "name": "Poncho Tricot",
+        "category": "vestuário",
+        "price": 114.74,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "boho"
+    },
+    {
+        "id": 78,
+        "name": "Xale Elegante",
+        "category": "vestuário",
+        "price": 41.87,
+        "color": "roxo",
+        "sexo": "feminino",
+        "estilo": "boho"
+    },
+    {
+        "id": 79,
+        "name": "Luvas Térmicas",
+        "category": "vestuário",
+        "price": 146.71,
+        "color": "laranja",
+        "sexo": "unissex",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 80,
+        "name": "Meia Cano Alto",
+        "category": "vestuário",
+        "price": 129.05,
+        "color": "dourado",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 81,
+        "name": "Meia Invisível",
+        "category": "vestuário",
+        "price": 108.05,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 82,
+        "name": "Cueca Slip",
+        "category": "vestuário",
+        "price": 378.87,
+        "color": "prata",
+        "sexo": "masculino",
+        "estilo": "íntimo"
+    },
+    {
+        "id": 83,
+        "name": "Sutiã Push Up",
+        "category": "vestuário",
+        "price": 354.25,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "íntimo"
+    },
+    {
+        "id": 84,
+        "name": "Sutiã Esportivo",
+        "category": "vestuário",
+        "price": 146.42,
+        "color": "branco",
+        "sexo": "feminino",
+        "estilo": "fitness"
+    },
+    {
+        "id": 85,
+        "name": "Calcinha Boxer",
+        "category": "vestuário",
+        "price": 272.5,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "íntimo"
+    },
+    {
+        "id": 86,
+        "name": "Short Doll Algodão",
+        "category": "vestuário",
+        "price": 176.37,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "beleza"
+    },
+    {
+        "id": 87,
+        "name": "Pijama Curto Verão",
+        "category": "vestuário",
+        "price": 368.37,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "beleza"
+    },
+    {
+        "id": 88,
+        "name": "Pijama Longo Flanela",
+        "category": "vestuário",
+        "price": 199.77,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "beleza"
+    },
+    {
+        "id": 89,
+        "name": "Avental Cozinha",
+        "category": "vestuário",
+        "price": 128,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "casa"
+    },
+    {
+        "id": 90,
+        "name": "Jaleco Uniforme",
+        "category": "vestuário",
+        "price": 121.24,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 91,
+        "name": "Macacão Operário",
+        "category": "vestuário",
+        "price": 237.7,
+        "color": "amarelo",
+        "sexo": "masculino",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 92,
+        "name": "Jaqueta Motociclista",
+        "category": "vestuário",
+        "price": 127.2,
+        "color": "roxo",
+        "sexo": "masculino",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 93,
+        "name": "Colete Refletivo",
+        "category": "vestuário",
+        "price": 246.29,
+        "color": "laranja",
+        "sexo": "masculino",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 94,
+        "name": "Camisa Flanela Xadrez",
+        "category": "vestuário",
+        "price": 362.18,
+        "color": "dourado",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 95,
+        "name": "Camiseta Surf",
+        "category": "vestuário",
+        "price": 177.77,
+        "color": "preto",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 96,
+        "name": "Regata Basquete",
+        "category": "vestuário",
+        "price": 111.14,
+        "color": "prata",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 97,
+        "name": "Camisa Henley",
+        "category": "vestuário",
+        "price": 399.08,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 98,
+        "name": "Blusa Ombro a Ombro",
+        "category": "vestuário",
+        "price": 218.51,
+        "color": "branco",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 99,
+        "name": "Blusa Peplum",
+        "category": "vestuário",
+        "price": 63.63,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 100,
+        "name": "Blusa Babados",
+        "category": "vestuário",
+        "price": 47.42,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 101,
+        "name": "Camisa Túnica",
+        "category": "vestuário",
+        "price": 70.56,
+        "color": "cinza",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 102,
+        "name": "Vestido Camisão",
+        "category": "vestuário",
+        "price": 262.15,
+        "color": "marrom",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 103,
+        "name": "Saia Jeans Curta",
+        "category": "vestuário",
+        "price": 323.06,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 104,
+        "name": "Saia Couro Sintético",
+        "category": "vestuário",
+        "price": 186.19,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 105,
+        "name": "Calça Jogger Moletom",
+        "category": "vestuário",
+        "price": 53.5,
+        "color": "amarelo",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 106,
+        "name": "Calça Chino Slim",
+        "category": "vestuário",
+        "price": 171.19,
+        "color": "roxo",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 107,
+        "name": "Shorts Ciclista",
+        "category": "vestuário",
+        "price": 398.55,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "fitness"
+    },
+    {
+        "id": 108,
+        "name": "Bermuda Jeans",
+        "category": "vestuário",
+        "price": 225.76,
+        "color": "dourado",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 109,
+        "name": "Jaqueta Jeans com Pelo",
+        "category": "vestuário",
+        "price": 389.29,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 110,
+        "name": "Casaco Trench Coat",
+        "category": "vestuário",
+        "price": 348.48,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 111,
+        "name": "Smartphone Premium",
+        "category": "eletrônicos",
+        "price": 83.86,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 112,
+        "name": "Tablet Educacional",
+        "category": "eletrônicos",
+        "price": 2176.12,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "tech"
+    },
+    {
+        "id": 113,
+        "name": "Notebook Gamer",
+        "category": "eletrônicos",
+        "price": 2061.04,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "gamer"
+    },
+    {
+        "id": 114,
+        "name": "Monitor Ultrawide",
+        "category": "eletrônicos",
+        "price": 1634.05,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 115,
+        "name": "Teclado Mecânico",
+        "category": "eletrônicos",
+        "price": 837.12,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 116,
+        "name": "Mouse Ergonômico",
+        "category": "eletrônicos",
+        "price": 1940.83,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "tech"
+    },
+    {
+        "id": 117,
+        "name": "Câmera Digital",
+        "category": "eletrônicos",
+        "price": 379.07,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "fotografia"
+    },
+    {
+        "id": 118,
+        "name": "Drone Profissional",
+        "category": "eletrônicos",
+        "price": 1332.55,
+        "color": "amarelo",
+        "sexo": "unissex",
+        "estilo": "fotografia"
+    },
+    {
+        "id": 119,
+        "name": "Pendrive 128GB",
+        "category": "eletrônicos",
+        "price": 1388.47,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 120,
+        "name": "HD Externo 1TB",
+        "category": "eletrônicos",
+        "price": 2863.75,
+        "color": "laranja",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 121,
+        "name": "Impressora Multifuncional",
+        "category": "eletrônicos",
+        "price": 2633.76,
+        "color": "dourado",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 122,
+        "name": "TV 50 Polegadas",
+        "category": "eletrônicos",
+        "price": 826.99,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 123,
+        "name": "Projetor Portátil",
+        "category": "eletrônicos",
+        "price": 1526.72,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 124,
+        "name": "Webcam HD",
+        "category": "eletrônicos",
+        "price": 577.01,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "tech"
+    },
+    {
+        "id": 125,
+        "name": "Microfone Condensador",
+        "category": "eletrônicos",
+        "price": 2742.24,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "áudio"
+    },
+    {
+        "id": 126,
+        "name": "Carregador Turbo",
+        "category": "eletrônicos",
+        "price": 2618.02,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 127,
+        "name": "Power Bank 20000mAh",
+        "category": "eletrônicos",
+        "price": 930.4,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 128,
+        "name": "Roteador Wi-Fi 6",
+        "category": "eletrônicos",
+        "price": 1934.89,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 129,
+        "name": "Adaptador USB-C",
+        "category": "eletrônicos",
+        "price": 1846.45,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 130,
+        "name": "Controle Gamer",
+        "category": "eletrônicos",
+        "price": 500.87,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "gamer"
+    },
+    {
+        "id": 131,
+        "name": "Smart TV 4K",
+        "category": "eletrônicos",
+        "price": 2299.4,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 132,
+        "name": "Soundbar Dolby",
+        "category": "eletrônicos",
+        "price": 1641.16,
+        "color": "amarelo",
+        "sexo": "unissex",
+        "estilo": "áudio"
+    },
+    {
+        "id": 133,
+        "name": "Caixa de Som Party",
+        "category": "eletrônicos",
+        "price": 2346.94,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "áudio"
+    },
+    {
+        "id": 134,
+        "name": "Fone com Cancelamento de Ruído",
+        "category": "eletrônicos",
+        "price": 1614.53,
+        "color": "laranja",
+        "sexo": "unissex",
+        "estilo": "áudio"
+    },
+    {
+        "id": 135,
+        "name": "Amplificador de Áudio",
+        "category": "eletrônicos",
+        "price": 51.68,
+        "color": "dourado",
+        "sexo": "unissex",
+        "estilo": "áudio"
+    },
+    {
+        "id": 136,
+        "name": "Mixer de Áudio",
+        "category": "eletrônicos",
+        "price": 1006.25,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "áudio"
+    },
+    {
+        "id": 137,
+        "name": "Interface de Áudio USB",
+        "category": "eletrônicos",
+        "price": 107.45,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "áudio"
+    },
+    {
+        "id": 138,
+        "name": "Headset Gamer RGB",
+        "category": "eletrônicos",
+        "price": 2790.83,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "gamer"
+    },
+    {
+        "id": 139,
+        "name": "SSD NVMe 1TB",
+        "category": "eletrônicos",
+        "price": 2642.22,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 140,
+        "name": "Memória RAM 16GB",
+        "category": "eletrônicos",
+        "price": 2503.4,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "tech"
+    },
+    {
+        "id": 141,
+        "name": "Placa de Vídeo RTX",
+        "category": "eletrônicos",
+        "price": 957.16,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 142,
+        "name": "Processador Octa-Core",
+        "category": "eletrônicos",
+        "price": 220.87,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 143,
+        "name": "Gabinete Gamer Vidro Temperado",
+        "category": "eletrônicos",
+        "price": 2640.12,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "gamer"
+    },
+    {
+        "id": 144,
+        "name": "Fonte 750W Modular",
+        "category": "eletrônicos",
+        "price": 2843.49,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "tech"
+    },
+    {
+        "id": 145,
+        "name": "Water Cooler 240mm",
+        "category": "eletrônicos",
+        "price": 302.67,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "tech"
+    },
+    {
+        "id": 146,
+        "name": "Ventoinha 120mm PWM",
+        "category": "eletrônicos",
+        "price": 1483.66,
+        "color": "amarelo",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 147,
+        "name": "Hub USB 3.0",
+        "category": "eletrônicos",
+        "price": 254.17,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 148,
+        "name": "Dock Station Notebook",
+        "category": "eletrônicos",
+        "price": 2293.77,
+        "color": "laranja",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 149,
+        "name": "Leitor de Cartão SD",
+        "category": "eletrônicos",
+        "price": 2309.2,
+        "color": "dourado",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 150,
+        "name": "Estabilizador 1000VA",
+        "category": "eletrônicos",
+        "price": 428.74,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 151,
+        "name": "No-break 600VA",
+        "category": "eletrônicos",
+        "price": 1452.07,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 152,
+        "name": "Lâmpada LED Inteligente",
+        "category": "eletrônicos",
+        "price": 1671.91,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "casa"
+    },
+    {
+        "id": 153,
+        "name": "Tomada Wi-Fi",
+        "category": "eletrônicos",
+        "price": 831.91,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "casa"
+    },
+    {
+        "id": 154,
+        "name": "Câmera de Segurança IP",
+        "category": "eletrônicos",
+        "price": 2623.67,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "fotografia"
+    },
+    {
+        "id": 155,
+        "name": "Videogame Console",
+        "category": "eletrônicos",
+        "price": 1298.25,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "gamer"
+    },
+    {
+        "id": 156,
+        "name": "Volante com Pedais",
+        "category": "eletrônicos",
+        "price": 674.79,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "gamer"
+    },
+    {
+        "id": 157,
+        "name": "Joystick Arcade",
+        "category": "eletrônicos",
+        "price": 1640.91,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "gamer"
+    },
+    {
+        "id": 158,
+        "name": "Tablet Gráfico",
+        "category": "eletrônicos",
+        "price": 2203.29,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "tech"
+    },
+    {
+        "id": 159,
+        "name": "Scanner Portátil",
+        "category": "eletrônicos",
+        "price": 643.39,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "tech"
+    },
+    {
+        "id": 160,
+        "name": "Calculadora Científica",
+        "category": "eletrônicos",
+        "price": 969.55,
+        "color": "amarelo",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 161,
+        "name": "Rádio Portátil AM/FM",
+        "category": "eletrônicos",
+        "price": 2985.68,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 162,
+        "name": "Gravador de Voz Digital",
+        "category": "eletrônicos",
+        "price": 1967.13,
+        "color": "laranja",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 163,
+        "name": "Walkie-Talkie Par",
+        "category": "eletrônicos",
+        "price": 1342.39,
+        "color": "dourado",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 164,
+        "name": "Balança Digital Cozinha",
+        "category": "eletrônicos",
+        "price": 1576.84,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "casa"
+    },
+    {
+        "id": 165,
+        "name": "Termômetro Infravermelho",
+        "category": "eletrônicos",
+        "price": 406.95,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 166,
+        "name": "Umidificador Ultrassônico",
+        "category": "eletrônicos",
+        "price": 712.85,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "casa"
+    },
+    {
+        "id": 167,
+        "name": "Aspirador Robô",
+        "category": "eletrônicos",
+        "price": 1047.34,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "casa"
+    },
+    {
+        "id": 168,
+        "name": "Liquidificador Potente",
+        "category": "eletrônicos",
+        "price": 1785.5,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "casa"
+    },
+    {
+        "id": 169,
+        "name": "Air Fryer Digital",
+        "category": "eletrônicos",
+        "price": 728.83,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "casa"
+    },
+    {
+        "id": 170,
+        "name": "Cafeteira Expresso",
+        "category": "eletrônicos",
+        "price": 699.63,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "casa"
+    },
+    {
+        "id": 171,
+        "name": "Sanduicheira Elétrica",
+        "category": "eletrônicos",
+        "price": 259.42,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "casa"
+    },
+    {
+        "id": 172,
+        "name": "Secador de Cabelo Ion",
+        "category": "eletrônicos",
+        "price": 1911.74,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "beleza"
+    },
+    {
+        "id": 173,
+        "name": "Chapinha Cerâmica",
+        "category": "eletrônicos",
+        "price": 725.37,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "beleza"
+    },
+    {
+        "id": 174,
+        "name": "Barbeador Elétrico",
+        "category": "eletrônicos",
+        "price": 2720.98,
+        "color": "amarelo",
+        "sexo": "masculino",
+        "estilo": "beleza"
+    },
+    {
+        "id": 175,
+        "name": "Escova Secadora",
+        "category": "eletrônicos",
+        "price": 2585.91,
+        "color": "roxo",
+        "sexo": "feminino",
+        "estilo": "beleza"
+    },
+    {
+        "id": 176,
+        "name": "Relógio Smartwatch Sport",
+        "category": "eletrônicos",
+        "price": 259.02,
+        "color": "laranja",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 177,
+        "name": "Pulseira Fitness",
+        "category": "eletrônicos",
+        "price": 752.1,
+        "color": "dourado",
+        "sexo": "unissex",
+        "estilo": "fitness"
+    },
+    {
+        "id": 178,
+        "name": "GPS Automotivo",
+        "category": "eletrônicos",
+        "price": 2023.47,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 179,
+        "name": "Rastreador Bluetooth",
+        "category": "eletrônicos",
+        "price": 681.99,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 180,
+        "name": "Alto-falante Bluetooth Mini",
+        "category": "eletrônicos",
+        "price": 440.31,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "áudio"
+    },
+    {
+        "id": 181,
+        "name": "Microfone Lapela Sem Fio",
+        "category": "eletrônicos",
+        "price": 2809.76,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "áudio"
+    },
+    {
+        "id": 182,
+        "name": "Ring Light LED",
+        "category": "eletrônicos",
+        "price": 1734.57,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "fotografia"
+    },
+    {
+        "id": 183,
+        "name": "Tripé para Celular",
+        "category": "eletrônicos",
+        "price": 1444.37,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "fotografia"
+    },
+    {
+        "id": 184,
+        "name": "Gimbal Estabilizador",
+        "category": "eletrônicos",
+        "price": 2364.62,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "fotografia"
+    },
+    {
+        "id": 185,
+        "name": "Action Cam 4K",
+        "category": "eletrônicos",
+        "price": 2432.11,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "fotografia"
+    },
+    {
+        "id": 186,
+        "name": "Lente Teleobjetiva",
+        "category": "eletrônicos",
+        "price": 611.7,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "fotografia"
+    },
+    {
+        "id": 187,
+        "name": "Flash Speedlight",
+        "category": "eletrônicos",
+        "price": 335.94,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "fotografia"
+    },
+    {
+        "id": 188,
+        "name": "Filtro ND Variável",
+        "category": "eletrônicos",
+        "price": 1321.59,
+        "color": "amarelo",
+        "sexo": "unissex",
+        "estilo": "fotografia"
+    },
+    {
+        "id": 189,
+        "name": "Notebook Ultrafino",
+        "category": "eletrônicos",
+        "price": 1299.55,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 190,
+        "name": "Chromebook Estudante",
+        "category": "eletrônicos",
+        "price": 1427.71,
+        "color": "laranja",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 191,
+        "name": "Mini PC Desktop",
+        "category": "eletrônicos",
+        "price": 2200.76,
+        "color": "dourado",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 192,
+        "name": "Servidor NAS 4 Baias",
+        "category": "eletrônicos",
+        "price": 2036.42,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 193,
+        "name": "Switch de Rede Gigabit",
+        "category": "eletrônicos",
+        "price": 2953.28,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 194,
+        "name": "Access Point Outdoor",
+        "category": "eletrônicos",
+        "price": 340.32,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 195,
+        "name": "Repetidor Wi-Fi Mesh",
+        "category": "eletrônicos",
+        "price": 1237.72,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 196,
+        "name": "Cabo HDMI 2.1",
+        "category": "eletrônicos",
+        "price": 1050.93,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 197,
+        "name": "Cabo USB-C Thunderbolt",
+        "category": "eletrônicos",
+        "price": 2591.92,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 198,
+        "name": "Adaptador VGA para HDMI",
+        "category": "eletrônicos",
+        "price": 783.53,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "conectividade"
+    },
+    {
+        "id": 199,
+        "name": "Hub HDMI KVM",
+        "category": "eletrônicos",
+        "price": 611.11,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 200,
+        "name": "Monitor Portátil 15",
+        "category": "eletrônicos",
+        "price": 1373.4,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "tech"
+    },
+    {
+        "id": 201,
+        "name": "Tablet Android Kids",
+        "category": "eletrônicos",
+        "price": 1294.54,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "tech"
+    },
+    {
+        "id": 202,
+        "name": "E-reader Tela E-Ink",
+        "category": "eletrônicos",
+        "price": 871.7,
+        "color": "amarelo",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 203,
+        "name": "Smartphone Dobrável",
+        "category": "eletrônicos",
+        "price": 786.92,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 204,
+        "name": "Smartphone Câmera 108MP",
+        "category": "eletrônicos",
+        "price": 2773.62,
+        "color": "laranja",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 205,
+        "name": "Caixa de Som Resistente à Água",
+        "category": "eletrônicos",
+        "price": 1357.23,
+        "color": "dourado",
+        "sexo": "unissex",
+        "estilo": "áudio"
+    },
+    {
+        "id": 206,
+        "name": "Fone Intra-auricular Sport",
+        "category": "eletrônicos",
+        "price": 2590.97,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "áudio"
+    },
+    {
+        "id": 207,
+        "name": "Mixer DJ Portátil",
+        "category": "eletrônicos",
+        "price": 1673.45,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "áudio"
+    },
+    {
+        "id": 208,
+        "name": "Controladora MIDI",
+        "category": "eletrônicos",
+        "price": 199.23,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 209,
+        "name": "Teclado Sem Fio Slim",
+        "category": "eletrônicos",
+        "price": 2997.87,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 210,
+        "name": "Mouse Bluetooth Silencioso",
+        "category": "eletrônicos",
+        "price": 2516.27,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "tech"
+    },
+    {
+        "id": 211,
+        "name": "Bolsa de Couro",
+        "category": "acessórios",
+        "price": 485.11,
+        "color": "marrom",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 212,
+        "name": "Carteira Slim",
+        "category": "acessórios",
+        "price": 464.65,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 213,
+        "name": "Cinto de Couro",
+        "category": "acessórios",
+        "price": 427.36,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 214,
+        "name": "Pulseira de Prata",
+        "category": "acessórios",
+        "price": 99.82,
+        "color": "amarelo",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 215,
+        "name": "Anel Banhado a Ouro",
+        "category": "acessórios",
+        "price": 253.1,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 216,
+        "name": "Colar Delicado",
+        "category": "acessórios",
+        "price": 122.59,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 217,
+        "name": "Brinco Argola",
+        "category": "acessórios",
+        "price": 212.49,
+        "color": "dourado",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 218,
+        "name": "Chapéu Panamá",
+        "category": "acessórios",
+        "price": 48.13,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 219,
+        "name": "Lenço de Seda",
+        "category": "acessórios",
+        "price": 201.9,
+        "color": "prata",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 220,
+        "name": "Gravata Estampada",
+        "category": "acessórios",
+        "price": 492.94,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "social"
+    },
+    {
+        "id": 221,
+        "name": "Cachecol Tricot",
+        "category": "acessórios",
+        "price": 147.29,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 222,
+        "name": "Porta-Cartão",
+        "category": "acessórios",
+        "price": 396.34,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 223,
+        "name": "Nécessaire Viagem",
+        "category": "acessórios",
+        "price": 238.39,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "beleza"
+    },
+    {
+        "id": 224,
+        "name": "Chaveiro Metal",
+        "category": "acessórios",
+        "price": 223.03,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 225,
+        "name": "Pochete Esportiva",
+        "category": "acessórios",
+        "price": 479.5,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "fitness"
+    },
+    {
+        "id": 226,
+        "name": "Tiara Decorada",
+        "category": "acessórios",
+        "price": 497.79,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 227,
+        "name": "Presilha de Cabelo",
+        "category": "acessórios",
+        "price": 286.76,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 228,
+        "name": "Broche Vintage",
+        "category": "acessórios",
+        "price": 364.83,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 229,
+        "name": "Relógio Analógico Clássico",
+        "category": "acessórios",
+        "price": 94.29,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 230,
+        "name": "Óculos de Grau",
+        "category": "acessórios",
+        "price": 162.41,
+        "color": "laranja",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 231,
+        "name": "Óculos Clip-On",
+        "category": "acessórios",
+        "price": 484.97,
+        "color": "dourado",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 232,
+        "name": "Luva de Couro",
+        "category": "acessórios",
+        "price": 298,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 233,
+        "name": "Guarda-Chuva Automático",
+        "category": "acessórios",
+        "price": 280.24,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 234,
+        "name": "Sombrinha Compacta",
+        "category": "acessórios",
+        "price": 379.02,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 235,
+        "name": "Capa para Notebook",
+        "category": "acessórios",
+        "price": 47.43,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "tech"
+    },
+    {
+        "id": 236,
+        "name": "Capa para Smartphone",
+        "category": "acessórios",
+        "price": 300.4,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "tech"
+    },
+    {
+        "id": 237,
+        "name": "Película de Vidro",
+        "category": "acessórios",
+        "price": 261.36,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 238,
+        "name": "Suporte Veicular",
+        "category": "acessórios",
+        "price": 429.3,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 239,
+        "name": "Ring Light de Mesa",
+        "category": "acessórios",
+        "price": 95.56,
+        "color": "marrom",
+        "sexo": "unissex",
+        "estilo": "casual"
+    },
+    {
+        "id": 240,
+        "name": "Organizador de Cabos",
+        "category": "acessórios",
+        "price": 481.16,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 241,
+        "name": "Estojo para Óculos",
+        "category": "acessórios",
+        "price": 58.44,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 242,
+        "name": "Porta-Documentos",
+        "category": "acessórios",
+        "price": 109.19,
+        "color": "amarelo",
+        "sexo": "unissex",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 243,
+        "name": "Passaporte Capa",
+        "category": "acessórios",
+        "price": 305.61,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 244,
+        "name": "Tag de Mala",
+        "category": "acessórios",
+        "price": 344.09,
+        "color": "laranja",
+        "sexo": "unissex",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 245,
+        "name": "Alça para Câmera",
+        "category": "acessórios",
+        "price": 132.89,
+        "color": "dourado",
+        "sexo": "unissex",
+        "estilo": "fotografia"
+    },
+    {
+        "id": 246,
+        "name": "Corrente para Óculos",
+        "category": "acessórios",
+        "price": 77.54,
+        "color": "preto",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 247,
+        "name": "Pingente Personalizado",
+        "category": "acessórios",
+        "price": 447.33,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 248,
+        "name": "Tornozeleira Prata",
+        "category": "acessórios",
+        "price": 138.17,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 249,
+        "name": "Bracelete Masculino",
+        "category": "acessórios",
+        "price": 305.36,
+        "color": "branco",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 250,
+        "name": "Par de Brincos Pérola",
+        "category": "acessórios",
+        "price": 317.29,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 251,
+        "name": "Colar Choker",
+        "category": "acessórios",
+        "price": 221.22,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 252,
+        "name": "Colar Longo Boho",
+        "category": "acessórios",
+        "price": 300.15,
+        "color": "cinza",
+        "sexo": "feminino",
+        "estilo": "boho"
+    },
+    {
+        "id": 253,
+        "name": "Anel Solitário Zircônia",
+        "category": "acessórios",
+        "price": 270.93,
+        "color": "marrom",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 254,
+        "name": "Aliança Aço",
+        "category": "acessórios",
+        "price": 468.65,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 255,
+        "name": "Cinto Elástico",
+        "category": "acessórios",
+        "price": 118.03,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 256,
+        "name": "Suspensório Clássico",
+        "category": "acessórios",
+        "price": 363.76,
+        "color": "amarelo",
+        "sexo": "masculino",
+        "estilo": "social"
+    },
+    {
+        "id": 257,
+        "name": "Gravata Borboleta",
+        "category": "acessórios",
+        "price": 134.56,
+        "color": "roxo",
+        "sexo": "masculino",
+        "estilo": "social"
+    },
+    {
+        "id": 258,
+        "name": "Prendedor de Gravata",
+        "category": "acessórios",
+        "price": 209.97,
+        "color": "laranja",
+        "sexo": "masculino",
+        "estilo": "social"
+    },
+    {
+        "id": 259,
+        "name": "Abotoaduras Prata",
+        "category": "acessórios",
+        "price": 342.4,
+        "color": "dourado",
+        "sexo": "masculino",
+        "estilo": "social"
+    },
+    {
+        "id": 260,
+        "name": "Lenço de Pescoço Inverno",
+        "category": "acessórios",
+        "price": 163.99,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 261,
+        "name": "Gorro Tricot",
+        "category": "acessórios",
+        "price": 171.76,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 262,
+        "name": "Faixa de Cabelo",
+        "category": "acessórios",
+        "price": 380.88,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 263,
+        "name": "Elástico Scrunchie Kit",
+        "category": "acessórios",
+        "price": 54.81,
+        "color": "branco",
+        "sexo": "feminino",
+        "estilo": "boho"
+    },
+    {
+        "id": 264,
+        "name": "Piranha Grande",
+        "category": "acessórios",
+        "price": 239.97,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 265,
+        "name": "Pente Madeira",
+        "category": "acessórios",
+        "price": 499.25,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "beleza"
+    },
+    {
+        "id": 266,
+        "name": "Escova Oval",
+        "category": "acessórios",
+        "price": 498.12,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "beleza"
+    },
+    {
+        "id": 267,
+        "name": "Espelho de Bolsa",
+        "category": "acessórios",
+        "price": 55.16,
+        "color": "marrom",
+        "sexo": "feminino",
+        "estilo": "beleza"
+    },
+    {
+        "id": 268,
+        "name": "Necessaire Maquiagem",
+        "category": "acessórios",
+        "price": 122.3,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "beleza"
+    },
+    {
+        "id": 269,
+        "name": "Estojo Pincéis",
+        "category": "acessórios",
+        "price": 147.29,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "beleza"
+    },
+    {
+        "id": 270,
+        "name": "Bolsa Transversal",
+        "category": "acessórios",
+        "price": 467.95,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 271,
+        "name": "Mochila Casual",
+        "category": "acessórios",
+        "price": 442.8,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 272,
+        "name": "Bolsa Tote Canvas",
+        "category": "acessórios",
+        "price": 442.04,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 273,
+        "name": "Carteira com Zíper",
+        "category": "acessórios",
+        "price": 197.36,
+        "color": "dourado",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 274,
+        "name": "Porta-Moedas Couro",
+        "category": "acessórios",
+        "price": 95.71,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 275,
+        "name": "Chaveiro USB Decorativo",
+        "category": "acessórios",
+        "price": 420.19,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 276,
+        "name": "Pingente Bag Charm",
+        "category": "acessórios",
+        "price": 357.69,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 277,
+        "name": "Cinto Dupla Face",
+        "category": "acessórios",
+        "price": 313.6,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 278,
+        "name": "Fivela Country",
+        "category": "acessórios",
+        "price": 493.86,
+        "color": "vermelho",
+        "sexo": "masculino",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 279,
+        "name": "Bandana Estampada",
+        "category": "acessórios",
+        "price": 333.9,
+        "color": "bege",
+        "sexo": "unissex",
+        "estilo": "streetwear"
+    },
+    {
+        "id": 280,
+        "name": "Viseira Esportiva",
+        "category": "acessórios",
+        "price": 23.75,
+        "color": "cinza",
+        "sexo": "unissex",
+        "estilo": "fitness"
+    },
+    {
+        "id": 281,
+        "name": "Boné Trucker",
+        "category": "acessórios",
+        "price": 412.2,
+        "color": "marrom",
+        "sexo": "masculino",
+        "estilo": "streetwear"
+    },
+    {
+        "id": 282,
+        "name": "Chapéu Bucket",
+        "category": "acessórios",
+        "price": 163.69,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "streetwear"
+    },
+    {
+        "id": 283,
+        "name": "Luva Térmica Touch",
+        "category": "acessórios",
+        "price": 338.42,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 284,
+        "name": "Meia-Luva Elegante",
+        "category": "acessórios",
+        "price": 470.68,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 285,
+        "name": "Cachecol Pashmina",
+        "category": "acessórios",
+        "price": 84.45,
+        "color": "roxo",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 286,
+        "name": "Echarpe Leve",
+        "category": "acessórios",
+        "price": 75.4,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 287,
+        "name": "Cinto Social Fino",
+        "category": "acessórios",
+        "price": 71.37,
+        "color": "dourado",
+        "sexo": "masculino",
+        "estilo": "social"
+    },
+    {
+        "id": 288,
+        "name": "Pulseira Couro Entrançado",
+        "category": "acessórios",
+        "price": 285.54,
+        "color": "preto",
+        "sexo": "masculino",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 289,
+        "name": "Colar Medalha",
+        "category": "acessórios",
+        "price": 150.72,
+        "color": "prata",
+        "sexo": "masculino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 290,
+        "name": "Brinco Pedra Natural",
+        "category": "acessórios",
+        "price": 310.31,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 291,
+        "name": "Anel Ajustável",
+        "category": "acessórios",
+        "price": 364.44,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 292,
+        "name": "Tornozeleira Dourada",
+        "category": "acessórios",
+        "price": 117.72,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 293,
+        "name": "Colar Corrente Grossa",
+        "category": "acessórios",
+        "price": 324.42,
+        "color": "bege",
+        "sexo": "masculino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 294,
+        "name": "Broche Flor",
+        "category": "acessórios",
+        "price": 146.7,
+        "color": "cinza",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 295,
+        "name": "Presilha Pérola",
+        "category": "acessórios",
+        "price": 254.49,
+        "color": "marrom",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 296,
+        "name": "Tiara Noiva",
+        "category": "acessórios",
+        "price": 454.55,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "festa"
+    },
+    {
+        "id": 297,
+        "name": "Arco Infantil",
+        "category": "acessórios",
+        "price": 426.12,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 298,
+        "name": "Laço de Cabelo Grande",
+        "category": "acessórios",
+        "price": 64.29,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 299,
+        "name": "Porta-Chaves Magnético",
+        "category": "acessórios",
+        "price": 223.31,
+        "color": "roxo",
+        "sexo": "unissex",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 300,
+        "name": "Organizador Bolsa",
+        "category": "acessórios",
+        "price": 152.8,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 301,
+        "name": "Bolsa Térmica Lanche",
+        "category": "acessórios",
+        "price": 21.69,
+        "color": "dourado",
+        "sexo": "unissex",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 302,
+        "name": "Garrafa Térmica 500ml",
+        "category": "acessórios",
+        "price": 390.13,
+        "color": "preto",
+        "sexo": "unissex",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 303,
+        "name": "Caneca Térmica Viagem",
+        "category": "acessórios",
+        "price": 325.8,
+        "color": "prata",
+        "sexo": "unissex",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 304,
+        "name": "Copo Térmico Inox",
+        "category": "acessórios",
+        "price": 145.73,
+        "color": "azul",
+        "sexo": "masculino",
+        "estilo": "aventureiro"
+    },
+    {
+        "id": 305,
+        "name": "Porta-Copos Couro",
+        "category": "acessórios",
+        "price": 375.78,
+        "color": "branco",
+        "sexo": "unissex",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 306,
+        "name": "Descanso para Pulseira Relógio",
+        "category": "acessórios",
+        "price": 284.8,
+        "color": "vermelho",
+        "sexo": "masculino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 307,
+        "name": "Estojo Relógio Duplo",
+        "category": "acessórios",
+        "price": 225.28,
+        "color": "bege",
+        "sexo": "masculino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 308,
+        "name": "Caixa Joias Veludo",
+        "category": "acessórios",
+        "price": 24.63,
+        "color": "cinza",
+        "sexo": "feminino",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 309,
+        "name": "Organizador Relógios 6 Slots",
+        "category": "acessórios",
+        "price": 56.11,
+        "color": "marrom",
+        "sexo": "masculino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 310,
+        "name": "Capa Chuva Transparente",
+        "category": "acessórios",
+        "price": 443.88,
+        "color": "verde",
+        "sexo": "masculino",
+        "estilo": "casual"
+    },
+    {
+        "id": 311,
+        "name": "Vestido Floral Verão",
+        "category": "vestuário",
+        "price": 58.95,
+        "color": "preto",
+        "sexo": "feminino",
+        "estilo": "boho"
+    },
+    {
+        "id": 312,
+        "name": "Saia Godê Rodada",
+        "category": "vestuário",
+        "price": 123.82,
+        "color": "prata",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 313,
+        "name": "Blusa Ciganinha",
+        "category": "vestuário",
+        "price": 211.34,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "boho"
+    },
+    {
+        "id": 314,
+        "name": "Vestido Envelope",
+        "category": "vestuário",
+        "price": 170.14,
+        "color": "branco",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 315,
+        "name": "Saia Evasê Linho",
+        "category": "vestuário",
+        "price": 200.1,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 316,
+        "name": "Top Halter Praia",
+        "category": "vestuário",
+        "price": 76.98,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "fitness"
+    },
+    {
+        "id": 317,
+        "name": "Vestido Slip Dress",
+        "category": "vestuário",
+        "price": 259.9,
+        "color": "cinza",
+        "sexo": "feminino",
+        "estilo": "festa"
+    },
+    {
+        "id": 318,
+        "name": "Blusa Gola Laço",
+        "category": "vestuário",
+        "price": 114.91,
+        "color": "marrom",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 319,
+        "name": "Saia Assimétrica",
+        "category": "vestuário",
+        "price": 345.06,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 320,
+        "name": "Vestido Chemise",
+        "category": "vestuário",
+        "price": 157.66,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 321,
+        "name": "Body Renda Transparente",
+        "category": "vestuário",
+        "price": 180.82,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 322,
+        "name": "Cropped Manga Bufante",
+        "category": "vestuário",
+        "price": 290.76,
+        "color": "roxo",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 323,
+        "name": "Saia Pareô Estampada",
+        "category": "vestuário",
+        "price": 290.7,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "praia"
+    },
+    {
+        "id": 324,
+        "name": "Vestido Babydoll",
+        "category": "vestuário",
+        "price": 321.58,
+        "color": "dourado",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 325,
+        "name": "Blusa Drapeada",
+        "category": "vestuário",
+        "price": 113.82,
+        "color": "preto",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 326,
+        "name": "Macacão Pantacourt",
+        "category": "vestuário",
+        "price": 58.79,
+        "color": "prata",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 327,
+        "name": "Vestido Tomara que Caia",
+        "category": "vestuário",
+        "price": 48.6,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "festa"
+    },
+    {
+        "id": 328,
+        "name": "Calça Flare Cintura Alta",
+        "category": "vestuário",
+        "price": 184.1,
+        "color": "branco",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 329,
+        "name": "Blusa Transpassada",
+        "category": "vestuário",
+        "price": 199.34,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 330,
+        "name": "Saia Tulipa",
+        "category": "vestuário",
+        "price": 269.84,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 331,
+        "name": "Vestido Midi Plissado",
+        "category": "vestuário",
+        "price": 55.8,
+        "color": "cinza",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 332,
+        "name": "Body Canelado Básico",
+        "category": "vestuário",
+        "price": 384.58,
+        "color": "marrom",
+        "sexo": "feminino",
+        "estilo": "íntimo"
+    },
+    {
+        "id": 333,
+        "name": "Cropped Tricot Alça",
+        "category": "vestuário",
+        "price": 309.54,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 334,
+        "name": "Saia Sino Jeans",
+        "category": "vestuário",
+        "price": 202.01,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 335,
+        "name": "Vestido Longo Festa",
+        "category": "vestuário",
+        "price": 249.1,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "festa"
+    },
+    {
+        "id": 336,
+        "name": "Blusa Mullet Assimétrica",
+        "category": "vestuário",
+        "price": 309.66,
+        "color": "roxo",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 337,
+        "name": "Macaquinho Estampado",
+        "category": "vestuário",
+        "price": 283.09,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 338,
+        "name": "Vestido Curto Rodado",
+        "category": "vestuário",
+        "price": 220.47,
+        "color": "dourado",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 339,
+        "name": "Calça Skinny Cintura Alta",
+        "category": "vestuário",
+        "price": 238.29,
+        "color": "preto",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 340,
+        "name": "Blusa Ombro Caído",
+        "category": "vestuário",
+        "price": 274.34,
+        "color": "prata",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 341,
+        "name": "Saia Midi Botões",
+        "category": "vestuário",
+        "price": 102.4,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 342,
+        "name": "Vestido Renda Guipir",
+        "category": "vestuário",
+        "price": 179.01,
+        "color": "branco",
+        "sexo": "feminino",
+        "estilo": "festa"
+    },
+    {
+        "id": 343,
+        "name": "Top Bandeau",
+        "category": "vestuário",
+        "price": 220.34,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 344,
+        "name": "Macacão Curto Ciganinha",
+        "category": "vestuário",
+        "price": 391.75,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "boho"
+    },
+    {
+        "id": 345,
+        "name": "Vestido Alcinha",
+        "category": "vestuário",
+        "price": 178.39,
+        "color": "cinza",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 346,
+        "name": "Blusa Regata Cetim",
+        "category": "vestuário",
+        "price": 271.26,
+        "color": "marrom",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 347,
+        "name": "Saia Cargo Feminina",
+        "category": "vestuário",
+        "price": 156.06,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "streetwear"
+    },
+    {
+        "id": 348,
+        "name": "Vestido Decote V Profundo",
+        "category": "vestuário",
+        "price": 256.68,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "festa"
+    },
+    {
+        "id": 349,
+        "name": "Calça Mom Jeans Feminina",
+        "category": "vestuário",
+        "price": 166.66,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 350,
+        "name": "Blusa Cropped Amarração",
+        "category": "vestuário",
+        "price": 114.96,
+        "color": "roxo",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 351,
+        "name": "Shorts Saia",
+        "category": "vestuário",
+        "price": 153.49,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 352,
+        "name": "Vestido Ombro a Ombro",
+        "category": "vestuário",
+        "price": 272.86,
+        "color": "dourado",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 353,
+        "name": "Body Gola Alta Manga Longa",
+        "category": "vestuário",
+        "price": 96.26,
+        "color": "preto",
+        "sexo": "feminino",
+        "estilo": "íntimo"
+    },
+    {
+        "id": 354,
+        "name": "Saia Fenda Lateral",
+        "category": "vestuário",
+        "price": 290.68,
+        "color": "prata",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 355,
+        "name": "Vestido Tubinho Festa",
+        "category": "vestuário",
+        "price": 79.3,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "festa"
+    },
+    {
+        "id": 356,
+        "name": "Blusa Peplum Renda",
+        "category": "vestuário",
+        "price": 211.24,
+        "color": "branco",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 357,
+        "name": "Macacão Pantalona Festa",
+        "category": "vestuário",
+        "price": 187.15,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "festa"
+    },
+    {
+        "id": 358,
+        "name": "Vestido Bordado Inglês",
+        "category": "vestuário",
+        "price": 52.22,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "festa"
+    },
+    {
+        "id": 359,
+        "name": "Calça Clochard Feminina",
+        "category": "vestuário",
+        "price": 397.47,
+        "color": "cinza",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 360,
+        "name": "Biquíni Hot Pants",
+        "category": "vestuário",
+        "price": 207.95,
+        "color": "marrom",
+        "sexo": "feminino",
+        "estilo": "praia"
+    },
+    {
+        "id": 361,
+        "name": "Bolsa Clutch Festa",
+        "category": "acessórios",
+        "price": 452.12,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "festa"
+    },
+    {
+        "id": 362,
+        "name": "Brinco Franja",
+        "category": "acessórios",
+        "price": 170.26,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "boho"
+    },
+    {
+        "id": 363,
+        "name": "Colar Gargantilha Coração",
+        "category": "acessórios",
+        "price": 148.2,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 364,
+        "name": "Tiara Bordada Pedraria",
+        "category": "acessórios",
+        "price": 465.48,
+        "color": "roxo",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 365,
+        "name": "Pulseira Berloques",
+        "category": "acessórios",
+        "price": 483.3,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 366,
+        "name": "Anel Falange Dourado",
+        "category": "acessórios",
+        "price": 423.55,
+        "color": "dourado",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 367,
+        "name": "Brinco Ear Cuff",
+        "category": "acessórios",
+        "price": 141.62,
+        "color": "preto",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 368,
+        "name": "Colar Pendente Gota",
+        "category": "acessórios",
+        "price": 244.8,
+        "color": "prata",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 369,
+        "name": "Presilha Laço Cetim",
+        "category": "acessórios",
+        "price": 411.54,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 370,
+        "name": "Bolsa Bucket Couro",
+        "category": "acessórios",
+        "price": 325.97,
+        "color": "branco",
+        "sexo": "feminino",
+        "estilo": "streetwear"
+    },
+    {
+        "id": 371,
+        "name": "Cinto Fino Dourado",
+        "category": "acessórios",
+        "price": 320.6,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 372,
+        "name": "Brinco Pérola Barroca",
+        "category": "acessórios",
+        "price": 353.45,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 373,
+        "name": "Pulseira Riviera",
+        "category": "acessórios",
+        "price": 495.28,
+        "color": "cinza",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 374,
+        "name": "Tiara Nó Tecido",
+        "category": "acessórios",
+        "price": 437.45,
+        "color": "marrom",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 375,
+        "name": "Colar Camadas Delicado",
+        "category": "acessórios",
+        "price": 298.96,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 376,
+        "name": "Bolsa Mini Bag",
+        "category": "acessórios",
+        "price": 297.87,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 377,
+        "name": "Brinco Argola Cravejada",
+        "category": "acessórios",
+        "price": 125.68,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 378,
+        "name": "Anel Solitário Pérola",
+        "category": "acessórios",
+        "price": 334.87,
+        "color": "roxo",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 379,
+        "name": "Lenço Estampado Seda",
+        "category": "acessórios",
+        "price": 192.61,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 380,
+        "name": "Presilha Pérola Grande",
+        "category": "acessórios",
+        "price": 333.69,
+        "color": "dourado",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 381,
+        "name": "Bolsa Transversal Matelassê",
+        "category": "acessórios",
+        "price": 301.05,
+        "color": "preto",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 382,
+        "name": "Colar Choker Corrente",
+        "category": "acessórios",
+        "price": 238.64,
+        "color": "prata",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 383,
+        "name": "Brinco Gota Cristal",
+        "category": "acessórios",
+        "price": 325.93,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 384,
+        "name": "Pulseira Bracelete Aberto",
+        "category": "acessórios",
+        "price": 186.43,
+        "color": "branco",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 385,
+        "name": "Bolsa Sacola Grande",
+        "category": "acessórios",
+        "price": 286.87,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 386,
+        "name": "Tiara Trançada Couro",
+        "category": "acessórios",
+        "price": 389.67,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 387,
+        "name": "Colar Relicário",
+        "category": "acessórios",
+        "price": 155.19,
+        "color": "cinza",
+        "sexo": "feminino",
+        "estilo": "elegante"
+    },
+    {
+        "id": 388,
+        "name": "Brinco Pressão Magnético",
+        "category": "acessórios",
+        "price": 75.89,
+        "color": "marrom",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 389,
+        "name": "Anel Meia Aliança Zircônia",
+        "category": "acessórios",
+        "price": 218.15,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "casual"
+    },
+    {
+        "id": 390,
+        "name": "Bolsa Carteira Corrente",
+        "category": "acessórios",
+        "price": 242.81,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 391,
+        "name": "Presilha Borboleta Cristal",
+        "category": "acessórios",
+        "price": 262.48,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 392,
+        "name": "Colar Lariat Longo",
+        "category": "acessórios",
+        "price": 461.62,
+        "color": "roxo",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 393,
+        "name": "Brinco Tassel Seda",
+        "category": "acessórios",
+        "price": 146.7,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 394,
+        "name": "Pulseira Escrava Ouro",
+        "category": "acessórios",
+        "price": 243.85,
+        "color": "dourado",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 395,
+        "name": "Bolsa Pochete Elegante",
+        "category": "acessórios",
+        "price": 275.18,
+        "color": "preto",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 396,
+        "name": "Tornozeleira Prata Estrelas",
+        "category": "acessórios",
+        "price": 409.12,
+        "color": "prata",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 397,
+        "name": "Colar Ponto de Luz",
+        "category": "acessórios",
+        "price": 230.06,
+        "color": "azul",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 398,
+        "name": "Brinco Flor Esmaltado",
+        "category": "acessórios",
+        "price": 333.19,
+        "color": "branco",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 399,
+        "name": "Anel Coroa Princesa",
+        "category": "acessórios",
+        "price": 127.47,
+        "color": "vermelho",
+        "sexo": "feminino",
+        "estilo": "romântico"
+    },
+    {
+        "id": 400,
+        "name": "Bolsa Crossbody Nylon",
+        "category": "acessórios",
+        "price": 66.81,
+        "color": "bege",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 401,
+        "name": "Piranha Acrílico Tartaruga",
+        "category": "acessórios",
+        "price": 213.27,
+        "color": "cinza",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 402,
+        "name": "Colar Pingente Inicial",
+        "category": "acessórios",
+        "price": 155.66,
+        "color": "marrom",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 403,
+        "name": "Brinco Huggie Ouro",
+        "category": "acessórios",
+        "price": 126.27,
+        "color": "verde",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 404,
+        "name": "Pulseira Miçanga Colorida",
+        "category": "acessórios",
+        "price": 364.32,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 405,
+        "name": "Bolsa Hobo Couro",
+        "category": "acessórios",
+        "price": 93.76,
+        "color": "amarelo",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 406,
+        "name": "Xuxinha Scrunchie Veludo",
+        "category": "acessórios",
+        "price": 310.84,
+        "color": "roxo",
+        "sexo": "feminino",
+        "estilo": "boho"
+    },
+    {
+        "id": 407,
+        "name": "Colar Mandala Folheado",
+        "category": "acessórios",
+        "price": 473.7,
+        "color": "laranja",
+        "sexo": "feminino",
+        "estilo": "boho"
+    },
+    {
+        "id": 408,
+        "name": "Brinco Argola Bambu",
+        "category": "acessórios",
+        "price": 153.85,
+        "color": "dourado",
+        "sexo": "feminino",
+        "estilo": "acessório pessoal"
+    },
+    {
+        "id": 409,
+        "name": "Porta-Joia Viagem Couro",
+        "category": "acessórios",
+        "price": 39.04,
+        "color": "preto",
+        "sexo": "feminino",
+        "estilo": "utilidade"
+    },
+    {
+        "id": 410,
+        "name": "Vestido Midi Manga Flare",
+        "category": "vestuário",
+        "price": 287.45,
+        "color": "rosa",
+        "sexo": "feminino",
+        "estilo": "casual"
+    }
+]

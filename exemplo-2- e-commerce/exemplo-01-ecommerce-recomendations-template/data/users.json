@@ -1,0 +1,1337 @@
+[
+    {
+        "id": 1,
+        "name": "Ana Lima",
+        "age": 25,
+        "sexo": "feminino",
+        "purchases": [
+            {
+                "id": 336,
+                "name": "Blusa Mullet Assimétrica",
+                "category": "vestuário",
+                "price": 309.66,
+                "color": "roxo",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 285,
+                "name": "Cachecol Pashmina",
+                "category": "acessórios",
+                "price": 84.45,
+                "color": "roxo",
+                "sexo": "feminino",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 49,
+                "name": "Body Manga Longa",
+                "category": "vestuário",
+                "price": 348.82,
+                "color": "amarelo",
+                "sexo": "feminino",
+                "estilo": "íntimo"
+            },
+            {
+                "id": 38,
+                "name": "Saia Plissada",
+                "category": "vestuário",
+                "price": 65.78,
+                "color": "dourado",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 363,
+                "name": "Colar Gargantilha Coração",
+                "category": "acessórios",
+                "price": 148.2,
+                "color": "amarelo",
+                "sexo": "feminino",
+                "estilo": "romântico"
+            },
+            {
+                "id": 247,
+                "name": "Pingente Personalizado",
+                "category": "acessórios",
+                "price": 447.33,
+                "color": "prata",
+                "sexo": "unissex",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 195,
+                "name": "Repetidor Wi-Fi Mesh",
+                "category": "eletrônicos",
+                "price": 1237.72,
+                "color": "branco",
+                "sexo": "unissex",
+                "estilo": "conectividade"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Bruno Ferreira",
+        "age": 27,
+        "sexo": "masculino",
+        "purchases": [
+            {
+                "id": 307,
+                "name": "Estojo Relógio Duplo",
+                "category": "acessórios",
+                "price": 225.28,
+                "color": "bege",
+                "sexo": "masculino",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 3,
+                "name": "Caixa de Som Bluetooth",
+                "category": "eletrônicos",
+                "price": 89.99,
+                "color": "azul",
+                "sexo": "masculino",
+                "estilo": "áudio"
+            },
+            {
+                "id": 75,
+                "name": "Suéter Gola V",
+                "category": "vestuário",
+                "price": 341.85,
+                "color": "verde",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 249,
+                "name": "Bracelete Masculino",
+                "category": "acessórios",
+                "price": 305.36,
+                "color": "branco",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 212,
+                "name": "Carteira Slim",
+                "category": "acessórios",
+                "price": 464.65,
+                "color": "verde",
+                "sexo": "masculino",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 218,
+                "name": "Chapéu Panamá",
+                "category": "acessórios",
+                "price": 48.13,
+                "color": "preto",
+                "sexo": "unissex",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 148,
+                "name": "Dock Station Notebook",
+                "category": "eletrônicos",
+                "price": 2293.77,
+                "color": "laranja",
+                "sexo": "unissex",
+                "estilo": "tech"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Camila Souza",
+        "age": 30,
+        "sexo": "feminino",
+        "purchases": [
+            {
+                "id": 334,
+                "name": "Saia Sino Jeans",
+                "category": "vestuário",
+                "price": 202.01,
+                "color": "rosa",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 76,
+                "name": "Suéter Gola Alta",
+                "category": "vestuário",
+                "price": 317.11,
+                "color": "rosa",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 70,
+                "name": "Camisola Renda",
+                "category": "vestuário",
+                "price": 170.39,
+                "color": "branco",
+                "sexo": "feminino",
+                "estilo": "romântico"
+            },
+            {
+                "id": 159,
+                "name": "Scanner Portátil",
+                "category": "eletrônicos",
+                "price": 643.39,
+                "color": "rosa",
+                "sexo": "feminino",
+                "estilo": "tech"
+            },
+            {
+                "id": 55,
+                "name": "Macacão Longo",
+                "category": "vestuário",
+                "price": 59.51,
+                "color": "azul",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 252,
+                "name": "Colar Longo Boho",
+                "category": "acessórios",
+                "price": 300.15,
+                "color": "cinza",
+                "sexo": "feminino",
+                "estilo": "boho"
+            },
+            {
+                "id": 119,
+                "name": "Pendrive 128GB",
+                "category": "eletrônicos",
+                "price": 1388.47,
+                "color": "roxo",
+                "sexo": "unissex",
+                "estilo": "conectividade"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Diego Almeida",
+        "age": 22,
+        "sexo": "masculino",
+        "purchases": [
+            {
+                "id": 258,
+                "name": "Prendedor de Gravata",
+                "category": "acessórios",
+                "price": 209.97,
+                "color": "laranja",
+                "sexo": "masculino",
+                "estilo": "social"
+            },
+            {
+                "id": 95,
+                "name": "Camiseta Surf",
+                "category": "vestuário",
+                "price": 177.77,
+                "color": "preto",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 249,
+                "name": "Bracelete Masculino",
+                "category": "acessórios",
+                "price": 305.36,
+                "color": "branco",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 138,
+                "name": "Headset Gamer RGB",
+                "category": "eletrônicos",
+                "price": 2790.83,
+                "color": "azul",
+                "sexo": "masculino",
+                "estilo": "gamer"
+            },
+            {
+                "id": 134,
+                "name": "Fone com Cancelamento de Ruído",
+                "category": "eletrônicos",
+                "price": 1614.53,
+                "color": "laranja",
+                "sexo": "unissex",
+                "estilo": "áudio"
+            },
+            {
+                "id": 238,
+                "name": "Suporte Veicular",
+                "category": "acessórios",
+                "price": 429.3,
+                "color": "cinza",
+                "sexo": "unissex",
+                "estilo": "utilidade"
+            },
+            {
+                "id": 79,
+                "name": "Luvas Térmicas",
+                "category": "vestuário",
+                "price": 146.71,
+                "color": "laranja",
+                "sexo": "unissex",
+                "estilo": "aventureiro"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Eduarda Nunes",
+        "age": 28,
+        "sexo": "feminino",
+        "purchases": [
+            {
+                "id": 264,
+                "name": "Piranha Grande",
+                "category": "acessórios",
+                "price": 239.97,
+                "color": "vermelho",
+                "sexo": "feminino",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 331,
+                "name": "Vestido Midi Plissado",
+                "category": "vestuário",
+                "price": 55.8,
+                "color": "cinza",
+                "sexo": "feminino",
+                "estilo": "elegante"
+            },
+            {
+                "id": 62,
+                "name": "Calça Wide Leg",
+                "category": "vestuário",
+                "price": 107.51,
+                "color": "rosa",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 38,
+                "name": "Saia Plissada",
+                "category": "vestuário",
+                "price": 65.78,
+                "color": "dourado",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 100,
+                "name": "Blusa Babados",
+                "category": "vestuário",
+                "price": 47.42,
+                "color": "bege",
+                "sexo": "feminino",
+                "estilo": "romântico"
+            },
+            {
+                "id": 224,
+                "name": "Chaveiro Metal",
+                "category": "acessórios",
+                "price": 223.03,
+                "color": "cinza",
+                "sexo": "unissex",
+                "estilo": "utilidade"
+            },
+            {
+                "id": 198,
+                "name": "Adaptador VGA para HDMI",
+                "category": "eletrônicos",
+                "price": 783.53,
+                "color": "cinza",
+                "sexo": "unissex",
+                "estilo": "conectividade"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Fernanda Costa",
+        "age": 24,
+        "sexo": "feminino",
+        "purchases": [
+            {
+                "id": 335,
+                "name": "Vestido Longo Festa",
+                "category": "vestuário",
+                "price": 249.1,
+                "color": "amarelo",
+                "sexo": "feminino",
+                "estilo": "festa"
+            },
+            {
+                "id": 355,
+                "name": "Vestido Tubinho Festa",
+                "category": "vestuário",
+                "price": 79.3,
+                "color": "azul",
+                "sexo": "feminino",
+                "estilo": "festa"
+            },
+            {
+                "id": 342,
+                "name": "Vestido Renda Guipir",
+                "category": "vestuário",
+                "price": 179.01,
+                "color": "branco",
+                "sexo": "feminino",
+                "estilo": "festa"
+            },
+            {
+                "id": 361,
+                "name": "Bolsa Clutch Festa",
+                "category": "acessórios",
+                "price": 452.12,
+                "color": "verde",
+                "sexo": "feminino",
+                "estilo": "festa"
+            },
+            {
+                "id": 383,
+                "name": "Brinco Gota Cristal",
+                "category": "acessórios",
+                "price": 325.93,
+                "color": "azul",
+                "sexo": "feminino",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 397,
+                "name": "Colar Ponto de Luz",
+                "category": "acessórios",
+                "price": 230.06,
+                "color": "azul",
+                "sexo": "feminino",
+                "estilo": "romântico"
+            },
+            {
+                "id": 253,
+                "name": "Anel Solitário Zircônia",
+                "category": "acessórios",
+                "price": 270.93,
+                "color": "marrom",
+                "sexo": "feminino",
+                "estilo": "elegante"
+            },
+            {
+                "id": 358,
+                "name": "Vestido Bordado Inglês",
+                "category": "vestuário",
+                "price": 52.22,
+                "color": "bege",
+                "sexo": "feminino",
+                "estilo": "festa"
+            },
+            {
+                "id": 296,
+                "name": "Tiara Noiva",
+                "category": "acessórios",
+                "price": 454.55,
+                "color": "verde",
+                "sexo": "feminino",
+                "estilo": "festa"
+            },
+            {
+                "id": 357,
+                "name": "Macacão Pantalona Festa",
+                "category": "vestuário",
+                "price": 187.15,
+                "color": "vermelho",
+                "sexo": "feminino",
+                "estilo": "festa"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Gabriel Santos",
+        "age": 31,
+        "sexo": "masculino",
+        "purchases": [
+            {
+                "id": 65,
+                "name": "Bermuda Tactel",
+                "category": "vestuário",
+                "price": 269.76,
+                "color": "laranja",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 95,
+                "name": "Camiseta Surf",
+                "category": "vestuário",
+                "price": 177.77,
+                "color": "preto",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 96,
+                "name": "Regata Basquete",
+                "category": "vestuário",
+                "price": 111.14,
+                "color": "prata",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 25,
+                "name": "Shorts Esportivo",
+                "category": "vestuário",
+                "price": 270.45,
+                "color": "preto",
+                "sexo": "masculino",
+                "estilo": "fitness"
+            },
+            {
+                "id": 15,
+                "name": "Bermuda Estampada",
+                "category": "vestuário",
+                "price": 302.48,
+                "color": "vermelho",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 6,
+                "name": "Tênis Esportivo",
+                "category": "calçados",
+                "price": 149.99,
+                "color": "vermelho",
+                "sexo": "feminino",
+                "estilo": "fitness"
+            },
+            {
+                "id": 130,
+                "name": "Controle Gamer",
+                "category": "eletrônicos",
+                "price": 500.87,
+                "color": "verde",
+                "sexo": "masculino",
+                "estilo": "gamer"
+            },
+            {
+                "id": 138,
+                "name": "Headset Gamer RGB",
+                "category": "eletrônicos",
+                "price": 2790.83,
+                "color": "azul",
+                "sexo": "masculino",
+                "estilo": "gamer"
+            },
+            {
+                "id": 1,
+                "name": "Fones de Ouvido Sem Fio",
+                "category": "eletrônicos",
+                "price": 129.99,
+                "color": "preto",
+                "sexo": "unissex",
+                "estilo": "áudio"
+            },
+            {
+                "id": 281,
+                "name": "Boné Trucker",
+                "category": "acessórios",
+                "price": 412.2,
+                "color": "marrom",
+                "sexo": "masculino",
+                "estilo": "streetwear"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Helena Martins",
+        "age": 26,
+        "sexo": "feminino",
+        "purchases": [
+            {
+                "id": 30,
+                "name": "Legging Fitness",
+                "category": "vestuário",
+                "price": 32.39,
+                "color": "bege",
+                "sexo": "feminino",
+                "estilo": "fitness"
+            },
+            {
+                "id": 84,
+                "name": "Sutiã Esportivo",
+                "category": "vestuário",
+                "price": 146.42,
+                "color": "branco",
+                "sexo": "feminino",
+                "estilo": "fitness"
+            },
+            {
+                "id": 19,
+                "name": "Regata Fitness",
+                "category": "vestuário",
+                "price": 186.1,
+                "color": "verde",
+                "sexo": "masculino",
+                "estilo": "fitness"
+            },
+            {
+                "id": 107,
+                "name": "Shorts Ciclista",
+                "category": "vestuário",
+                "price": 398.55,
+                "color": "laranja",
+                "sexo": "feminino",
+                "estilo": "fitness"
+            },
+            {
+                "id": 316,
+                "name": "Top Halter Praia",
+                "category": "vestuário",
+                "price": 76.98,
+                "color": "bege",
+                "sexo": "feminino",
+                "estilo": "fitness"
+            },
+            {
+                "id": 67,
+                "name": "Maiô Esportivo",
+                "category": "vestuário",
+                "price": 93.31,
+                "color": "preto",
+                "sexo": "feminino",
+                "estilo": "fitness"
+            },
+            {
+                "id": 177,
+                "name": "Pulseira Fitness",
+                "category": "eletrônicos",
+                "price": 752.1,
+                "color": "dourado",
+                "sexo": "unissex",
+                "estilo": "fitness"
+            },
+            {
+                "id": 302,
+                "name": "Garrafa Térmica 500ml",
+                "category": "acessórios",
+                "price": 390.13,
+                "color": "preto",
+                "sexo": "unissex",
+                "estilo": "aventureiro"
+            },
+            {
+                "id": 225,
+                "name": "Pochete Esportiva",
+                "category": "acessórios",
+                "price": 479.5,
+                "color": "marrom",
+                "sexo": "unissex",
+                "estilo": "fitness"
+            },
+            {
+                "id": 176,
+                "name": "Relógio Smartwatch Sport",
+                "category": "eletrônicos",
+                "price": 259.02,
+                "color": "laranja",
+                "sexo": "unissex",
+                "estilo": "acessório pessoal"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Igor Oliveira",
+        "age": 35,
+        "sexo": "masculino",
+        "purchases": [
+            {
+                "id": 20,
+                "name": "Camisa Social",
+                "category": "vestuário",
+                "price": 41.01,
+                "color": "rosa",
+                "sexo": "masculino",
+                "estilo": "social"
+            },
+            {
+                "id": 31,
+                "name": "Blazer Alfaiataria",
+                "category": "vestuário",
+                "price": 328.14,
+                "color": "cinza",
+                "sexo": "masculino",
+                "estilo": "social"
+            },
+            {
+                "id": 39,
+                "name": "Calça Alfaiataria",
+                "category": "vestuário",
+                "price": 343.56,
+                "color": "preto",
+                "sexo": "masculino",
+                "estilo": "social"
+            },
+            {
+                "id": 220,
+                "name": "Gravata Estampada",
+                "category": "acessórios",
+                "price": 492.94,
+                "color": "azul",
+                "sexo": "masculino",
+                "estilo": "social"
+            },
+            {
+                "id": 256,
+                "name": "Suspensório Clássico",
+                "category": "acessórios",
+                "price": 363.76,
+                "color": "amarelo",
+                "sexo": "masculino",
+                "estilo": "social"
+            },
+            {
+                "id": 259,
+                "name": "Abotoaduras Prata",
+                "category": "acessórios",
+                "price": 342.4,
+                "color": "dourado",
+                "sexo": "masculino",
+                "estilo": "social"
+            },
+            {
+                "id": 258,
+                "name": "Prendedor de Gravata",
+                "category": "acessórios",
+                "price": 209.97,
+                "color": "laranja",
+                "sexo": "masculino",
+                "estilo": "social"
+            },
+            {
+                "id": 32,
+                "name": "Colete Social",
+                "category": "vestuário",
+                "price": 288.3,
+                "color": "marrom",
+                "sexo": "masculino",
+                "estilo": "social"
+            },
+            {
+                "id": 9,
+                "name": "Mochila Executiva",
+                "category": "acessórios",
+                "price": 159.99,
+                "color": "cinza",
+                "sexo": "unissex",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 2,
+                "name": "Relógio Inteligente",
+                "category": "eletrônicos",
+                "price": 199.99,
+                "color": "prata",
+                "sexo": "unissex",
+                "estilo": "acessório pessoal"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Juliana Rocha",
+        "age": 29,
+        "sexo": "feminino",
+        "purchases": [
+            {
+                "id": 54,
+                "name": "Vestido Midi Floral",
+                "category": "vestuário",
+                "price": 137.06,
+                "color": "prata",
+                "sexo": "feminino",
+                "estilo": "boho"
+            },
+            {
+                "id": 36,
+                "name": "Kimono Floral",
+                "category": "vestuário",
+                "price": 154.53,
+                "color": "roxo",
+                "sexo": "feminino",
+                "estilo": "boho"
+            },
+            {
+                "id": 52,
+                "name": "Saia Longa Fluida",
+                "category": "vestuário",
+                "price": 46.95,
+                "color": "dourado",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 313,
+                "name": "Blusa Ciganinha",
+                "category": "vestuário",
+                "price": 211.34,
+                "color": "azul",
+                "sexo": "feminino",
+                "estilo": "boho"
+            },
+            {
+                "id": 252,
+                "name": "Colar Longo Boho",
+                "category": "acessórios",
+                "price": 300.15,
+                "color": "cinza",
+                "sexo": "feminino",
+                "estilo": "boho"
+            },
+            {
+                "id": 217,
+                "name": "Brinco Argola",
+                "category": "acessórios",
+                "price": 212.49,
+                "color": "dourado",
+                "sexo": "feminino",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 248,
+                "name": "Tornozeleira Prata",
+                "category": "acessórios",
+                "price": 138.17,
+                "color": "azul",
+                "sexo": "feminino",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 405,
+                "name": "Bolsa Hobo Couro",
+                "category": "acessórios",
+                "price": 93.76,
+                "color": "amarelo",
+                "sexo": "feminino",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 406,
+                "name": "Xuxinha Scrunchie Veludo",
+                "category": "acessórios",
+                "price": 310.84,
+                "color": "roxo",
+                "sexo": "feminino",
+                "estilo": "boho"
+            },
+            {
+                "id": 311,
+                "name": "Vestido Floral Verão",
+                "category": "vestuário",
+                "price": 58.95,
+                "color": "preto",
+                "sexo": "feminino",
+                "estilo": "boho"
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "name": "Lucas Barbosa",
+        "age": 23,
+        "sexo": "masculino",
+        "purchases": [
+            {
+                "id": 113,
+                "name": "Notebook Gamer",
+                "category": "eletrônicos",
+                "price": 2061.04,
+                "color": "bege",
+                "sexo": "unissex",
+                "estilo": "gamer"
+            },
+            {
+                "id": 138,
+                "name": "Headset Gamer RGB",
+                "category": "eletrônicos",
+                "price": 2790.83,
+                "color": "azul",
+                "sexo": "masculino",
+                "estilo": "gamer"
+            },
+            {
+                "id": 130,
+                "name": "Controle Gamer",
+                "category": "eletrônicos",
+                "price": 500.87,
+                "color": "verde",
+                "sexo": "masculino",
+                "estilo": "gamer"
+            },
+            {
+                "id": 116,
+                "name": "Mouse Ergonômico",
+                "category": "eletrônicos",
+                "price": 1940.83,
+                "color": "verde",
+                "sexo": "masculino",
+                "estilo": "tech"
+            },
+            {
+                "id": 115,
+                "name": "Teclado Mecânico",
+                "category": "eletrônicos",
+                "price": 837.12,
+                "color": "marrom",
+                "sexo": "unissex",
+                "estilo": "tech"
+            },
+            {
+                "id": 114,
+                "name": "Monitor Ultrawide",
+                "category": "eletrônicos",
+                "price": 1634.05,
+                "color": "cinza",
+                "sexo": "unissex",
+                "estilo": "tech"
+            },
+            {
+                "id": 95,
+                "name": "Camiseta Surf",
+                "category": "vestuário",
+                "price": 177.77,
+                "color": "preto",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 108,
+                "name": "Bermuda Jeans",
+                "category": "vestuário",
+                "price": 225.76,
+                "color": "dourado",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 8,
+                "name": "Boné Estiloso",
+                "category": "acessórios",
+                "price": 39.99,
+                "color": "preto",
+                "sexo": "unissex",
+                "estilo": "casual"
+            },
+            {
+                "id": 3,
+                "name": "Caixa de Som Bluetooth",
+                "category": "eletrônicos",
+                "price": 89.99,
+                "color": "azul",
+                "sexo": "masculino",
+                "estilo": "áudio"
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "name": "Mariana Dias",
+        "age": 32,
+        "sexo": "feminino",
+        "purchases": [
+            {
+                "id": 53,
+                "name": "Vestido Tubinho",
+                "category": "vestuário",
+                "price": 114.31,
+                "color": "preto",
+                "sexo": "feminino",
+                "estilo": "elegante"
+            },
+            {
+                "id": 51,
+                "name": "Saia Lápis",
+                "category": "vestuário",
+                "price": 290.68,
+                "color": "laranja",
+                "sexo": "feminino",
+                "estilo": "elegante"
+            },
+            {
+                "id": 99,
+                "name": "Blusa Peplum",
+                "category": "vestuário",
+                "price": 63.63,
+                "color": "vermelho",
+                "sexo": "feminino",
+                "estilo": "elegante"
+            },
+            {
+                "id": 381,
+                "name": "Bolsa Transversal Matelassê",
+                "category": "acessórios",
+                "price": 301.05,
+                "color": "preto",
+                "sexo": "feminino",
+                "estilo": "elegante"
+            },
+            {
+                "id": 382,
+                "name": "Colar Choker Corrente",
+                "category": "acessórios",
+                "price": 238.64,
+                "color": "prata",
+                "sexo": "feminino",
+                "estilo": "elegante"
+            },
+            {
+                "id": 372,
+                "name": "Brinco Pérola Barroca",
+                "category": "acessórios",
+                "price": 353.45,
+                "color": "bege",
+                "sexo": "feminino",
+                "estilo": "elegante"
+            },
+            {
+                "id": 389,
+                "name": "Anel Meia Aliança Zircônia",
+                "category": "acessórios",
+                "price": 218.15,
+                "color": "verde",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 39,
+                "name": "Calça Alfaiataria",
+                "category": "vestuário",
+                "price": 343.56,
+                "color": "preto",
+                "sexo": "masculino",
+                "estilo": "social"
+            },
+            {
+                "id": 379,
+                "name": "Lenço Estampado Seda",
+                "category": "acessórios",
+                "price": 192.61,
+                "color": "laranja",
+                "sexo": "feminino",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 371,
+                "name": "Cinto Fino Dourado",
+                "category": "acessórios",
+                "price": 320.6,
+                "color": "vermelho",
+                "sexo": "feminino",
+                "estilo": "acessório pessoal"
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "name": "Nicolas Pereira",
+        "age": 20,
+        "sexo": "masculino",
+        "purchases": [
+            {
+                "id": 44,
+                "name": "Camiseta Longline",
+                "category": "vestuário",
+                "price": 390.04,
+                "color": "bege",
+                "sexo": "masculino",
+                "estilo": "streetwear"
+            },
+            {
+                "id": 40,
+                "name": "Bermuda Sarja",
+                "category": "vestuário",
+                "price": 253.37,
+                "color": "prata",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 41,
+                "name": "Jaqueta Bomber",
+                "category": "vestuário",
+                "price": 328.63,
+                "color": "azul",
+                "sexo": "masculino",
+                "estilo": "streetwear"
+            },
+            {
+                "id": 46,
+                "name": "Camisa Xadrez",
+                "category": "vestuário",
+                "price": 234.25,
+                "color": "marrom",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 14,
+                "name": "Calça Cargo",
+                "category": "vestuário",
+                "price": 112.58,
+                "color": "branco",
+                "sexo": "masculino",
+                "estilo": "streetwear"
+            },
+            {
+                "id": 281,
+                "name": "Boné Trucker",
+                "category": "acessórios",
+                "price": 412.2,
+                "color": "marrom",
+                "sexo": "masculino",
+                "estilo": "streetwear"
+            },
+            {
+                "id": 1,
+                "name": "Fones de Ouvido Sem Fio",
+                "category": "eletrônicos",
+                "price": 129.99,
+                "color": "preto",
+                "sexo": "unissex",
+                "estilo": "áudio"
+            },
+            {
+                "id": 3,
+                "name": "Caixa de Som Bluetooth",
+                "category": "eletrônicos",
+                "price": 89.99,
+                "color": "azul",
+                "sexo": "masculino",
+                "estilo": "áudio"
+            },
+            {
+                "id": 271,
+                "name": "Mochila Casual",
+                "category": "acessórios",
+                "price": 442.8,
+                "color": "roxo",
+                "sexo": "unissex",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 279,
+                "name": "Bandana Estampada",
+                "category": "acessórios",
+                "price": 333.9,
+                "color": "bege",
+                "sexo": "unissex",
+                "estilo": "streetwear"
+            }
+        ]
+    },
+    {
+        "id": 14,
+        "name": "Patrícia Mendes",
+        "age": 27,
+        "sexo": "feminino",
+        "purchases": [
+            {
+                "id": 320,
+                "name": "Vestido Chemise",
+                "category": "vestuário",
+                "price": 157.66,
+                "color": "rosa",
+                "sexo": "feminino",
+                "estilo": "elegante"
+            },
+            {
+                "id": 62,
+                "name": "Calça Wide Leg",
+                "category": "vestuário",
+                "price": 107.51,
+                "color": "rosa",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 329,
+                "name": "Blusa Transpassada",
+                "category": "vestuário",
+                "price": 199.34,
+                "color": "vermelho",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 376,
+                "name": "Bolsa Mini Bag",
+                "category": "acessórios",
+                "price": 297.87,
+                "color": "rosa",
+                "sexo": "feminino",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 375,
+                "name": "Colar Camadas Delicado",
+                "category": "acessórios",
+                "price": 298.96,
+                "color": "verde",
+                "sexo": "feminino",
+                "estilo": "elegante"
+            },
+            {
+                "id": 403,
+                "name": "Brinco Huggie Ouro",
+                "category": "acessórios",
+                "price": 126.27,
+                "color": "verde",
+                "sexo": "feminino",
+                "estilo": "acessório pessoal"
+            },
+            {
+                "id": 369,
+                "name": "Presilha Laço Cetim",
+                "category": "acessórios",
+                "price": 411.54,
+                "color": "azul",
+                "sexo": "feminino",
+                "estilo": "romântico"
+            },
+            {
+                "id": 322,
+                "name": "Cropped Manga Bufante",
+                "category": "vestuário",
+                "price": 290.76,
+                "color": "roxo",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 341,
+                "name": "Saia Midi Botões",
+                "category": "vestuário",
+                "price": 102.4,
+                "color": "azul",
+                "sexo": "feminino",
+                "estilo": "casual"
+            },
+            {
+                "id": 10,
+                "name": "Óculos de Sol",
+                "category": "acessórios",
+                "price": 89.99,
+                "color": "marrom",
+                "sexo": "unissex",
+                "estilo": "acessório pessoal"
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "name": "Rafael Teixeira",
+        "age": 33,
+        "sexo": "masculino",
+        "purchases": [
+            {
+                "id": 92,
+                "name": "Jaqueta Motociclista",
+                "category": "vestuário",
+                "price": 127.2,
+                "color": "roxo",
+                "sexo": "masculino",
+                "estilo": "aventureiro"
+            },
+            {
+                "id": 93,
+                "name": "Colete Refletivo",
+                "category": "vestuário",
+                "price": 246.29,
+                "color": "laranja",
+                "sexo": "masculino",
+                "estilo": "aventureiro"
+            },
+            {
+                "id": 65,
+                "name": "Bermuda Tactel",
+                "category": "vestuário",
+                "price": 269.76,
+                "color": "laranja",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 94,
+                "name": "Camisa Flanela Xadrez",
+                "category": "vestuário",
+                "price": 362.18,
+                "color": "dourado",
+                "sexo": "masculino",
+                "estilo": "casual"
+            },
+            {
+                "id": 42,
+                "name": "Parka Impermeável",
+                "category": "vestuário",
+                "price": 299.99,
+                "color": "branco",
+                "sexo": "unissex",
+                "estilo": "aventureiro"
+            },
+            {
+                "id": 178,
+                "name": "GPS Automotivo",
+                "category": "eletrônicos",
+                "price": 2023.47,
+                "color": "preto",
+                "sexo": "unissex",
+                "estilo": "conectividade"
+            },
+            {
+                "id": 185,
+                "name": "Action Cam 4K",
+                "category": "eletrônicos",
+                "price": 2432.11,
+                "color": "marrom",
+                "sexo": "unissex",
+                "estilo": "fotografia"
+            },
+            {
+                "id": 118,
+                "name": "Drone Profissional",
+                "category": "eletrônicos",
+                "price": 1332.55,
+                "color": "amarelo",
+                "sexo": "unissex",
+                "estilo": "fotografia"
+            },
+            {
+                "id": 232,
+                "name": "Luva de Couro",
+                "category": "acessórios",
+                "price": 298,
+                "color": "preto",
+                "sexo": "unissex",
+                "estilo": "casual"
+            },
+            {
+                "id": 282,
+                "name": "Chapéu Bucket",
+                "category": "acessórios",
+                "price": 163.69,
+                "color": "verde",
+                "sexo": "masculino",
+                "estilo": "streetwear"
+            }
+        ]
+    }
+]

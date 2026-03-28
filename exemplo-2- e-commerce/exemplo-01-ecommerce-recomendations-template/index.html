@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Recommendation System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="main">
+        <h1>E-commerce Recommendation System</h1>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>User Profile</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="userForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="userSelect" class="form-label">Select User</label>
+                                    <select class="form-select" id="userSelect">
+                                        <option value="">-- Select a user --</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="userAge" class="form-label">Age</label>
+                                    <input type="number" class="form-control" id="userAge" disabled>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="d-flex gap-2 mt-2">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#usersGlossaryModal">
+                                <i class="bi bi-people"></i> Users Glossary
+                            </button>
+                            <button type="button" class="btn btn-outline-warning btn-sm" id="shuffleUsersBtn">
+                                <i class="bi bi-shuffle"></i> Shuffle Users
+                            </button>
+                        </div>
+
+                        <div id="pastPurchasesContainer" class="mt-4">
+                            <h5>Past Purchases</h5>
+                            <div id="pastPurchasesList" class="row"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h4>Model Training</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="model-controls d-flex gap-2">
+                                <button id="trainModelBtn" class="btn btn-primary train-model-btn">
+                                    <i class="bi bi-cpu"></i> Train Model
+                                </button>
+                                <button disabled id="runRecommendationBtn" class="btn btn-success train-model-btn">
+                                    <i class="bi bi-cpu"></i> Run Recommendation
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <div class="all-users-purchases">
+                            <h5 id="purchasesDiv" style="cursor: pointer;">
+                                All Users Purchase Data
+                                <i id="purchasesArrow" class="bi bi-chevron-down"></i>
+                            </h5>
+                            <div id="allUsersPurchasesList" class="user-purchases-data overflow-auto"
+                                style="max-height: 400px;display: none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <h3 class="mb-0">Products</h3>
+            <div class="d-flex align-items-center gap-2">
+                <label for="sortSelect" class="form-label mb-0 text-nowrap">Sort by:</label>
+                <select class="form-select form-select-sm" id="sortSelect" style="width: 200px;">
+                    <option value="default">Default</option>
+                    <option value="category">Category</option>
+                    <option value="price-asc">Lowest Price</option>
+                    <option value="price-desc">Highest Price</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" id="productList">
+        </div>
+    </div>
+
+
+    <!-- Modal Glossário de Usuários -->
+    <div class="modal fade" id="usersGlossaryModal" tabindex="-1" aria-labelledby="usersGlossaryLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="usersGlossaryLabel"><i class="bi bi-people"></i> Users Glossary</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-hover table-sm">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>Gender</th>
+                                <th>Style</th>
+                                <th>Products by Style</th>
+                                <th>Purchases</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersGlossaryBody"></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.5.1/dist/tfjs-vis.umd.min.js"></script>
+
+    <script>
+        const styleDefinitions = [
+            { style: 'Moda festa e joias', sexo: 'feminino',
+              keywords: ['Vestido', 'Festa', 'Renda', 'Brinco', 'Colar', 'Anel', 'Clutch', 'Tiara', 'Bordado'] },
+            { style: 'Casual esportivo', sexo: 'masculino',
+              keywords: ['Bermuda', 'Camiseta', 'Regata', 'Shorts', 'Tênis', 'Boné', 'Esportiv'] },
+            { style: 'Fitness e bem-estar', sexo: 'feminino',
+              keywords: ['Legging', 'Fitness', 'Esportiv', 'Top', 'Maiô', 'Shorts Ciclista', 'Pulseira Fitness', 'Garrafa', 'Pochete'] },
+            { style: 'Social/executivo', sexo: 'masculino',
+              keywords: ['Social', 'Blazer', 'Alfaiataria', 'Gravata', 'Suspensório', 'Abotoaduras', 'Colete Social', 'Executiv'] },
+            { style: 'Boho/romântico', sexo: 'feminino',
+              keywords: ['Floral', 'Kimono', 'Longa', 'Boho', 'Argola', 'Tornozeleira', 'Scrunchie', 'Renda', 'Saia'] },
+            { style: 'Gamer/tech', sexo: 'masculino',
+              keywords: ['Gamer', 'Notebook', 'Mouse', 'Teclado', 'Monitor', 'Headset', 'Controle', 'Fone', 'RGB'] },
+            { style: 'Elegante/clássico', sexo: 'feminino',
+              keywords: ['Tubinho', 'Lápis', 'Peplum', 'Matelassê', 'Choker', 'Pérola', 'Aliança', 'Lenço', 'Cinto Fino'] },
+            { style: 'Streetwear', sexo: 'masculino',
+              keywords: ['Longline', 'Bomber', 'Cargo', 'Xadrez', 'Boné', 'Bandana', 'Mochila', 'Jaqueta', 'Sarja'] },
+            { style: 'Casual chic', sexo: 'feminino',
+              keywords: ['Chemise', 'Wide Leg', 'Transpassada', 'Mini Bag', 'Camadas', 'Huggie', 'Cropped', 'Midi', 'Óculos'] },
+            { style: 'Aventureiro/outdoor', sexo: 'masculino',
+              keywords: ['Motociclista', 'Refletivo', 'Tactel', 'Flanela', 'Parka', 'GPS', 'Action Cam', 'Drone', 'Luva', 'Bucket'] },
+            { style: 'Moda praia', sexo: 'feminino',
+              keywords: ['Biquíni', 'Maiô', 'Pareô', 'Praia', 'Cropped', 'Tornozeleira', 'Bolsa', 'Óculos'] },
+            { style: 'Tech minimalista', sexo: 'masculino',
+              keywords: ['Smartphone', 'Fone', 'Relógio', 'Smartwatch', 'Power Bank', 'Bluetooth', 'Slim', 'Carteira'] },
+            { style: 'Romântico delicado', sexo: 'feminino',
+              keywords: ['Delicado', 'Renda', 'Babados', 'Flor', 'Pérola', 'Coração', 'Laço', 'Cetim', 'Rosa'] },
+            { style: 'Esporte radical', sexo: 'masculino',
+              keywords: ['Esportiv', 'Tênis', 'Bermuda', 'Action', 'Drone', 'Cam', 'Camiseta', 'Relógio'] },
+            { style: 'Trabalho moderno', sexo: 'feminino',
+              keywords: ['Blazer', 'Alfaiataria', 'Pantalona', 'Envelope', 'Colar', 'Bolsa', 'Notebook', 'Relógio'] }
+        ];
+
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function pickForStyle(styleDef, userSexo, products, count) {
+            const matched = products.filter(p => {
+                const nameUp = p.name.toLowerCase();
+                return styleDef.keywords.some(k => nameUp.includes(k.toLowerCase()));
+            });
+
+            const genderFiltered = matched.filter(p =>
+                p.sexo === userSexo || p.sexo === 'unissex'
+            );
+
+            const pool = genderFiltered.length >= count ? genderFiltered : matched;
+            const shuffled = shuffleArray(pool);
+            const selected = shuffled.slice(0, count);
+
+            if (selected.length < count) {
+                const fallback = products.filter(p =>
+                    p.sexo === userSexo || p.sexo === 'unissex'
+                );
+                const extra = shuffleArray(fallback).filter(p => !selected.find(s => s.id === p.id));
+                selected.push(...extra.slice(0, count - selected.length));
+            }
+
+            return selected.map(p => ({
+                id: p.id, name: p.name, category: p.category, price: p.price, color: p.color
+            }));
+        }
+
+        function detectStyleFromPurchases(user, productMap) {
+            let bestStyle = '—';
+            let bestScore = 0;
+            styleDefinitions.forEach(sd => {
+                let score = 0;
+                user.purchases.forEach(p => {
+                    const full = productMap[p.id] || p;
+                    const nameUp = (full.name || '').toLowerCase();
+                    sd.keywords.forEach(k => {
+                        if (nameUp.includes(k.toLowerCase())) score++;
+                    });
+                });
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestStyle = sd.style;
+                }
+            });
+            return bestStyle;
+        }
+
+        document.getElementById('shuffleUsersBtn').addEventListener('click', async function () {
+            const btn = this;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Shuffling...';
+
+            const [baseUsers, products] = await Promise.all([
+                (await fetch('./data/users.json')).json(),
+                (await fetch('./data/products.json')).json()
+            ]);
+
+            const femStyles = shuffleArray(styleDefinitions.filter(s => s.sexo === 'feminino'));
+            const mascStyles = shuffleArray(styleDefinitions.filter(s => s.sexo === 'masculino'));
+            let femIdx = 0, mascIdx = 0;
+
+            const styleMap = {};
+            const users = baseUsers.map(u => {
+                const pool = u.sexo === 'feminino' ? femStyles : mascStyles;
+                const idx = u.sexo === 'feminino' ? femIdx++ : mascIdx++;
+                const assigned = pool[idx % pool.length];
+
+                styleMap[u.name] = assigned.style;
+
+                return {
+                    id: u.id,
+                    name: u.name,
+                    age: u.age,
+                    sexo: u.sexo,
+                    purchases: pickForStyle(assigned, u.sexo, products, 10)
+                };
+            });
+
+            sessionStorage.setItem('ew-academy-users', JSON.stringify(users));
+            sessionStorage.setItem('ew-academy-styles', JSON.stringify(styleMap));
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="bi bi-shuffle"></i> Shuffle Users';
+            location.reload();
+        });
+
+        document.getElementById('usersGlossaryModal').addEventListener('show.bs.modal', async function () {
+            const stored = sessionStorage.getItem('ew-academy-users');
+            const users = stored ? JSON.parse(stored) : await (await fetch('./data/users.json')).json();
+            const catalog = await (await fetch('./data/products.json')).json();
+            const productMap = Object.fromEntries(catalog.map(p => [p.id, p]));
+
+            const styleMap = JSON.parse(sessionStorage.getItem('ew-academy-styles') || '{}');
+
+            const tbody = document.getElementById('usersGlossaryBody');
+
+            tbody.innerHTML = users.map(u => {
+                const style = styleMap[u.name] || detectStyleFromPurchases(u, productMap);
+                const genderClass = u.sexo === 'feminino' ? 'bg-danger' : u.sexo === 'masculino' ? 'bg-primary' : 'bg-secondary';
+
+                const styleCounts = {};
+                u.purchases.forEach(p => {
+                    const full = productMap[p.id];
+                    const est = (full && full.estilo) || p.estilo || '—';
+                    styleCounts[est] = (styleCounts[est] || 0) + 1;
+                });
+                const styleBadges = Object.entries(styleCounts)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([s, c]) => '<span class="badge bg-info text-dark me-1 mb-1">' + s + ': ' + c + '</span>')
+                    .join('');
+
+                const badges = u.purchases.map(p =>
+                    '<span class="badge bg-light text-dark me-1 mb-1">' + p.name + '</span>'
+                ).join('');
+
+                return '<tr>' +
+                    '<td class="fw-bold text-nowrap">' + u.name + '</td>' +
+                    '<td>' + u.age + '</td>' +
+                    '<td><span class="badge ' + genderClass + '">' + (u.sexo || 'unissex') + '</span></td>' +
+                    '<td class="text-nowrap"><em>' + style + '</em></td>' +
+                    '<td><div class="d-flex flex-wrap">' + styleBadges + '</div></td>' +
+                    '<td><div class="d-flex flex-wrap">' + (badges || '<span class="text-muted">Sem compras</span>') + '</div></td>' +
+                    '</tr>';
+            }).join('');
+        });
+    </script>
+
+    <script type="module" src="./src/index.js"></script>
+</body>
+
+</html>

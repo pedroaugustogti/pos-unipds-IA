@@ -1,0 +1,12 @@
+**/.env
+**/.env.*
+!**/.env.example
+**/node_modules/
+**/github-token.local
+**/respostas/
+**/.cache/
+**/neo4j/data/
+**/neo4j/logs/
+**/*.log
+.DS_Store
+Thumbs.db
