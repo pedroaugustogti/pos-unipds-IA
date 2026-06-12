@@ -1,0 +1,8 @@
+{
+  "node_version": "22",
+  "graphs": {
+    "song_highlights": "./src/graph/factory.ts:graph"
+  },
+  "env": ".env",
+  "dependencies": ["."]
+}

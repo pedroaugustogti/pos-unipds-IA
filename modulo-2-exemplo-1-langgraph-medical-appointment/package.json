@@ -1,0 +1,37 @@
+{
+  "name": "exemplo-2-langgraph-medical-appointment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --env-file .env src/index.ts",
+    "dev": "node --watch --inspect --env-file .env src/index.ts",
+    "test": "node --env-file .env --test tests/**/*.test.ts",
+    "test:dev": "node --inspect --env-file .env --test --watch tests/**/*.test.ts",
+    "test:unit:dev": "node --inspect --test --watch tests/**/*unit.test.ts",
+    "test:unit": "node --inspect --test tests/**/*unit.test.ts",
+    "test:e2e:dev": "node --inspect --env-file .env --test --watch tests/**/*e2e.test.ts",
+    "test:e2e": "node --inspect --env-file .env --test tests/**/*e2e.test.ts",
+    "langgraph:serve": "npx @langchain/langgraph-cli dev"
+  },
+  "keywords": [
+    "langchain",
+    "prompt-chaining",
+    "article-generator",
+    "openrouter",
+    "ollama"
+  ],
+  "author": "Pedro Augusto",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@langchain/core": "^1.1.48",
+    "@langchain/openai": "^1.4.7",
+    "@types/node": "^24.13.2",
+    "fastify": "^5.7.4",
+    "langchain": "^1.4.4"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

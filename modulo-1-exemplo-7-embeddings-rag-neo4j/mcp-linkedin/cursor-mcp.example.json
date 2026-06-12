@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "linkedin": {
+      "command": "node",
+      "args": [
+        "C:/caminho/absoluto/para/modulo-1-exemplo-7-embeddings-rag-neo4j/mcp-linkedin/dist/index.js"
+      ],
+      "env": {
+        "LINKEDIN_ACCESS_TOKEN": "cole_o_token_aqui_ou_use_variavel_do_sistema"
+      }
+    }
+  }
+}
