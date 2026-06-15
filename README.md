@@ -24,6 +24,7 @@ Repositório com **exemplos práticos** usados na pós-graduação: modelos em J
 | [`modulo-2-exemplo-2-song-highlights`](./modulo-2-exemplo-2-song-highlights/) | Recomendação musical com **memória persistente** (LangGraph + Postgres). |
 | [`modulo-2-exemplo-3-safe-guard`](./modulo-2-exemplo-3-safe-guard/) | Demo de **prompt injection** e **guardrails** com controle de acesso por perfil. |
 | [`modulo-2-exemplo-4-neo4j-students`](./modulo-2-exemplo-4-neo4j-students/) | **Text-to-Cypher** com LangGraph: planejamento de consultas, execução no Neo4j e resposta analítica. |
+| [`modulo-2-exemplo-5-doc-analysis`](./modulo-2-exemplo-5-doc-analysis/) | **Q&A multimodal** em PDF via LangGraph + Fastify (visão com Gemini/OpenRouter). |
 
 ## Requisitos gerais
 
