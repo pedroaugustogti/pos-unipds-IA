@@ -1,0 +1,2 @@
+Product with highest total sales value: rice
+Total sales: 22.9
