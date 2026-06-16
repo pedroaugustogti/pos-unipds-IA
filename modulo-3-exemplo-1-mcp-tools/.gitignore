@@ -8,3 +8,6 @@ outputs/
 
 # LangGraph API
 .langgraph_api
+
+# Written by src/index.ts each run
+reports/index_run_report.txt

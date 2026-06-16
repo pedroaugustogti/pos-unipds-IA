@@ -6,13 +6,14 @@ const fsMcpEntry = path.resolve(
     __dirname,
     "../../node_modules/@modelcontextprotocol/server-filesystem/dist/index.js"
 );
+const reportsDir = path.resolve(process.cwd(), "reports");
 
 export const getFSTool = () => {
     return {
         filesystem: {
             transport: "stdio" as const,
             command: process.execPath,
-            args: [fsMcpEntry, process.cwd()],
+            args: [fsMcpEntry, reportsDir],
             defaultToolTimeout: 120_000,
         },
     };
