@@ -1,0 +1,15 @@
+{
+  "name": "modulo-3-exemplo-4-skills",
+  "version": "1.0.0",
+  "description": "Cursor Agent Skills: browser automation (agent-browser) and FFmpeg media processing",
+  "private": true,
+  "scripts": {
+    "browser:install": "agent-browser install",
+    "browser:skills": "agent-browser skills list",
+    "browser:core": "agent-browser skills get core",
+    "skills:install": "npx skills add https://github.com/vercel-labs/agent-browser --skill agent-browser -y && npx skills add https://github.com/digitalsamba/claude-code-video-toolkit --skill ffmpeg -y && npx skills add https://github.com/sundial-org/awesome-openclaw-skills --skill ffmpeg-video-editor -y"
+  },
+  "devDependencies": {
+    "agent-browser": "^0.15.0"
+  }
+}
