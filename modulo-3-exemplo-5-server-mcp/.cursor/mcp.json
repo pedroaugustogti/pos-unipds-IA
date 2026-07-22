@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "ciphersuite-mcp": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "ciphersuite-mcp.cmd"
+      ]
+    }
+  }
+}
