@@ -6,6 +6,13 @@
         "/c",
         "modulo-3-exemplo-5-server-mcp\\ciphersuite-mcp.cmd"
       ]
+    },
+    "customers-mcp": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "modulo-3-exemplo-6-mcp-integration-api\\customers-mcp.cmd"
+      ]
     }
   }
 }
