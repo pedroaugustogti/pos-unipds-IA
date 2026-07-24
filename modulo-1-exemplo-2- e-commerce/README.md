@@ -1,10 +1,20 @@
-# Exemplo 2 — E-commerce e recomendação (TensorFlow.js)
+# Atividade: recomendação em e-commerce
 
-Contém o subprojeto **`exemplo-01-ecommerce-recomendations-template`**: interface web simples com **BrowserSync** e lógica de **recomendação** usando **TensorFlow.js** (perfil de usuário × itens).
+Este diretório é o **Módulo 1 — Exemplo 2** (`modulo-1-exemplo-2- e-commerce`) e demonstra **recomendação de produtos** com TensorFlow.js no browser.
 
-## Como rodar
+## Objetivo da atividade (Pós)
 
-Entre na pasta do template:
+1. Relacionar perfil de usuário e catálogo de itens via features numéricas/categóricas
+2. Treinar/usar modelo de recomendação em interface web
+3. Observar sugestões em tempo real no front
+
+## O que há nesta pasta
+
+| Item | Papel |
+|------|--------|
+| `exemplo-01-ecommerce-recomendations-template/` | App web com BrowserSync + TF.js |
+
+## Como realizar a atividade
 
 ```bash
 cd "exemplo-01-ecommerce-recomendations-template"
@@ -12,8 +22,14 @@ npm install
 npm start
 ```
 
-Abra o endereço indicado pelo BrowserSync (porta padrão **3000**).
+Abra o endereço do BrowserSync (porta **3000**).
 
-## O que observar
+### Critérios de sucesso
 
-- Uso de tensores e modelo para sugerir itens com base em features numéricas/categóricas simuladas.
+- [ ] Interface carrega e exibe recomendações
+- [ ] Você explica como o modelo usa tensores para pontuar itens
+- [ ] Alterar entrada do usuário muda as sugestões
+
+## Relação com o Módulo 1
+
+Aplica o Exemplo 1 em um caso de uso de negócio (e-commerce).

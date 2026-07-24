@@ -1,38 +1,90 @@
 # POS — Engenharia de IA Aplicada
 
-Repositório com **exemplos práticos** usados na pós-graduação: modelos em JavaScript/TypeScript, integração com APIs de LLM, **LangGraph**, embeddings, grafo **Neo4j** e **RAG** (Retrieval-Augmented Generation).
+Repositório com **exemplos práticos** da pós-graduação **Engenharia de IA Aplicada (UNIPDS)**: modelos em JavaScript/TypeScript, LLMs, **LangGraph**, embeddings, **Neo4j**, **RAG**, **MCP** e **Agent Skills** no Cursor.
 
-## Estrutura
+Cada pasta `modulo-X-exemplo-Y-*` segue um **padrão didático** nos `README.md`: objetivo da atividade, passo a passo, critérios de sucesso e relação com o módulo. Referência de estilo: [`modulo-3-exemplo-4-skills/sample-video-ffmpeg/README.md`](./modulo-3-exemplo-4-skills/sample-video-ffmpeg/README.md).
 
-### Módulo 1 — Fundamentos de IA e LLMs
+---
 
-| Pasta | Tema resumido |
-|--------|----------------|
-| [`modulo-1-exemplo-1-training-model`](./modulo-1-exemplo-1-training-model/) | Treino/uso de modelo com **TensorFlow.js** no Node. |
-| [`modulo-1-exemplo-2- e-commerce`](./modulo-1-exemplo-2-%20e-commerce/) | **Recomendação** em e-commerce com TensorFlow.js e front estático. |
-| [`modulo-1-exemplo-3-duck game`](./modulo-1-exemplo-3-duck%20game/) | Jogo estilo Duck Hunt com uso de **ML** (já possui README próprio). |
-| [`modulo-1-exemplo-4-ollama`](./modulo-1-exemplo-4-ollama/) | Chamadas **HTTP** ao servidor local **Ollama** (API compatível com OpenAI). |
-| [`modulo-1-exemplo-5-open router`](./modulo-1-exemplo-5-open%20router/) | Chamadas à API **OpenRouter** via `curl` e variáveis de ambiente. |
-| [`modulo-1-exemplo-6-embeddings-neo4j`](./modulo-1-exemplo-6-embeddings-neo4j/) | **Embeddings** locais (Transformers.js), indexação no **Neo4j** e busca por similaridade. |
-| [`modulo-1-exemplo-7-embeddings-rag-neo4j`](./modulo-1-exemplo-7-embeddings-rag-neo4j/) | **RAG** completo: Neo4j + LangChain + prompts em arquivo + LLM via OpenRouter. |
+## Módulo 1 — Fundamentos de IA e LLMs
 
-### Módulo 2 — LangGraph e agentes
+**O que você aprende:** partir do zero com ML no Node.js, consumir LLMs locais e na nuvem, gerar **embeddings** e montar pipelines de **busca semântica** e **RAG** com grafo.
 
-| Pasta | Tema resumido |
-|--------|----------------|
-| [`modulo-2-exemplo-1-langgraph-medical-appointment`](./modulo-2-exemplo-1-langgraph-medical-appointment/) | Agente **LangGraph** para agendamento médico (roteamento de intenções, tools e fluxo multi-nó). |
-| [`modulo-2-exemplo-2-song-highlights`](./modulo-2-exemplo-2-song-highlights/) | Recomendação musical com **memória persistente** (LangGraph + Postgres). |
-| [`modulo-2-exemplo-3-safe-guard`](./modulo-2-exemplo-3-safe-guard/) | Demo de **prompt injection** e **guardrails** com controle de acesso por perfil. |
-| [`modulo-2-exemplo-4-neo4j-students`](./modulo-2-exemplo-4-neo4j-students/) | **Text-to-Cypher** com LangGraph: planejamento de consultas, execução no Neo4j e resposta analítica. |
-| [`modulo-2-exemplo-5-doc-analysis`](./modulo-2-exemplo-5-doc-analysis/) | **Q&A multimodal** em PDF via LangGraph + Fastify (visão com Gemini/OpenRouter). |
+| Exemplo | Pasta | Principais aprendizados |
+|---------|-------|-------------------------|
+| 1 | [`modulo-1-exemplo-1-training-model`](./modulo-1-exemplo-1-training-model/) | TensorFlow.js no servidor: tensores, modelo simples, treino/inferência |
+| 2 | [`modulo-1-exemplo-2- e-commerce`](./modulo-1-exemplo-2-%20e-commerce/) | Recomendação em e-commerce com rede neural e front estático |
+| 3 | [`modulo-1-exemplo-3-duck game`](./modulo-1-exemplo-3-duck%20game/) | Jogo Duck Hunt com detecção/ML no browser |
+| 4 | [`modulo-1-exemplo-4-ollama`](./modulo-1-exemplo-4-ollama/) | API **Ollama** local (compatível OpenAI) via `curl` |
+| 5 | [`modulo-1-exemplo-5-open router`](./modulo-1-exemplo-5-open%20router/) | Chamadas à API **OpenRouter** com variáveis de ambiente |
+| 6 | [`modulo-1-exemplo-6-embeddings-neo4j`](./modulo-1-exemplo-6-embeddings-neo4j/) | Embeddings locais (Transformers.js) + indexação vetorial no **Neo4j** |
+| 7 | [`modulo-1-exemplo-7-embeddings-rag-neo4j`](./modulo-1-exemplo-7-embeddings-rag-neo4j/) | **RAG** completo: retrieve no Neo4j + geração com LLM (LangChain + OpenRouter) |
+
+**Competências do módulo:** fundamentos de ML em JS; integração com LLMs; vetorização; recuperação aumentada por contexto.
+
+---
+
+## Módulo 2 — LangGraph e agentes
+
+**O que você aprende:** construir **agentes com estado**, memória persistente, guardrails, consultas em grafo e análise multimodal de documentos.
+
+| Exemplo | Pasta | Principais aprendizados |
+|---------|-------|-------------------------|
+| 1 | [`modulo-2-exemplo-1-langgraph-medical-appointment`](./modulo-2-exemplo-1-langgraph-medical-appointment/) | Agente **LangGraph** para agendamento médico (intenções, tools, multi-nó) |
+| 2 | [`modulo-2-exemplo-2-song-highlights`](./modulo-2-exemplo-2-song-highlights/) | Memória conversacional com **checkpointer** e recomendação musical |
+| 3 | [`modulo-2-exemplo-3-safe-guard`](./modulo-2-exemplo-3-safe-guard/) | **Prompt injection**, perfis de acesso e guardrails |
+| 4 | [`modulo-2-exemplo-4-neo4j-students`](./modulo-2-exemplo-4-neo4j-students/) | **Text-to-Cypher** com LangGraph sobre dados de alunos no Neo4j |
+| 5 | [`modulo-2-exemplo-5-doc-analysis`](./modulo-2-exemplo-5-doc-analysis/) | Q&A **multimodal** em PDF (LangGraph + Fastify + visão) |
+
+**Competências do módulo:** grafos de agentes; persistência de estado; segurança em LLMs; integração banco de grafos + LLM.
+
+---
+
+## Módulo 3 — MCP na prática
+
+**O que você aprende:** conectar agentes a ferramentas externas via **Model Context Protocol (MCP)**, criar servidores, integrar APIs legadas e aplicar **autenticação e rate limiting**.
+
+| Exemplo | Pasta | Principais aprendizados |
+|---------|-------|-------------------------|
+| 1 | [`modulo-3-exemplo-1-mcp-tools`](./modulo-3-exemplo-1-mcp-tools/) | Agente **LangGraph** consumindo **tools MCP** (pipeline de dados) |
+| 2 | [`modulo-3-exemplo-2-google-trends-agent`](./modulo-3-exemplo-2-google-trends-agent/) | Agente com **Google Trends** + structured outputs |
+| 3 | [`modulo-3-exemplo-3-dev-instructions-events`](./modulo-3-exemplo-3-dev-instructions-events/) | **Dev instructions**, agents customizados e MCP Playwright |
+| 4 | [`modulo-3-exemplo-4-skills`](./modulo-3-exemplo-4-skills/) | **Agent Skills** ([skills.sh](https://www.skills.sh/)): browser, FFmpeg — ver [`sample-video-ffmpeg`](./modulo-3-exemplo-4-skills/sample-video-ffmpeg/) |
+| 5 | [`modulo-3-exemplo-5-server-mcp`](./modulo-3-exemplo-5-server-mcp/) | Criar **servidor MCP do zero** (criptografia AES-256-CBC) |
+| 6 | [`modulo-3-exemplo-6-mcp-integration-api`](./modulo-3-exemplo-6-mcp-integration-api/) | **API legada** (Fastify + MongoDB) exposta como MCP |
+| 7 | [`modulo-3-exemplo-7-security-auth-mcp`](./modulo-3-exemplo-7-security-auth-mcp/) | **Auth**, role/departamento, service token, **rate limit** e anti-DDoS |
+
+**Competências do módulo:** protocolo MCP; tools/resources/prompts; adaptação de sistemas legados; segurança em integrações agenticas.
+
+---
 
 ## Requisitos gerais
 
-- **Node.js** 22+ nos exemplos em TS/JS (ver `engines` em cada `package.json` quando existir).
-- **Docker** onde houver `docker-compose` (Neo4j nos exemplos 6 e 7 do módulo 1; Neo4j e Postgres no módulo 2).
-- Chaves e URLs em **`.env`** (não versionados); copie de `.env.example` quando existir.
-- **LangGraph Studio** (`npm run langgraph:serve`) nos projetos do módulo 2.
+| Recurso | Onde é necessário |
+|---------|-------------------|
+| **Node.js 22+** (24+ no Módulo 3 MCP) | Maioria dos exemplos TS/JS |
+| **Docker** | Neo4j (M1 ex. 6–7), Postgres (M2 ex. 2), APIs legadas (M3 ex. 6–7) |
+| **`.env`** | Chaves OpenRouter, Neo4j, etc. (copiar de `.env.example` quando existir) |
+| **LangGraph Studio** | `npm run langgraph:serve` nos projetos do Módulo 2 |
+| **Cursor / VS Code** | Módulo 3 (MCP e Skills) |
+| **FFmpeg** | Módulo 3 Exemplo 4 (skills de vídeo) |
+
+## MCP configurado no workspace
+
+O arquivo [`.cursor/mcp.json`](./.cursor/mcp.json) registra servidores dos exemplos 5, 6 e 7:
+
+| Servidor | Exemplo |
+|----------|---------|
+| `ciphersuite-mcp` | Exemplo 5 — criptografia |
+| `customers-mcp` | Exemplo 6 — API legada |
+| `customers-secure-mcp` | Exemplo 7 — API com auth |
+
+## Como navegar
+
+1. Escolha o módulo e abra a pasta do exemplo.
+2. Leia o `README.md` da pasta (objetivo + passo a passo).
+3. Siga os critérios de sucesso com checkbox antes de considerar a atividade concluída.
 
 ## Autor / contexto
 
-Exemplos derivados de material de curso (vários com base em conteúdo do **Erick Wendel** nos projetos Node/LangChain). Ajustes e extensões: **Pedro Augusto**.
+Exemplos derivados do material **UNIPDS** / **Erick Wendel** (Node, LangChain, MCP). Ajustes, extensões e documentação didática: **Pedro Augusto** ([`pedroaugustogti/pos-unipds-IA`](https://github.com/pedroaugustogti/pos-unipds-IA)).

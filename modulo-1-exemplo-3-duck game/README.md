@@ -1,8 +1,23 @@
-# Duck Hunt JS — Zerado com IA (YOLOv5n)
+# Atividade: Duck Hunt com detecção por IA (YOLOv5n)
+
+Este diretório é o **Módulo 1 — Exemplo 3** (`modulo-1-exemplo-3-duck game`) e demonstra **visão computacional no browser** com TensorFlow.js e Web Workers.
+
+## Objetivo da atividade (Pós)
+
+1. Executar modelo **YOLOv5n** no navegador para detectar alvos
+2. Integrar inferência em loop de jogo (PixiJS)
+3. Otimizar latência do pipeline (preprocess → inferência → ação)
+
+### Critérios de sucesso
+
+- [ ] Jogo roda em `http://localhost:8080/`
+- [ ] Detecção e mira automática funcionam
+- [ ] Você explica o pipeline no Web Worker
+
+---
 
 **Autor:** Pedro Augusto  
-**Data:** 25 de Março de 2026  
-**Score Final:** 9400 / 9400 — Flawless Victory
+**Score de referência:** 9400 / 9400 — Flawless Victory
 
 ![Flawless Victory — Score 9400](duck_hunt_zerado/flawless-victory.png)
 

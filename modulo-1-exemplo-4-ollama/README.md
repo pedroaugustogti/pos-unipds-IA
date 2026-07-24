@@ -1,21 +1,33 @@
-# Exemplo 4 — Ollama (API local)
+# Atividade: LLM local com Ollama
 
-Scripts **`bash`** que conversam com o servidor **Ollama** em `http://localhost:11434`, usando o endpoint **compatível com OpenAI** (`/v1/chat/completions`).
+Este diretório é o **Módulo 1 — Exemplo 4** (`modulo-1-exemplo-4-ollama`) e demonstra chamadas à API **Ollama** em `http://localhost:11434` (compatível com OpenAI).
+
+## Objetivo da atividade (Pós)
+
+1. Subir modelo local com Ollama
+2. Enviar chat completion via `curl` + JSON
+3. Comparar com clientes OpenAI (mesmo formato de mensagens)
 
 ## Pré-requisitos
 
-- [Ollama](https://ollama.com/) instalado e em execução.
-- `curl` e `jq` no PATH (Git Bash / WSL / Linux / macOS).
+- [Ollama](https://ollama.com/) instalado e em execução
+- `curl` e `jq` (Git Bash / WSL / Linux / macOS)
 
-## Como rodar
+## Como realizar a atividade
 
 ```bash
 chmod +x request.sh   # se necessário
 ./request.sh
 ```
 
-O script exemplo faz `ollama pull` de um modelo e envia uma requisição de chat. Ajuste o nome do modelo e o prompt dentro do `request.sh` conforme necessário.
+Ajuste modelo e prompt em `request.sh`.
 
-## O que observar
+### Critérios de sucesso
 
-- Formato JSON da API e como reutilizar o mesmo padrão de clientes OpenAI apontando para Ollama.
+- [ ] Ollama responde em `/v1/chat/completions`
+- [ ] Você troca o modelo no script com sucesso
+- [ ] Entende como reutilizar o padrão em SDKs OpenAI
+
+## Relação com o Módulo 1
+
+Primeiro contato com **LLM em produção local** — base para OpenRouter (Ex. 5) e RAG (Ex. 7).

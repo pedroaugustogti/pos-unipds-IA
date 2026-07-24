@@ -1,4 +1,39 @@
-# Song Recommender with LangGraph Memory
+# Atividade: recomendador musical com memória LangGraph
+
+Este diretório é o **Módulo 2 — Exemplo 2** (`modulo-2-exemplo-2-song-highlights`) e demonstra **persistência de memória** em conversas multi-turno com LangGraph.
+
+## Objetivo da atividade (Pós)
+
+1. Usar **MemorySaver** para histórico de conversa por `thread_id`
+2. Persistir preferências do usuário em **LibSQL** com embeddings
+3. Construir recomendações musicais que evoluem ao longo do diálogo
+4. Isolar sessões (usuários diferentes, memórias separadas)
+
+## Como realizar a atividade
+
+```bash
+npm install
+npm run docker:up          # Postgres para LibSQL
+cp .env.example .env       # OPENROUTER_API_KEY
+npm run chat:pedro         # ou chat:ana
+npm test
+npm run langgraph:serve    # LangGraph Studio (opcional)
+```
+
+### Critérios de sucesso
+
+- [ ] O agente lembra nome, bandas e gêneros em turnos seguintes
+- [ ] `thread_id` diferente mantém contextos isolados
+- [ ] Preferências persistem após reinício (LibSQL)
+- [ ] Testes de integração passam com API real
+
+## Relação com o Módulo 2
+
+Evolui o grafo do Exemplo 1 com **estado persistente** — base para guardrails (Ex. 3) e consultas estruturadas (Ex. 4).
+
+---
+
+## Referência técnica (detalhes do projeto)
 
 Demonstration of **LangGraph memory persistence** using conversational AI to recommend music based on user preferences. This project showcases how to build stateful, multi-turn conversations where the AI remembers context across messages.
 

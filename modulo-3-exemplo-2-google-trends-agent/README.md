@@ -1,297 +1,67 @@
-# Prompt Chaining Article Generator
+# Atividade: agente Google Trends com LangGraph
 
-Demonstration of **prompt engineering** with LangChain using structured outputs and conditional edges to generate high-quality technical articles through multiple AI agents reviewing each other.
+Este diretório é o **Módulo 3 — Exemplo 2** (`modulo-3-exemplo-2-google-trends-agent`) e demonstra como **transformar um serviço externo (SerpAPI / Google Trends) em tool** de um agente LangGraph.
 
-## 🎯 Goals
+## Objetivo da atividade (Pós)
 
-This project exemplifies:
-- **Structured Outputs**: Using Zod schemas to prevent hallucinations
-- **Prompt Chaining**: Three-stage pipeline with quality feedback loop
-- **Minimal Code**: Let AI agents review each other instead of complex logic
-- **Real API Testing**: Integration tests with actual OpenRouter calls
-- **Quality Assurance**: Automatic retry until score ≥ 8/10
+1. Encapsular **Google Trends** como tool LangChain (`google_trends`)
+2. Orquestrar pesquisa e resposta em grafo de dois nós: `researcher` → `responder`
+3. Usar **structured outputs** (Zod) para extrair keywords e recomendar títulos de vídeo
+4. Expor o agente via API HTTP (`POST /chat`)
 
-## Features
+## O que há nesta pasta
 
-- 🎨 **3-Stage Pipeline**: Plan → Draft → Review (with quality loop)
-- 📊 **Structured Validation**: Zod schemas at every step
-- 🔄 **Conditional Edges**: Retry review until quality threshold met
-- 📝 **Template System**: JSON prompts with variable interpolation
-- 🧪 **Real API Tests**: No mocks, actual LLM calls
-- 📁 **Organized Outputs**: `outputs/timestamp-topic/output.md`
+| Item | Papel |
+|------|--------|
+| `src/tools/googleTrendsTool.ts` | Tool que consulta SerpAPI |
+| `src/graph/` | Nós `researcher` e `responder` |
+| `src/services/serpApiService.ts` | Cliente SerpAPI |
+| `src/prompts/v1/` | Prompts versionados (keywords, video trends) |
+| `data/trendingData.ts` | Dados de apoio para testes |
 
-## Architecture
+## Pré-requisitos
 
-### LangGraph Workflow
+- Node.js **24+**
+- `.env` com `OPENROUTER_API_KEY` e `SERPAPI_API_KEY`
+- Opcional: `LANGSMITH_API_KEY` para tracing
 
-```
-START → plan → draft → review ⟲ (if score < 8) → END
-         ↓       ↓       ↓
-      outline  article  final + scores
-```
-
-### Project Structure
-
-```
-src/
-  ├── config.ts                 # Configuration with env vars
-  ├── index.ts                  # CLI entry point
-  ├── graph/
-  │   ├── graph.ts             # StateGraph with conditional edges
-  │   ├── factory.ts           # Graph builder
-  │   └── nodes/
-  │       ├── planNode.ts      # Outline generation (Zod validated)
-  │       ├── draftNode.ts     # Article drafting
-  │       └── reviewNode.ts    # Quality scoring & improvement
-  ├── services/
-  │   └── openrouter-service.ts  # LLM client
-  └── utils/
-      └── prompt-loader.ts     # Template loading & interpolation
-prompts/
-  └── v1/
-      ├── plan.json           # Outline generation prompt
-      ├── draft.json          # Section writing prompt
-      └── review.json         # Quality review prompt
-tests/
-  └── article-generator.test.ts  # Real API integration test
-```
-  │   ├── graph.ts          # StateGraph definition with co-located types
-  │   ├── factory.ts        # Graph creation factory
-  │   └── nodes/            # LangGraph nodes (workflow steps)
-  │       ├── outline.node.ts    # Generate article structure + parsing
-  │       ├── research.node.ts   # Research sections in parallel
-  │       ├── write.node.ts      # Write sections + assembly
-  │       └── review.node.ts     # Polish final article
-  ├── services/
-  │   └── openrouter-service.ts  # OpenRouter SDK wrapper (implements LLMClient)
-  └── utils/
-      └── prompt-loader.ts  # Load prompts from template files
-
-prompts/                    # Prompt templates with variables
-  ├── outline.txt           # Section structure generation
-  ├── research.txt          # Research individual sections
-  ├── write-section.txt     # Write section content
-  └── review.txt            # Review and improve
-
-tests/
-  └── article-generator.test.ts  # Graph workflow tests
-```
-
-## Installation
+## Como realizar a atividade
 
 ```bash
 npm install
-```
-
-## Configuration
-
-Create `.env` file:
-
-```env
-# OpenRouter Configuration (required)
-OPENROUTER_API_KEY=sk-or-v1-...
-OPENROUTER_MODEL=anthropic/claude-3.5-sonnet
-OPENROUTER_HTTP_REFERER=https://your-site.com
-OPENROUTER_X_TITLE=Article Generator
-
-# Model Configuration
-MODEL_TIMEOUT=60000
-MODEL_MAX_RETRIES=3
-
-# Article Configuration
-MIN_SECTIONS=3
-MAX_SECTIONS=8
-TARGET_WORDS_PER_SECTION=200
-
-# Logging
-LOG_LEVEL=info
-```
-
-## Usage
-
-### Generate Article
-
-```bash
-# Using topic flag
-npm run generate -- --topic "Test-Driven Development in TypeScript"
-
-# With custom output path
-npm run generate -- --topic "Docker Best Practices" --output my-article.md
-```
-
-### Run Tests
-
-```bash
+cp .env.example .env
+npm start              # http://localhost:3000
 npm test
+npm run langgraph:serve
 ```
 
-## How It Works
+### Exemplo de pergunta
 
-### 1. Outline Node
-
-Generates article structure:
-- Title
-- Introduction
-- Sections with key points
-- Conclusion
-
-**State Updates**: `outline`, `currentStep`
-
-### 2. Research Node
-
-Researches all sections **in parallel**:
-```typescript
-const researchPromises = sections.map(section =>
-  llmClient.generate(researchPrompt)
-);
-const results = await Promise.all(researchPromises);
+```bash
+curl -X POST http://localhost:3000/chat \
+  -H "Content-Type: application/json" \
+  -d '{"question": "Estou pensando em criar um vídeo sobre Web AI, quais títulos você recomendaria?"}'
 ```
 
-**State Updates**: `researchResults`, `currentStep`
+### Critérios de sucesso
 
-### 3. Write Sections Node
+- [ ] O agente invoca a tool `google_trends` quando analisa ideias de título
+- [ ] A resposta usa dados reais de tendência (não inventa popularidade)
+- [ ] Structured outputs validam keywords e sugestões
+- [ ] Testes unitários e e2e passam
 
-Writes each section **sequentially** using research:
-- Loops through sections
-- Uses section research + key points
-- Calculates word count
-- Builds draft article
+## Fluxo do grafo
 
-**State Updates**: `sections`, `draftArticle`, `totalWords`, `currentStep`
-
-### 4. Review Node
-
-Reviews and improves final article:
-- Checks tone and style
-- Improves transitions
-- Ensures consistency
-- Polishes language
-
-**State Updates**: `finalArticle`, `currentStep`
-
-## LangGraph Concepts
-
-### StateGraph
-
-Defines the workflow with typed state:
-```typescript
-const ArticleStateAnnotation = Annotation.Root({
-  topic: Annotation<string>,
-  outline: Annotation<any>,
-  researchResults: Annotation<string[]>,
-  sections: Annotation<any[]>,
-  draftArticle: Annotation<string>,
-  finalArticle: Annotation<string>,
-  totalWords: Annotation<number>,
-  currentStep: Annotation<string>,
-});
+```
+Pergunta do usuário
+        ↓
+researcher (extrai keywords + chama google_trends)
+        ↓
+responder (monta recomendações de título/estratégia)
+        ↓
+Resposta JSON
 ```
 
-### Node Functions
+## Relação com o Módulo 3
 
-Each node receives state and returns partial state updates:
-```typescript
-export const createOutlineNode = (llmClient: LLMClient) => {
-  return async (state: GraphState): Promise<Partial<GraphState>> => {
-    const outline = await generateOutline(state.topic);
-    return {
-      outline,
-      currentStep: 'outline_completed',
-    };
-  };
-};
-```
-
-### Graph Construction
-
-```typescript
-const workflow = new StateGraph({ stateSchema: ArticleStateAnnotation })
-  .addNode('generateOutline', outlineNode)
-  .addNode('conductResearch', researchNode)
-  .addNode('writeSections', writeSectionsNode)
-  .addNode('reviewArticle', reviewNode)
-  .addEdge(START, 'generateOutline')
-  .addEdge('generateOutline', 'conductResearch')
-  .addEdge('conductResearch', 'writeSections')
-  .addEdge('writeSections', 'reviewArticle')
-  .addEdge('reviewArticle', END);
-
-return workflow.compile();
-```
-
-## Testing Strategy
-
-Uses **MockLLMClient** with deterministic responses:
-
-```typescript
-class MockLLMClient implements LLMClient {
-  responses: Map<string, string>;
-
-  async generate(prompt: string): Promise<string> {
-    if (prompt.includes('outline')) return mockOutline;
-    if (prompt.includes('Research')) return mockResearch;
-    if (prompt.includes('Write')) return mockSection;
-    if (prompt.includes('Review')) return mockReview;
-  }
-}
-```
-
-Tests verify:
-- ✅ Complete article generation through graph
-- ✅ Multiple LLM calls in chain
-- ✅ Correct state flow through all nodes
-- ✅ Word count calculation
-
-## Key Patterns
-
-### Single Responsibility Principle
-
-- **Nodes**: One transformation per node
-- **Services**: LLM interactions only
-- **Utils**: Reusable helpers (prompt loading)
-- **Config**: Environment management
-
-### Dependency Injection
-
-Nodes receive dependencies as parameters:
-```typescript
-createOutlineNode(llmClient: LLMClient, config: ArticleConfig)
-```
-
-### Immutable State
-
-Nodes return new state objects, never mutate:
-```typescript
-return {
-  ...state,
-  outline: newOutline,
-};
-```
-
-### Prompt Templates
-
-Prompts stored in files, not code:
-```typescript
-const prompt = await PromptLoader.load('outline', {
-  topic: state.topic,
-  minSections: config.minSections,
-  maxSections: config.maxSections,
-});
-```
-
-## Learning Objectives
-
-1. **Prompt Chaining**: Build complex outputs from simple steps
-2. **LangGraph**: State management in LLM workflows
-3. **Parallel Execution**: Research sections concurrently
-4. **Sequential Processing**: Write sections in order
-5. **State Transitions**: Track progress through workflow
-6. **Testing**: Mock LLMs for deterministic tests
-
-## Node Version
-
-Requires Node.js >= 22.0.0 for TypeScript strip-types support.
-
-## License
-
-MIT
+Antecede servidores MCP completos (Ex. 5–7): aqui o padrão é **serviço → tool → agente**. No Módulo 3, o MCP generaliza essa ideia para qualquer integração.

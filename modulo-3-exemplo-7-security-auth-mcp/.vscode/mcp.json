@@ -1,0 +1,11 @@
+{
+  "servers": {
+    "customers-secure-mcp": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "customers-secure-mcp.cmd"
+      ]
+    }
+  }
+}

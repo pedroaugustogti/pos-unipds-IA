@@ -1,22 +1,31 @@
-# Exemplo 5 — OpenRouter (`curl`)
+# Atividade: API OpenRouter com curl
 
-Demonstra chamada **HTTPS** à API de chat da **OpenRouter** (`/api/v1/chat/completions`) com **`curl`**, cabeçalhos opcionais (`HTTP-Referer`, `X-Title`) e corpo JSON.
+Este diretório é o **Módulo 1 — Exemplo 5** (`modulo-1-exemplo-5-open router`) e demonstra chamadas **HTTPS** à API de chat da **OpenRouter**.
+
+## Objetivo da atividade (Pós)
+
+1. Autenticar com `OPENROUTER_API_KEY`
+2. Montar payload `messages` no formato OpenAI
+3. Trocar modelos via variável `NLP_MODEL`
 
 ## Pré-requisitos
 
-- Arquivo **`.env`** na mesma pasta com `OPENROUTER_API_KEY`.
-- `curl` e `jq`.
+- `.env` com `OPENROUTER_API_KEY`
+- `curl` e `jq`
 
-## Como rodar
+## Como realizar a atividade
 
 ```bash
-source .env   # ou exporte a variável manualmente no Windows
+source .env   # ou exporte no PowerShell / WSL
 bash request.sh
 ```
 
-No **PowerShell**, carregue a chave e execute o `curl` equivalente, ou use WSL/Git Bash para rodar o script como está.
+### Critérios de sucesso
 
-## O que observar
+- [ ] Resposta JSON válida da API
+- [ ] Modelo alterado com sucesso
+- [ ] Cabeçalhos opcionais (`HTTP-Referer`, `X-Title`) compreendidos
 
-- Troca de modelo via variável `NLP_MODEL`.
-- Estrutura `messages` igual à API OpenAI, roteada pelo OpenRouter.
+## Relação com o Módulo 1
+
+Ponte para **LLMs na nuvem** — usado nos Módulos 2 e 3 (LangGraph, RAG, agentes).

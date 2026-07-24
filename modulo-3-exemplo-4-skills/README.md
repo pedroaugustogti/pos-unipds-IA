@@ -1,85 +1,103 @@
-# Skills para Cursor — Módulo 3 Exemplo 4
+# Atividade: Agent Skills no Cursor
 
-Exemplo do **Módulo 3** demonstrando como instalar **Agent Skills** no Cursor via [skills.sh](https://www.skills.sh/), habilitando capacidades de navegação em browser e processamento de mídia com FFmpeg.
+Este diretório é o **Módulo 3 — Exemplo 4** (`modulo-3-exemplo-4-skills`) e serve como **material de apoio** para a atividade da pós-graduação sobre **utilização de Agent Skills**.
 
-## Skills instaladas
+## Objetivo da atividade (Pós)
 
-| Skill | Fonte | Installs | Uso |
-|-------|-------|----------|-----|
-| [agent-browser](https://www.skills.sh/vercel-labs/agent-browser/agent-browser) | vercel-labs/agent-browser | 532K+ | Navegação, formulários, screenshots, QA |
-| [ffmpeg](https://skills.sh/digitalsamba/claude-code-video-toolkit/ffmpeg) | digitalsamba/claude-code-video-toolkit | 5K+ | Conversão, compressão, áudio, Remotion |
-| [ffmpeg-video-editor](https://skills.sh/sundial-org/awesome-openclaw-skills/ffmpeg-video-editor) | sundial-org/awesome-openclaw-skills | 1.3K+ | Edição por linguagem natural (cortar, converter, GIF) |
+A entrega esperada **não é** executar FFmpeg ou Playwright manualmente no terminal. O foco é demonstrar que o **agente do Cursor**, guiado pelas **skills instaladas no projeto**, consegue:
 
-## Estrutura
+1. Carregar skills de `.cursor/skills/` automaticamente
+2. Resolver tarefas especializadas (browser, vídeo) a partir de linguagem natural
+3. Montar e executar comandos corretos (FFmpeg, agent-browser) sem repetir instruções em todo prompt
 
-```
-modulo-3-exemplo-4-skills/
-├── .agents/skills/          # instaladas via skills CLI
-│   ├── agent-browser/
-│   ├── ffmpeg/
-│   └── ffmpeg-video-editor/
-├── .cursor/skills/          # cópias para descoberta nativa do Cursor
-├── skills-lock.json         # lockfile das skills instaladas
-├── package.json
-└── README.md
-```
+Skills instaladas via [skills.sh](https://www.skills.sh/):
 
-## Instalação
+| Skill | Uso principal |
+|-------|----------------|
+| [agent-browser](https://www.skills.sh/vercel-labs/agent-browser/agent-browser) | Navegação, formulários, screenshots, QA |
+| [ffmpeg](https://www.skills.sh/digitalsamba/claude-code-video-toolkit/ffmpeg) | Conversão e compressão de mídia |
+| [ffmpeg-video-editor](https://www.skills.sh/sundial-org/awesome-openclaw-skills/ffmpeg-video-editor) | Edição por linguagem natural |
+
+## Atividade prática principal
+
+A subpasta **[`sample-video-ffmpeg/`](./sample-video-ffmpeg/)** contém o exercício guiado de conversão de vídeo para preto e branco. **Leia o README completo dessa pasta** antes de entregar a atividade.
+
+## O que há nesta pasta
+
+| Item | Papel |
+|------|--------|
+| `.cursor/skills/` | Skills descobertas pelo Cursor |
+| `.agents/skills/` | Instalação via CLI `skills` |
+| `skills-lock.json` | Lockfile das versões instaladas |
+| `sample-video-ffmpeg/` | **Atividade prática** — conversão de vídeo com skill FFmpeg |
+| `package.json` | Scripts de instalação |
+
+## Como realizar a atividade (passo a passo)
+
+### 1. Instalar dependências e skills
 
 ```bash
 cd modulo-3-exemplo-4-skills
 npm install
+npm run skills:install
 npm run browser:install   # Chromium para agent-browser
 ```
 
-### Reinstalar todas as skills
-
-```bash
-npm run skills:install
-```
-
-Ou individualmente:
-
-```bash
-npx skills add https://github.com/vercel-labs/agent-browser --skill agent-browser -y
-npx skills add https://github.com/digitalsamba/claude-code-video-toolkit --skill ffmpeg -y
-npx skills add https://github.com/sundial-org/awesome-openclaw-skills --skill ffmpeg-video-editor -y
-```
-
-### Pré-requisito FFmpeg
-
-As skills de FFmpeg assumem `ffmpeg` e `ffprobe` no PATH do sistema:
+### 2. Instalar FFmpeg no sistema
 
 - Windows: [ffmpeg.org/download](https://ffmpeg.org/download.html) ou `winget install Gyan.FFmpeg`
-- macOS: `brew install ffmpeg`
+- Confirme: `ffmpeg -version`
 
-## Como usar no Cursor
+### 3. Realizar a atividade de vídeo
 
-1. Abra o workspace em `modulo-3-exemplo-4-skills`
-2. O Cursor carrega skills de `.cursor/skills/` e `.agents/skills/`
-3. Exemplos de prompts:
+Siga o guia em [`sample-video-ffmpeg/README.md`](./sample-video-ffmpeg/README.md).
+
+### 4. (Opcional) Testar outras skills
 
 **Browser:**
 > Use agent-browser para abrir https://example.com e tirar um screenshot
 
-**FFmpeg (produção):**
-> Use a skill ffmpeg para converter este GIF em MP4 compatível com web
+**FFmpeg:**
+> Use a skill ffmpeg para converter um vídeo para formato web
 
-**FFmpeg (edição):**
-> Use ffmpeg-video-editor para cortar video.mp4 de 1:21 até 1:35
+### Critérios de sucesso
+
+- [ ] Skills visíveis em `.cursor/skills/`
+- [ ] Atividade de vídeo feita **via agente** (não manualmente), conforme `sample-video-ffmpeg/`
+- [ ] Agente referenciou a skill `ffmpeg` ou `ffmpeg-video-editor`
+- [ ] (Opcional) agent-browser executou navegação ou screenshot com sucesso
+
+## Fluxo da atividade (skills)
+
+```
+Você (prompt no Cursor)
+        ↓
+Agente carrega skill (ffmpeg / agent-browser / …)
+        ↓
+Agente monta comando ou fluxo especializado
+        ↓
+Resultado (arquivo, screenshot, etc.)
+```
 
 ## Scripts npm
 
 | Script | Descrição |
 |--------|-----------|
-| `npm run browser:install` | Instala Chromium para agent-browser |
-| `npm run browser:skills` | Lista skills da CLI agent-browser |
-| `npm run browser:core` | Carrega workflow principal do agent-browser |
-| `npm run skills:install` | Reinstala todas as skills do exemplo |
+| `npm run skills:install` | Reinstala todas as skills |
+| `npm run browser:install` | Instala Chromium |
+| `npm run browser:skills` | Lista skills do agent-browser |
+
+## Relação com o Módulo 3
+
+| Exemplo | Tema |
+|---------|------|
+| Exemplo 1–3 | Agentes + MCP / dev instructions |
+| **Exemplo 4** | **Skills** — conhecimento reutilizável no agente ← este projeto |
+| Exemplo 5–7 | Servidores MCP e integração com APIs |
+
+O aprendizado central é: **skills estendem o agente** com conhecimento e fluxos especializados, complementando MCP (ferramentas) e prompts ad hoc.
 
 ## Referências
 
-- [skills.sh — diretório de skills](https://www.skills.sh/)
+- [skills.sh](https://www.skills.sh/)
 - [agent-browser](https://github.com/vercel-labs/agent-browser)
-- [claude-code-video-toolkit / ffmpeg](https://github.com/digitalsamba/claude-code-video-toolkit)
-- [awesome-openclaw-skills / ffmpeg-video-editor](https://github.com/sundial-org/awesome-openclaw-skills)
