@@ -54,8 +54,9 @@ Cada pasta `modulo-X-exemplo-Y-*` segue um **padrão didático** nos `README.md`
 | 6 | [`modulo-3-exemplo-6-mcp-integration-api`](./modulo-3-exemplo-6-mcp-integration-api/) | **API legada** (Fastify + MongoDB) exposta como MCP |
 | 7 | [`modulo-3-exemplo-7-security-auth-mcp`](./modulo-3-exemplo-7-security-auth-mcp/) | **Auth**, role/departamento, service token, **rate limit** e anti-DDoS |
 | 8 | [`modulo-3-exemplo-8-publish-mcp`](./modulo-3-exemplo-8-publish-mcp/) | **Publicar MCP** no Verdaccio (privado) e no **npm público** (`@gorgan/customers-mcp`); consumir no Cursor via `customers-mcp-public` |
+| 9 | [`modulo-3-exemplo-9-mcp-langchain`](./modulo-3-exemplo-9-mcp-langchain/) | **LangChain + MCP**: `MultiServerMCPClient` conecta `@gorgan/customers-mcp` (ex. 8) e filesystem; agente LangGraph com OpenRouter e LangSmith Studio |
 
-**Competências do módulo:** protocolo MCP; tools/resources/prompts; adaptação de sistemas legados; segurança em integrações agenticas; empacotamento e distribuição via npm.
+**Competências do módulo:** protocolo MCP; tools/resources/prompts; adaptação de sistemas legados; segurança em integrações agenticas; empacotamento e distribuição via npm; **ponte MCP → LangChain** para agentes com tool calling.
 
 ### Fluxo de publicação do MCP (Exemplo 8)
 
@@ -83,6 +84,35 @@ Agente chama tools (list/create/get/update/delete)
 | Validação | `npm run validate:e2e` | CRUD completo via `npx` |
 | Cursor | `scripts/start-public-mcp.mjs` | MCP conectado com 5 tools |
 
+### Fluxo LangChain + MCP (Exemplo 9)
+
+O exemplo 9 fecha o arco **MCP → agente**: o pacote publicado no exemplo 8 deixa de ser consumido só pelo Cursor e passa a ser **tool do LangChain**, orquestrado por um grafo LangGraph com LLM.
+
+```
+Pacote MCP publicado (ex. 8) — @gorgan/customers-mcp
+        ↓
+Launcher local (start-public-mcp.mjs) — stdio + SERVICE_TOKEN da API :9999
+        ↓
+@langchain/mcp-adapters (MultiServerMCPClient)
+        ↓
+LangChain Tools (create_customer, list_customers, … + filesystem em data/)
+        ↓
+createAgent() + OpenRouter (tool calling)
+        ↓
+LangGraph (graph multiple_mcp_tools) — Studio / API / CLI
+        ↓
+LLM executa CRUD real na API legada e retorna resultado ao usuário
+```
+
+| Etapa | Comando / artefato | Resultado |
+|-------|-------------------|-----------|
+| API legada | `modulo-3-exemplo-7-security-auth-mcp/legacy-api/start-docker.cmd` | Token para o MCP customers |
+| Conexão MCP | `npm run validate:mcp-tools` | ~19 tools (5 customers + filesystem) |
+| Agente completo | `npm run validate:langgraph` | 10× `create_customer` + `list_customers` |
+| LangGraph Studio | `npm run langgraph:serve` | Chat em `smith.langchain.com/studio?baseUrl=http://localhost:2024` |
+
+Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exemplo-9-mcp-langchain/README.md`](./modulo-3-exemplo-9-mcp-langchain/README.md).
+
 ---
 
 ## Requisitos gerais
@@ -92,7 +122,7 @@ Agente chama tools (list/create/get/update/delete)
 | **Node.js 22+** (24+ no Módulo 3 MCP) | Maioria dos exemplos TS/JS |
 | **Docker** | Neo4j (M1 ex. 6–7), Postgres (M2 ex. 2), APIs legadas (M3 ex. 6–7) |
 | **`.env`** | Chaves OpenRouter, Neo4j, etc. (copiar de `.env.example` quando existir) |
-| **LangGraph Studio** | `npm run langgraph:serve` nos projetos do Módulo 2 |
+| **LangGraph Studio** | `npm run langgraph:serve` nos projetos do Módulo 2 e no **Módulo 3 Exemplo 9** |
 | **Cursor / VS Code** | Módulo 3 (MCP e Skills) |
 | **FFmpeg** | Módulo 3 Exemplo 4 (skills de vídeo) |
 
@@ -108,6 +138,8 @@ O arquivo [`.cursor/mcp.json`](./.cursor/mcp.json) registra servidores dos exemp
 | `customers-mcp-public` | Exemplo 8 — pacote npm público [`@gorgan/customers-mcp`](https://www.npmjs.com/package/@gorgan/customers-mcp) |
 
 Para o **Exemplo 8**, o launcher `modulo-3-exemplo-8-publish-mcp/scripts/start-public-mcp.mjs` obtém o `SERVICE_TOKEN` da API legada e inicia o MCP in-process (compatível com Node 22 do Cursor). Recarregue o MCP em **Settings → MCP** após subir a API na porta 9999.
+
+O **Exemplo 9** reutiliza o mesmo launcher programaticamente (transporte **stdio** via `customersTool.ts`) — não depende do `.cursor/mcp.json`; o agente LangGraph sobe o MCP como processo filho em cada execução.
 
 ## Como navegar
 

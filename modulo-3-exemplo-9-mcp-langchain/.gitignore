@@ -1,0 +1,8 @@
+.env
+node_modules/
+data/users.json
+data/data/
+.langgraph_api/
+data/validation-run.json
+data/studio-run.*
+langgraph-chat-result.png

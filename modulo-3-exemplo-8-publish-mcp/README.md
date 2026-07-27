@@ -15,41 +15,55 @@ A entrega esperada é demonstrar o ciclo completo de **empacotar e publicar** um
 3. Consumir o pacote publicado no **Cursor/VS Code** via `npx @scope/pacote`
 4. (Opcional) Publicar no **npm público** com `npm publish --access public`
 
+
+
 ## Pacote publicado (este workspace)
 
-| Campo | Valor |
-|-------|-------|
-| **Nome** | `@pedroaugusto/customers-mcp` |
-| **Versão** | `1.0.1` |
-| **Registry** | `http://localhost:4873` |
-| **Usuário npm** | `pedroaugusto` |
-| **Senha** | `123456` |
-| **Bin** | `customers-mcp` (via `npx`) |
+
+| Campo           | Valor                         |
+| --------------- | ----------------------------- |
+| **Nome**        | `@pedroaugusto/customers-mcp` |
+| **Versão**      | `1.0.1`                       |
+| **Registry**    | `http://localhost:4873`       |
+| **Usuário npm** | `pedroaugusto`                |
+| **Senha**       | `123456`                      |
+| **Bin**         | `customers-mcp` (via `npx`)   |
+
+
+
 
 ## O que este MCP faz
 
-Pacote **`@pedroaugusto/customers-mcp`** — expõe a API de clientes como tools MCP:
+Pacote `@pedroaugusto/customers-mcp` — expõe a API de clientes como tools MCP:
 
-| Tipo | Nome | Descrição |
-|------|------|-----------|
-| Tool | `list_customers` | Lista todos os clientes |
-| Tool | `get_customer` | Busca cliente por ID |
-| Tool | `create_customer` | Cria novo cliente |
-| Tool | `update_customer` | Atualiza cliente |
-| Tool | `delete_customer` | Remove cliente |
-| Resource | `customers://api-info` | Metadados da API |
-| Prompt | `find_customer_prompt` | Prompt para localizar cliente |
+
+| Tipo     | Nome                   | Descrição                     |
+| -------- | ---------------------- | ----------------------------- |
+| Tool     | `list_customers`       | Lista todos os clientes       |
+| Tool     | `get_customer`         | Busca cliente por ID          |
+| Tool     | `create_customer`      | Cria novo cliente             |
+| Tool     | `update_customer`      | Atualiza cliente              |
+| Tool     | `delete_customer`      | Remove cliente                |
+| Resource | `customers://api-info` | Metadados da API              |
+| Prompt   | `find_customer_prompt` | Prompt para localizar cliente |
+
+
+
 
 ## Pré-requisitos
 
-| Recurso | Uso |
-|---------|-----|
-| **Node.js v24+** | Runtime e testes |
-| **API legada** | Exemplo 7 rodando em `http://127.0.0.1:9999` |
-| **Verdaccio** | Registry privado na porta `4873` |
+
+| Recurso           | Uso                                           |
+| ----------------- | --------------------------------------------- |
+| **Node.js v24+**  | Runtime e testes                              |
+| **API legada**    | Exemplo 7 rodando em `http://127.0.0.1:9999`  |
+| **Verdaccio**     | Registry privado na porta `4873`              |
 | **SERVICE_TOKEN** | Obtido automaticamente pelos launchers `.cmd` |
 
+
 > **Windows:** use `127.0.0.1` para a API legada (não `localhost`) — evita timeout de IPv6.
+
+
 
 ## Estrutura
 
@@ -69,7 +83,11 @@ modulo-3-exemplo-8-publish-mcp/
 └── .vscode/mcp.json               # Config MCP no VS Code
 ```
 
+
+
 ## Passo a passo
+
+
 
 ### 1. Instalar dependências
 
@@ -77,6 +95,8 @@ modulo-3-exemplo-8-publish-mcp/
 cd modulo-3-exemplo-8-publish-mcp
 npm install
 ```
+
+
 
 ### 2. Subir a API legada (exemplo 7)
 
@@ -102,6 +122,8 @@ Ou tudo de uma vez:
 npm run release:private:full
 ```
 
+
+
 ### 4. Validar publicação e conexão MCP
 
 ```bash
@@ -116,9 +138,11 @@ OK: MCP connected — 5 tools, 1 resources
 Validation complete: publish + MCP connection OK.
 ```
 
+
+
 ### 5. Consumir no Cursor
 
-O workspace raiz já inclui o servidor **`customers-mcp-published`** em `.cursor/mcp.json`:
+O workspace raiz já inclui o servidor `customers-mcp-published` em `.cursor/mcp.json`:
 
 ```json
 {
@@ -148,38 +172,51 @@ Alternativa direta (sem `.cmd`):
 }
 ```
 
+
+
 ## Scripts npm
 
-| Script | Descrição |
-|--------|-----------|
-| `npm start` | Inicia o servidor MCP (stdio) |
-| `npm test` | Testes de integração |
-| `npm run mcp:inspect` | Abre o MCP Inspector |
-| `npm run registry:start` | Sobe Verdaccio local (porta 4873) |
-| `npm run registry:setup` | Cria usuário `pedroaugusto` e `.npmrc` |
-| `npm run registry:login` | Login manual no registry local |
-| `npm run release:private` | Publica no Verdaccio |
-| `npm run validate:published` | Valida pacote publicado + conexão MCP |
-| `npm run release:public` | Publica no npmjs.org (opcional) |
+
+| Script                       | Descrição                              |
+| ---------------------------- | -------------------------------------- |
+| `npm start`                  | Inicia o servidor MCP (stdio)          |
+| `npm test`                   | Testes de integração                   |
+| `npm run mcp:inspect`        | Abre o MCP Inspector                   |
+| `npm run registry:start`     | Sobe Verdaccio local (porta 4873)      |
+| `npm run registry:setup`     | Cria usuário `pedroaugusto` e `.npmrc` |
+| `npm run registry:login`     | Login manual no registry local         |
+| `npm run release:private`    | Publica no Verdaccio                   |
+| `npm run validate:published` | Valida pacote publicado + conexão MCP  |
+| `npm run release:public`     | Publica no npmjs.org (opcional)        |
+
+
+
 
 ## Critérios de sucesso
 
 - [x] Pacote `@pedroaugusto/customers-mcp@1.0.1` publicado no Verdaccio
 - [x] Usuário `pedroaugusto` / `123456` configurado no registry
 - [x] `npm run validate:published` passa (5 tools, 1 resource)
-- [ ] MCP `customers-mcp-published` conectado no Cursor (recarregar MCP após subir serviços)
-- [ ] Tools de CRUD funcionando com API legada ativa
+- [x] MCP `customers-mcp-published` conectado no Cursor (recarregar MCP após subir serviços)
+- [x] Tools de CRUD funcionando com API legada ativa
+
+
 
 ## Relação com outros exemplos
 
-| Exemplo | Relação |
-|---------|---------|
-| **6** | API legada sem auth — base do HTTP client |
-| **7** | API com auth/rate limit — evolução de segurança |
+
+| Exemplo      | Relação                                          |
+| ------------ | ------------------------------------------------ |
+| **6**        | API legada sem auth — base do HTTP client        |
+| **7**        | API com auth/rate limit — evolução de segurança  |
 | **8** (este) | **Empacotar e publicar** o MCP para distribuição |
+
+
+
 
 ## Referências
 
 - [Model Context Protocol — Inspector](https://modelcontextprotocol.io/docs/tools/inspector)
 - [Verdaccio — registry npm privado](https://verdaccio.org/)
 - [npm publish](https://docs.npmjs.com/cli/v10/commands/npm-publish)
+

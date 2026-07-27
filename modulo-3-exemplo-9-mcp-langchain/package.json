@@ -1,0 +1,41 @@
+{
+  "name": "modulo-3-exemplo-9-mcp-langchain",
+  "version": "1.0.0",
+  "description": "LangGraph agent with multiple MCP tools (customers from exemplo 8 + filesystem)",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "node --use-system-ca --env-file .env src/index.ts",
+    "dev": "node --use-system-ca --watch --inspect --env-file .env src/index.ts",
+    "langgraph:serve": "node scripts/start-langgraph.mjs",
+    "validate:mcp-tools": "node --use-system-ca scripts/validate-mcp-tools.mjs",
+    "validate:langgraph": "node --use-system-ca --env-file .env scripts/validate-langgraph.mjs",
+    "validate:langgraph:api": "node --use-system-ca --env-file .env scripts/validate-langgraph-api.mjs"
+  },
+  "keywords": [
+    "langchain",
+    "langgraph",
+    "mcp",
+    "openrouter"
+  ],
+  "author": "pedroaugusto",
+  "license": "MIT",
+  "dependencies": {
+    "@langchain/core": "^1.1.19",
+    "@langchain/langgraph": "^1.2.0",
+    "@langchain/mcp-adapters": "^1.1.3",
+    "@langchain/openai": "^1.2.5",
+    "fastify": "^5.7.4",
+    "langchain": "^1.2.17",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@langchain/langgraph-cli": "^1.4.3",
+    "@modelcontextprotocol/server-filesystem": "^2026.1.14",
+    "@types/node": "^24.10.12"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
+
