@@ -14,6 +14,15 @@
         "modulo-3-exemplo-6-mcp-integration-api\\customers-mcp.cmd"
       ]
     },
+    "customers-mcp-public": {
+      "command": "node",
+      "args": [
+        "modulo-3-exemplo-8-publish-mcp/scripts/start-public-mcp.mjs"
+      ],
+      "env": {
+        "NODE_OPTIONS": "--use-system-ca"
+      }
+    },
     "customers-secure-mcp": {
       "command": "cmd",
       "args": [

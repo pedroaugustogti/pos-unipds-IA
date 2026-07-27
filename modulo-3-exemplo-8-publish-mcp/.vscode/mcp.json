@@ -1,0 +1,16 @@
+{
+  "servers": {
+    "customers-mcp-published": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "--registry",
+        "http://localhost:4873",
+        "@pedroaugusto/customers-mcp@latest"
+      ],
+      "env": {
+        "SERVICE_TOKEN": "<obtenha via getServiceToken.sh ou customers-mcp-published.cmd>"
+      }
+    }
+  }
+}

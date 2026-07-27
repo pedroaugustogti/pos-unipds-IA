@@ -1,0 +1,57 @@
+{
+  "name": "@gorgan/customers-mcp",
+  "version": "1.0.5",
+  "description": "MCP server that exposes a customer CRUD API as tools — published by gorgan",
+  "main": "src/index.ts",
+  "bin": {
+    "customers-mcp": "bin/customers-mcp.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "node -e \"console.log('No build step — TypeScript runs via Node/tsx')\"",
+    "start": "node src/index.ts",
+    "dev": "node --watch --inspect src/index.ts",
+    "test": "node --test tests/**/*.test.ts",
+    "mcp:inspect": "npx @modelcontextprotocol/inspector node src/index.ts",
+    "test:dev": "node --inspect --test --watch tests/**/*.test.ts",
+    "registry:start": "node scripts/start-verdaccio.mjs",
+    "registry:start:docker": "docker compose up -d",
+    "registry:stop": "docker compose down",
+    "registry:setup": "node scripts/setup-registry.mjs",
+    "registry:login": "npm login --registry http://localhost:4873 --auth-type legacy --username pedroaugusto --password 123456 --email pedroaugusto@local.test",
+    "release:private": "npm publish --registry http://localhost:4873",
+    "release:private:full": "npm run registry:start && npm run registry:setup && npm run release:private",
+    "validate:published": "node scripts/validate-published-mcp.mjs",
+    "validate:public": "node scripts/validate-public-mcp.mjs",
+    "validate:e2e": "node scripts/validate-e2e-public.mjs",
+    "registry:login:public": "node scripts/setup-npm-auth.mjs",
+    "release:public": "node scripts/publish-from-browser-token.mjs"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "customers",
+    "gorgan"
+  ],
+  "author": "gorgan",
+  "license": "ISC",
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "devDependencies": {
+    "verdaccio": "^6.2.4"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "@types/node": "^24.11.0",
+    "tsx": "^4.21.0",
+    "zod": "^3.25.76"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "customers-mcp-local": {
+      "command": "cmd",
+      "args": ["/c", "customers-mcp.cmd"]
+    },
+    "customers-mcp-public": {
+      "command": "node",
+      "args": ["scripts/start-public-mcp.mjs"],
+      "env": {
+        "NODE_OPTIONS": "--use-system-ca"
+      }
+    }
+  }
+}

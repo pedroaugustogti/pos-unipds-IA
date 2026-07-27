@@ -53,8 +53,35 @@ Cada pasta `modulo-X-exemplo-Y-*` segue um **padrão didático** nos `README.md`
 | 5 | [`modulo-3-exemplo-5-server-mcp`](./modulo-3-exemplo-5-server-mcp/) | Criar **servidor MCP do zero** (criptografia AES-256-CBC) |
 | 6 | [`modulo-3-exemplo-6-mcp-integration-api`](./modulo-3-exemplo-6-mcp-integration-api/) | **API legada** (Fastify + MongoDB) exposta como MCP |
 | 7 | [`modulo-3-exemplo-7-security-auth-mcp`](./modulo-3-exemplo-7-security-auth-mcp/) | **Auth**, role/departamento, service token, **rate limit** e anti-DDoS |
+| 8 | [`modulo-3-exemplo-8-publish-mcp`](./modulo-3-exemplo-8-publish-mcp/) | **Publicar MCP** no Verdaccio (privado) e no **npm público** (`@gorgan/customers-mcp`); consumir no Cursor via `customers-mcp-public` |
 
-**Competências do módulo:** protocolo MCP; tools/resources/prompts; adaptação de sistemas legados; segurança em integrações agenticas.
+**Competências do módulo:** protocolo MCP; tools/resources/prompts; adaptação de sistemas legados; segurança em integrações agenticas; empacotamento e distribuição via npm.
+
+### Fluxo de publicação do MCP (Exemplo 8)
+
+O exemplo 8 fecha o arco do Módulo 3: o mesmo servidor MCP dos exemplos 6 e 7 vira um **pacote npm** instalável com `npx`, sem clonar o repositório.
+
+```
+Código MCP (ex. 6/7)
+        ↓
+package.json (bin, files, publishConfig)
+        ↓
+Registry privado (Verdaccio :4873)  →  npm run release:private
+        ↓
+Registry público (npmjs.org)        →  npm run release:public
+        ↓
+Cursor (.cursor/mcp.json)            →  customers-mcp-public
+        ↓
+Agente chama tools (list/create/get/update/delete)
+```
+
+| Etapa | Comando / artefato | Resultado |
+|-------|-------------------|-----------|
+| API legada | `modulo-3-exemplo-7-security-auth-mcp/legacy-api/start-docker.cmd` | `SERVICE_TOKEN` em `http://127.0.0.1:9999` |
+| Registry privado | `npm run registry:start` + `registry:setup` + `release:private` | `@pedroaugusto/customers-mcp` no Verdaccio |
+| Registry público | `npm run release:public` | [`@gorgan/customers-mcp`](https://www.npmjs.com/package/@gorgan/customers-mcp) no npmjs.org |
+| Validação | `npm run validate:e2e` | CRUD completo via `npx` |
+| Cursor | `scripts/start-public-mcp.mjs` | MCP conectado com 5 tools |
 
 ---
 
@@ -71,13 +98,16 @@ Cada pasta `modulo-X-exemplo-Y-*` segue um **padrão didático** nos `README.md`
 
 ## MCP configurado no workspace
 
-O arquivo [`.cursor/mcp.json`](./.cursor/mcp.json) registra servidores dos exemplos 5, 6 e 7:
+O arquivo [`.cursor/mcp.json`](./.cursor/mcp.json) registra servidores dos exemplos 5, 6, 7 e 8:
 
 | Servidor | Exemplo |
 |----------|---------|
 | `ciphersuite-mcp` | Exemplo 5 — criptografia |
 | `customers-mcp` | Exemplo 6 — API legada |
 | `customers-secure-mcp` | Exemplo 7 — API com auth |
+| `customers-mcp-public` | Exemplo 8 — pacote npm público [`@gorgan/customers-mcp`](https://www.npmjs.com/package/@gorgan/customers-mcp) |
+
+Para o **Exemplo 8**, o launcher `modulo-3-exemplo-8-publish-mcp/scripts/start-public-mcp.mjs` obtém o `SERVICE_TOKEN` da API legada e inicia o MCP in-process (compatível com Node 22 do Cursor). Recarregue o MCP em **Settings → MCP** após subir a API na porta 9999.
 
 ## Como navegar
 

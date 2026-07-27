@@ -1,0 +1,14 @@
+services:
+  verdaccio:
+    image: verdaccio/verdaccio:6
+    container_name: verdaccio-pedroaugusto
+    ports:
+      - "4873:4873"
+    volumes:
+      - ./verdaccio/config.yaml:/verdaccio/conf/config.yaml:ro
+      - verdaccio-storage:/verdaccio/storage
+      - verdaccio-plugins:/verdaccio/plugins
+
+volumes:
+  verdaccio-storage:
+  verdaccio-plugins:

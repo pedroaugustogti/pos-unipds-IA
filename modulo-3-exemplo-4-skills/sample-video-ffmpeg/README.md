@@ -104,3 +104,44 @@ Este exemplo integra o **Exemplo 4 — Skills** do Módulo 3, junto com:
 - **ffmpeg-video-editor** — edição por linguagem natural
 
 O aprendizado central é: **skills estendem o agente** com conhecimento e fluxos especializados, sem precisar repetir instruções em todo prompt.
+
+## Relação com a publicação de MCP (Exemplo 8)
+
+No [`modulo-3-exemplo-8-publish-mcp`](../modulo-3-exemplo-8-publish-mcp/), o servidor MCP dos exemplos 6 e 7 é empacotado e publicado no npm para consumo via `npx` e no Cursor:
+
+```
+Servidor MCP (código dos ex. 6/7)
+        ↓
+Empacotamento npm (bin, files, tsx no bin)
+        ↓
+Verdaccio local (:4873) — registry privado
+        ↓
+npmjs.org — @gorgan/customers-mcp
+        ↓
+npm publish + validação e2e (CRUD)
+        ↓
+Cursor — customers-mcp-public (5 tools)
+```
+
+| Etapa | Comando / artefato |
+|-------|-------------------|
+| Registry privado | `npm run release:private` |
+| Registry público | `npm run release:public` |
+| Validação | `npm run validate:e2e` |
+| Cursor | `scripts/start-public-mcp.mjs` |
+
+### Pacotes publicados neste workspace
+
+| Registry | Pacote | Uso |
+|----------|--------|-----|
+| Verdaccio (`localhost:4873`) | `@pedroaugusto/customers-mcp` | Registry privado local (usuário `pedroaugusto`) |
+| npm público | [`@gorgan/customers-mcp`](https://www.npmjs.com/package/@gorgan/customers-mcp) | Consumo via `npx` e MCP `customers-mcp-public` no Cursor |
+
+### Critérios de sucesso (publicação MCP)
+
+- [ ] Pacote publicado no Verdaccio e/ou npm público
+- [ ] `npm run validate:e2e` passa (API legada + CRUD via `npx`)
+- [ ] `customers-mcp-public` conectado no Cursor com 5 tools
+- [ ] Agente consegue chamar `list_customers` / `create_customer` na API legada
+
+Guia completo: [`modulo-3-exemplo-8-publish-mcp/README.md`](../modulo-3-exemplo-8-publish-mcp/README.md).
