@@ -122,6 +122,7 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 | Exemplo | Pasta | Principais aprendizados |
 |---------|-------|-------------------------|
 | 1 | [`modulo-4-exemplo-1-agente-ia-contratos`](./modulo-4-exemplo-1-agente-ia-contratos/) | **Contratos de agente** (`agent.md`, `skills.md`, `rules.md`); runtime Python; `delivery-agent` compara UNIPDS vs repo local, sugere próximo `modulo-X-exemplo-Y` e prepara **commit** (sem PR) |
+| 2 | [`modulo-4-exemplo-2-runtime`](./modulo-4-exemplo-2-runtime/) | **Por dentro do runtime** — 6 módulos Python (`contratos`, `ciclo`, `planejador`, `ferramentas`, `executor`, `telemetria`); trace → código; `monitor-agent` com telemetria completa |
 
 **Competências do módulo:** agentes orientados a contratos; planejamento com LLM (OpenRouter); ferramentas reais (git + GitHub API); governança de entrega sem abrir PR automaticamente.
 
