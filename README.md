@@ -115,11 +115,24 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 
 ---
 
+## Módulo 4 — Agentes autônomos
+
+**O que você aprende:** definir agentes por **contratos** (YAML em Markdown), runtime Python com ciclo perceber→planejar→agir→avaliar, e automação de entrega (commit/push) com comparação ao repositório oficial UNIPDS.
+
+| Exemplo | Pasta | Principais aprendizados |
+|---------|-------|-------------------------|
+| 1 | [`modulo-4-exemplo-1-agente-ia-contratos`](./modulo-4-exemplo-1-agente-ia-contratos/) | **Contratos de agente** (`agent.md`, `skills.md`, `rules.md`); runtime Python; `delivery-agent` compara UNIPDS vs repo local, sugere próximo `modulo-X-exemplo-Y` e prepara **commit** (sem PR) |
+
+**Competências do módulo:** agentes orientados a contratos; planejamento com LLM (OpenRouter); ferramentas reais (git + GitHub API); governança de entrega sem abrir PR automaticamente.
+
+---
+
 ## Requisitos gerais
 
 | Recurso | Onde é necessário |
 |---------|-------------------|
 | **Node.js 22+** (24+ no Módulo 3 MCP) | Maioria dos exemplos TS/JS |
+| **Python 3.10+** | Módulo 4 Exemplo 1 (runtime do agente por contratos) |
 | **Docker** | Neo4j (M1 ex. 6–7), Postgres (M2 ex. 2), APIs legadas (M3 ex. 6–7) |
 | **`.env`** | Chaves OpenRouter, Neo4j, etc. (copiar de `.env.example` quando existir) |
 | **LangGraph Studio** | `npm run langgraph:serve` nos projetos do Módulo 2 e no **Módulo 3 Exemplo 9** |
