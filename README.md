@@ -124,9 +124,9 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 | 1 | [`modulo-4-exemplo-1-agente-ia-contratos`](./modulo-4-exemplo-1-agente-ia-contratos/) | **Contratos de agente** (`agent.md`, `skills.md`, `rules.md`); runtime Python; `delivery-agent` compara UNIPDS vs repo local, sugere próximo `modulo-X-exemplo-Y` e prepara **commit** (sem PR) |
 | 2 | [`modulo-4-exemplo-2-runtime`](./modulo-4-exemplo-2-runtime/) | **Por dentro do runtime** — 6 módulos Python (`contratos`, `ciclo`, `planejador`, `ferramentas`, `executor`, `telemetria`); trace → código; `monitor-agent` com telemetria completa |
 | 3 | [`modulo-4-exemplo-3-observabilidade`](./modulo-4-exemplo-3-observabilidade/) | **Observabilidade em 4 níveis** — `trace-analyzer`, comando `analisar`, `analise-agente.md`; planejador `auto`/`llm`; ferramentas determinísticas |
-| 4 | *próximo* → `modulo-4-exemplo-4-tipos-agentes-e-projetos` | **Tipos de agente** — `backlog-decomposer`, modos `interactive` / `goal_oriented` / `autonomous` ([aula06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula06-tipos-agentes-e-projetos)) |
+| 4 | [`modulo-4-exemplo-4-tipos-agentes-e-projetos`](./modulo-4-exemplo-4-tipos-agentes-e-projetos/) | **Tipos de agente** — `backlog-decomposer` (`goal_oriented`), modos `interactive` / `autonomous`, contract-driven development ([aula06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula06-tipos-agentes-e-projetos)) |
 
-**Competências do módulo:** agentes orientados a contratos; planejamento com LLM (OpenRouter); ferramentas reais (git + GitHub API); governança de entrega sem abrir PR automaticamente; **observabilidade** (trace, KPIs, análise automatizada).
+**Competências do módulo:** agentes orientados a contratos; planejamento com LLM (OpenRouter); ferramentas reais (git + GitHub API); governança de entrega sem abrir PR automaticamente; **observabilidade** (trace, KPIs, análise automatizada); **tipos de agente** (task_based, interactive, goal_oriented, autonomous) e decomposição de backlog.
 
 ---
 
