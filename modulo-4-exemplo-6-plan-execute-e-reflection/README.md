@@ -35,23 +35,63 @@ python main.py rodar --agente ../monitor-agent --entrada "alerta de latencia no 
 
 # Reflection — crítica rejeita 1º FINALIZAR, agente corrige e aprova
 python main.py rodar --agente ../monitor-agent --entrada "alerta de latencia no servico de pagamentos" --arquitetura reflect
+
+# Reflection strict (desafio — só contrato, sem mudar Python)
+python main.py rodar --agente ../monitor-agent --entrada "alerta de latencia no servico de pagamentos" --arquitetura reflect-strict
 ```
 
-## Critérios de sucesso (scaffold)
+## Critérios de sucesso
 
 - [x] Pasta criada no padrão `modulo-4-exemplo-6-*` (51 arquivos UNIPDS)
-- [x] README local com objetivo e passo a passo
+- [x] README local com objetivo, passo a passo e critérios validados
 - [x] Runtime otimizado herdado do Ex. 5 + lógica aula08 (`plan_execute`, `reflect`)
 - [x] `.env` não commitado (`.gitignore` + `.env.example`)
-- [ ] Atividade executada e validada (plan_execute + reflect)
+- [x] Atividade executada e validada (4 cenários + desafios da aula)
 - [x] README raiz do `pos-unipds-IA` atualizado
+- [x] `validar` passa para `monitor-agent` (**VALIDO 0 avisos**)
+- [x] Comparação `padrao` / `react` / `plan_execute` / `reflect` documentada
+- [x] Desafio `limiar_aprovacao: 50` — aprovação na 1ª crítica (trace `5546cb68aae5`, 5 etapas)
+- [x] `architectures/reflect-strict/` criado (`limiar: 95`, `max_reflexoes: 3`) — trace `118e4d3338e7`
+
+### Métricas — modo `auto` (`RUNTIME_PLANEJADOR=auto`)
+
+| Cenário | Trace ID | Arquitetura | Etapas | Tempo | Tokens | Taxa sucesso |
+|---------|----------|-------------|--------|-------|--------|--------------|
+| Baseline (sem flag) | `02f3970d0f4e` | `padrao` | 5 | **0,0 s** | 0 | 100% |
+| ReAct | `1fa426634e5b` | `react` | 5 | **0,0 s** | 0 | 100% |
+| Plan-Execute | `0dd1e343d36b` | `plan_execute` | 5 | **0,0 s** | 0 | 100% |
+| Reflection | `172db9278196` | `reflect` | 6 | **0,01 s** | 0 | 100% |
+| Reflection (`limiar: 50`) | `5546cb68aae5` | `reflect` | 5 | **0,0 s** | 0 | 100% |
+| Reflection strict | `118e4d3338e7` | `reflect-strict` | 6 | **0,0 s** | 0 | 100% |
+
+**Plan-Execute:** etapa 1 gera `plano_completo` com 4 passos; etapas 2–4 seguem o plano com `tokens=0`.  
+**Reflection:** 1ª crítica rejeita (55/70), corrige via `buscar_logs`, 2ª crítica aprova. Com `limiar: 50`, aprova na 1ª (`nota >= limiar`).  
+**reflect-strict:** rejeita (55/95), corrige, aprova com nota 100 — **sem alterar Python**, só o contrato em `architectures/reflect-strict/`.
+
+### Desafios da aula (concluídos)
+
+1. Quatro cenários rodados — tabela acima.
+2. `limiar_aprovacao: 50` em `reflect/critic.md` → aprovação imediata (`[reflexao] aprovado! nota=55/100`).
+3. `architectures/reflect-strict/` criado — runtime carregou `critic.md` sem modificação de código.
+
+---
+
+## Próxima aula (Exemplo 7)
+
+**UNIPDS:** [aula09-evals-e-frameworks-mercado](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula09-evals-e-frameworks-mercado)
+
+| Item | Conteúdo |
+|------|----------|
+| Pasta local prevista | `modulo-4-exemplo-7-evals-e-frameworks-mercado` |
+| Foco | Comparar arquiteturas com evals automatizados |
+| Runtime | Reutilizar motor deste exemplo |
 
 ## Relação com outros exemplos
 
 | Exemplo | Relação |
 |---------|---------|
 | **Ex. 5** | Slot `--arquitetura` e ReAct — base desta aula |
-| **Ex. 9 (próximo)** | Evals e comparação de arquiteturas (aula09) |
+| **Ex. 9 (próximo)** | Evals e comparação de arquiteturas ([aula09](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula09-evals-e-frameworks-mercado)) |
 
 ---
 

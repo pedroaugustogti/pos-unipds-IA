@@ -248,9 +248,10 @@ Responda APENAS em JSON:
     # --- mock: primeira reflexao rejeita, segunda aprova ---
     reflexoes_feitas = estado.get("reflexoes_feitas", 0)
     if reflexoes_feitas == 0:
+        nota = 55
         return {
-            "nota": 55,
-            "aprovado": False,
+            "nota": nota,
+            "aprovado": nota >= limiar,
             "problemas": [
                 "evidencias de metricas coletadas mas nao cruzadas com logs",
                 "diagnostico baseado em dados parciais",
@@ -260,9 +261,10 @@ Responda APENAS em JSON:
                 "incluir correlacao temporal entre metricas e deploys no diagnostico",
             ],
         }
+    nota_final = min(limiar + 15, 100)
     return {
-        "nota": 85,
-        "aprovado": True,
+        "nota": nota_final,
+        "aprovado": nota_final >= limiar,
         "problemas": [],
         "sugestoes": [],
     }
