@@ -126,9 +126,10 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 | 3 | [`modulo-4-exemplo-3-observabilidade`](./modulo-4-exemplo-3-observabilidade/) | **Observabilidade em 4 níveis** — `trace-analyzer`, comando `analisar`, `analise-agente.md`; planejador `auto`/`llm`; ferramentas determinísticas |
 | 4 | [`modulo-4-exemplo-4-tipos-agentes-e-projetos`](./modulo-4-exemplo-4-tipos-agentes-e-projetos/) | **Tipos de agente** — `backlog-decomposer` (`goal_oriented`), modos `interactive` / `autonomous`, contract-driven development ([aula06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula06-tipos-agentes-e-projetos)) |
 | 5 | [`modulo-4-exemplo-5-arquiteturas-cognitivas`](./modulo-4-exemplo-5-arquiteturas-cognitivas/) | **Arquiteturas cognitivas** — `--arquitetura react`, campo `raciocínio` no trace, contratos em `architectures/` ([aula07 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula07-arquiteturas-cognitivas)) |
+| 6 | [`modulo-4-exemplo-6-plan-execute-e-reflection`](./modulo-4-exemplo-6-plan-execute-e-reflection/) | **Plan-Execute e Reflection** — `--arquitetura plan_execute` / `reflect`, `critic.md`, autocritica antes de finalizar ([aula08 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula08-plan-execute-e-reflection)) |
 
 
-**Competências do módulo:** agentes orientados a contratos; planejamento com LLM (OpenRouter); ferramentas reais (git + GitHub API); governança de entrega sem abrir PR automaticamente; **observabilidade** (trace, KPIs, análise automatizada); **tipos de agente** (task_based, interactive, goal_oriented, autonomous) e decomposição de backlog.
+**Competências do módulo:** agentes orientados a contratos; planejamento com LLM (OpenRouter); ferramentas reais (git + GitHub API); governança de entrega sem abrir PR automaticamente; **observabilidade** (trace, KPIs, análise automatizada); **tipos de agente** (task_based, interactive, goal_oriented, autonomous) e decomposição de backlog; **arquiteturas cognitivas** (ReAct, Plan-Execute, Reflection).
 
 ---
 
