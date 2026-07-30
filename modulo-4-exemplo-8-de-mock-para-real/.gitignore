@@ -1,0 +1,8 @@
+runtime/.env
+runtime/trace.json
+runtime/analise.json
+runtime/analise-agente.md
+runtime/__pycache__/
+runtime/adapters/__pycache__/
+api_local/__pycache__/
+benchmarks/
