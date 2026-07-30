@@ -18,6 +18,7 @@ except ImportError:
 from ferramentas import (
     agente_tem_somente_ferramentas_deterministicas,
     extrair_evidencias_do_historico,
+    ferramenta_e_deterministica,
     montar_argumentos_mock,
 )
 from llm_config import get_llm_client_and_model
@@ -190,13 +191,24 @@ def _ordem_ferramentas(contratos: dict) -> list:
     return nomes_habilidades
 
 
+def _agente_precisa_planejador_llm(contratos: dict) -> bool:
+    """LLM no planejador so e necessaria quando skills mock nao tem implementacao deterministica."""
+    for habilidade in contratos.get("habilidades", {}).get("habilidades", []):
+        if habilidade.get("tipo_implementacao", "mock") != "mock":
+            continue
+        nome = habilidade.get("nome")
+        if nome and not ferramenta_e_deterministica(nome):
+            return True
+    return False
+
+
 def _deve_usar_planejador_mock(contratos: dict) -> bool:
     modo = _modo_planejador()
     if modo == "mock":
         return True
     if modo == "llm":
         return False
-    return agente_tem_somente_ferramentas_deterministicas(contratos)
+    return not _agente_precisa_planejador_llm(contratos)
 
 
 def _formato_arquitetura(contratos: dict) -> dict:

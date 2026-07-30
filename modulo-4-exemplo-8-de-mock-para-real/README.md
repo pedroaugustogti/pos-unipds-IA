@@ -94,14 +94,36 @@ monitor-agent/
 - [x] Runtime Ex. 7 mesclado (`llm_config`, `planejador`, `ciclo`, `main`, `benchmark`)
 - [x] `rest_adapter.py` + `api_local/server.py` implementados
 - [x] `skills.md` com `tipo_implementacao`, `conexao` e `limites`
-- [ ] API local rodando e agente com `_adapter: "rest"` no trace (validar localmente)
-- [ ] Com API parada, skills REST retornam `sucesso: false` (validar localmente)
+- [x] API local rodando e agente com `_adapter: "rest"` no trace (validado)
+- [x] Com API parada, skills REST retornam `sucesso: false` (validado)
+
+---
+
+## Resultados da validação E2E
+
+**Comando (API ativa):**
+```bash
+python api_local/server.py   # terminal 1
+python main.py rodar --agente ../monitor-agent --entrada "alerta de latencia no servico de checkout"
+```
+
+| Critério | Resultado | Trace ID |
+|----------|-----------|----------|
+| `[ferramentas] → rest` no log | ✅ 3 skills REST despachadas | `c60e9bc27833` |
+| `_adapter: "rest"` no trace | ✅ consultar_metricas, buscar_logs, historico_deploys | etapas 1–3 |
+| `_latencia_ms` ~2000ms (HTTP) | ✅ fase `agir` com latência de rede | ~1557ms média |
+| `relatorio_incidente` sem `_adapter` | ✅ mock determinístico | etapa 4, ~0ms |
+| Dados da API (`taxa_erro: 4.2`, `status: degradado`) | ✅ valores fixos da API local | etapa 1 |
+| API offline (`API_BASE_URL` inválida) | ✅ REST `sucesso: false`, retries 2/2 | `b406ae7b10ff` |
+| `RUNTIME_PLANEJADOR=auto` com skills REST | ✅ planejador mock (fix em `planejador.py`) | via=mock |
+
+**Trace final:** `runtime/trace.json` (5 etapas, 100% sucesso ferramentas com API ativa)
 
 ---
 
 ## Próxima aula
 
-**UNIPDS:** [aula11 — adapters database/MCP](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos) (quando publicada) — slots `database` e `mcp` já existem no resolver; faltam os adapters.
+**Exemplo 9:** [`modulo-4-exemplo-9-database-e-mcp`](../modulo-4-exemplo-9-database-e-mcp/) — adapters `database` e `mcp`, SQLite local (`seed_logs.py`), MCP server stdio, políticas de segurança em `rules.md`/`hooks.md` ([aula11 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula11-database-e-mcp)).
 
 ---
 
