@@ -1,0 +1,54 @@
+[
+  {
+    "id": "inc-001",
+    "dificuldade": "facil",
+    "entrada": "alerta de latencia no servico de pagamentos",
+    "ferramentas_esperadas": [
+      "consultar_metricas",
+      "buscar_logs",
+      "relatorio_incidente"
+    ]
+  },
+  {
+    "id": "inc-002",
+    "dificuldade": "medio",
+    "entrada": "erro apos deploy no servico de pagamentos",
+    "ferramentas_esperadas": [
+      "consultar_metricas",
+      "buscar_logs",
+      "historico_deploys",
+      "relatorio_incidente"
+    ]
+  },
+  {
+    "id": "inc-003",
+    "dificuldade": "medio",
+    "entrada": "taxa de erro elevada no servico de pagamentos",
+    "ferramentas_esperadas": [
+      "consultar_metricas",
+      "buscar_logs",
+      "relatorio_incidente"
+    ]
+  },
+  {
+    "id": "inc-004",
+    "dificuldade": "dificil",
+    "entrada": "timeout downstream no servico de pagamentos apos deploy recente",
+    "ferramentas_esperadas": [
+      "consultar_metricas",
+      "buscar_logs",
+      "historico_deploys",
+      "relatorio_incidente"
+    ]
+  },
+  {
+    "id": "inc-005",
+    "dificuldade": "facil",
+    "entrada": "mesmo padrao do inc-001: latencia no servico de pagamentos",
+    "ferramentas_esperadas": [
+      "consultar_metricas",
+      "buscar_logs",
+      "relatorio_incidente"
+    ]
+  }
+]

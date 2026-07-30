@@ -1,0 +1,140 @@
+{
+  "arquitetura": "react",
+  "suite": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-4-exemplo-7-evals-e-frameworks-mercado\\evals\\suites\\monitor-agent.yaml",
+  "casos": [
+    {
+      "caso_id": "inc-001",
+      "trace_id": "3c173c27f02e",
+      "concluiu": true,
+      "etapas": 5,
+      "tokens": 0,
+      "tokens_planejamento": 0,
+      "tempo_segundos": 0.0,
+      "taxa_sucesso_ferramentas": 100.0,
+      "circuit_breaker": 0,
+      "reflexoes": 0,
+      "cobertura_ferramentas": 100.0,
+      "ferramentas_chamadas": [
+        "buscar_logs",
+        "consultar_metricas",
+        "historico_deploys",
+        "relatorio_incidente"
+      ],
+      "ferramentas_esperadas": [
+        "buscar_logs",
+        "consultar_metricas",
+        "relatorio_incidente"
+      ]
+    },
+    {
+      "caso_id": "inc-002",
+      "trace_id": "3ab77637473e",
+      "concluiu": true,
+      "etapas": 5,
+      "tokens": 0,
+      "tokens_planejamento": 0,
+      "tempo_segundos": 0.0,
+      "taxa_sucesso_ferramentas": 100.0,
+      "circuit_breaker": 0,
+      "reflexoes": 0,
+      "cobertura_ferramentas": 100.0,
+      "ferramentas_chamadas": [
+        "buscar_logs",
+        "consultar_metricas",
+        "historico_deploys",
+        "relatorio_incidente"
+      ],
+      "ferramentas_esperadas": [
+        "buscar_logs",
+        "consultar_metricas",
+        "historico_deploys",
+        "relatorio_incidente"
+      ]
+    },
+    {
+      "caso_id": "inc-003",
+      "trace_id": "b808582be12f",
+      "concluiu": true,
+      "etapas": 5,
+      "tokens": 0,
+      "tokens_planejamento": 0,
+      "tempo_segundos": 0.0,
+      "taxa_sucesso_ferramentas": 100.0,
+      "circuit_breaker": 0,
+      "reflexoes": 0,
+      "cobertura_ferramentas": 100.0,
+      "ferramentas_chamadas": [
+        "buscar_logs",
+        "consultar_metricas",
+        "historico_deploys",
+        "relatorio_incidente"
+      ],
+      "ferramentas_esperadas": [
+        "buscar_logs",
+        "consultar_metricas",
+        "relatorio_incidente"
+      ]
+    },
+    {
+      "caso_id": "inc-004",
+      "trace_id": "1fc5c6185b15",
+      "concluiu": true,
+      "etapas": 5,
+      "tokens": 0,
+      "tokens_planejamento": 0,
+      "tempo_segundos": 0.0,
+      "taxa_sucesso_ferramentas": 100.0,
+      "circuit_breaker": 0,
+      "reflexoes": 0,
+      "cobertura_ferramentas": 100.0,
+      "ferramentas_chamadas": [
+        "buscar_logs",
+        "consultar_metricas",
+        "historico_deploys",
+        "relatorio_incidente"
+      ],
+      "ferramentas_esperadas": [
+        "buscar_logs",
+        "consultar_metricas",
+        "historico_deploys",
+        "relatorio_incidente"
+      ]
+    },
+    {
+      "caso_id": "inc-005",
+      "trace_id": "d9ad1393759c",
+      "concluiu": true,
+      "etapas": 5,
+      "tokens": 0,
+      "tokens_planejamento": 0,
+      "tempo_segundos": 0.0,
+      "taxa_sucesso_ferramentas": 100.0,
+      "circuit_breaker": 0,
+      "reflexoes": 0,
+      "cobertura_ferramentas": 100.0,
+      "ferramentas_chamadas": [
+        "buscar_logs",
+        "consultar_metricas",
+        "historico_deploys",
+        "relatorio_incidente"
+      ],
+      "ferramentas_esperadas": [
+        "buscar_logs",
+        "consultar_metricas",
+        "relatorio_incidente"
+      ]
+    }
+  ],
+  "metricas": {
+    "taxa_conclusao": 100.0,
+    "media_etapas": 5,
+    "media_tokens": 0,
+    "tokens_planejamento": 0,
+    "media_tempo_segundos": 0.0,
+    "taxa_sucesso_ferramentas": 100.0,
+    "circuit_breaker_total": 0,
+    "reflexoes_total": 0,
+    "cobertura_ferramentas": 100.0
+  },
+  "violacoes": []
+}

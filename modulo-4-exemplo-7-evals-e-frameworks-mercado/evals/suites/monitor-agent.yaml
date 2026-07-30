@@ -1,0 +1,17 @@
+dataset: ../datasets/incidentes.json
+
+métricas:
+  - taxa_conclusao
+  - media_etapas
+  - media_tokens
+  - tokens_planejamento
+  - media_tempo_segundos
+  - taxa_sucesso_ferramentas
+  - circuit_breaker_total
+  - reflexoes_total
+  - cobertura_ferramentas
+
+limiares:
+  taxa_conclusao: 80
+  taxa_sucesso_ferramentas: 90
+  cobertura_ferramentas: 75
