@@ -1,0 +1,164 @@
+{
+  "trace_id": "a4mcpfal1bck",
+  "agente": "monitor-agent",
+  "tipo_agente": "task_based",
+  "arquitetura": "padrao",
+  "entrada": "desafio: MCP offline ou sem pip install mcp",
+  "evento": null,
+  "tempo_total_segundos": 0.0,
+  "tokens_consumidos": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+  },
+  "etapas": [
+    {
+      "etapa": 1,
+      "percepcao": "Desafio 4: MCP server indisponivel ou SDK ausente — fallback simulado",
+      "plano": {
+        "proxima_acao": "CHAMAR_FERRAMENTA",
+        "nome_ferramenta": "buscar_issues",
+        "argumentos_ferramenta": {
+          "repositorio": "org/checkout-service",
+          "estado": "open",
+          "labels": [
+            "bug",
+            "p1"
+          ]
+        },
+        "criterio_sucesso": "buscar_issues executado com sucesso",
+        "_modo": "mock"
+      },
+      "resultado_acao": {
+        "sucesso": true,
+        "dados": {
+          "issues": [
+            {
+              "numero": 142,
+              "titulo": "Latencia elevada apos deploy v2.4.1",
+              "estado": "open",
+              "labels": [
+                "bug",
+                "p1",
+                "producao"
+              ],
+              "autor": "eng-oncall",
+              "criado_em": "2026-07-30T10:36:55.744934",
+              "repositorio": "org/checkout-service"
+            },
+            {
+              "numero": 138,
+              "titulo": "Circuit breaker ativando para upstream-payments",
+              "estado": "open",
+              "labels": [
+                "bug",
+                "p2"
+              ],
+              "autor": "monitoring-bot",
+              "criado_em": "2026-07-30T07:36:55.744934",
+              "repositorio": "org/checkout-service"
+            }
+          ],
+          "contagem_total": 2,
+          "_entrada": {
+            "repositorio": "org/checkout-service",
+            "estado": "open",
+            "labels": [
+              "bug",
+              "p1"
+            ]
+          }
+        },
+        "_adapter": "mcp",
+        "_mcp_server": "monitor-mcp",
+        "_tool_name": "buscar_issues",
+        "_via_mcp_real": false,
+        "_latencia_ms": 1.0,
+        "_tokens": {
+          "prompt": 0,
+          "completion": 0,
+          "total": 0
+        }
+      },
+      "avaliacao": {
+        "objetivo_alcancado": false,
+        "motivo": "etapa ok - criterio: buscar_issues executado com sucesso",
+        "qualidade": "completa",
+        "problemas_saida": []
+      }
+    }
+  ],
+  "resumo": "Desafio 4: buscar_issues via fallback (_via_mcp_real: false)",
+  "desafio": {
+    "numero": 4,
+    "titulo": "Fallback MCP",
+    "descricao": "buscar_issues com _via_mcp_real: false",
+    "marcador_chave": "_via_mcp_real: false"
+  },
+  "telemetry_stream": [
+    {
+      "timestamp": "2026-07-30T12:36:55.745952",
+      "elapsed_ms": 0,
+      "trace_id": "a4mcpfal1bck",
+      "tipo": "inicio",
+      "dados": {
+        "entrada": "desafio: MCP offline ou sem pip install mcp",
+        "objetivo": "desafio_aula11",
+        "desafio": 4
+      }
+    },
+    {
+      "timestamp": "2026-07-30T12:36:55.745952",
+      "elapsed_ms": 2,
+      "trace_id": "a4mcpfal1bck",
+      "tipo": "ferramenta_executada",
+      "dados": {
+        "ferramenta": "buscar_issues",
+        "sucesso": true,
+        "duracao_ms": 1.0,
+        "tokens": 0
+      }
+    }
+  ],
+  "audit_logs": [
+    {
+      "timestamp": "2026-07-30T12:36:55.745952",
+      "elapsed_ms": 2,
+      "trace_id": "a4mcpfal1bck",
+      "tipo": "ferramenta_executada",
+      "dados": {
+        "ferramenta": "buscar_issues",
+        "sucesso": true,
+        "duracao_ms": 1.0,
+        "tokens": 0
+      }
+    }
+  ],
+  "health_metrics": {
+    "trace_id": "a4mcpfal1bck",
+    "taxa_sucesso_ferramentas": 100.0,
+    "ferramentas_sucesso": 1,
+    "ferramentas_falha": 0,
+    "circuit_breaker_ativacoes": 0,
+    "validacao_payload_falhas": 0,
+    "chamadas_llm": 0
+  },
+  "performance_data": {
+    "trace_id": "a4mcpfal1bck",
+    "tempo_total_ms": 2,
+    "tokens": {
+      "prompt": 0,
+      "completion": 0,
+      "total": 0
+    },
+    "chamadas_llm": 0,
+    "fases": {
+      "agir": {
+        "total_ms": 1.0,
+        "contagem": 1,
+        "max_ms": 1.0,
+        "media_ms": 0
+      }
+    }
+  }
+}

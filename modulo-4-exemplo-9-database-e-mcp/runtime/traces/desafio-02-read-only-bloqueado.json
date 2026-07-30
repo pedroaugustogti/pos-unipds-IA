@@ -1,0 +1,122 @@
+{
+  "trace_id": "a2read0nly01",
+  "agente": "monitor-agent",
+  "tipo_agente": "task_based",
+  "arquitetura": "padrao",
+  "entrada": "desafio: quebrar read_only do buscar_logs_historico",
+  "evento": null,
+  "tempo_total_segundos": 0.0,
+  "tokens_consumidos": {
+    "prompt": 0,
+    "completion": 0,
+    "total": 0
+  },
+  "etapas": [
+    {
+      "etapa": 1,
+      "percepcao": "Desafio 2: tentativa de INSERT com modo read_only no query_template",
+      "plano": {
+        "proxima_acao": "CHAMAR_FERRAMENTA",
+        "nome_ferramenta": "buscar_logs_historico",
+        "argumentos_ferramenta": {
+          "nome_servico": "checkout",
+          "janela_tempo_horas": 24,
+          "nivel_minimo": "WARN"
+        },
+        "criterio_sucesso": "buscar_logs_historico executado com sucesso",
+        "_modo": "mock"
+      },
+      "resultado_acao": {
+        "sucesso": false,
+        "erro": "violacao de read_only: operacao 'INSERT' proibida em modo read_only",
+        "_adapter": "database",
+        "_tokens": {
+          "prompt": 0,
+          "completion": 0,
+          "total": 0
+        }
+      },
+      "avaliacao": {
+        "objetivo_alcancado": false,
+        "motivo": "falha em buscar_logs_historico: violacao de read_only: operacao 'INSERT' proibida em modo read_only",
+        "qualidade": "falha",
+        "problemas_saida": [
+          "violacao de read_only: operacao 'INSERT' proibida em modo read_only"
+        ]
+      }
+    }
+  ],
+  "resumo": "Desafio 2: adapter bloqueou INSERT em modo read_only",
+  "desafio": {
+    "numero": 2,
+    "titulo": "Read-only bloqueia INSERT",
+    "descricao": "db_adapter rejeita escrita antes de tocar no SQLite",
+    "marcador_chave": "violacao de read_only"
+  },
+  "telemetry_stream": [
+    {
+      "timestamp": "2026-07-30T12:36:55.743934",
+      "elapsed_ms": 0,
+      "trace_id": "a2read0nly01",
+      "tipo": "inicio",
+      "dados": {
+        "entrada": "desafio: quebrar read_only do buscar_logs_historico",
+        "objetivo": "desafio_aula11",
+        "desafio": 2
+      }
+    },
+    {
+      "timestamp": "2026-07-30T12:36:55.743934",
+      "elapsed_ms": 1,
+      "trace_id": "a2read0nly01",
+      "tipo": "ferramenta_executada",
+      "dados": {
+        "ferramenta": "buscar_logs_historico",
+        "sucesso": false,
+        "duracao_ms": 0,
+        "tokens": 0
+      }
+    }
+  ],
+  "audit_logs": [
+    {
+      "timestamp": "2026-07-30T12:36:55.743934",
+      "elapsed_ms": 1,
+      "trace_id": "a2read0nly01",
+      "tipo": "ferramenta_executada",
+      "dados": {
+        "ferramenta": "buscar_logs_historico",
+        "sucesso": false,
+        "duracao_ms": 0,
+        "tokens": 0
+      }
+    }
+  ],
+  "health_metrics": {
+    "trace_id": "a2read0nly01",
+    "taxa_sucesso_ferramentas": 0.0,
+    "ferramentas_sucesso": 0,
+    "ferramentas_falha": 1,
+    "circuit_breaker_ativacoes": 0,
+    "validacao_payload_falhas": 0,
+    "chamadas_llm": 0
+  },
+  "performance_data": {
+    "trace_id": "a2read0nly01",
+    "tempo_total_ms": 1,
+    "tokens": {
+      "prompt": 0,
+      "completion": 0,
+      "total": 0
+    },
+    "chamadas_llm": 0,
+    "fases": {
+      "agir": {
+        "total_ms": 0,
+        "contagem": 1,
+        "max_ms": 0,
+        "media_ms": 0
+      }
+    }
+  }
+}
