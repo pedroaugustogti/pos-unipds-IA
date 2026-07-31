@@ -1,0 +1,123 @@
+{
+  "gerado_em": "2026-07-30T13:42:24.434847",
+  "v1": {
+    "tool_selection_accuracy": 0.25,
+    "argument_accuracy": 0.125,
+    "wrong_tool_rate": 0.75,
+    "violacoes": [
+      "tool_selection_accuracy: 0.25 < 0.8",
+      "unnecessary_calls_rate: 0.625 > 0.1",
+      "wrong_tool_rate: 0.75 > 0.15"
+    ]
+  },
+  "v2": {
+    "tool_selection_accuracy": 0.375,
+    "argument_exact_accuracy": 1.0,
+    "tool_confusion_rate": 0.25,
+    "composite_assertiveness_score": 0.438,
+    "violacoes": [
+      "tool_selection_accuracy: 0.375 < 0.8",
+      "prohibited_tool_violation_rate: 0.125 > 0.05",
+      "tool_confusion_rate: 0.25 > 0.1",
+      "composite_assertiveness_score: 0.438 < 0.75"
+    ]
+  },
+  "casos": [
+    {
+      "caso_id": "ts-001",
+      "v1_tool_ok": true,
+      "v2_tool_ok": true,
+      "v1_escolhida": "consultar_metricas",
+      "v2_escolhida": "consultar_metricas",
+      "esperada": "consultar_metricas",
+      "v1_args": 0.0,
+      "v2_args_exato": 1.0,
+      "v2_confusao": false,
+      "melhorou_com_v2": true
+    },
+    {
+      "caso_id": "ts-002",
+      "v1_tool_ok": false,
+      "v2_tool_ok": true,
+      "v1_escolhida": "consultar_metricas",
+      "v2_escolhida": "buscar_logs",
+      "esperada": "buscar_logs",
+      "v1_args": 0.0,
+      "v2_args_exato": 1.0,
+      "v2_confusao": false,
+      "melhorou_com_v2": true
+    },
+    {
+      "caso_id": "ts-003",
+      "v1_tool_ok": false,
+      "v2_tool_ok": false,
+      "v1_escolhida": "consultar_metricas",
+      "v2_escolhida": "consultar_metricas",
+      "esperada": "historico_deploys",
+      "v1_args": 1.0,
+      "v2_args_exato": 1.0,
+      "v2_confusao": true,
+      "melhorou_com_v2": false
+    },
+    {
+      "caso_id": "ts-004",
+      "v1_tool_ok": false,
+      "v2_tool_ok": false,
+      "v1_escolhida": "consultar_metricas",
+      "v2_escolhida": "historico_deploys",
+      "esperada": "buscar_logs_historico",
+      "v1_args": 0.0,
+      "v2_args_exato": 1.0,
+      "v2_confusao": false,
+      "melhorou_com_v2": true
+    },
+    {
+      "caso_id": "ts-005",
+      "v1_tool_ok": false,
+      "v2_tool_ok": false,
+      "v1_escolhida": "consultar_metricas",
+      "v2_escolhida": "buscar_logs_historico",
+      "esperada": "buscar_issues",
+      "v1_args": 0.0,
+      "v2_args_exato": 1.0,
+      "v2_confusao": false,
+      "melhorou_com_v2": true
+    },
+    {
+      "caso_id": "ts-006",
+      "v1_tool_ok": false,
+      "v2_tool_ok": false,
+      "v1_escolhida": "consultar_metricas",
+      "v2_escolhida": "buscar_logs_historico",
+      "esperada": "relatorio_incidente",
+      "v1_args": 0.0,
+      "v2_args_exato": 1.0,
+      "v2_confusao": false,
+      "melhorou_com_v2": true
+    },
+    {
+      "caso_id": "ts-007",
+      "v1_tool_ok": true,
+      "v2_tool_ok": true,
+      "v1_escolhida": "consultar_metricas",
+      "v2_escolhida": "consultar_metricas",
+      "esperada": "consultar_metricas",
+      "v1_args": 0.0,
+      "v2_args_exato": 1.0,
+      "v2_confusao": false,
+      "melhorou_com_v2": true
+    },
+    {
+      "caso_id": "ts-008",
+      "v1_tool_ok": false,
+      "v2_tool_ok": false,
+      "v1_escolhida": "consultar_metricas",
+      "v2_escolhida": "consultar_metricas",
+      "esperada": "buscar_issues",
+      "v1_args": 0.0,
+      "v2_args_exato": 1.0,
+      "v2_confusao": true,
+      "melhorou_com_v2": true
+    }
+  ]
+}

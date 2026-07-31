@@ -1,0 +1,148 @@
+{
+  "suite": "tool_selection_llm",
+  "arquitetura": "padrao",
+  "agente": "monitor-agent",
+  "total_casos": 3,
+  "casos_executados": 3,
+  "casos_solicitados": 3,
+  "duracao_seg": 21.95,
+  "timeout_total_seg": 30.0,
+  "config": {
+    "historico_simulado": true,
+    "passar_entrada_ao_planejador": true,
+    "forcar_planejador": null,
+    "argumentos": {
+      "modo": "normalizado"
+    },
+    "pares_confusaveis": {
+      "buscar_logs": [
+        "buscar_logs_historico",
+        "consultar_metricas"
+      ],
+      "buscar_logs_historico": [
+        "buscar_logs",
+        "consultar_metricas"
+      ],
+      "historico_deploys": [
+        "consultar_metricas",
+        "buscar_issues"
+      ],
+      "buscar_issues": [
+        "historico_deploys",
+        "consultar_metricas"
+      ],
+      "relatorio_incidente": [
+        "consultar_metricas"
+      ]
+    }
+  },
+  "metricas_configuradas": [
+    "tool_selection_accuracy",
+    "argument_accuracy",
+    "argument_exact_accuracy",
+    "unnecessary_calls_rate",
+    "prohibited_tool_violation_rate",
+    "repeat_tool_violation_rate",
+    "wrong_tool_rate",
+    "tool_confusion_rate"
+  ],
+  "resultados_por_caso": [
+    {
+      "caso_id": "ts-001",
+      "tool_esperada": "consultar_metricas",
+      "tool_escolhida": "consultar_metricas",
+      "tool_correta": true,
+      "arg_accuracy": 1.0,
+      "arg_exact_accuracy": 1.0,
+      "chamada_desnecessaria": false,
+      "repeat_tool_violation": false,
+      "tool_confusion": false,
+      "argumentos_detalhe": [
+        {
+          "campo": "nome_servico",
+          "esperado": "pagamentos",
+          "recebido": "pagamentos",
+          "match": true,
+          "match_exato": true
+        }
+      ],
+      "justificativa_esperada": "primeira acao deve ser coletar metricas do servico mencionado",
+      "ferramentas_ja_usadas": [],
+      "modo_planejador": "llm"
+    },
+    {
+      "caso_id": "ts-006",
+      "tool_esperada": "relatorio_incidente",
+      "tool_escolhida": "relatorio_incidente",
+      "tool_correta": true,
+      "arg_accuracy": 1.0,
+      "arg_exact_accuracy": 1.0,
+      "chamada_desnecessaria": false,
+      "repeat_tool_violation": false,
+      "tool_confusion": false,
+      "argumentos_detalhe": [
+        {
+          "campo": "nome_servico",
+          "esperado": "pagamentos",
+          "recebido": "pagamentos",
+          "match": true,
+          "match_exato": true
+        },
+        {
+          "campo": "severidade",
+          "esperado": "alta",
+          "recebido": "alta",
+          "match": true,
+          "match_exato": true
+        }
+      ],
+      "justificativa_esperada": "todas evidencias coletadas, hora de registrar incidente",
+      "ferramentas_ja_usadas": [
+        "consultar_metricas",
+        "buscar_logs",
+        "historico_deploys",
+        "buscar_issues"
+      ],
+      "modo_planejador": "mock_timeout"
+    },
+    {
+      "caso_id": "ts-008",
+      "tool_esperada": "buscar_issues",
+      "tool_escolhida": "buscar_issues",
+      "tool_correta": true,
+      "arg_accuracy": 1.0,
+      "arg_exact_accuracy": 1.0,
+      "chamada_desnecessaria": false,
+      "repeat_tool_violation": false,
+      "tool_confusion": false,
+      "argumentos_detalhe": [
+        {
+          "campo": "repositorio",
+          "esperado": "gateway",
+          "recebido": "org/gateway-service",
+          "match": true,
+          "match_exato": true
+        }
+      ],
+      "justificativa_esperada": "pedido especifico sobre issues, ir direto na tool certa",
+      "ferramentas_ja_usadas": [],
+      "modo_planejador": "mock_timeout"
+    }
+  ],
+  "limiares": {
+    "tool_selection_accuracy": 0.8,
+    "unnecessary_calls_rate": 0.1,
+    "wrong_tool_rate": 0.15,
+    "repeat_tool_violation_rate": 0.0
+  },
+  "violacoes": [],
+  "tool_selection_accuracy": 1.0,
+  "argument_accuracy": 1.0,
+  "argument_exact_accuracy": 1.0,
+  "unnecessary_calls_rate": 0.0,
+  "prohibited_tool_violation_rate": 0.0,
+  "repeat_tool_violation_rate": 0.0,
+  "tool_confusion_rate": 0.0,
+  "wrong_tool_rate": 0.0,
+  "composite_assertiveness_score": 0.8
+}

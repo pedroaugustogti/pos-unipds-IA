@@ -1,0 +1,247 @@
+{
+  "suite": "tool_selection_v1",
+  "arquitetura": "padrao",
+  "agente": "monitor-agent",
+  "total_casos": 8,
+  "config": {
+    "historico_simulado": false,
+    "passar_entrada_ao_planejador": false,
+    "forcar_planejador": "mock",
+    "argumentos": {
+      "modo": "substring"
+    },
+    "pares_confusaveis": {}
+  },
+  "metricas_configuradas": [
+    "tool_selection_accuracy",
+    "argument_accuracy",
+    "unnecessary_calls_rate",
+    "wrong_tool_rate"
+  ],
+  "resultados_por_caso": [
+    {
+      "caso_id": "ts-001",
+      "tool_esperada": "consultar_metricas",
+      "tool_escolhida": "consultar_metricas",
+      "tool_correta": true,
+      "arg_accuracy": 0.0,
+      "arg_exact_accuracy": 0.0,
+      "chamada_desnecessaria": false,
+      "repeat_tool_violation": false,
+      "tool_confusion": false,
+      "argumentos_detalhe": [
+        {
+          "campo": "nome_servico",
+          "esperado": "pagamentos",
+          "recebido": "checkout",
+          "match": false,
+          "match_exato": false
+        }
+      ],
+      "justificativa_esperada": "primeira acao deve ser coletar metricas do servico mencionado",
+      "ferramentas_ja_usadas": [],
+      "modo_planejador": "mock"
+    },
+    {
+      "caso_id": "ts-002",
+      "tool_esperada": "buscar_logs",
+      "tool_escolhida": "consultar_metricas",
+      "tool_correta": false,
+      "arg_accuracy": 0.0,
+      "arg_exact_accuracy": 0.0,
+      "chamada_desnecessaria": true,
+      "repeat_tool_violation": true,
+      "tool_confusion": false,
+      "argumentos_detalhe": [
+        {
+          "campo": "nome_servico",
+          "esperado": "pagamentos",
+          "recebido": "checkout",
+          "match": false,
+          "match_exato": false
+        }
+      ],
+      "justificativa_esperada": "apos confirmar metricas, proximo passo e buscar logs para entender causa",
+      "ferramentas_ja_usadas": [
+        "consultar_metricas"
+      ],
+      "modo_planejador": "mock"
+    },
+    {
+      "caso_id": "ts-003",
+      "tool_esperada": "historico_deploys",
+      "tool_escolhida": "consultar_metricas",
+      "tool_correta": false,
+      "arg_accuracy": 1.0,
+      "arg_exact_accuracy": 1.0,
+      "chamada_desnecessaria": false,
+      "repeat_tool_violation": false,
+      "tool_confusion": false,
+      "argumentos_detalhe": [
+        {
+          "campo": "nome_servico",
+          "esperado": "checkout",
+          "recebido": "checkout",
+          "match": true,
+          "match_exato": true
+        }
+      ],
+      "justificativa_esperada": "entrada menciona deploy, priorizacao de historico_deploys faz sentido",
+      "ferramentas_ja_usadas": [],
+      "modo_planejador": "mock"
+    },
+    {
+      "caso_id": "ts-004",
+      "tool_esperada": "buscar_logs_historico",
+      "tool_escolhida": "consultar_metricas",
+      "tool_correta": false,
+      "arg_accuracy": 0.0,
+      "arg_exact_accuracy": 0.0,
+      "chamada_desnecessaria": true,
+      "repeat_tool_violation": true,
+      "tool_confusion": false,
+      "argumentos_detalhe": [
+        {
+          "campo": "nome_servico",
+          "esperado": "autenticacao",
+          "recebido": "checkout",
+          "match": false,
+          "match_exato": false
+        }
+      ],
+      "justificativa_esperada": "logs API ja coletados, buscar historico no banco para correlacao temporal",
+      "ferramentas_ja_usadas": [
+        "consultar_metricas",
+        "buscar_logs"
+      ],
+      "modo_planejador": "mock"
+    },
+    {
+      "caso_id": "ts-005",
+      "tool_esperada": "buscar_issues",
+      "tool_escolhida": "consultar_metricas",
+      "tool_correta": false,
+      "arg_accuracy": 0.0,
+      "arg_exact_accuracy": 1.0,
+      "chamada_desnecessaria": true,
+      "repeat_tool_violation": true,
+      "tool_confusion": false,
+      "argumentos_detalhe": [
+        {
+          "campo": "repositorio",
+          "esperado": "checkout",
+          "recebido": "",
+          "match": false,
+          "match_exato": true
+        }
+      ],
+      "justificativa_esperada": "evidencias coletadas, buscar issues para correlacionar com incidente conhecido",
+      "ferramentas_ja_usadas": [
+        "consultar_metricas",
+        "buscar_logs",
+        "historico_deploys"
+      ],
+      "modo_planejador": "mock"
+    },
+    {
+      "caso_id": "ts-006",
+      "tool_esperada": "relatorio_incidente",
+      "tool_escolhida": "consultar_metricas",
+      "tool_correta": false,
+      "arg_accuracy": 0.0,
+      "arg_exact_accuracy": 0.5,
+      "chamada_desnecessaria": true,
+      "repeat_tool_violation": true,
+      "tool_confusion": false,
+      "argumentos_detalhe": [
+        {
+          "campo": "nome_servico",
+          "esperado": "pagamentos",
+          "recebido": "checkout",
+          "match": false,
+          "match_exato": false
+        },
+        {
+          "campo": "severidade",
+          "esperado": "alta",
+          "recebido": "",
+          "match": false,
+          "match_exato": true
+        }
+      ],
+      "justificativa_esperada": "todas evidencias coletadas, hora de registrar incidente",
+      "ferramentas_ja_usadas": [
+        "consultar_metricas",
+        "buscar_logs",
+        "historico_deploys",
+        "buscar_issues"
+      ],
+      "modo_planejador": "mock"
+    },
+    {
+      "caso_id": "ts-007",
+      "tool_esperada": "consultar_metricas",
+      "tool_escolhida": "consultar_metricas",
+      "tool_correta": true,
+      "arg_accuracy": 0.0,
+      "arg_exact_accuracy": 0.0,
+      "chamada_desnecessaria": false,
+      "repeat_tool_violation": false,
+      "tool_confusion": false,
+      "argumentos_detalhe": [
+        {
+          "campo": "nome_servico",
+          "esperado": "notificacoes",
+          "recebido": "checkout",
+          "match": false,
+          "match_exato": false
+        }
+      ],
+      "justificativa_esperada": "pedido de status comeca com metricas",
+      "ferramentas_ja_usadas": [],
+      "modo_planejador": "mock"
+    },
+    {
+      "caso_id": "ts-008",
+      "tool_esperada": "buscar_issues",
+      "tool_escolhida": "consultar_metricas",
+      "tool_correta": false,
+      "arg_accuracy": 0.0,
+      "arg_exact_accuracy": 1.0,
+      "chamada_desnecessaria": true,
+      "repeat_tool_violation": false,
+      "tool_confusion": false,
+      "argumentos_detalhe": [
+        {
+          "campo": "repositorio",
+          "esperado": "gateway",
+          "recebido": "",
+          "match": false,
+          "match_exato": true
+        }
+      ],
+      "justificativa_esperada": "pedido especifico sobre issues, ir direto na tool certa",
+      "ferramentas_ja_usadas": [],
+      "modo_planejador": "mock"
+    }
+  ],
+  "limiares": {
+    "tool_selection_accuracy": 0.8,
+    "unnecessary_calls_rate": 0.1,
+    "wrong_tool_rate": 0.15
+  },
+  "violacoes": [
+    "tool_selection_accuracy: 0.25 < 0.8",
+    "unnecessary_calls_rate: 0.625 > 0.1",
+    "wrong_tool_rate: 0.75 > 0.15"
+  ],
+  "tool_selection_accuracy": 0.25,
+  "argument_accuracy": 0.125,
+  "argument_exact_accuracy": 0.438,
+  "unnecessary_calls_rate": 0.625,
+  "prohibited_tool_violation_rate": 0.625,
+  "repeat_tool_violation_rate": 0.5,
+  "tool_confusion_rate": 0.0,
+  "wrong_tool_rate": 0.75,
+  "composite_assertiveness_score": 0.169
+}

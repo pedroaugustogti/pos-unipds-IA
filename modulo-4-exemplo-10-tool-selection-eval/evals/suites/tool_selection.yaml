@@ -1,0 +1,23 @@
+# Tool Selection Eval Suite v1 (baseline)
+# Mede se o agente escolhe a ferramenta certa para cada cenario.
+
+name: tool_selection_v1
+dataset: ../datasets/tool_selection_cases.json
+
+config:
+  historico_simulado: false
+  passar_entrada_ao_planejador: false
+  forcar_planejador: mock
+  argumentos:
+    modo: substring
+
+metricas:
+  - tool_selection_accuracy    # % de vezes que escolheu a tool correta
+  - argument_accuracy          # % de argumentos com valor correto
+  - unnecessary_calls_rate     # % de chamadas a tools que nao deveriam ser chamadas
+  - wrong_tool_rate            # % de vezes que escolheu tool errada
+
+limiares:
+  tool_selection_accuracy: 0.8     # minimo 80% de acertos
+  unnecessary_calls_rate: 0.1      # maximo 10% de chamadas desnecessarias
+  wrong_tool_rate: 0.15            # maximo 15% de tools erradas 

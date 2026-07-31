@@ -1,0 +1,43 @@
+# Tool Selection Eval — suite para execucao com planejador LLM
+# Usa historico simulado e entrada completa para avaliacao assertiva.
+
+name: tool_selection_llm
+dataset: ../datasets/tool_selection_cases.json
+
+config:
+  historico_simulado: true
+  passar_entrada_ao_planejador: true
+  forcar_planejador: null
+  argumentos:
+    modo: normalizado
+  pares_confusaveis:
+    buscar_logs:
+      - buscar_logs_historico
+      - consultar_metricas
+    buscar_logs_historico:
+      - buscar_logs
+      - consultar_metricas
+    historico_deploys:
+      - consultar_metricas
+      - buscar_issues
+    buscar_issues:
+      - historico_deploys
+      - consultar_metricas
+    relatorio_incidente:
+      - consultar_metricas
+
+metricas:
+  - tool_selection_accuracy
+  - argument_accuracy
+  - argument_exact_accuracy
+  - unnecessary_calls_rate
+  - prohibited_tool_violation_rate
+  - repeat_tool_violation_rate
+  - wrong_tool_rate
+  - tool_confusion_rate
+
+limiares:
+  tool_selection_accuracy: 0.8
+  unnecessary_calls_rate: 0.1
+  wrong_tool_rate: 0.15
+  repeat_tool_violation_rate: 0.0

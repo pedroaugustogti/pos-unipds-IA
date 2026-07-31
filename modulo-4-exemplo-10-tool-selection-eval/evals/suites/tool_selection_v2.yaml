@@ -1,0 +1,47 @@
+# Tool Selection Eval Suite v2 — metricas ampliadas e avaliacao mais assertiva
+name: tool_selection_v2
+dataset: ../datasets/tool_selection_cases.json
+
+config:
+  historico_simulado: true
+  passar_entrada_ao_planejador: true
+  forcar_planejador: mock
+  argumentos:
+    modo: normalizado
+  pares_confusaveis:
+    buscar_logs:
+      - buscar_logs_historico
+      - consultar_metricas
+    buscar_logs_historico:
+      - buscar_logs
+      - consultar_metricas
+    consultar_metricas:
+      - buscar_logs
+    historico_deploys:
+      - consultar_metricas
+    buscar_issues:
+      - relatorio_incidente
+      - consultar_metricas
+
+metricas:
+  - tool_selection_accuracy
+  - argument_exact_accuracy
+  - prohibited_tool_violation_rate
+  - repeat_tool_violation_rate
+  - tool_confusion_rate
+  - composite_assertiveness_score
+
+pesos_composite:
+  tool_selection_accuracy: 0.45
+  argument_exact_accuracy: 0.30
+  prohibited_tool_violation_rate: -0.15
+  repeat_tool_violation_rate: -0.05
+  tool_confusion_rate: -0.05
+
+limiares:
+  tool_selection_accuracy: 0.8
+  argument_exact_accuracy: 0.75
+  prohibited_tool_violation_rate: 0.05
+  repeat_tool_violation_rate: 0.0
+  tool_confusion_rate: 0.1
+  composite_assertiveness_score: 0.75
