@@ -2,8 +2,11 @@
 
 import json
 import re
+import shutil
 import subprocess
+import tempfile
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from pre_requisitos_aula import (
@@ -15,6 +18,8 @@ from relatorio_didatico import ferramenta_gerar_relatorio_didatico_aula
 UNIPDS_REPO = "unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada"
 UNIPDS_API = f"https://api.github.com/repos/{UNIPDS_REPO}/contents"
 UNIPDS_URL_BASE = f"https://github.com/{UNIPDS_REPO}/tree/main"
+UNIPDS_GIT_URL = f"https://github.com/{UNIPDS_REPO}.git"
+_GITHUB_MAX_WORKERS = 12
 
 MAPA_MODULOS_UNIPDS = {
     1: "modulo01-fundamentos-ia-e-llms",
@@ -147,21 +152,102 @@ def _listar_atividades_unipds(pasta_unipds: str) -> list[dict]:
 
 
 def _github_baixar_recursivo(caminho_unipds: str, destino: Path) -> list[str]:
-    baixados: list[str] = []
+    """Compat: delega para download otimizado."""
+    arquivos, _ = _github_baixar_base(caminho_unipds, destino)
+    return arquivos
+
+
+def _github_coletar_arquivos(caminho_unipds: str, prefixo: str = "") -> list[tuple[str, str]]:
+    """Lista (caminho_relativo, download_url) para download paralelo."""
+    arquivos: list[tuple[str, str]] = []
     for item in _github_conteudo(caminho_unipds):
         nome = item["name"]
+        rel = f"{prefixo}/{nome}" if prefixo else nome
         if item.get("type") == "file":
-            destino.mkdir(parents=True, exist_ok=True)
             url = item.get("download_url")
-            if not url:
-                continue
-            conteudo = _github_request(url)
-            caminho_local = destino / nome
-            caminho_local.write_bytes(conteudo)
-            baixados.append(str(caminho_local))
+            if url:
+                arquivos.append((rel, url))
         elif item.get("type") == "dir":
-            baixados.extend(_github_baixar_recursivo(f"{caminho_unipds}/{nome}", destino / nome))
-    return baixados
+            arquivos.extend(_github_coletar_arquivos(f"{caminho_unipds}/{nome}", rel))
+    return arquivos
+
+
+def _baixar_um_arquivo(destino: Path, rel: str, url: str) -> str:
+    conteudo = _github_request(url)
+    caminho_local = destino / Path(rel)
+    caminho_local.parent.mkdir(parents=True, exist_ok=True)
+    caminho_local.write_bytes(conteudo)
+    return str(caminho_local)
+
+
+def _github_baixar_paralelo(caminho_unipds: str, destino: Path) -> list[str]:
+    """Baixa arquivos em paralelo via API GitHub (fallback)."""
+    destino.mkdir(parents=True, exist_ok=True)
+    fila = _github_coletar_arquivos(caminho_unipds)
+    baixados: list[str] = []
+    with ThreadPoolExecutor(max_workers=_GITHUB_MAX_WORKERS) as pool:
+        futures = [
+            pool.submit(_baixar_um_arquivo, destino, rel, url)
+            for rel, url in fila
+        ]
+        for fut in as_completed(futures):
+            baixados.append(fut.result())
+    return sorted(baixados)
+
+
+def _github_baixar_sparse_git(caminho_unipds: str, destino: Path) -> list[str]:
+    """Baixa pasta UNIPDS via git sparse-checkout (1 clone + 1 checkout)."""
+    destino.mkdir(parents=True, exist_ok=True)
+    caminho_norm = caminho_unipds.replace("\\", "/").strip("/")
+
+    with tempfile.TemporaryDirectory(prefix="unipds_sparse_") as tmp:
+        clone_dir = Path(tmp) / "repo"
+        clone = subprocess.run(
+            [
+                "git", "clone", "--depth", "1", "--filter=blob:none",
+                "--sparse", UNIPDS_GIT_URL, str(clone_dir),
+            ],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        if clone.returncode != 0:
+            raise RuntimeError(clone.stderr or clone.stdout or "git clone falhou")
+
+        checkout = subprocess.run(
+            ["git", "sparse-checkout", "set", caminho_norm],
+            cwd=clone_dir,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        if checkout.returncode != 0:
+            raise RuntimeError(checkout.stderr or checkout.stdout or "sparse-checkout falhou")
+
+        src = clone_dir.joinpath(*caminho_norm.split("/"))
+        if not src.is_dir():
+            raise FileNotFoundError(f"Pasta nao encontrada apos sparse-checkout: {caminho_norm}")
+
+        baixados: list[str] = []
+        for path in src.rglob("*"):
+            if not path.is_file():
+                continue
+            rel = path.relative_to(src)
+            alvo = destino / rel
+            alvo.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(path, alvo)
+            baixados.append(str(alvo))
+        return baixados
+
+
+def _github_baixar_base(caminho_unipds: str, destino: Path) -> tuple[list[str], str]:
+    """Tenta git sparse (rapido); fallback para API paralela."""
+    try:
+        return _github_baixar_sparse_git(caminho_unipds, destino), "git_sparse"
+    except Exception:
+        return _github_baixar_paralelo(caminho_unipds, destino), "api_paralela"
 
 
 def ferramenta_comparar_repositorios(argumentos: dict) -> dict:
@@ -281,7 +367,7 @@ def ferramenta_baixar_base_unipds(argumentos: dict) -> dict:
 
     try:
         destino.mkdir(parents=True, exist_ok=True)
-        arquivos = _github_baixar_recursivo(caminho_unipds, destino)
+        arquivos, metodo = _github_baixar_base(caminho_unipds, destino)
     except Exception as erro:
         return _erro(f"Falha ao baixar base UNIPDS: {erro}")
 
@@ -290,6 +376,7 @@ def ferramenta_baixar_base_unipds(argumentos: dict) -> dict:
         "caminho_local": str(destino),
         "caminho_unipds": caminho_unipds,
         "arquivos_baixados": len(arquivos),
+        "metodo_download": metodo,
         "amostra_arquivos": arquivos[:15],
     })
 
