@@ -1,0 +1,99 @@
+conteudo:
+  entrada:
+    evidencia: &id001
+      buscar_issues:
+        _entrada:
+          estado: estado_sem_api_key
+          labels:
+          - item: labels_1
+          - item: labels_2
+          repositorio: repositorio_sem_api_key
+        contagem_total: 2
+        issues:
+        - autor: eng-oncall
+          criado_em: '2026-07-31T07:11:28.049985'
+          estado: open
+          labels:
+          - bug
+          - p1
+          - producao
+          numero: 142
+          repositorio: repositorio_sem_api_key
+          titulo: Latencia elevada apos deploy v2.4.1
+        - autor: monitoring-bot
+          criado_em: '2026-07-31T04:11:28.049985'
+          estado: open
+          labels:
+          - bug
+          - p2
+          numero: 138
+          repositorio: repositorio_sem_api_key
+          titulo: Circuit breaker ativando para upstream-payments
+      buscar_logs:
+        _entrada:
+          janela_tempo_minutos: 78
+          nivel_minimo: nivel_minimo_sem_api_key
+          nome_servico: pagamentos
+        contagem_total: 3
+        eventos:
+        - mensagem: 'timeout conectando a upstream-payments: 30s exceeded'
+          nivel: ERROR
+          servico: pagamentos
+          timestamp: '2026-07-31T08:59:25.962356'
+        - mensagem: circuit breaker aberto para upstream-payments
+          nivel: ERROR
+          servico: pagamentos
+          timestamp: '2026-07-31T09:03:25.962356'
+        - mensagem: 'latencia p99 acima do SLO: 342ms > 200ms'
+          nivel: WARN
+          servico: pagamentos
+          timestamp: '2026-07-31T09:06:25.962356'
+      buscar_logs_historico:
+        _entrada:
+          janela_tempo_horas: 319
+          nivel_minimo: nivel_minimo_sem_api_key
+          nome_servico: pagamentos
+        contagem_total: 3
+        eventos:
+        - mensagem: connection timeout em pagamentos
+          nivel: ERROR
+          servico: pagamentos
+          timestamp: '2024-01-15T10:32:00Z'
+        - mensagem: pool de conexoes esgotado em pagamentos
+          nivel: WARN
+          servico: pagamentos
+          timestamp: '2024-01-15T10:28:00Z'
+        - mensagem: 'query lenta detectada em pagamentos: 4500ms'
+          nivel: ERROR
+          servico: pagamentos
+          timestamp: '2024-01-15T10:25:00Z'
+      consultar_metricas:
+        _entrada:
+          janela_tempo_minutos: 263
+          nome_servico: pagamentos
+        coletado_em: '2026-07-31T09:11:23.900164'
+        latencia_p99_ms: 342.7
+        servico: pagamentos
+        status: degradado
+        taxa_erro: 4.2
+        vazao_rps: 1847
+      historico_deploys:
+        _entrada:
+          janela_tempo_horas: 241
+          nome_servico: pagamentos
+        contagem_total: 1
+        deploys:
+        - autor: ci/cd-pipeline
+          data_hora: '2026-07-31T08:26:28.037987'
+          mudancas: refactor connection pool settings
+          status: sucesso
+          versao: v2.4.1
+    nome_servico: pagamentos
+    recomendacao: *id001
+    severidade: severidade_sem_api_key
+  ferramenta: relatorio_incidente
+  observacoes:
+    id_incidente: id_incidente_sem_api_key
+    status: status_sem_api_key
+id: lon_975bea80
+timestamp: '2026-07-31T09:11:28.060993'

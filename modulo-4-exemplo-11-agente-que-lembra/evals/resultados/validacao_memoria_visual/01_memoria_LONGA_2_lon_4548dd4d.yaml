@@ -1,0 +1,15 @@
+conteudo:
+  entrada:
+    janela_tempo_horas: 270
+    nome_servico: nome_servico_sem_api_key
+  ferramenta: historico_deploys
+  observacoes:
+    contagem_total: 1
+    deploys:
+    - autor: ci/cd-pipeline
+      data_hora: '2026-07-31T08:24:37.301240'
+      mudancas: refactor connection pool settings
+      status: sucesso
+      versao: v2.4.1
+id: lon_4548dd4d
+timestamp: '2026-07-31T09:09:37.332486'

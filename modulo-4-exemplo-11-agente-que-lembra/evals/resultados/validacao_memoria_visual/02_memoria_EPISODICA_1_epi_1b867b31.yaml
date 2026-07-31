@@ -1,0 +1,38 @@
+conteudo:
+  erros_encontrados: []
+  etapas_executadas: 7
+  ferramentas_chamadas:
+  - consultar_metricas
+  - buscar_logs
+  - historico_deploys
+  - buscar_logs_historico
+  - buscar_issues
+  - relatorio_incidente
+  objetivo: resolver_incidente
+  resultado_final: 'Diagnostico: [consultar_metricas] latencia_p99_ms=342.7, vazao_rps=1847,
+    taxa_erro=4.2, status=degradado, servico=pagamentos, coletado_em=2026-07-31T09:11:23.900164
+    | [buscar_logs] eventos=[{''timestamp'': ''2026-07-31T08:59:25.962356'', ''nivel'':
+    ''ERROR'', ''mensagem'': ''timeout conectando a upstream-payments: 30s exceeded'',
+    ''servico'': ''pagamentos''}, {''timestamp'': ''2026-07-31T09:03:25.962356'',
+    ''nivel'': ''ERROR'', ''mensagem'': ''circuit breaker aberto para upstream-payments'',
+    ''servico'': ''pagamentos''}, {''timestamp'': ''2026-07-31T09:06:25.962356'',
+    ''nivel'': ''WARN'', ''mensagem'': ''latencia p99 acima do SLO: 342ms > 200ms'',
+    ''servico'': ''pagamentos''}], contagem_total=3 | [historico_deploys] deploys=[{''versao'':
+    ''v2.4.1'', ''data_hora'': ''2026-07-31T08:26:28.037987'', ''autor'': ''ci/cd-pipeline'',
+    ''status'': ''sucesso'', ''mudancas'': ''refactor connection pool settings''}],
+    contagem_total=1 | [buscar_logs_historico] eventos=[{''timestamp'': ''2024-01-15T10:32:00Z'',
+    ''nivel'': ''ERROR'', ''mensagem'': ''connection timeout em pagamentos'', ''servico'':
+    ''pagamentos''}, {''timestamp'': ''2024-01-15T10:28:00Z'', ''nivel'': ''WARN'',
+    ''mensagem'': ''pool de conexoes esgotado em pagamentos'', ''servico'': ''pagamentos''},
+    {''timestamp'': ''2024-01-15T10:25:00Z'', ''nivel'': ''ERROR'', ''mensagem'':
+    ''query lenta detectada em pagamentos: 4500ms'', ''servico'': ''pagamentos''}],
+    contagem_total=3 | [buscar_issues] issues=[{''numero'': 142, ''titulo'': ''Latencia
+    elevada apos deploy v2.4.1'', ''estado'': ''open'', ''labels'': [''bug'', ''p1'',
+    ''producao''], ''autor'': ''eng-oncall'', ''criado_em'': ''2026-07-31T07:11:28.049985'',
+    ''repositorio'': ''repositorio_sem_api_key''}, {''numero'': 138, ''titulo'': ''Circuit
+    breaker ativando para upstream-payments'', ''estado'': ''open'', ''labels'': [''bug'',
+    ''p2''], ''autor'': ''monitoring-bot'', ''criado_em'': ''2026-07-31T04:11:28.049985'',
+    ''repositorio'': ''repositorio_sem_api_key''}], contagem_total=2 | [relatorio_incidente]
+    id_incidente=id_incidente_sem_api_key, status=status_sem_api_key'
+id: epi_1b867b31
+timestamp: '2026-07-31T09:11:28.050988'

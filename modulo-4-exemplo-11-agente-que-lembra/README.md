@@ -31,11 +31,11 @@ cd modulo-4-exemplo-11-agente-que-lembra
 
 ## Critérios de sucesso
 
-- [ ] Pasta criada no padrão `modulo-4-exemplo-11-*`
-- [ ] README local com objetivo, passo a passo e critérios de sucesso
-- [ ] Atividade executada conforme material UNIPDS
-- [ ] README raiz do `pos-unipds-IA` atualizado
-- [ ] `.env` não commitado (apenas `.env.example` quando aplicável)
+- [x] Pasta criada no padrão `modulo-4-exemplo-11-*`
+- [x] README local com objetivo, passo a passo e critérios de sucesso
+- [x] Atividade executada conforme material UNIPDS
+- [x] README raiz do `pos-unipds-IA` atualizado
+- [x] `.env` não commitado (apenas `.env.example` quando aplicável)
 
 ## Material base UNIPDS
 
@@ -280,3 +280,11 @@ Se a segunda execução não muda em nada, confira: `longa.ativo: true`, `episod
 Sem memória, o agente é amnésico — investiga o mesmo serviço dez vezes do zero. Com memória estruturada por contrato, cada execução acumula evidência: fatos confirmados em `longa`, padrões em `episodica`, conhecimento semântico em `contextual` (aula 14), lições generalizáveis em `reflection_store/` (também aula 14).
 
 > Memória não é cache. É contexto filtrado, governado por política, gravado por adapter, recuperado pelo runtime — sem o agente saber de onde veio.
+
+---
+
+## Próxima aula
+
+**Exemplo seguinte:** [`modulo-4-exemplo-12-embeddings-reflexao-evolutiva`](../modulo-4-exemplo-12-embeddings-reflexao-evolutiva/) ([aula14-embeddings-reflexao-evolutiva](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula14-embeddings-reflexao-evolutiva)).
+
+Implementa memória **contextual** (`embedding_adapter`), `reflection_store` e evolução do agente com busca semântica (limiar 0.7).

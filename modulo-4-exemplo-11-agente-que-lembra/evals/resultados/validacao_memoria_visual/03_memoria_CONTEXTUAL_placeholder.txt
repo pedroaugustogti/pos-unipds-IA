@@ -1,0 +1,3 @@
+Memoria contextual (embedding, limiar 0.7) — contrato ativo, sem arquivos no Ex. 11.
+Diretorio: memory_store/contextual/ (0 arquivos)
+Implementacao prevista na aula 14 (embedding_adapter).

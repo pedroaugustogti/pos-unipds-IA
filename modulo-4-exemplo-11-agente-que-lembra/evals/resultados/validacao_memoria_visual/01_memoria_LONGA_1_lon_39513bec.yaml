@@ -1,0 +1,14 @@
+conteudo:
+  entrada:
+    janela_tempo_minutos: 458
+    nome_servico: nome_servico_sem_api_key
+  ferramenta: consultar_metricas
+  observacoes:
+    coletado_em: '2026-07-31T09:09:33.180240'
+    latencia_p99_ms: 342.7
+    servico: nome_servico_sem_api_key
+    status: degradado
+    taxa_erro: 4.2
+    vazao_rps: 1847
+id: lon_39513bec
+timestamp: '2026-07-31T09:09:37.329492'

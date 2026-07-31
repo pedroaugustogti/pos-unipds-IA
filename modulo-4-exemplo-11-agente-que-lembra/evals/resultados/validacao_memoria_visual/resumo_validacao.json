@@ -1,0 +1,1473 @@
+{
+  "execucao_1": {
+    "entrada": "alerta de latencia no servico de pagamentos",
+    "resultado": {
+      "objetivo": "resolver_incidente",
+      "entrada": "alerta de latencia no servico de pagamentos",
+      "tipo_agente": "task_based",
+      "arquitetura": "padrao",
+      "evento": null,
+      "etapa": 7,
+      "chamadas_ferramenta": 6,
+      "chamadas_por_ferramenta": {
+        "consultar_metricas": 1,
+        "buscar_logs": 1,
+        "historico_deploys": 1,
+        "buscar_logs_historico": 1,
+        "buscar_issues": 1,
+        "relatorio_incidente": 1
+      },
+      "max_etapas": 12,
+      "max_chamadas_ferramenta": 12,
+      "limites_por_ferramenta": {
+        "consultar_metricas": 3,
+        "buscar_logs": 3,
+        "buscar_logs_historico": 2,
+        "historico_deploys": 2,
+        "buscar_issues": 1,
+        "relatorio_incidente": 1
+      },
+      "sem_progresso": 3,
+      "limite_tempo_segundos": 120,
+      "max_tokens": 50000,
+      "tokens_consumidos": {
+        "prompt": 0,
+        "completion": 0,
+        "total": 0
+      },
+      "acoes_sensiveis": [
+        "rollback_deploy"
+      ],
+      "historico": [
+        {
+          "etapa": 1,
+          "percepcao": "Alerta: alerta de latencia no servico de pagamentos\nModo: task_based\nEtapas realizadas: 1/12\nChamadas de ferramenta: 0/12",
+          "plano": {
+            "proxima_acao": "CHAMAR_FERRAMENTA",
+            "nome_ferramenta": "consultar_metricas",
+            "argumentos_ferramenta": {
+              "nome_servico": "pagamentos",
+              "janela_tempo_minutos": 263
+            },
+            "criterio_sucesso": "consultar_metricas executado com sucesso"
+          },
+          "resultado_acao": {
+            "sucesso": true,
+            "dados": {
+              "latencia_p99_ms": 342.7,
+              "vazao_rps": 1847,
+              "taxa_erro": 4.2,
+              "status": "degradado",
+              "servico": "pagamentos",
+              "coletado_em": "2026-07-31T09:11:23.900164",
+              "_entrada": {
+                "nome_servico": "pagamentos",
+                "janela_tempo_minutos": 263
+              }
+            },
+            "_adapter": "rest",
+            "_latencia_ms": 2105.5
+          },
+          "avaliacao": {
+            "objetivo_alcancado": false,
+            "motivo": "etapa ok - criterio: consultar_metricas executado com sucesso",
+            "qualidade": "completa",
+            "problemas_saida": []
+          }
+        },
+        {
+          "etapa": 2,
+          "percepcao": "Alerta: alerta de latencia no servico de pagamentos\nModo: task_based\nEtapa 1 [consultar_metricas]: {\"sucesso\": true, \"dados\": {\"latencia_p99_ms\": 342.7, \"vazao_rps\": 1847, \"taxa_erro\": 4.2, \"status\": \"degradado\", \"servico\": \"pagamentos\", \"coletado_em\": \"2026-07-31T09:11:23.900164\", \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 263}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2105.5}\nFerramentas ja utilizadas: consultar_metricas\nEtapas realizadas: 2/12\nChamadas de ferramenta: 1/12",
+          "plano": {
+            "proxima_acao": "CHAMAR_FERRAMENTA",
+            "nome_ferramenta": "buscar_logs",
+            "argumentos_ferramenta": {
+              "nome_servico": "pagamentos",
+              "janela_tempo_minutos": 78,
+              "nivel_minimo": "nivel_minimo_sem_api_key"
+            },
+            "criterio_sucesso": "buscar_logs executado com sucesso"
+          },
+          "resultado_acao": {
+            "sucesso": true,
+            "dados": {
+              "eventos": [
+                {
+                  "timestamp": "2026-07-31T08:59:25.962356",
+                  "nivel": "ERROR",
+                  "mensagem": "timeout conectando a upstream-payments: 30s exceeded",
+                  "servico": "pagamentos"
+                },
+                {
+                  "timestamp": "2026-07-31T09:03:25.962356",
+                  "nivel": "ERROR",
+                  "mensagem": "circuit breaker aberto para upstream-payments",
+                  "servico": "pagamentos"
+                },
+                {
+                  "timestamp": "2026-07-31T09:06:25.962356",
+                  "nivel": "WARN",
+                  "mensagem": "latencia p99 acima do SLO: 342ms > 200ms",
+                  "servico": "pagamentos"
+                }
+              ],
+              "contagem_total": 3,
+              "_entrada": {
+                "nome_servico": "pagamentos",
+                "janela_tempo_minutos": 78,
+                "nivel_minimo": "nivel_minimo_sem_api_key"
+              }
+            },
+            "_adapter": "rest",
+            "_latencia_ms": 2053.2
+          },
+          "avaliacao": {
+            "objetivo_alcancado": false,
+            "motivo": "etapa ok - criterio: buscar_logs executado com sucesso",
+            "qualidade": "completa",
+            "problemas_saida": []
+          }
+        },
+        {
+          "etapa": 3,
+          "percepcao": "Alerta: alerta de latencia no servico de pagamentos\nModo: task_based\nEtapa 1 [consultar_metricas]: {\"sucesso\": true, \"dados\": {\"latencia_p99_ms\": 342.7, \"vazao_rps\": 1847, \"taxa_erro\": 4.2, \"status\": \"degradado\", \"servico\": \"pagamentos\", \"coletado_em\": \"2026-07-31T09:11:23.900164\", \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 263}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2105.5}\nEtapa 2 [buscar_logs]: {\"sucesso\": true, \"dados\": {\"eventos\": [{\"timestamp\": \"2026-07-31T08:59:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"timeout conectando a upstream-payments: 30s exceeded\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:03:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"circuit breaker aberto para upstream-payments\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:06:25.962356\", \"nivel\": \"WARN\", \"mensagem\": \"latencia p99 acima do SLO: 342ms > 200ms\", \"servico\": \"pagamentos\"}], \"contagem_total\": 3, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 78, \"nivel_minimo\": \"nivel_minimo_sem_api_key\"}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2053.2}\nFerramentas ja utilizadas: buscar_logs, consultar_metricas\nEtapas realizadas: 3/12\nChamadas de ferramenta: 2/12",
+          "plano": {
+            "proxima_acao": "CHAMAR_FERRAMENTA",
+            "nome_ferramenta": "historico_deploys",
+            "argumentos_ferramenta": {
+              "nome_servico": "pagamentos",
+              "janela_tempo_horas": 241
+            },
+            "criterio_sucesso": "historico_deploys executado com sucesso"
+          },
+          "resultado_acao": {
+            "sucesso": true,
+            "dados": {
+              "deploys": [
+                {
+                  "versao": "v2.4.1",
+                  "data_hora": "2026-07-31T08:26:28.037987",
+                  "autor": "ci/cd-pipeline",
+                  "status": "sucesso",
+                  "mudancas": "refactor connection pool settings"
+                }
+              ],
+              "contagem_total": 1,
+              "_entrada": {
+                "nome_servico": "pagamentos",
+                "janela_tempo_horas": 241
+              }
+            },
+            "_adapter": "rest",
+            "_latencia_ms": 2077.6
+          },
+          "avaliacao": {
+            "objetivo_alcancado": false,
+            "motivo": "etapa ok - criterio: historico_deploys executado com sucesso",
+            "qualidade": "completa",
+            "problemas_saida": []
+          }
+        },
+        {
+          "etapa": 4,
+          "percepcao": "Alerta: alerta de latencia no servico de pagamentos\nModo: task_based\nEtapa 1 [consultar_metricas]: {\"sucesso\": true, \"dados\": {\"latencia_p99_ms\": 342.7, \"vazao_rps\": 1847, \"taxa_erro\": 4.2, \"status\": \"degradado\", \"servico\": \"pagamentos\", \"coletado_em\": \"2026-07-31T09:11:23.900164\", \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 263}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2105.5}\nEtapa 2 [buscar_logs]: {\"sucesso\": true, \"dados\": {\"eventos\": [{\"timestamp\": \"2026-07-31T08:59:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"timeout conectando a upstream-payments: 30s exceeded\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:03:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"circuit breaker aberto para upstream-payments\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:06:25.962356\", \"nivel\": \"WARN\", \"mensagem\": \"latencia p99 acima do SLO: 342ms > 200ms\", \"servico\": \"pagamentos\"}], \"contagem_total\": 3, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 78, \"nivel_minimo\": \"nivel_minimo_sem_api_key\"}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2053.2}\nEtapa 3 [historico_deploys]: {\"sucesso\": true, \"dados\": {\"deploys\": [{\"versao\": \"v2.4.1\", \"data_hora\": \"2026-07-31T08:26:28.037987\", \"autor\": \"ci/cd-pipeline\", \"status\": \"sucesso\", \"mudancas\": \"refactor connection pool settings\"}], \"contagem_total\": 1, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_horas\": 241}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2077.6}\nFerramentas ja utilizadas: buscar_logs, consultar_metricas, historico_deploys\nEtapas realizadas: 4/12\nChamadas de ferramenta: 3/12",
+          "plano": {
+            "proxima_acao": "CHAMAR_FERRAMENTA",
+            "nome_ferramenta": "buscar_logs_historico",
+            "argumentos_ferramenta": {
+              "nome_servico": "pagamentos",
+              "janela_tempo_horas": 319,
+              "nivel_minimo": "nivel_minimo_sem_api_key"
+            },
+            "criterio_sucesso": "buscar_logs_historico executado com sucesso"
+          },
+          "resultado_acao": {
+            "sucesso": true,
+            "dados": {
+              "eventos": [
+                {
+                  "timestamp": "2024-01-15T10:32:00Z",
+                  "nivel": "ERROR",
+                  "mensagem": "connection timeout em pagamentos",
+                  "servico": "pagamentos"
+                },
+                {
+                  "timestamp": "2024-01-15T10:28:00Z",
+                  "nivel": "WARN",
+                  "mensagem": "pool de conexoes esgotado em pagamentos",
+                  "servico": "pagamentos"
+                },
+                {
+                  "timestamp": "2024-01-15T10:25:00Z",
+                  "nivel": "ERROR",
+                  "mensagem": "query lenta detectada em pagamentos: 4500ms",
+                  "servico": "pagamentos"
+                }
+              ],
+              "contagem_total": 3,
+              "_entrada": {
+                "nome_servico": "pagamentos",
+                "janela_tempo_horas": 319,
+                "nivel_minimo": "nivel_minimo_sem_api_key"
+              }
+            },
+            "_adapter": "database",
+            "_modo": "read_only",
+            "_query_segura": "SELECT timestamp, level, service, message FROM logs WHERE service = $1\n  AND timestamp > datetime('now', '-' || $2 || ' hours')\n  AND level_priority >=\n    CASE $3\n      WHEN 'ERROR' THEN 3\n      WHEN 'WARN' THEN 2\n      WHEN 'INFO' THEN 1\n      ELSE 0\n    END\nORDER BY timestamp DESC LIMIT 100\n",
+            "_parametros_count": 3,
+            "_simulado": true,
+            "_latencia_ms": 0.0
+          },
+          "avaliacao": {
+            "objetivo_alcancado": false,
+            "motivo": "etapa ok - criterio: buscar_logs_historico executado com sucesso",
+            "qualidade": "completa",
+            "problemas_saida": []
+          }
+        },
+        {
+          "etapa": 5,
+          "percepcao": "Alerta: alerta de latencia no servico de pagamentos\nModo: task_based\nEtapa 1 [consultar_metricas]: {\"sucesso\": true, \"dados\": {\"latencia_p99_ms\": 342.7, \"vazao_rps\": 1847, \"taxa_erro\": 4.2, \"status\": \"degradado\", \"servico\": \"pagamentos\", \"coletado_em\": \"2026-07-31T09:11:23.900164\", \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 263}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2105.5}\nEtapa 2 [buscar_logs]: {\"sucesso\": true, \"dados\": {\"eventos\": [{\"timestamp\": \"2026-07-31T08:59:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"timeout conectando a upstream-payments: 30s exceeded\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:03:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"circuit breaker aberto para upstream-payments\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:06:25.962356\", \"nivel\": \"WARN\", \"mensagem\": \"latencia p99 acima do SLO: 342ms > 200ms\", \"servico\": \"pagamentos\"}], \"contagem_total\": 3, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 78, \"nivel_minimo\": \"nivel_minimo_sem_api_key\"}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2053.2}\nEtapa 3 [historico_deploys]: {\"sucesso\": true, \"dados\": {\"deploys\": [{\"versao\": \"v2.4.1\", \"data_hora\": \"2026-07-31T08:26:28.037987\", \"autor\": \"ci/cd-pipeline\", \"status\": \"sucesso\", \"mudancas\": \"refactor connection pool settings\"}], \"contagem_total\": 1, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_horas\": 241}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2077.6}\nEtapa 4 [buscar_logs_historico]: {\"sucesso\": true, \"dados\": {\"eventos\": [{\"timestamp\": \"2024-01-15T10:32:00Z\", \"nivel\": \"ERROR\", \"mensagem\": \"connection timeout em pagamentos\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2024-01-15T10:28:00Z\", \"nivel\": \"WARN\", \"mensagem\": \"pool de conexoes esgotado em pagamentos\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2024-01-15T10:25:00Z\", \"nivel\": \"ERROR\", \"mensagem\": \"query lenta detectada em pagamentos: 4500ms\", \"servico\": \"pagamentos\"}], \"contagem_total\": 3, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_horas\": 319, \"nivel_minimo\": \"nivel_minimo_sem_api_key\"}}, \"_adapter\": \"database\", \"_modo\": \"read_only\", \"_query_segura\": \"SELECT timestamp, level, service, message FROM logs WHERE service = $1\\n  AND timestamp > datetime('now', '-' || $2 || ' hours')\\n  AND level_priority >=\\n    CASE $3\\n      WHEN 'ERROR' THEN 3\\n      WHEN 'WARN' THEN 2\\n      WHEN 'INFO' THEN 1\\n      ELSE 0\\n    END\\nORDER BY timestamp DESC LIMIT 100\\n\", \"_parametros_count\": 3, \"_simulado\": true, \"_latencia_ms\": 0.0}\nFerramentas ja utilizadas: buscar_logs, buscar_logs_historico, consultar_metricas, historico_deploys\nEtapas realizadas: 5/12\nChamadas de ferramenta: 4/12",
+          "plano": {
+            "proxima_acao": "CHAMAR_FERRAMENTA",
+            "nome_ferramenta": "buscar_issues",
+            "argumentos_ferramenta": {
+              "repositorio": "repositorio_sem_api_key",
+              "estado": "estado_sem_api_key",
+              "labels": [
+                {
+                  "item": "labels_1"
+                },
+                {
+                  "item": "labels_2"
+                }
+              ]
+            },
+            "criterio_sucesso": "buscar_issues executado com sucesso"
+          },
+          "resultado_acao": {
+            "sucesso": true,
+            "dados": {
+              "issues": [
+                {
+                  "numero": 142,
+                  "titulo": "Latencia elevada apos deploy v2.4.1",
+                  "estado": "open",
+                  "labels": [
+                    "bug",
+                    "p1",
+                    "producao"
+                  ],
+                  "autor": "eng-oncall",
+                  "criado_em": "2026-07-31T07:11:28.049985",
+                  "repositorio": "repositorio_sem_api_key"
+                },
+                {
+                  "numero": 138,
+                  "titulo": "Circuit breaker ativando para upstream-payments",
+                  "estado": "open",
+                  "labels": [
+                    "bug",
+                    "p2"
+                  ],
+                  "autor": "monitoring-bot",
+                  "criado_em": "2026-07-31T04:11:28.049985",
+                  "repositorio": "repositorio_sem_api_key"
+                }
+              ],
+              "contagem_total": 2,
+              "_entrada": {
+                "repositorio": "repositorio_sem_api_key",
+                "estado": "estado_sem_api_key",
+                "labels": [
+                  {
+                    "item": "labels_1"
+                  },
+                  {
+                    "item": "labels_2"
+                  }
+                ]
+              }
+            },
+            "_adapter": "mcp",
+            "_mcp_server": "monitor-mcp",
+            "_tool_name": "buscar_issues",
+            "_via_mcp_real": false,
+            "_latencia_ms": 1.0
+          },
+          "avaliacao": {
+            "objetivo_alcancado": false,
+            "motivo": "etapa ok - criterio: buscar_issues executado com sucesso",
+            "qualidade": "completa",
+            "problemas_saida": []
+          }
+        },
+        {
+          "etapa": 6,
+          "percepcao": "Alerta: alerta de latencia no servico de pagamentos\nModo: task_based\nEtapa 1 [consultar_metricas]: {\"sucesso\": true, \"dados\": {\"latencia_p99_ms\": 342.7, \"vazao_rps\": 1847, \"taxa_erro\": 4.2, \"status\": \"degradado\", \"servico\": \"pagamentos\", \"coletado_em\": \"2026-07-31T09:11:23.900164\", \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 263}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2105.5}\nEtapa 2 [buscar_logs]: {\"sucesso\": true, \"dados\": {\"eventos\": [{\"timestamp\": \"2026-07-31T08:59:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"timeout conectando a upstream-payments: 30s exceeded\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:03:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"circuit breaker aberto para upstream-payments\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:06:25.962356\", \"nivel\": \"WARN\", \"mensagem\": \"latencia p99 acima do SLO: 342ms > 200ms\", \"servico\": \"pagamentos\"}], \"contagem_total\": 3, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 78, \"nivel_minimo\": \"nivel_minimo_sem_api_key\"}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2053.2}\nEtapa 3 [historico_deploys]: {\"sucesso\": true, \"dados\": {\"deploys\": [{\"versao\": \"v2.4.1\", \"data_hora\": \"2026-07-31T08:26:28.037987\", \"autor\": \"ci/cd-pipeline\", \"status\": \"sucesso\", \"mudancas\": \"refactor connection pool settings\"}], \"contagem_total\": 1, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_horas\": 241}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2077.6}\nEtapa 4 [buscar_logs_historico]: {\"sucesso\": true, \"dados\": {\"eventos\": [{\"timestamp\": \"2024-01-15T10:32:00Z\", \"nivel\": \"ERROR\", \"mensagem\": \"connection timeout em pagamentos\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2024-01-15T10:28:00Z\", \"nivel\": \"WARN\", \"mensagem\": \"pool de conexoes esgotado em pagamentos\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2024-01-15T10:25:00Z\", \"nivel\": \"ERROR\", \"mensagem\": \"query lenta detectada em pagamentos: 4500ms\", \"servico\": \"pagamentos\"}], \"contagem_total\": 3, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_horas\": 319, \"nivel_minimo\": \"nivel_minimo_sem_api_key\"}}, \"_adapter\": \"database\", \"_modo\": \"read_only\", \"_query_segura\": \"SELECT timestamp, level, service, message FROM logs WHERE service = $1\\n  AND timestamp > datetime('now', '-' || $2 || ' hours')\\n  AND level_priority >=\\n    CASE $3\\n      WHEN 'ERROR' THEN 3\\n      WHEN 'WARN' THEN 2\\n      WHEN 'INFO' THEN 1\\n      ELSE 0\\n    END\\nORDER BY timestamp DESC LIMIT 100\\n\", \"_parametros_count\": 3, \"_simulado\": true, \"_latencia_ms\": 0.0}\nEtapa 5 [buscar_issues]: {\"sucesso\": true, \"dados\": {\"issues\": [{\"numero\": 142, \"titulo\": \"Latencia elevada apos deploy v2.4.1\", \"estado\": \"open\", \"labels\": [\"bug\", \"p1\", \"producao\"], \"autor\": \"eng-oncall\", \"criado_em\": \"2026-07-31T07:11:28.049985\", \"repositorio\": \"repositorio_sem_api_key\"}, {\"numero\": 138, \"titulo\": \"Circuit breaker ativando para upstream-payments\", \"estado\": \"open\", \"labels\": [\"bug\", \"p2\"], \"autor\": \"monitoring-bot\", \"criado_em\": \"2026-07-31T04:11:28.049985\", \"repositorio\": \"repositorio_sem_api_key\"}], \"contagem_total\": 2, \"_entrada\": {\"repositorio\": \"repositorio_sem_api_key\", \"estado\": \"estado_sem_api_key\", \"labels\": [{\"item\": \"labels_1\"}, {\"item\": \"labels_2\"}]}}, \"_adapter\": \"mcp\", \"_mcp_server\": \"monitor-mcp\", \"_tool_name\": \"buscar_issues\", \"_via_mcp_real\": false, \"_latencia_ms\": 1.0}\nFerramentas ja utilizadas: buscar_issues, buscar_logs, buscar_logs_historico, consultar_metricas, historico_deploys\nEtapas realizadas: 6/12\nChamadas de ferramenta: 5/12",
+          "plano": {
+            "proxima_acao": "CHAMAR_FERRAMENTA",
+            "nome_ferramenta": "relatorio_incidente",
+            "argumentos_ferramenta": {
+              "nome_servico": "pagamentos",
+              "severidade": "severidade_sem_api_key",
+              "evidencia": {
+                "consultar_metricas": {
+                  "latencia_p99_ms": 342.7,
+                  "vazao_rps": 1847,
+                  "taxa_erro": 4.2,
+                  "status": "degradado",
+                  "servico": "pagamentos",
+                  "coletado_em": "2026-07-31T09:11:23.900164",
+                  "_entrada": {
+                    "nome_servico": "pagamentos",
+                    "janela_tempo_minutos": 263
+                  }
+                },
+                "buscar_logs": {
+                  "eventos": [
+                    {
+                      "timestamp": "2026-07-31T08:59:25.962356",
+                      "nivel": "ERROR",
+                      "mensagem": "timeout conectando a upstream-payments: 30s exceeded",
+                      "servico": "pagamentos"
+                    },
+                    {
+                      "timestamp": "2026-07-31T09:03:25.962356",
+                      "nivel": "ERROR",
+                      "mensagem": "circuit breaker aberto para upstream-payments",
+                      "servico": "pagamentos"
+                    },
+                    {
+                      "timestamp": "2026-07-31T09:06:25.962356",
+                      "nivel": "WARN",
+                      "mensagem": "latencia p99 acima do SLO: 342ms > 200ms",
+                      "servico": "pagamentos"
+                    }
+                  ],
+                  "contagem_total": 3,
+                  "_entrada": {
+                    "nome_servico": "pagamentos",
+                    "janela_tempo_minutos": 78,
+                    "nivel_minimo": "nivel_minimo_sem_api_key"
+                  }
+                },
+                "historico_deploys": {
+                  "deploys": [
+                    {
+                      "versao": "v2.4.1",
+                      "data_hora": "2026-07-31T08:26:28.037987",
+                      "autor": "ci/cd-pipeline",
+                      "status": "sucesso",
+                      "mudancas": "refactor connection pool settings"
+                    }
+                  ],
+                  "contagem_total": 1,
+                  "_entrada": {
+                    "nome_servico": "pagamentos",
+                    "janela_tempo_horas": 241
+                  }
+                },
+                "buscar_logs_historico": {
+                  "eventos": [
+                    {
+                      "timestamp": "2024-01-15T10:32:00Z",
+                      "nivel": "ERROR",
+                      "mensagem": "connection timeout em pagamentos",
+                      "servico": "pagamentos"
+                    },
+                    {
+                      "timestamp": "2024-01-15T10:28:00Z",
+                      "nivel": "WARN",
+                      "mensagem": "pool de conexoes esgotado em pagamentos",
+                      "servico": "pagamentos"
+                    },
+                    {
+                      "timestamp": "2024-01-15T10:25:00Z",
+                      "nivel": "ERROR",
+                      "mensagem": "query lenta detectada em pagamentos: 4500ms",
+                      "servico": "pagamentos"
+                    }
+                  ],
+                  "contagem_total": 3,
+                  "_entrada": {
+                    "nome_servico": "pagamentos",
+                    "janela_tempo_horas": 319,
+                    "nivel_minimo": "nivel_minimo_sem_api_key"
+                  }
+                },
+                "buscar_issues": {
+                  "issues": [
+                    {
+                      "numero": 142,
+                      "titulo": "Latencia elevada apos deploy v2.4.1",
+                      "estado": "open",
+                      "labels": [
+                        "bug",
+                        "p1",
+                        "producao"
+                      ],
+                      "autor": "eng-oncall",
+                      "criado_em": "2026-07-31T07:11:28.049985",
+                      "repositorio": "repositorio_sem_api_key"
+                    },
+                    {
+                      "numero": 138,
+                      "titulo": "Circuit breaker ativando para upstream-payments",
+                      "estado": "open",
+                      "labels": [
+                        "bug",
+                        "p2"
+                      ],
+                      "autor": "monitoring-bot",
+                      "criado_em": "2026-07-31T04:11:28.049985",
+                      "repositorio": "repositorio_sem_api_key"
+                    }
+                  ],
+                  "contagem_total": 2,
+                  "_entrada": {
+                    "repositorio": "repositorio_sem_api_key",
+                    "estado": "estado_sem_api_key",
+                    "labels": [
+                      {
+                        "item": "labels_1"
+                      },
+                      {
+                        "item": "labels_2"
+                      }
+                    ]
+                  }
+                }
+              },
+              "recomendacao": {
+                "consultar_metricas": {
+                  "latencia_p99_ms": 342.7,
+                  "vazao_rps": 1847,
+                  "taxa_erro": 4.2,
+                  "status": "degradado",
+                  "servico": "pagamentos",
+                  "coletado_em": "2026-07-31T09:11:23.900164",
+                  "_entrada": {
+                    "nome_servico": "pagamentos",
+                    "janela_tempo_minutos": 263
+                  }
+                },
+                "buscar_logs": {
+                  "eventos": [
+                    {
+                      "timestamp": "2026-07-31T08:59:25.962356",
+                      "nivel": "ERROR",
+                      "mensagem": "timeout conectando a upstream-payments: 30s exceeded",
+                      "servico": "pagamentos"
+                    },
+                    {
+                      "timestamp": "2026-07-31T09:03:25.962356",
+                      "nivel": "ERROR",
+                      "mensagem": "circuit breaker aberto para upstream-payments",
+                      "servico": "pagamentos"
+                    },
+                    {
+                      "timestamp": "2026-07-31T09:06:25.962356",
+                      "nivel": "WARN",
+                      "mensagem": "latencia p99 acima do SLO: 342ms > 200ms",
+                      "servico": "pagamentos"
+                    }
+                  ],
+                  "contagem_total": 3,
+                  "_entrada": {
+                    "nome_servico": "pagamentos",
+                    "janela_tempo_minutos": 78,
+                    "nivel_minimo": "nivel_minimo_sem_api_key"
+                  }
+                },
+                "historico_deploys": {
+                  "deploys": [
+                    {
+                      "versao": "v2.4.1",
+                      "data_hora": "2026-07-31T08:26:28.037987",
+                      "autor": "ci/cd-pipeline",
+                      "status": "sucesso",
+                      "mudancas": "refactor connection pool settings"
+                    }
+                  ],
+                  "contagem_total": 1,
+                  "_entrada": {
+                    "nome_servico": "pagamentos",
+                    "janela_tempo_horas": 241
+                  }
+                },
+                "buscar_logs_historico": {
+                  "eventos": [
+                    {
+                      "timestamp": "2024-01-15T10:32:00Z",
+                      "nivel": "ERROR",
+                      "mensagem": "connection timeout em pagamentos",
+                      "servico": "pagamentos"
+                    },
+                    {
+                      "timestamp": "2024-01-15T10:28:00Z",
+                      "nivel": "WARN",
+                      "mensagem": "pool de conexoes esgotado em pagamentos",
+                      "servico": "pagamentos"
+                    },
+                    {
+                      "timestamp": "2024-01-15T10:25:00Z",
+                      "nivel": "ERROR",
+                      "mensagem": "query lenta detectada em pagamentos: 4500ms",
+                      "servico": "pagamentos"
+                    }
+                  ],
+                  "contagem_total": 3,
+                  "_entrada": {
+                    "nome_servico": "pagamentos",
+                    "janela_tempo_horas": 319,
+                    "nivel_minimo": "nivel_minimo_sem_api_key"
+                  }
+                },
+                "buscar_issues": {
+                  "issues": [
+                    {
+                      "numero": 142,
+                      "titulo": "Latencia elevada apos deploy v2.4.1",
+                      "estado": "open",
+                      "labels": [
+                        "bug",
+                        "p1",
+                        "producao"
+                      ],
+                      "autor": "eng-oncall",
+                      "criado_em": "2026-07-31T07:11:28.049985",
+                      "repositorio": "repositorio_sem_api_key"
+                    },
+                    {
+                      "numero": 138,
+                      "titulo": "Circuit breaker ativando para upstream-payments",
+                      "estado": "open",
+                      "labels": [
+                        "bug",
+                        "p2"
+                      ],
+                      "autor": "monitoring-bot",
+                      "criado_em": "2026-07-31T04:11:28.049985",
+                      "repositorio": "repositorio_sem_api_key"
+                    }
+                  ],
+                  "contagem_total": 2,
+                  "_entrada": {
+                    "repositorio": "repositorio_sem_api_key",
+                    "estado": "estado_sem_api_key",
+                    "labels": [
+                      {
+                        "item": "labels_1"
+                      },
+                      {
+                        "item": "labels_2"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "criterio_sucesso": "relatorio_incidente executado com sucesso"
+          },
+          "resultado_acao": {
+            "sucesso": true,
+            "dados": {
+              "id_incidente": "id_incidente_sem_api_key",
+              "status": "status_sem_api_key",
+              "_entrada": {
+                "nome_servico": "pagamentos",
+                "severidade": "severidade_sem_api_key",
+                "evidencia": {
+                  "consultar_metricas": {
+                    "latencia_p99_ms": 342.7,
+                    "vazao_rps": 1847,
+                    "taxa_erro": 4.2,
+                    "status": "degradado",
+                    "servico": "pagamentos",
+                    "coletado_em": "2026-07-31T09:11:23.900164",
+                    "_entrada": {
+                      "nome_servico": "pagamentos",
+                      "janela_tempo_minutos": 263
+                    }
+                  },
+                  "buscar_logs": {
+                    "eventos": [
+                      {
+                        "timestamp": "2026-07-31T08:59:25.962356",
+                        "nivel": "ERROR",
+                        "mensagem": "timeout conectando a upstream-payments: 30s exceeded",
+                        "servico": "pagamentos"
+                      },
+                      {
+                        "timestamp": "2026-07-31T09:03:25.962356",
+                        "nivel": "ERROR",
+                        "mensagem": "circuit breaker aberto para upstream-payments",
+                        "servico": "pagamentos"
+                      },
+                      {
+                        "timestamp": "2026-07-31T09:06:25.962356",
+                        "nivel": "WARN",
+                        "mensagem": "latencia p99 acima do SLO: 342ms > 200ms",
+                        "servico": "pagamentos"
+                      }
+                    ],
+                    "contagem_total": 3,
+                    "_entrada": {
+                      "nome_servico": "pagamentos",
+                      "janela_tempo_minutos": 78,
+                      "nivel_minimo": "nivel_minimo_sem_api_key"
+                    }
+                  },
+                  "historico_deploys": {
+                    "deploys": [
+                      {
+                        "versao": "v2.4.1",
+                        "data_hora": "2026-07-31T08:26:28.037987",
+                        "autor": "ci/cd-pipeline",
+                        "status": "sucesso",
+                        "mudancas": "refactor connection pool settings"
+                      }
+                    ],
+                    "contagem_total": 1,
+                    "_entrada": {
+                      "nome_servico": "pagamentos",
+                      "janela_tempo_horas": 241
+                    }
+                  },
+                  "buscar_logs_historico": {
+                    "eventos": [
+                      {
+                        "timestamp": "2024-01-15T10:32:00Z",
+                        "nivel": "ERROR",
+                        "mensagem": "connection timeout em pagamentos",
+                        "servico": "pagamentos"
+                      },
+                      {
+                        "timestamp": "2024-01-15T10:28:00Z",
+                        "nivel": "WARN",
+                        "mensagem": "pool de conexoes esgotado em pagamentos",
+                        "servico": "pagamentos"
+                      },
+                      {
+                        "timestamp": "2024-01-15T10:25:00Z",
+                        "nivel": "ERROR",
+                        "mensagem": "query lenta detectada em pagamentos: 4500ms",
+                        "servico": "pagamentos"
+                      }
+                    ],
+                    "contagem_total": 3,
+                    "_entrada": {
+                      "nome_servico": "pagamentos",
+                      "janela_tempo_horas": 319,
+                      "nivel_minimo": "nivel_minimo_sem_api_key"
+                    }
+                  },
+                  "buscar_issues": {
+                    "issues": [
+                      {
+                        "numero": 142,
+                        "titulo": "Latencia elevada apos deploy v2.4.1",
+                        "estado": "open",
+                        "labels": [
+                          "bug",
+                          "p1",
+                          "producao"
+                        ],
+                        "autor": "eng-oncall",
+                        "criado_em": "2026-07-31T07:11:28.049985",
+                        "repositorio": "repositorio_sem_api_key"
+                      },
+                      {
+                        "numero": 138,
+                        "titulo": "Circuit breaker ativando para upstream-payments",
+                        "estado": "open",
+                        "labels": [
+                          "bug",
+                          "p2"
+                        ],
+                        "autor": "monitoring-bot",
+                        "criado_em": "2026-07-31T04:11:28.049985",
+                        "repositorio": "repositorio_sem_api_key"
+                      }
+                    ],
+                    "contagem_total": 2,
+                    "_entrada": {
+                      "repositorio": "repositorio_sem_api_key",
+                      "estado": "estado_sem_api_key",
+                      "labels": [
+                        {
+                          "item": "labels_1"
+                        },
+                        {
+                          "item": "labels_2"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "recomendacao": {
+                  "consultar_metricas": {
+                    "latencia_p99_ms": 342.7,
+                    "vazao_rps": 1847,
+                    "taxa_erro": 4.2,
+                    "status": "degradado",
+                    "servico": "pagamentos",
+                    "coletado_em": "2026-07-31T09:11:23.900164",
+                    "_entrada": {
+                      "nome_servico": "pagamentos",
+                      "janela_tempo_minutos": 263
+                    }
+                  },
+                  "buscar_logs": {
+                    "eventos": [
+                      {
+                        "timestamp": "2026-07-31T08:59:25.962356",
+                        "nivel": "ERROR",
+                        "mensagem": "timeout conectando a upstream-payments: 30s exceeded",
+                        "servico": "pagamentos"
+                      },
+                      {
+                        "timestamp": "2026-07-31T09:03:25.962356",
+                        "nivel": "ERROR",
+                        "mensagem": "circuit breaker aberto para upstream-payments",
+                        "servico": "pagamentos"
+                      },
+                      {
+                        "timestamp": "2026-07-31T09:06:25.962356",
+                        "nivel": "WARN",
+                        "mensagem": "latencia p99 acima do SLO: 342ms > 200ms",
+                        "servico": "pagamentos"
+                      }
+                    ],
+                    "contagem_total": 3,
+                    "_entrada": {
+                      "nome_servico": "pagamentos",
+                      "janela_tempo_minutos": 78,
+                      "nivel_minimo": "nivel_minimo_sem_api_key"
+                    }
+                  },
+                  "historico_deploys": {
+                    "deploys": [
+                      {
+                        "versao": "v2.4.1",
+                        "data_hora": "2026-07-31T08:26:28.037987",
+                        "autor": "ci/cd-pipeline",
+                        "status": "sucesso",
+                        "mudancas": "refactor connection pool settings"
+                      }
+                    ],
+                    "contagem_total": 1,
+                    "_entrada": {
+                      "nome_servico": "pagamentos",
+                      "janela_tempo_horas": 241
+                    }
+                  },
+                  "buscar_logs_historico": {
+                    "eventos": [
+                      {
+                        "timestamp": "2024-01-15T10:32:00Z",
+                        "nivel": "ERROR",
+                        "mensagem": "connection timeout em pagamentos",
+                        "servico": "pagamentos"
+                      },
+                      {
+                        "timestamp": "2024-01-15T10:28:00Z",
+                        "nivel": "WARN",
+                        "mensagem": "pool de conexoes esgotado em pagamentos",
+                        "servico": "pagamentos"
+                      },
+                      {
+                        "timestamp": "2024-01-15T10:25:00Z",
+                        "nivel": "ERROR",
+                        "mensagem": "query lenta detectada em pagamentos: 4500ms",
+                        "servico": "pagamentos"
+                      }
+                    ],
+                    "contagem_total": 3,
+                    "_entrada": {
+                      "nome_servico": "pagamentos",
+                      "janela_tempo_horas": 319,
+                      "nivel_minimo": "nivel_minimo_sem_api_key"
+                    }
+                  },
+                  "buscar_issues": {
+                    "issues": [
+                      {
+                        "numero": 142,
+                        "titulo": "Latencia elevada apos deploy v2.4.1",
+                        "estado": "open",
+                        "labels": [
+                          "bug",
+                          "p1",
+                          "producao"
+                        ],
+                        "autor": "eng-oncall",
+                        "criado_em": "2026-07-31T07:11:28.049985",
+                        "repositorio": "repositorio_sem_api_key"
+                      },
+                      {
+                        "numero": 138,
+                        "titulo": "Circuit breaker ativando para upstream-payments",
+                        "estado": "open",
+                        "labels": [
+                          "bug",
+                          "p2"
+                        ],
+                        "autor": "monitoring-bot",
+                        "criado_em": "2026-07-31T04:11:28.049985",
+                        "repositorio": "repositorio_sem_api_key"
+                      }
+                    ],
+                    "contagem_total": 2,
+                    "_entrada": {
+                      "repositorio": "repositorio_sem_api_key",
+                      "estado": "estado_sem_api_key",
+                      "labels": [
+                        {
+                          "item": "labels_1"
+                        },
+                        {
+                          "item": "labels_2"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "avaliacao": {
+            "objetivo_alcancado": false,
+            "motivo": "etapa ok - criterio: relatorio_incidente executado com sucesso",
+            "qualidade": "completa",
+            "problemas_saida": []
+          }
+        },
+        {
+          "etapa": 7,
+          "percepcao": "Alerta: alerta de latencia no servico de pagamentos\nModo: task_based\nEtapa 1 [consultar_metricas]: {\"sucesso\": true, \"dados\": {\"latencia_p99_ms\": 342.7, \"vazao_rps\": 1847, \"taxa_erro\": 4.2, \"status\": \"degradado\", \"servico\": \"pagamentos\", \"coletado_em\": \"2026-07-31T09:11:23.900164\", \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 263}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2105.5}\nEtapa 2 [buscar_logs]: {\"sucesso\": true, \"dados\": {\"eventos\": [{\"timestamp\": \"2026-07-31T08:59:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"timeout conectando a upstream-payments: 30s exceeded\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:03:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"circuit breaker aberto para upstream-payments\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:06:25.962356\", \"nivel\": \"WARN\", \"mensagem\": \"latencia p99 acima do SLO: 342ms > 200ms\", \"servico\": \"pagamentos\"}], \"contagem_total\": 3, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 78, \"nivel_minimo\": \"nivel_minimo_sem_api_key\"}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2053.2}\nEtapa 3 [historico_deploys]: {\"sucesso\": true, \"dados\": {\"deploys\": [{\"versao\": \"v2.4.1\", \"data_hora\": \"2026-07-31T08:26:28.037987\", \"autor\": \"ci/cd-pipeline\", \"status\": \"sucesso\", \"mudancas\": \"refactor connection pool settings\"}], \"contagem_total\": 1, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_horas\": 241}}, \"_adapter\": \"rest\", \"_latencia_ms\": 2077.6}\nEtapa 4 [buscar_logs_historico]: {\"sucesso\": true, \"dados\": {\"eventos\": [{\"timestamp\": \"2024-01-15T10:32:00Z\", \"nivel\": \"ERROR\", \"mensagem\": \"connection timeout em pagamentos\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2024-01-15T10:28:00Z\", \"nivel\": \"WARN\", \"mensagem\": \"pool de conexoes esgotado em pagamentos\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2024-01-15T10:25:00Z\", \"nivel\": \"ERROR\", \"mensagem\": \"query lenta detectada em pagamentos: 4500ms\", \"servico\": \"pagamentos\"}], \"contagem_total\": 3, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_horas\": 319, \"nivel_minimo\": \"nivel_minimo_sem_api_key\"}}, \"_adapter\": \"database\", \"_modo\": \"read_only\", \"_query_segura\": \"SELECT timestamp, level, service, message FROM logs WHERE service = $1\\n  AND timestamp > datetime('now', '-' || $2 || ' hours')\\n  AND level_priority >=\\n    CASE $3\\n      WHEN 'ERROR' THEN 3\\n      WHEN 'WARN' THEN 2\\n      WHEN 'INFO' THEN 1\\n      ELSE 0\\n    END\\nORDER BY timestamp DESC LIMIT 100\\n\", \"_parametros_count\": 3, \"_simulado\": true, \"_latencia_ms\": 0.0}\nEtapa 5 [buscar_issues]: {\"sucesso\": true, \"dados\": {\"issues\": [{\"numero\": 142, \"titulo\": \"Latencia elevada apos deploy v2.4.1\", \"estado\": \"open\", \"labels\": [\"bug\", \"p1\", \"producao\"], \"autor\": \"eng-oncall\", \"criado_em\": \"2026-07-31T07:11:28.049985\", \"repositorio\": \"repositorio_sem_api_key\"}, {\"numero\": 138, \"titulo\": \"Circuit breaker ativando para upstream-payments\", \"estado\": \"open\", \"labels\": [\"bug\", \"p2\"], \"autor\": \"monitoring-bot\", \"criado_em\": \"2026-07-31T04:11:28.049985\", \"repositorio\": \"repositorio_sem_api_key\"}], \"contagem_total\": 2, \"_entrada\": {\"repositorio\": \"repositorio_sem_api_key\", \"estado\": \"estado_sem_api_key\", \"labels\": [{\"item\": \"labels_1\"}, {\"item\": \"labels_2\"}]}}, \"_adapter\": \"mcp\", \"_mcp_server\": \"monitor-mcp\", \"_tool_name\": \"buscar_issues\", \"_via_mcp_real\": false, \"_latencia_ms\": 1.0}\nEtapa 6 [relatorio_incidente]: {\"sucesso\": true, \"dados\": {\"id_incidente\": \"id_incidente_sem_api_key\", \"status\": \"status_sem_api_key\", \"_entrada\": {\"nome_servico\": \"pagamentos\", \"severidade\": \"severidade_sem_api_key\", \"evidencia\": {\"consultar_metricas\": {\"latencia_p99_ms\": 342.7, \"vazao_rps\": 1847, \"taxa_erro\": 4.2, \"status\": \"degradado\", \"servico\": \"pagamentos\", \"coletado_em\": \"2026-07-31T09:11:23.900164\", \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 263}}, \"buscar_logs\": {\"eventos\": [{\"timestamp\": \"2026-07-31T08:59:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"timeout conectando a upstream-payments: 30s exceeded\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:03:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"circuit breaker aberto para upstream-payments\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:06:25.962356\", \"nivel\": \"WARN\", \"mensagem\": \"latencia p99 acima do SLO: 342ms > 200ms\", \"servico\": \"pagamentos\"}], \"contagem_total\": 3, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 78, \"nivel_minimo\": \"nivel_minimo_sem_api_key\"}}, \"historico_deploys\": {\"deploys\": [{\"versao\": \"v2.4.1\", \"data_hora\": \"2026-07-31T08:26:28.037987\", \"autor\": \"ci/cd-pipeline\", \"status\": \"sucesso\", \"mudancas\": \"refactor connection pool settings\"}], \"contagem_total\": 1, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_horas\": 241}}, \"buscar_logs_historico\": {\"eventos\": [{\"timestamp\": \"2024-01-15T10:32:00Z\", \"nivel\": \"ERROR\", \"mensagem\": \"connection timeout em pagamentos\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2024-01-15T10:28:00Z\", \"nivel\": \"WARN\", \"mensagem\": \"pool de conexoes esgotado em pagamentos\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2024-01-15T10:25:00Z\", \"nivel\": \"ERROR\", \"mensagem\": \"query lenta detectada em pagamentos: 4500ms\", \"servico\": \"pagamentos\"}], \"contagem_total\": 3, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_horas\": 319, \"nivel_minimo\": \"nivel_minimo_sem_api_key\"}}, \"buscar_issues\": {\"issues\": [{\"numero\": 142, \"titulo\": \"Latencia elevada apos deploy v2.4.1\", \"estado\": \"open\", \"labels\": [\"bug\", \"p1\", \"producao\"], \"autor\": \"eng-oncall\", \"criado_em\": \"2026-07-31T07:11:28.049985\", \"repositorio\": \"repositorio_sem_api_key\"}, {\"numero\": 138, \"titulo\": \"Circuit breaker ativando para upstream-payments\", \"estado\": \"open\", \"labels\": [\"bug\", \"p2\"], \"autor\": \"monitoring-bot\", \"criado_em\": \"2026-07-31T04:11:28.049985\", \"repositorio\": \"repositorio_sem_api_key\"}], \"contagem_total\": 2, \"_entrada\": {\"repositorio\": \"repositorio_sem_api_key\", \"estado\": \"estado_sem_api_key\", \"labels\": [{\"item\": \"labels_1\"}, {\"item\": \"labels_2\"}]}}}, \"recomendacao\": {\"consultar_metricas\": {\"latencia_p99_ms\": 342.7, \"vazao_rps\": 1847, \"taxa_erro\": 4.2, \"status\": \"degradado\", \"servico\": \"pagamentos\", \"coletado_em\": \"2026-07-31T09:11:23.900164\", \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 263}}, \"buscar_logs\": {\"eventos\": [{\"timestamp\": \"2026-07-31T08:59:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"timeout conectando a upstream-payments: 30s exceeded\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:03:25.962356\", \"nivel\": \"ERROR\", \"mensagem\": \"circuit breaker aberto para upstream-payments\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2026-07-31T09:06:25.962356\", \"nivel\": \"WARN\", \"mensagem\": \"latencia p99 acima do SLO: 342ms > 200ms\", \"servico\": \"pagamentos\"}], \"contagem_total\": 3, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_minutos\": 78, \"nivel_minimo\": \"nivel_minimo_sem_api_key\"}}, \"historico_deploys\": {\"deploys\": [{\"versao\": \"v2.4.1\", \"data_hora\": \"2026-07-31T08:26:28.037987\", \"autor\": \"ci/cd-pipeline\", \"status\": \"sucesso\", \"mudancas\": \"refactor connection pool settings\"}], \"contagem_total\": 1, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_horas\": 241}}, \"buscar_logs_historico\": {\"eventos\": [{\"timestamp\": \"2024-01-15T10:32:00Z\", \"nivel\": \"ERROR\", \"mensagem\": \"connection timeout em pagamentos\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2024-01-15T10:28:00Z\", \"nivel\": \"WARN\", \"mensagem\": \"pool de conexoes esgotado em pagamentos\", \"servico\": \"pagamentos\"}, {\"timestamp\": \"2024-01-15T10:25:00Z\", \"nivel\": \"ERROR\", \"mensagem\": \"query lenta detectada em pagamentos: 4500ms\", \"servico\": \"pagamentos\"}], \"contagem_total\": 3, \"_entrada\": {\"nome_servico\": \"pagamentos\", \"janela_tempo_horas\": 319, \"nivel_minimo\": \"nivel_minimo_sem_api_key\"}}, \"buscar_issues\": {\"issues\": [{\"numero\": 142, \"titulo\": \"Latencia elevada apos deploy v2.4.1\", \"estado\": \"open\", \"labels\": [\"bug\", \"p1\", \"producao\"], \"autor\": \"eng-oncall\", \"criado_em\": \"2026-07-31T07:11:28.049985\", \"repositorio\": \"repositorio_sem_api_key\"}, {\"numero\": 138, \"titulo\": \"Circuit breaker ativando para upstream-payments\", \"estado\": \"open\", \"labels\": [\"bug\", \"p2\"], \"autor\": \"monitoring-bot\", \"criado_em\": \"2026-07-31T04:11:28.049985\", \"repositorio\": \"repositorio_sem_api_key\"}], \"contagem_total\": 2, \"_entrada\": {\"repositorio\": \"repositorio_sem_api_key\", \"estado\": \"estado_sem_api_key\", \"labels\": [{\"item\": \"labels_1\"}, {\"item\": \"labels_2\"}]}}}}}}\nFerramentas ja utilizadas: buscar_issues, buscar_logs, buscar_logs_historico, consultar_metricas, historico_deploys, relatorio_incidente\nEtapas realizadas: 7/12\nChamadas de ferramenta: 6/12",
+          "plano": {
+            "proxima_acao": "FINALIZAR",
+            "nome_ferramenta": null,
+            "argumentos_ferramenta": null,
+            "criterio_sucesso": "Diagnostico: [consultar_metricas] latencia_p99_ms=342.7, vazao_rps=1847, taxa_erro=4.2, status=degradado, servico=pagamentos, coletado_em=2026-07-31T09:11:23.900164 | [buscar_logs] eventos=[{'timestamp': '2026-07-31T08:59:25.962356', 'nivel': 'ERROR', 'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:03:25.962356', 'nivel': 'ERROR', 'mensagem': 'circuit breaker aberto para upstream-payments', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:06:25.962356', 'nivel': 'WARN', 'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'servico': 'pagamentos'}], contagem_total=3 | [historico_deploys] deploys=[{'versao': 'v2.4.1', 'data_hora': '2026-07-31T08:26:28.037987', 'autor': 'ci/cd-pipeline', 'status': 'sucesso', 'mudancas': 'refactor connection pool settings'}], contagem_total=1 | [buscar_logs_historico] eventos=[{'timestamp': '2024-01-15T10:32:00Z', 'nivel': 'ERROR', 'mensagem': 'connection timeout em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:28:00Z', 'nivel': 'WARN', 'mensagem': 'pool de conexoes esgotado em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:25:00Z', 'nivel': 'ERROR', 'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'servico': 'pagamentos'}], contagem_total=3 | [buscar_issues] issues=[{'numero': 142, 'titulo': 'Latencia elevada apos deploy v2.4.1', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}, {'numero': 138, 'titulo': 'Circuit breaker ativando para upstream-payments', 'estado': 'open', 'labels': ['bug', 'p2'], 'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}], contagem_total=2 | [relatorio_incidente] id_incidente=id_incidente_sem_api_key, status=status_sem_api_key"
+          },
+          "resultado_acao": null,
+          "avaliacao": {
+            "objetivo_alcancado": true,
+            "motivo": "Diagnostico: [consultar_metricas] latencia_p99_ms=342.7, vazao_rps=1847, taxa_erro=4.2, status=degradado, servico=pagamentos, coletado_em=2026-07-31T09:11:23.900164 | [buscar_logs] eventos=[{'timestamp': '2026-07-31T08:59:25.962356', 'nivel': 'ERROR', 'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:03:25.962356', 'nivel': 'ERROR', 'mensagem': 'circuit breaker aberto para upstream-payments', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:06:25.962356', 'nivel': 'WARN', 'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'servico': 'pagamentos'}], contagem_total=3 | [historico_deploys] deploys=[{'versao': 'v2.4.1', 'data_hora': '2026-07-31T08:26:28.037987', 'autor': 'ci/cd-pipeline', 'status': 'sucesso', 'mudancas': 'refactor connection pool settings'}], contagem_total=1 | [buscar_logs_historico] eventos=[{'timestamp': '2024-01-15T10:32:00Z', 'nivel': 'ERROR', 'mensagem': 'connection timeout em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:28:00Z', 'nivel': 'WARN', 'mensagem': 'pool de conexoes esgotado em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:25:00Z', 'nivel': 'ERROR', 'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'servico': 'pagamentos'}], contagem_total=3 | [buscar_issues] issues=[{'numero': 142, 'titulo': 'Latencia elevada apos deploy v2.4.1', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}, {'numero': 138, 'titulo': 'Circuit breaker ativando para upstream-payments', 'estado': 'open', 'labels': ['bug', 'p2'], 'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}], contagem_total=2 | [relatorio_incidente] id_incidente=id_incidente_sem_api_key, status=status_sem_api_key"
+          }
+        }
+      ],
+      "concluido": true,
+      "resultado": "Diagnostico: [consultar_metricas] latencia_p99_ms=342.7, vazao_rps=1847, taxa_erro=4.2, status=degradado, servico=pagamentos, coletado_em=2026-07-31T09:11:23.900164 | [buscar_logs] eventos=[{'timestamp': '2026-07-31T08:59:25.962356', 'nivel': 'ERROR', 'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:03:25.962356', 'nivel': 'ERROR', 'mensagem': 'circuit breaker aberto para upstream-payments', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:06:25.962356', 'nivel': 'WARN', 'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'servico': 'pagamentos'}], contagem_total=3 | [historico_deploys] deploys=[{'versao': 'v2.4.1', 'data_hora': '2026-07-31T08:26:28.037987', 'autor': 'ci/cd-pipeline', 'status': 'sucesso', 'mudancas': 'refactor connection pool settings'}], contagem_total=1 | [buscar_logs_historico] eventos=[{'timestamp': '2024-01-15T10:32:00Z', 'nivel': 'ERROR', 'mensagem': 'connection timeout em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:28:00Z', 'nivel': 'WARN', 'mensagem': 'pool de conexoes esgotado em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:25:00Z', 'nivel': 'ERROR', 'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'servico': 'pagamentos'}], contagem_total=3 | [buscar_issues] issues=[{'numero': 142, 'titulo': 'Latencia elevada apos deploy v2.4.1', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}, {'numero': 138, 'titulo': 'Circuit breaker ativando para upstream-payments', 'estado': 'open', 'labels': ['bug', 'p2'], 'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}], contagem_total=2 | [relatorio_incidente] id_incidente=id_incidente_sem_api_key, status=status_sem_api_key",
+      "etapas_sem_progresso": 0,
+      "ultima_ferramenta": "relatorio_incidente",
+      "contexto_memoria": {
+        "_fatos_filtrados": {
+          "total_em_memoria": 0,
+          "elegiveis": 0,
+          "descartados_antigos": 0,
+          "descartados_outro_servico": 0
+        }
+      }
+    }
+  },
+  "execucao_2": {
+    "entrada": "erro 500 no servico de pagamentos",
+    "resultado": {
+      "objetivo": "resolver_incidente",
+      "entrada": "erro 500 no servico de pagamentos",
+      "tipo_agente": "task_based",
+      "arquitetura": "padrao",
+      "evento": null,
+      "etapa": 3,
+      "chamadas_ferramenta": 2,
+      "chamadas_por_ferramenta": {
+        "relatorio_incidente": 1,
+        "buscar_issues": 1
+      },
+      "max_etapas": 12,
+      "max_chamadas_ferramenta": 12,
+      "limites_por_ferramenta": {
+        "consultar_metricas": 3,
+        "buscar_logs": 3,
+        "buscar_logs_historico": 2,
+        "historico_deploys": 2,
+        "buscar_issues": 1,
+        "relatorio_incidente": 1
+      },
+      "sem_progresso": 3,
+      "limite_tempo_segundos": 120,
+      "max_tokens": 50000,
+      "tokens_consumidos": {
+        "prompt": 0,
+        "completion": 0,
+        "total": 0
+      },
+      "acoes_sensiveis": [
+        "rollback_deploy"
+      ],
+      "historico": [
+        {
+          "etapa": 1,
+          "percepcao": "Alerta: erro 500 no servico de pagamentos\nModo: task_based\n\n--- Conhecimento previo (memoria) ---\nFatos conhecidos (memoria longa):\n- [buscar_logs] entrada={janela_tempo_minutos=78, nivel_minimo=nivel_minimo_sem_api_key, nome_servico=pagamentos} | contagem_total=3, eventos=[{'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T08:59:25.962356'}, {'mensagem': 'circuit breaker aberto para upstream-payments', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:03:25.962356'}, {'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:06:25.962356'}]\n- [buscar_logs_historico] entrada={janela_tempo_horas=319, nivel_minimo=nivel_minimo_sem_api_key, nome_servico=pagamentos} | contagem_total=3, eventos=[{'mensagem': 'connection timeout em pagamentos', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:32:00Z'}, {'mensagem': 'pool de conexoes esgotado em pagamentos', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:28:00Z'}, {'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:25:00Z'}]\n- [consultar_metricas] entrada={janela_tempo_minutos=263, nome_servico=pagamentos} | coletado_em=2026-07-31T09:11:23.900164, latencia_p99_ms=342.7, servico=pagamentos, status=degradado, taxa_erro=4.2, vazao_rps=1847\n- [historico_deploys] entrada={janela_tempo_horas=241, nome_servico=pagamentos} | contagem_total=1, deploys=[{'autor': 'ci/cd-pipeline', 'data_hora': '2026-07-31T08:26:28.037987', 'mudancas': 'refactor connection pool settings', 'status': 'sucesso', 'versao': 'v2.4.1'}]\n- [relatorio_incidente] entrada={evidencia={'buscar_issues': {'_entrada': {'estado': 'estado_sem_api_key', 'labels': [{'item': 'labels_1'}, {'item': 'labels_2'}], 'repositorio': 'repositorio_sem_api_key'}, 'contagem_total': 2, 'issues': [{'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'numero': 142, 'repositorio': 'repositorio_sem_api_key', 'titulo': 'Latencia elevada apos deploy v2.4.1'}, {'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'estado': 'open', 'labels': ['bug', 'p2'], 'numero': 138, 'repositorio': 'repositorio_sem_api_key', 'titulo': 'Circuit breaker ativando para upstream-payments'}]}, 'buscar_logs': {'_entrada': {'janela_tempo_minutos': 78, 'nivel_minimo': 'nivel_minimo_sem_api_key', 'nome_servico': 'pagamentos'}, 'contagem_total': 3, 'eventos': [{'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T08:59:25.962356'}, {'mensagem': 'circuit breaker aberto para upstream-payments', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:03:25.962356'}, {'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:06:25.962356'}]}, 'buscar_logs_historico': {'_entrada': {'janela_tempo_horas': 319, 'nivel_minimo': 'nivel_minimo_sem_api_key', 'nome_servico': 'pagamentos'}, 'contagem_total': 3, 'eventos': [{'mensagem': 'connection timeout em pagamentos', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:32:00Z'}, {'mensagem': 'pool de conexoes esgotado em pagamentos', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:28:00Z'}, {'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:25:00Z'}]}, 'consultar_metricas': {'_entrada': {'janela_tempo_minutos': 263, 'nome_servico': 'pagamentos'}, 'coletado_em': '2026-07-31T09:11:23.900164', 'latencia_p99_ms': 342.7, 'servico': 'pagamentos', 'status': 'degradado', 'taxa_erro': 4.2, 'vazao_rps': 1847}, 'historico_deploys': {'_entrada': {'janela_tempo_horas': 241, 'nome_servico': 'pagamentos'}, 'contagem_total': 1, 'deploys': [{'autor': 'ci/cd-pipeline', 'data_hora': '2026-07-31T08:26:28.037987', 'mudancas': 'refactor connection pool settings', 'status': 'sucesso', 'versao': 'v2.4.1'}]}}, nome_servico=pagamentos, recomendacao={'buscar_issues': {'_entrada': {'estado': 'estado_sem_api_key', 'labels': [{'item': 'labels_1'}, {'item': 'labels_2'}], 'repositorio': 'repositorio_sem_api_key'}, 'contagem_total': 2, 'issues': [{'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'numero': 142, 'repositorio': 'repositorio_sem_api_key', 'titulo': 'Latencia elevada apos deploy v2.4.1'}, {'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'estado': 'open', 'labels': ['bug', 'p2'], 'numero': 138, 'repositorio': 'repositorio_sem_api_key', 'titulo': 'Circuit breaker ativando para upstream-payments'}]}, 'buscar_logs': {'_entrada': {'janela_tempo_minutos': 78, 'nivel_minimo': 'nivel_minimo_sem_api_key', 'nome_servico': 'pagamentos'}, 'contagem_total': 3, 'eventos': [{'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T08:59:25.962356'}, {'mensagem': 'circuit breaker aberto para upstream-payments', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:03:25.962356'}, {'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:06:25.962356'}]}, 'buscar_logs_historico': {'_entrada': {'janela_tempo_horas': 319, 'nivel_minimo': 'nivel_minimo_sem_api_key', 'nome_servico': 'pagamentos'}, 'contagem_total': 3, 'eventos': [{'mensagem': 'connection timeout em pagamentos', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:32:00Z'}, {'mensagem': 'pool de conexoes esgotado em pagamentos', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:28:00Z'}, {'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:25:00Z'}]}, 'consultar_metricas': {'_entrada': {'janela_tempo_minutos': 263, 'nome_servico': 'pagamentos'}, 'coletado_em': '2026-07-31T09:11:23.900164', 'latencia_p99_ms': 342.7, 'servico': 'pagamentos', 'status': 'degradado', 'taxa_erro': 4.2, 'vazao_rps': 1847}, 'historico_deploys': {'_entrada': {'janela_tempo_horas': 241, 'nome_servico': 'pagamentos'}, 'contagem_total': 1, 'deploys': [{'autor': 'ci/cd-pipeline', 'data_hora': '2026-07-31T08:26:28.037987', 'mudancas': 'refactor connection pool settings', 'status': 'sucesso', 'versao': 'v2.4.1'}]}}, severidade=severidade_sem_api_key} | id_incidente=id_incidente_sem_api_key, status=status_sem_api_key\nExperiencia anterior (memoria episodica):\n- Episodio 1: objetivo=resolver_incidente | ferramentas=consultar_metricas, buscar_logs, historico_deploys, buscar_logs_historico, buscar_issues, relatorio_incidente | resultado=Diagnostico: [consultar_metricas] latencia_p99_ms=342.7, vazao_rps=1847, taxa_erro=4.2, status=degradado, servico=pagamentos, coletado_em=2026-07-31T09:11:23.900164 | [buscar_logs] eventos=[{'timestamp': '2026-07-31T08:59:25.962356', 'nivel': 'ERROR', 'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:03:25.962356', 'nivel': 'ERROR', 'mensagem': 'circuit breaker aberto para upstream-payments', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:06:25.962356', 'nivel': 'WARN', 'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'servico': 'pagamentos'}], contagem_total=3 | [historico_deploys] deploys=[{'versao': 'v2.4.1', 'data_hora': '2026-07-31T08:26:28.037987', 'autor': 'ci/cd-pipeline', 'status': 'sucesso', 'mudancas': 'refactor connection pool settings'}], contagem_total=1 | [buscar_logs_historico] eventos=[{'timestamp': '2024-01-15T10:32:00Z', 'nivel': 'ERROR', 'mensagem': 'connection timeout em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:28:00Z', 'nivel': 'WARN', 'mensagem': 'pool de conexoes esgotado em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:25:00Z', 'nivel': 'ERROR', 'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'servico': 'pagamentos'}], contagem_total=3 | [buscar_issues] issues=[{'numero': 142, 'titulo': 'Latencia elevada apos deploy v2.4.1', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}, {'numero': 138, 'titulo': 'Circuit breaker ativando para upstream-payments', 'estado': 'open', 'labels': ['bug', 'p2'], 'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}], contagem_total=2 | [relatorio_incidente] id_incidente=id_incidente_sem_api_key, status=status_sem_api_key\nUSE esse conhecimento: se um fato ja estiver confirmado acima, NAO chame a mesma ferramenta de novo. Se a experiencia anterior indica a sequencia que funcionou, siga-a e pule coletas redundantes.\nFerramentas ja utilizadas: buscar_logs, buscar_logs_historico, consultar_metricas, historico_deploys, relatorio_incidente\n(das quais buscar_logs, buscar_logs_historico, consultar_metricas, historico_deploys, relatorio_incidente tem evidencia em memoria — NAO rechamar)\nEtapas realizadas: 1/12\nChamadas de ferramenta: 0/12",
+          "plano": {
+            "proxima_acao": "CHAMAR_FERRAMENTA",
+            "nome_ferramenta": "relatorio_incidente",
+            "argumentos_ferramenta": {
+              "nome_servico": "nome_servico_sem_api_key",
+              "severidade": "severidade_sem_api_key",
+              "evidencia": {
+                "campo": "evidencia",
+                "valor": "sem_api_key"
+              },
+              "recomendacao": {
+                "campo": "recomendacao",
+                "valor": "sem_api_key"
+              }
+            },
+            "criterio_sucesso": "relatorio_incidente obrigatorio antes de finalizar"
+          },
+          "resultado_acao": {
+            "sucesso": true,
+            "dados": {
+              "id_incidente": "id_incidente_sem_api_key",
+              "status": "status_sem_api_key",
+              "_entrada": {
+                "nome_servico": "nome_servico_sem_api_key",
+                "severidade": "severidade_sem_api_key",
+                "evidencia": {
+                  "campo": "evidencia",
+                  "valor": "sem_api_key"
+                },
+                "recomendacao": {
+                  "campo": "recomendacao",
+                  "valor": "sem_api_key"
+                }
+              }
+            }
+          },
+          "avaliacao": {
+            "objetivo_alcancado": false,
+            "motivo": "etapa ok - criterio: relatorio_incidente obrigatorio antes de finalizar",
+            "qualidade": "completa",
+            "problemas_saida": []
+          }
+        },
+        {
+          "etapa": 2,
+          "percepcao": "Alerta: erro 500 no servico de pagamentos\nModo: task_based\n\n--- Conhecimento previo (memoria) ---\nFatos conhecidos (memoria longa):\n- [buscar_logs] entrada={janela_tempo_minutos=78, nivel_minimo=nivel_minimo_sem_api_key, nome_servico=pagamentos} | contagem_total=3, eventos=[{'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T08:59:25.962356'}, {'mensagem': 'circuit breaker aberto para upstream-payments', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:03:25.962356'}, {'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:06:25.962356'}]\n- [buscar_logs_historico] entrada={janela_tempo_horas=319, nivel_minimo=nivel_minimo_sem_api_key, nome_servico=pagamentos} | contagem_total=3, eventos=[{'mensagem': 'connection timeout em pagamentos', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:32:00Z'}, {'mensagem': 'pool de conexoes esgotado em pagamentos', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:28:00Z'}, {'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:25:00Z'}]\n- [consultar_metricas] entrada={janela_tempo_minutos=263, nome_servico=pagamentos} | coletado_em=2026-07-31T09:11:23.900164, latencia_p99_ms=342.7, servico=pagamentos, status=degradado, taxa_erro=4.2, vazao_rps=1847\n- [historico_deploys] entrada={janela_tempo_horas=241, nome_servico=pagamentos} | contagem_total=1, deploys=[{'autor': 'ci/cd-pipeline', 'data_hora': '2026-07-31T08:26:28.037987', 'mudancas': 'refactor connection pool settings', 'status': 'sucesso', 'versao': 'v2.4.1'}]\n- [relatorio_incidente] entrada={evidencia={'buscar_issues': {'_entrada': {'estado': 'estado_sem_api_key', 'labels': [{'item': 'labels_1'}, {'item': 'labels_2'}], 'repositorio': 'repositorio_sem_api_key'}, 'contagem_total': 2, 'issues': [{'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'numero': 142, 'repositorio': 'repositorio_sem_api_key', 'titulo': 'Latencia elevada apos deploy v2.4.1'}, {'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'estado': 'open', 'labels': ['bug', 'p2'], 'numero': 138, 'repositorio': 'repositorio_sem_api_key', 'titulo': 'Circuit breaker ativando para upstream-payments'}]}, 'buscar_logs': {'_entrada': {'janela_tempo_minutos': 78, 'nivel_minimo': 'nivel_minimo_sem_api_key', 'nome_servico': 'pagamentos'}, 'contagem_total': 3, 'eventos': [{'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T08:59:25.962356'}, {'mensagem': 'circuit breaker aberto para upstream-payments', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:03:25.962356'}, {'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:06:25.962356'}]}, 'buscar_logs_historico': {'_entrada': {'janela_tempo_horas': 319, 'nivel_minimo': 'nivel_minimo_sem_api_key', 'nome_servico': 'pagamentos'}, 'contagem_total': 3, 'eventos': [{'mensagem': 'connection timeout em pagamentos', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:32:00Z'}, {'mensagem': 'pool de conexoes esgotado em pagamentos', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:28:00Z'}, {'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:25:00Z'}]}, 'consultar_metricas': {'_entrada': {'janela_tempo_minutos': 263, 'nome_servico': 'pagamentos'}, 'coletado_em': '2026-07-31T09:11:23.900164', 'latencia_p99_ms': 342.7, 'servico': 'pagamentos', 'status': 'degradado', 'taxa_erro': 4.2, 'vazao_rps': 1847}, 'historico_deploys': {'_entrada': {'janela_tempo_horas': 241, 'nome_servico': 'pagamentos'}, 'contagem_total': 1, 'deploys': [{'autor': 'ci/cd-pipeline', 'data_hora': '2026-07-31T08:26:28.037987', 'mudancas': 'refactor connection pool settings', 'status': 'sucesso', 'versao': 'v2.4.1'}]}}, nome_servico=pagamentos, recomendacao={'buscar_issues': {'_entrada': {'estado': 'estado_sem_api_key', 'labels': [{'item': 'labels_1'}, {'item': 'labels_2'}], 'repositorio': 'repositorio_sem_api_key'}, 'contagem_total': 2, 'issues': [{'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'numero': 142, 'repositorio': 'repositorio_sem_api_key', 'titulo': 'Latencia elevada apos deploy v2.4.1'}, {'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'estado': 'open', 'labels': ['bug', 'p2'], 'numero': 138, 'repositorio': 'repositorio_sem_api_key', 'titulo': 'Circuit breaker ativando para upstream-payments'}]}, 'buscar_logs': {'_entrada': {'janela_tempo_minutos': 78, 'nivel_minimo': 'nivel_minimo_sem_api_key', 'nome_servico': 'pagamentos'}, 'contagem_total': 3, 'eventos': [{'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T08:59:25.962356'}, {'mensagem': 'circuit breaker aberto para upstream-payments', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:03:25.962356'}, {'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:06:25.962356'}]}, 'buscar_logs_historico': {'_entrada': {'janela_tempo_horas': 319, 'nivel_minimo': 'nivel_minimo_sem_api_key', 'nome_servico': 'pagamentos'}, 'contagem_total': 3, 'eventos': [{'mensagem': 'connection timeout em pagamentos', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:32:00Z'}, {'mensagem': 'pool de conexoes esgotado em pagamentos', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:28:00Z'}, {'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:25:00Z'}]}, 'consultar_metricas': {'_entrada': {'janela_tempo_minutos': 263, 'nome_servico': 'pagamentos'}, 'coletado_em': '2026-07-31T09:11:23.900164', 'latencia_p99_ms': 342.7, 'servico': 'pagamentos', 'status': 'degradado', 'taxa_erro': 4.2, 'vazao_rps': 1847}, 'historico_deploys': {'_entrada': {'janela_tempo_horas': 241, 'nome_servico': 'pagamentos'}, 'contagem_total': 1, 'deploys': [{'autor': 'ci/cd-pipeline', 'data_hora': '2026-07-31T08:26:28.037987', 'mudancas': 'refactor connection pool settings', 'status': 'sucesso', 'versao': 'v2.4.1'}]}}, severidade=severidade_sem_api_key} | id_incidente=id_incidente_sem_api_key, status=status_sem_api_key\nExperiencia anterior (memoria episodica):\n- Episodio 1: objetivo=resolver_incidente | ferramentas=consultar_metricas, buscar_logs, historico_deploys, buscar_logs_historico, buscar_issues, relatorio_incidente | resultado=Diagnostico: [consultar_metricas] latencia_p99_ms=342.7, vazao_rps=1847, taxa_erro=4.2, status=degradado, servico=pagamentos, coletado_em=2026-07-31T09:11:23.900164 | [buscar_logs] eventos=[{'timestamp': '2026-07-31T08:59:25.962356', 'nivel': 'ERROR', 'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:03:25.962356', 'nivel': 'ERROR', 'mensagem': 'circuit breaker aberto para upstream-payments', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:06:25.962356', 'nivel': 'WARN', 'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'servico': 'pagamentos'}], contagem_total=3 | [historico_deploys] deploys=[{'versao': 'v2.4.1', 'data_hora': '2026-07-31T08:26:28.037987', 'autor': 'ci/cd-pipeline', 'status': 'sucesso', 'mudancas': 'refactor connection pool settings'}], contagem_total=1 | [buscar_logs_historico] eventos=[{'timestamp': '2024-01-15T10:32:00Z', 'nivel': 'ERROR', 'mensagem': 'connection timeout em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:28:00Z', 'nivel': 'WARN', 'mensagem': 'pool de conexoes esgotado em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:25:00Z', 'nivel': 'ERROR', 'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'servico': 'pagamentos'}], contagem_total=3 | [buscar_issues] issues=[{'numero': 142, 'titulo': 'Latencia elevada apos deploy v2.4.1', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}, {'numero': 138, 'titulo': 'Circuit breaker ativando para upstream-payments', 'estado': 'open', 'labels': ['bug', 'p2'], 'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}], contagem_total=2 | [relatorio_incidente] id_incidente=id_incidente_sem_api_key, status=status_sem_api_key\nUSE esse conhecimento: se um fato ja estiver confirmado acima, NAO chame a mesma ferramenta de novo. Se a experiencia anterior indica a sequencia que funcionou, siga-a e pule coletas redundantes.\nEtapa 1 [relatorio_incidente]: {\"sucesso\": true, \"dados\": {\"id_incidente\": \"id_incidente_sem_api_key\", \"status\": \"status_sem_api_key\", \"_entrada\": {\"nome_servico\": \"nome_servico_sem_api_key\", \"severidade\": \"severidade_sem_api_key\", \"evidencia\": {\"campo\": \"evidencia\", \"valor\": \"sem_api_key\"}, \"recomendacao\": {\"campo\": \"recomendacao\", \"valor\": \"sem_api_key\"}}}}\nFerramentas ja utilizadas: buscar_logs, buscar_logs_historico, consultar_metricas, historico_deploys, relatorio_incidente\n(das quais buscar_logs, buscar_logs_historico, consultar_metricas, historico_deploys, relatorio_incidente tem evidencia em memoria — NAO rechamar)\nEtapas realizadas: 2/12\nChamadas de ferramenta: 1/12",
+          "plano": {
+            "proxima_acao": "CHAMAR_FERRAMENTA",
+            "nome_ferramenta": "buscar_issues",
+            "argumentos_ferramenta": {
+              "repositorio": "repositorio_sem_api_key",
+              "estado": "estado_sem_api_key",
+              "labels": [
+                {
+                  "item": "labels_1"
+                },
+                {
+                  "item": "labels_2"
+                }
+              ]
+            },
+            "criterio_sucesso": "buscar_issues obrigatorio antes de finalizar"
+          },
+          "resultado_acao": {
+            "sucesso": true,
+            "dados": {
+              "issues": [
+                {
+                  "numero": 142,
+                  "titulo": "Latencia elevada apos deploy v2.4.1",
+                  "estado": "open",
+                  "labels": [
+                    "bug",
+                    "p1",
+                    "producao"
+                  ],
+                  "autor": "eng-oncall",
+                  "criado_em": "2026-07-31T07:11:28.091522",
+                  "repositorio": "repositorio_sem_api_key"
+                },
+                {
+                  "numero": 138,
+                  "titulo": "Circuit breaker ativando para upstream-payments",
+                  "estado": "open",
+                  "labels": [
+                    "bug",
+                    "p2"
+                  ],
+                  "autor": "monitoring-bot",
+                  "criado_em": "2026-07-31T04:11:28.091522",
+                  "repositorio": "repositorio_sem_api_key"
+                }
+              ],
+              "contagem_total": 2,
+              "_entrada": {
+                "repositorio": "repositorio_sem_api_key",
+                "estado": "estado_sem_api_key",
+                "labels": [
+                  {
+                    "item": "labels_1"
+                  },
+                  {
+                    "item": "labels_2"
+                  }
+                ]
+              }
+            },
+            "_adapter": "mcp",
+            "_mcp_server": "monitor-mcp",
+            "_tool_name": "buscar_issues",
+            "_via_mcp_real": false,
+            "_latencia_ms": 0.0
+          },
+          "avaliacao": {
+            "objetivo_alcancado": false,
+            "motivo": "etapa ok - criterio: buscar_issues obrigatorio antes de finalizar",
+            "qualidade": "completa",
+            "problemas_saida": []
+          }
+        },
+        {
+          "etapa": 3,
+          "percepcao": "Alerta: erro 500 no servico de pagamentos\nModo: task_based\n\n--- Conhecimento previo (memoria) ---\nFatos conhecidos (memoria longa):\n- [buscar_logs] entrada={janela_tempo_minutos=78, nivel_minimo=nivel_minimo_sem_api_key, nome_servico=pagamentos} | contagem_total=3, eventos=[{'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T08:59:25.962356'}, {'mensagem': 'circuit breaker aberto para upstream-payments', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:03:25.962356'}, {'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:06:25.962356'}]\n- [buscar_logs_historico] entrada={janela_tempo_horas=319, nivel_minimo=nivel_minimo_sem_api_key, nome_servico=pagamentos} | contagem_total=3, eventos=[{'mensagem': 'connection timeout em pagamentos', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:32:00Z'}, {'mensagem': 'pool de conexoes esgotado em pagamentos', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:28:00Z'}, {'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:25:00Z'}]\n- [consultar_metricas] entrada={janela_tempo_minutos=263, nome_servico=pagamentos} | coletado_em=2026-07-31T09:11:23.900164, latencia_p99_ms=342.7, servico=pagamentos, status=degradado, taxa_erro=4.2, vazao_rps=1847\n- [historico_deploys] entrada={janela_tempo_horas=241, nome_servico=pagamentos} | contagem_total=1, deploys=[{'autor': 'ci/cd-pipeline', 'data_hora': '2026-07-31T08:26:28.037987', 'mudancas': 'refactor connection pool settings', 'status': 'sucesso', 'versao': 'v2.4.1'}]\n- [relatorio_incidente] entrada={evidencia={'buscar_issues': {'_entrada': {'estado': 'estado_sem_api_key', 'labels': [{'item': 'labels_1'}, {'item': 'labels_2'}], 'repositorio': 'repositorio_sem_api_key'}, 'contagem_total': 2, 'issues': [{'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'numero': 142, 'repositorio': 'repositorio_sem_api_key', 'titulo': 'Latencia elevada apos deploy v2.4.1'}, {'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'estado': 'open', 'labels': ['bug', 'p2'], 'numero': 138, 'repositorio': 'repositorio_sem_api_key', 'titulo': 'Circuit breaker ativando para upstream-payments'}]}, 'buscar_logs': {'_entrada': {'janela_tempo_minutos': 78, 'nivel_minimo': 'nivel_minimo_sem_api_key', 'nome_servico': 'pagamentos'}, 'contagem_total': 3, 'eventos': [{'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T08:59:25.962356'}, {'mensagem': 'circuit breaker aberto para upstream-payments', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:03:25.962356'}, {'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:06:25.962356'}]}, 'buscar_logs_historico': {'_entrada': {'janela_tempo_horas': 319, 'nivel_minimo': 'nivel_minimo_sem_api_key', 'nome_servico': 'pagamentos'}, 'contagem_total': 3, 'eventos': [{'mensagem': 'connection timeout em pagamentos', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:32:00Z'}, {'mensagem': 'pool de conexoes esgotado em pagamentos', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:28:00Z'}, {'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:25:00Z'}]}, 'consultar_metricas': {'_entrada': {'janela_tempo_minutos': 263, 'nome_servico': 'pagamentos'}, 'coletado_em': '2026-07-31T09:11:23.900164', 'latencia_p99_ms': 342.7, 'servico': 'pagamentos', 'status': 'degradado', 'taxa_erro': 4.2, 'vazao_rps': 1847}, 'historico_deploys': {'_entrada': {'janela_tempo_horas': 241, 'nome_servico': 'pagamentos'}, 'contagem_total': 1, 'deploys': [{'autor': 'ci/cd-pipeline', 'data_hora': '2026-07-31T08:26:28.037987', 'mudancas': 'refactor connection pool settings', 'status': 'sucesso', 'versao': 'v2.4.1'}]}}, nome_servico=pagamentos, recomendacao={'buscar_issues': {'_entrada': {'estado': 'estado_sem_api_key', 'labels': [{'item': 'labels_1'}, {'item': 'labels_2'}], 'repositorio': 'repositorio_sem_api_key'}, 'contagem_total': 2, 'issues': [{'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'numero': 142, 'repositorio': 'repositorio_sem_api_key', 'titulo': 'Latencia elevada apos deploy v2.4.1'}, {'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'estado': 'open', 'labels': ['bug', 'p2'], 'numero': 138, 'repositorio': 'repositorio_sem_api_key', 'titulo': 'Circuit breaker ativando para upstream-payments'}]}, 'buscar_logs': {'_entrada': {'janela_tempo_minutos': 78, 'nivel_minimo': 'nivel_minimo_sem_api_key', 'nome_servico': 'pagamentos'}, 'contagem_total': 3, 'eventos': [{'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T08:59:25.962356'}, {'mensagem': 'circuit breaker aberto para upstream-payments', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:03:25.962356'}, {'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:06:25.962356'}]}, 'buscar_logs_historico': {'_entrada': {'janela_tempo_horas': 319, 'nivel_minimo': 'nivel_minimo_sem_api_key', 'nome_servico': 'pagamentos'}, 'contagem_total': 3, 'eventos': [{'mensagem': 'connection timeout em pagamentos', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:32:00Z'}, {'mensagem': 'pool de conexoes esgotado em pagamentos', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:28:00Z'}, {'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:25:00Z'}]}, 'consultar_metricas': {'_entrada': {'janela_tempo_minutos': 263, 'nome_servico': 'pagamentos'}, 'coletado_em': '2026-07-31T09:11:23.900164', 'latencia_p99_ms': 342.7, 'servico': 'pagamentos', 'status': 'degradado', 'taxa_erro': 4.2, 'vazao_rps': 1847}, 'historico_deploys': {'_entrada': {'janela_tempo_horas': 241, 'nome_servico': 'pagamentos'}, 'contagem_total': 1, 'deploys': [{'autor': 'ci/cd-pipeline', 'data_hora': '2026-07-31T08:26:28.037987', 'mudancas': 'refactor connection pool settings', 'status': 'sucesso', 'versao': 'v2.4.1'}]}}, severidade=severidade_sem_api_key} | id_incidente=id_incidente_sem_api_key, status=status_sem_api_key\nExperiencia anterior (memoria episodica):\n- Episodio 1: objetivo=resolver_incidente | ferramentas=consultar_metricas, buscar_logs, historico_deploys, buscar_logs_historico, buscar_issues, relatorio_incidente | resultado=Diagnostico: [consultar_metricas] latencia_p99_ms=342.7, vazao_rps=1847, taxa_erro=4.2, status=degradado, servico=pagamentos, coletado_em=2026-07-31T09:11:23.900164 | [buscar_logs] eventos=[{'timestamp': '2026-07-31T08:59:25.962356', 'nivel': 'ERROR', 'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:03:25.962356', 'nivel': 'ERROR', 'mensagem': 'circuit breaker aberto para upstream-payments', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:06:25.962356', 'nivel': 'WARN', 'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'servico': 'pagamentos'}], contagem_total=3 | [historico_deploys] deploys=[{'versao': 'v2.4.1', 'data_hora': '2026-07-31T08:26:28.037987', 'autor': 'ci/cd-pipeline', 'status': 'sucesso', 'mudancas': 'refactor connection pool settings'}], contagem_total=1 | [buscar_logs_historico] eventos=[{'timestamp': '2024-01-15T10:32:00Z', 'nivel': 'ERROR', 'mensagem': 'connection timeout em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:28:00Z', 'nivel': 'WARN', 'mensagem': 'pool de conexoes esgotado em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:25:00Z', 'nivel': 'ERROR', 'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'servico': 'pagamentos'}], contagem_total=3 | [buscar_issues] issues=[{'numero': 142, 'titulo': 'Latencia elevada apos deploy v2.4.1', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}, {'numero': 138, 'titulo': 'Circuit breaker ativando para upstream-payments', 'estado': 'open', 'labels': ['bug', 'p2'], 'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}], contagem_total=2 | [relatorio_incidente] id_incidente=id_incidente_sem_api_key, status=status_sem_api_key\nUSE esse conhecimento: se um fato ja estiver confirmado acima, NAO chame a mesma ferramenta de novo. Se a experiencia anterior indica a sequencia que funcionou, siga-a e pule coletas redundantes.\nEtapa 1 [relatorio_incidente]: {\"sucesso\": true, \"dados\": {\"id_incidente\": \"id_incidente_sem_api_key\", \"status\": \"status_sem_api_key\", \"_entrada\": {\"nome_servico\": \"nome_servico_sem_api_key\", \"severidade\": \"severidade_sem_api_key\", \"evidencia\": {\"campo\": \"evidencia\", \"valor\": \"sem_api_key\"}, \"recomendacao\": {\"campo\": \"recomendacao\", \"valor\": \"sem_api_key\"}}}}\nEtapa 2 [buscar_issues]: {\"sucesso\": true, \"dados\": {\"issues\": [{\"numero\": 142, \"titulo\": \"Latencia elevada apos deploy v2.4.1\", \"estado\": \"open\", \"labels\": [\"bug\", \"p1\", \"producao\"], \"autor\": \"eng-oncall\", \"criado_em\": \"2026-07-31T07:11:28.091522\", \"repositorio\": \"repositorio_sem_api_key\"}, {\"numero\": 138, \"titulo\": \"Circuit breaker ativando para upstream-payments\", \"estado\": \"open\", \"labels\": [\"bug\", \"p2\"], \"autor\": \"monitoring-bot\", \"criado_em\": \"2026-07-31T04:11:28.091522\", \"repositorio\": \"repositorio_sem_api_key\"}], \"contagem_total\": 2, \"_entrada\": {\"repositorio\": \"repositorio_sem_api_key\", \"estado\": \"estado_sem_api_key\", \"labels\": [{\"item\": \"labels_1\"}, {\"item\": \"labels_2\"}]}}, \"_adapter\": \"mcp\", \"_mcp_server\": \"monitor-mcp\", \"_tool_name\": \"buscar_issues\", \"_via_mcp_real\": false, \"_latencia_ms\": 0.0}\nFerramentas ja utilizadas: buscar_issues, buscar_logs, buscar_logs_historico, consultar_metricas, historico_deploys, relatorio_incidente\n(das quais buscar_logs, buscar_logs_historico, consultar_metricas, historico_deploys, relatorio_incidente tem evidencia em memoria — NAO rechamar)\nEtapas realizadas: 3/12\nChamadas de ferramenta: 2/12",
+          "plano": {
+            "proxima_acao": "FINALIZAR",
+            "nome_ferramenta": null,
+            "argumentos_ferramenta": null,
+            "criterio_sucesso": "Diagnostico: [relatorio_incidente] id_incidente=id_incidente_sem_api_key, status=status_sem_api_key | [buscar_issues] issues=[{'numero': 142, 'titulo': 'Latencia elevada apos deploy v2.4.1', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.091522', 'repositorio': 'repositorio_sem_api_key'}, {'numero': 138, 'titulo': 'Circuit breaker ativando para upstream-payments', 'estado': 'open', 'labels': ['bug', 'p2'], 'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.091522', 'repositorio': 'repositorio_sem_api_key'}], contagem_total=2"
+          },
+          "resultado_acao": null,
+          "avaliacao": {
+            "objetivo_alcancado": true,
+            "motivo": "Diagnostico: [relatorio_incidente] id_incidente=id_incidente_sem_api_key, status=status_sem_api_key | [buscar_issues] issues=[{'numero': 142, 'titulo': 'Latencia elevada apos deploy v2.4.1', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.091522', 'repositorio': 'repositorio_sem_api_key'}, {'numero': 138, 'titulo': 'Circuit breaker ativando para upstream-payments', 'estado': 'open', 'labels': ['bug', 'p2'], 'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.091522', 'repositorio': 'repositorio_sem_api_key'}], contagem_total=2"
+          }
+        }
+      ],
+      "concluido": true,
+      "resultado": "Diagnostico: [relatorio_incidente] id_incidente=id_incidente_sem_api_key, status=status_sem_api_key | [buscar_issues] issues=[{'numero': 142, 'titulo': 'Latencia elevada apos deploy v2.4.1', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.091522', 'repositorio': 'repositorio_sem_api_key'}, {'numero': 138, 'titulo': 'Circuit breaker ativando para upstream-payments', 'estado': 'open', 'labels': ['bug', 'p2'], 'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.091522', 'repositorio': 'repositorio_sem_api_key'}], contagem_total=2",
+      "etapas_sem_progresso": 0,
+      "ultima_ferramenta": "buscar_issues",
+      "contexto_memoria": {
+        "fatos_conhecidos": [
+          {
+            "entrada": {
+              "janela_tempo_minutos": 78,
+              "nivel_minimo": "nivel_minimo_sem_api_key",
+              "nome_servico": "pagamentos"
+            },
+            "ferramenta": "buscar_logs",
+            "observacoes": {
+              "contagem_total": 3,
+              "eventos": [
+                {
+                  "mensagem": "timeout conectando a upstream-payments: 30s exceeded",
+                  "nivel": "ERROR",
+                  "servico": "pagamentos",
+                  "timestamp": "2026-07-31T08:59:25.962356"
+                },
+                {
+                  "mensagem": "circuit breaker aberto para upstream-payments",
+                  "nivel": "ERROR",
+                  "servico": "pagamentos",
+                  "timestamp": "2026-07-31T09:03:25.962356"
+                },
+                {
+                  "mensagem": "latencia p99 acima do SLO: 342ms > 200ms",
+                  "nivel": "WARN",
+                  "servico": "pagamentos",
+                  "timestamp": "2026-07-31T09:06:25.962356"
+                }
+              ]
+            },
+            "_idade_min": 0.0
+          },
+          {
+            "entrada": {
+              "janela_tempo_horas": 319,
+              "nivel_minimo": "nivel_minimo_sem_api_key",
+              "nome_servico": "pagamentos"
+            },
+            "ferramenta": "buscar_logs_historico",
+            "observacoes": {
+              "contagem_total": 3,
+              "eventos": [
+                {
+                  "mensagem": "connection timeout em pagamentos",
+                  "nivel": "ERROR",
+                  "servico": "pagamentos",
+                  "timestamp": "2024-01-15T10:32:00Z"
+                },
+                {
+                  "mensagem": "pool de conexoes esgotado em pagamentos",
+                  "nivel": "WARN",
+                  "servico": "pagamentos",
+                  "timestamp": "2024-01-15T10:28:00Z"
+                },
+                {
+                  "mensagem": "query lenta detectada em pagamentos: 4500ms",
+                  "nivel": "ERROR",
+                  "servico": "pagamentos",
+                  "timestamp": "2024-01-15T10:25:00Z"
+                }
+              ]
+            },
+            "_idade_min": 0.0
+          },
+          {
+            "entrada": {
+              "janela_tempo_minutos": 263,
+              "nome_servico": "pagamentos"
+            },
+            "ferramenta": "consultar_metricas",
+            "observacoes": {
+              "coletado_em": "2026-07-31T09:11:23.900164",
+              "latencia_p99_ms": 342.7,
+              "servico": "pagamentos",
+              "status": "degradado",
+              "taxa_erro": 4.2,
+              "vazao_rps": 1847
+            },
+            "_idade_min": 0.0
+          },
+          {
+            "entrada": {
+              "janela_tempo_horas": 241,
+              "nome_servico": "pagamentos"
+            },
+            "ferramenta": "historico_deploys",
+            "observacoes": {
+              "contagem_total": 1,
+              "deploys": [
+                {
+                  "autor": "ci/cd-pipeline",
+                  "data_hora": "2026-07-31T08:26:28.037987",
+                  "mudancas": "refactor connection pool settings",
+                  "status": "sucesso",
+                  "versao": "v2.4.1"
+                }
+              ]
+            },
+            "_idade_min": 0.0
+          },
+          {
+            "entrada": {
+              "evidencia": {
+                "buscar_issues": {
+                  "_entrada": {
+                    "estado": "estado_sem_api_key",
+                    "labels": [
+                      {
+                        "item": "labels_1"
+                      },
+                      {
+                        "item": "labels_2"
+                      }
+                    ],
+                    "repositorio": "repositorio_sem_api_key"
+                  },
+                  "contagem_total": 2,
+                  "issues": [
+                    {
+                      "autor": "eng-oncall",
+                      "criado_em": "2026-07-31T07:11:28.049985",
+                      "estado": "open",
+                      "labels": [
+                        "bug",
+                        "p1",
+                        "producao"
+                      ],
+                      "numero": 142,
+                      "repositorio": "repositorio_sem_api_key",
+                      "titulo": "Latencia elevada apos deploy v2.4.1"
+                    },
+                    {
+                      "autor": "monitoring-bot",
+                      "criado_em": "2026-07-31T04:11:28.049985",
+                      "estado": "open",
+                      "labels": [
+                        "bug",
+                        "p2"
+                      ],
+                      "numero": 138,
+                      "repositorio": "repositorio_sem_api_key",
+                      "titulo": "Circuit breaker ativando para upstream-payments"
+                    }
+                  ]
+                },
+                "buscar_logs": {
+                  "_entrada": {
+                    "janela_tempo_minutos": 78,
+                    "nivel_minimo": "nivel_minimo_sem_api_key",
+                    "nome_servico": "pagamentos"
+                  },
+                  "contagem_total": 3,
+                  "eventos": [
+                    {
+                      "mensagem": "timeout conectando a upstream-payments: 30s exceeded",
+                      "nivel": "ERROR",
+                      "servico": "pagamentos",
+                      "timestamp": "2026-07-31T08:59:25.962356"
+                    },
+                    {
+                      "mensagem": "circuit breaker aberto para upstream-payments",
+                      "nivel": "ERROR",
+                      "servico": "pagamentos",
+                      "timestamp": "2026-07-31T09:03:25.962356"
+                    },
+                    {
+                      "mensagem": "latencia p99 acima do SLO: 342ms > 200ms",
+                      "nivel": "WARN",
+                      "servico": "pagamentos",
+                      "timestamp": "2026-07-31T09:06:25.962356"
+                    }
+                  ]
+                },
+                "buscar_logs_historico": {
+                  "_entrada": {
+                    "janela_tempo_horas": 319,
+                    "nivel_minimo": "nivel_minimo_sem_api_key",
+                    "nome_servico": "pagamentos"
+                  },
+                  "contagem_total": 3,
+                  "eventos": [
+                    {
+                      "mensagem": "connection timeout em pagamentos",
+                      "nivel": "ERROR",
+                      "servico": "pagamentos",
+                      "timestamp": "2024-01-15T10:32:00Z"
+                    },
+                    {
+                      "mensagem": "pool de conexoes esgotado em pagamentos",
+                      "nivel": "WARN",
+                      "servico": "pagamentos",
+                      "timestamp": "2024-01-15T10:28:00Z"
+                    },
+                    {
+                      "mensagem": "query lenta detectada em pagamentos: 4500ms",
+                      "nivel": "ERROR",
+                      "servico": "pagamentos",
+                      "timestamp": "2024-01-15T10:25:00Z"
+                    }
+                  ]
+                },
+                "consultar_metricas": {
+                  "_entrada": {
+                    "janela_tempo_minutos": 263,
+                    "nome_servico": "pagamentos"
+                  },
+                  "coletado_em": "2026-07-31T09:11:23.900164",
+                  "latencia_p99_ms": 342.7,
+                  "servico": "pagamentos",
+                  "status": "degradado",
+                  "taxa_erro": 4.2,
+                  "vazao_rps": 1847
+                },
+                "historico_deploys": {
+                  "_entrada": {
+                    "janela_tempo_horas": 241,
+                    "nome_servico": "pagamentos"
+                  },
+                  "contagem_total": 1,
+                  "deploys": [
+                    {
+                      "autor": "ci/cd-pipeline",
+                      "data_hora": "2026-07-31T08:26:28.037987",
+                      "mudancas": "refactor connection pool settings",
+                      "status": "sucesso",
+                      "versao": "v2.4.1"
+                    }
+                  ]
+                }
+              },
+              "nome_servico": "pagamentos",
+              "recomendacao": {
+                "buscar_issues": {
+                  "_entrada": {
+                    "estado": "estado_sem_api_key",
+                    "labels": [
+                      {
+                        "item": "labels_1"
+                      },
+                      {
+                        "item": "labels_2"
+                      }
+                    ],
+                    "repositorio": "repositorio_sem_api_key"
+                  },
+                  "contagem_total": 2,
+                  "issues": [
+                    {
+                      "autor": "eng-oncall",
+                      "criado_em": "2026-07-31T07:11:28.049985",
+                      "estado": "open",
+                      "labels": [
+                        "bug",
+                        "p1",
+                        "producao"
+                      ],
+                      "numero": 142,
+                      "repositorio": "repositorio_sem_api_key",
+                      "titulo": "Latencia elevada apos deploy v2.4.1"
+                    },
+                    {
+                      "autor": "monitoring-bot",
+                      "criado_em": "2026-07-31T04:11:28.049985",
+                      "estado": "open",
+                      "labels": [
+                        "bug",
+                        "p2"
+                      ],
+                      "numero": 138,
+                      "repositorio": "repositorio_sem_api_key",
+                      "titulo": "Circuit breaker ativando para upstream-payments"
+                    }
+                  ]
+                },
+                "buscar_logs": {
+                  "_entrada": {
+                    "janela_tempo_minutos": 78,
+                    "nivel_minimo": "nivel_minimo_sem_api_key",
+                    "nome_servico": "pagamentos"
+                  },
+                  "contagem_total": 3,
+                  "eventos": [
+                    {
+                      "mensagem": "timeout conectando a upstream-payments: 30s exceeded",
+                      "nivel": "ERROR",
+                      "servico": "pagamentos",
+                      "timestamp": "2026-07-31T08:59:25.962356"
+                    },
+                    {
+                      "mensagem": "circuit breaker aberto para upstream-payments",
+                      "nivel": "ERROR",
+                      "servico": "pagamentos",
+                      "timestamp": "2026-07-31T09:03:25.962356"
+                    },
+                    {
+                      "mensagem": "latencia p99 acima do SLO: 342ms > 200ms",
+                      "nivel": "WARN",
+                      "servico": "pagamentos",
+                      "timestamp": "2026-07-31T09:06:25.962356"
+                    }
+                  ]
+                },
+                "buscar_logs_historico": {
+                  "_entrada": {
+                    "janela_tempo_horas": 319,
+                    "nivel_minimo": "nivel_minimo_sem_api_key",
+                    "nome_servico": "pagamentos"
+                  },
+                  "contagem_total": 3,
+                  "eventos": [
+                    {
+                      "mensagem": "connection timeout em pagamentos",
+                      "nivel": "ERROR",
+                      "servico": "pagamentos",
+                      "timestamp": "2024-01-15T10:32:00Z"
+                    },
+                    {
+                      "mensagem": "pool de conexoes esgotado em pagamentos",
+                      "nivel": "WARN",
+                      "servico": "pagamentos",
+                      "timestamp": "2024-01-15T10:28:00Z"
+                    },
+                    {
+                      "mensagem": "query lenta detectada em pagamentos: 4500ms",
+                      "nivel": "ERROR",
+                      "servico": "pagamentos",
+                      "timestamp": "2024-01-15T10:25:00Z"
+                    }
+                  ]
+                },
+                "consultar_metricas": {
+                  "_entrada": {
+                    "janela_tempo_minutos": 263,
+                    "nome_servico": "pagamentos"
+                  },
+                  "coletado_em": "2026-07-31T09:11:23.900164",
+                  "latencia_p99_ms": 342.7,
+                  "servico": "pagamentos",
+                  "status": "degradado",
+                  "taxa_erro": 4.2,
+                  "vazao_rps": 1847
+                },
+                "historico_deploys": {
+                  "_entrada": {
+                    "janela_tempo_horas": 241,
+                    "nome_servico": "pagamentos"
+                  },
+                  "contagem_total": 1,
+                  "deploys": [
+                    {
+                      "autor": "ci/cd-pipeline",
+                      "data_hora": "2026-07-31T08:26:28.037987",
+                      "mudancas": "refactor connection pool settings",
+                      "status": "sucesso",
+                      "versao": "v2.4.1"
+                    }
+                  ]
+                }
+              },
+              "severidade": "severidade_sem_api_key"
+            },
+            "ferramenta": "relatorio_incidente",
+            "observacoes": {
+              "id_incidente": "id_incidente_sem_api_key",
+              "status": "status_sem_api_key"
+            },
+            "_idade_min": 0.0
+          }
+        ],
+        "_fatos_filtrados": {
+          "total_em_memoria": 6,
+          "elegiveis": 5,
+          "descartados_antigos": 0,
+          "descartados_outro_servico": 1
+        },
+        "experiencia_anterior": [
+          {
+            "erros_encontrados": [],
+            "etapas_executadas": 7,
+            "ferramentas_chamadas": [
+              "consultar_metricas",
+              "buscar_logs",
+              "historico_deploys",
+              "buscar_logs_historico",
+              "buscar_issues",
+              "relatorio_incidente"
+            ],
+            "objetivo": "resolver_incidente",
+            "resultado_final": "Diagnostico: [consultar_metricas] latencia_p99_ms=342.7, vazao_rps=1847, taxa_erro=4.2, status=degradado, servico=pagamentos, coletado_em=2026-07-31T09:11:23.900164 | [buscar_logs] eventos=[{'timestamp': '2026-07-31T08:59:25.962356', 'nivel': 'ERROR', 'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:03:25.962356', 'nivel': 'ERROR', 'mensagem': 'circuit breaker aberto para upstream-payments', 'servico': 'pagamentos'}, {'timestamp': '2026-07-31T09:06:25.962356', 'nivel': 'WARN', 'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'servico': 'pagamentos'}], contagem_total=3 | [historico_deploys] deploys=[{'versao': 'v2.4.1', 'data_hora': '2026-07-31T08:26:28.037987', 'autor': 'ci/cd-pipeline', 'status': 'sucesso', 'mudancas': 'refactor connection pool settings'}], contagem_total=1 | [buscar_logs_historico] eventos=[{'timestamp': '2024-01-15T10:32:00Z', 'nivel': 'ERROR', 'mensagem': 'connection timeout em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:28:00Z', 'nivel': 'WARN', 'mensagem': 'pool de conexoes esgotado em pagamentos', 'servico': 'pagamentos'}, {'timestamp': '2024-01-15T10:25:00Z', 'nivel': 'ERROR', 'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'servico': 'pagamentos'}], contagem_total=3 | [buscar_issues] issues=[{'numero': 142, 'titulo': 'Latencia elevada apos deploy v2.4.1', 'estado': 'open', 'labels': ['bug', 'p1', 'producao'], 'autor': 'eng-oncall', 'criado_em': '2026-07-31T07:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}, {'numero': 138, 'titulo': 'Circuit breaker ativando para upstream-payments', 'estado': 'open', 'labels': ['bug', 'p2'], 'autor': 'monitoring-bot', 'criado_em': '2026-07-31T04:11:28.049985', 'repositorio': 'repositorio_sem_api_key'}], contagem_total=2 | [relatorio_incidente] id_incidente=id_incidente_sem_api_key, status=status_sem_api_key"
+          }
+        ]
+      }
+    }
+  },
+  "arquivos_gerados": {
+    "longa": [
+      "memory_store\\longa\\lon_0d17d8e1.yaml",
+      "memory_store\\longa\\lon_1817b825.yaml",
+      "memory_store\\longa\\lon_2e41d2cb.yaml",
+      "memory_store\\longa\\lon_6b4406a8.yaml",
+      "memory_store\\longa\\lon_972bc91b.yaml",
+      "memory_store\\longa\\lon_975bea80.yaml",
+      "memory_store\\longa\\lon_ddeddf28.yaml"
+    ],
+    "episodica": [
+      "memory_store\\episodica\\epi_1b867b31.yaml",
+      "memory_store\\episodica\\epi_56a5f11e.yaml"
+    ],
+    "contextual": [],
+    "curta_snapshot": "evals\\resultados\\validacao_memoria_visual\\00_memoria_CURTA_snapshot_exec1.json"
+  },
+  "recuperacao_exec2": {
+    "etapa": 1,
+    "trecho": "--- Conhecimento previo (memoria) ---\nFatos conhecidos (memoria longa):\n- [buscar_logs] entrada={janela_tempo_minutos=78, nivel_minimo=nivel_minimo_sem_api_key, nome_servico=pagamentos} | contagem_total=3, eventos=[{'mensagem': 'timeout conectando a upstream-payments: 30s exceeded', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T08:59:25.962356'}, {'mensagem': 'circuit breaker aberto para upstream-payments', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:03:25.962356'}, {'mensagem': 'latencia p99 acima do SLO: 342ms > 200ms', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2026-07-31T09:06:25.962356'}]\n- [buscar_logs_historico] entrada={janela_tempo_horas=319, nivel_minimo=nivel_minimo_sem_api_key, nome_servico=pagamentos} | contagem_total=3, eventos=[{'mensagem': 'connection timeout em pagamentos', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:32:00Z'}, {'mensagem': 'pool de conexoes esgotado em pagamentos', 'nivel': 'WARN', 'servico': 'pagamentos', 'timestamp': '2024-01-15T10:28:00Z'}, {'mensagem': 'query lenta detectada em pagamentos: 4500ms', 'nivel': 'ERROR', 'servico': 'pagamentos', 'timestamp': '20"
+  }
+}

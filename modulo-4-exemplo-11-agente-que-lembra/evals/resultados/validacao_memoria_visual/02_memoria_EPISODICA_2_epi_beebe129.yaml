@@ -1,0 +1,17 @@
+conteudo:
+  erros_encontrados: []
+  etapas_executadas: 3
+  ferramentas_chamadas:
+  - relatorio_incidente
+  - buscar_issues
+  objetivo: resolver_incidente
+  resultado_final: 'Diagnostico: [relatorio_incidente] id_incidente=id_incidente_sem_api_key,
+    status=status_sem_api_key | [buscar_issues] issues=[{''numero'': 142, ''titulo'':
+    ''Latencia elevada apos deploy v2.4.1'', ''estado'': ''open'', ''labels'': [''bug'',
+    ''p1'', ''producao''], ''autor'': ''eng-oncall'', ''criado_em'': ''2026-07-31T07:09:37.371924'',
+    ''repositorio'': ''repositorio_sem_api_key''}, {''numero'': 138, ''titulo'': ''Circuit
+    breaker ativando para upstream-payments'', ''estado'': ''open'', ''labels'': [''bug'',
+    ''p2''], ''autor'': ''monitoring-bot'', ''criado_em'': ''2026-07-31T04:09:37.371924'',
+    ''repositorio'': ''repositorio_sem_api_key''}], contagem_total=2'
+id: epi_beebe129
+timestamp: '2026-07-31T09:09:37.373016'

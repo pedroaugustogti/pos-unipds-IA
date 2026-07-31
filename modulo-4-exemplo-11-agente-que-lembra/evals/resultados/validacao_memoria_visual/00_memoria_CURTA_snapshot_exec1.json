@@ -1,0 +1,49 @@
+{
+  "tipo": "curta",
+  "persiste_em_disco": false,
+  "descricao": "Historico em RAM durante o ciclo — exportado do trace.json",
+  "registros": [
+    {
+      "etapa": 1,
+      "ferramenta": "consultar_metricas",
+      "sucesso": true,
+      "qualidade": "completa"
+    },
+    {
+      "etapa": 2,
+      "ferramenta": "buscar_logs",
+      "sucesso": true,
+      "qualidade": "completa"
+    },
+    {
+      "etapa": 3,
+      "ferramenta": "historico_deploys",
+      "sucesso": true,
+      "qualidade": "completa"
+    },
+    {
+      "etapa": 4,
+      "ferramenta": "buscar_logs_historico",
+      "sucesso": true,
+      "qualidade": "completa"
+    },
+    {
+      "etapa": 5,
+      "ferramenta": "buscar_issues",
+      "sucesso": true,
+      "qualidade": "completa"
+    },
+    {
+      "etapa": 6,
+      "ferramenta": "relatorio_incidente",
+      "sucesso": true,
+      "qualidade": "completa"
+    },
+    {
+      "etapa": 7,
+      "ferramenta": null,
+      "sucesso": null,
+      "qualidade": null
+    }
+  ]
+}

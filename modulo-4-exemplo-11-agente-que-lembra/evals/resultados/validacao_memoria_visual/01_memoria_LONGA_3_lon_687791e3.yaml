@@ -1,0 +1,23 @@
+conteudo:
+  entrada:
+    janela_tempo_horas: 486
+    nivel_minimo: nivel_minimo_sem_api_key
+    nome_servico: nome_servico_sem_api_key
+  ferramenta: buscar_logs_historico
+  observacoes:
+    contagem_total: 3
+    eventos:
+    - mensagem: connection timeout em nome_servico_sem_api_key
+      nivel: ERROR
+      servico: nome_servico_sem_api_key
+      timestamp: '2024-01-15T10:32:00Z'
+    - mensagem: pool de conexoes esgotado em nome_servico_sem_api_key
+      nivel: WARN
+      servico: nome_servico_sem_api_key
+      timestamp: '2024-01-15T10:28:00Z'
+    - mensagem: 'query lenta detectada em nome_servico_sem_api_key: 4500ms'
+      nivel: ERROR
+      servico: nome_servico_sem_api_key
+      timestamp: '2024-01-15T10:25:00Z'
+id: lon_687791e3
+timestamp: '2026-07-31T09:09:37.333485'
