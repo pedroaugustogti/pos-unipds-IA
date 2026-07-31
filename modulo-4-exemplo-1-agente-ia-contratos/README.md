@@ -72,7 +72,13 @@ python main.py validar --agente ../delivery-agent
 python main.py rodar --agente ../delivery-agent --entrada "modulo 4: preparar proxima aula"
 ```
 
-Fluxo: `comparar_repositorios` → `identificar_proximo_exemplo` → `baixar_base_unipds` → `customizar_readme_exemplo` → `atualizar_readme_raiz` → `git_status` → `git_diff_resumo` → `verificar_env_example` → `preparar_mensagem_commit`.
+Fluxo: `comparar_repositorios` → `verificar_aula_atual_pronta` → `executar_commit_push_aula_atual` (se necessário) → `identificar_proximo_exemplo` → `baixar_base_unipds` → `customizar_readme_exemplo` → `atualizar_readme_raiz` → `gerar_relatorio_didatico_aula` → `garantir_readmes_para_commit` → `git_status` → `git_diff_resumo` → `verificar_env_example` → `preparar_mensagem_commit` (com `readmes_commit`).
+
+**Gate antes do scaffold:** `verificar_aula_atual_pronta` confere se todos os critérios de aceite da aula atual estão marcados no README (`- [x]`) e se não há pendências git. Se estiver tudo OK mas houver mudanças locais ou commits não enviados, `executar_commit_push_aula_atual` faz commit e push **antes** de `baixar_base_unipds`.
+
+O passo `gerar_relatorio_didatico_aula` retorna um **relatório didático em texto** na saída do agente (tópicos, exemplos CLI e resumo visual) — sem criar arquivo `.md`.
+
+O passo `garantir_readmes_para_commit` revisa o README do **exemplo atual** (seção Próxima aula + critérios) e garante que **README local + README raiz** entram sempre no `arquivos_sugeridos_stage` do commit.
 
 ## Passo a passo
 

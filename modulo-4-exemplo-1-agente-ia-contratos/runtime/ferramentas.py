@@ -181,6 +181,16 @@ def montar_argumentos_mock(habilidade: dict, historico: list) -> dict:
             argumentos[nome_campo] = "main"
         elif nome_campo == "comparacao" and evidencias.get("comparar_repositorios"):
             argumentos[nome_campo] = evidencias["comparar_repositorios"]
+        elif nome_campo == "verificacao_aula_atual" and evidencias.get("verificar_aula_atual_pronta"):
+            argumentos[nome_campo] = evidencias["verificar_aula_atual_pronta"]
+        elif nome_campo == "pasta_exemplo_atual":
+            if evidencias.get("verificar_aula_atual_pronta"):
+                argumentos[nome_campo] = evidencias["verificar_aula_atual_pronta"].get("pasta_aula_atual")
+            elif evidencias.get("comparar_repositorios"):
+                local = evidencias["comparar_repositorios"].get("local_exemplos") or []
+                argumentos[nome_campo] = sorted(local)[-1] if local else ""
+            else:
+                argumentos[nome_campo] = ""
         elif nome_campo == "proximo_exemplo" and evidencias.get("identificar_proximo_exemplo"):
             argumentos[nome_campo] = evidencias["identificar_proximo_exemplo"]
         elif nome_campo == "caminho_unipds" and evidencias.get("identificar_proximo_exemplo"):

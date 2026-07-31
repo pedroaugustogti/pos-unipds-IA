@@ -6,6 +6,12 @@ import subprocess
 import urllib.request
 from pathlib import Path
 
+from pre_requisitos_aula import (
+    ferramenta_executar_commit_push_aula_atual,
+    ferramenta_verificar_aula_atual_pronta,
+)
+from relatorio_didatico import ferramenta_gerar_relatorio_didatico_aula
+
 UNIPDS_REPO = "unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada"
 UNIPDS_API = f"https://api.github.com/repos/{UNIPDS_REPO}/contents"
 UNIPDS_URL_BASE = f"https://github.com/{UNIPDS_REPO}/tree/main"
@@ -238,6 +244,29 @@ def ferramenta_identificar_proximo_exemplo(argumentos: dict) -> dict:
 def ferramenta_baixar_base_unipds(argumentos: dict) -> dict:
     repo = _resolver_repo(argumentos.get("caminho_repositorio_local"))
     proximo = argumentos.get("proximo_exemplo") or {}
+    comparacao = argumentos.get("comparacao") or {}
+
+    if not argumentos.get("ignorar_pre_requisitos"):
+        verif = ferramenta_verificar_aula_atual_pronta({
+            "caminho_repositorio_local": str(repo),
+            "comparacao": comparacao,
+        })
+        if not verif.get("sucesso"):
+            return verif
+        dados_verif = verif["dados"]
+        if not dados_verif.get("pode_iniciar_scaffold"):
+            bloqueios = dados_verif.get("bloqueios") or []
+            if dados_verif.get("precisa_commit_push"):
+                return _erro(
+                    "Execute executar_commit_push_aula_atual antes de baixar_base_unipds — "
+                    "aula atual com aceite OK mas commit/push pendente"
+                )
+            return _erro(
+                "Pre-requisitos da aula atual nao atendidos: " + "; ".join(bloqueios[:5])
+                if bloqueios
+                else "Verifique criterios de aceite e pendencias git"
+            )
+
     caminho_unipds = argumentos.get("caminho_unipds") or proximo.get("caminho_unipds")
     pasta_destino = argumentos.get("pasta_destino") or proximo.get("pasta")
 
@@ -347,11 +376,52 @@ cd {pasta}
     })
 
 
+def _identificar_exemplo_atual(comparacao: dict) -> str | None:
+    local_exemplos = comparacao.get("local_exemplos") or []
+    if not local_exemplos:
+        return None
+    return sorted(local_exemplos)[-1]
+
+
+def _rel_path(repo: Path, caminho: Path) -> str:
+    return str(caminho.relative_to(repo)).replace("\\", "/")
+
+
+def _atualizar_secao_proxima_aula(readme_path: Path, pasta_proxima: str, aula_unipds: str) -> bool:
+    if not readme_path.exists():
+        return False
+
+    texto = readme_path.read_text(encoding="utf-8")
+    url_unipds = f"{UNIPDS_URL_BASE}/modulo04-agentes-autonomos/{aula_unipds}"
+    secao = (
+        "## Próxima aula\n\n"
+        f"**Exemplo seguinte:** [`{pasta_proxima}`](../{pasta_proxima}/) "
+        f"([{aula_unipds}]({url_unipds})).\n"
+    )
+    marcador = "## Próxima aula"
+    if marcador in texto:
+        antes, _, depois = texto.partition(marcador)
+        resto = depois.split("\n## ", 1)
+        texto = antes.rstrip() + "\n\n" + secao
+        if len(resto) > 1 and not resto[1].startswith("Material base"):
+            texto += "\n## " + resto[1]
+        elif "## Material base UNIPDS" in depois:
+            texto += "\n---\n\n" + depois[depois.find("## Material base UNIPDS") :]
+    elif "## Material base UNIPDS" in texto:
+        texto = texto.replace("## Material base UNIPDS", secao + "\n---\n\n## Material base UNIPDS", 1)
+    else:
+        texto = texto.rstrip() + "\n\n---\n\n" + secao
+
+    readme_path.write_text(texto, encoding="utf-8")
+    return True
+
+
 def ferramenta_atualizar_readme_raiz(argumentos: dict) -> dict:
     repo = _resolver_repo(argumentos.get("caminho_repositorio_local"))
     proximo = argumentos.get("proximo_exemplo") or {}
     comparacao = argumentos.get("comparacao") or {}
     pasta = argumentos.get("pasta_exemplo") or proximo.get("pasta")
+    forcar = bool(argumentos.get("forcar_atualizacao"))
 
     if not pasta:
         return _erro("pasta_exemplo obrigatorio")
@@ -368,10 +438,25 @@ def ferramenta_atualizar_readme_raiz(argumentos: dict) -> dict:
 
     texto = readme.read_text(encoding="utf-8")
     if pasta in texto:
+        if forcar and nova_linha.strip() not in texto:
+            padrao = re.compile(
+                rf"^\| {numero} \| \[`{re.escape(pasta)}`\]\(\./{re.escape(pasta)}/\) \|.*\|$",
+                re.M,
+            )
+            if padrao.search(texto):
+                texto = padrao.sub(nova_linha, texto, count=1)
+                readme.write_text(texto, encoding="utf-8")
+                return _ok({
+                    "readme_raiz": str(readme),
+                    "linha_adicionada": nova_linha,
+                    "ja_existia": True,
+                    "atualizado": True,
+                })
         return _ok({
             "readme_raiz": str(readme),
             "linha_adicionada": nova_linha,
             "ja_existia": True,
+            "atualizado": False,
         })
 
     secao = f"## Módulo {modulo}"
@@ -484,26 +569,86 @@ def ferramenta_verificar_env_example(argumentos: dict) -> dict:
     })
 
 
+def ferramenta_garantir_readmes_para_commit(argumentos: dict) -> dict:
+    """Garante README do exemplo atual, do novo e o README raiz no stage do commit."""
+    repo = _resolver_repo(argumentos.get("caminho_repositorio_local"))
+    comparacao = argumentos.get("comparacao") or {}
+    proximo = argumentos.get("proximo_exemplo") or {}
+    pasta_atual = argumentos.get("pasta_exemplo_atual") or _identificar_exemplo_atual(comparacao)
+    pasta_nova = proximo.get("pasta")
+
+    readmes_stage: list[str] = []
+    faltando: list[str] = []
+    atualizacoes: list[str] = []
+
+    readme_raiz = repo / "README.md"
+    if readme_raiz.exists():
+        readmes_stage.append("README.md")
+    else:
+        faltando.append("README.md")
+
+    if pasta_atual:
+        readme_atual = repo / pasta_atual / "README.md"
+        if readme_atual.exists():
+            readmes_stage.append(_rel_path(repo, readme_atual))
+            if pasta_nova and _atualizar_secao_proxima_aula(
+                readme_atual,
+                pasta_nova,
+                proximo.get("aula_unipds", ""),
+            ):
+                atualizacoes.append(f"secao Proxima aula em {pasta_atual}/README.md")
+        else:
+            faltando.append(f"{pasta_atual}/README.md")
+
+    if pasta_nova:
+        readme_novo = repo / pasta_nova / "README.md"
+        if readme_novo.exists():
+            readmes_stage.append(_rel_path(repo, readme_novo))
+        else:
+            faltando.append(f"{pasta_nova}/README.md")
+
+    arquivos_stage = sorted(set(readmes_stage))
+    if pasta_nova:
+        arquivos_stage = sorted(set([pasta_nova, *arquivos_stage]))
+
+    return _ok({
+        "pasta_exemplo_atual": pasta_atual,
+        "pasta_exemplo_novo": pasta_nova,
+        "readmes_para_stage": readmes_stage,
+        "arquivos_sugeridos_stage": arquivos_stage,
+        "atualizacoes": atualizacoes,
+        "faltando": faltando,
+        "ok": not faltando,
+    })
+
 def ferramenta_preparar_mensagem_commit(argumentos: dict) -> dict:
     resumo = argumentos.get("resumo_diff", "")
     proximo = argumentos.get("proximo_exemplo") or {}
     comparacao = argumentos.get("comparacao") or {}
+    readmes = argumentos.get("readmes_commit") or {}
     modulo = comparacao.get("modulo_alvo", 4)
     pasta = proximo.get("pasta", f"modulo-{modulo}-exemplo")
+    pasta_atual = readmes.get("pasta_exemplo_atual") or _identificar_exemplo_atual(comparacao)
     sufixo = pasta.split("-", 3)[-1] if "-" in pasta else pasta
     titulo = f"feat(modulo-{modulo}): add {sufixo}"
     corpo = (
         f"Add {pasta} based on UNIPDS {proximo.get('referencia_unipds', '')}.\n\n"
         f"- Baixa base do repositorio UNIPDS\n"
-        f"- README local customizado\n"
-        f"- README raiz atualizado\n\n"
-        f"Diff summary:\n{resumo[:500]}"
+        f"- README local do novo exemplo customizado\n"
+        f"- README raiz atualizado\n"
     )
-    stage = [pasta, "README.md"]
+    if pasta_atual:
+        corpo += f"- README de {pasta_atual} revisado (proxima aula + criterios)\n"
+    corpo += f"\nDiff summary:\n{resumo[:500]}"
+
+    stage = readmes.get("arquivos_sugeridos_stage") or [pasta, "README.md"]
+    if pasta_atual and f"{pasta_atual}/README.md" not in stage:
+        stage = sorted(set([*stage, f"{pasta_atual}/README.md", "README.md"]))
     return _ok({
         "titulo": titulo,
         "mensagem_commit": f"{titulo}\n\n{corpo}",
         "arquivos_sugeridos_stage": stage,
+        "readmes_incluidos": readmes.get("readmes_para_stage", []),
     })
 
 
@@ -518,10 +663,14 @@ def ferramenta_git_push(argumentos: dict) -> dict:
 
 IMPLEMENTACOES_REAIS = {
     "comparar_repositorios": ferramenta_comparar_repositorios,
+    "verificar_aula_atual_pronta": ferramenta_verificar_aula_atual_pronta,
+    "executar_commit_push_aula_atual": ferramenta_executar_commit_push_aula_atual,
     "identificar_proximo_exemplo": ferramenta_identificar_proximo_exemplo,
     "baixar_base_unipds": ferramenta_baixar_base_unipds,
     "customizar_readme_exemplo": ferramenta_customizar_readme_exemplo,
     "atualizar_readme_raiz": ferramenta_atualizar_readme_raiz,
+    "gerar_relatorio_didatico_aula": ferramenta_gerar_relatorio_didatico_aula,
+    "garantir_readmes_para_commit": ferramenta_garantir_readmes_para_commit,
     "git_status": ferramenta_git_status,
     "git_diff_resumo": ferramenta_git_diff_resumo,
     "verificar_env_example": ferramenta_verificar_env_example,

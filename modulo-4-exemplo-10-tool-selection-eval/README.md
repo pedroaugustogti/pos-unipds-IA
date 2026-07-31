@@ -116,4 +116,4 @@ O README original da aula está em [aula12-tool-selection-eval](https://github.c
 
 ## Próxima aula
 
-**Exemplo 11:** memória do agente — [`modulo-4-exemplo-11-agente-que-lembra`](../modulo-4-exemplo-11-agente-que-lembra/) ([aula13-agente-que-lembra](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula13-agente-que-lembra)).
+**Exemplo seguinte:** [`modulo-4-exemplo-11-agente-que-lembra`](../modulo-4-exemplo-11-agente-que-lembra/) ([aula13-agente-que-lembra](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula13-agente-que-lembra)).
