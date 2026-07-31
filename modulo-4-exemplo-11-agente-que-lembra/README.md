@@ -286,5 +286,3 @@ Sem memória, o agente é amnésico — investiga o mesmo serviço dez vezes do 
 ## Próxima aula
 
 **Exemplo seguinte:** [`modulo-4-exemplo-12-embeddings-reflexao-evolutiva`](../modulo-4-exemplo-12-embeddings-reflexao-evolutiva/) ([aula14-embeddings-reflexao-evolutiva](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula14-embeddings-reflexao-evolutiva)).
-
-Implementa memória **contextual** (`embedding_adapter`), `reflection_store` e evolução do agente com busca semântica (limiar 0.7).

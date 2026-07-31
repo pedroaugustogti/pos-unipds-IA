@@ -132,6 +132,8 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 | 9 | [`modulo-4-exemplo-9-database-e-mcp`](./modulo-4-exemplo-9-database-e-mcp/) | **Database, segurança e MCP** — `db_adapter.py`, `mcp_adapter.py`, SQLite (`seed_logs.py`), MCP stdio (`mcp/server.py`); 6 tools com 4 adapters (REST + database + MCP + mock); políticas e hooks; E2E validado (`trace_id` `97117d352739`) ([aula11 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula11-database-e-mcp)) |
 | 10 | [`modulo-4-exemplo-10-tool-selection-eval`](./modulo-4-exemplo-10-tool-selection-eval/) | **Tool selection eval** — dataset com gabarito (`tool_selection_cases.json`), 4 métricas + suites v1/v2/LLM, CLI `tool-eval`/`tool-eval-comparar`; padrao/reflect **87,5%** com LLM; refinamento de `skills.md` ([aula12 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula12-tool-selection-eval)) |
 | 11 | [`modulo-4-exemplo-11-agente-que-lembra`](./modulo-4-exemplo-11-agente-que-lembra/) | **Agente Que Lembra** — material base UNIPDS adaptado para o padrao pos-unipds-IA |
+| 12 | [`modulo-4-exemplo-12-embeddings-reflexao-evolutiva`](./modulo-4-exemplo-12-embeddings-reflexao-evolutiva/) | **Embeddings Reflexao Evolutiva** — material base UNIPDS adaptado para o padrao pos-unipds-IA |
+
 
 
 
