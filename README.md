@@ -132,12 +132,26 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 | 9 | [`modulo-4-exemplo-9-database-e-mcp`](./modulo-4-exemplo-9-database-e-mcp/) | **Database, segurança e MCP** — `db_adapter.py`, `mcp_adapter.py`, SQLite (`seed_logs.py`), MCP stdio (`mcp/server.py`); 6 tools com 4 adapters (REST + database + MCP + mock); políticas e hooks; E2E validado (`trace_id` `97117d352739`) ([aula11 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula11-database-e-mcp)) |
 | 10 | [`modulo-4-exemplo-10-tool-selection-eval`](./modulo-4-exemplo-10-tool-selection-eval/) | **Tool selection eval** — dataset com gabarito (`tool_selection_cases.json`), 4 métricas + suites v1/v2/LLM, CLI `tool-eval`/`tool-eval-comparar`; padrao/reflect **87,5%** com LLM; refinamento de `skills.md` ([aula12 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula12-tool-selection-eval)) |
 | 11 | [`modulo-4-exemplo-11-agente-que-lembra`](./modulo-4-exemplo-11-agente-que-lembra/) | **Agente Que Lembra** — material base UNIPDS adaptado para o padrao pos-unipds-IA |
-| 12 | [`modulo-4-exemplo-12-embeddings-reflexao-evolutiva`](./modulo-4-exemplo-12-embeddings-reflexao-evolutiva/) | **Embeddings Reflexao Evolutiva** — material base UNIPDS adaptado para o padrao pos-unipds-IA |
-
-
-
+| 12 | [`modulo-4-exemplo-12-embeddings-reflexao-evolutiva`](./modulo-4-exemplo-12-embeddings-reflexao-evolutiva/) | **Embeddings Reflexao Evolutiva** — `embedding_adapter.py` (indexar/buscar/reindexar), memória contextual via OpenRouter, `reflection.md` + `reflection_store/`, lazy reindex; validação local com SQLite (`validar_execucao_embeddings.py`, sim ≥ 0,7) ([aula14 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula14-embeddings-reflexao-evolutiva)) |
+| 13 | [`modulo-4-exemplo-13-evals-memoria`](./modulo-4-exemplo-13-evals-memoria/) | **Evals de memória** — `memory_eval.py`, `MEMORY_DISABLED=1`, dataset `memory_impact_cases.json`, 6 métricas, comparação com vs sem memória; **fechamento da Unidade 4** ([aula15 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula15-evals-memoria)) |
 
 **Competências do módulo:** agentes orientados a contratos; planejamento com LLM (OpenRouter); ferramentas reais (git + GitHub API); governança de entrega sem abrir PR automaticamente; **observabilidade** (trace, KPIs, análise automatizada); **tipos de agente** (task_based, interactive, goal_oriented, autonomous) e decomposição de backlog; **arquiteturas cognitivas** (ReAct, Plan-Execute, Reflection); **evals** mensuráveis; **padrão Adapter** (REST, database, MCP declarados no contrato, secrets no `.env`).
+
+---
+
+## Módulo 5 — Ferramentas de IA para UI e UX
+
+**O que você aprende:** aplicar IA como camada de engenharia no ciclo de produto — refinamento de requisitos, prototipação, agentes CLI, automação com MCP e integração de lógica de IA no front/back.
+
+| Exemplo | Pasta | Principais aprendizados |
+|---------|-------|-------------------------|
+| 1 | [`modulo-5-exemplo-1-discovery-refinement`](./modulo-5-exemplo-1-discovery-refinement/) | **Discovery e refinamento AI-First** — structured prompts, edge cases, Mermaid.js, destilador de insights ([modulo-01 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-01)) — *scaffold pronto; retomar execução da atividade* |
+| 2 | *próximo* [`modulo-02`](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-02) | **Prototyping UI** — Figma to Code e Firebase Studio |
+| 3 | *próximo* [`modulo-03`](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-03) | **Agents CLI** — Gemini CLI e agentes de refatoração |
+| 4 | *próximo* [`modulo-04`](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-04) | **Automação MCP** — testes E2E e depuração via MCP |
+| 5 | *próximo* [`modulo-05`](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-05) | **AI Integration** — Firebase AI Logic e APIs |
+
+**Competências do módulo:** engenharia de prompts estruturados; refinamento técnico de requisitos; diagramação com Mermaid; data discovery; redução de variabilidade antes do código; integração de IA em produtos digitais.
 
 ---
 

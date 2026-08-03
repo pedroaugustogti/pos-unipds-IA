@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-08-03T10:40:28.306518",
+  "max_casos": 2,
+  "metricas_agregadas": {
+    "retrieval_precision": 0.812,
+    "retrieval_recall": 0.875,
+    "memory_utilization": 0.236,
+    "hallucination_from_memory": 0.9,
+    "decision_improvement": 0.571,
+    "lesson_quality": 1.0
+  },
+  "status": {
+    "retrieval_precision": "PASS",
+    "retrieval_recall": "PASS",
+    "memory_utilization": "FAIL",
+    "hallucination_from_memory": "FAIL",
+    "decision_improvement": "PASS",
+    "lesson_quality": "PASS"
+  },
+  "pass_count": 4,
+  "fail_count": 2,
+  "lesson_quality_ok": true,
+  "decision_improvement_ok": true,
+  "arquivo_relatorio": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-4-exemplo-13-evals-memoria\\evals\\resultados\\memory_impact_report_20260803_104028.md",
+  "duracao_segundos": 31.02,
+  "sucesso": true
+}

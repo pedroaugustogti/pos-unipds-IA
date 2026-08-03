@@ -1,4 +1,4 @@
-atualizado_em: '2026-04-24T19:36:22.007580'
+atualizado_em: '2026-08-03T10:24:06.309503'
 conteudo:
   entrada:
     estado: estado_sem_api_key
@@ -11,7 +11,7 @@ conteudo:
     contagem_total: 2
     issues:
     - autor: eng-oncall
-      criado_em: '2026-04-24T17:36:15.037991'
+      criado_em: '2026-08-03T08:24:06.276683'
       estado: open
       labels:
       - bug
@@ -21,7 +21,7 @@ conteudo:
       repositorio: repositorio_sem_api_key
       titulo: Latencia elevada apos deploy v2.4.1
     - autor: monitoring-bot
-      criado_em: '2026-04-24T14:36:15.037991'
+      criado_em: '2026-08-03T05:24:06.276683'
       estado: open
       labels:
       - bug

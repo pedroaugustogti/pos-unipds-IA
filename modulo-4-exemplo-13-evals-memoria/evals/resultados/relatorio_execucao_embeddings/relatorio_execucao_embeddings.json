@@ -1,0 +1,88 @@
+{
+  "timestamp": "2026-08-03T10:23:59.123669",
+  "config": {
+    "embedding_storage": "sqlite",
+    "db": "monitor_local.db...",
+    "openrouter": true,
+    "modelo_embedding": "openai/text-embedding-3-small"
+  },
+  "fases": [
+    {
+      "nome": "indexar_amostras",
+      "fragmentos": 4,
+      "storage": "sqlite"
+    }
+  ],
+  "embeddings_db_antes": 0,
+  "busca_direta": [
+    {
+      "consulta": "erro 500 no servico de pedidos",
+      "hits": 1,
+      "top": [
+        {
+          "id": "emb_91e1e526",
+          "texto": "servico de pedidos com erro HTTP 500 apos deploy",
+          "similaridade": 0.7507,
+          "metadados": {
+            "tipo": "longa",
+            "servico": "pedidos"
+          },
+          "storage": "sqlite"
+        }
+      ]
+    },
+    {
+      "consulta": "timeout no banco do servico de pedidos",
+      "hits": 1,
+      "top": [
+        {
+          "id": "emb_20a64c1f",
+          "texto": "timeout no banco de dados durante pico de trafego",
+          "similaridade": 0.7009,
+          "metadados": {
+            "tipo": "contextual"
+          },
+          "storage": "sqlite"
+        }
+      ]
+    },
+    {
+      "consulta": "falha de conexao PostgreSQL payments",
+      "hits": 0,
+      "top": []
+    }
+  ],
+  "embeddings_consultados_ok": true,
+  "embeddings_db_depois": 4,
+  "recuperacao": {
+    "fatos_conhecidos": 0,
+    "experiencia_anterior": 5,
+    "conhecimento_relevante": [
+      {
+        "texto": "timeout no banco de dados durante pico de trafego",
+        "similaridade": 0.7009
+      }
+    ],
+    "licoes_relevantes": 3
+  },
+  "execucoes": {
+    "exec1": {
+      "entrada": "erro 500 no servico de pedidos",
+      "ferramentas": {
+        "relatorio_incidente": 1,
+        "buscar_issues": 1
+      },
+      "etapas": 3
+    },
+    "exec2": {
+      "entrada": "timeout no banco do servico de pedidos",
+      "ferramentas": {
+        "relatorio_incidente": 1,
+        "buscar_issues": 1
+      },
+      "etapas": 3
+    }
+  },
+  "duracao_segundos": 7.19,
+  "sucesso": true
+}

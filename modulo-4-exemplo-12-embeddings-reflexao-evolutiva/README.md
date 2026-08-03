@@ -31,11 +31,34 @@ cd modulo-4-exemplo-12-embeddings-reflexao-evolutiva
 
 ## Critérios de sucesso
 
-- [ ] Pasta criada no padrão `modulo-4-exemplo-12-*`
-- [ ] README local com objetivo, passo a passo e critérios de sucesso
-- [ ] Atividade executada conforme material UNIPDS
-- [ ] README raiz do `pos-unipds-IA` atualizado
-- [ ] `.env` não commitado (apenas `.env.example` quando aplicável)
+- [x] Pasta criada no padrão `modulo-4-exemplo-12-*`
+- [x] README local com objetivo, passo a passo e critérios de sucesso
+- [x] Atividade executada conforme material UNIPDS
+- [x] README raiz do `pos-unipds-IA` atualizado
+- [x] `.env` não commitado (apenas `.env.example` quando aplicável)
+
+## Evidências de execução
+
+Validação local em **2026-08-03** (revalidação; primeira em 2026-07-31) — relatório completo em [`evals/resultados/relatorio_execucao_embeddings/`](./evals/resultados/relatorio_execucao_embeddings/).
+
+| Verificação | Resultado |
+|-------------|-----------|
+| `embedding_adapter.py` (indexar, buscar, reindexar) | ✅ |
+| Lazy reindex em `_recuperar_contexto` | ✅ |
+| `reflection.md` + `_extrair_licoes` + `_detectar_padroes` | ✅ |
+| `licoes_relevantes` injetadas no planner | ✅ (3 lições em `reflection_store/licoes/`) |
+| Busca semântica OpenRouter (limiar 0,7) | ✅ sim=0,7507 e 0,7009 |
+| Storage local (SQLite fallback; PostgreSQL via `setup_postgres_local.py`) | ✅ 4 fragmentos indexados |
+| Execuções do agente com `conhecimento_relevante` | ✅ 2 execuções validadas (2026-08-03) |
+
+```bash
+# setup (copie .env do ex8 ou preencha OPENROUTER_API_KEY)
+cd modulo-4-exemplo-12-embeddings-reflexao-evolutiva
+python setup_sqlite_local.py          # ou setup_postgres_local.py com Docker
+python validar_execucao_embeddings.py
+```
+
+Detalhamento: [`evals/EVIDENCIAS_ACEITE.md`](./evals/EVIDENCIAS_ACEITE.md)
 
 ## Material base UNIPDS
 
@@ -311,3 +334,28 @@ Com a aula 14, o monitor-agent tem os 4 pilares:
 | Reflexão | `reflection_store/licoes/*.yaml` | lição generalizável |
 
 A aula 15 mede tudo isso com eval de impacto de memória.
+
+---
+
+## Próxima aula
+
+**Exemplo seguinte:** `modulo-4-exemplo-13-evals-memoria` — fechamento da Unidade 4 (concluído).
+
+O que entra na aula 15:
+
+| Componente | Descrição |
+|------------|-----------|
+| `memory_eval.py` | Harness que roda cada caso **com** e **sem** memória (`MEMORY_DISABLED=1`) |
+| `memory_impact_cases.json` | Dataset com 5+ casos (ajuda, ruído, desatualizado, frio, lições) |
+| `memory_impact_eval.yaml` | 6 métricas: precision, recall, utilization, hallucination, **decision_improvement**, lesson_quality |
+| Relatório | `evals/resultados/memory_impact_report_<ts>.md` |
+
+**Pré-requisito desta aula:** `reflection_store/licoes/` populado (já temos 3 lições) e embeddings funcionando (validado acima).
+
+**Receita rápida** para forçar extração de lição antes do eval (se precisar de mais):
+
+1. Baixar `limites.max_etapas` em `monitor-agent/rules.md` de 12 para 3
+2. Rodar com entrada inédita (ex.: `alerta de cpu alta no servico de notificacoes por push novo`)
+3. Observar `[reflection] extraindo licoes...`
+4. Restaurar `max_etapas: 12`
+
