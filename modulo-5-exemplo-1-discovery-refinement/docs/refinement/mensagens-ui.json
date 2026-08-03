@@ -64,7 +64,7 @@
     "message": "Deseja realizar esta transferência agora ou agendá-la para uma data futura?",
     "action_label": "Realizar agora"
   },
-    "SCHEDULE_PIX_INSTANT_TRANSFER_DECLINED": {
+  "SCHEDULE_PIX_INSTANT_TRANSFER_DECLINED": {
     "title": "Agendamento concluído",
     "message": "Seu Pix foi agendado para a data futura selecionada.",
     "action_label": "Ver comprovante"
