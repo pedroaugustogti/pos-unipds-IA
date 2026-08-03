@@ -26,6 +26,7 @@ MAPA_MODULOS_UNIPDS = {
     2: "modulo02-langgraph-e-agentes",
     3: "modulo03-mcp-na-pratica",
     4: "modulo04-agentes-autonomos",
+    5: "modulo05-ferramentas-de-IA-para-UI-UX",
 }
 
 

@@ -1,0 +1,82 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-overlay);
+  z-index: var(--z-index-modal-backdrop);
+}
+
+.modal-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-index-modal);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-card);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  padding: var(--spacing-large);
+  border-left: var(--spacing-small) solid var(--color-error);
+  border-radius: var(--radius-small);
+  box-shadow: var(--shadow-card);
+  width: calc(100% - var(--spacing-large) * 2);
+  max-width: var(--max-width-modal);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-medium);
+}
+
+.modal-title {
+  font-family: var(--font-heading);
+  color: var(--color-error);
+  margin: 0;
+  font-size: var(--font-size-title);
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: var(--color-text);
+  cursor: pointer;
+  padding: var(--spacing-small);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-small);
+}
+
+.close-button:hover,
+.close-button:focus-visible {
+  color: var(--color-error);
+  background-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
+  outline: none;
+}
+
+.modal-message {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.modal-footer {
+  margin-top: var(--spacing-large);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-action {
+  padding: var(--spacing-small) var(--spacing-large);
+  border: none;
+  border-radius: var(--radius-small);
+  background-color: var(--color-action);
+  color: var(--color-text-on-action);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--font-size-caption);
+  cursor: pointer;
+}

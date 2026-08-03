@@ -4,6 +4,8 @@ Repositório com **exemplos práticos** da pós-graduação **Engenharia de IA A
 
 Cada pasta `modulo-X-exemplo-Y-*` segue um **padrão didático** nos `README.md`: objetivo da atividade, passo a passo, critérios de sucesso e relação com o módulo. Referência de estilo: [`modulo-3-exemplo-4-skills/sample-video-ffmpeg/README.md`](./modulo-3-exemplo-4-skills/sample-video-ffmpeg/README.md).
 
+O [`delivery-agent/`](./delivery-agent/) na raiz automatiza a preparação da próxima aula (comparar UNIPDS, scaffold, READMEs e commit).
+
 ---
 
 ## Módulo 1 — Fundamentos de IA e LLMs
@@ -121,7 +123,7 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 
 | Exemplo | Pasta | Principais aprendizados |
 |---------|-------|-------------------------|
-| 1 | [`modulo-4-exemplo-1-agente-ia-contratos`](./modulo-4-exemplo-1-agente-ia-contratos/) | **Contratos de agente** (`agent.md`, `skills.md`, `rules.md`); runtime Python; `delivery-agent` compara UNIPDS vs repo local, sugere próximo `modulo-X-exemplo-Y` e prepara **commit** (sem PR) |
+| 1 | [`modulo-4-exemplo-1-agente-ia-contratos`](./modulo-4-exemplo-1-agente-ia-contratos/) | **Contratos de agente** (`agent.md`, `skills.md`, `rules.md`); runtime Python; [`delivery-agent`](./delivery-agent/) na raiz compara UNIPDS vs repo local, sugere próximo `modulo-X-exemplo-Y` e prepara **commit** (sem PR) |
 | 2 | [`modulo-4-exemplo-2-runtime`](./modulo-4-exemplo-2-runtime/) | **Por dentro do runtime** — 6 módulos Python (`contratos`, `ciclo`, `planejador`, `ferramentas`, `executor`, `telemetria`); trace → código; `monitor-agent` com telemetria completa |
 | 3 | [`modulo-4-exemplo-3-observabilidade`](./modulo-4-exemplo-3-observabilidade/) | **Observabilidade em 4 níveis** — `trace-analyzer`, comando `analisar`, `analise-agente.md`; planejador `auto`/`llm`; ferramentas determinísticas |
 | 4 | [`modulo-4-exemplo-4-tipos-agentes-e-projetos`](./modulo-4-exemplo-4-tipos-agentes-e-projetos/) | **Tipos de agente** — `backlog-decomposer` (`goal_oriented`), modos `interactive` / `autonomous`, contract-driven development ([aula06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula06-tipos-agentes-e-projetos)) |
@@ -146,8 +148,8 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 | Exemplo | Pasta | Principais aprendizados |
 |---------|-------|-------------------------|
 | 1 | [`modulo-5-exemplo-1-discovery-refinement`](./modulo-5-exemplo-1-discovery-refinement/) | **Discovery e refinamento AI-First** — prompts versionados, edge cases, Mermaid, data sanitizer, backlog; critérios UNIPDS ✅ ([modulo-01 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-01)) |
-| 2 | [`modulo-5-exemplo-2-prototyping-ui`](./modulo-5-exemplo-2-prototyping-ui/) | **Prototyping UI** — Figma to Code / Firebase Studio; entrada: artefatos do Ex. 1 ([modulo-02 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-02)) — *scaffold pronto* |
-| 3 | *próximo* [`modulo-03`](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-03) | **Agents CLI** — Gemini CLI e agentes de refatoração |
+| 2 | [`modulo-5-exemplo-2-prototyping-ui`](./modulo-5-exemplo-2-prototyping-ui/) | **Prototyping UI** — app **Angular 21** Pix Agendado a partir das specs do Ex. 1; Figma/Stitch → componentes; critérios UNIPDS ✅ ([modulo-02 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-02)) |
+| 3 | [`modulo-5-exemplo-3-agents-cli`](./modulo-5-exemplo-3-agents-cli/) | **Agents CLI** — refatoração segura do `pix-app` com Gemini CLI / terminal ([modulo-03 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-03)) |
 | 4 | *próximo* [`modulo-04`](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-04) | **Automação MCP** — testes E2E e depuração via MCP |
 | 5 | *próximo* [`modulo-05`](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-05) | **AI Integration** — Firebase AI Logic e APIs |
 

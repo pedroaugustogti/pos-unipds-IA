@@ -20,7 +20,7 @@ Use estes arquivos como **especificação de produto** para o protótipo (Trilha
 ## Prompt sugerido no Cursor
 
 ```
-Implemente o fluxo Pix Agendado em app/ seguindo:
+Implemente o fluxo Pix Agendado em `app/` (Angular 21) seguindo:
 - fluxo-logico.mmd (navegação)
 - ui-states-checklist.md (estados obrigatórios)
 - mensagens-ui.json (textos de erro/sucesso)

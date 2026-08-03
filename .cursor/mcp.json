@@ -29,6 +29,13 @@
         "/c",
         "modulo-3-exemplo-7-security-auth-mcp\\customers-secure-mcp.cmd"
       ]
+    },
+    "angular-cli-pix-app": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "cd /d modulo-5-exemplo-2-prototyping-ui\\app && npx -y @angular/cli mcp"
+      ]
     }
   }
 }

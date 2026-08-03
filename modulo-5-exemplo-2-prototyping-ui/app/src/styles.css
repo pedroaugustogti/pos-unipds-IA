@@ -1,0 +1,186 @@
+/* Design tokens — briefing/branding-briefing.txt + design-tokens-generator.md */
+:root {
+  --color-primary: #0a192f;
+  --color-action: #64ffda;
+  --color-error: #ff6b6b;
+  --color-warning: #f0b429;
+  --color-received: #10b981;
+  --color-sent: #ef4444;
+
+  --color-canvas: #112240;
+  --color-surface: #0a192f;
+  --color-card: #0b1221;
+  --color-input: #050810;
+  --color-border: color-mix(in srgb, var(--color-action) 18%, transparent);
+  --color-border-subtle: color-mix(in srgb, var(--color-text-light) 12%, transparent);
+
+  --color-text: #ffffff;
+  --color-text-light: #ffffff;
+  --color-text-muted: color-mix(in srgb, var(--color-text-light) 70%, transparent);
+  --color-text-on-action: var(--color-primary);
+  --color-label: var(--color-action);
+  --color-overlay: color-mix(in srgb, var(--color-primary) 85%, transparent);
+
+  --font-heading: 'Montserrat', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  --spacing-small: 8px;
+  --spacing-medium: 16px;
+  --spacing-large: 24px;
+  --spacing-extra-large: 32px;
+  --spacing-icon-gap: 12px;
+
+  --icon-size-md: 24px;
+  --breakpoint-sm: 600px;
+
+  --font-size-display: 1.75rem;
+  --font-size-title: 16px;
+  --font-size-caption: 12px;
+  --font-size-label: 0.7rem;
+  --font-size-amount: 16px;
+
+  --radius-small: 8px;
+  --radius-medium: 12px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 20px 40px color-mix(in srgb, var(--color-primary) 40%, transparent);
+  --border-card-accent: 3px solid var(--color-action);
+  --max-width-modal: 400px;
+  --z-index-modal-backdrop: 1000;
+  --z-index-modal: 1001;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-canvas: #f8f9fa;
+    --color-surface: #ffffff;
+    --color-card: #ffffff;
+    --color-input: #f8f9fa;
+    --color-text: #112240;
+    --color-text-light: #ffffff;
+    --color-text-muted: #64748b;
+    --color-border: #e2e8f0;
+    --color-border-subtle: #e2e8f0;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--color-canvas);
+  color: var(--color-text);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+.skeleton-row {
+  height: 52px;
+  border-radius: var(--radius-small);
+  margin-bottom: var(--spacing-small);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-text) 8%, transparent),
+    color-mix(in srgb, var(--color-text) 16%, transparent),
+    color-mix(in srgb, var(--color-text) 8%, transparent)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-action);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-overlay);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  gap: var(--spacing-medium);
+  color: var(--color-text-light);
+}
+
+.toast {
+  position: fixed;
+  bottom: var(--spacing-large);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-card);
+  border: 1px solid var(--color-received);
+  padding: var(--spacing-medium) var(--spacing-large);
+  border-radius: var(--radius-small);
+  z-index: 300;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--spacing-medium);
+  top: calc(-1 * var(--spacing-extra-large));
+  z-index: 500;
+  padding: var(--spacing-small) var(--spacing-medium);
+  background-color: var(--color-action);
+  color: var(--color-text-on-action);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: var(--radius-small);
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: var(--spacing-medium);
+  outline: 2px solid var(--color-text-light);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-action);
+  outline-offset: 2px;
+}

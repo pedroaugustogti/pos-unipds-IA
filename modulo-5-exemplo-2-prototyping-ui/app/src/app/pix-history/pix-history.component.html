@@ -1,0 +1,35 @@
+<section class="pix-history-card" aria-labelledby="history-title">
+  <h2 id="history-title" class="page-title">Extrato</h2>
+  <ul class="pix-history-list" role="list">
+    @for (transaction of transactions(); track transaction.id) {
+      <li class="transaction-item">
+        <div class="transaction-info">
+          <span
+            class="material-symbols-outlined icon"
+            [class.icon-received]="transaction.type === 'received'"
+            [class.icon-sent]="transaction.type === 'sent'"
+            aria-hidden="true"
+          >
+            {{ transaction.type === 'received' ? 'arrow_downward' : 'arrow_upward' }}
+          </span>
+          <div class="transaction-details">
+            <span class="transaction-title">{{ transaction.title }}</span>
+            <time class="transaction-date" [dateTime]="transaction.date">
+              {{ transaction.date | date: 'dd/MM/yyyy HH:mm' }}
+            </time>
+          </div>
+        </div>
+        <span
+          class="transaction-amount"
+          [class.amount-received]="transaction.type === 'received'"
+          [class.amount-sent]="transaction.type === 'sent'"
+          [attr.aria-label]="(transaction.type === 'received' ? 'Recebido' : 'Enviado') + ' ' + (transaction.amount | currency: 'BRL')"
+        >
+          <span class="sr-only">{{ transaction.type === 'received' ? 'Recebido' : 'Enviado' }}</span>
+          {{ transaction.type === 'received' ? '+' : '-' }}
+          {{ transaction.amount | currency: 'BRL' }}
+        </span>
+      </li>
+    }
+  </ul>
+</section>

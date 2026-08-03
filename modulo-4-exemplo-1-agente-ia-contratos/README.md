@@ -16,15 +16,16 @@ O template incluído é o `monitor-agent` (diagnóstico de incidentes de produç
 modulo-4-exemplo-1-agente-ia-contratos/
 ├── README.md
 ├── monitor-agent/            # agente modelo UNIPDS
-├── delivery-agent/           # agente custom (opção C — commit/push, sem PR)
-│   ├── agent.md
-│   ├── skills.md
-│   ├── rules.md
-│   └── contracts/
 └── runtime/
     ├── llm_config.py         # OpenRouter / OpenAI
     ├── main.py
     └── .env.example
+
+delivery-agent/                 # na raiz do repo — agente custom (opção C)
+├── agent.md
+├── skills.md
+├── rules.md
+└── contracts/
 ```
 
 ## Pré-requisitos
@@ -64,12 +65,12 @@ if ($key) { $key | Set-Content runtime\.env -Encoding utf8; Add-Content runtime\
 
 ## Agente customizado: `delivery-agent` (Opção C — próxima aula, commit, sem PR)
 
-Pasta `delivery-agent/` — compara UNIPDS vs repo local, **baixa a base da próxima aula**, cria pasta `modulo-X-exemplo-Y-slug`, customiza **README local** e **README raiz**, e prepara **mensagem de commit** (não gera PR).
+Pasta [`delivery-agent/`](../../delivery-agent/) (raiz do repositório) — compara UNIPDS vs repo local, **baixa a base da próxima aula**, cria pasta `modulo-X-exemplo-Y-slug`, customiza **README local** e **README raiz**, e prepara **mensagem de commit** (não gera PR).
 
 ```bash
 cd runtime
-python main.py validar --agente ../delivery-agent
-python main.py rodar --agente ../delivery-agent --entrada "modulo 4: preparar proxima aula"
+python main.py validar --agente ../../delivery-agent
+python main.py rodar --agente ../../delivery-agent --entrada "modulo 4: preparar proxima aula"
 ```
 
 Fluxo: `comparar_repositorios` → `verificar_aula_atual_pronta` → `executar_commit_push_aula_atual` (se necessário) → `identificar_proximo_exemplo` → `baixar_base_unipds` → `customizar_readme_exemplo` → `atualizar_readme_raiz` → `gerar_relatorio_didatico_aula` → `garantir_readmes_para_commit` → `git_status` → `git_diff_resumo` → `verificar_env_example` → `preparar_mensagem_commit` (com `readmes_commit`).
@@ -181,7 +182,7 @@ python main.py rodar --agente ../customers-ops-agent --entrada "auditar integrac
 
 ### Opção C — Agente de preparação de entrega (commit/PR) ✅ implementado
 
-**Pasta:** `delivery-agent/` — já criado neste repositório.
+**Pasta:** [`delivery-agent/`](../../delivery-agent/) — na raiz do repositório.
 
 | Contrato | O que customizar |
 |----------|------------------|

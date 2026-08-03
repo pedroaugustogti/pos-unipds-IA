@@ -1,0 +1,20 @@
+<div class="modal-backdrop" role="presentation"></div>
+
+<div
+  class="modal-dialog"
+  role="alertdialog"
+  aria-modal="true"
+  aria-labelledby="error-title"
+  aria-describedby="error-message"
+>
+  <header class="modal-header">
+    <h2 id="error-title" class="modal-title">{{ title() }}</h2>
+    <button #closeBtn type="button" class="close-button" aria-label="Fechar alerta" (click)="close.emit()">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+    </button>
+  </header>
+  <p id="error-message" class="modal-message">{{ message() }}</p>
+  <footer class="modal-footer">
+    <button type="button" class="close-action" (click)="close.emit()">Fechar</button>
+  </footer>
+</div>

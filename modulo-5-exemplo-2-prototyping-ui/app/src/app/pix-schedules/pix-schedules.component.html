@@ -1,0 +1,50 @@
+<section class="card" aria-labelledby="schedules-title">
+  <h2 id="schedules-title">Meus agendamentos</h2>
+
+  @if (schedulesResource.isLoading()) {
+    <div class="skeleton-list" aria-busy="true" aria-live="polite">
+      <p class="sr-only">Carregando agendamentos</p>
+      <div class="skeleton-row"></div>
+      <div class="skeleton-row"></div>
+    </div>
+  } @else if (schedulesResource.value()?.length === 0) {
+    <p class="empty">Sem agendamentos.</p>
+    <a routerLink="/pix" class="btn btn-primary">Agendar Pix</a>
+  } @else if (schedulesResource.value(); as schedules) {
+    <ul class="schedule-list" role="list">
+      @for (s of schedules; track s.id) {
+        <li class="schedule-item">
+          <div class="schedule-info">
+            <strong>{{ s.contact.name }}</strong>
+            <span>{{ formatCurrency(s.amount) }} · {{ formatDateBr(s.date) }}</span>
+            @if (s.status === 'processing') {
+              <span class="badge" role="status">Em processamento</span>
+            }
+          </div>
+          <button
+            type="button"
+            class="btn btn-danger sm"
+            [disabled]="cancelingId() === s.id"
+            [attr.aria-label]="'Cancelar agendamento de ' + s.contact.name"
+            [attr.aria-busy]="cancelingId() === s.id"
+            (click)="cancel(s.id)"
+          >
+            {{ cancelingId() === s.id ? 'Cancelando…' : 'Cancelar' }}
+          </button>
+        </li>
+      }
+    </ul>
+  }
+
+  <button type="button" class="btn btn-ghost demo-btn" (click)="demoProcessing()">
+    Demo: marcar 1º como em processamento
+  </button>
+</section>
+
+@if (errorModal(); as err) {
+  <app-error-modal [title]="err.title" [message]="err.message" (close)="errorModal.set(null)" />
+}
+
+@if (toast(); as msg) {
+  <div class="toast" role="status" aria-live="polite">{{ msg }}</div>
+}

@@ -1,0 +1,55 @@
+<div class="receipt-page">
+  <article
+    class="receipt-card"
+    role="region"
+    aria-label="Comprovante de transferência Pix"
+  >
+    <div class="receipt-accent" aria-hidden="true"></div>
+
+    <div class="success-icon" aria-hidden="true">
+      <span class="material-symbols-outlined check-icon">check_circle</span>
+    </div>
+
+    <div class="amount-block">
+      <span class="status-label">Transferência Concluída</span>
+      <p class="amount">{{ valor() | currency: 'BRL' : 'symbol' : '1.2-2' }}</p>
+    </div>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <dl class="details">
+      <div class="detail-row">
+        <dt class="detail-label">Para</dt>
+        <dd class="detail-value">{{ nome() }}</dd>
+      </div>
+      <div class="detail-row">
+        <dt class="detail-label">Data</dt>
+        <dd class="detail-value">
+          <time [dateTime]="dataHora()">
+            {{ dataHora() | date: "dd 'de' MMMM, yyyy" }}
+          </time>
+          <time class="detail-time" [dateTime]="dataHora()">
+            {{ dataHora() | date: 'HH:mm' }}
+          </time>
+        </dd>
+      </div>
+      @if (instituicao(); as bank) {
+        <div class="detail-row">
+          <dt class="detail-label">Instituição</dt>
+          <dd class="detail-value">{{ bank }}</dd>
+        </div>
+      }
+      @if (transactionId(); as id) {
+        <div class="transaction-box">
+          <span class="transaction-label">ID da Transação</span>
+          <span class="transaction-id">{{ id }}</span>
+        </div>
+      }
+    </dl>
+
+    <button type="button" class="primary-btn" (click)="voltarInicio.emit()">
+      <span>Voltar ao Início</span>
+      <span class="material-symbols-outlined btn-icon" aria-hidden="true">arrow_forward</span>
+    </button>
+  </article>
+</div>

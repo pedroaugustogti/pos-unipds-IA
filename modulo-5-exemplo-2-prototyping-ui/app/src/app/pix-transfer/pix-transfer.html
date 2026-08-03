@@ -1,0 +1,133 @@
+@if (receipt(); as r) {
+  <app-pix-receipt
+    [nome]="r.contact.name"
+    [valor]="r.amount"
+    [dataHora]="r.createdAt"
+    instituicao="Nubank S.A."
+    [transactionId]="r.id"
+    (voltarInicio)="resetFlow()"
+  />
+} @else {
+  <section class="transfer-card" aria-labelledby="transfer-title">
+    <header class="transfer-header">
+      <h2 id="transfer-title" class="transfer-title">Transferência Pix</h2>
+      <p class="transfer-subtitle">Envie dinheiro de forma rápida e segura.</p>
+    </header>
+
+    <form class="transfer-form" [formGroup]="transferForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label for="pix-key" class="field-label">Chave Pix</label>
+        <input
+          id="pix-key"
+          type="text"
+          class="field-input"
+          formControlName="pixKey"
+          placeholder="CPF, CNPJ, E-mail ou Celular"
+          required
+        />
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="amount" class="field-label">Valor (R$)</label>
+          <input
+            id="amount"
+            type="number"
+            class="field-input"
+            formControlName="amount"
+            placeholder="0,00"
+            min="0"
+            step="0.01"
+            [max]="5000"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="date" class="field-label">Data de Agendamento</label>
+          <div class="date-input-wrap">
+            <input
+              id="date"
+              type="date"
+              class="field-input"
+              formControlName="date"
+              [min]="minDate"
+              required
+            />
+            <span class="material-symbols-outlined date-icon" aria-hidden="true">calendar_today</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        Confirmar Transferência
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+      </button>
+    </form>
+  </section>
+}
+
+@if (mfaOpen()) {
+  <div class="modal-backdrop" role="presentation"></div>
+  <form
+    class="mfa-modal"
+    [formGroup]="mfaForm"
+    (ngSubmit)="confirmSchedule()"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="mfa-title"
+    aria-describedby="mfa-hint"
+  >
+    <h2 id="mfa-title" class="mfa-title">Confirme sua identidade</h2>
+    <p id="mfa-hint" class="mfa-hint">Senha transacional (demo: 1234)</p>
+    <label for="mfa-pin" class="sr-only">Senha transacional</label>
+    <input
+      #mfaPinInput
+      id="mfa-pin"
+      type="password"
+      class="field-input"
+      formControlName="pin"
+      maxlength="6"
+      autocomplete="one-time-code"
+      [attr.aria-invalid]="mfaError()"
+      [attr.aria-describedby]="mfaError() ? 'mfa-hint mfa-error' : 'mfa-hint'"
+    />
+    @if (mfaError()) {
+      <p id="mfa-error" class="field-error" role="alert">{{ messageFor('SCHEDULE_PIX_AUTHENTICATION_ERROR').message }}</p>
+    }
+    <div class="mfa-actions">
+      <button type="button" class="ghost-btn" (click)="mfaOpen.set(false)">Cancelar</button>
+      <button type="submit" class="submit-btn sm">Confirmar</button>
+    </div>
+  </form>
+}
+
+@if (showInstantPix()) {
+  <div class="modal-backdrop" role="presentation"></div>
+  <div
+    #instantDialog
+    class="mfa-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="instant-title"
+    aria-describedby="instant-message"
+    tabindex="-1"
+  >
+    <h2 id="instant-title" class="mfa-title">{{ messageFor('SCHEDULE_PIX_INSTANT_TRANSFER_PROMPT').title }}</h2>
+    <p id="instant-message" class="mfa-hint">{{ messageFor('SCHEDULE_PIX_INSTANT_TRANSFER_PROMPT').message }}</p>
+    <div class="mfa-actions">
+      <button type="button" class="ghost-btn" (click)="showInstantPix.set(false)">Escolher data</button>
+      <button type="button" class="submit-btn sm" (click)="showInstantPix.set(false)">Realizar agora (demo)</button>
+    </div>
+  </div>
+}
+
+@if (processing()) {
+  <div class="overlay" role="status" aria-live="polite" aria-busy="true">
+    <div class="spinner" aria-hidden="true"></div>
+    <p>Registrando agendamento...</p>
+  </div>
+}
+
+@if (errorModal(); as err) {
+  <app-error-modal [title]="err.title" [message]="err.message" (close)="errorModal.set(null)" />
+}

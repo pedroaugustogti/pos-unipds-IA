@@ -1,0 +1,67 @@
+<a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
+
+<div class="app-shell">
+  <header class="app-header" role="banner">
+    <button
+      type="button"
+      class="menu-toggle"
+      aria-label="Abrir menu"
+      [attr.aria-expanded]="isMenuOpen()"
+      (click)="toggleMenu()"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+    </button>
+    <h1 class="brand">Pix App</h1>
+  </header>
+
+  @if (isMenuOpen()) {
+    <button type="button" class="menu-backdrop" aria-label="Fechar menu" (click)="closeMenu()"></button>
+  }
+
+  <div class="app-body">
+    <aside class="sidebar" [class.open]="isMenuOpen()" aria-label="Navegação lateral">
+      <nav aria-label="Menu principal">
+        <a
+          routerLink="/pix"
+          routerLinkActive="active"
+          #pixNav="routerLinkActive"
+          [attr.aria-current]="pixNav.isActive ? 'page' : null"
+          (click)="closeMenu()"
+        >
+          Transferência Pix
+        </a>
+        <a
+          routerLink="/extrato"
+          routerLinkActive="active"
+          #extratoNav="routerLinkActive"
+          [attr.aria-current]="extratoNav.isActive ? 'page' : null"
+          (click)="closeMenu()"
+        >
+          Extrato
+        </a>
+        <a
+          routerLink="/agendamentos"
+          routerLinkActive="active"
+          #agNav="routerLinkActive"
+          [attr.aria-current]="agNav.isActive ? 'page' : null"
+          (click)="closeMenu()"
+        >
+          Agendamentos
+        </a>
+        <a
+          routerLink="/comprovante"
+          routerLinkActive="active"
+          #receiptNav="routerLinkActive"
+          [attr.aria-current]="receiptNav.isActive ? 'page' : null"
+          (click)="closeMenu()"
+        >
+          Comprovante
+        </a>
+      </nav>
+    </aside>
+
+    <main id="conteudo-principal" class="main-content" tabindex="-1">
+      <router-outlet />
+    </main>
+  </div>
+</div>

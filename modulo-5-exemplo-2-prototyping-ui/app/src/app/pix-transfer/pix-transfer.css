@@ -1,0 +1,198 @@
+/* Layout referência UNIPDS — apenas var(--token) */
+:host {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+}
+
+.transfer-card {
+  width: 100%;
+  background-color: var(--color-card);
+  border-radius: var(--radius-medium);
+  border-top: var(--border-card-accent);
+  box-shadow: var(--shadow-card);
+  padding: var(--spacing-extra-large);
+}
+
+.transfer-header {
+  text-align: center;
+  margin-bottom: var(--spacing-extra-large);
+}
+
+.transfer-title {
+  margin: 0 0 var(--spacing-small);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-display);
+  font-weight: 700;
+  color: var(--color-action);
+}
+
+.transfer-subtitle {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-caption);
+  color: var(--color-text-muted);
+}
+
+.transfer-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-large);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-small);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-medium);
+}
+
+.field-label {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-label);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-label);
+}
+
+.field-input {
+  width: 100%;
+  padding: var(--spacing-medium);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background-color: var(--color-input);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-title);
+}
+
+.field-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.field-input:focus {
+  outline: none;
+  border-color: var(--color-action);
+}
+
+.date-input-wrap {
+  position: relative;
+}
+
+.date-input-wrap .field-input {
+  padding-right: calc(var(--spacing-extra-large) + var(--spacing-small));
+}
+
+.date-icon {
+  position: absolute;
+  right: var(--spacing-medium);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  pointer-events: none;
+  font-size: var(--font-size-title);
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-small);
+  width: 100%;
+  margin-top: var(--spacing-medium);
+  padding: var(--spacing-medium) var(--spacing-large);
+  border: none;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-action);
+  color: var(--color-text-on-action);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-title);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.submit-btn:hover {
+  transform: scale(1.01);
+}
+
+.submit-btn.sm {
+  width: auto;
+  margin-top: 0;
+  border-radius: var(--radius-small);
+  padding: var(--spacing-small) var(--spacing-large);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-overlay);
+  z-index: 50;
+}
+
+.mfa-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 60;
+  width: calc(100% - var(--spacing-large) * 2);
+  max-width: 400px;
+  background-color: var(--color-card);
+  border-radius: var(--radius-medium);
+  border-top: var(--border-card-accent);
+  padding: var(--spacing-extra-large);
+  box-shadow: var(--shadow-card);
+}
+
+.mfa-title {
+  margin: 0 0 var(--spacing-small);
+  font-family: var(--font-heading);
+  color: var(--color-action);
+  font-size: var(--font-size-title);
+}
+
+.mfa-hint {
+  margin: 0 0 var(--spacing-large);
+  font-size: var(--font-size-caption);
+  color: var(--color-text-muted);
+}
+
+.field-error {
+  color: var(--color-error);
+  font-size: var(--font-size-caption);
+  margin: var(--spacing-small) 0 0;
+}
+
+.mfa-actions {
+  display: flex;
+  gap: var(--spacing-small);
+  justify-content: flex-end;
+  margin-top: var(--spacing-large);
+}
+
+.ghost-btn {
+  padding: var(--spacing-small) var(--spacing-medium);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-heading);
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .transfer-card {
+    padding: var(--spacing-large);
+  }
+}

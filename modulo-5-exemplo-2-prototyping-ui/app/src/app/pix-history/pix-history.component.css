@@ -1,0 +1,105 @@
+.pix-history-card {
+  width: 100%;
+  background-color: var(--color-card);
+  border-radius: var(--radius-medium);
+  border: 1px solid var(--color-border-subtle);
+  overflow: hidden;
+}
+
+.page-title {
+  margin: 0;
+  padding: var(--spacing-large);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-title);
+  font-weight: 600;
+  color: var(--color-action);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.pix-history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.transaction-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-medium) var(--spacing-large);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-icon-gap);
+}
+
+.icon {
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  font-size: var(--icon-size-md);
+}
+
+.icon-received {
+  color: var(--color-received);
+}
+
+.icon-sent {
+  color: var(--color-sent);
+}
+
+.transaction-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.transaction-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--font-size-title);
+  color: var(--color-text);
+}
+
+.transaction-date {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--font-size-caption);
+  color: var(--color-text-muted);
+}
+
+.transaction-amount {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-amount);
+  font-weight: 700;
+}
+
+.amount-received {
+  color: var(--color-received);
+}
+
+.amount-sent {
+  color: var(--color-sent);
+}
+
+@media (max-width: 600px) {
+  .transaction-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-small);
+  }
+
+  .transaction-amount {
+    margin-left: calc(var(--icon-size-md) + var(--spacing-icon-gap));
+  }
+}

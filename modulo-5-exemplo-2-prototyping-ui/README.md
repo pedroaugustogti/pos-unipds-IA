@@ -1,4 +1,4 @@
-# Prototyping UI — Figma to Code
+# Prototyping UI — Figma to Code (Angular)
 
 Este diretório é o **Módulo 5 — Exemplo 2** (`modulo-5-exemplo-2-prototyping-ui`) — adaptação local da pós UNIPDS.
 
@@ -6,17 +6,15 @@ Referência UNIPDS: [modulo-02](https://github.com/unipds-engenharia-de-ia-aplic
 
 ## Objetivo
 
-Transformar a especificação refinada do **Exemplo 1** em **protótipo funcional**: via Figma + Firebase Studio (fluxo UNIPDS) ou implementação local no Cursor a partir dos artefatos de refinamento.
+Transformar a especificação do **Exemplo 1** em **protótipo funcional** com **Angular 21**, cobrindo caminho feliz e unhappy paths do Pix Agendado.
 
 ## Pré-requisitos
 
 | Recurso | Uso |
 |---------|-----|
-| [Exemplo 1 concluído](../modulo-5-exemplo-1-discovery-refinement/) | `edge-cases.md`, `ui-states-checklist.md`, `fluxo-logico.mmd`, `mensagens-ui.json` |
-| [Firebase Studio](https://firebase.google.com/docs/studio) | App Prototyping agent (fluxo cloud UNIPDS) |
-| Figma + [Builder.io plugin](https://www.builder.io/c/docs/builder-figma-plugin) | Import design → Firebase Studio (opcional) |
-| Node.js 22+ | App local em `app/` (fluxo Cursor) |
-| Cursor | Geração de código a partir de `prompts/` |
+| [Exemplo 1 concluído](../modulo-5-exemplo-1-discovery-refinement/) | Specs em `docs/refinement/` |
+| Node.js 22+ | Angular CLI |
+| Angular CLI 21 | `npx @angular/cli@21` |
 
 Entrada detalhada: [`docs/ENTRADA_EXEMPLO_1.md`](docs/ENTRADA_EXEMPLO_1.md)
 
@@ -24,59 +22,120 @@ Entrada detalhada: [`docs/ENTRADA_EXEMPLO_1.md`](docs/ENTRADA_EXEMPLO_1.md)
 
 ```
 modulo-5-exemplo-2-prototyping-ui/
+├── .cursor/
+│   └── mcp.json                      # Angular CLI MCP (local ao exemplo)
+├── briefing/                         # UNIPDS — branding, figma-specs, stitch
+│   ├── branding-briefing.txt
+│   ├── figma-specs.txt
+│   └── google-stitch.txt
 ├── prompts/
-│   ├── figma-to-code.md              # Design → componentes React
-│   └── firebase-studio-prototyper.md
+│   ├── README.md                     # Índice dos prompts (UNIPDS + locais)
+│   ├── figma-to-angular.md           # UNIPDS — Figma → PixHistoryComponent
+│   ├── componente-figma.txt            # UNIPDS — execução com imagem + specs
+│   ├── design-tokens-generator.md      # UNIPDS — tokens CSS
+│   ├── a11y-component-generator.md   # UNIPDS — componente acessível
+│   ├── stitch-code-refactor.md       # UNIPDS — Stitch → Angular
+│   ├── refatoracao-stich.txt           # UNIPDS — execução Stitch
+│   ├── adicionar-fluxo-comprovante.txt # UNIPDS — integrar recibo
+│   ├── criacao-menu-extrato.txt        # UNIPDS — rota /extrato
+│   ├── correcao_css.md                 # UNIPDS — responsividade + a11y
+│   ├── figma-to-code.md              # Local — Pix Agendado (Ex. 1 → app)
+│   ├── google-stitch.md              # Local — Stitch → PixReceiptComponent
+│   └── firebase-studio-prototyper.md # Trilha cloud UNIPDS (opcional)
 ├── docs/
-│   ├── ENTRADA_EXEMPLO_1.md          # Links para artefatos do Ex. 1
+│   ├── ENTRADA_EXEMPLO_1.md
+│   ├── EVIDENCIAS_ACEITE.md        # Validação dos critérios ✅
+│   ├── PROXIMA_AULA.md             # Roteiro Ex. 3 — Agents CLI
+│   ├── MCP_REVISAO.md              # Alinhamento com get_best_practices (Angular MCP)
 │   └── PIPELINE.md
-└── app/                              # Implementação (a gerar)
-    └── README.md
+└── app/                              # pix-app (Angular 21)
+    ├── modelo/code.html              # HTML bruto Google Stitch
+    ├── src/app/core/                 # models, messages, mock API, state
+    ├── src/app/components/           # error-modal (a11y)
+    ├── src/app/pix-transfer/         # wizard Pix Agendado
+    ├── src/app/features/receipt/     # PixReceiptComponent (Stitch)
+    ├── src/app/pix-history/          # extrato (/extrato)
+    └── src/app/pix-schedules/        # agendamentos
 ```
 
 ## Como executar
 
-### Trilha A — UNIPDS (Firebase Studio + Figma)
+### Criar o projeto (já feito)
 
-1. Abra o design Pix Agendado no Figma (ou use wireframe da aula)
-2. Exporte com **Builder.io → Classic Export → Firebase Studio**
-3. No Firebase Studio, use `prompts/firebase-studio-prototyper.md` como guia de prompts
-4. Valide estados de UI contra `ui-states-checklist.md` do Exemplo 1
-5. Publique protótipo e compartilhe URL de preview
+```bash
+cd modulo-5-exemplo-2-prototyping-ui
+npx @angular/cli@21 new pix-app --directory app --style css --routing --skip-git --defaults --ssr=false
+```
 
-### Trilha B — Cursor (código local)
-
-1. Cole em System Instructions: `prompts/figma-to-code.md`
-2. Anexe como contexto os arquivos listados em `docs/ENTRADA_EXEMPLO_1.md`
-3. Gere o app em `app/` (React + Vite recomendado)
-4. Implemente estados de erro com `mensagens-ui.json`
-5. Valide fluxo contra `fluxo-logico.mmd`
+### Rodar localmente
 
 ```bash
 cd app
-npm install
-npm run dev
+npm start
 ```
+
+Abra http://localhost:4200
+
+| Rota | Tela |
+|------|------|
+| `/pix` | Wizard Pix Agendado + comprovante |
+| `/extrato` | Extrato (`PixHistoryComponent`) |
+| `/comprovante` | Preview comprovante Stitch |
+| `/agendamentos` | Lista e cancelamento |
+
+**Demo:** MFA senha `1234` · chave inválida `invalid@pix` · valor > saldo `3000`
+
+### Angular MCP no Cursor
+
+O servidor MCP do Angular CLI conecta o agente às ferramentas oficiais (`get_best_practices`, `find_examples`, etc.).
+
+**Config local:** [`.cursor/mcp.json`](.cursor/mcp.json) (executa `npx @angular/cli mcp` na pasta `app/`).
+
+**Config no repo raiz:** `.cursor/mcp.json` → servidor `angular-cli-pix-app` (quando o workspace é `pos-unipds-IA`).
+
+1. Abra **Cursor Settings → MCP** e confira `angular-cli` ou `angular-cli-pix-app` ativo
+2. Se não aparecer, recarregue a janela (`Developer: Reload Window`)
+3. No chat, peça: *"use as best practices do Angular para criar um componente de revisão"*
+
+Opções extras no `args` (opcional): `--read-only`, `-E modernize`, `-E devserver`
+
+Referência: [Angular CLI MCP](https://angular.dev/ai/mcp)
+
+Referência UNIPDS prompts: [pix-app/prompts](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-02/pix-app/prompts) · índice local em [`prompts/README.md`](prompts/README.md)
 
 ## Critérios de sucesso
 
-- [ ] Pasta criada no padrão `modulo-5-exemplo-2-*`
-- [ ] README local com objetivo, passo a passo e critérios de sucesso
-- [ ] Entrada do Exemplo 1 documentada (`ENTRADA_EXEMPLO_1.md`)
-- [ ] Protótipo ou app cobre o **caminho feliz** do Pix Agendado
-- [ ] Pelo menos 3 **unhappy paths** da checklist implementados
-- [ ] Mensagens de UI alinhadas a `mensagens-ui.json`
-- [ ] README raiz do `pos-unipds-IA` atualizado
+- [x] Pasta no padrão `modulo-5-exemplo-2-*`
+- [x] README local com objetivo e passo a passo
+- [x] Entrada do Exemplo 1 documentada
+- [x] App Angular 21 em `app/` (`npm run build` OK)
+- [x] Caminho feliz Pix Agendado implementado
+- [x] ≥ 3 unhappy paths (limite, saldo, cancelamento bloqueado, chave inválida)
+- [x] Mensagens de `mensagens-ui.json` em `core/messages.ts`
+- [x] Angular MCP configurado (`.cursor/mcp.json`)
+- [x] Prompts UNIPDS em `prompts/` (9 arquivos oficiais + índice)
+- [x] App revisado conforme `get_best_practices` ([`docs/MCP_REVISAO.md`](docs/MCP_REVISAO.md))
+- [x] Critérios validados ([`docs/EVIDENCIAS_ACEITE.md`](docs/EVIDENCIAS_ACEITE.md))
+- [x] Roteiro próxima aula ([`docs/PROXIMA_AULA.md`](docs/PROXIMA_AULA.md))
+- [x] README raiz atualizado
 
-## Fluxo didático
+## Mapeamento com Exemplo 1
 
-```
-Ex. 1 (refinamento)  →  Ex. 2 (protótipo)  →  Ex. 3+ (CLI, MCP, integração)
-     specs/json/mmd        app / Firebase Studio
-```
+| Spec Ex. 1 | Implementação Angular |
+|------------|----------------------|
+| `fluxo-logico.mmd` | Wizard em `pix-transfer/` + rotas `/pix`, `/agendamentos` |
+| `mensagens-ui.json` | `core/messages.ts` |
+| `ui-states-checklist.md` | Estados loading/empty/error + `ErrorModal` |
+| `edge-cases.md` | Validações no wizard + mock API |
+| Prompts UNIPDS extrato | `pix-history/` em `/extrato` |
+| Prompts UNIPDS comprovante | `features/receipt/` integrado em `pix-transfer` + `/comprovante` |
 
-Pipeline completo: [`docs/PIPELINE.md`](docs/PIPELINE.md)
+## Próximo passo
+
+**Exemplo 3 criado:** [`modulo-5-exemplo-3-agents-cli`](../modulo-5-exemplo-3-agents-cli/) — Agents CLI (scaffold via delivery-agent).
+
+Roteiro: [`docs/PROXIMA_AULA.md`](docs/PROXIMA_AULA.md) · Relatório didático: [`../modulo-5-exemplo-3-agents-cli/docs/RELATORIO_DIDATICO.md`](../modulo-5-exemplo-3-agents-cli/docs/RELATORIO_DIDATICO.md)
 
 ## Exemplo anterior
 
-[`modulo-5-exemplo-1-discovery-refinement`](../modulo-5-exemplo-1-discovery-refinement/) — Discovery e Refinamento AI-First ✅
+[`modulo-5-exemplo-1-discovery-refinement`](../modulo-5-exemplo-1-discovery-refinement/) ✅

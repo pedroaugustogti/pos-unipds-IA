@@ -38,9 +38,8 @@ flowchart LR
 
 | Etapa | Prompt | Entrada | Saída |
 |-------|--------|---------|-------|
-| 1 | `figma-to-code.md` | Artefatos Ex. 1 | `app/` React |
-| 2 | — | `mensagens-ui.json` | Componentes de erro |
-| 3 | — | `ui-states-checklist.md` | Validação manual |
+| 1 | `figma-to-code.md` | Artefatos Ex. 1 | `app/` Angular 21 |
+| 2 | `ng serve` | — | http://localhost:4200 |
 
 ## Critério de pronto
 

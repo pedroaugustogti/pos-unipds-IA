@@ -1,0 +1,197 @@
+.receipt-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100vh - var(--spacing-extra-large) * 2);
+  padding: var(--spacing-large);
+}
+
+.receipt-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+  padding: var(--spacing-extra-large) var(--spacing-extra-large) var(--spacing-large);
+  background-color: var(--color-card);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-border-subtle);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.receipt-card:hover {
+  transform: scale(1.01);
+}
+
+.receipt-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--spacing-small);
+  background-color: var(--color-action);
+}
+
+.success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--spacing-extra-large) * 2.5);
+  height: calc(var(--spacing-extra-large) * 2.5);
+  margin-bottom: var(--spacing-large);
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--color-action) 10%, transparent);
+  animation: scale-in 0.5s ease-out;
+}
+
+.check-icon {
+  font-size: var(--font-size-display);
+  color: var(--color-action);
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+.amount-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-small);
+  width: 100%;
+  margin-bottom: var(--spacing-large);
+  text-align: center;
+}
+
+.status-label {
+  font-size: var(--font-size-label);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.amount {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  margin-bottom: var(--spacing-large);
+  background-color: var(--color-border-subtle);
+  opacity: 0.5;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-medium);
+  width: 100%;
+  margin: 0 0 var(--spacing-extra-large);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-medium);
+}
+
+.detail-label {
+  font-size: var(--font-size-title);
+  color: var(--color-text-muted);
+}
+
+.detail-value {
+  margin: 0;
+  font-size: var(--font-size-title);
+  font-weight: 600;
+  text-align: right;
+  color: var(--color-text);
+}
+
+.detail-time {
+  display: block;
+  font-weight: 500;
+}
+
+.transaction-box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-small);
+  margin-top: var(--spacing-small);
+  padding: var(--spacing-medium);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-medium);
+}
+
+.transaction-label {
+  font-size: var(--font-size-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.transaction-id {
+  font-family: monospace;
+  font-size: var(--font-size-caption);
+  word-break: break-all;
+  color: var(--color-text);
+}
+
+.primary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-small);
+  width: 100%;
+  padding: var(--spacing-medium);
+  border: none;
+  border-radius: var(--radius-medium);
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-title);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 25%, transparent);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.primary-btn:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 85%, var(--color-action));
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-primary) 35%, transparent);
+}
+
+.primary-btn:focus-visible {
+  outline: 2px solid var(--color-action);
+  outline-offset: 2px;
+}
+
+.btn-icon {
+  font-size: var(--font-size-title);
+  transition: transform 0.3s ease;
+}
+
+.primary-btn:hover .btn-icon {
+  transform: translateX(var(--spacing-small));
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

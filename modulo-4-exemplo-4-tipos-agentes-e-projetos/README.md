@@ -146,7 +146,7 @@ Comando sugerido para iniciar a próxima aula:
 
 ```bash
 cd modulo-4-exemplo-1-agente-ia-contratos/runtime
-python main.py rodar --agente ../delivery-agent --entrada "modulo 4: preparar proxima aula"
+python main.py rodar --agente ../../delivery-agent --entrada "modulo 4: preparar proxima aula"
 ```
 
 Ou baixe manualmente a base da [aula07](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo04-agentes-autonomos/aula07-arquiteturas-cognitivas) e copie o `runtime/` otimizado deste exemplo.
