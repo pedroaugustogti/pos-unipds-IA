@@ -24,9 +24,30 @@ Testes E2E com **Cypress** guiados por **OpenSpec**: specs → change `add-cypre
 ```
 modulo-5-exemplo-4-cypress-openspec/
 ├── README.md
-├── docs/          ← roteiro, evidências, fluxo
-└── prompts/       ← propose + spec→cypress
+├── docs/
+│   ├── ONDE_ESTA_CYPRESS.md       ← mapa de todos os artefatos Cypress
+│   ├── CYPRESS_CLOUD_SETUP.md     ← conectar cy.prompt ao Cloud
+│   ├── FLUXO_CYPRESS_OPENSPEC.md
+│   ├── ROTEIRO_AULA.md
+│   ├── EVIDENCIAS_ACEITE.md
+│   └── RELATORIO_DIDATICO.md
+└── prompts/
+    ├── openspec-propose-cypress.md
+    ├── cypress-from-spec.md
+    └── cypress-ai-prompt-testing.md   ← lab cy.prompt()
 ```
+
+## Onde está o Cypress
+
+Consulte **[`docs/ONDE_ESTA_CYPRESS.md`](docs/ONDE_ESTA_CYPRESS.md)** — mapa completo.
+
+| Camada | Local |
+|--------|-------|
+| **Config** | `cfp-platform/frontend-cypress-e2e/cypress.config.ts` |
+| **Nx** | projeto `frontend-e2e` → `npx nx e2e` / `open-cypress` |
+| **Specs CSS** | `frontend-cypress-e2e/src/e2e/cfp-*.cy.ts`, `navigation.cy.ts` |
+| **Spec AI** | `frontend-cypress-e2e/src/e2e/event-registration-ai.cy.ts` |
+| **OpenSpec** | `openspec/specs/cfp-cypress-e2e/` |
 
 **App alvo:** [`../modulo-5-exemplo-3-openspec-cfp/cfp-platform/`](../modulo-5-exemplo-3-openspec-cfp/cfp-platform/)
 
@@ -34,6 +55,15 @@ modulo-5-exemplo-4-cypress-openspec/
 |--------------|------------|--------|
 | `frontend-cypress-e2e/` | `frontend-e2e` | Cypress |
 | `frontend-e2e/` | `frontend-playwright-e2e` | Playwright (Ex. 3) |
+
+## Cypress Cloud (`cy.prompt`)
+
+Guia completo: [`docs/CYPRESS_CLOUD_SETUP.md`](docs/CYPRESS_CLOUD_SETUP.md)
+
+```bash
+cd ../modulo-5-exemplo-3-openspec-cfp/cfp-platform
+npm run cy:open   # login + Connect to Cypress Cloud → Create project
+```
 
 ## Início rápido
 
@@ -60,7 +90,8 @@ Archive de referência: `cfp-platform/openspec/changes/archive/2026-03-31-add-cy
 ## Critérios de sucesso
 
 - [ ] Change `add-cypress-e2e` explorada/arquivada
-- [ ] ≥ 3 specs em `frontend-cypress-e2e/src/e2e/`
+- [ ] ≥ 3 specs determinísticos em `frontend-cypress-e2e/src/e2e/`
+- [ ] Spec **`event-registration-ai.cy.ts`** com `cy.prompt()` (cadastro de evento)
 - [ ] `npx nx e2e frontend-e2e` verde
 - [ ] `npx nx open-cypress frontend-e2e` validado no browser
 - [ ] `docs/EVIDENCIAS_ACEITE.md` preenchido

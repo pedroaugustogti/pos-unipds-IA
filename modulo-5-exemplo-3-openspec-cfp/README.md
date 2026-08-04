@@ -52,6 +52,7 @@ npx nx run-many -t serve -p api frontend
 | http://localhost:4200/dashboard | Dashboard |
 | http://localhost:4200/talks/new | Formulário CFP |
 | http://localhost:4200/submit-talk | Formulário CFP (alias) |
+| http://localhost:4200/event/new | Cadastro de local do evento |
 
 ### Testes E2E
 
@@ -59,9 +60,12 @@ npx nx run-many -t serve -p api frontend
 # Playwright (aceite)
 cd frontend-e2e && npx playwright test
 
-# Cypress (Ex. 4)
+# Cypress determinístico (Ex. 4)
 npx nx e2e frontend-e2e
 npx nx open-cypress frontend-e2e
+
+# Cypress AI — cy.prompt (Ex. 4, requer Cypress Cloud)
+npm run cy:run:ai
 ```
 
 ## Critérios de sucesso

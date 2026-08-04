@@ -29,3 +29,13 @@ The Cypress suite MUST verify submissions appear in the dashboard table.
 - **WHEN** the user submits a talk with a unique speaker name
 - **AND** navigates to `/dashboard`
 - **THEN** the dashboard table MUST contain the speaker name, email, and talk title
+
+### Requirement: Event Registration E2E via cy.prompt (Cypress AI)
+
+The Cypress suite MUST support AI-driven testing for event registration using natural language steps.
+
+#### Scenario: Register event with cy.prompt
+- **WHEN** the user visits `/event/new`
+- **AND** `cy.prompt` fills Nome do Local, Endereço, Capacidade, and Data do Evento
+- **AND** submits the form via prompt
+- **THEN** a success message MUST be visible

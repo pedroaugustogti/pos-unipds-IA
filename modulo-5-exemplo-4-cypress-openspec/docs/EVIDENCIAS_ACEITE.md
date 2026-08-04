@@ -31,6 +31,7 @@ openspec list --specs
 | Spec submissão CFP (happy path) | ⬜ | `cfp-submission.cy.ts` |
 | Spec navegação entre rotas | ⬜ | `navigation.cy.ts` |
 | Spec submissão no dashboard | ⬜ | `cfp-dashboard.cy.ts` |
+| Spec AI `cy.prompt` cadastro evento | ⬜ | `event-registration-ai.cy.ts` |
 | `nx e2e frontend-e2e` verde | ⬜ | output terminal |
 | Playwright `aceite.spec.ts` continua verde | ⬜ | baseline Ex. 3 |
 
@@ -49,4 +50,5 @@ openspec list --specs
 | Lab 1 | Explorar archive `add-cypress-e2e` | |
 | Lab 2 | `/opsx:propose add-cypress-e2e` | |
 | Lab 3 | `nx e2e frontend-e2e` | |
-| Lab 4 | `cypress-from-spec.md` | |
+| Lab 4 | `cypress-ai-prompt-testing.md` — `event-registration-ai.cy.ts` | |
+| Lab 5 | `cypress-from-spec.md` | |

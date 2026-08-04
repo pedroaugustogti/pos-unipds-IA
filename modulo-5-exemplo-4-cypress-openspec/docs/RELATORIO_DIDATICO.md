@@ -40,10 +40,10 @@ flowchart TB
 - **Conceito:** cada Scenario da spec vira um bloco `it()` com steps Cypress.
 - **Exemplo:** `prompts/cypress-from-spec.md`
 
-### 4. Coexistência Playwright + Cypress
+### 4. Coexistência Playwright + Cypress + cy.prompt
 
-- **Conceito:** Ex. 3 usa Playwright (CI); Ex. 4 adiciona Cypress via OpenSpec.
-- **Exemplo:** `frontend-e2e/` vs `frontend-cypress-e2e/`
+- **Conceito:** Playwright (Ex. 3), Cypress determinístico e `cy.prompt` (Ex. 4) no mesmo monorepo.
+- **Exemplo:** `cfp-submission.cy.ts` vs `event-registration-ai.cy.ts`
 
 ## Comandos de referência
 

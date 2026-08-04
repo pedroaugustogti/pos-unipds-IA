@@ -46,3 +46,7 @@ Thumbs.db
 .angular
 
 __screenshots__/
+
+cypress/screenshots
+cypress/videos
+cypress/downloads

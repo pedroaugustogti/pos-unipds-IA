@@ -54,13 +54,24 @@ npx nx open-cypress frontend-e2e   # debug interativo
 
 Exercício: quebrar um seletor propositalmente e corrigir via Cypress UI.
 
-### 6. Lab 4 — Spec → teste (15 min)
+### 6. Lab 4 — AI Driven Testing (`cy.prompt`) (15 min)
+
+Mapa: [`docs/ONDE_ESTA_CYPRESS.md`](ONDE_ESTA_CYPRESS.md)
+
+Prompt: [`prompts/cypress-ai-prompt-testing.md`](../prompts/cypress-ai-prompt-testing.md)
+
+Spec: `frontend-cypress-e2e/src/e2e/event-registration-ai.cy.ts`
+
+```bash
+npx nx open-cypress frontend-e2e
+# Login Cypress Cloud → executar "Cadastro de Eventos - AI Driven Testing"
+```
+
+### 7. Lab 5 — Spec → teste determinístico (10 min)
 
 Prompt: [`prompts/cypress-from-spec.md`](../prompts/cypress-from-spec.md)
 
-Gerar um novo `it()` a partir de um Scenario da spec (ex.: validação de email inválido).
-
-### 7. Encerramento (5 min)
+### 8. Encerramento (5 min)
 
 - Preencher [`EVIDENCIAS_ACEITE.md`](EVIDENCIAS_ACEITE.md)
 - Preview Ex. 5 (Firebase AI Logic)
@@ -71,3 +82,4 @@ Gerar um novo `it()` a partir de um Scenario da spec (ex.: validação de email 
 2. `data-cy` vs seletores por texto/role — trade-offs
 3. Cypress vs Playwright no mesmo monorepo — quando usar cada um?
 4. Como archive de E2E difere de archive de feature?
+5. Quando usar `cy.prompt()` vs seletores fixos no CI?

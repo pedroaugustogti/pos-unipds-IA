@@ -29,6 +29,30 @@ npx nx build api
 npx nx build frontend
 ```
 
+## Testes E2E
+
+| Pasta | Projeto Nx | Runner |
+|-------|------------|--------|
+| `frontend-e2e/` | `frontend-playwright-e2e` | Playwright |
+| `frontend-cypress-e2e/` | `frontend-e2e` | Cypress 15 |
+
+```bash
+# Playwright
+cd frontend-e2e && npx playwright test
+
+# Cypress (determinístico)
+npx nx e2e frontend-e2e
+npx nx open-cypress frontend-e2e
+
+# Cypress AI — cy.prompt (Cypress Cloud, projectId em cypress.config.ts)
+npm run cy:open
+npm run cy:run:ai
+```
+
+Specs Cypress: `cfp-submission.cy.ts`, `navigation.cy.ts`, `cfp-dashboard.cy.ts`, `event-registration-ai.cy.ts`
+
+Guia Cloud: [`../../modulo-5-exemplo-4-cypress-openspec/docs/CYPRESS_CLOUD_SETUP.md`](../../modulo-5-exemplo-4-cypress-openspec/docs/CYPRESS_CLOUD_SETUP.md)
+
 ## Rotas (frontend)
 
 | Rota | Componente |
@@ -59,7 +83,8 @@ openspec/
 ├── config.yaml                  # contexto do projeto (rotas, nomes, UI)
 ├── specs/
 │   ├── cfp-submission/spec.md
-│   └── cfp-dashboard/spec.md
+│   ├── cfp-dashboard/spec.md
+│   └── cfp-cypress-e2e/spec.md
 └── changes/archive/             # histórico de changes implementadas
 ```
 

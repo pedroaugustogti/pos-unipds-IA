@@ -3,6 +3,7 @@ import { defineConfig } from 'cypress';
 const projectRoot = 'frontend-cypress-e2e';
 
 export default defineConfig({
+  projectId: 'axsqin',
   e2e: {
     baseUrl: 'http://localhost:4200',
     supportFile: `${projectRoot}/src/support/e2e.ts`,

@@ -2,7 +2,11 @@
   "name": "@cfp-platform/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "cy:open": "cypress open --config-file frontend-cypress-e2e/cypress.config.ts --e2e",
+    "cy:run": "cypress run --config-file frontend-cypress-e2e/cypress.config.ts",
+    "cy:run:ai": "cypress run --config-file frontend-cypress-e2e/cypress.config.ts --spec frontend-cypress-e2e/src/e2e/event-registration-ai.cy.ts"
+  },
   "private": true,
   "devDependencies": {
     "@angular-devkit/core": "~21.2.0",
@@ -29,7 +33,7 @@
     "@nx/workspace": "22.6.3",
     "@oxc-project/runtime": "^0.115.0",
     "@playwright/test": "^1.36.0",
-    "cypress": "^14.3.0",
+    "cypress": "^15.13.0",
     "@schematics/angular": "~21.2.0",
     "@swc-node/register": "~1.11.1",
     "@swc/core": "~1.15.5",
