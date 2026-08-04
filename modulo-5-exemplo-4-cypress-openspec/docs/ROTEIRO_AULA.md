@@ -8,7 +8,7 @@
 
 | Anterior | Esta aula | Próxima |
 |----------|-----------|---------|
-| Ex. 3 — OpenSpec + CFP ✅ | **Ex. 4 — Cypress + OpenSpec** | Ex. 5 — Playwright MCP |
+| Ex. 3 — OpenSpec + CFP ✅ | **Ex. 4 — Cypress + OpenSpec** ✅ | Ex. 5 — Playwright MCP |
 
 ## Roteiro
 

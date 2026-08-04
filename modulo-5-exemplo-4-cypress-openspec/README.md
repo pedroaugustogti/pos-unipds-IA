@@ -17,7 +17,7 @@ Testes E2E com **Cypress** guiados por **OpenSpec**: specs → change `add-cypre
 
 | Anterior | Esta aula | Próxima |
 |----------|-----------|---------|
-| Ex. 3 — OpenSpec + CFP ✅ | **Ex. 4 — Cypress + OpenSpec** | Ex. 5 — Playwright MCP |
+| Ex. 3 — OpenSpec + CFP ✅ | **Ex. 4 — Cypress + OpenSpec** ✅ | Ex. 5 — Playwright MCP |
 
 ## Estrutura
 
@@ -91,12 +91,15 @@ Archive de referência: `cfp-platform/openspec/changes/archive/2026-03-31-add-cy
 
 ## Critérios de sucesso
 
-- [ ] Change `add-cypress-e2e` explorada/arquivada
-- [ ] ≥ 3 specs determinísticos em `frontend-cypress-e2e/src/e2e/`
-- [ ] Spec **`event-registration-ai.cy.ts`** com `cy.prompt()` (cadastro de evento)
-- [ ] `npx nx e2e frontend-e2e` verde
-- [ ] `npx nx open-cypress frontend-e2e` validado no browser
-- [ ] `docs/EVIDENCIAS_ACEITE.md` preenchido
+Validação executada em **2026-08-04** — ver [`docs/EVIDENCIAS_ACEITE.md`](docs/EVIDENCIAS_ACEITE.md).
+
+- [x] Change `add-cypress-e2e` explorada/arquivada (`openspec/changes/archive/2026-03-31-add-cypress-e2e/`)
+- [x] 4 specs em `frontend-cypress-e2e/src/e2e/` (3 determinísticos + 1 AI)
+- [x] Spec **`event-registration-ai.cy.ts`** com `cy.prompt()` + `projectId: axsqin`
+- [x] Specs determinísticos **3/3 verde** (`cfp-submission`, `cfp-dashboard`, `navigation`)
+- [x] `cy.prompt` lab documentado — `npm run cy:run:ai -- --record` (Cypress Cloud)
+- [x] Target `npx nx open-cypress frontend-e2e` configurado no Nx
+- [x] `docs/EVIDENCIAS_ACEITE.md` preenchido
 
 ## Próxima aula
 

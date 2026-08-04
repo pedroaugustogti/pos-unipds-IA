@@ -1,35 +1,31 @@
-# Próxima Aula — Exemplo 5: Playwright MCP
+# Próxima Aula — Exemplo 6: BragBot + Genkit
 
-> Scaffold: [`modulo-5-exemplo-5-playwright-mcp`](../../modulo-5-exemplo-5-playwright-mcp/)
+> **Scaffold criado:** [`modulo-5-exemplo-6-brag-bot`](../../modulo-5-exemplo-6-brag-bot/) (via delivery-agent)
 
-## Objetivos
+**Referência UNIPDS:** [modulo-05/brag-bot](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-05/brag-bot)
 
-1. Conectar **Playwright Test MCP** no CFP Platform
-2. Usar agentes 🎭 planner / generator / healer para automação E2E
-3. Gerar planos em `specs/` e testes em `frontend-e2e/src/`
-4. Comparar Playwright MCP vs Cypress `cy.prompt()` (Ex. 4)
+## Contexto
 
-## Pré-requisito — Playwright MCP
+| Ex. 4 (esta pasta) | Ex. 5 ✅ | Ex. 6 (próxima) |
+|--------------------|----------|-----------------|
+| Cypress + OpenSpec | Playwright MCP | **BragBot + Genkit** |
 
-Guia: [`PLAYWRIGHT_MCP.md`](PLAYWRIGHT_MCP.md)
+Nos Exemplos 4–5 a IA **automatiza testes**. No Ex. 6 a IA **gera valor no produto** — Brag Documents a partir de rascunhos informais.
+
+## Início rápido
 
 ```bash
-cd ../modulo-5-exemplo-3-openspec-cfp/cfp-platform
+cd ../modulo-5-exemplo-6-brag-bot/app
 npm install
-npx playwright install chromium
-npx nx run-many -t serve -p api frontend
+cp .env.example .env
+# GOOGLE_GENAI_API_KEY=...
+
+npm run build
+node dist/brag-bot/server/server.mjs
 ```
 
-No Cursor: **Settings → MCP** → `playwright-test-cfp` verde.
+## Materiais
 
-## Comandos de validação
-
-```bash
-cd ../modulo-5-exemplo-3-openspec-cfp/cfp-platform
-npx playwright test frontend-e2e/src/seed.spec.ts --config frontend-e2e/playwright.config.ts
-npx nx e2e frontend-playwright-e2e
-```
-
-## Referência UNIPDS
-
-[modulo-04 — Playwright](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-04)
+- [`modulo-5-exemplo-6-brag-bot/README.md`](../../modulo-5-exemplo-6-brag-bot/README.md)
+- [`modulo-5-exemplo-6-brag-bot/docs/ROTEIRO_AULA.md`](../../modulo-5-exemplo-6-brag-bot/docs/ROTEIRO_AULA.md)
+- [`modulo-5-exemplo-5-playwright-mcp/docs/PROXIMA_AULA.md`](../../modulo-5-exemplo-5-playwright-mcp/docs/PROXIMA_AULA.md)

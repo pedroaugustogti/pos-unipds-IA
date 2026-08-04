@@ -10,7 +10,7 @@ Automação de testes E2E no **CFP Platform** com **Playwright MCP**: agentes �
 
 | Anterior | Esta aula | Próxima |
 |----------|-----------|---------|
-| Ex. 4 — Cypress + OpenSpec ✅ | **Ex. 5 — Playwright MCP** | — |
+| Ex. 4 — Cypress + OpenSpec ✅ | **Ex. 5 — Playwright MCP** ✅ | Ex. 6 — BragBot + Genkit |
 
 ## Objetivos
 
@@ -29,9 +29,13 @@ Automação de testes E2E no **CFP Platform** com **Playwright MCP**: agentes �
 ```
 modulo-5-exemplo-5-playwright-mcp/
 ├── README.md
-├── docs/              ← a preencher na aula
+├── docs/
+│   ├── ROTEIRO_AULA.md
+│   ├── EVIDENCIAS_ACEITE.md
+│   ├── HEALER_LAB.md             ← lab healer (seletor quebrado)
+│   └── PROXIMA_AULA.md          ← Ex. 6 BragBot
 └── prompts/
-    └── playwright-mcp-event-registration.md   ← lab cadastro de evento
+    └── playwright-mcp-event-registration.md
 ```
 
 ## Início rápido
@@ -57,13 +61,30 @@ Fluxo `/event/new` executado via MCP (`planner_setup_page` → `browser_fill_for
 
 ## Critérios de sucesso
 
+Validação executada em **2026-08-04** — ver [`docs/EVIDENCIAS_ACEITE.md`](docs/EVIDENCIAS_ACEITE.md).
+
 - [x] Lab cadastro de evento documentado e validado via MCP
-- [ ] `playwright-test-cfp` MCP conectado no Cursor (aluno)
-- [ ] `frontend-e2e/src/seed.spec.ts` passa
-- [ ] Plano gerado em `cfp-platform/specs/`
-- [ ] Teste gerado pelo agente generator executa com sucesso
-- [ ] Healer corrige pelo menos um cenário quebrado (lab)
+- [x] MCP `playwright-test-cfp` configurado em `.cursor/mcp.json`
+- [x] Agents planner / generator / healer em `cfp-platform/.cursor/agents/`
+- [x] `frontend-e2e/src/seed.spec.ts` criado
+- [x] Prompt em `prompts/playwright-mcp-event-registration.md`
+
+## Checklist do aluno (aula)
+
+Validação **2026-08-04** — todos os itens concluídos.
+
+- [x] `playwright-test-cfp` MCP configurado (`.cursor/mcp.json` raiz + `cfp-platform/.cursor/mcp.json`)
+- [x] `seed.spec.ts` passa localmente (**1/1**)
+- [x] Plano em `cfp-platform/specs/event-registration.md`
+- [x] Teste gerado `event-registration.spec.ts` executa com sucesso (**2/2**)
+- [x] Healer corrige cenário quebrado — lab documentado em [`docs/HEALER_LAB.md`](docs/HEALER_LAB.md)
 
 ## Anterior
 
 [`modulo-5-exemplo-4-cypress-openspec`](../modulo-5-exemplo-4-cypress-openspec/)
+
+---
+
+## Próxima aula
+
+**Exemplo seguinte:** [`modulo-5-exemplo-6-brag-bot`](../modulo-5-exemplo-6-brag-bot/) ([modulo-05/brag-bot](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-05/brag-bot)).

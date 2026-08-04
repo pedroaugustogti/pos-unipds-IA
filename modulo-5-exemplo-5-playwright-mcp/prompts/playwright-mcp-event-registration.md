@@ -63,8 +63,8 @@ Use as ferramentas do Playwright MCP disponíveis para navegar e interagir. Repo
 
 ## Critérios de sucesso
 
-- [ ] Servidores `api` + `frontend` rodando
-- [ ] MCP Playwright navegou até `/event/new`
-- [ ] Formulário preenchido e submetido via MCP
-- [ ] Mensagem de sucesso confirmada
-- [ ] Resultado reportado no chat (sucesso ou falha com detalhes)
+- [x] Servidores `api` + `frontend` rodando
+- [x] MCP Playwright navegou até `/event/new`
+- [x] Formulário preenchido e submetido via MCP
+- [x] Mensagem de sucesso confirmada
+- [x] Resultado reportado no chat (sucesso ou falha com detalhes)
