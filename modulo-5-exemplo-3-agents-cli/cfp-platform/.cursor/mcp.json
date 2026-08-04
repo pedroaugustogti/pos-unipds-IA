@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "nx-mcp": {
+      "command": "node",
+      "args": ["node_modules/nx-mcp/main.js"]
+    }
+  }
+}

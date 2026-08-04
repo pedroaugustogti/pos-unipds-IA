@@ -36,6 +36,13 @@
         "/c",
         "cd /d modulo-5-exemplo-2-prototyping-ui\\app && npx -y @angular/cli mcp"
       ]
+    },
+    "nx-mcp": {
+      "command": "node",
+      "args": [
+        "modulo-5-exemplo-3-agents-cli/cfp-platform/node_modules/nx-mcp/main.js",
+        "modulo-5-exemplo-3-agents-cli/cfp-platform"
+      ]
     }
   }
 }

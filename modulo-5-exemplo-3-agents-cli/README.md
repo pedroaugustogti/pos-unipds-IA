@@ -14,6 +14,7 @@ Usar **agentes CLI** (Gemini CLI ou equivalente) para **consolidar** o protótip
 |---------|-----|
 | [Exemplo 2 concluído](../modulo-5-exemplo-2-prototyping-ui/) | `pix-app` buildando (`npm run build`) |
 | Node.js 22+ | Angular CLI 21 |
+| Nx CLI | `npm install -g nx@latest` |
 | Gemini CLI (ou Cursor CLI) | Agente no terminal conforme UNIPDS modulo-03 |
 | [delivery-agent](../../delivery-agent/) | Scaffold desta aula (opcional) |
 
@@ -22,6 +23,7 @@ Usar **agentes CLI** (Gemini CLI ou equivalente) para **consolidar** o protótip
 ```
 modulo-5-exemplo-3-agents-cli/
 ├── README.md
+├── cfp-platform/                 # workspace Nx (preset apps)
 ├── prompts/
 │   ├── refactor-safe.md          # diff mínimo, sem over-engineering
 │   ├── dead-code-cleanup.md      # remover scaffold legado
@@ -33,6 +35,16 @@ modulo-5-exemplo-3-agents-cli/
 ```
 
 **App alvo:** `../modulo-5-exemplo-2-prototyping-ui/app/` (não duplicar o projeto).
+
+## Configuração
+
+```bash
+npm install -g nx@latest
+nx --version
+
+cd modulo-5-exemplo-3-agents-cli
+npx create-nx-workspace@latest cfp-platform --preset=apps --nxCloud=skip
+```
 
 ## Como executar
 
