@@ -1,10 +1,10 @@
-# Próxima Aula — Módulo 5, Exemplo 3: Agents CLI
+# Próxima Aula — Módulo 5, Exemplo 3: OpenSpec + CFP
 
-> **Scaffold criado:** [`modulo-5-exemplo-3-agents-cli`](../../modulo-5-exemplo-3-agents-cli/) (via delivery-agent)
+> **Scaffold criado:** [`modulo-5-exemplo-3-openspec-cfp`](../../modulo-5-exemplo-3-openspec-cfp/) (via delivery-agent)
 
 Plano de aula para continuidade do módulo **Ferramentas de IA para UI/UX**, após conclusão do [Exemplo 2 (Prototyping UI)](../README.md).
 
-**Referência UNIPDS:** [modulo-03 — Agents CLI](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-03)
+**Referência UNIPDS:** [modulo-03 — CFP Platform + OpenSpec](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-03)
 
 ---
 
@@ -12,7 +12,7 @@ Plano de aula para continuidade do módulo **Ferramentas de IA para UI/UX**, ap�
 
 | Aula anterior | Esta aula | Próxima (UNIPDS) |
 |---------------|-----------|------------------|
-| Ex. 1 — Discovery/refinement (specs, edge cases, Mermaid) | **Ex. 3 — Agents CLI** (refatoração e manutenção com IA no terminal) | Ex. 4 — Automação MCP (testes E2E) |
+| Ex. 1 — Discovery/refinement (specs, edge cases, Mermaid) | **Ex. 3 — OpenSpec + CFP** (spec-driven com CFP Platform) | Ex. 4 — Cypress + OpenSpec (testes E2E) |
 | Ex. 2 — Prototyping UI (Figma/Stitch → Angular 21) ✅ | | Ex. 5 — AI Integration (Firebase AI Logic) |
 
 **Ponte com o Ex. 2:** o app `pix-app` já existe; nesta aula o aluno usa **agentes CLI** para refatorar, corrigir e evoluir o código gerado por IA — espelhando o fluxo real de equipes que prototipam com Cursor/Figma e depois consolidam com ferramentas de linha de comando.
@@ -43,7 +43,7 @@ Ao final da aula, o aluno será capaz de:
 ## Estrutura sugerida do repositório local
 
 ```
-modulo-5-exemplo-3-agents-cli/
+modulo-5-exemplo-3-openspec-cfp/
 ├── README.md
 ├── prompts/
 │   ├── refactor-safe.md          # system: diff mínimo, sem over-engineering
@@ -124,7 +124,7 @@ Use TestBed standalone. Não mockar o DOM inteiro.
 ### 6. Encerramento (10 min)
 
 - Checklist de aceite da aula (abaixo)
-- Preview do **Exemplo 4** (Automação MCP — Playwright + depuração)
+- Preview do **Exemplo 4** (Cypress + OpenSpec — testes E2E spec-driven)
 - Tarefa de casa: exportar `briefing/extrato-figma.png` e abrir PR documentando diff
 
 ---
@@ -163,6 +163,6 @@ Use TestBed standalone. Não mockar o DOM inteiro.
 
 ## Tarefa para casa
 
-1. ~~Criar `modulo-5-exemplo-3-agents-cli/`~~ ✅ feito pelo delivery-agent
+1. ~~Criar `modulo-5-exemplo-3-openspec-cfp/`~~ ✅ feito pelo delivery-agent
 2. Executar Laboratório 3 completo (testes do comprovante)
-3. Registrar no [`EVIDENCIAS_ACEITE.md`](../../modulo-5-exemplo-3-agents-cli/docs/EVIDENCIAS_ACEITE.md)
+3. Registrar no [`EVIDENCIAS_ACEITE.md`](../../modulo-5-exemplo-3-openspec-cfp/docs/EVIDENCIAS_ACEITE.md)

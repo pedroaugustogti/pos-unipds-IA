@@ -1,0 +1,18 @@
+schema: spec-driven
+
+context: |
+  Monorepo Nx `cfp-platform`: api/ (NestJS), frontend/ (Angular 21 standalone), shared-types/.
+  Contrato compartilhado: SpeakerDTO exportado por @cfp-platform/shared-types.
+  API de palestras: SpeakerController + SpeakerService, POST /api/speakers, GET /api/speakers.
+  API de eventos: EventController, POST /api/events, rota frontend /event/new.
+  Formulário CFP: CfpSubmissionComponent em frontend/src/app/cfp-submission/.
+  Rota do formulário: /talks/new (não usar /cfp nem /submit-talk).
+  Dashboard: CfpDashboardComponent, rota /dashboard; redirect '' → dashboard.
+  Shell: nav em app.html (Cadastro de Evento, Cadastro de Palestra, Dashboard); sem nx-welcome.
+  UI: dark mode, glass-card, gradiente laranja #ff8a00 → rosa #e52e71 no título e botão.
+  Labels do formulário em inglês: Call for Papers, Submit Proposal, Full Name, Email, Talk Title.
+  Estado do form: Angular Signals (name, email, talkTitle, isGDE, submissionStatus).
+  Acessibilidade: WAI-ARIA (aria-label, role=alert, aria-describedby).
+  Validação API: class-validator + ValidationPipe global; 400 para payload inválido.
+  Testes: Jest (api), Vitest-Angular (frontend), Playwright (frontend-e2e), Cypress (frontend-cypress-e2e).
+  OpenSpec: changes pequenas, archive após apply; specs canônicas em openspec/specs/.

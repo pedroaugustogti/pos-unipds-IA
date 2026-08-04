@@ -45,7 +45,7 @@ modulo-5-exemplo-2-prototyping-ui/
 ├── docs/
 │   ├── ENTRADA_EXEMPLO_1.md
 │   ├── EVIDENCIAS_ACEITE.md        # Validação dos critérios ✅
-│   ├── PROXIMA_AULA.md             # Roteiro Ex. 3 — Agents CLI
+│   ├── PROXIMA_AULA.md             # Roteiro Ex. 3 — OpenSpec + CFP
 │   ├── MCP_REVISAO.md              # Alinhamento com get_best_practices (Angular MCP)
 │   └── PIPELINE.md
 └── app/                              # pix-app (Angular 21)
@@ -132,9 +132,9 @@ Referência UNIPDS prompts: [pix-app/prompts](https://github.com/unipds-engenhar
 
 ## Próximo passo
 
-**Exemplo 3 criado:** [`modulo-5-exemplo-3-agents-cli`](../modulo-5-exemplo-3-agents-cli/) — Agents CLI (scaffold via delivery-agent).
+**Exemplo 3 criado:** [`modulo-5-exemplo-3-openspec-cfp`](../modulo-5-exemplo-3-openspec-cfp/) — OpenSpec + CFP Platform.
 
-Roteiro: [`docs/PROXIMA_AULA.md`](docs/PROXIMA_AULA.md) · Relatório didático: [`../modulo-5-exemplo-3-agents-cli/docs/RELATORIO_DIDATICO.md`](../modulo-5-exemplo-3-agents-cli/docs/RELATORIO_DIDATICO.md)
+Roteiro: [`docs/PROXIMA_AULA.md`](docs/PROXIMA_AULA.md) · Relatório didático: [`../modulo-5-exemplo-3-openspec-cfp/docs/RELATORIO_DIDATICO.md`](../modulo-5-exemplo-3-openspec-cfp/docs/RELATORIO_DIDATICO.md)
 
 ## Exemplo anterior
 
