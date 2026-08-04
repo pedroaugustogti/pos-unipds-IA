@@ -53,6 +53,17 @@ Specs Cypress: `cfp-submission.cy.ts`, `navigation.cy.ts`, `cfp-dashboard.cy.ts`
 
 Guia Cloud: [`../../modulo-5-exemplo-4-cypress-openspec/docs/CYPRESS_CLOUD_SETUP.md`](../../modulo-5-exemplo-4-cypress-openspec/docs/CYPRESS_CLOUD_SETUP.md)
 
+### Playwright MCP (Ex. 5 — automação com agentes)
+
+Agents 🎭 planner / generator / healer + MCP `playwright-test` em `.cursor/mcp.json`.
+
+Guia: [`../../modulo-5-exemplo-4-cypress-openspec/docs/PLAYWRIGHT_MCP.md`](../../modulo-5-exemplo-4-cypress-openspec/docs/PLAYWRIGHT_MCP.md)
+
+```bash
+# Validar seed dos agentes
+npx playwright test frontend-e2e/src/seed.spec.ts --config frontend-e2e/playwright.config.ts
+```
+
 ## Rotas (frontend)
 
 | Rota | Componente |
