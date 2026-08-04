@@ -16,8 +16,8 @@ App **Angular 21** que transforma rascunhos informais de conquistas profissionai
 
 1. Integrar **Genkit Flows** com schemas **Zod** (`BragInputSchema`, `BragSchema`)
 2. Definir `bragGeneratorFlow` com saída JSON estruturada via `ai.generate`
-3. Expor o flow via **API Express** (`POST /api/brag`) no `server.ts`
-4. Consumir a API no frontend com `BragService` + signals
+3. Expor o flow via **Micro-BFF Express** (`POST /api/brag`) no `server.ts`
+4. Integrar **full-stack**: `HttpClient` + `BragService` (signals) consumindo a API
 5. Explorar **Genkit UI** (`npm run genkit:ui`) para debug de prompts e flows
 6. Comparar integração de IA **no produto** (esta aula) vs **automação de testes** (Ex. 4–5)
 
@@ -108,6 +108,21 @@ npm run genkit:ui
 # Abre UI para inspecionar bragGeneratorFlow
 ```
 
+## Integração Full-Stack (Micro-BFF)
+
+Etapa final: conectar o frontend Angular ao `bragGeneratorFlow` via API Express no mesmo processo SSR.
+
+| Camada | Arquivo | Implementação |
+|--------|---------|---------------|
+| **Micro-BFF** | `app/src/server.ts` | `express.json()` + `POST /api/brag` → `bragGeneratorFlow({ definition })` |
+| **HttpClient** | `app/src/app/app.config.ts` | `provideHttpClient(withFetch())` — compatível com SSR |
+| **Service** | `app/src/app/services/brag.service.ts` | `generateBrag()` — POST `/api/brag`, signals `loading` e `brags` |
+| **UI** | `dashboard/`, `detail/` | Formulário → lista → detalhe do Brag Document |
+
+Fluxo: **Dashboard** → `BragService.generateBrag()` → **POST /api/brag** → **bragGeneratorFlow** (Genkit + Zod) → JSON estruturado → signals Angular.
+
+> Detalhes: [`docs/FLUXO_GENKIT.md`](docs/FLUXO_GENKIT.md)
+
 ## Lab sugerido
 
 1. Descreva uma conquista informal no dashboard
@@ -123,6 +138,9 @@ Validação executada em **2026-08-04** — ver [`docs/EVIDENCIAS_ACEITE.md`](do
 - [x] Base UNIPDS `brag-bot` em `app/`
 - [x] **Genkit Flow** `bragGeneratorFlow` com **Zod** (`BragInputSchema`, `BragSchema`)
 - [x] `llm-config.ts` — OpenRouter ou Google AI
+- [x] **Micro-BFF** — `express.json()` + `POST /api/brag` antes do catch-all Angular
+- [x] **HttpClient** — `provideHttpClient(withFetch())` em `app.config.ts`
+- [x] **BragService** — `generateBrag()` sem mock, POST real + signals
 - [x] `POST /api/brag` retorna JSON estruturado (validado)
 - [x] Dashboard gera e lista Brag Documents
 - [x] Página `/detail/:id` exibe contexto, impacto e métricas

@@ -25,6 +25,31 @@ sequenceDiagram
     D-->>U: Card + link /detail/:id
 ```
 
+## Micro-BFF (Integração Full-Stack)
+
+O Angular SSR roda no mesmo processo Express que expõe a API — padrão **Micro-BFF**: backend mínimo colocado junto ao frontend, sem serviço separado.
+
+### Backend (`server.ts`)
+
+1. `express.json()` logo após `const app = express()`
+2. Rota `POST /api/brag` **antes** do catch-all do Angular
+3. Extrai `req.body.definition` e chama `bragGeneratorFlow({ definition })`
+4. Retorna JSON; em erro, status `500`
+
+### Frontend
+
+| Arquivo | Mudança |
+|---------|---------|
+| `app.config.ts` | `provideHttpClient(withFetch())` para SSR |
+| `brag.service.ts` | Remove mock; `generateBrag(definition)` com `loading` + POST `/api/brag` |
+| `dashboard.component.ts` | Chama `bragService.generateBrag(prompt)` no submit |
+
+### Validação de build
+
+```bash
+cd app && npm run build   # deve passar sem erros TypeScript/SSR
+```
+
 ## Camadas
 
 | Camada | Arquivo | Responsabilidade |

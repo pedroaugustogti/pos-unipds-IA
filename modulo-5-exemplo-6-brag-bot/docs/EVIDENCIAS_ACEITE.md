@@ -9,7 +9,9 @@ Validação executada em **2026-08-04**.
 | **Genkit Flows** | `app/src/flows.ts` → `bragGeneratorFlow` |
 | **Zod** | `BragInputSchema`, `BragSchema` |
 | **OpenRouter** | `app/src/llm-config.ts` (`LLM_PROVIDER=openrouter`) |
-| **Express API** | `POST /api/brag` em `app/src/server.ts` |
+| **Express API** | `POST /api/brag` em `app/src/server.ts` (Micro-BFF) |
+| **HttpClient** | `provideHttpClient(withFetch())` em `app.config.ts` |
+| **BragService** | `generateBrag()` — POST real, signals `loading`/`brags` |
 | **Genkit UI** | `npm run genkit:ui` → http://localhost:4003 |
 
 ## Comandos executados
@@ -31,6 +33,9 @@ npm run genkit:ui                   # http://localhost:4003
 |----------|--------|-----------|
 | `BragInputSchema` / `BragSchema` (Zod) | ✅ | `flows.ts` |
 | `bragGeneratorFlow` definido | ✅ | `ai.defineFlow(...)` |
+| Micro-BFF `express.json()` + `POST /api/brag` | ✅ | `server.ts` — antes do catch-all |
+| `provideHttpClient(withFetch())` | ✅ | `app.config.ts` |
+| `BragService.generateBrag()` sem mock | ✅ | POST `/api/brag` + signals |
 | `POST /api/brag` retorna JSON | ✅ | `title`, `businessImpact`, `metrics` |
 | Dashboard — destilar conquista | ✅ | UI `/` |
 | Detail — `/detail/:id` | ✅ | contexto, impacto, métricas |
