@@ -13,7 +13,7 @@ Plano de aula para continuidade do módulo **Ferramentas de IA para UI/UX**, ap�
 | Aula anterior | Esta aula | Próxima (UNIPDS) |
 |---------------|-----------|------------------|
 | Ex. 1 — Discovery/refinement (specs, edge cases, Mermaid) | **Ex. 3 — OpenSpec + CFP** (spec-driven com CFP Platform) | Ex. 4 — Cypress + OpenSpec (testes E2E) |
-| Ex. 2 — Prototyping UI (Figma/Stitch → Angular 21) ✅ | | Ex. 5 — AI Integration (Firebase AI Logic) |
+| Ex. 2 — Prototyping UI (Figma/Stitch → Angular 21) ✅ | | Ex. 5 — Playwright MCP (automação E2E) |
 
 **Ponte com o Ex. 2:** o app `pix-app` já existe; nesta aula o aluno usa **agentes CLI** para refatorar, corrigir e evoluir o código gerado por IA — espelhando o fluxo real de equipes que prototipam com Cursor/Figma e depois consolidam com ferramentas de linha de comando.
 

@@ -3,6 +3,15 @@
     "nx-mcp": {
       "command": "npx",
       "args": ["-y", "nx-mcp@latest"]
+    },
+    "playwright-test": {
+      "command": "npx",
+      "args": [
+        "playwright",
+        "run-test-mcp-server",
+        "--config",
+        "frontend-e2e/playwright.config.ts"
+      ]
     }
   }
 }

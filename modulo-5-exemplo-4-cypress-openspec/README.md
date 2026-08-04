@@ -17,7 +17,7 @@ Testes E2E com **Cypress** guiados por **OpenSpec**: specs → change `add-cypre
 
 | Anterior | Esta aula | Próxima |
 |----------|-----------|---------|
-| Ex. 3 — OpenSpec + CFP ✅ | **Ex. 4 — Cypress + OpenSpec** | Ex. 5 — AI Integration |
+| Ex. 3 — OpenSpec + CFP ✅ | **Ex. 4 — Cypress + OpenSpec** | Ex. 5 — Playwright MCP |
 
 ## Estrutura
 
@@ -27,6 +27,8 @@ modulo-5-exemplo-4-cypress-openspec/
 ├── docs/
 │   ├── ONDE_ESTA_CYPRESS.md       ← mapa de todos os artefatos Cypress
 │   ├── CYPRESS_CLOUD_SETUP.md     ← conectar cy.prompt ao Cloud
+│   ├── PLAYWRIGHT_MCP.md          ← MCP Playwright (próxima aula)
+│   ├── PROXIMA_AULA.md            ← Ex. 5 Playwright MCP
 │   ├── FLUXO_CYPRESS_OPENSPEC.md
 │   ├── ROTEIRO_AULA.md
 │   ├── EVIDENCIAS_ACEITE.md
@@ -96,7 +98,13 @@ Archive de referência: `cfp-platform/openspec/changes/archive/2026-03-31-add-cy
 - [ ] `npx nx open-cypress frontend-e2e` validado no browser
 - [ ] `docs/EVIDENCIAS_ACEITE.md` preenchido
 
+## Próxima aula
+
+- [`docs/PROXIMA_AULA.md`](docs/PROXIMA_AULA.md) — Ex. 5 Playwright MCP
+- [`docs/PLAYWRIGHT_MCP.md`](docs/PLAYWRIGHT_MCP.md) — conectar Playwright MCP
+- [`modulo-5-exemplo-5-playwright-mcp`](../modulo-5-exemplo-5-playwright-mcp/)
+
 ## Anterior / Próximo
 
 - Anterior: [`modulo-5-exemplo-3-openspec-cfp`](../modulo-5-exemplo-3-openspec-cfp/)
-- Próximo: [modulo-05 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-05) — AI Integration
+- Próximo: [`modulo-5-exemplo-5-playwright-mcp`](../modulo-5-exemplo-5-playwright-mcp/) — Automação Playwright MCP

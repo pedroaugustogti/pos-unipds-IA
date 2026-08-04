@@ -8,7 +8,7 @@
 
 | Anterior | Esta aula | Próxima |
 |----------|-----------|---------|
-| Ex. 3 — OpenSpec + CFP ✅ | **Ex. 4 — Cypress + OpenSpec** | Ex. 5 — AI Integration |
+| Ex. 3 — OpenSpec + CFP ✅ | **Ex. 4 — Cypress + OpenSpec** | Ex. 5 — Playwright MCP |
 
 ## Roteiro
 
@@ -74,7 +74,7 @@ Prompt: [`prompts/cypress-from-spec.md`](../prompts/cypress-from-spec.md)
 ### 8. Encerramento (5 min)
 
 - Preencher [`EVIDENCIAS_ACEITE.md`](EVIDENCIAS_ACEITE.md)
-- Preview Ex. 5 (Firebase AI Logic)
+- Preview Ex. 5 (Playwright MCP — planner/generator/healer)
 
 ## Discussão
 

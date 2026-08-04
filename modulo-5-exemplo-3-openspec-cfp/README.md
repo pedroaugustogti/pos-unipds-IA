@@ -19,7 +19,7 @@ O código em `cfp-platform/` é o **estado final** após todas as fases. Guia co
 
 | Anterior | Esta aula | Próxima |
 |----------|-----------|---------|
-| Ex. 2 — Prototyping UI ✅ | **Ex. 3 — OpenSpec + CFP** ✅ | Ex. 4 — Cypress + OpenSpec |
+| Ex. 2 — Prototyping UI ✅ | **Ex. 3 — OpenSpec + CFP** ✅ | Ex. 4 — Cypress → Ex. 5 — Playwright MCP |
 
 ## Estrutura
 
@@ -30,8 +30,9 @@ modulo-5-exemplo-3-openspec-cfp/
 │   ├── api/
 │   ├── frontend/
 │   ├── shared-types/
-│   ├── frontend-playwright-e2e/   ← pasta frontend-e2e (Playwright)
+│   ├── frontend-e2e/              ← Playwright (projeto Nx: frontend-playwright-e2e)
 │   ├── frontend-cypress-e2e/      ← Cypress (projeto Nx: frontend-e2e)
+│   ├── .cursor/agents/            ← agents Playwright MCP (Ex. 5)
 │   └── openspec/
 ├── docs/
 └── prompts/
@@ -66,6 +67,9 @@ npx nx open-cypress frontend-e2e
 
 # Cypress AI — cy.prompt (Ex. 4, requer Cypress Cloud)
 npm run cy:run:ai
+
+# Playwright MCP — seed dos agentes (Ex. 5)
+npx playwright test frontend-e2e/src/seed.spec.ts --config frontend-e2e/playwright.config.ts
 ```
 
 ## Critérios de sucesso
@@ -76,6 +80,7 @@ npm run cy:run:ai
 - [x] Changes em `openspec/changes/archive/`
 - [x] [`docs/EVIDENCIAS_ACEITE.md`](docs/EVIDENCIAS_ACEITE.md) preenchido
 
-## Próxima aula
+## Próximas aulas
 
-[`modulo-5-exemplo-4-cypress-openspec`](../modulo-5-exemplo-4-cypress-openspec/) — [`docs/PROXIMA_AULA.md`](docs/PROXIMA_AULA.md)
+- Ex. 4: [`modulo-5-exemplo-4-cypress-openspec`](../modulo-5-exemplo-4-cypress-openspec/)
+- Ex. 5: [`modulo-5-exemplo-5-playwright-mcp`](../modulo-5-exemplo-5-playwright-mcp/) — guia MCP em [`PLAYWRIGHT_MCP.md`](../modulo-5-exemplo-4-cypress-openspec/docs/PLAYWRIGHT_MCP.md)

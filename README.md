@@ -151,9 +151,9 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 | 2 | [`modulo-5-exemplo-2-prototyping-ui`](./modulo-5-exemplo-2-prototyping-ui/) | **Prototyping UI** — app **Angular 21** Pix Agendado a partir das specs do Ex. 1; Figma/Stitch → componentes; critérios UNIPDS ✅ ([modulo-02 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-02)) |
 | 3 | [`modulo-5-exemplo-3-openspec-cfp`](./modulo-5-exemplo-3-openspec-cfp/) | **OpenSpec + CFP** — monorepo `cfp-platform` (Nx + Angular + NestJS), fluxo propose/apply/archive; critérios UNIPDS ✅ ([modulo-03 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-03/cfp-platform)) |
 | 4 | [`modulo-5-exemplo-4-cypress-openspec`](./modulo-5-exemplo-4-cypress-openspec/) | **Cypress + OpenSpec** — E2E spec-driven com Cypress 15, `cy.prompt()` e Cypress Cloud no `cfp-platform` ([modulo-04 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-04)) |
-| 5 | *próximo* [`modulo-05`](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-05) | **AI Integration** — Firebase AI Logic e APIs |
+| 5 | [`modulo-5-exemplo-5-playwright-mcp`](./modulo-5-exemplo-5-playwright-mcp/) | **Playwright MCP** — agentes planner/generator/healer para automação E2E no `cfp-platform` ([modulo-04 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo05-ferramentas-de-IA-para-UI-UX/modulo-04)) |
 
-**Competências do módulo:** engenharia de prompts estruturados; refinamento técnico de requisitos; diagramação com Mermaid; data discovery; redução de variabilidade antes do código; integração de IA em produtos digitais.
+**Competências do módulo:** engenharia de prompts estruturados; refinamento técnico de requisitos; OpenSpec spec-driven; E2E com Cypress (`cy.prompt`) e Playwright MCP (agentes planner/generator/healer); integração de IA em produtos digitais.
 
 ---
 
@@ -166,12 +166,12 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 | **Docker** | Neo4j (M1 ex. 6–7), Postgres (M2 ex. 2), APIs legadas (M3 ex. 6–7) |
 | **`.env`** | Chaves OpenRouter, Neo4j, etc. (copiar de `.env.example` quando existir) |
 | **LangGraph Studio** | `npm run langgraph:serve` nos projetos do Módulo 2 e no **Módulo 3 Exemplo 9** |
-| **Cursor / VS Code** | Módulo 3 (MCP e Skills) |
+| **Cursor / VS Code** | Módulo 3 (MCP e Skills); Módulo 5 Ex. 5 (Playwright MCP) |
 | **FFmpeg** | Módulo 3 Exemplo 4 (skills de vídeo) |
 
 ## MCP configurado no workspace
 
-O arquivo [`.cursor/mcp.json`](./.cursor/mcp.json) registra servidores dos exemplos 5, 6, 7 e 8:
+O arquivo [`.cursor/mcp.json`](./.cursor/mcp.json) registra servidores MCP do repositório (Módulo 3, CFP Platform, etc.):
 
 | Servidor | Exemplo |
 |----------|---------|
@@ -179,8 +179,12 @@ O arquivo [`.cursor/mcp.json`](./.cursor/mcp.json) registra servidores dos exemp
 | `customers-mcp` | Exemplo 6 — API legada |
 | `customers-secure-mcp` | Exemplo 7 — API com auth |
 | `customers-mcp-public` | Exemplo 8 — pacote npm público [`@gorgan/customers-mcp`](https://www.npmjs.com/package/@gorgan/customers-mcp) |
+| `nx-mcp` | Exemplo 3 CFP — monorepo Nx |
+| `playwright-test-cfp` | Módulo 5 Ex. 5 — automação Playwright MCP no `cfp-platform` |
 
 Para o **Exemplo 8**, o launcher `modulo-3-exemplo-8-publish-mcp/scripts/start-public-mcp.mjs` obtém o `SERVICE_TOKEN` da API legada e inicia o MCP in-process (compatível com Node 22 do Cursor). Recarregue o MCP em **Settings → MCP** após subir a API na porta 9999.
+
+Para o **Módulo 5 Ex. 5**, o servidor `playwright-test-cfp` exige Chromium instalado (`npx playwright install chromium`) e app em `http://localhost:4200`. Lab validado: cadastro em `/event/new` via MCP — ver [`modulo-5-exemplo-5-playwright-mcp/prompts/playwright-mcp-event-registration.md`](./modulo-5-exemplo-5-playwright-mcp/prompts/playwright-mcp-event-registration.md).
 
 O **Exemplo 9** reutiliza o mesmo launcher programaticamente (transporte **stdio** via `customersTool.ts`) — não depende do `.cursor/mcp.json`; o agente LangGraph sobe o MCP como processo filho em cada execução.
 
