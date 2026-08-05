@@ -70,12 +70,32 @@ streamlit run ui/app.py
 
 Os laboratórios estão organizados em scripts individuais na pasta `labs/` e cobrem do início ao fim a esteira de operações inteligentes.
 
-### 🟢 Módulo 1 & 2: IA Consultiva e IaC Copilot
-**Cenário**: Validar normas de segurança internas e automatizar a geração de arquivos Terraform HCL aderentes a conformidades.
+### 🟢 Módulo 1: IA Consultiva (Foundation)
+**Cenário**: Agente Cloud Architect consulta políticas corporativas via RAG e projeta bucket S3 compliant.
 ```bash
-# Executa a geração assistida do main.tf e sua auditoria pelo DevSecOps Auditor
+python3 labs/modulo1_foundation.py
+```
+
+### 🟢 Módulo 2: IaC Copilot (geração + loop de correção)
+**Cenário**: Architect gera `main.tf` → auditoria programática (Checkov JSON + OPA) → feedback `CKV_*` → correção (até 3 rodadas). Rules em `rules/architect-iac-correction.md` limitam escopo a S3/KMS/SNS (sem VPC/EC2/Lambda).
+
+```bash
+# Instale Checkov no venv (primeira vez)
+pip install checkov
+
+# Windows — encoding UTF-8 recomendado
+$env:PYTHONIOENCODING = "utf-8"   # PowerShell
 python3 labs/modulo2_iac_copilot.py
 ```
+
+**Fluxo:**
+```
+GERAÇÃO → AUDITORIA → (se FAILED) CORREÇÃO → reauditoria → … até PASSED ou 3 rodadas
+```
+
+**Arquivos-chave:** `tools/security_scan.py`, `tools/file_writer.py`, `core/architect_rules.py`
+
+**Evidências:** `../docs/EVIDENCIAS_MODULO2.md`, `../docs/EVIDENCIAS_MODULO2_LOOP.md`
 
 ### 🟡 Módulo 3: Kubernetes GitOps & Canary
 **Cenário**: Gerar manifestos Kubernetes V1 blindados, simular a reconciliação declarativa (Sync) e analisar métricas de deploy Canary.

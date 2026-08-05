@@ -1,26 +1,26 @@
-# Nexus AI-Ops — Foundation (IA Consultiva)
+# Nexus AI-Ops — Foundation & IaC Copilot
 
 **Módulo 6 — Exemplo 1** (`modulo-6-exemplo-1-aiops-foundation`)
 
-Primeira aula do módulo **AI-Ops e Engenharia Agêntica (Nexus)** — agente CrewAI consultivo que projeta infraestrutura seguindo políticas corporativas via **policy RAG**.
+Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **IaC Copilot com loop de correção** (Lab 2).
 
 **Referência UNIPDS:** [modulo06-aiops-engenharia-agentica](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)
 
 ## Contexto
 
-| Anterior | Esta aula | Próxima |
-|----------|-----------|---------|
-| Módulo 5 — BragBot + Genkit ✅ | **Ex. 1 — Nexus Foundation** ✅ | Ex. 2 — IaC Copilot |
+| Anterior | Esta pasta | Próxima |
+|----------|------------|---------|
+| Módulo 5 — BragBot + Genkit ✅ | **Ex. 1 — Nexus** (Labs 1–2) | Labs 3–12 no monorepo |
 
-**Ponte com o Módulo 5:** no Ex. 6 a IA estava **no produto** (Genkit + Angular). No Módulo 6 a IA opera **infraestrutura e plataforma** — agentes que consultam políticas, geram IaC e remedia incidentes.
+**Ponte com o Módulo 5:** no Ex. 6 a IA estava **no produto** (Genkit + Angular). Aqui a IA opera **infraestrutura e plataforma** — agentes que consultam políticas, geram IaC, auditam com Checkov/OPA e iteram correções.
 
 ## Objetivos
 
 1. Configurar o monorepo **Nexus AI-Ops** (CrewAI + Groq)
-2. Entender o agente `get_architect` e a tool `check_compliance_rules`
-3. Executar o **Lab 1** — design de bucket S3 para logs com compliance
-4. Mapear a trilha de 12 labs do módulo (Foundation → Orquestração hierárquica)
-5. Comparar IA **consultiva** (esta aula) vs **autônoma/remediadora** (labs posteriores)
+2. **Lab 1** — agente `get_architect` + `check_compliance_rules` (IA consultiva)
+3. **Lab 2** — pipeline IaC: geração → auditoria Checkov/OPA → **loop de correção** (até 3 rodadas)
+4. Aplicar **rules de escopo** para o architect não alucinar recursos fora do S3
+5. Mapear a trilha de 12 labs (Foundation → Orquestração hierárquica)
 
 ## Estrutura
 
@@ -29,30 +29,34 @@ modulo-6-exemplo-1-aiops-foundation/
 ├── README.md
 ├── docs/
 │   ├── ROTEIRO_AULA.md
-│   ├── EVIDENCIAS_ACEITE.md
-│   ├── RELATORIO_DIDATICO.md
+│   ├── EVIDENCIAS_ACEITE.md          ← Lab 1
+│   ├── EVIDENCIAS_MODULO2.md         ← Lab 2 (pipeline linear)
+│   ├── EVIDENCIAS_MODULO2_LOOP.md    ← Lab 2 (loop de correção)
 │   ├── PROXIMA_AULA.md
 │   ├── FLUXO_CREWAI.md
 │   └── GROQ_SETUP.md
 ├── prompts/
 │   └── s3-compliance-design.md
-└── nexus/                          ← base UNIPDS (monorepo completo)
-    ├── core/agents.py              ← get_architect, get_auditor, ...
-    ├── core/llm_config.py          ← Groq Llama 3.1
-    ├── tools/policy_rag.py         ← check_compliance_rules
-    ├── labs/modulo1_foundation.py  ← Lab desta aula
-    ├── labs/modulo2_iac_copilot.py ← próximo lab
-    └── nexus_iac_copilot.py        ← menu CLI dos 12 labs
+└── nexus/
+    ├── core/agents.py
+    ├── core/architect_rules.py       ← loader das rules IaC
+    ├── rules/architect-iac-correction.md  ← allowlist/blocklist S3
+    ├── tools/policy_rag.py
+    ├── tools/security_scan.py        ← Checkov JSON + OPA
+    ├── tools/file_writer.py          ← read/write + validação HCL
+    ├── labs/modulo1_foundation.py
+    ├── labs/modulo2_iac_copilot.py   ← Lab 2 com loop
+    └── nexus_iac_copilot.py
 ```
 
 ## Pré-requisitos
 
 | Recurso | Uso |
 |---------|-----|
-| **Python 3.10–3.13** | CrewAI + Pydantic (evitar 3.14 experimental) |
-| **GROQ_API_KEY** | LLM `groq/llama-3.1-8b-instant` — ver [`docs/GROQ_SETUP.md`](docs/GROQ_SETUP.md) |
-| Docker + kubectl | Labs posteriores (K8s, troubleshooting) — não obrigatório na Aula 1 |
-| Módulo 5 concluído | Contexto de IA em produto vs operações |
+| **Python 3.10–3.13** | CrewAI + Pydantic |
+| **GROQ_API_KEY** | `groq/llama-3.1-8b-instant` — [`docs/GROQ_SETUP.md`](docs/GROQ_SETUP.md) |
+| **Checkov** | Lab 2 — `pip install checkov` no venv |
+| Docker + kubectl | Labs posteriores (K8s) |
 
 ## Configuração
 
@@ -62,14 +66,13 @@ py -3.11 -m venv venv
 .\venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -r requirements.txt
+pip install checkov
 
 copy .env.example .env
 # GROQ_API_KEY=gsk_...
 ```
 
-Guia completo: [`docs/GROQ_SETUP.md`](docs/GROQ_SETUP.md)
-
-## Início rápido — Lab 1 Foundation
+## Lab 1 — Foundation (IA consultiva)
 
 ```powershell
 cd nexus
@@ -77,9 +80,38 @@ cd nexus
 python labs/modulo1_foundation.py
 ```
 
-**Cenário:** o agente **Cloud Architect** recebe a tarefa de desenhar um bucket S3 para logs da empresa Nexus, consultando as regras de compliance via `check_compliance_rules`.
+**Cenário:** Cloud Architect desenha bucket S3 para logs consultando `check_compliance_rules`.
 
-**Saída esperada:** plano com nome do bucket (prefixo `nexus-`), região `us-east-1` e bucket privado.
+**Saída esperada:** bucket `nexus-*`, região `us-east-1`, privado.
+
+Evidências: [`docs/EVIDENCIAS_ACEITE.md`](docs/EVIDENCIAS_ACEITE.md)
+
+## Lab 2 — IaC Copilot (loop de correção)
+
+```powershell
+cd nexus
+.\venv\Scripts\Activate.ps1
+$env:PYTHONIOENCODING = "utf-8"
+python labs/modulo2_iac_copilot.py
+```
+
+**Cenário:** Architect gera `main.tf` (bucket `nexus-apollo-data`) → auditoria programática (Checkov + OPA) → se reprovado, feedback `CKV_*` volta ao architect (até 3 rodadas).
+
+**Componentes:**
+
+| Peça | Função |
+|------|--------|
+| `audit_infrastructure_file()` | Audita o arquivo em disco (não o texto da task) |
+| `rules/architect-iac-correction.md` | Escopo fechado S3 — proíbe VPC/EC2/Lambda/SG/`0.0.0.0/0` |
+| `write_file` | Valida sintaxe HCL + governança antes de gravar |
+
+**Evidências:**
+
+- [`docs/EVIDENCIAS_MODULO2.md`](docs/EVIDENCIAS_MODULO2.md) — pipeline linear (v1)
+- [`docs/EVIDENCIAS_MODULO2_LOOP.md`](docs/EVIDENCIAS_MODULO2_LOOP.md) — loop de correção (v2)
+- [`docs/execucao-modulo2-rules-2026-08-05.log`](docs/execucao-modulo2-rules-2026-08-05.log) — execução com rules
+
+> **Nota:** convergência 100% Checkov depende do modelo Groq e do rate limit (TPM 6000). As rules evitam alucinação de escopo; em aula, discuta trade-off entre autonomia do agente e guardrails.
 
 ### Menu interativo (todos os labs)
 
@@ -87,30 +119,22 @@ python labs/modulo1_foundation.py
 python nexus_iac_copilot.py
 ```
 
-### Dashboard Streamlit (labs posteriores)
-
-```powershell
-streamlit run ui/app.py
-```
-
-## Lab sugerido
-
-1. Execute `modulo1_foundation.py` e capture a saída do agente
-2. Leia `tools/policy_rag.py` — entenda o que a tool retorna
-3. Edite a task em `labs/modulo1_foundation.py` para pedir bucket de **backups** em vez de logs
-4. Compare: o agente respeita as mesmas regras de compliance?
-5. Documente em [`prompts/s3-compliance-design.md`](prompts/s3-compliance-design.md)
-
 ## Critérios de sucesso
 
-Validação executada em **2026-08-05** — ver [`docs/EVIDENCIAS_ACEITE.md`](docs/EVIDENCIAS_ACEITE.md).
+### Lab 1 ✅
 
-- [x] Base UNIPDS em `nexus/` (monorepo Nexus AI-Ops)
-- [x] `venv` criado e dependências instaladas (`crewai`, `litellm`, `langchain-groq`, `truststore`)
-- [x] `GROQ_API_KEY` configurada em `.env` (não commitada)
-- [x] `python labs/modulo1_foundation.py` executa sem erro
-- [x] Agente consulta `check_compliance_rules` e propõe bucket compliant (`nexus-logs-us-east-1`, `us-east-1`, privado)
-- [x] README, roteiro e evidências de aceite completos
+- [x] `modulo1_foundation.py` executa sem erro
+- [x] Agente consulta `check_compliance_rules` e propõe bucket compliant
+- [x] Evidências em [`docs/EVIDENCIAS_ACEITE.md`](docs/EVIDENCIAS_ACEITE.md)
+
+### Lab 2
+
+- [x] Checkov instalado e integrado (Windows via `python venv/Scripts/checkov`)
+- [x] Loop de correção implementado (geração → auditoria → feedback → correção)
+- [x] Rules de escopo em `nexus/rules/architect-iac-correction.md`
+- [x] `write_file` rejeita HCL fora do escopo e sintaxe inválida
+- [x] Evidências documentadas (linear + loop)
+- [ ] Conformidade Checkov 100% em 3 rodadas (limitado por modelo/rate limit Groq)
 
 ## Anterior
 
