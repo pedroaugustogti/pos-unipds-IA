@@ -27,6 +27,7 @@ MAPA_MODULOS_UNIPDS = {
     3: "modulo03-mcp-na-pratica",
     4: "modulo04-agentes-autonomos",
     5: "modulo05-ferramentas-de-IA-para-UI-UX",
+    6: "modulo06-aiops-engenharia-agentica",
 }
 
 
@@ -93,6 +94,8 @@ def _proximo_numero_exemplo(local_exemplos: list[str]) -> int:
 def _slug_de_aula(nome: str) -> str:
     if nome.startswith("aula"):
         sufixo = re.sub(r"^aula0?\d+-", "", nome, flags=re.I)
+    elif re.match(r"^modulo-0?\d+", nome, re.I):
+        sufixo = re.sub(r"^modulo-0?\d+-?", "", nome, flags=re.I)
     else:
         sufixo = re.sub(r"^\d+-", "", nome)
         sufixo = re.sub(r"-z$", "", sufixo)
@@ -114,6 +117,34 @@ def _listar_atividades_unipds(pasta_unipds: str) -> list[dict]:
                 "aula_unipds": nome,
                 "slug": _slug_de_aula(nome),
             })
+            continue
+
+        m_modulo = re.match(r"^modulo-0?(\d+)(?:-(.+))?$", nome, re.I)
+        if m_modulo:
+            subdirs = [s for s in _github_listar(caminho) if not s.endswith("-template")]
+            z_subdirs = sorted(s for s in subdirs if s.endswith("-z"))
+            if z_subdirs:
+                alvo = z_subdirs[0]
+                atividades.append({
+                    "nome": alvo,
+                    "caminho_unipds": f"{caminho}/{alvo}",
+                    "aula_unipds": nome,
+                    "slug": _slug_de_aula(alvo),
+                })
+            elif len(subdirs) == 1:
+                atividades.append({
+                    "nome": subdirs[0],
+                    "caminho_unipds": f"{caminho}/{subdirs[0]}",
+                    "aula_unipds": nome,
+                    "slug": _slug_de_aula(subdirs[0]),
+                })
+            else:
+                atividades.append({
+                    "nome": nome,
+                    "caminho_unipds": caminho,
+                    "aula_unipds": nome,
+                    "slug": _slug_de_aula(nome),
+                })
             continue
 
         m = re.match(r"^(\d+)-", nome)
@@ -146,7 +177,10 @@ def _listar_atividades_unipds(pasta_unipds: str) -> list[dict]:
             })
 
     atividades.sort(key=lambda a: (
-        int(m.group(1)) if (m := re.search(r"(?:^aula0?(\d+)|^(\d+)-)", a["aula_unipds"], re.I)) and (m.group(1) or m.group(2)) else 999,
+        int(m.group(1) or m.group(2) or m.group(3))
+        if (m := re.search(r"(?:^aula0?(\d+)|^(\d+)-|^modulo-0?(\d+))", a["aula_unipds"], re.I))
+        and (m.group(1) or m.group(2) or m.group(3))
+        else 999,
         a["nome"],
     ))
     return atividades

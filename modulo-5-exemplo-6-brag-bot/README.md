@@ -10,7 +10,7 @@ App **Angular 21** que transforma rascunhos informais de conquistas profissionai
 
 | Anterior | Esta aula | Próxima |
 |----------|-----------|---------|
-| Ex. 5 — Playwright MCP ✅ | **Ex. 6 — BragBot + Genkit** ✅ | Encerramento Módulo 5 |
+| Ex. 5 — Playwright MCP ✅ | **Ex. 6 — BragBot + Genkit** ✅ | **Módulo 6 — Nexus Foundation** |
 
 ## Objetivos
 
@@ -150,3 +150,7 @@ Validação executada em **2026-08-04** — ver [`docs/EVIDENCIAS_ACEITE.md`](do
 ## Anterior
 
 [`modulo-5-exemplo-5-playwright-mcp`](../modulo-5-exemplo-5-playwright-mcp/)
+
+## Próximo exemplo
+
+[`modulo-6-exemplo-1-aiops-foundation`](../modulo-6-exemplo-1-aiops-foundation/) — Nexus AI-Ops Foundation (CrewAI + Groq)

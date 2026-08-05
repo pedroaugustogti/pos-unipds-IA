@@ -158,12 +158,25 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 
 ---
 
+## Módulo 6 — AI-Ops e Engenharia Agêntica (Nexus)
+
+**O que você aprende:** aplicar agentes CrewAI em operações de plataforma — compliance, IaC, Kubernetes, troubleshooting, DevSecOps, FinOps e orquestração hierárquica de incidentes.
+
+| Exemplo | Pasta | Principais aprendizados |
+|---------|-------|-------------------------|
+| 1 | [`modulo-6-exemplo-1-aiops-foundation`](./modulo-6-exemplo-1-aiops-foundation/) | **Nexus Foundation** — CrewAI + Groq, agente `get_architect`, tool `check_compliance_rules`, Lab 1 S3 compliance ✅ ([modulo06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)) |
+
+**Competências do módulo:** IA consultiva em operações; engenharia agêntica com CrewAI; policy RAG e governança; IaC Copilot; troubleshooting ReAct; AIOps preditivo; ChatOps com human-in-the-loop; orquestração multiagente.
+
+---
+
 ## Requisitos gerais
 
 | Recurso | Onde é necessário |
 |---------|-------------------|
 | **Node.js 22+** (24+ no Módulo 3 MCP) | Maioria dos exemplos TS/JS |
-| **Python 3.10+** | Módulo 4 Exemplo 1 (runtime do agente por contratos) |
+| **Python 3.10–3.13** | Módulo 4 Ex. 1; **Módulo 6** (CrewAI Nexus) |
+| **GROQ_API_KEY** | **Módulo 6** — Groq Llama 3.1 nos labs Nexus |
 | **Docker** | Neo4j (M1 ex. 6–7), Postgres (M2 ex. 2), APIs legadas (M3 ex. 6–7) |
 | **`.env`** | Chaves OpenRouter, Neo4j, etc. (copiar de `.env.example` quando existir) |
 | **LangGraph Studio** | `npm run langgraph:serve` nos projetos do Módulo 2 e no **Módulo 3 Exemplo 9** |
@@ -186,6 +199,8 @@ O arquivo [`.cursor/mcp.json`](./.cursor/mcp.json) registra servidores MCP do re
 Para o **Exemplo 8**, o launcher `modulo-3-exemplo-8-publish-mcp/scripts/start-public-mcp.mjs` obtém o `SERVICE_TOKEN` da API legada e inicia o MCP in-process (compatível com Node 22 do Cursor). Recarregue o MCP em **Settings → MCP** após subir a API na porta 9999.
 
 Para o **Módulo 5 Ex. 5**, o servidor `playwright-test-cfp` exige Chromium instalado (`npx playwright install chromium`) e app em `http://localhost:4200`. Lab validado: cadastro em `/event/new` via MCP — ver [`modulo-5-exemplo-5-playwright-mcp/prompts/playwright-mcp-event-registration.md`](./modulo-5-exemplo-5-playwright-mcp/prompts/playwright-mcp-event-registration.md).
+
+Para o **Módulo 6 Ex. 1 (Nexus Foundation)**, configure `GROQ_API_KEY` em `nexus/.env` — guia em [`modulo-6-exemplo-1-aiops-foundation/docs/GROQ_SETUP.md`](./modulo-6-exemplo-1-aiops-foundation/docs/GROQ_SETUP.md). Comando: `python labs/modulo1_foundation.py`.
 
 Para o **Módulo 5 Ex. 6 (BragBot)**, use **Genkit Flows + Zod** (`bragGeneratorFlow` em `app/src/flows.ts`). Configure `OPENROUTER_API_KEY` ou `GEMINI_API_KEY` via `.env.example` — guias em [`modulo-5-exemplo-6-brag-bot/docs/`](./modulo-5-exemplo-6-brag-bot/docs/). Comandos: `npm run serve:ssr:brag-bot` (app + API) e `npm run genkit:ui` (Developer UI).
 
