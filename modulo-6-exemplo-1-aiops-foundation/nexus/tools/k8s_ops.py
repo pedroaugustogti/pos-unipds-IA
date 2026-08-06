@@ -1,6 +1,68 @@
 import os
 import subprocess
+from pathlib import Path
+
 from crewai.tools import tool
+
+K3D_SERVER_CONTAINER = os.environ.get("K3D_SERVER_CONTAINER", "k3d-nexus-lab-server-0")
+
+
+def _kubectl_base_args() -> list[str]:
+    if os.environ.get("KUBE_INSECURE_SKIP_TLS_VERIFY", "").lower() in ("1", "true", "yes"):
+        return ["--insecure-skip-tls-verify"]
+    return []
+
+
+def _apply_via_docker_exec(filename: str) -> tuple[bool, str]:
+    """Applies manifest through k3d server container (Windows TLS workaround)."""
+    manifest = Path(filename).read_text(encoding="utf-8")
+    try:
+        check = subprocess.run(
+            ["docker", "inspect", "-f", "{{.State.Running}}", K3D_SERVER_CONTAINER],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if check.returncode != 0 or check.stdout.strip() != "true":
+            return False, ""
+
+        result = subprocess.run(
+            ["docker", "exec", "-i", K3D_SERVER_CONTAINER, "kubectl", "apply", "-f", "-"],
+            input=manifest,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode == 0:
+            return True, result.stdout.strip()
+        return False, (result.stderr or result.stdout or "").strip()
+    except FileNotFoundError:
+        return False, ""
+
+
+def _apply_via_kubectl(filename: str) -> tuple[bool, str]:
+    try:
+        result = subprocess.run(
+            ["kubectl", *_kubectl_base_args(), "apply", "-f", filename],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode == 0:
+            return True, result.stdout.strip()
+
+        stderr = (result.stderr or "").lower()
+        if "certificate" in stderr or "x509" in stderr:
+            ok, output = _apply_via_docker_exec(filename)
+            if ok:
+                return True, f"{output} (via k3d container)"
+
+        return False, (result.stderr or result.stdout or "").strip()
+    except FileNotFoundError:
+        ok, output = _apply_via_docker_exec(filename)
+        if ok:
+            return True, f"{output} (via k3d container)"
+        return False, "kubectl not found"
 
 
 @tool("generate_k8s_manifest")
@@ -54,26 +116,17 @@ def apply_k8s_manifest(filename: str) -> str:
     if not os.path.exists(filename):
         return f"❌ Error: The file '{filename}' was not found to apply."
 
-    try:
-        # Attempts to apply the manifest to a real cluster if available
-        result = subprocess.run(
-            ["kubectl", "apply", "-f", filename],
-            capture_output=True,
-            text=True,
-            check=False
-        )
-        if result.returncode == 0:
-            return f"✅ GitOps Sync Success: {result.stdout.strip()}"
-        
-        return (
-            f"⚠️ GitOps Simulation: File '{filename}' is syntactically valid, "
-            f"but no Kubernetes cluster was detected. The GitOps controller would reconcile this state."
-        )
-    except FileNotFoundError:
-        return (
-            f"ℹ️ Simulation Mode: 'kubectl' command line tool is not installed. "
-            f"In a production system, ArgoCD or Flux would apply this manifest now."
-        )
+    ok, output = _apply_via_kubectl(filename)
+    if ok:
+        return f"✅ GitOps Sync Success: {output}"
+
+    if output and "certificate" not in output.lower():
+        return f"⚠️ GitOps apply failed: {output}"
+
+    return (
+        f"⚠️ GitOps Simulation: File '{filename}' is syntactically valid, "
+        f"but no Kubernetes cluster was detected. The GitOps controller would reconcile this state."
+    )
 
 
 @tool("analyze_canary_metrics")

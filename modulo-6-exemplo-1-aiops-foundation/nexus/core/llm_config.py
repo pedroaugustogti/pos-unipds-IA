@@ -17,6 +17,7 @@ try:
     import litellm
 
     litellm.drop_params = True
+    litellm.num_retries = int(os.getenv("NEXUS_LITELLM_NUM_RETRIES", "2"))
     _litellm_completion = litellm.completion
 
     def _completion_without_cache_breakpoint(*args, **kwargs):
@@ -33,7 +34,8 @@ except ImportError:
 
 # Centraliza a inteligência do projeto
 nexus_llm = LLM(
-    model="groq/llama-3.1-8b-instant",
+    model=os.getenv("GROQ_MODEL", "groq/llama-3.1-8b-instant"),
     api_key=os.getenv("GROQ_API_KEY"),
-    temperature=0.2,
+    temperature=float(os.getenv("GROQ_TEMPERATURE", "0.2")),
+    max_tokens=int(os.getenv("GROQ_MAX_TOKENS", "1024")),
 )

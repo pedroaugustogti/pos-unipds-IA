@@ -1,0 +1,15 @@
+# k3d registry config — workaround TLS x509 no containerd (lab local)
+# Sintoma: pods em ContainerCreating com "x509: certificate signed by unknown authority" ao pull do Docker Hub
+# Uso: .\scripts\setup-k3d-cluster.ps1
+#      ou: k3d cluster create nexus-lab --agents 0 --wait --registry-config k8s/k3d-registries.yaml
+mirrors:
+  docker.io:
+    endpoint:
+      - https://registry-1.docker.io
+configs:
+  "registry-1.docker.io":
+    tls:
+      insecure_skip_verify: true
+  "docker.io":
+    tls:
+      insecure_skip_verify: true

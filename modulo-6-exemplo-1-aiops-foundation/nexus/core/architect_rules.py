@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 RULES_DIR = Path(__file__).resolve().parent.parent / "rules"
@@ -23,12 +24,29 @@ FORBIDDEN_RESOURCE_PATTERNS = (
 )
 
 
+ARCHITECT_IAC_RULES_SUMMARY = """\
+Escopo fechado: bucket S3 `nexus-apollo-data` em us-east-1 (provider aws).
+Permitido: aws_s3_bucket*, aws_kms_key, aws_sns_topic, aws_iam_role (somente replication).
+Proibido: VPC, subnet, EC2, Lambda, Security Group, 0.0.0.0/0, file(), t3.large.
+Correção: mínima por CKV_* do relatório; não reescreva o arquivo inteiro nem remova o que passou.
+"""
+
+
 def load_architect_iac_rules(rules_file: Path | None = None) -> str:
     """Loads architect IaC correction rules from markdown."""
     path = rules_file or DEFAULT_RULES_FILE
     if not path.exists():
         return ""
     return path.read_text(encoding="utf-8").strip()
+
+
+def get_architect_iac_rules_for_prompt(use_full: bool | None = None) -> str:
+    """Returns compact rules for LLM prompts unless NEXUS_USE_FULL_IAC_RULES=true."""
+    if use_full is None:
+        use_full = os.getenv("NEXUS_USE_FULL_IAC_RULES", "").lower() in ("1", "true", "yes")
+    if use_full:
+        return load_architect_iac_rules()
+    return ARCHITECT_IAC_RULES_SUMMARY
 
 
 def validate_iac_governance(content: str) -> tuple[bool, str]:

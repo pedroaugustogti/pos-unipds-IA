@@ -1,6 +1,14 @@
 from typing import List, Optional
 from crewai import Agent
 from core.llm_config import nexus_llm
+from core.crew_config import AGENT_MAX_ITER, AGENT_MAX_RPM
+
+_AGENT_DEFAULTS = {
+    "llm": nexus_llm,
+    "verbose": True,
+    "max_iter": AGENT_MAX_ITER,
+    "max_rpm": AGENT_MAX_RPM,
+}
 
 
 def get_architect(tools: Optional[List] = None, backstory: Optional[str] = None) -> Agent:
@@ -10,8 +18,7 @@ def get_architect(tools: Optional[List] = None, backstory: Optional[str] = None)
         goal='Projetar infraestrutura seguindo normas e gerando código HCL.',
         backstory=backstory or 'Especialista em AWS/Terraform com foco em governança.',
         tools=tools or [],
-        llm=nexus_llm,
-        verbose=True
+        **_AGENT_DEFAULTS,
     )
 
 
@@ -22,8 +29,7 @@ def get_auditor(tools: Optional[List] = None) -> Agent:
         goal='Garantir segurança e conformidade total dos projetos.',
         backstory='Auditor rigoroso que utiliza ferramentas de scan e OPA.',
         tools=tools or [],
-        llm=nexus_llm,
-        verbose=True
+        **_AGENT_DEFAULTS,
     )
 
 
@@ -34,8 +40,7 @@ def get_sre_agent(tools: Optional[List] = None) -> Agent:
         goal='Gerenciar workloads Kubernetes e garantir rollouts seguros.',
         backstory='Especialista em orquestração, GitOps e análise de métricas de tráfego.',
         tools=tools or [],
-        llm=nexus_llm,
-        verbose=True
+        **_AGENT_DEFAULTS,
     )
 
 
@@ -46,9 +51,8 @@ def get_oncall_sre(tools: Optional[List] = None) -> Agent:
         goal='Reduzir o MTTR identificando a causa raiz de falhas no Kubernetes.',
         backstory='Especialista em ReAct. Você pensa antes de agir, observa os logs e correlaciona eventos.',
         tools=tools or [],
-        llm=nexus_llm,
-        verbose=True,
-        allow_delegation=True
+        allow_delegation=True,
+        **_AGENT_DEFAULTS,
     )
 
 
@@ -62,8 +66,7 @@ def get_aiops_agent(tools: Optional[List] = None) -> Agent:
             'como Prophet e Isolation Forest. Você não espera o alerta tocar, você prevê o alerta.'
         ),
         tools=tools or [], 
-        llm=nexus_llm,
-        verbose=True
+        **_AGENT_DEFAULTS,
     )
 
 
@@ -77,8 +80,7 @@ def get_chatops_agent(tools: Optional[List] = None) -> Agent:
             'Você nunca executa uma ação destrutiva sem antes pedir permissão a um humano autorizado.'
         ),
         tools=tools or [], 
-        llm=nexus_llm, 
-        verbose=True
+        **_AGENT_DEFAULTS,
     )
 
 
@@ -92,8 +94,7 @@ def get_devsecops_agent(tools: Optional[List] = None) -> Agent:
             'teórica de uma tentativa de invasão ativa ou backdoor em execução.'
         ),
         tools=tools or [],
-        llm=nexus_llm,
-        verbose=True
+        **_AGENT_DEFAULTS,
     )
 
 
@@ -107,8 +108,7 @@ def get_cicd_agent(tools: Optional[List] = None) -> Agent:
             'Ele domina estratégias de cache, builds multi-stage e canary deployments.'
         ),
         tools=tools or [],
-        llm=nexus_llm,
-        verbose=True
+        **_AGENT_DEFAULTS,
     )
 
 
@@ -119,8 +119,7 @@ def get_finops_agent(tools: Optional[List] = None) -> Agent:
         goal='Reduzir o desperdício financeiro na nuvem e sugerir o dimensionamento correto (rightsizing).',
         backstory='Um auditor financeiro que entende de nuvem. Ele caça recursos zumbis e instâncias superdimensionadas.',
         tools=tools or [],
-        llm=nexus_llm,
-        verbose=True
+        **_AGENT_DEFAULTS,
     )
 
 
@@ -134,8 +133,7 @@ def get_sre_knowledge_agent(tools: Optional[List] = None) -> Agent:
             'e evidências. Ele é mestre em transformar incidentes em aprendizado.'
         ),
         tools=tools or [],
-        llm=nexus_llm,
-        verbose=True
+        **_AGENT_DEFAULTS,
     )
 
 
@@ -149,7 +147,6 @@ def get_nexus_manager_agent(tools: Optional[List] = None) -> Agent:
             'os agentes especialistas e consolidar os resultados em relatórios executivos de alto impacto.'
         ),
         tools=tools or [],
-        llm=nexus_llm,
-        verbose=True,
-        allow_delegation=True
+        allow_delegation=True,
+        **_AGENT_DEFAULTS,
     )

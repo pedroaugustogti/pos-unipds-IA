@@ -14,23 +14,26 @@ if hasattr(sys.stderr, "reconfigure"):
 
 from crewai import Task, Crew
 from core.agents import get_architect
-from core.architect_rules import load_architect_iac_rules
+from core.architect_rules import get_architect_iac_rules_for_prompt
+from core.crew_config import (
+    MAX_AUDIT_FEEDBACK_ITEMS,
+    ROUND_DELAY_SECONDS,
+    kickoff_with_retry,
+    nexus_crew_kwargs,
+)
 from tools.file_writer import read_file, write_file
 from tools.security_scan import audit_infrastructure_file
 
 MAX_CORRECTION_ROUNDS = 3
-ROUND_DELAY_SECONDS = 8
 TF_FILE = "main.tf"
 
-ARCHITECT_IAC_RULES = load_architect_iac_rules()
+ARCHITECT_IAC_RULES = get_architect_iac_rules_for_prompt()
 
 architect = get_architect(
     tools=[read_file, write_file],
     backstory=(
         "Especialista em AWS/Terraform com foco em governança. "
-        "Em correções de IaC, segue estritamente as rules Nexus em "
-        "nexus/rules/architect-iac-correction.md — escopo fechado S3, "
-        "sem VPC/EC2/Lambda/SG e sem 0.0.0.0/0."
+        "Escopo fechado S3 em us-east-1; sem VPC/EC2/Lambda/SG nem 0.0.0.0/0."
     ),
 )
 
@@ -38,38 +41,32 @@ architect = get_architect(
 def _rules_block() -> str:
     if not ARCHITECT_IAC_RULES:
         return ""
-    return f"\n\n## RULES OBRIGATÓRIAS (Nexus Architect)\n\n{ARCHITECT_IAC_RULES}\n"
+    return f"\n\n## RULES (resumo Nexus)\n\n{ARCHITECT_IAC_RULES}\n"
 
 
 def _generation_task(feedback: str | None = None) -> Task:
     rules = _rules_block()
     if feedback is None:
         description = (
-            f"Gere um arquivo '{TF_FILE}' DO ZERO para um bucket S3 seguro chamado 'nexus-apollo-data'. "
-            "NÃO use read_file — crie HCL novo e válido. "
-            "Região deve ser us-east-1 (provider aws). "
-            "Use sintaxe moderna do AWS provider 4.x com resources separados "
-            "(aws_s3_bucket, aws_s3_bucket_versioning, aws_s3_bucket_public_access_block, "
-            "aws_s3_bucket_server_side_encryption_configuration com aws:kms, aws_kms_key). "
-            "Use write_file para salvar o HCL em disco."
+            f"Gere '{TF_FILE}' DO ZERO para bucket S3 seguro 'nexus-apollo-data'. "
+            "NÃO use read_file. Região us-east-1. "
+            "Resources: aws_s3_bucket, versioning, public_access_block, "
+            "server_side_encryption_configuration (aws:kms), aws_kms_key. "
+            "Salve com write_file uma única vez."
             f"{rules}"
         )
     else:
         description = (
-            f"O auditor REPROVOU o '{TF_FILE}'. "
-            "Use read_file para ler o arquivo atual. "
-            "Faça correções MÍNIMAS conforme as RULES: adicione apenas os resources da allowlist "
-            "necessários para os CKV_* falhos — "
-            "NÃO reescreva o arquivo inteiro, NÃO remova o que já passou, "
-            "NÃO adicione VPC/EC2/Lambda/Security Group. "
-            "Salve com write_file.\n\n"
-            f"RELATÓRIO DE AUDITORIA:\n{feedback}"
+            f"Auditoria REPROVOU '{TF_FILE}'. "
+            "Use read_file, corrija só os CKV_* listados (mínimo necessário), "
+            "sem VPC/EC2/Lambda/SG. Salve com write_file uma única vez.\n\n"
+            f"RELATÓRIO:\n{feedback}"
             f"{rules}"
         )
 
     return Task(
         description=description,
-        expected_output=f"Arquivo {TF_FILE} salvo em disco via write_file.",
+        expected_output=f"Arquivo {TF_FILE} salvo via write_file.",
         agent=architect,
     )
 
@@ -78,11 +75,12 @@ def _format_audit_feedback(report: dict) -> str:
     lines = [report["summary"]]
     failures = report.get("failures", [])
     if failures:
-        lines.append("\nCorreções obrigatórias (adicione sem remover o que já passou):")
-        for failure in failures:
-            lines.append(
-                f"- {failure['check_id']}: {failure['remediation']}"
-            )
+        lines.append("\nCorreções obrigatórias:")
+        for failure in failures[:MAX_AUDIT_FEEDBACK_ITEMS]:
+            lines.append(f"- {failure['check_id']}: {failure['remediation']}")
+        remaining = len(failures) - MAX_AUDIT_FEEDBACK_ITEMS
+        if remaining > 0:
+            lines.append(f"- ... e mais {remaining} falha(s) (corrija incrementalmente).")
     return "\n".join(lines)
 
 
@@ -90,11 +88,14 @@ def _run_architect_round(feedback: str | None, round_number: int) -> bool:
     label = "GERAÇÃO" if round_number == 1 else f"CORREÇÃO (rodada {round_number})"
     print(f"\n{'=' * 60}\n🏗️  {label}\n{'=' * 60}\n")
     try:
-        Crew(
-            agents=[architect],
-            tasks=[_generation_task(feedback)],
-            verbose=True,
-        ).kickoff()
+        kickoff_with_retry(
+            Crew(
+                agents=[architect],
+                tasks=[_generation_task(feedback)],
+                **nexus_crew_kwargs(),
+            ),
+            label=label,
+        )
         return True
     except Exception as error:
         print(f"\n⚠️  Erro na fase {label}: {error}\n")
@@ -144,7 +145,10 @@ if __name__ == "__main__":
 
         audit_feedback = _format_audit_feedback(final_report)
         if round_number < MAX_CORRECTION_ROUNDS:
-            print(f"\n⚠️  Rodada {round_number} reprovada — iniciando correção...\n")
+            print(
+                f"\n⚠️  Rodada {round_number} reprovada — "
+                f"aguardando {ROUND_DELAY_SECONDS}s antes da correção...\n"
+            )
             time.sleep(ROUND_DELAY_SECONDS)
         else:
             print(f"\n❌ Limite de {MAX_CORRECTION_ROUNDS} rodadas atingido.\n")
