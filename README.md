@@ -164,7 +164,7 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 
 | Exemplo | Pasta | Principais aprendizados |
 |---------|-------|-------------------------|
-| 1 | [`modulo-6-exemplo-1-aiops-foundation`](./modulo-6-exemplo-1-aiops-foundation/) | **Nexus AI-Ops** — Labs 1–7: Foundation, IaC Copilot, K8s GitOps, ReAct self-healing, AIOps preditivo, ChatOps, **DevSecOps (Trivy + remediação CVE-2024-3094)** ([modulo06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)) |
+| 1 | [`modulo-6-exemplo-1-aiops-foundation`](./modulo-6-exemplo-1-aiops-foundation/) | **Nexus AI-Ops** — Labs 1–8: Foundation, IaC Copilot, K8s GitOps, ReAct self-healing, AIOps preditivo, ChatOps, DevSecOps (Trivy), **CI/CD Copilot (cache npm)** ([modulo06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)) |
 
 **Competências do módulo:** IA consultiva em operações; engenharia agêntica com CrewAI; policy RAG e governança; IaC Copilot; troubleshooting ReAct; AIOps preditivo; ChatOps com human-in-the-loop; orquestração multiagente.
 
@@ -207,8 +207,9 @@ Para o **Módulo 6 (Nexus AI-Ops)**, configure `GROQ_API_KEY` em `nexus/.env` �
 | 1 — Foundation | `python labs/modulo1_foundation.py` |
 | 2 — IaC Copilot | `pip install checkov` + `python labs/modulo2_iac_copilot.py` |
 | 7 — DevSecOps | `python labs/modulo7_devsecops.py` |
+| 8 — CI/CD Copilot | `python labs/modulo8_cicd.py` |
 
-Evidências Lab 2: [`EVIDENCIAS_MODULO2_LOOP.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO2_LOOP.md) · Lab 7: [`EVIDENCIAS_MODULO7.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO7.md)
+Evidências Lab 2: [`EVIDENCIAS_MODULO2_LOOP.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO2_LOOP.md) · Lab 7: [`EVIDENCIAS_MODULO7.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO7.md) · Lab 8: [`EVIDENCIAS_MODULO8.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO8.md)
 
 Para o **Módulo 5 Ex. 6 (BragBot)**, use **Genkit Flows + Zod** (`bragGeneratorFlow` em `app/src/flows.ts`). Configure `OPENROUTER_API_KEY` ou `GEMINI_API_KEY` via `.env.example` — guias em [`modulo-5-exemplo-6-brag-bot/docs/`](./modulo-5-exemplo-6-brag-bot/docs/). Comandos: `npm run serve:ssr:brag-bot` (app + API) e `npm run genkit:ui` (Developer UI).
 

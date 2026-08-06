@@ -216,12 +216,24 @@ ETAPA 2: DevSecOps Remediator → read_file(Dockerfile.vulnerable) + apply_cve_r
 **Arquivos-chave:** `tools/devsecops_tools.py`, `data/Dockerfile.vulnerable`, `data/trivy.json`  
 **Evidências:** `../docs/EVIDENCIAS_MODULO7.md`, `../docs/RELATORIO_DIDATICO_MODULO7.md`
 
-### ⚡ Módulo 8: Otimização Inteligente de CI/CD
-**Cenário**: Ler arquivos de workflows do GitHub Actions lentos e reescrevê-los aplicando otimizações com cache no nível das dependências.
-```bash
-# Lê data/workflow_lento.yaml e sugere a versão acelerada
-python3 labs/modulo8_cicd.py
+### ⚡ Módulo 8: CI/CD Copilot — Otimização de Pipeline
+**Cenário**: Analisar workflow GitHub Actions lento (`npm install` sem cache) e propor YAML otimizado com `actions/cache@v3`.
+
+```powershell
+$env:CREWAI_TRACING_ENABLED = "false"
+python labs/modulo8_cicd.py
 ```
+
+**Fluxo (single-agent):**
+```
+Eng. CI/CD → analyze_workflow_yaml(workflow_lento.yaml)
+    ↓ raciocínio LLM
+YAML otimizado + estimativa de economia (~50–60%)
+```
+
+**Entrada:** `data/workflow_lento.yaml` · **Referência:** `data/workflow_rapido.yaml`  
+**Arquivos-chave:** `labs/modulo8_cicd.py`, `core/agents.py` → `get_cicd_agent()`  
+**Evidências:** `../docs/EVIDENCIAS_MODULO8.md`, `../docs/RELATORIO_DIDATICO_MODULO8.md`
 
 ### 💰 Módulo 9: FinOps & Rightsizing Cloud
 **Cenário**: Auditar inventários de nuvem, identificando recursos "zumbis" (IPs e volumes EBS não associados) e propor cortes com cálculo de ROI.
