@@ -2,7 +2,7 @@
 
 **Módulo 6 — Exemplo 1** (`modulo-6-exemplo-1-aiops-foundation`)
 
-Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **AIOps preditivo** (Labs 1–5).
+Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **ChatOps com governança** (Labs 1–6).
 
 **Referência UNIPDS:** [modulo06-aiops-engenharia-agentica](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)
 
@@ -22,7 +22,8 @@ Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **AI
 4. **Lab 3** — GitOps & Canary (3 etapas isoladas, k3d opcional)
 5. **Lab 4** — Troubleshooting ReAct + self-healing (`checkout-k8s-fix.yaml`)
 6. **Lab 5** — AIOps preditivo (PromQL + alerta ML + dashboard Grafana)
-7. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
+7. **Lab 6** — ChatOps com Human-in-the-loop (`GESTOR-APROVA` para ações destrutivas)
+8. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
 
 ## Estrutura
 
@@ -35,6 +36,7 @@ modulo-6-exemplo-1-aiops-foundation/
 │   ├── RELATORIO_DIDATICO_MODULO3.md
 │   ├── RELATORIO_DIDATICO_MODULO4.md
 │   ├── RELATORIO_DIDATICO_MODULO5.md
+│   ├── RELATORIO_DIDATICO_MODULO6.md
 │   ├── EVIDENCIAS_MODULO5.md
 │   ├── FLUXO_CREWAI.md
 │   └── GROQ_SETUP.md
@@ -47,6 +49,7 @@ modulo-6-exemplo-1-aiops-foundation/
     ├── tools/
     │   ├── file_writer.py          ← HCL (Lab 2) + YAML (Lab 4)
     │   ├── aiops_tools.py          ← Lab 5
+    │   ├── chatops_tools.py        ← Lab 6
     │   ├── k8s_ops.py              ← Lab 3
     │   ├── k8s_diag.py             ← Lab 4
     │   └── obs_tools.py            ← Lab 4
@@ -56,7 +59,7 @@ modulo-6-exemplo-1-aiops-foundation/
     ├── checkout-k8s-fix.yaml
     ├── k8s/k3d-registries.yaml
     ├── scripts/setup-k3d-cluster.ps1
-    └── labs/modulo1_foundation.py … modulo5_aiops.py
+    └── labs/modulo1_foundation.py … modulo6_chatops.py
 ```
 
 ## Pré-requisitos
@@ -139,6 +142,24 @@ python labs/modulo5_aiops.py
 
 **Evidências:** [`docs/EVIDENCIAS_MODULO5.md`](docs/EVIDENCIAS_MODULO5.md) · [`docs/RELATORIO_DIDATICO_MODULO5.md`](docs/RELATORIO_DIDATICO_MODULO5.md)
 
+## Lab 6 — ChatOps Slack Simulator
+
+```powershell
+cd nexus
+.\venv\Scripts\Activate.ps1
+$env:CREWAI_TRACING_ENABLED = "false"
+streamlit run labs/modulo6_chatops.py
+```
+
+| Tipo de mensagem | Roteamento | Resultado |
+|------------------|------------|-----------|
+| Destrutiva (`destrua`, `apague`…) | `execute_terraform` determinístico | Bloqueia sem `GESTOR-APROVA` |
+| Mutação infra (`terraform apply`…) | `execute_terraform` determinístico | Executa com governança |
+| Status (`quantas máquinas…`) | Resposta simulada | Sem LLM/tool call |
+| Conversa geral | LLM sem tools | Evita `tool_use_failed` no Groq |
+
+**Relatório didático:** [`docs/RELATORIO_DIDATICO_MODULO6.md`](docs/RELATORIO_DIDATICO_MODULO6.md)
+
 ### Menu interativo (todos os labs)
 
 ```powershell
@@ -168,6 +189,11 @@ python nexus_iac_copilot.py
 - [x] 3 etapas concluídas (PromQL → alerta ML → dashboard)
 - [x] `incident_dashboard.json` validado + preview HTML
 - [x] Sem rate limit Groq na execução documentada
+
+### Lab 6 ✅
+- [x] Governança determinística para ações destrutivas (`GESTOR-APROVA`)
+- [x] Consultas de status sem tool call do LLM
+- [x] Conversa geral sem `tool_use_failed` no Groq
 
 ## Anterior
 

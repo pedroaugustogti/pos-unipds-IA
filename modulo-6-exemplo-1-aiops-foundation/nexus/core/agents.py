@@ -73,8 +73,11 @@ def get_aiops_agent(tools: Optional[List] = None, max_iter: Optional[int] = None
     )
 
 
-def get_chatops_agent(tools: Optional[List] = None) -> Agent:
+def get_chatops_agent(tools: Optional[List] = None, max_iter: Optional[int] = None) -> Agent:
     """Returns the ChatOps Automation Agent."""
+    agent_defaults = {**_AGENT_DEFAULTS}
+    if max_iter is not None:
+        agent_defaults["max_iter"] = max_iter
     return Agent(
         role='Engenheiro de Automação ChatOps',
         goal='Intermediar ações críticas entre humanos e infraestrutura com total segurança.',
@@ -82,8 +85,8 @@ def get_chatops_agent(tools: Optional[List] = None) -> Agent:
             'Especialista em governança, RBAC e integrações com Slack/Teams. '
             'Você nunca executa uma ação destrutiva sem antes pedir permissão a um humano autorizado.'
         ),
-        tools=tools or [], 
-        **_AGENT_DEFAULTS,
+        tools=tools or [],
+        **agent_defaults,
     )
 
 

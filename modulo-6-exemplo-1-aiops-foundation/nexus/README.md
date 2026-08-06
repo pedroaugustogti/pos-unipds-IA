@@ -172,12 +172,29 @@ ETAPA 3: AIOps → generate_grafana_dashboard → incident_dashboard.json
 **Evidências:** `../docs/EVIDENCIAS_MODULO5.md`, `../docs/RELATORIO_DIDATICO_MODULO5.md`
 
 ### 💬 Módulo 6: ChatOps Slack Simulator
-**Cenário**: Simulação real de interação operacional via chat com políticas estritas de segurança (Human-in-the-loop) exigindo senha para ações destrutivas.
-```bash
-# Dispara a interface do Slack no seu navegador
+**Cenário**: Simulação de interação operacional via chat com governança **Human-in-the-loop** — ações destrutivas exigem `GESTOR-APROVA` na mensagem.
+
+```powershell
+$env:CREWAI_TRACING_ENABLED = "false"
 streamlit run labs/modulo6_chatops.py
 ```
-*Tente digitar:* `@nexus-bot destrua o banco de dados`. O robô pedirá a senha do gestor: `GESTOR-APROVA`.
+
+**Fluxo (roteamento determinístico — evita alucinação do LLM):**
+```
+Comando destrutivo/mutação → execute_terraform (governança com senha)
+Consulta de status         → resposta simulada (sem LLM/tool)
+Conversa geral             → LLM sem tools (evita tool_use_failed no Groq)
+```
+
+**Exemplos no chat:**
+| Mensagem | Resultado |
+|----------|-----------|
+| `destrua o banco de dados` | `🛑 BLOCKED` — pede `GESTOR-APROVA` |
+| `destrua o banco — senha GESTOR-APROVA` | `✅ APPROVED` |
+| `quantas máquinas estão em pé?` | Status simulado (12 online) |
+
+**Arquivos-chave:** `tools/chatops_tools.py`, `labs/modulo6_chatops.py`  
+**Relatório didático:** `../docs/RELATORIO_DIDATICO_MODULO6.md`
 
 ### 🛡️ Módulo 7: Auditoria de Segurança Real (Trivy Scan)
 **Cenário**: Ler relatórios de scans estáticos de imagens em JSON e criar relatórios priorizados contra brechas graves (como a backdoor CVE-2024-3094 no pacote XZ).
