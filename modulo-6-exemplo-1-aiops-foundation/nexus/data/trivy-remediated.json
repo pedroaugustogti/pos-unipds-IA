@@ -1,0 +1,28 @@
+{
+  "ArtifactName": "nexus-api:remediated",
+  "Results": [
+    {
+      "Target": "liblzma5",
+      "Vulnerabilities": [
+        {
+          "VulnerabilityID": "CVE-2023-45853",
+          "PkgName": "zlib1g",
+          "InstalledVersion": "1:1.2.13.dfsg-1",
+          "Severity": "HIGH",
+          "Title": "integer overflow in miniizip",
+          "Description": "Miniizip has a heap-based buffer overflow in zipOpenNewFileInZip4_64.",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/2023/cve-2023-45853"
+        },
+        {
+          "VulnerabilityID": "CVE-2022-123",
+          "PkgName": "nginx",
+          "InstalledVersion": "1.19.0-1~buster",
+          "Severity": "LOW",
+          "Title": "nginx 1.19.0-1~buster has a vulnerability in the ngx_http_v2_module module that allows an attacker to cause a denial of service (DoS) attack by sending specially crafted HTTP/2 requests.",
+          "Description": "nginx 1.19.0-1~buster has a vulnerability in the ngx_http_v2_module module that allows an attacker to cause a denial of service (DoS) attack by sending specially crafted HTTP/2 requests.",
+          "PrimaryURL": "https://avd.aquasecurity.jp/nvd/cve-2022-123"
+        }
+      ]
+    }
+  ]
+}

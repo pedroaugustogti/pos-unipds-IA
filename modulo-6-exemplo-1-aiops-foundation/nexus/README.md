@@ -196,12 +196,25 @@ Conversa geral             → LLM sem tools (evita tool_use_failed no Groq)
 **Arquivos-chave:** `tools/chatops_tools.py`, `labs/modulo6_chatops.py`  
 **Relatório didático:** `../docs/RELATORIO_DIDATICO_MODULO6.md`
 
-### 🛡️ Módulo 7: Auditoria de Segurança Real (Trivy Scan)
-**Cenário**: Ler relatórios de scans estáticos de imagens em JSON e criar relatórios priorizados contra brechas graves (como a backdoor CVE-2024-3094 no pacote XZ).
-```bash
-# Processa o scan real data/trivy.json e gera o parecer do DevSecOps Auditor
-python3 labs/modulo7_devsecops.py
+### 🛡️ Módulo 7: DevSecOps — Diagnóstico + Remediação (Trivy)
+**Cenário**: Triagem de vulnerabilidades em `data/trivy.json` (backdoor **CVE-2024-3094** no `liblzma5`) e aplicação automática do playbook de correção.
+
+```powershell
+$env:CREWAI_TRACING_ENABLED = "false"
+python labs/modulo7_devsecops.py
 ```
+
+**Fluxo (2 etapas isoladas — economia de TPM):**
+```
+ETAPA 1: DevSecOps Auditor → read_trivy_report → CVE-2024-3094 como P0
+    ↓ pausa 25s
+ETAPA 2: DevSecOps Remediator → read_file(Dockerfile.vulnerable) + apply_cve_remediation
+    ↓ validação programática
+```
+
+**Saídas:** `Dockerfile.remediated`, `data/trivy-remediated.json` (P0 removida)  
+**Arquivos-chave:** `tools/devsecops_tools.py`, `data/Dockerfile.vulnerable`, `data/trivy.json`  
+**Evidências:** `../docs/EVIDENCIAS_MODULO7.md`, `../docs/RELATORIO_DIDATICO_MODULO7.md`
 
 ### ⚡ Módulo 8: Otimização Inteligente de CI/CD
 **Cenário**: Ler arquivos de workflows do GitHub Actions lentos e reescrevê-los aplicando otimizações com cache no nível das dependências.

@@ -90,7 +90,10 @@ def get_chatops_agent(tools: Optional[List] = None, max_iter: Optional[int] = No
     )
 
 
-def get_devsecops_agent(tools: Optional[List] = None) -> Agent:
+def get_devsecops_agent(
+    tools: Optional[List] = None,
+    allow_delegation: bool = True,
+) -> Agent:
     """Returns the AI DevSecOps Analyst Agent."""
     return Agent(
         role='Analista de DevSecOps AI',
@@ -100,6 +103,7 @@ def get_devsecops_agent(tools: Optional[List] = None) -> Agent:
             'teórica de uma tentativa de invasão ativa ou backdoor em execução.'
         ),
         tools=tools or [],
+        allow_delegation=allow_delegation,
         **_AGENT_DEFAULTS,
     )
 

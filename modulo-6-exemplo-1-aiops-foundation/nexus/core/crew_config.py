@@ -41,6 +41,7 @@ def _is_rate_limit_error(error: BaseException) -> bool:
         or "tpm" in message
         or "tokens per minute" in message
         or "too many requests" in message
+        or "request too large" in message
     )
 
 
