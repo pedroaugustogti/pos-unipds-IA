@@ -16,6 +16,8 @@
       "instance_type": "m5.4xlarge",
       "avg_cpu_utilization": "2.5%",
       "cost_per_month": 340.00,
+      "recommended_instance_type": "m5.large",
+      "rightsized_cost_per_month": 70.00,
       "note": "Extremely overprovisioned"
     },
     {

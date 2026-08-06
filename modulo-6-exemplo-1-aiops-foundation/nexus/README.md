@@ -235,12 +235,28 @@ YAML otimizado + estimativa de economia (~50–60%)
 **Arquivos-chave:** `labs/modulo8_cicd.py`, `core/agents.py` → `get_cicd_agent()`  
 **Evidências:** `../docs/EVIDENCIAS_MODULO8.md`, `../docs/RELATORIO_DIDATICO_MODULO8.md`
 
-### 💰 Módulo 9: FinOps & Rightsizing Cloud
-**Cenário**: Auditar inventários de nuvem, identificando recursos "zumbis" (IPs e volumes EBS não associados) e propor cortes com cálculo de ROI.
-```bash
-# Analisa data/inventario_cloud.json e calcula a economia de custos em dólares
-python3 labs/modulo9_finops.py
+### 💰 Módulo 9: FinOps — Zumbis & Rightsizing
+**Cenário**: Auditar inventário cloud (`inventario_cloud.json`), identificar zumbis (EBS órfão, EIP solto) e rightsizing EC2 com cálculo determinístico de economia.
+
+```powershell
+$env:CREWAI_TRACING_ENABLED = "false"
+python labs/modulo9_finops.py
 ```
+
+**Fluxo (single-agent + validação programática):**
+```
+Consultor FinOps → analyze_cloud_costs(inventario_cloud.json)
+    ↓ cálculo determinístico (finops_tools.py)
+Zumbis $55/mês + Rightsizing $270/mês = Total $325/mês
+    ↓ validação automática ao final
+```
+
+**Regras de economia:**
+- **Zumbis:** custo integral recuperável (delete/release)
+- **Rightsizing:** `custo atual − custo após downsize` (ex.: m5.4xlarge $340 → m5.large $70)
+
+**Arquivos-chave:** `tools/finops_tools.py`, `data/inventario_cloud.json`  
+**Evidências:** `../docs/EVIDENCIAS_MODULO9.md`, `../docs/RELATORIO_DIDATICO_MODULO9.md`
 
 ### 📚 Módulo 10: RAG & Auto-Remediação com Runbooks
 **Cenário**: Utilizar inteligência baseada em documentos (RAG) para buscar em runbooks corporativos os comandos exatos de resolução de saturação de conexões em BD.
