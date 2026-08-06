@@ -44,14 +44,14 @@ def get_sre_agent(tools: Optional[List] = None) -> Agent:
     )
 
 
-def get_oncall_sre(tools: Optional[List] = None) -> Agent:
+def get_oncall_sre(tools: Optional[List] = None, allow_delegation: bool = True) -> Agent:
     """Returns the On-Call Troubleshooting SRE Agent."""
     return Agent(
         role='SRE On-Call (Troubleshooting Expert)',
         goal='Reduzir o MTTR identificando a causa raiz de falhas no Kubernetes.',
         backstory='Especialista em ReAct. Você pensa antes de agir, observa os logs e correlaciona eventos.',
         tools=tools or [],
-        allow_delegation=True,
+        allow_delegation=allow_delegation,
         **_AGENT_DEFAULTS,
     )
 

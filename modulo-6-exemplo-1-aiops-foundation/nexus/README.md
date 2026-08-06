@@ -98,21 +98,56 @@ GERAÇÃO → AUDITORIA → (se FAILED) CORREÇÃO → reauditoria → … até 
 **Evidências:** `../docs/EVIDENCIAS_MODULO2.md`, `../docs/EVIDENCIAS_MODULO2_LOOP.md`
 
 ### 🟡 Módulo 3: Kubernetes GitOps & Canary
-**Cenário**: Gerar manifestos Kubernetes V1 blindados, simular a reconciliação declarativa (Sync) e analisar métricas de deploy Canary.
-```bash
-# Gera o arquivo YAML e define a decisão de Rollout baseado em baseline de tráfego
-python3 labs/modulo3_k8s_ops.py
+**Cenário**: Gerar manifestos Kubernetes V1, reconciliar no cluster (ou simular GitOps) e decidir rollout canary com base em métricas.
+
+```powershell
+$env:CREWAI_TRACING_ENABLED = "false"
+python labs/modulo3_k8s_ops.py
 ```
+
+**Fluxo (3 etapas isoladas — economia de TPM):**
+```
+ETAPA 1: Architect → generate_k8s_manifest
+    ↓ pausa 25s
+ETAPA 2: SRE → apply_k8s_manifest (1×)
+    ↓ pausa 25s
+ETAPA 3: SRE → analyze_canary_metrics → ROLLBACK ou PROCEED
+```
+
+**Arquivos-chave:** `tools/k8s_ops.py`, `core/crew_config.py`  
+**Cluster opcional (k3d):** `scripts/setup-k3d-cluster.ps1`, `k8s/k3d-registries.yaml`  
+**Evidências:** `../docs/EVIDENCIAS_MODULO3.md`, `../docs/RELATORIO_DIDATICO_MODULO3.md`
 
 ### 🔴 Módulo 4: Troubleshooting & Self-Healing
-**Cenário**: Investigação ReAct de incidentes (CrashLoop/OOMKilled) consumindo Prometheus e Jaeger, seguida de autocorreção gerada pela IA.
-```bash
-# 1. Simule a quebra aplicando um Pod com imagem errada
-kubectl apply -f k8s/deploy.yml
+**Cenário**: SRE on-call investiga incidente no checkout (ReAct: Prometheus + Jaeger + diagnóstico de pod) e o Architect gera hotfix `checkout-k8s-fix.yaml`.
 
-# 2. Rode o SRE de plantão para diagnosticar a causa raiz e salvar o hotfix
-python3 labs/modulo4_troubleshooting.py
+```powershell
+$env:CREWAI_TRACING_ENABLED = "false"
+
+# 1. (Opcional) Provocar o incidente no cluster
+kubectl apply -f checkout-broken.yaml
+
+# 2. Pipeline agêntico — diagnóstico + self-healing
+python labs/modulo4_troubleshooting.py
+
+# 3. (Opcional) Aplicar o hotfix gerado
+kubectl apply -f checkout-k8s-fix.yaml
+kubectl get pods -l app=checkout-api
 ```
+
+**Fluxo (2 etapas isoladas — economia de TPM):**
+```
+ETAPA 1: SRE On-Call → métricas, traces, inspect_pod_failure, suggest_fix
+    ↓ pausa 25s
+ETAPA 2: Architect → write_file → checkout-k8s-fix.yaml
+    ↓ validação programática do hotfix
+```
+
+**Cenário de quebra:** `checkout-broken.yaml` (imagem `nginx:versao-que-nao-existe-999` → ImagePullBackOff)  
+**Hotfix esperado:** `nginx:latest`, probes HTTP em `/` porta 80, `initialDelaySeconds`
+
+**Arquivos-chave:** `tools/obs_tools.py`, `tools/k8s_diag.py`, `tools/file_writer.py` (HCL + YAML)  
+**Relatório didático:** `../docs/RELATORIO_DIDATICO_MODULO4.md`
 
 ### 🟣 Módulo 5: AIOps Preditivo
 **Cenário**: Tradução de linguagem natural para PromQL, seguida de análise de regressão linear para prever saturação de disco 4 horas antes do incidente ocorrer.
@@ -174,6 +209,23 @@ python3 labs/modulo12_projeto_final.py
 ---
 
 ## 🛠️ Solução de Problemas Comuns
+
+### Rate limit Groq (TPM 6000)
+Os labs 2–4 fazem várias chamadas ao LLM. Use:
+
+```powershell
+$env:CREWAI_TRACING_ENABLED = "false"
+```
+
+Variáveis opcionais em `.env` (ver `.env.example`):
+
+| Variável | Default | Função |
+|----------|---------|--------|
+| `NEXUS_ROUND_DELAY_SECONDS` | 25 | Pausa entre etapas/rodadas |
+| `NEXUS_AGENT_MAX_ITER` | 3 | Limite de loops do agente |
+| `NEXUS_GROQ_RETRY_ATTEMPTS` | 3 | Retentativas com backoff |
+
+Centralizado em `core/crew_config.py`.
 
 ### `ModuleNotFoundError: crewai`
 Certifique-se de que ativou o ambiente virtual (`source venv/bin/activate`) antes de executar os comandos.

@@ -2,7 +2,7 @@
 
 **Módulo 6 — Exemplo 1** (`modulo-6-exemplo-1-aiops-foundation`)
 
-Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **IaC Copilot com loop de correção** (Lab 2).
+Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **troubleshooting ReAct e self-healing** (Labs 1–4).
 
 **Referência UNIPDS:** [modulo06-aiops-engenharia-agentica](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)
 
@@ -10,17 +10,18 @@ Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **Ia
 
 | Anterior | Esta pasta | Próxima |
 |----------|------------|---------|
-| Módulo 5 — BragBot + Genkit ✅ | **Ex. 1 — Nexus** (Labs 1–2) | Labs 3–12 no monorepo |
+| Módulo 5 — BragBot + Genkit ✅ | **Ex. 1 — Nexus** (Labs 1–12) | Labs 5–12 no monorepo |
 
-**Ponte com o Módulo 5:** no Ex. 6 a IA estava **no produto** (Genkit + Angular). Aqui a IA opera **infraestrutura e plataforma** — agentes que consultam políticas, geram IaC, auditam com Checkov/OPA e iteram correções.
+**Ponte com o Módulo 5:** no Ex. 6 a IA estava **no produto** (Genkit + Angular). Aqui a IA opera **infraestrutura e plataforma** — agentes que consultam políticas, geram IaC, operam Kubernetes, diagnosticam incidentes e aplicam hotfixes.
 
 ## Objetivos
 
 1. Configurar o monorepo **Nexus AI-Ops** (CrewAI + Groq)
-2. **Lab 1** — agente `get_architect` + `check_compliance_rules` (IA consultiva)
-3. **Lab 2** — pipeline IaC: geração → auditoria Checkov/OPA → **loop de correção** (até 3 rodadas)
-4. Aplicar **rules de escopo** para o architect não alucinar recursos fora do S3
-5. Mapear a trilha de 12 labs (Foundation → Orquestração hierárquica)
+2. **Lab 1** — IA consultiva (`check_compliance_rules`)
+3. **Lab 2** — IaC Copilot com loop Checkov/OPA (até 3 rodadas)
+4. **Lab 3** — GitOps & Canary (3 etapas isoladas, k3d opcional)
+5. **Lab 4** — Troubleshooting ReAct + self-healing (`checkout-k8s-fix.yaml`)
+6. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
 
 ## Estrutura
 
@@ -28,25 +29,28 @@ Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **Ia
 modulo-6-exemplo-1-aiops-foundation/
 ├── README.md
 ├── docs/
-│   ├── ROTEIRO_AULA.md
-│   ├── EVIDENCIAS_ACEITE.md          ← Lab 1
-│   ├── EVIDENCIAS_MODULO2.md         ← Lab 2 (pipeline linear)
-│   ├── EVIDENCIAS_MODULO2_LOOP.md    ← Lab 2 (loop de correção)
-│   ├── PROXIMA_AULA.md
+│   ├── EVIDENCIAS_MODULO2*.md
+│   ├── EVIDENCIAS_MODULO3.md
+│   ├── RELATORIO_DIDATICO_MODULO3.md
+│   ├── RELATORIO_DIDATICO_MODULO4.md
 │   ├── FLUXO_CREWAI.md
 │   └── GROQ_SETUP.md
-├── prompts/
-│   └── s3-compliance-design.md
 └── nexus/
-    ├── core/agents.py
-    ├── core/architect_rules.py       ← loader das rules IaC
-    ├── rules/architect-iac-correction.md  ← allowlist/blocklist S3
-    ├── tools/policy_rag.py
-    ├── tools/security_scan.py        ← Checkov JSON + OPA
-    ├── tools/file_writer.py          ← read/write + validação HCL
-    ├── labs/modulo1_foundation.py
-    ├── labs/modulo2_iac_copilot.py   ← Lab 2 com loop
-    └── nexus_iac_copilot.py
+    ├── core/
+    │   ├── agents.py
+    │   ├── architect_rules.py
+    │   ├── crew_config.py          ← limites TPM / retry
+    │   └── llm_config.py
+    ├── tools/
+    │   ├── file_writer.py          ← HCL (Lab 2) + YAML (Lab 4)
+    │   ├── k8s_ops.py              ← Lab 3
+    │   ├── k8s_diag.py             ← Lab 4
+    │   └── obs_tools.py            ← Lab 4
+    ├── checkout-broken.yaml        ← cenário ImagePullBackOff
+    ├── checkout-k8s-fix.yaml       ← hotfix golden / gerado pela IA
+    ├── k8s/k3d-registries.yaml
+    ├── scripts/setup-k3d-cluster.ps1
+    └── labs/modulo1_foundation.py … modulo4_troubleshooting.py
 ```
 
 ## Pré-requisitos
@@ -55,8 +59,8 @@ modulo-6-exemplo-1-aiops-foundation/
 |---------|-----|
 | **Python 3.10–3.13** | CrewAI + Pydantic |
 | **GROQ_API_KEY** | `groq/llama-3.1-8b-instant` — [`docs/GROQ_SETUP.md`](docs/GROQ_SETUP.md) |
-| **Checkov** | Lab 2 — `pip install checkov` no venv |
-| Docker + kubectl | Labs posteriores (K8s) |
+| **Checkov** | Lab 2 — `pip install checkov` |
+| Docker + kubectl | Labs 3–4 (cluster opcional; k3d recomendado no Windows) |
 
 ## Configuração
 
@@ -64,54 +68,53 @@ modulo-6-exemplo-1-aiops-foundation/
 cd nexus
 py -3.11 -m venv venv
 .\venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
 pip install -r requirements.txt
 pip install checkov
 
 copy .env.example .env
 # GROQ_API_KEY=gsk_...
+$env:CREWAI_TRACING_ENABLED = "false"
 ```
 
-## Lab 1 — Foundation (IA consultiva)
+## Labs 1–2
+
+Ver seções anteriores em [`nexus/README.md`](nexus/README.md).
+
+**Evidências Lab 2:** [`docs/EVIDENCIAS_MODULO2.md`](docs/EVIDENCIAS_MODULO2.md), [`docs/EVIDENCIAS_MODULO2_LOOP.md`](docs/EVIDENCIAS_MODULO2_LOOP.md)
+
+## Lab 3 — Kubernetes GitOps & Canary
 
 ```powershell
 cd nexus
 .\venv\Scripts\Activate.ps1
-python labs/modulo1_foundation.py
+$env:CREWAI_TRACING_ENABLED = "false"
+python labs/modulo3_k8s_ops.py
 ```
 
-**Cenário:** Cloud Architect desenha bucket S3 para logs consultando `check_compliance_rules`.
+- 3 crews separados com pausa de 25s (economia TPM)
+- Saída: `nexus-api-error-k8s.yaml`, decisão canary (ROLLBACK esperado com métricas default)
+- E2E com k3d: [`docs/EVIDENCIAS_MODULO3.md`](docs/EVIDENCIAS_MODULO3.md)
 
-**Saída esperada:** bucket `nexus-*`, região `us-east-1`, privado.
-
-Evidências: [`docs/EVIDENCIAS_ACEITE.md`](docs/EVIDENCIAS_ACEITE.md)
-
-## Lab 2 — IaC Copilot (loop de correção)
+## Lab 4 — Troubleshooting ReAct & Self-Healing
 
 ```powershell
 cd nexus
 .\venv\Scripts\Activate.ps1
-$env:PYTHONIOENCODING = "utf-8"
-python labs/modulo2_iac_copilot.py
+$env:CREWAI_TRACING_ENABLED = "false"
+
+kubectl apply -f checkout-broken.yaml          # opcional
+python labs/modulo4_troubleshooting.py
+kubectl apply -f checkout-k8s-fix.yaml         # opcional
 ```
 
-**Cenário:** Architect gera `main.tf` (bucket `nexus-apollo-data`) → auditoria programática (Checkov + OPA) → se reprovado, feedback `CKV_*` volta ao architect (até 3 rodadas).
+| Etapa | Agente | Saída |
+|-------|--------|-------|
+| 1 | SRE On-Call | Relatório (métricas + traces + pod) |
+| 2 | Architect | `checkout-k8s-fix.yaml` via `write_file` |
 
-**Componentes:**
+**Relatório didático:** [`docs/RELATORIO_DIDATICO_MODULO4.md`](docs/RELATORIO_DIDATICO_MODULO4.md)
 
-| Peça | Função |
-|------|--------|
-| `audit_infrastructure_file()` | Audita o arquivo em disco (não o texto da task) |
-| `rules/architect-iac-correction.md` | Escopo fechado S3 — proíbe VPC/EC2/Lambda/SG/`0.0.0.0/0` |
-| `write_file` | Valida sintaxe HCL + governança antes de gravar |
-
-**Evidências:**
-
-- [`docs/EVIDENCIAS_MODULO2.md`](docs/EVIDENCIAS_MODULO2.md) — pipeline linear (v1)
-- [`docs/EVIDENCIAS_MODULO2_LOOP.md`](docs/EVIDENCIAS_MODULO2_LOOP.md) — loop de correção (v2)
-- [`docs/execucao-modulo2-rules-2026-08-05.log`](docs/execucao-modulo2-rules-2026-08-05.log) — execução com rules
-
-> **Nota:** convergência 100% Checkov depende do modelo Groq e do rate limit (TPM 6000). As rules evitam alucinação de escopo; em aula, discuta trade-off entre autonomia do agente e guardrails.
+> `write_file` valida `.tf` (HCL + governança S3) e `.yaml`/`.yml` (manifestos K8s).
 
 ### Menu interativo (todos os labs)
 
@@ -122,19 +125,21 @@ python nexus_iac_copilot.py
 ## Critérios de sucesso
 
 ### Lab 1 ✅
-
 - [x] `modulo1_foundation.py` executa sem erro
-- [x] Agente consulta `check_compliance_rules` e propõe bucket compliant
 - [x] Evidências em [`docs/EVIDENCIAS_ACEITE.md`](docs/EVIDENCIAS_ACEITE.md)
 
 ### Lab 2
+- [x] Loop de correção + rules de escopo
+- [ ] Conformidade Checkov 100% (limitado por modelo/TPM Groq)
 
-- [x] Checkov instalado e integrado (Windows via `python venv/Scripts/checkov`)
-- [x] Loop de correção implementado (geração → auditoria → feedback → correção)
-- [x] Rules de escopo em `nexus/rules/architect-iac-correction.md`
-- [x] `write_file` rejeita HCL fora do escopo e sintaxe inválida
-- [x] Evidências documentadas (linear + loop)
-- [ ] Conformidade Checkov 100% em 3 rodadas (limitado por modelo/rate limit Groq)
+### Lab 3 ✅
+- [x] 3 etapas concluídas sem rate limit (com `crew_config`)
+- [x] Evidências E2E com k3d documentadas
+
+### Lab 4 ✅
+- [x] Diagnóstico ReAct (5 tools) + hotfix YAML gerado
+- [x] Validação programática do `checkout-k8s-fix.yaml`
+- [x] Pipeline em 2 etapas com pausa TPM
 
 ## Anterior
 

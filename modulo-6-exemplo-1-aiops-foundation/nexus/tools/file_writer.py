@@ -9,6 +9,19 @@ def _sanitize_hcl(content: str) -> str:
     return content.replace("```hcl", "").replace("```terraform", "").replace("```", "").strip()
 
 
+def _sanitize_yaml(content: str) -> str:
+    cleaned = content.replace("```yaml", "").replace("```yml", "").replace("```", "").strip()
+    return cleaned
+
+
+def _validate_k8s_yaml(content: str) -> tuple[bool, str]:
+    if not content:
+        return False, "conteúdo vazio"
+    if "apiVersion:" not in content or "kind:" not in content:
+        return False, "manifesto Kubernetes inválido (apiVersion/kind ausentes)"
+    return True, ""
+
+
 def _validate_hcl(content: str) -> tuple[bool, str]:
     if not content:
         return False, "conteúdo vazio"
@@ -40,6 +53,15 @@ def read_file(filename: str = "main.tf") -> str:
 @tool("write_file")
 def write_file(content: str, filename: str = "main.tf") -> str:
     """Saves the generated code to a physical file on disk."""
+    if filename.endswith((".yaml", ".yml")):
+        cleaned = _sanitize_yaml(content)
+        valid, reason = _validate_k8s_yaml(cleaned)
+        if not valid:
+            return f"❌ YAML rejeitado: {reason}. Corrija o manifesto Kubernetes e tente novamente."
+        with open(filename, "w", encoding="utf-8") as file:
+            file.write(cleaned)
+        return f"✅ File '{filename}' saved successfully."
+
     cleaned = _sanitize_hcl(content)
     valid, reason = _validate_hcl(cleaned)
     if not valid:
