@@ -2,7 +2,7 @@
 
 **Módulo 6 — Exemplo 1** (`modulo-6-exemplo-1-aiops-foundation`)
 
-Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **troubleshooting ReAct e self-healing** (Labs 1–4).
+Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **AIOps preditivo** (Labs 1–5).
 
 **Referência UNIPDS:** [modulo06-aiops-engenharia-agentica](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)
 
@@ -21,7 +21,8 @@ Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **tr
 3. **Lab 2** — IaC Copilot com loop Checkov/OPA (até 3 rodadas)
 4. **Lab 3** — GitOps & Canary (3 etapas isoladas, k3d opcional)
 5. **Lab 4** — Troubleshooting ReAct + self-healing (`checkout-k8s-fix.yaml`)
-6. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
+6. **Lab 5** — AIOps preditivo (PromQL + alerta ML + dashboard Grafana)
+7. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
 
 ## Estrutura
 
@@ -33,6 +34,8 @@ modulo-6-exemplo-1-aiops-foundation/
 │   ├── EVIDENCIAS_MODULO3.md
 │   ├── RELATORIO_DIDATICO_MODULO3.md
 │   ├── RELATORIO_DIDATICO_MODULO4.md
+│   ├── RELATORIO_DIDATICO_MODULO5.md
+│   ├── EVIDENCIAS_MODULO5.md
 │   ├── FLUXO_CREWAI.md
 │   └── GROQ_SETUP.md
 └── nexus/
@@ -43,14 +46,17 @@ modulo-6-exemplo-1-aiops-foundation/
     │   └── llm_config.py
     ├── tools/
     │   ├── file_writer.py          ← HCL (Lab 2) + YAML (Lab 4)
+    │   ├── aiops_tools.py          ← Lab 5
     │   ├── k8s_ops.py              ← Lab 3
     │   ├── k8s_diag.py             ← Lab 4
     │   └── obs_tools.py            ← Lab 4
-    ├── checkout-broken.yaml        ← cenário ImagePullBackOff
-    ├── checkout-k8s-fix.yaml       ← hotfix golden / gerado pela IA
+    ├── incident_dashboard.json     ← gerado pelo Lab 5
+    ├── incident_dashboard.html     ← preview local do dashboard
+    ├── checkout-broken.yaml
+    ├── checkout-k8s-fix.yaml
     ├── k8s/k3d-registries.yaml
     ├── scripts/setup-k3d-cluster.ps1
-    └── labs/modulo1_foundation.py … modulo4_troubleshooting.py
+    └── labs/modulo1_foundation.py … modulo5_aiops.py
 ```
 
 ## Pré-requisitos
@@ -116,6 +122,23 @@ kubectl apply -f checkout-k8s-fix.yaml         # opcional
 
 > `write_file` valida `.tf` (HCL + governança S3) e `.yaml`/`.yml` (manifestos K8s).
 
+## Lab 5 — AIOps Preditivo
+
+```powershell
+cd nexus
+.\venv\Scripts\Activate.ps1
+$env:CREWAI_TRACING_ENABLED = "false"
+python labs/modulo5_aiops.py
+```
+
+| Etapa | Tool | Saída |
+|-------|------|-------|
+| 1 | `nl_to_promql` | Query PromQL de disco livre |
+| 2 | `predictive_disk_alert` | Alerta — saturação em 4h |
+| 3 | `generate_grafana_dashboard` | `incident_dashboard.json` + preview HTML |
+
+**Evidências:** [`docs/EVIDENCIAS_MODULO5.md`](docs/EVIDENCIAS_MODULO5.md) · [`docs/RELATORIO_DIDATICO_MODULO5.md`](docs/RELATORIO_DIDATICO_MODULO5.md)
+
 ### Menu interativo (todos os labs)
 
 ```powershell
@@ -140,6 +163,11 @@ python nexus_iac_copilot.py
 - [x] Diagnóstico ReAct (5 tools) + hotfix YAML gerado
 - [x] Validação programática do `checkout-k8s-fix.yaml`
 - [x] Pipeline em 2 etapas com pausa TPM
+
+### Lab 5 ✅
+- [x] 3 etapas concluídas (PromQL → alerta ML → dashboard)
+- [x] `incident_dashboard.json` validado + preview HTML
+- [x] Sem rate limit Groq na execução documentada
 
 ## Anterior
 

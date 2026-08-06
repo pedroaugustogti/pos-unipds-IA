@@ -56,8 +56,11 @@ def get_oncall_sre(tools: Optional[List] = None, allow_delegation: bool = True) 
     )
 
 
-def get_aiops_agent(tools: Optional[List] = None) -> Agent:
+def get_aiops_agent(tools: Optional[List] = None, max_iter: Optional[int] = None) -> Agent:
     """Returns the Predictive Observability AIOps Agent."""
+    agent_defaults = {**_AGENT_DEFAULTS}
+    if max_iter is not None:
+        agent_defaults["max_iter"] = max_iter
     return Agent(
         role='Engenheiro de AIOps e Dados (Observabilidade Preditiva)',
         goal='Transformar dados brutos em insights preditivos e painéis dinâmicos.',
@@ -66,7 +69,7 @@ def get_aiops_agent(tools: Optional[List] = None) -> Agent:
             'como Prophet e Isolation Forest. Você não espera o alerta tocar, você prevê o alerta.'
         ),
         tools=tools or [], 
-        **_AGENT_DEFAULTS,
+        **agent_defaults,
     )
 
 

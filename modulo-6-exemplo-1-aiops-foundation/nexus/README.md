@@ -150,11 +150,26 @@ ETAPA 2: Architect → write_file → checkout-k8s-fix.yaml
 **Relatório didático:** `../docs/RELATORIO_DIDATICO_MODULO4.md`
 
 ### 🟣 Módulo 5: AIOps Preditivo
-**Cenário**: Tradução de linguagem natural para PromQL, seguida de análise de regressão linear para prever saturação de disco 4 horas antes do incidente ocorrer.
-```bash
-# Gera o alerta preditivo e o JSON estruturado de um Dashboard do Grafana
-python3 labs/modulo5_aiops.py
+**Cenário**: NL → PromQL, alerta preditivo de saturação de disco (ML simulado) e dashboard Grafana dinâmico.
+
+```powershell
+$env:CREWAI_TRACING_ENABLED = "false"
+python labs/modulo5_aiops.py
 ```
+
+**Fluxo (3 etapas isoladas — economia de TPM):**
+```
+ETAPA 1: AIOps → nl_to_promql
+    ↓ pausa 25s
+ETAPA 2: AIOps → predictive_disk_alert (saturação em 4h)
+    ↓ pausa 25s
+ETAPA 3: AIOps → generate_grafana_dashboard → incident_dashboard.json
+    ↓ validação + preview HTML (incident_dashboard.html)
+```
+
+**Saídas:** `incident_dashboard.json` (import Grafana), `incident_dashboard.html` (preview local)  
+**Arquivos-chave:** `tools/aiops_tools.py`, `core/crew_config.py`  
+**Evidências:** `../docs/EVIDENCIAS_MODULO5.md`, `../docs/RELATORIO_DIDATICO_MODULO5.md`
 
 ### 💬 Módulo 6: ChatOps Slack Simulator
 **Cenário**: Simulação real de interação operacional via chat com políticas estritas de segurança (Human-in-the-loop) exigindo senha para ações destrutivas.

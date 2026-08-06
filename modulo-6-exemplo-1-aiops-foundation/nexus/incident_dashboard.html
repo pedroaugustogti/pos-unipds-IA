@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Dynamic Incident Dashboard: Disk Saturation</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #0a0e14; color: #e6edf3; margin: 2rem; }
+    h1 { color: #58a6ff; }
+    section { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 1rem; margin: 1rem 0; }
+    pre { background: #0d1117; padding: 1rem; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>Dynamic Incident Dashboard: Disk Saturation</h1>
+  <p>Preview gerado pelo Lab 5 — importe <code>incident_dashboard.json</code> no Grafana para versão completa.</p>
+  <section><h2>Disk Usage Prediction</h2><p><strong>Tipo:</strong> timeseries</p><pre>[
+  {
+    "expr": "node_filesystem_avail_bytes"
+  }
+]</pre></section><section><h2>Error Rate Spike</h2><p><strong>Tipo:</strong> stat</p><pre>[
+  {
+    "expr": "rate(http_requests_total{status='500'}[5m])"
+  }
+]</pre></section>
+</body>
+</html>

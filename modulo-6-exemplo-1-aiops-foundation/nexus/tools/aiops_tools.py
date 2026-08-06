@@ -62,7 +62,7 @@ def generate_grafana_dashboard(incident_context: str):
     filename = "incident_dashboard.json"
     
     # 3. Salva o arquivo fisicamente na mesma pasta onde o script está rodando
-    with open(filename, "w") as f:
+    with open(filename, "w", encoding="utf-8") as f:
         f.write(json_formatted)
         
     return f"✅ Dashboard gerado com sucesso! O arquivo '{filename}' foi salvo no disco pronto para importação no Grafana."
