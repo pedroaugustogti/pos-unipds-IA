@@ -2,7 +2,7 @@
 
 **Módulo 6 — Exemplo 1** (`modulo-6-exemplo-1-aiops-foundation`)
 
-Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **FinOps com cálculo determinístico** (Labs 1–9).
+Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **RAG de runbooks** (Labs 1–10).
 
 **Referência UNIPDS:** [modulo06-aiops-engenharia-agentica](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)
 
@@ -26,7 +26,8 @@ Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **Fi
 8. **Lab 7** — DevSecOps: triagem Trivy + remediação CVE-2024-3094
 9. **Lab 8** — CI/CD Copilot: otimização de workflow com cache npm
 10. **Lab 9** — FinOps: zumbis ($55) + rightsizing EC2 ($270) = **$325/mês**
-11. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
+11. **Lab 10** — RAG Runbooks: saturação PostgreSQL + SQL `pg_terminate_backend`
+12. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
 
 ## Estrutura
 
@@ -39,9 +40,11 @@ modulo-6-exemplo-1-aiops-foundation/
 │   ├── EVIDENCIAS_MODULO7.md
 │   ├── EVIDENCIAS_MODULO8.md
 │   ├── EVIDENCIAS_MODULO9.md
+│   ├── EVIDENCIAS_MODULO10.md
 │   ├── RELATORIO_DIDATICO_MODULO7.md
 │   ├── RELATORIO_DIDATICO_MODULO8.md
 │   ├── RELATORIO_DIDATICO_MODULO9.md
+│   ├── RELATORIO_DIDATICO_MODULO10.md
 │   ├── RELATORIO_DIDATICO_MODULO3.md
 │   ├── RELATORIO_DIDATICO_MODULO4.md
 │   ├── RELATORIO_DIDATICO_MODULO5.md
@@ -61,6 +64,7 @@ modulo-6-exemplo-1-aiops-foundation/
     │   ├── chatops_tools.py        ← Lab 6
     │   ├── devsecops_tools.py    ← Lab 7
     │   ├── finops_tools.py         ← Lab 9
+    │   ├── runbook_tools.py        ← Lab 10
     │   ├── k8s_ops.py              ← Lab 3
     │   ├── k8s_diag.py             ← Lab 4
     │   └── obs_tools.py            ← Lab 4
@@ -70,7 +74,8 @@ modulo-6-exemplo-1-aiops-foundation/
     ├── checkout-k8s-fix.yaml
     ├── k8s/k3d-registries.yaml
     ├── scripts/setup-k3d-cluster.ps1
-    └── labs/modulo1_foundation.py … modulo9_finops.py
+    ├── data/runbook_db.md          ← Lab 10
+    └── labs/modulo1_foundation.py … modulo10_remediation.py
 ```
 
 ## Pré-requisitos
@@ -208,6 +213,21 @@ python labs/modulo9_finops.py
 
 **Evidências:** [`docs/EVIDENCIAS_MODULO9.md`](docs/EVIDENCIAS_MODULO9.md) · [`docs/RELATORIO_DIDATICO_MODULO9.md`](docs/RELATORIO_DIDATICO_MODULO9.md)
 
+## Lab 10 — RAG & Auto-Remediação (Runbooks)
+
+```powershell
+python labs/modulo10_remediation.py
+```
+
+| Etapa | Tool | Saída |
+|-------|------|-------|
+| 1 | `consult_runbook("db")` | Plano compacto: SQL diagnóstico + remediação + post-mortem |
+| 2 | Validação programática | Runbook completo + plano RAG auditável |
+
+**Incidente simulado:** `PostgresqlTooManyConnections` — limpeza de conexões idle via `pg_terminate_backend`.
+
+**Evidências:** [`docs/EVIDENCIAS_MODULO10.md`](docs/EVIDENCIAS_MODULO10.md) · [`docs/RELATORIO_DIDATICO_MODULO10.md`](docs/RELATORIO_DIDATICO_MODULO10.md)
+
 ### Menu interativo (todos os labs)
 
 ```powershell
@@ -254,6 +274,11 @@ python nexus_iac_copilot.py
 ### Lab 9 ✅
 - [x] Zumbis $55 + rightsizing $270 = total $325 (cálculo determinístico)
 - [x] Validação programática em `finops_tools.py`
+
+### Lab 10 ✅
+- [x] Runbook `runbook_db.md` completo (diagnóstico + remediação + post-mortem)
+- [x] RAG via `consult_runbook` com plano compacto e validação determinística
+- [x] SQL `pg_terminate_backend` para conexões idle > 5 min
 
 ## Anterior
 

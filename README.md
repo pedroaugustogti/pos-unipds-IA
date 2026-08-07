@@ -164,7 +164,7 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 
 | Exemplo | Pasta | Principais aprendizados |
 |---------|-------|-------------------------|
-| 1 | [`modulo-6-exemplo-1-aiops-foundation`](./modulo-6-exemplo-1-aiops-foundation/) | **Nexus AI-Ops** — Labs 1–9: Foundation, IaC Copilot, K8s GitOps, ReAct self-healing, AIOps preditivo, ChatOps, DevSecOps (Trivy), CI/CD Copilot, **FinOps (zumbis + rightsizing $325/mês)** ([modulo06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)) |
+| 1 | [`modulo-6-exemplo-1-aiops-foundation`](./modulo-6-exemplo-1-aiops-foundation/) | **Nexus AI-Ops** — Labs 1–10: Foundation, IaC Copilot, K8s GitOps, ReAct self-healing, AIOps preditivo, ChatOps, DevSecOps (Trivy), CI/CD Copilot, FinOps ($325/mês), **RAG Runbooks (PostgreSQL)** ([modulo06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)) |
 
 **Competências do módulo:** IA consultiva em operações; engenharia agêntica com CrewAI; policy RAG e governança; IaC Copilot; troubleshooting ReAct; AIOps preditivo; ChatOps com human-in-the-loop; orquestração multiagente.
 
@@ -213,6 +213,7 @@ Para o **Módulo 6 (Nexus AI-Ops)**, configure `GROQ_API_KEY` em `nexus/.env` �
 | 7 — DevSecOps | `python labs/modulo7_devsecops.py` | [`EVIDENCIAS_MODULO7.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO7.md) |
 | 8 — CI/CD Copilot | `python labs/modulo8_cicd.py` | [`EVIDENCIAS_MODULO8.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO8.md) |
 | 9 — FinOps | `python labs/modulo9_finops.py` | [`EVIDENCIAS_MODULO9.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO9.md) |
+| 10 — RAG Runbooks | `python labs/modulo10_remediation.py` | [`EVIDENCIAS_MODULO10.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO10.md) |
 
 Guia completo: [`modulo-6-exemplo-1-aiops-foundation/README.md`](./modulo-6-exemplo-1-aiops-foundation/README.md) · Setup Groq: [`GROQ_SETUP.md`](./modulo-6-exemplo-1-aiops-foundation/docs/GROQ_SETUP.md)
 

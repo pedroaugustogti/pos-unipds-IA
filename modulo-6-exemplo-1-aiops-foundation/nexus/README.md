@@ -259,11 +259,23 @@ Zumbis $55/mês + Rightsizing $270/mês = Total $325/mês
 **Evidências:** `../docs/EVIDENCIAS_MODULO9.md`, `../docs/RELATORIO_DIDATICO_MODULO9.md`
 
 ### 📚 Módulo 10: RAG & Auto-Remediação com Runbooks
-**Cenário**: Utilizar inteligência baseada em documentos (RAG) para buscar em runbooks corporativos os comandos exatos de resolução de saturação de conexões em BD.
-```bash
-# Consulta data/runbook_db.md e monta o plano de ação
-python3 labs/modulo10_remediation.py
+**Cenário**: Alerta `PostgresqlTooManyConnections` — o agente consulta `data/runbook_db.md` via RAG e monta plano de remediação com SQL de diagnóstico, limpeza de conexões idle e rascunho de post-mortem.
+
+```powershell
+$env:CREWAI_TRACING_ENABLED = "false"
+python labs/modulo10_remediation.py
 ```
+
+**Fluxo (single-agent + validação programática):**
+```
+SRE Knowledge → consult_runbook("db")
+    ↓ extração determinística (runbook_tools.py)
+Plano: pg_stat_activity (diagnóstico) + pg_terminate_backend (remediação) + post-mortem
+    ↓ validação automática ao final
+```
+
+**Arquivos-chave:** `tools/runbook_tools.py`, `data/runbook_db.md`  
+**Evidências:** `../docs/EVIDENCIAS_MODULO10.md`, `../docs/RELATORIO_DIDATICO_MODULO10.md`
 
 ### 🚦 Módulo 11: Guardrails & Human-in-the-Loop
 **Cenário**: Simular um pipeline autônomo de Kubernetes que detecta erros, sugere o comando de correção usando dry-run e solicita aprovação em linha.
