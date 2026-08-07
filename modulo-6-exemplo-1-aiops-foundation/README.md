@@ -2,7 +2,7 @@
 
 **Módulo 6 — Exemplo 1** (`modulo-6-exemplo-1-aiops-foundation`)
 
-Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **RAG de runbooks** (Labs 1–10).
+Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) aos **guardrails K8s** (Labs 1–11).
 
 **Referência UNIPDS:** [modulo06-aiops-engenharia-agentica](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)
 
@@ -27,7 +27,8 @@ Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **RA
 9. **Lab 8** — CI/CD Copilot: otimização de workflow com cache npm
 10. **Lab 9** — FinOps: zumbis ($55) + rightsizing EC2 ($270) = **$325/mês**
 11. **Lab 10** — RAG Runbooks: saturação PostgreSQL + SQL `pg_terminate_backend`
-12. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
+12. **Lab 11** — Guardrails: `kubectl set image` + `--dry-run=client` + aprovação humana
+13. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
 
 ## Estrutura
 
@@ -41,10 +42,12 @@ modulo-6-exemplo-1-aiops-foundation/
 │   ├── EVIDENCIAS_MODULO8.md
 │   ├── EVIDENCIAS_MODULO9.md
 │   ├── EVIDENCIAS_MODULO10.md
+│   ├── EVIDENCIAS_MODULO11.md
 │   ├── RELATORIO_DIDATICO_MODULO7.md
 │   ├── RELATORIO_DIDATICO_MODULO8.md
 │   ├── RELATORIO_DIDATICO_MODULO9.md
 │   ├── RELATORIO_DIDATICO_MODULO10.md
+│   ├── RELATORIO_DIDATICO_MODULO11.md
 │   ├── RELATORIO_DIDATICO_MODULO3.md
 │   ├── RELATORIO_DIDATICO_MODULO4.md
 │   ├── RELATORIO_DIDATICO_MODULO5.md
@@ -70,12 +73,12 @@ modulo-6-exemplo-1-aiops-foundation/
     │   └── obs_tools.py            ← Lab 4
     ├── incident_dashboard.json     ← gerado pelo Lab 5
     ├── incident_dashboard.html     ← preview local do dashboard
-    ├── checkout-broken.yaml
+    ├── checkout-broken.yaml        ← Lab 4 / Lab 11
     ├── checkout-k8s-fix.yaml
     ├── k8s/k3d-registries.yaml
     ├── scripts/setup-k3d-cluster.ps1
     ├── data/runbook_db.md          ← Lab 10
-    └── labs/modulo1_foundation.py … modulo10_remediation.py
+    └── labs/modulo1_foundation.py … modulo11_guardrails.py
 ```
 
 ## Pré-requisitos
@@ -228,6 +231,22 @@ python labs/modulo10_remediation.py
 
 **Evidências:** [`docs/EVIDENCIAS_MODULO10.md`](docs/EVIDENCIAS_MODULO10.md) · [`docs/RELATORIO_DIDATICO_MODULO10.md`](docs/RELATORIO_DIDATICO_MODULO10.md)
 
+## Lab 11 — Guardrails & Human-in-the-Loop (Kubernetes)
+
+```powershell
+python labs/modulo11_guardrails.py
+```
+
+| Etapa | Comportamento | Saída |
+|-------|---------------|-------|
+| 1 | `Safety_SRE` propõe `kubectl set image` | Comando para `checkout-api` → `v2.0` |
+| 2 | Dry-run | `--dry-run=client -o yaml` |
+| 3 | Gate humano | `input("sim/não")` — execução simulada se aprovado |
+
+**Incidente simulado:** `checkout-api` com erro de imagem (`ImagePullBackOff` — ver `checkout-broken.yaml`).
+
+**Evidências:** [`docs/EVIDENCIAS_MODULO11.md`](docs/EVIDENCIAS_MODULO11.md) · [`docs/RELATORIO_DIDATICO_MODULO11.md`](docs/RELATORIO_DIDATICO_MODULO11.md)
+
 ### Menu interativo (todos os labs)
 
 ```powershell
@@ -279,6 +298,11 @@ python nexus_iac_copilot.py
 - [x] Runbook `runbook_db.md` completo (diagnóstico + remediação + post-mortem)
 - [x] RAG via `consult_runbook` com plano compacto e validação determinística
 - [x] SQL `pg_terminate_backend` para conexões idle > 5 min
+
+### Lab 11 ✅
+- [x] Agente propõe `kubectl set image` para `checkout-api` com `v2.0`
+- [x] Comando inclui `--dry-run=client`
+- [x] Gate HITL (`sim`/`não`) antes da execução simulada
 
 ## Anterior
 

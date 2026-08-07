@@ -278,11 +278,22 @@ Plano: pg_stat_activity (diagnóstico) + pg_terminate_backend (remediação) + p
 **Evidências:** `../docs/EVIDENCIAS_MODULO10.md`, `../docs/RELATORIO_DIDATICO_MODULO10.md`
 
 ### 🚦 Módulo 11: Guardrails & Human-in-the-Loop
-**Cenário**: Simular um pipeline autônomo de Kubernetes que detecta erros, sugere o comando de correção usando dry-run e solicita aprovação em linha.
-```bash
-# Executa a tomada de decisão assistida no terminal
-python3 labs/modulo11_guardrails.py
+**Cenário**: Pod `checkout-api` com erro de imagem (`ImagePullBackOff`). O agente `Safety_SRE` propõe `kubectl set image` com `--dry-run=client`; o engenheiro aprova ou aborta no terminal.
+
+```powershell
+$env:CREWAI_TRACING_ENABLED = "false"
+python labs/modulo11_guardrails.py
 ```
+
+**Fluxo (single-agent + HITL no terminal):**
+```
+Safety_SRE → kubectl set image checkout-api=v2.0 + --dry-run=client
+    ↓ proposta exibida
+input("aprova? sim/não") → execução simulada ou aborto
+```
+
+**Arquivos-chave:** `labs/modulo11_guardrails.py`, `checkout-broken.yaml` (cenário M4)  
+**Evidências:** `../docs/EVIDENCIAS_MODULO11.md`, `../docs/RELATORIO_DIDATICO_MODULO11.md`
 
 ### 🧠 Módulo 12: Projeto Final (Orquestração Hierárquica)
 **Cenário**: Um incidente multidomínio crítico ocorre em produção (checkout com erro 500, pico de custo de 40% e backdoor detectada). O **Nexus Manager** assume como cérebro da operação e coordena em formato hierárquico os agentes SRE, Segurança e FinOps.
