@@ -2,7 +2,7 @@
 
 **Módulo 6 — Exemplo 1** (`modulo-6-exemplo-1-aiops-foundation`)
 
-Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **ChatOps com governança** (Labs 1–6).
+Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **FinOps com cálculo determinístico** (Labs 1–9).
 
 **Referência UNIPDS:** [modulo06-aiops-engenharia-agentica](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)
 
@@ -23,7 +23,10 @@ Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **Ch
 5. **Lab 4** — Troubleshooting ReAct + self-healing (`checkout-k8s-fix.yaml`)
 6. **Lab 5** — AIOps preditivo (PromQL + alerta ML + dashboard Grafana)
 7. **Lab 6** — ChatOps com Human-in-the-loop (`GESTOR-APROVA` para ações destrutivas)
-8. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
+8. **Lab 7** — DevSecOps: triagem Trivy + remediação CVE-2024-3094
+9. **Lab 8** — CI/CD Copilot: otimização de workflow com cache npm
+10. **Lab 9** — FinOps: zumbis ($55) + rightsizing EC2 ($270) = **$325/mês**
+11. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
 
 ## Estrutura
 
@@ -33,6 +36,12 @@ modulo-6-exemplo-1-aiops-foundation/
 ├── docs/
 │   ├── EVIDENCIAS_MODULO2*.md
 │   ├── EVIDENCIAS_MODULO3.md
+│   ├── EVIDENCIAS_MODULO7.md
+│   ├── EVIDENCIAS_MODULO8.md
+│   ├── EVIDENCIAS_MODULO9.md
+│   ├── RELATORIO_DIDATICO_MODULO7.md
+│   ├── RELATORIO_DIDATICO_MODULO8.md
+│   ├── RELATORIO_DIDATICO_MODULO9.md
 │   ├── RELATORIO_DIDATICO_MODULO3.md
 │   ├── RELATORIO_DIDATICO_MODULO4.md
 │   ├── RELATORIO_DIDATICO_MODULO5.md
@@ -50,6 +59,8 @@ modulo-6-exemplo-1-aiops-foundation/
     │   ├── file_writer.py          ← HCL (Lab 2) + YAML (Lab 4)
     │   ├── aiops_tools.py          ← Lab 5
     │   ├── chatops_tools.py        ← Lab 6
+    │   ├── devsecops_tools.py    ← Lab 7
+    │   ├── finops_tools.py         ← Lab 9
     │   ├── k8s_ops.py              ← Lab 3
     │   ├── k8s_diag.py             ← Lab 4
     │   └── obs_tools.py            ← Lab 4
@@ -59,7 +70,7 @@ modulo-6-exemplo-1-aiops-foundation/
     ├── checkout-k8s-fix.yaml
     ├── k8s/k3d-registries.yaml
     ├── scripts/setup-k3d-cluster.ps1
-    └── labs/modulo1_foundation.py … modulo6_chatops.py
+    └── labs/modulo1_foundation.py … modulo9_finops.py
 ```
 
 ## Pré-requisitos
@@ -160,6 +171,43 @@ streamlit run labs/modulo6_chatops.py
 
 **Relatório didático:** [`docs/RELATORIO_DIDATICO_MODULO6.md`](docs/RELATORIO_DIDATICO_MODULO6.md)
 
+## Lab 7 — DevSecOps (Trivy + Remediação)
+
+```powershell
+python labs/modulo7_devsecops.py
+```
+
+| Etapa | Agente | Saída |
+|-------|--------|-------|
+| 1 | DevSecOps Auditor | CVE-2024-3094 como P0 |
+| 2 | DevSecOps Remediator | `Dockerfile.remediated`, `trivy-remediated.json` |
+
+**Evidências:** [`docs/EVIDENCIAS_MODULO7.md`](docs/EVIDENCIAS_MODULO7.md) · [`docs/RELATORIO_DIDATICO_MODULO7.md`](docs/RELATORIO_DIDATICO_MODULO7.md)
+
+## Lab 8 — CI/CD Copilot
+
+```powershell
+python labs/modulo8_cicd.py
+```
+
+- Analisa `data/workflow_lento.yaml` e propõe `actions/cache@v3` (~50% economia de build)
+
+**Evidências:** [`docs/EVIDENCIAS_MODULO8.md`](docs/EVIDENCIAS_MODULO8.md) · [`docs/RELATORIO_DIDATICO_MODULO8.md`](docs/RELATORIO_DIDATICO_MODULO8.md)
+
+## Lab 9 — FinOps (Zumbis & Rightsizing)
+
+```powershell
+python labs/modulo9_finops.py
+```
+
+| Categoria | Regra | Valor (fixture) |
+|-----------|-------|-----------------|
+| Zumbis | custo integral recuperável | **$55/mês** |
+| Rightsizing | custo atual − pós-downsize | **$270/mês** |
+| **Total** | validação programática | **$325/mês** |
+
+**Evidências:** [`docs/EVIDENCIAS_MODULO9.md`](docs/EVIDENCIAS_MODULO9.md) · [`docs/RELATORIO_DIDATICO_MODULO9.md`](docs/RELATORIO_DIDATICO_MODULO9.md)
+
 ### Menu interativo (todos os labs)
 
 ```powershell
@@ -194,6 +242,18 @@ python nexus_iac_copilot.py
 - [x] Governança determinística para ações destrutivas (`GESTOR-APROVA`)
 - [x] Consultas de status sem tool call do LLM
 - [x] Conversa geral sem `tool_use_failed` no Groq
+
+### Lab 7 ✅
+- [x] Diagnóstico CVE-2024-3094 + remediação em 2 etapas
+- [x] `Dockerfile.remediated` e `trivy-remediated.json` validados
+
+### Lab 8 ✅
+- [x] Identificação de falta de cache npm
+- [x] Sugestão de `actions/cache@v3` com economia estimada
+
+### Lab 9 ✅
+- [x] Zumbis $55 + rightsizing $270 = total $325 (cálculo determinístico)
+- [x] Validação programática em `finops_tools.py`
 
 ## Anterior
 

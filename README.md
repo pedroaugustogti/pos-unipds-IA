@@ -202,15 +202,19 @@ Para o **Módulo 5 Ex. 5**, o servidor `playwright-test-cfp` exige Chromium inst
 
 Para o **Módulo 6 (Nexus AI-Ops)**, configure `GROQ_API_KEY` em `nexus/.env` — guia em [`modulo-6-exemplo-1-aiops-foundation/docs/GROQ_SETUP.md`](./modulo-6-exemplo-1-aiops-foundation/docs/GROQ_SETUP.md).
 
-| Lab | Comando |
-|-----|---------|
-| 1 — Foundation | `python labs/modulo1_foundation.py` |
-| 2 — IaC Copilot | `pip install checkov` + `python labs/modulo2_iac_copilot.py` |
-| 7 — DevSecOps | `python labs/modulo7_devsecops.py` |
-| 8 — CI/CD Copilot | `python labs/modulo8_cicd.py` |
-| 9 — FinOps | `python labs/modulo9_finops.py` |
+| Lab | Comando | Documentação |
+|-----|---------|--------------|
+| 1 — Foundation | `python labs/modulo1_foundation.py` | [`nexus/README.md`](./modulo-6-exemplo-1-aiops-foundation/nexus/README.md) |
+| 2 — IaC Copilot | `pip install checkov` + `python labs/modulo2_iac_copilot.py` | [`EVIDENCIAS_MODULO2_LOOP.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO2_LOOP.md) |
+| 3 — K8s GitOps | `python labs/modulo3_k8s_ops.py` | [`EVIDENCIAS_MODULO3.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO3.md) |
+| 4 — ReAct / Self-healing | `python labs/modulo4_troubleshooting.py` | [`RELATORIO_DIDATICO_MODULO4.md`](./modulo-6-exemplo-1-aiops-foundation/docs/RELATORIO_DIDATICO_MODULO4.md) |
+| 5 — AIOps preditivo | `python labs/modulo5_aiops.py` | [`EVIDENCIAS_MODULO5.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO5.md) |
+| 6 — ChatOps | `streamlit run labs/modulo6_chatops.py` | [`RELATORIO_DIDATICO_MODULO6.md`](./modulo-6-exemplo-1-aiops-foundation/docs/RELATORIO_DIDATICO_MODULO6.md) |
+| 7 — DevSecOps | `python labs/modulo7_devsecops.py` | [`EVIDENCIAS_MODULO7.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO7.md) |
+| 8 — CI/CD Copilot | `python labs/modulo8_cicd.py` | [`EVIDENCIAS_MODULO8.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO8.md) |
+| 9 — FinOps | `python labs/modulo9_finops.py` | [`EVIDENCIAS_MODULO9.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO9.md) |
 
-Evidências Lab 2: [`EVIDENCIAS_MODULO2_LOOP.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO2_LOOP.md) · Lab 7: [`EVIDENCIAS_MODULO7.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO7.md) · Lab 8: [`EVIDENCIAS_MODULO8.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO8.md) · Lab 9: [`EVIDENCIAS_MODULO9.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO9.md)
+Guia completo: [`modulo-6-exemplo-1-aiops-foundation/README.md`](./modulo-6-exemplo-1-aiops-foundation/README.md) · Setup Groq: [`GROQ_SETUP.md`](./modulo-6-exemplo-1-aiops-foundation/docs/GROQ_SETUP.md)
 
 Para o **Módulo 5 Ex. 6 (BragBot)**, use **Genkit Flows + Zod** (`bragGeneratorFlow` em `app/src/flows.ts`). Configure `OPENROUTER_API_KEY` ou `GEMINI_API_KEY` via `.env.example` — guias em [`modulo-5-exemplo-6-brag-bot/docs/`](./modulo-5-exemplo-6-brag-bot/docs/). Comandos: `npm run serve:ssr:brag-bot` (app + API) e `npm run genkit:ui` (Developer UI).
 
