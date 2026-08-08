@@ -1,6 +1,19 @@
+# Módulo 13.1 — não copiar segredos nem ambiente local para a imagem
 venv/
+.venv/
 .env
+.env.*
+!.env.example
 __pycache__/
 *.pyc
 .git/
-data/*.json
+.pytest_cache/
+.mypy_cache/
+*.log
+
+# Artefatos gerados em runtime (labs locais)
+incident_dashboard.json
+incident_dashboard.html
+
+# Build pesado desnecessário na imagem
+Dockerfile.remediated

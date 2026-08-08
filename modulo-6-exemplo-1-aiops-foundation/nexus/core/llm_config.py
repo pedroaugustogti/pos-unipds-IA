@@ -1,11 +1,26 @@
 import os
+import ssl
+import sys
 
-try:
-    import truststore
+# Windows host: certificados do sistema (corp proxy). Docker: certifi ou modo lab.
+if os.getenv("NEXUS_IN_DOCKER") == "1":
+    if os.getenv("NEXUS_SSL_INSECURE") == "1":
+        ssl._create_default_https_context = ssl._create_unverified_context
+    else:
+        try:
+            import certifi
 
-    truststore.inject_into_ssl()
-except ImportError:
-    pass
+            os.environ.setdefault("SSL_CERT_FILE", certifi.where())
+            os.environ.setdefault("REQUESTS_CA_BUNDLE", certifi.where())
+        except ImportError:
+            pass
+elif sys.platform == "win32":
+    try:
+        import truststore
+
+        truststore.inject_into_ssl()
+    except ImportError:
+        pass
 
 from dotenv import load_dotenv
 from crewai import LLM
@@ -18,6 +33,8 @@ try:
 
     litellm.drop_params = True
     litellm.num_retries = int(os.getenv("NEXUS_LITELLM_NUM_RETRIES", "2"))
+    if os.getenv("NEXUS_SSL_INSECURE") == "1":
+        litellm.ssl_verify = False
     _litellm_completion = litellm.completion
 
     def _completion_without_cache_breakpoint(*args, **kwargs):

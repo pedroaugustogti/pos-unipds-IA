@@ -164,7 +164,7 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 
 | Exemplo | Pasta | Principais aprendizados |
 |---------|-------|-------------------------|
-| 1 | [`modulo-6-exemplo-1-aiops-foundation`](./modulo-6-exemplo-1-aiops-foundation/) | **Nexus AI-Ops** — Labs 1–11: Foundation, IaC Copilot, K8s GitOps, ReAct self-healing, AIOps preditivo, ChatOps, DevSecOps (Trivy), CI/CD Copilot, FinOps ($325/mês), RAG Runbooks, **Guardrails K8s (dry-run + HITL)** ([modulo06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)) |
+| 1 | [`modulo-6-exemplo-1-aiops-foundation`](./modulo-6-exemplo-1-aiops-foundation/) | **Nexus AI-Ops** — Labs 1–12 + **M13 stack local** (Docker, Minikube, LocalStack, Streamlit UI): Foundation, IaC Copilot, K8s GitOps, ReAct self-healing, AIOps preditivo, ChatOps, DevSecOps (Trivy), CI/CD Copilot, FinOps ($325/mês), RAG Runbooks, Guardrails K8s, **Projeto Final hierárquico** ([modulo06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)) |
 
 **Competências do módulo:** IA consultiva em operações; engenharia agêntica com CrewAI; policy RAG e governança; IaC Copilot; troubleshooting ReAct; AIOps preditivo; ChatOps com human-in-the-loop; orquestração multiagente.
 
@@ -177,7 +177,7 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 | **Node.js 22+** (24+ no Módulo 3 MCP) | Maioria dos exemplos TS/JS |
 | **Python 3.10–3.13** | Módulo 4 Ex. 1; **Módulo 6** (CrewAI Nexus) |
 | **GROQ_API_KEY** | **Módulo 6** — Groq Llama 3.1 nos labs Nexus |
-| **Docker** | Neo4j (M1 ex. 6–7), Postgres (M2 ex. 2), APIs legadas (M3 ex. 6–7) |
+| **Docker + Minikube** | **Módulo 6 M13** — stack local Nexus (imagem, K8s, LocalStack, UI) |
 | **`.env`** | Chaves OpenRouter, Neo4j, etc. (copiar de `.env.example` quando existir) |
 | **LangGraph Studio** | `npm run langgraph:serve` nos projetos do Módulo 2 e no **Módulo 3 Exemplo 9** |
 | **Cursor / VS Code** | Módulo 3 (MCP e Skills); Módulo 5 Ex. 5 (Playwright MCP); Ex. 6 (BragBot + Genkit UI) |
@@ -215,6 +215,11 @@ Para o **Módulo 6 (Nexus AI-Ops)**, configure `GROQ_API_KEY` em `nexus/.env` �
 | 9 — FinOps | `python labs/modulo9_finops.py` | [`EVIDENCIAS_MODULO9.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO9.md) |
 | 10 — RAG Runbooks | `python labs/modulo10_remediation.py` | [`EVIDENCIAS_MODULO10.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO10.md) |
 | 11 — Guardrails | `python labs/modulo11_guardrails.py` | [`EVIDENCIAS_MODULO11.md`](./modulo-6-exemplo-1-aiops-foundation/docs/EVIDENCIAS_MODULO11.md) |
+| 12 — Projeto Final | `python labs/modulo12_projeto_final.py` | [`RELATORIO_DIDATICO_MODULO12.md`](./modulo-6-exemplo-1-aiops-foundation/docs/RELATORIO_DIDATICO_MODULO12.md) |
+| 13.1 — Docker | `.\scripts\docker-build.ps1` | [`DOCKER_MODULO131.md`](./modulo-6-exemplo-1-aiops-foundation/docs/DOCKER_MODULO131.md) |
+| 13.2 — Minikube | `.\scripts\setup-minikube.ps1` | [`MINIKUBE_MODULO132.md`](./modulo-6-exemplo-1-aiops-foundation/docs/MINIKUBE_MODULO132.md) |
+| 13.3 — LocalStack | `.\scripts\setup-localstack.ps1` | [`LOCALSTACK_MODULO133.md`](./modulo-6-exemplo-1-aiops-foundation/docs/LOCALSTACK_MODULO133.md) |
+| 13.4 — Streamlit UI | `.\scripts\setup-nexus-ui.ps1` | [`STREAMLIT_MODULO134.md`](./modulo-6-exemplo-1-aiops-foundation/docs/STREAMLIT_MODULO134.md) |
 
 Guia completo: [`modulo-6-exemplo-1-aiops-foundation/README.md`](./modulo-6-exemplo-1-aiops-foundation/README.md) · Setup Groq: [`GROQ_SETUP.md`](./modulo-6-exemplo-1-aiops-foundation/docs/GROQ_SETUP.md)
 

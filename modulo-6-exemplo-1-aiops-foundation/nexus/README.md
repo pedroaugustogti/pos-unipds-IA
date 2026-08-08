@@ -298,9 +298,32 @@ input("aprova? sim/não") → execução simulada ou aborto
 ### 🧠 Módulo 12: Projeto Final (Orquestração Hierárquica)
 **Cenário**: Um incidente multidomínio crítico ocorre em produção (checkout com erro 500, pico de custo de 40% e backdoor detectada). O **Nexus Manager** assume como cérebro da operação e coordena em formato hierárquico os agentes SRE, Segurança e FinOps.
 ```bash
-# Executa a orquestração multiagente hierárquica e consolida o relatório
 python3 labs/modulo12_projeto_final.py
 ```
+
+**Evidências:** `../docs/EVIDENCIAS_MODULO12.md`, `../docs/RELATORIO_DIDATICO_MODULO12.md`
+
+---
+
+## ☸️ Módulo 13: Stack Local (Docker → Minikube → LocalStack → UI)
+
+Trilha de deploy local documentada nos slides `slides131.md`–`slides134.md`.
+
+| Etapa | Comando | Documentação |
+|-------|---------|--------------|
+| 13.1 Docker | `.\scripts\docker-build.ps1` | `../docs/DOCKER_MODULO131.md` |
+| 13.2 Minikube | `.\scripts\setup-minikube.ps1` | `../docs/MINIKUBE_MODULO132.md` |
+| 13.3 LocalStack | `.\scripts\setup-localstack.ps1` | `../docs/LOCALSTACK_MODULO133.md` |
+| 13.4 Streamlit UI | `.\scripts\setup-nexus-ui.ps1` | `../docs/STREAMLIT_MODULO134.md` |
+
+**Abrir dashboard no browser (Windows):**
+
+```powershell
+.\scripts\open-nexus-ui.ps1
+# http://localhost:8501
+```
+
+**LocalStack no host:** `.\scripts\open-localstack.ps1` (port-forward → `localhost:4566`). Dentro do cluster use `http://localstack:4566`.
 
 ---
 

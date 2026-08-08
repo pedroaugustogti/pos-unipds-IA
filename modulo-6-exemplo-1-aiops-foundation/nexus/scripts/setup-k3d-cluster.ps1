@@ -32,8 +32,6 @@ else {
 
 k3d kubeconfig merge $ClusterName --kubeconfig-switch-context | Out-Null
 
-# kubectl no Windows: API k3d via host.docker.internal pode falhar verificação x509
-# Use apenas na sessão atual (lab local):
-$env:KUBE_INSECURE_SKIP_TLS_VERIFY = "true"
+. (Join-Path $PSScriptRoot "Configure-K8sTls.ps1")
 Write-Host ""
 kubectl get nodes

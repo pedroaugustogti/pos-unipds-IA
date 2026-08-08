@@ -2,7 +2,7 @@
 
 **Módulo 6 — Exemplo 1** (`modulo-6-exemplo-1-aiops-foundation`)
 
-Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) aos **guardrails K8s** (Labs 1–11).
+Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **stack local em K8s** (Labs 1–12 + Módulo 13).
 
 **Referência UNIPDS:** [modulo06-aiops-engenharia-agentica](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)
 
@@ -10,7 +10,7 @@ Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) aos **g
 
 | Anterior | Esta pasta | Próxima |
 |----------|------------|---------|
-| Módulo 5 — BragBot + Genkit ✅ | **Ex. 1 — Nexus** (Labs 1–12) | Labs 5–12 no monorepo |
+| Módulo 5 — BragBot + Genkit ✅ | **Ex. 1 — Nexus** (Labs 1–12 + M13) | Stack cloud real (opcional) |
 
 **Ponte com o Módulo 5:** no Ex. 6 a IA estava **no produto** (Genkit + Angular). Aqui a IA opera **infraestrutura e plataforma** — agentes que consultam políticas, geram IaC, operam Kubernetes, diagnosticam incidentes e aplicam hotfixes.
 
@@ -28,7 +28,9 @@ Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) aos **g
 10. **Lab 9** — FinOps: zumbis ($55) + rightsizing EC2 ($270) = **$325/mês**
 11. **Lab 10** — RAG Runbooks: saturação PostgreSQL + SQL `pg_terminate_backend`
 12. **Lab 11** — Guardrails: `kubectl set image` + `--dry-run=client` + aprovação humana
-13. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
+13. **Lab 12** — Projeto Final: orquestração hierárquica Game Day
+14. **M13** — Stack local: Docker, Minikube, LocalStack, Streamlit UI
+15. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
 
 ## Estrutura
 
@@ -43,7 +45,12 @@ modulo-6-exemplo-1-aiops-foundation/
 │   ├── EVIDENCIAS_MODULO9.md
 │   ├── EVIDENCIAS_MODULO10.md
 │   ├── EVIDENCIAS_MODULO11.md
-│   ├── RELATORIO_DIDATICO_MODULO7.md
+│   ├── EVIDENCIAS_MODULO12.md
+│   ├── DOCKER_MODULO131.md
+│   ├── MINIKUBE_MODULO132.md
+│   ├── LOCALSTACK_MODULO133.md
+│   ├── STREAMLIT_MODULO134.md
+│   ├── RELATORIO_DIDATICO_MODULO12.md
 │   ├── RELATORIO_DIDATICO_MODULO8.md
 │   ├── RELATORIO_DIDATICO_MODULO9.md
 │   ├── RELATORIO_DIDATICO_MODULO10.md
@@ -75,10 +82,18 @@ modulo-6-exemplo-1-aiops-foundation/
     ├── incident_dashboard.html     ← preview local do dashboard
     ├── checkout-broken.yaml        ← Lab 4 / Lab 11
     ├── checkout-k8s-fix.yaml
-    ├── k8s/k3d-registries.yaml
-    ├── scripts/setup-k3d-cluster.ps1
-    ├── data/runbook_db.md          ← Lab 10
-    └── labs/modulo1_foundation.py … modulo11_guardrails.py
+    ├── Dockerfile
+    ├── scripts/
+    │   ├── docker-build.ps1 / docker-run.ps1      ← M13.1
+    │   ├── setup-minikube.ps1                     ← M13.2
+    │   ├── setup-localstack.ps1 / open-localstack.ps1  ← M13.3
+    │   ├── setup-nexus-ui.ps1 / open-nexus-ui.ps1       ← M13.4
+    │   └── Configure-K8sTls.ps1
+    ├── k8s/
+    │   ├── job.yaml, job-smoke.yaml, deploy.yml
+    │   ├── localstack.yaml, streamlit.yaml
+    │   └── secrets.yaml.example
+    └── labs/modulo1_foundation.py … modulo12_projeto_final.py
 ```
 
 ## Pré-requisitos
@@ -88,7 +103,7 @@ modulo-6-exemplo-1-aiops-foundation/
 | **Python 3.10–3.13** | CrewAI + Pydantic |
 | **GROQ_API_KEY** | `groq/llama-3.1-8b-instant` — [`docs/GROQ_SETUP.md`](docs/GROQ_SETUP.md) |
 | **Checkov** | Lab 2 — `pip install checkov` |
-| Docker + kubectl | Labs 3–4 (cluster opcional; k3d recomendado no Windows) |
+| Docker + Minikube | M13 — imagem, cluster local, LocalStack, UI |
 
 ## Configuração
 
@@ -247,6 +262,35 @@ python labs/modulo11_guardrails.py
 
 **Evidências:** [`docs/EVIDENCIAS_MODULO11.md`](docs/EVIDENCIAS_MODULO11.md) · [`docs/RELATORIO_DIDATICO_MODULO11.md`](docs/RELATORIO_DIDATICO_MODULO11.md)
 
+## Lab 12 — Projeto Final (Orquestração Hierárquica)
+
+```powershell
+python labs/modulo12_projeto_final.py
+```
+
+Game Day multidomínio — Nexus Manager coordena SRE, Segurança e FinOps.
+
+**Relatório:** [`docs/RELATORIO_DIDATICO_MODULO12.md`](docs/RELATORIO_DIDATICO_MODULO12.md) · **Evidências:** [`docs/EVIDENCIAS_MODULO12.md`](docs/EVIDENCIAS_MODULO12.md)
+
+## Módulo 13 — Stack local (Docker → K8s → Cloud simulada → UI)
+
+| Etapa | Script | Documentação |
+|-------|--------|--------------|
+| 13.1 Docker | `.\scripts\docker-build.ps1` | [`docs/DOCKER_MODULO131.md`](docs/DOCKER_MODULO131.md) |
+| 13.2 Minikube | `.\scripts\setup-minikube.ps1` | [`docs/MINIKUBE_MODULO132.md`](docs/MINIKUBE_MODULO132.md) |
+| 13.3 LocalStack | `.\scripts\setup-localstack.ps1` | [`docs/LOCALSTACK_MODULO133.md`](docs/LOCALSTACK_MODULO133.md) |
+| 13.4 Streamlit UI | `.\scripts\setup-nexus-ui.ps1` | [`docs/STREAMLIT_MODULO134.md`](docs/STREAMLIT_MODULO134.md) |
+
+**Abrir UI no browser (Windows):**
+
+```powershell
+cd nexus
+.\scripts\open-nexus-ui.ps1
+# http://localhost:8501
+```
+
+> `http://localstack:4566` só funciona **dentro do cluster**. No host use `.\scripts\open-localstack.ps1` ou port-forward.
+
 ### Menu interativo (todos os labs)
 
 ```powershell
@@ -303,6 +347,16 @@ python nexus_iac_copilot.py
 - [x] Agente propõe `kubectl set image` para `checkout-api` com `v2.0`
 - [x] Comando inclui `--dry-run=client`
 - [x] Gate HITL (`sim`/`não`) antes da execução simulada
+
+### Lab 12 ✅
+- [x] Orquestração hierárquica Game Day (Nexus Manager)
+- [x] Evidências em [`docs/EVIDENCIAS_MODULO12.md`](docs/EVIDENCIAS_MODULO12.md)
+
+### Módulo 13 ✅
+- [x] Imagem Docker `nexus-bot:v1` (M13.1)
+- [x] Minikube + Job Lab 12 no cluster (M13.2)
+- [x] LocalStack S3/SQS no K8s (M13.3)
+- [x] Streamlit UI `nexus-ui` com explorador S3 (M13.4)
 
 ## Anterior
 

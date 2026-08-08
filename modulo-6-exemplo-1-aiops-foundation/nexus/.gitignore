@@ -12,6 +12,8 @@ __pycache__/
 # Variáveis de ambiente e segredos locais
 .env
 *.local
+k8s/secrets.yaml
+certs/*.pem
 
 # Sistema operacional / editores
 .DS_Store
