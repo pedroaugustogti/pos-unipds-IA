@@ -164,7 +164,7 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 
 | Exemplo | Pasta | Principais aprendizados |
 |---------|-------|-------------------------|
-| 1 | [`modulo-6-exemplo-1-aiops-foundation`](./modulo-6-exemplo-1-aiops-foundation/) | **Nexus AI-Ops** — Labs 1–12 + **M13 stack local** (Docker, Minikube, LocalStack, Streamlit UI): Foundation, IaC Copilot, K8s GitOps, ReAct self-healing, AIOps preditivo, ChatOps, DevSecOps (Trivy), CI/CD Copilot, FinOps ($325/mês), RAG Runbooks, Guardrails K8s, **Projeto Final hierárquico** ([modulo06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)) |
+| 1 | [`modulo-6-exemplo-1-aiops-foundation`](./modulo-6-exemplo-1-aiops-foundation/) | **Nexus AI-Ops** — Labs 1–12 + **M13 stack local** (Docker, Minikube, LocalStack, Streamlit, **Ollama GPU offline**): Foundation, IaC Copilot, K8s GitOps, ReAct self-healing, AIOps preditivo, ChatOps, DevSecOps (Trivy), CI/CD Copilot, FinOps ($325/mês), RAG Runbooks, Guardrails K8s, Projeto Final hierárquico ([modulo06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)) |
 
 **Competências do módulo:** IA consultiva em operações; engenharia agêntica com CrewAI; policy RAG e governança; IaC Copilot; troubleshooting ReAct; AIOps preditivo; ChatOps com human-in-the-loop; orquestração multiagente.
 
@@ -220,6 +220,7 @@ Para o **Módulo 6 (Nexus AI-Ops)**, configure `GROQ_API_KEY` em `nexus/.env` �
 | 13.2 — Minikube | `.\scripts\setup-minikube.ps1` | [`MINIKUBE_MODULO132.md`](./modulo-6-exemplo-1-aiops-foundation/docs/MINIKUBE_MODULO132.md) |
 | 13.3 — LocalStack | `.\scripts\setup-localstack.ps1` | [`LOCALSTACK_MODULO133.md`](./modulo-6-exemplo-1-aiops-foundation/docs/LOCALSTACK_MODULO133.md) |
 | 13.4 — Streamlit UI | `.\scripts\setup-nexus-ui.ps1` | [`STREAMLIT_MODULO134.md`](./modulo-6-exemplo-1-aiops-foundation/docs/STREAMLIT_MODULO134.md) |
+| 13.5 — Ollama GPU | `.\scripts\setup-ollama-gpu.ps1` | [`OLLAMA_MODULO135.md`](./modulo-6-exemplo-1-aiops-foundation/docs/OLLAMA_MODULO135.md) |
 
 Guia completo: [`modulo-6-exemplo-1-aiops-foundation/README.md`](./modulo-6-exemplo-1-aiops-foundation/README.md) · Setup Groq: [`GROQ_SETUP.md`](./modulo-6-exemplo-1-aiops-foundation/docs/GROQ_SETUP.md)
 

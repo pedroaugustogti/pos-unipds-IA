@@ -307,7 +307,7 @@ python3 labs/modulo12_projeto_final.py
 
 ## ☸️ Módulo 13: Stack Local (Docker → Minikube → LocalStack → UI)
 
-Trilha de deploy local documentada nos slides `slides131.md`–`slides134.md`.
+Trilha de deploy local documentada nos slides `slides131.md`–`slides135.md`.
 
 | Etapa | Comando | Documentação |
 |-------|---------|--------------|
@@ -315,6 +315,18 @@ Trilha de deploy local documentada nos slides `slides131.md`–`slides134.md`.
 | 13.2 Minikube | `.\scripts\setup-minikube.ps1` | `../docs/MINIKUBE_MODULO132.md` |
 | 13.3 LocalStack | `.\scripts\setup-localstack.ps1` | `../docs/LOCALSTACK_MODULO133.md` |
 | 13.4 Streamlit UI | `.\scripts\setup-nexus-ui.ps1` | `../docs/STREAMLIT_MODULO134.md` |
+| 13.5 Ollama GPU | `.\scripts\setup-ollama-gpu.ps1` | `../docs/OLLAMA_MODULO135.md` |
+
+**LLM offline (modelo `llama3.2:3b`, GPU RTX 4050):**
+
+```powershell
+.\scripts\setup-ollama-gpu.ps1
+$env:OLLAMA_BASE_URL = "http://localhost:11434"
+$env:OLLAMA_MODEL = "ollama/llama3.2:3b"
+python labs/modulo1_foundation.py
+```
+
+Teste validado: [`../docs/TESTE_OLLAMA_MINIKUBE_2026-08-08.md`](../docs/TESTE_OLLAMA_MINIKUBE_2026-08-08.md)
 
 **Abrir dashboard no browser (Windows):**
 

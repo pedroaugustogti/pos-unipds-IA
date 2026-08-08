@@ -29,7 +29,7 @@ Monorepo **Nexus AI-Ops** com CrewAI + Groq — da IA consultiva (Lab 1) ao **st
 11. **Lab 10** — RAG Runbooks: saturação PostgreSQL + SQL `pg_terminate_backend`
 12. **Lab 11** — Guardrails: `kubectl set image` + `--dry-run=client` + aprovação humana
 13. **Lab 12** — Projeto Final: orquestração hierárquica Game Day
-14. **M13** — Stack local: Docker, Minikube, LocalStack, Streamlit UI
+14. **M13** — Stack local: Docker, Minikube, LocalStack, Streamlit UI, **Ollama GPU offline**
 15. Economia de TPM via `core/crew_config.py` (max_iter, pausas, retry)
 
 ## Estrutura
@@ -50,6 +50,8 @@ modulo-6-exemplo-1-aiops-foundation/
 │   ├── MINIKUBE_MODULO132.md
 │   ├── LOCALSTACK_MODULO133.md
 │   ├── STREAMLIT_MODULO134.md
+│   ├── OLLAMA_MODULO135.md
+│   ├── TESTE_OLLAMA_MINIKUBE_2026-08-08.md
 │   ├── RELATORIO_DIDATICO_MODULO12.md
 │   ├── RELATORIO_DIDATICO_MODULO8.md
 │   ├── RELATORIO_DIDATICO_MODULO9.md
@@ -88,10 +90,11 @@ modulo-6-exemplo-1-aiops-foundation/
     │   ├── setup-minikube.ps1                     ← M13.2
     │   ├── setup-localstack.ps1 / open-localstack.ps1  ← M13.3
     │   ├── setup-nexus-ui.ps1 / open-nexus-ui.ps1       ← M13.4
+    │   ├── setup-ollama-gpu.ps1                         ← M13.5
     │   └── Configure-K8sTls.ps1
     ├── k8s/
     │   ├── job.yaml, job-smoke.yaml, deploy.yml
-    │   ├── localstack.yaml, streamlit.yaml
+    │   ├── localstack.yaml, streamlit.yaml, ollama.yaml
     │   └── secrets.yaml.example
     └── labs/modulo1_foundation.py … modulo12_projeto_final.py
 ```
@@ -280,6 +283,16 @@ Game Day multidomínio — Nexus Manager coordena SRE, Segurança e FinOps.
 | 13.2 Minikube | `.\scripts\setup-minikube.ps1` | [`docs/MINIKUBE_MODULO132.md`](docs/MINIKUBE_MODULO132.md) |
 | 13.3 LocalStack | `.\scripts\setup-localstack.ps1` | [`docs/LOCALSTACK_MODULO133.md`](docs/LOCALSTACK_MODULO133.md) |
 | 13.4 Streamlit UI | `.\scripts\setup-nexus-ui.ps1` | [`docs/STREAMLIT_MODULO134.md`](docs/STREAMLIT_MODULO134.md) |
+| 13.5 Ollama GPU | `.\scripts\setup-ollama-gpu.ps1` | [`docs/OLLAMA_MODULO135.md`](docs/OLLAMA_MODULO135.md) |
+
+**LLM offline (sem Groq):**
+
+```powershell
+.\scripts\setup-ollama-gpu.ps1
+$env:OLLAMA_BASE_URL = "http://localhost:11434"
+$env:OLLAMA_MODEL = "ollama/llama3.2:3b"
+python labs/modulo1_foundation.py
+```
 
 **Abrir UI no browser (Windows):**
 
@@ -357,6 +370,7 @@ python nexus_iac_copilot.py
 - [x] Minikube + Job Lab 12 no cluster (M13.2)
 - [x] LocalStack S3/SQS no K8s (M13.3)
 - [x] Streamlit UI `nexus-ui` com explorador S3 (M13.4)
+- [x] Ollama offline `llama3.2:3b` com GPU RTX 4050 (M13.5)
 
 ## Anterior
 

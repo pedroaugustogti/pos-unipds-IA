@@ -115,4 +115,4 @@ kubectl delete -f k8s/streamlit.yaml
 
 ## Próximo passo
 
-Continuar labs M13 ou revisar evidências em [`RELATORIO_DIDATICO_MODULO12.md`](RELATORIO_DIDATICO_MODULO12.md).
+Módulo 13.5 — Ollama offline: [`OLLAMA_MODULO135.md`](OLLAMA_MODULO135.md) · [`slides135.md`](../nexus/slides/slides135.md)
