@@ -97,7 +97,7 @@ def get_review_template(task_id: str, creator_role: str, verdict: str = "approve
         return json.dumps({"error": "template nao encontrado"})
     tpl = REVIEW_TEMPLATE.read_text(encoding="utf-8")
     reviewer_role = CREATOR_TO_REVIEWER.get(creator_role, reviewer_for(creator_role))
-    board_status = "Done" if verdict == "approved" else "In Progress"
+    board_status = "Ready for Test" if verdict == "approved" else "In Progress"
     for k, v in {
         "{task_id}": task_id,
         "{creator_role}": creator_role,

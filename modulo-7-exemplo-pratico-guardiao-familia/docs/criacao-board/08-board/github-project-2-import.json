@@ -17,6 +17,11 @@
       "options": [
         "Todo",
         "In Progress",
+        "Ready for Code Review",
+        "In Code Review",
+        "Ready for Test",
+        "In Test",
+        "In Pull Request",
         "Done"
       ]
     },

@@ -23,7 +23,7 @@ SKILLS = ROOT / "skills"
 def render_review_body(task_id: str, creator: str, verdict: str) -> str:
     tpl = REVIEW_TEMPLATE.read_text(encoding="utf-8")
     reviewer = CREATOR_TO_REVIEWER[creator]
-    board = "Done" if verdict == "approved" else "In Progress"
+    board = "Ready for Test" if verdict == "approved" else "In Progress"
     for k, v in {
         "{task_id}": task_id,
         "{creator_role}": creator,

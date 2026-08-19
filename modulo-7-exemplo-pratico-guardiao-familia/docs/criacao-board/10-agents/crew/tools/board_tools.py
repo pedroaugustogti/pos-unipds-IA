@@ -11,7 +11,7 @@ _LIB = Path(__file__).resolve().parents[2]
 if str(_LIB) not in sys.path:
     sys.path.insert(0, str(_LIB))
 
-from lib.board_client import claim_task, complete_task, update_project_status  # noqa: E402
+from lib.board_client import claim_task, complete_task, update_project_status, comment_issue, add_labels  # noqa: E402
 from lib.task_router import (  # noqa: E402
     AGENT_ROLES,
     load_tasks,
@@ -84,8 +84,49 @@ def claim_task_on_board(task_id: str, agent_role: str, sprint: int = 1) -> str:
 
 @tool("Atualizar status do board")
 def update_board_status(task_id: str, title: str, status: str) -> str:
-    """Atualiza Status no GitHub Project #2: todo, in_progress, done."""
+    """Atualiza Status no Project #2. Use slug (in_progress) ou nome canonico."""
     result = update_project_status(task_id, title, status, dry_run=_DRY_RUN)
+    return json.dumps(result, ensure_ascii=False)
+
+
+@tool("Aplicar evento de workflow")
+def apply_workflow_event(task_id: str, title: str, event: str, kind: str = "feature") -> str:
+    """Eventos: claim, open_pr, start_review, request_changes, resubmit_review, approve_review, start_test, test_failed_bug, test_passed, merge_pr."""
+    from lib.task_status_workflow import EVENT_TARGET
+
+    if event not in EVENT_TARGET:
+        return json.dumps({"ok": False, "error": f"Evento invalido: {event}"})
+    target = EVENT_TARGET[event]
+    result = update_project_status(task_id, title, target, dry_run=_DRY_RUN)
+    return json.dumps({**result, "event": event, "target": target, "kind": kind}, ensure_ascii=False)
+
+
+@tool("Iniciar code review")
+def start_code_review(task_id: str, agent_role: str) -> str:
+    """Move task para In Code Review."""
+    tasks = load_tasks()
+    task = next((t for t in tasks if t["id"] == task_id), None)
+    if not task:
+        return json.dumps({"ok": False, "error": f"Task {task_id} nao encontrada"})
+    add_labels(task["repo"], task_id, ["agent:in-review"], dry_run=_DRY_RUN)
+    result = update_project_status(task_id, task["title"], "In Code Review", dry_run=_DRY_RUN)
+    return json.dumps(result, ensure_ascii=False)
+
+
+@tool("Reenviar apos correcao CR")
+def resubmit_after_review(task_id: str, agent_role: str, pr_url: str = "") -> str:
+    """Correcao de code review → In Code Review (re-review)."""
+    tasks = load_tasks()
+    task = next((t for t in tasks if t["id"] == task_id), None)
+    if not task:
+        return json.dumps({"ok": False, "error": f"Task {task_id} nao encontrada"})
+    comment_issue(
+        task["repo"], task_id,
+        f"**{agent_role}** — correcoes aplicadas, re-review solicitado."
+        + (f"\n\n{pr_url}" if pr_url else ""),
+        dry_run=_DRY_RUN,
+    )
+    result = update_project_status(task_id, task["title"], "In Code Review", dry_run=_DRY_RUN)
     return json.dumps(result, ensure_ascii=False)
 
 
@@ -127,6 +168,9 @@ BOARD_TOOLS = [
     select_next_task,
     claim_task_on_board,
     update_board_status,
+    apply_workflow_event,
+    start_code_review,
+    resubmit_after_review,
     plan_sprint_assignments,
     batch_claim_sprint,
     mark_task_in_review,

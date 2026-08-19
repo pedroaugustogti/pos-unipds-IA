@@ -41,28 +41,30 @@ Equipe de agentes Cursor alinhada ao [GitHub Project #2](https://github.com/orgs
 | qa | qa-reviewer | [skills/qa-reviewer](skills/qa-reviewer/SKILL.md) |
 | stores-release | stores-release-reviewer | [skills/stores-release-reviewer](skills/stores-release-reviewer/SKILL.md) |
 
-## Fluxo autônomo (board → PR → review → Done)
+## Fluxo autônomo (board → PR → review → QA → merge → Done)
+
+Ver workflow completo: [`11-workflow/TASK_STATUS_WORKFLOW.md`](../11-workflow/TASK_STATUS_WORKFLOW.md)
 
 ```mermaid
 flowchart LR
-  A[Orquestrador] --> B[Claim task]
-  B --> C[In Progress]
-  C --> D[Criador + SKILL]
-  D --> E[PR estrategico]
-  E --> F[In Review]
-  F --> G[Revisor + SKILL]
-  G --> H{Veredito}
-  H -->|approved| I[Done]
-  H -->|changes_requested| C
+  A[Todo] --> B[In Progress]
+  B --> C[Ready for Code Review]
+  C --> D[In Code Review]
+  D --> E[Ready for Test]
+  E --> F[In Test]
+  F --> G[In Pull Request]
+  G --> H[Done]
+  D -->|changes requested| B
+  B -->|resubmit CR| D
+  F -->|bug| B
 ```
 
-1. Orquestrador lê `TASK_AGENT_MAP.csv` e seleciona a task elegível de maior `priority_rank` para o agente.
-2. Agente move card para **In Progress** (GitHub Project ou label `agent:in-progress`).
-3. Implementação segue a skill do papel + contexto da issue.
-4. Commit referencia `T-XXX-NNN` no subject.
-5. PR usa [templates/PR_TEMPLATE.md](templates/PR_TEMPLATE.md) — estratégia, arquivos, dúvidas.
-6. Card vai para **In Review**; revisor pareado finaliza PR.
-7. `approved` → **Done**; `changes_requested` → devolve **In Progress**.
+1. Orquestrador claim → **In Progress**
+2. Criador abre PR → **Ready for Code Review**
+3. Revisor inicia → **In Code Review**
+4. `approved` → **Ready for Test** · `changes_requested` → **In Progress**
+5. Criador corrige → **`resubmit_review`** → **In Code Review**
+6. QA → **In Test** → **In Pull Request** → **Done**
 
 ### Revisores
 

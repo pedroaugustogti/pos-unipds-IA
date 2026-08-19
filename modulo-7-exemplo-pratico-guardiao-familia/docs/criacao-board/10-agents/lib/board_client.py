@@ -13,14 +13,29 @@ ORG = "guardiaofamilia"
 PROJECT_NUMBER = 2
 PROJECT_ID = "PVT_kwDOEDZbAM4Bg2rE"
 
-STATUS_MAP = {
-    "todo": "Todo",
-    "in_progress": "In Progress",
-    "in-progress": "In Progress",
-    "in_review": "In Progress",
-    "in-review": "In Progress",
-    "done": "Done",
+from lib.task_status_workflow import (  # noqa: E402
+    EVENT_TARGET,
+    STATUSES,
+    apply_event,
+    label_for_status,
+    resolve_status,
+    status_after_review_verdict,
+)
+
+# Retrocompat: aliases legados → novos status
+LEGACY_STATUS_MAP = {
+    "in_review": "In Code Review",
+    "in-review": "In Code Review",
 }
+
+
+def _resolve_board_status(status: str) -> str:
+    key = status.lower().replace(" ", "_")
+    if key in LEGACY_STATUS_MAP:
+        return LEGACY_STATUS_MAP[key]
+    if status in EVENT_TARGET:
+        return EVENT_TARGET[status]
+    return resolve_status(status)
 
 
 def _token() -> str | None:
@@ -105,7 +120,7 @@ def comment_issue(repo: str, task_id: str, body: str, dry_run: bool = False) -> 
 
 def _get_status_field(dry_run: bool = False) -> dict | None:
     if dry_run:
-        return {"id": "dry", "options": [{"name": s, "id": s} for s in STATUS_MAP.values()]}
+        return {"id": "dry", "options": [{"name": s, "id": s} for s in STATUSES]}
     fields = _gh_json("project", "field-list", str(PROJECT_NUMBER), "--owner", ORG)
     if isinstance(fields, dict):
         field_list = fields.get("fields", [])
@@ -141,7 +156,7 @@ def _find_project_item_id(task_id: str, title: str) -> str | None:
 
 def update_project_status(task_id: str, title: str, status: str, dry_run: bool = False) -> dict:
     """Atualiza campo Status no GitHub Project #2."""
-    gh_status = STATUS_MAP.get(status.lower().replace(" ", "_"), status)
+    gh_status = _resolve_board_status(status)
     if dry_run:
         return {"ok": True, "dry_run": True, "task_id": task_id, "status": gh_status}
 
@@ -212,15 +227,22 @@ def claim_task(task: dict, agent: str, branch: str, dry_run: bool = False) -> di
 
 
 def complete_task(task: dict, agent: str, pr_url: str = "", dry_run: bool = False) -> dict:
-    """Marca task como In Review (label) apos PR."""
+    """PR aberto → Ready for Code Review."""
     repo = task["repo"]
     task_id = task["id"]
-    labels = add_labels(repo, task_id, ["agent:in-review"], dry_run=dry_run)
-    body = f"**CrewAI** — PR aberto por `{agent}`"
+    labels = add_labels(
+        repo, task_id,
+        ["agent:ready-for-review", "agent:in-review"],
+        dry_run=dry_run,
+    )
+    body = f"**CrewAI** — PR aberto por `{agent}` → **Ready for Code Review**"
     if pr_url:
         body += f"\n\n{pr_url}"
     comment = comment_issue(repo, task_id, body, dry_run=dry_run)
-    return {"task_id": task_id, "labels": labels, "comment": comment}
+    status = update_project_status(
+        task_id, task["title"], "Ready for Code Review", dry_run=dry_run,
+    )
+    return {"task_id": task_id, "labels": labels, "comment": comment, "board_status": status}
 
 
 def find_pr_for_task(repo: str, task_id: str, dry_run: bool = False) -> dict:
@@ -283,13 +305,11 @@ def finalize_pr_review(
     }
 
     if verdict == "approved":
-        board_status = "done"
-        extra_labels = ["review:approved", "agent:done"]
-        remove_in_review = True
+        board_status = "Ready for Test"
+        extra_labels = ["review:approved", "agent:ready-for-test"]
     else:
-        board_status = "in_progress"
-        extra_labels = ["review:changes-requested"]
-        remove_in_review = False
+        board_status = "In Progress"
+        extra_labels = ["review:changes-requested", "agent:in-progress"]
 
     label_result = add_labels(repo, task_id, extra_labels, dry_run=dry_run)
 

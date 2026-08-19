@@ -16,7 +16,9 @@ Cada criador tem um revisor dedicado que **finaliza o PR** e **atualiza o board*
 ## Fluxo
 
 ```
-Criador (PR) -> agent:in-review -> Revisor (code review) -> finalize -> Done | In Progress
+Criador (PR) -> Ready for Code Review -> Revisor -> In Code Review
+  -> approved -> Ready for Test -> QA -> In Pull Request -> Done
+  -> changes_requested -> In Progress -> resubmit -> In Code Review
 ```
 
 ## Arquivos

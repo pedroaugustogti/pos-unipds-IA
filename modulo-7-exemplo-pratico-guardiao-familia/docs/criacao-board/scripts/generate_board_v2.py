@@ -653,7 +653,10 @@ def build_json_board(tasks: list[Task]) -> dict:
             "template": "Board",
         },
         "fields": [
-            {"name": "Status", "type": "single_select", "options": ["Todo", "In Progress", "Done"]},
+            {"name": "Status", "type": "single_select", "options": [
+                "Todo", "In Progress", "Ready for Code Review", "In Code Review",
+                "Ready for Test", "In Test", "In Pull Request", "Done",
+            ]},
             {"name": "Trilha", "type": "single_select", "options": ["produto", "infraestrutura", "stores"]},
             {"name": "OKR", "type": "single_select", "options": ["O1", "O2", "O3"]},
             {"name": "Epic", "type": "text"},

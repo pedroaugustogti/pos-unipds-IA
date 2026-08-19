@@ -38,11 +38,16 @@ agent:database
 agent:devops-cicd
 agent:qa
 agent:stores-release
-agent:ready          # elegível para claim
-agent:in-progress    # claimed por agente
-agent:in-review      # PR aberto, aguarda revisor
-agent:done           # review approved
-agent:blocked        # dependência não satisfeita
+agent:ready          # Todo — elegível para claim
+agent:in-progress    # In Progress
+agent:ready-for-review  # Ready for Code Review
+agent:in-review      # In Code Review
+agent:ready-for-test # Ready for Test
+agent:in-test        # In Test
+agent:in-pr          # In Pull Request
+agent:done           # Done
+agent:blocked        # dependência externa (fora do pipeline)
+type:bug             # fluxo alternativo bug
 review:approved
 review:changes-requested
 reviewer:{role}-reviewer   # par do criador
