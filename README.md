@@ -2,7 +2,7 @@
 
 Repositório com **exemplos práticos** da pós-graduação **Engenharia de IA Aplicada (UNIPDS)**: modelos em JavaScript/TypeScript, LLMs, **LangGraph**, embeddings, **Neo4j**, **RAG**, **MCP** e **Agent Skills** no Cursor.
 
-Cada pasta `modulo-X-exemplo-Y-*` segue um **padrão didático** nos `README.md`: objetivo da atividade, passo a passo, critérios de sucesso e relação com o módulo. Referência de estilo: [`modulo-3-exemplo-4-skills/sample-video-ffmpeg/README.md`](./modulo-3-exemplo-4-skills/sample-video-ffmpeg/README.md).
+Cada pasta `modulo-X-exemplo-Y-*` segue um **padrão didático** nos `README.md`: objetivo da atividade, passo a passo, critérios de sucesso e relação com o módulo. 
 
 O [`delivery-agent/`](./delivery-agent/) na raiz automatiza a preparação da próxima aula (comparar UNIPDS, scaffold, READMEs e commit).
 
@@ -167,6 +167,22 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 | 1 | [`modulo-6-exemplo-1-aiops-foundation`](./modulo-6-exemplo-1-aiops-foundation/) | **Nexus AI-Ops** — Labs 1–12 + **M13 stack local** (Docker, Minikube, LocalStack, Streamlit, **Ollama GPU offline**): Foundation, IaC Copilot, K8s GitOps, ReAct self-healing, AIOps preditivo, ChatOps, DevSecOps (Trivy), CI/CD Copilot, FinOps ($325/mês), RAG Runbooks, Guardrails K8s, Projeto Final hierárquico ([modulo06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo06-aiops-engenharia-agentica)) |
 
 **Competências do módulo:** IA consultiva em operações; engenharia agêntica com CrewAI; policy RAG e governança; IaC Copilot; troubleshooting ReAct; AIOps preditivo; ChatOps com human-in-the-loop; orquestração multiagente.
+
+---
+
+## Módulo 7 — Ferramentas de IA para Gestão de Projetos (RouteWise)
+
+**O que você aprende:** aplicar IA no ciclo de gestão de projetos — de transcrições de discovery a backlog estruturado no Jira, priorização, cronograma, estimativas, riscos, reuniões, status reports, governança e portfolio/OKRs. Caso de estudo: **RouteWise** (gestão de frota logística).
+
+| Exemplo | Pasta | Principais aprendizados |
+|---------|-------|-------------------------|
+| 1 | [`modulo-7-exemplo-1-planejamento-e-escopo`](./modulo-7-exemplo-1-planejamento-e-escopo/) | **RouteWise** — Requirements Copilot (transcrição → INVEST/Gherkin → Jira); priorização RICE/WSJF; What-If; PERT/Monte Carlo; riscos; status reports; NL to Workflow; boards/comunicação; portfólio/OKRs; Danger.js — **11 relatórios didáticos** em `docs/` ([modulo-01 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo07-ferramentas-de-ia-para-gestao-de-projetos/modulo-01-planejamento-e-escopo)) |
+
+**Competências do módulo:** engenharia de requisitos assistida por IA; INVEST e Gherkin; backlog e governança no Jira; priorização e forecast; riscos e AIOps; status reports multi-audiência; automação de boards e comunicação; alinhamento portfólio/OKRs; pipeline **PM AI Toolkit** (10 módulos UNIPDS).
+
+Resumo da próxima aula: [`modulo-7-exemplo-1-planejamento-e-escopo/docs/RESUMO_PROXIMA_AULA.md`](./modulo-7-exemplo-1-planejamento-e-escopo/docs/RESUMO_PROXIMA_AULA.md)
+
+Relatórios didáticos (índice completo): [`modulo-7-exemplo-1-planejamento-e-escopo/README.md`](./modulo-7-exemplo-1-planejamento-e-escopo/README.md)
 
 ---
 
