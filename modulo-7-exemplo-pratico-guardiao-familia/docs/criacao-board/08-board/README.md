@@ -170,7 +170,7 @@ python scripts/generate_backlog_dashboard.py
 start 08-board/backlog-dashboard.html
 ```
 
-Ou abra diretamente: [backlog-dashboard.html](backlog-dashboard.html)
+Ou abra diretamente: [backlog-dashboard.html](https://pedroaugustogti.github.io/pos-unipds-IA/modulo-7-exemplo-pratico-guardiao-familia/docs/criacao-board/08-board/backlog-dashboard.html) (GitHub Pages) · local: [backlog-dashboard.html](backlog-dashboard.html)
 
 Funcionalidades: busca, filtros (trilha/sprint/baseline/blocker), modal com refinamento e arquivos sugeridos.
 

@@ -14,7 +14,7 @@ Board replanejado do zero (GitHub Project #2), sem reutilizar as 238 tasks do Pr
 | 5b. Estratégia | [05-priorizacao/PERGUNTAS_ESTRATEGIA.md](05-priorizacao/PERGUNTAS_ESTRATEGIA.md) | Perguntas e pesos |
 | 6. Commits | [06-analise-commits/ANALISE_COMMITS.md](06-analise-commits/ANALISE_COMMITS.md) | Baseline código |
 | 7. Planilhas | [07-planilhas/](07-planilhas/) | CSVs por cálculo + final + refinamento |
-| 8. Board JSON | [08-board/github-project-2-import.json](08-board/github-project-2-import.json) | Import GitHub + [dashboard HTML](08-board/backlog-dashboard.html) |
+| 8. Board JSON | [08-board/github-project-2-import.json](08-board/github-project-2-import.json) | Import GitHub + [dashboard HTML](https://pedroaugustogti.github.io/pos-unipds-IA/modulo-7-exemplo-pratico-guardiao-familia/docs/criacao-board/08-board/backlog-dashboard.html) |
 | 9. Report | [09-report/REPORT_EXECUTIVO_ESCOPO_PRODUCAO.md](09-report/REPORT_EXECUTIVO_ESCOPO_PRODUCAO.md) | Escopo → produção |
 | 10. Agentes | [10-agents/](10-agents/) | Skills, roteamento e PR estratégico |
 | 11. Workflow | [11-workflow/](11-workflow/TASK_STATUS_WORKFLOW.md) | Status Todo → Done, bugs, re-review CR |
