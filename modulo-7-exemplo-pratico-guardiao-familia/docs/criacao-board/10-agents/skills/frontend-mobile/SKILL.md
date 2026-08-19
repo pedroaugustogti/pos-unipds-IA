@@ -31,7 +31,7 @@ description: >-
 4. Testar em simulador iOS/Android quando aplicável.
 5. Commit: `feat(T-XXX-NNN): ...`
 6. PR com template estratégico; mencionar plataforma (iOS/Android/both).
-7. Board → In Review.
+7. Board → **Ready for Code Review** (`mark_task_in_review`).
 
 ## Critérios de aceite
 

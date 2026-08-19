@@ -78,6 +78,169 @@ EVENT_TARGET: dict[str, str] = {
 
 EVENT_AFTER_CHANGES_REQUESTED = "resubmit_review"  # volta para In Code Review
 
+# Papel responsável por status (primary owner)
+STAGE_OWNERS: dict[str, str] = {
+    "Todo": "orchestrator",
+    "In Progress": "creator",
+    "Ready for Code Review": "reviewer",
+    "In Code Review": "reviewer",
+    "Ready for Test": "qa",
+    "In Test": "qa",
+    "In Pull Request": "devops-cicd",
+    "Done": "orchestrator",
+}
+
+# Detalhe por etapa: quem entra, o que faz, como sai, evento
+AGENT_STAGES: list[dict[str, str]] = [
+    {
+        "status": "Todo",
+        "owner": "orchestrator",
+        "enters": "Backlog priorizado; nenhum agente criador ativo",
+        "does": "Planeja sprint, roteia via TASK_AGENT_MAP, executa claim",
+        "exits": "claim → assign creator + In Progress",
+        "event_in": "—",
+        "event_out": "claim",
+        "label": "agent:ready",
+    },
+    {
+        "status": "In Progress",
+        "owner": "creator",
+        "enters": "claim | request_changes (CR) | test_failed_bug (QA)",
+        "does": "Implementa/corrige na branch; commit T-XXX; prepara PR",
+        "exits": "open_pr → Ready for Code Review | resubmit_review → In Code Review",
+        "event_in": "claim / request_changes / test_failed_bug",
+        "event_out": "open_pr / resubmit_review",
+        "label": "agent:in-progress",
+    },
+    {
+        "status": "Ready for Code Review",
+        "owner": "reviewer",
+        "enters": "open_pr (criador abriu PR)",
+        "does": "Revisor pareado (1:1) assume fila; busca PR por task_id",
+        "exits": "start_review → In Code Review",
+        "event_in": "open_pr",
+        "event_out": "start_review",
+        "label": "agent:ready-for-review",
+    },
+    {
+        "status": "In Code Review",
+        "owner": "reviewer",
+        "enters": "start_review | resubmit_review (correcao CR)",
+        "does": "Checklist skill revisor; comenta PR; emite veredito",
+        "exits": "approve_review → Ready for Test | request_changes → In Progress",
+        "event_in": "start_review / resubmit_review",
+        "event_out": "approve_review / request_changes",
+        "label": "agent:in-review",
+    },
+    {
+        "status": "Ready for Test",
+        "owner": "qa",
+        "enters": "approve_review (CR aprovado)",
+        "does": "QA planeja cenarios; prepara ambiente/dispositivos",
+        "exits": "start_test → In Test",
+        "event_in": "approve_review",
+        "event_out": "start_test",
+        "label": "agent:ready-for-test",
+    },
+    {
+        "status": "In Test",
+        "owner": "qa",
+        "enters": "start_test",
+        "does": "E2E, regressao, evidencias; label type:bug se falhar",
+        "exits": "test_passed → In Pull Request | test_failed_bug → In Progress",
+        "event_in": "start_test",
+        "event_out": "test_passed / test_failed_bug",
+        "label": "agent:in-test",
+    },
+    {
+        "status": "In Pull Request",
+        "owner": "devops-cicd",
+        "enters": "test_passed (stores-release se track=stores)",
+        "does": "Merge queue, CI green, deploy staging/prod conforme task",
+        "exits": "merge_pr → Done",
+        "event_in": "test_passed",
+        "event_out": "merge_pr",
+        "label": "agent:in-pr",
+    },
+    {
+        "status": "Done",
+        "owner": "orchestrator",
+        "enters": "merge_pr",
+        "does": "Fecha ciclo; metricas; retrospectiva opcional",
+        "exits": "—",
+        "event_in": "merge_pr",
+        "event_out": "—",
+        "label": "agent:done",
+    },
+]
+
+# Criador: status em que atua
+CREATOR_ACTIVE_STATUSES = frozenset({"In Progress"})
+REVIEWER_ACTIVE_STATUSES = frozenset({"Ready for Code Review", "In Code Review"})
+QA_ACTIVE_STATUSES = frozenset({"Ready for Test", "In Test"})
+MERGE_OWNER_BY_TRACK = {
+    "stores": "stores-release",
+    "infraestrutura": "devops-cicd",
+    "produto": "devops-cicd",
+}
+
+
+def merge_owner_for_task(track: str = "produto") -> str:
+    return MERGE_OWNER_BY_TRACK.get(track, "devops-cicd")
+
+
+def stages_for_role(role: str) -> list[dict[str, str]]:
+    """Etapas onde o agente e owner ou participa."""
+    if role == "orchestrator":
+        return [s for s in AGENT_STAGES if s["owner"] == "orchestrator"]
+    if role == "qa":
+        return [s for s in AGENT_STAGES if s["owner"] == "qa"]
+    if role == "devops-cicd" or role == "stores-release":
+        track = "stores" if role == "stores-release" else "produto"
+        return [s for s in AGENT_STAGES if s["status"] == "In Pull Request"]
+    if role.endswith("-reviewer"):
+        return [s for s in AGENT_STAGES if s["owner"] == "reviewer"]
+    # creator roles
+    creator_stages = [s for s in AGENT_STAGES if s["status"] in CREATOR_ACTIVE_STATUSES]
+    creator_stages.append({
+        "status": "Ready for Code Review",
+        "owner": "creator",
+        "enters": "Apos open_pr (aguarda revisor)",
+        "does": "Monitora PR; responde duvidas do revisor",
+        "exits": "Revisor assume (start_review)",
+        "event_in": "open_pr",
+        "event_out": "start_review",
+        "label": "agent:ready-for-review",
+    })
+    return creator_stages
+
+
+def mermaid_agent_swimlane() -> str:
+    return """```mermaid
+flowchart TB
+  subgraph ORCH["🎯 Orchestrator"]
+    T[Todo] -->|claim| IP
+  end
+  subgraph CRE["👨‍💻 Creator (agent_role da task)"]
+    IP[In Progress] -->|open_pr| RFC
+    IP -->|resubmit_review| ICR
+  end
+  subgraph REV["🔍 Reviewer (par 1:1)"]
+    RFC[Ready for Code Review] -->|start_review| ICR[In Code Review]
+    ICR -->|approve_review| RFT[Ready for Test]
+    ICR -->|request_changes| IP
+  end
+  subgraph QA["🧪 QA"]
+    RFT -->|start_test| IT[In Test]
+    IT -->|test_passed| IPR[In Pull Request]
+    IT -->|test_failed_bug| IP
+  end
+  subgraph OPS["⚙️ DevOps / Stores-release"]
+    IPR -->|merge_pr| D[Done]
+  end
+  D --> ORCH2[Orchestrator fecha ciclo]
+```"""
+
 
 def resolve_status(name: str) -> str:
     key = name.strip().lower().replace(" ", "_")

@@ -2,6 +2,8 @@
 
 Cada arquivo abaixo é um **prompt completo** para Cursor Agent ou Automation. Copie o conteúdo do `.agent.md` correspondente.
 
+**Workflow board (obrigatório):** [WORKFLOW_BOARD.md](WORKFLOW_BOARD.md) · [AGENT_BOARD_STAGES.md](../../11-workflow/AGENT_BOARD_STAGES.md)
+
 | Arquivo | Agente | Trigger sugerido |
 |---------|--------|------------------|
 | [backend.agent.md](backend.agent.md) | Backend NestJS | schedule 2h / label `agent:backend` |

@@ -17,7 +17,7 @@ Skill do criador: [../backend/SKILL.md](../backend/SKILL.md)
 
 ## Quando acionar
 
-- Issue com labels `agent:in-review` + `agent:backend`
+- Issue em **Ready for Code Review** + label `agent:backend`
 - PR titulo contem `T-XXX-NNN` do backlog API
 
 ## Checklist de revisao

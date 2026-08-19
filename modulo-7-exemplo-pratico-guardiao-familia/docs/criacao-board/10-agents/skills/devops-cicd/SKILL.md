@@ -26,7 +26,7 @@ description: >-
 2. Branch `ci/T-XXX-NNN-<slug>`.
 3. Workflow testável via `act` ou documentação de trigger manual.
 4. PR: estratégia de pipeline, secrets necessários (nomes only), rollback deploy.
-5. In Review.
+5. Creator: **Ready for Code Review**; merge owner: **In Pull Request** → **Done**.
 
 ## Critérios de aceite
 

@@ -31,6 +31,6 @@ Documentar:
 
 ## Board
 
-Claim → In Progress → PR → In Review
+[WORKFLOW_BOARD.md](WORKFLOW_BOARD.md): In Progress → Ready for CR → In CR → Ready for Test → …
 
 Reporte: task_id, resources[], PR URL, dúvidas de infra.

@@ -27,4 +27,15 @@ Branch: `ci/{task_id}-{slug}`
 - Como validar pipeline
 - Dúvidas (runners, permissões org)
 
-Reporte: task_id, workflows_changed[], PR URL.
+Reporte: task_id, test_files[], scenarios_count, PR URL.
+
+## Workflow board (merge)
+
+Ver [WORKFLOW_BOARD.md](WORKFLOW_BOARD.md)
+
+| Etapa | Status | Tool |
+|-------|--------|------|
+| Após QA pass | **In Pull Request** | (entrada automática) |
+| Merge concluído | **Done** | `complete_merge_on_board` |
+
+Trilha **stores** → preferir `stores-release` como owner merge.

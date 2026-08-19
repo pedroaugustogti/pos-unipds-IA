@@ -28,7 +28,7 @@ description: >-
 2. Branch `feat/T-XXX-NNN-<slug>`.
 3. Implementar páginas/componentes; respeitar roles (backoffice).
 4. Commit + PR estratégico.
-5. In Review no board.
+5. **Ready for Code Review** no board (`mark_task_in_review`).
 
 ## Critérios de aceite
 

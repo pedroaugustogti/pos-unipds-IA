@@ -45,6 +45,8 @@ Equipe de agentes Cursor alinhada ao [GitHub Project #2](https://github.com/orgs
 
 Ver workflow completo: [`11-workflow/TASK_STATUS_WORKFLOW.md`](../11-workflow/TASK_STATUS_WORKFLOW.md)
 
+**Agentes × status (entradas/saídas):** [`11-workflow/AGENT_BOARD_STAGES.md`](../11-workflow/AGENT_BOARD_STAGES.md) · [`agents/WORKFLOW_BOARD.md`](agents/WORKFLOW_BOARD.md)
+
 ```mermaid
 flowchart LR
   A[Todo] --> B[In Progress]

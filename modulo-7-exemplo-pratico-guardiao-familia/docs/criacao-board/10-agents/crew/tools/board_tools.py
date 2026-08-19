@@ -11,7 +11,19 @@ _LIB = Path(__file__).resolve().parents[2]
 if str(_LIB) not in sys.path:
     sys.path.insert(0, str(_LIB))
 
-from lib.board_client import claim_task, complete_task, update_project_status, comment_issue, add_labels  # noqa: E402
+from lib.board_client import (  # noqa: E402
+    claim_task,
+    complete_task,
+    complete_merge,
+    complete_qa_pass,
+    report_qa_bug,
+    resubmit_after_changes,
+    start_code_review as board_start_review,
+    start_qa,
+    update_project_status,
+    comment_issue,
+    add_labels,
+)
 from lib.task_router import (  # noqa: E402
     AGENT_ROLES,
     load_tasks,
@@ -102,32 +114,81 @@ def apply_workflow_event(task_id: str, title: str, event: str, kind: str = "feat
 
 
 @tool("Iniciar code review")
-def start_code_review(task_id: str, agent_role: str) -> str:
-    """Move task para In Code Review."""
+def start_code_review(task_id: str, reviewer_role: str) -> str:
+    """Revisor assume task → In Code Review (evento start_review)."""
     tasks = load_tasks()
     task = next((t for t in tasks if t["id"] == task_id), None)
     if not task:
         return json.dumps({"ok": False, "error": f"Task {task_id} nao encontrada"})
-    add_labels(task["repo"], task_id, ["agent:in-review"], dry_run=_DRY_RUN)
-    result = update_project_status(task_id, task["title"], "In Code Review", dry_run=_DRY_RUN)
+    result = board_start_review(task, reviewer_role, dry_run=_DRY_RUN)
     return json.dumps(result, ensure_ascii=False)
 
 
 @tool("Reenviar apos correcao CR")
 def resubmit_after_review(task_id: str, agent_role: str, pr_url: str = "") -> str:
-    """Correcao de code review → In Code Review (re-review)."""
+    """Creator corrigiu CR → In Code Review (evento resubmit_review)."""
     tasks = load_tasks()
     task = next((t for t in tasks if t["id"] == task_id), None)
     if not task:
         return json.dumps({"ok": False, "error": f"Task {task_id} nao encontrada"})
-    comment_issue(
-        task["repo"], task_id,
-        f"**{agent_role}** — correcoes aplicadas, re-review solicitado."
-        + (f"\n\n{pr_url}" if pr_url else ""),
-        dry_run=_DRY_RUN,
-    )
-    result = update_project_status(task_id, task["title"], "In Code Review", dry_run=_DRY_RUN)
+    result = resubmit_after_changes(task, agent_role, pr_url, dry_run=_DRY_RUN)
     return json.dumps(result, ensure_ascii=False)
+
+
+@tool("QA inicia testes")
+def start_qa_on_board(task_id: str) -> str:
+    """Ready for Test → In Test (evento start_test)."""
+    tasks = load_tasks()
+    task = next((t for t in tasks if t["id"] == task_id), None)
+    if not task:
+        return json.dumps({"ok": False, "error": f"Task {task_id} nao encontrada"})
+    result = start_qa(task, dry_run=_DRY_RUN)
+    return json.dumps(result, ensure_ascii=False)
+
+
+@tool("QA aprova testes")
+def complete_qa_pass_on_board(task_id: str, summary: str = "") -> str:
+    """In Test → In Pull Request (evento test_passed)."""
+    tasks = load_tasks()
+    task = next((t for t in tasks if t["id"] == task_id), None)
+    if not task:
+        return json.dumps({"ok": False, "error": f"Task {task_id} nao encontrada"})
+    result = complete_qa_pass(task, summary, dry_run=_DRY_RUN)
+    return json.dumps(result, ensure_ascii=False)
+
+
+@tool("QA reporta bug")
+def report_qa_bug_on_board(task_id: str, summary: str) -> str:
+    """In Test → In Progress + type:bug (evento test_failed_bug)."""
+    tasks = load_tasks()
+    task = next((t for t in tasks if t["id"] == task_id), None)
+    if not task:
+        return json.dumps({"ok": False, "error": f"Task {task_id} nao encontrada"})
+    result = report_qa_bug(task, summary, dry_run=_DRY_RUN)
+    return json.dumps(result, ensure_ascii=False)
+
+
+@tool("Concluir merge")
+def complete_merge_on_board(task_id: str, agent_role: str = "devops-cicd") -> str:
+    """In Pull Request → Done (evento merge_pr)."""
+    tasks = load_tasks()
+    task = next((t for t in tasks if t["id"] == task_id), None)
+    if not task:
+        return json.dumps({"ok": False, "error": f"Task {task_id} nao encontrada"})
+    result = complete_merge(task, agent_role, dry_run=_DRY_RUN)
+    return json.dumps(result, ensure_ascii=False)
+
+
+@tool("Etapas do workflow por agente")
+def workflow_stages_for_agent(agent_role: str) -> str:
+    """Retorna JSON com status onde o agente entra/sai."""
+    from lib.task_status_workflow import stages_for_role, mermaid_agent_swimlane
+
+    return json.dumps({
+        "agent_role": agent_role,
+        "stages": stages_for_role(agent_role),
+        "diagram": mermaid_agent_swimlane(),
+    }, ensure_ascii=False, indent=2)
 
 
 @tool("Planejar sprint completo")
@@ -154,7 +215,7 @@ def batch_claim_sprint(sprint: int = 1, limit_per_agent: int = 1) -> str:
 
 @tool("Marcar task em review")
 def mark_task_in_review(task_id: str, agent_role: str, pr_url: str = "") -> str:
-    """Apos PR: label agent:in-review e comentario com link."""
+    """PR aberto → Ready for Code Review (evento open_pr)."""
     tasks = load_tasks()
     task = next((t for t in tasks if t["id"] == task_id), None)
     if not task:
@@ -169,8 +230,13 @@ BOARD_TOOLS = [
     claim_task_on_board,
     update_board_status,
     apply_workflow_event,
+    workflow_stages_for_agent,
     start_code_review,
     resubmit_after_review,
+    start_qa_on_board,
+    complete_qa_pass_on_board,
+    report_qa_bug_on_board,
+    complete_merge_on_board,
     plan_sprint_assignments,
     batch_claim_sprint,
     mark_task_in_review,

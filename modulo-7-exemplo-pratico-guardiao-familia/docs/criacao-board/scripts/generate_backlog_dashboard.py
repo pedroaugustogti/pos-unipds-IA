@@ -3,8 +3,10 @@
 
 from __future__ import annotations
 
+import csv
 import json
 import re
+import sys
 from datetime import date
 from html import escape
 from pathlib import Path
@@ -12,6 +14,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 JSON_PATH = ROOT / "08-board" / "github-project-2-import.json"
 OUT_PATH = ROOT / "08-board" / "backlog-dashboard.html"
+AGENT_MAP_PATH = ROOT / "10-agents" / "TASK_AGENT_MAP.csv"
+
+sys.path.insert(0, str(ROOT / "10-agents"))
+from lib.task_status_workflow import STATUSES, STAGE_OWNERS, resolve_status  # noqa: E402
 
 
 def epic_id(epic_field: str) -> str:
@@ -19,16 +25,30 @@ def epic_id(epic_field: str) -> str:
     return m.group(1) if m else "?"
 
 
-def compact_tasks(board: dict) -> list[dict]:
+def load_agent_map() -> dict[str, dict[str, str]]:
+    mapping: dict[str, dict[str, str]] = {}
+    if not AGENT_MAP_PATH.is_file():
+        return mapping
+    with AGENT_MAP_PATH.open(encoding="utf-8", newline="") as fh:
+        for row in csv.DictReader(fh):
+            mapping[row["id"]] = {
+                "agentRole": row.get("agent_role", ""),
+                "agentRoleSecondary": row.get("agent_role_secondary", "") or "",
+            }
+    return mapping
+
+
+def compact_tasks(board: dict, agent_map: dict[str, dict[str, str]]) -> list[dict]:
     items = []
     for it in board["items"]:
         f = it["fields"]
         ref = it.get("refinement") or {}
+        am = agent_map.get(it["id"], {})
         items.append({
             "id": it["id"],
             "title": it["title"],
             "repo": it.get("repository", ""),
-            "status": f.get("Status", "Todo"),
+            "status": resolve_status(f.get("Status", "Todo")),
             "trilha": f.get("Trilha", ""),
             "okr": f.get("OKR", ""),
             "epic": f.get("Epic", ""),
@@ -41,6 +61,8 @@ def compact_tasks(board: dict) -> list[dict]:
             "blocker": f.get("Release Blocker") == "yes",
             "blockerReason": f.get("Blocker Motivo") or (ref.get("blocker_reason") if ref else ""),
             "rank": int(f.get("Priority Rank", 999)),
+            "agentRole": am.get("agentRole", ""),
+            "agentRoleSecondary": am.get("agentRoleSecondary", ""),
             "files": ref.get("suggested_files", []),
             "hints": ref.get("acceptance_hints", []),
             "context": ref.get("context_summary", f.get("Refinamento", "")),
@@ -57,6 +79,8 @@ def build_html(board: dict, tasks: list[dict]) -> str:
         "project": meta,
         "epics": epics,
         "tasks": tasks,
+        "statuses": list(STATUSES),
+        "stageOwners": STAGE_OWNERS,
         "generated": date.today().isoformat(),
     }, ensure_ascii=False)
 
@@ -71,6 +95,8 @@ def build_html(board: dict, tasks: list[dict]) -> str:
       --bg: #0d1117; --surface: #161b22; --border: #30363d; --text: #e6edf3;
       --muted: #8b949e; --accent: #58a6ff; --produto: #3fb950; --infra: #d29922;
       --stores: #a371f7; --blocker: #f85149; --done: #238636; --partial: #9e6a03;
+      --st-todo: #8b949e; --st-ip: #58a6ff; --st-rfc: #a371f7; --st-icr: #d29922;
+      --st-rft: #39c5cf; --st-it: #e3b341; --st-ipr: #3fb950; --st-done: #238636;
     }}
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
     body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -79,6 +105,16 @@ def build_html(board: dict, tasks: list[dict]) -> str:
       background: var(--surface); position: sticky; top: 0; z-index: 100; }}
     header h1 {{ font-size: 1.15rem; font-weight: 600; }}
     header p {{ color: var(--muted); font-size: 0.85rem; margin-top: 0.25rem; }}
+    .workflow-bar {{ display: none; flex-wrap: nowrap; gap: 0.35rem; padding: 0.55rem 1.5rem;
+      border-bottom: 1px solid var(--border); background: var(--bg); overflow-x: auto; }}
+    .workflow-bar.is-kanban {{ display: flex; }}
+    .wf-chip {{ flex-shrink: 0; font-size: 0.72rem; padding: 0.3rem 0.55rem; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--surface); cursor: pointer; color: var(--text);
+      display: flex; align-items: center; gap: 0.35rem; white-space: nowrap; }}
+    .wf-chip:hover {{ border-color: var(--accent); }}
+    .wf-chip.active {{ border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }}
+    .wf-chip strong {{ font-size: 0.85rem; color: var(--text); }}
+    .wf-dot {{ width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }}
     .toolbar {{ display: flex; flex-wrap: wrap; gap: 0.6rem; padding: 0.75rem 1.5rem;
       border-bottom: 1px solid var(--border); background: var(--surface); align-items: center; }}
     .toolbar input, .toolbar select {{ background: var(--bg); border: 1px solid var(--border);
@@ -101,8 +137,16 @@ def build_html(board: dict, tasks: list[dict]) -> str:
     .group-l3 {{ margin-bottom: 0.75rem; }}
     .group-l3 > h4 {{ font-size: 0.82rem; color: var(--muted); margin-bottom: 0.4rem; }}
     .cards {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.55rem; }}
+    .kanban {{ display: flex; gap: 0.65rem; overflow-x: auto; padding-bottom: 0.5rem; align-items: flex-start; }}
+    .kanban-col {{ min-width: 268px; max-width: 300px; flex-shrink: 0; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 10px; padding: 0.55rem; }}
+    .kanban-col > h3 {{ font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.03em;
+      color: var(--muted); margin-bottom: 0.45rem; display: flex; justify-content: space-between; gap: 0.4rem; }}
+    .kanban-col > h3 span {{ background: var(--bg); padding: 0.05rem 0.4rem; border-radius: 999px; }}
+    .kanban-cards {{ display: flex; flex-direction: column; grid-template-columns: unset; max-height: 70vh; overflow-y: auto; }}
     .card {{ background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
       padding: 0.65rem 0.75rem; cursor: pointer; transition: border-color .15s; }}
+    .kanban-cards .card {{ margin-bottom: 0.45rem; }}
     .card:hover {{ border-color: var(--accent); }}
     .card.hidden {{ display: none; }}
     .card-top {{ display: flex; justify-content: space-between; align-items: flex-start; gap: 0.4rem; }}
@@ -113,6 +157,24 @@ def build_html(board: dict, tasks: list[dict]) -> str:
     .tag {{ padding: 0.05rem 0.35rem; border-radius: 4px; background: var(--bg); }}
     .tag-blocker {{ color: var(--blocker); border: 1px solid var(--blocker); }}
     .tag-done {{ color: var(--done); }} .tag-partial {{ color: var(--partial); }}
+    .tag-status {{ font-weight: 600; border: 1px solid; }}
+    .tag-agent {{ color: var(--accent); border: 1px solid rgba(88,166,255,.35); }}
+    .st-Todo {{ color: var(--st-todo); border-color: var(--st-todo); }}
+    .st-In-Progress {{ color: var(--st-ip); border-color: var(--st-ip); }}
+    .st-Ready-for-Code-Review {{ color: var(--st-rfc); border-color: var(--st-rfc); }}
+    .st-In-Code-Review {{ color: var(--st-icr); border-color: var(--st-icr); }}
+    .st-Ready-for-Test {{ color: var(--st-rft); border-color: var(--st-rft); }}
+    .st-In-Test {{ color: var(--st-it); border-color: var(--st-it); }}
+    .st-In-Pull-Request {{ color: var(--st-ipr); border-color: var(--st-ipr); }}
+    .st-Done {{ color: var(--st-done); border-color: var(--st-done); }}
+    .dot-Todo {{ background: var(--st-todo); }}
+    .dot-In-Progress {{ background: var(--st-ip); }}
+    .dot-Ready-for-Code-Review {{ background: var(--st-rfc); }}
+    .dot-In-Code-Review {{ background: var(--st-icr); }}
+    .dot-Ready-for-Test {{ background: var(--st-rft); }}
+    .dot-In-Test {{ background: var(--st-it); }}
+    .dot-In-Pull-Request {{ background: var(--st-ipr); }}
+    .dot-Done {{ background: var(--st-done); }}
     .modal-bg {{ display: none; position: fixed; inset: 0; background: rgba(0,0,0,.65); z-index: 200;
       align-items: center; justify-content: center; padding: 1rem; }}
     .modal-bg.open {{ display: flex; }}
@@ -133,10 +195,13 @@ def build_html(board: dict, tasks: list[dict]) -> str:
 <body>
   <header>
     <h1>📋 {escape(meta.get('title', 'Guardião Família v2'))}</h1>
-    <p>Backlog local · {len(tasks)} tasks · espelho do GitHub Project #2 · gerado {date.today().isoformat()}</p>
+    <p>Backlog local · {len(tasks)} tasks · workflow 8 status · GitHub Project #2 · gerado {date.today().isoformat()}</p>
   </header>
+  <div class="workflow-bar" id="workflowBar" title="Clique para filtrar por status"></div>
   <div class="toolbar">
-    <input type="search" id="search" placeholder="Buscar task, épico, repo, arquivo..." />
+    <input type="search" id="search" placeholder="Buscar task, épico, repo, agente, status..." />
+    <select id="filterStatus"><option value="">Todos status</option></select>
+    <select id="filterAgent"><option value="">Todos agentes</option></select>
     <select id="filterTrilha"><option value="">Todas trilhas</option></select>
     <select id="filterSprint"><option value="">Todos sprints</option></select>
     <select id="filterBaseline"><option value="">Todos baselines</option>
@@ -146,27 +211,78 @@ def build_html(board: dict, tasks: list[dict]) -> str:
       <button type="button" data-group="trilha-sprint-epic" class="active">Trilha → Sprint → Epic</button>
       <button type="button" data-group="sprint-epic">Sprint → Epic</button>
       <button type="button" data-group="rank">Por prioridade</button>
+      <button type="button" data-group="kanban">Workflow Kanban</button>
     </div>
   </div>
   <div class="stats" id="stats"></div>
   <main id="board"></main>
   <div class="modal-bg" id="modalBg"><div class="modal" id="modal"></div></div>
-  <footer>Gerado por generate_backlog_dashboard.py · dados de github-project-2-import.json</footer>
+  <footer>Gerado por generate_backlog_dashboard.py · workflow em 11-workflow/TASK_STATUS_WORKFLOW.md</footer>
   <script>
     const DATA = {data_json};
     const board = document.getElementById('board');
     const statsEl = document.getElementById('stats');
+    const workflowBar = document.getElementById('workflowBar');
     let groupMode = 'trilha-sprint-epic';
 
+    function statusClass(s) {{ return 'st-' + s.replace(/ /g, '-'); }}
     function trilhaClass(t) {{ return 'trilha-' + t; }}
 
-    function renderStats(tasks) {{
-      const vis = tasks.filter(t => !t._hidden);
+    function activeOwner(t) {{
+      const kind = DATA.stageOwners[t.status] || 'orchestrator';
+      if (kind === 'creator') return t.agentRole || 'creator';
+      if (kind === 'reviewer') return t.agentRole ? t.agentRole + '-reviewer' : 'reviewer';
+      if (kind === 'devops-cicd') return t.trilha === 'stores' ? 'stores-release' : 'devops-cicd';
+      return kind;
+    }}
+
+    function shortStatus(s) {{
+      const m = {{'Ready for Code Review':'Ready CR','In Code Review':'In CR','Ready for Test':'Ready Test','In Pull Request':'In PR'}};
+      return m[s] || s;
+    }}
+
+    function applyFilters() {{
+      const q = document.getElementById('search').value.toLowerCase();
+      const fst = document.getElementById('filterStatus').value;
+      const fa = document.getElementById('filterAgent').value;
+      const ft = document.getElementById('filterTrilha').value;
+      const fs = document.getElementById('filterSprint').value;
+      const fb = document.getElementById('filterBaseline').value;
+      const fbl = document.getElementById('filterBlocker').checked;
+      DATA.tasks.forEach(t => {{
+        const owner = activeOwner(t);
+        const hay = [t.id,t.title,t.epic,t.repo,t.trilha,t.status,t.agentRole,owner,...t.files].join(' ').toLowerCase();
+        t._hidden = (q && !hay.includes(q)) || (fst && t.status!==fst) || (fa && t.agentRole!==fa && owner!==fa)
+          || (ft && t.trilha!==ft) || (fs && String(t.sprint)!==fs)
+          || (fb && t.baseline!==fb) || (fbl && !t.blocker);
+      }});
+      return DATA.tasks.filter(t => !t._hidden);
+    }}
+
+    function renderWorkflowBar(vis) {{
+      workflowBar.innerHTML = DATA.statuses.map(st => {{
+        const n = vis.filter(t => t.status === st).length;
+        const active = document.getElementById('filterStatus').value === st ? ' active' : '';
+        return `<button type="button" class="wf-chip${{active}}" data-status="${{esc(st)}}">
+          <span class="wf-dot dot-${{st.replace(/ /g,'-')}}"></span>${{shortStatus(st)}} <strong>${{n}}</strong></button>`;
+      }}).join('');
+      workflowBar.querySelectorAll('.wf-chip').forEach(chip => {{
+        chip.addEventListener('click', () => {{
+          const sel = document.getElementById('filterStatus');
+          sel.value = sel.value === chip.dataset.status ? '' : chip.dataset.status;
+          renderBoard();
+        }});
+      }});
+    }}
+
+    function renderStats(vis) {{
       const byTrilha = {{}};
       vis.forEach(t => {{ byTrilha[t.trilha] = (byTrilha[t.trilha]||0)+1; }});
+      const inFlight = vis.filter(t => t.status !== 'Todo' && t.status !== 'Done').length;
       statsEl.innerHTML = `
         <div class="stat"><strong>${{vis.length}}</strong> visíveis</div>
         <div class="stat"><strong>${{DATA.tasks.length}}</strong> total</div>
+        <div class="stat"><strong>${{inFlight}}</strong> em fluxo</div>
         <div class="stat"><strong>${{vis.filter(t=>t.blocker).length}}</strong> blockers</div>
         <div class="stat"><strong>${{vis.reduce((s,t)=>s+t.sp,0)}}</strong> SP</div>
         ${{Object.entries(byTrilha).map(([k,v])=>`<div class="stat"><strong>${{v}}</strong> ${{k}}</div>`).join('')}}
@@ -176,12 +292,14 @@ def build_html(board: dict, tasks: list[dict]) -> str:
     function cardHtml(t) {{
       const bl = t.blocker ? '<span class="tag tag-blocker">blocker</span>' : '';
       const blClass = t.baseline === 'done' ? 'tag-done' : t.baseline === 'partial' ? 'tag-partial' : '';
+      const stTag = `<span class="tag tag-status ${{statusClass(t.status)}}">${{shortStatus(t.status)}}</span>`;
+      const ag = t.agentRole ? `<span class="tag tag-agent">${{esc(t.agentRole)}}</span>` : '';
       return `<article class="card" data-id="${{t.id}}" tabindex="0">
         <div class="card-top"><span class="card-id">${{t.id}}</span><span class="card-rank">#${{t.rank}}</span></div>
         <div class="card-title">${{esc(t.title)}}</div>
-        <div class="card-meta">
+        <div class="card-meta">${{stTag}}${{ag}}
           <span class="tag">${{t.repo}}</span><span class="tag">${{t.sp}} SP</span>
-          <span class="tag">RICE ${{t.rice}}</span><span class="tag ${{blClass}}">${{t.baseline}}</span>${{bl}}
+          <span class="tag ${{blClass}}">${{t.baseline}}</span>${{bl}}
         </div></article>`;
     }}
 
@@ -199,55 +317,73 @@ def build_html(board: dict, tasks: list[dict]) -> str:
       return tree;
     }}
 
-    function renderBoard() {{
-      const q = document.getElementById('search').value.toLowerCase();
-      const ft = document.getElementById('filterTrilha').value;
-      const fs = document.getElementById('filterSprint').value;
-      const fb = document.getElementById('filterBaseline').value;
-      const fbl = document.getElementById('filterBlocker').checked;
-      DATA.tasks.forEach(t => {{
-        const hay = [t.id,t.title,t.epic,t.repo,t.trilha,...t.files].join(' ').toLowerCase();
-        t._hidden = (q && !hay.includes(q)) || (ft && t.trilha!==ft) || (fs && String(t.sprint)!==fs)
-          || (fb && t.baseline!==fb) || (fbl && !t.blocker);
+    function renderKanban(tasks) {{
+      let html = '<div class="kanban">';
+      DATA.statuses.forEach(st => {{
+        const cards = tasks.filter(t => t.status === st).sort((a,b) => a.rank - b.rank);
+        html += `<section class="kanban-col"><h3>${{esc(st)}} <span>${{cards.length}}</span></h3>
+          <div class="cards kanban-cards">${{cards.map(cardHtml).join('')}}</div></section>`;
       }});
-      const vis = DATA.tasks.filter(t => !t._hidden);
-      renderStats(DATA.tasks);
-      const tree = buildGroups(vis, groupMode);
-      let html = '';
-      Object.keys(tree).sort().forEach(k1 => {{
-        const tc = groupMode==='trilha-sprint-epic' ? `<span class="badge-trilha ${{trilhaClass(k1)}}">${{k1}}</span>` : '';
-        html += `<section class="group-l1"><h2>${{tc}} ${{esc(k1)}}</h2>`;
-        Object.keys(tree[k1]).sort((a,b)=>a.localeCompare(b,undefined,{{numeric:true}})).forEach(k2 => {{
-          html += `<div class="group-l2"><h3>${{esc(k2)}}</h3>`;
-          Object.keys(tree[k1][k2]).sort().forEach(k3 => {{
-            const cards = tree[k1][k2][k3];
-            if (groupMode !== 'rank') html += `<div class="group-l3"><h4>${{esc(k3)}} (${{cards.length}})</h4>`;
-            html += `<div class="cards">${{cards.map(cardHtml).join('')}}</div>`;
-            if (groupMode !== 'rank') html += '</div>';
-          }});
-          html += '</div>';
-        }});
-        html += '</section>';
-      }});
-      board.innerHTML = html || '<p style="color:var(--muted)">Nenhuma task encontrada.</p>';
+      return html + '</div>';
+    }}
+
+    function bindCards() {{
       board.querySelectorAll('.card').forEach(el => {{
         el.addEventListener('click', () => openModal(el.dataset.id));
         el.addEventListener('keydown', e => {{ if(e.key==='Enter') openModal(el.dataset.id); }});
       }});
     }}
 
+    function renderBoard() {{
+      const vis = applyFilters();
+      const isKanban = groupMode === 'kanban';
+      workflowBar.classList.toggle('is-kanban', isKanban);
+      if (isKanban) renderWorkflowBar(vis);
+      else workflowBar.innerHTML = '';
+      renderStats(vis);
+      let html = '';
+      if (groupMode === 'kanban') {{
+        html = renderKanban(vis);
+      }} else {{
+        const tree = buildGroups(vis, groupMode);
+        Object.keys(tree).sort().forEach(k1 => {{
+          const tc = groupMode==='trilha-sprint-epic' ? `<span class="badge-trilha ${{trilhaClass(k1)}}">${{k1}}</span>` : '';
+          html += `<section class="group-l1"><h2>${{tc}} ${{esc(k1)}}</h2>`;
+          Object.keys(tree[k1]).sort((a,b)=>a.localeCompare(b,undefined,{{numeric:true}})).forEach(k2 => {{
+            html += `<div class="group-l2"><h3>${{esc(k2)}}</h3>`;
+            Object.keys(tree[k1][k2]).sort().forEach(k3 => {{
+              const cards = tree[k1][k2][k3];
+              if (groupMode !== 'rank') html += `<div class="group-l3"><h4>${{esc(k3)}} (${{cards.length}})</h4>`;
+              html += `<div class="cards">${{cards.map(cardHtml).join('')}}</div>`;
+              if (groupMode !== 'rank') html += '</div>';
+            }});
+            html += '</div>';
+          }});
+          html += '</section>';
+        }});
+      }}
+      board.innerHTML = html || '<p style="color:var(--muted)">Nenhuma task encontrada.</p>';
+      bindCards();
+    }}
+
     function openModal(id) {{
       const t = DATA.tasks.find(x => x.id===id);
       if (!t) return;
+      const owner = activeOwner(t);
       document.getElementById('modal').innerHTML = `
         <button class="close" onclick="closeModal()">×</button>
         <h2>${{esc(t.id)}} — ${{esc(t.title)}}</h2>
-        <p style="font-size:.82rem;color:var(--muted)">${{esc(t.epic)}} · ${{t.repo}} · Sprint ${{t.sprint}} · #${{t.rank}}</p>
+        <p style="font-size:.82rem;color:var(--muted)">
+          <span class="tag tag-status ${{statusClass(t.status)}}">${{esc(t.status)}}</span>
+          · owner: <code>${{esc(owner)}}</code>
+          · ${{esc(t.epic)}} · ${{t.repo}} · Sprint ${{t.sprint}} · #${{t.rank}}
+        </p>
         <pre>${{esc(t.context)}}</pre>
         <strong>Arquivos sugeridos</strong><ul>${{t.files.map(f=>'<li><code>'+esc(f)+'</code></li>').join('')}}</ul>
         <strong>Critérios de aceite</strong><ul>${{t.hints.map(h=>'<li>'+esc(h)+'</li>').join('')}}</ul>
         <strong>Métricas</strong><ul>
-          <li>SP: ${{t.sp}} · RICE: ${{t.rice}} · WSJF: ${{t.wsjf}} · PERT implícito no board</li>
+          <li>Agente: ${{esc(t.agentRole || '—')}}${{t.agentRoleSecondary ? ' · sec: '+esc(t.agentRoleSecondary) : ''}}</li>
+          <li>SP: ${{t.sp}} · RICE: ${{t.rice}} · WSJF: ${{t.wsjf}}</li>
           <li>Baseline: ${{t.baseline}} · Blocker: ${{t.blocker?'sim':'não'}} · OKR: ${{t.okr}}</li>
           ${{t.blockerReason ? '<li><strong>Motivo blocker:</strong> '+esc(t.blockerReason)+'</li>' : ''}}
           ${{t.commit ? '<li>Commit: <code>'+esc(t.commit)+'</code></li>' : ''}}
@@ -258,13 +394,20 @@ def build_html(board: dict, tasks: list[dict]) -> str:
     document.getElementById('modalBg').addEventListener('click', e => {{ if(e.target.id==='modalBg') closeModal(); }});
 
     function initFilters() {{
+      DATA.statuses.forEach(v => {{
+        const o=document.createElement('option'); o.value=v; o.textContent=v;
+        document.getElementById('filterStatus').appendChild(o);
+      }});
+      const agents = [...new Set(DATA.tasks.map(t=>t.agentRole).filter(Boolean))].sort();
+      agents.forEach(v => {{ const o=document.createElement('option'); o.value=v; o.textContent=v;
+        document.getElementById('filterAgent').appendChild(o); }});
       const trilhas = [...new Set(DATA.tasks.map(t=>t.trilha))].sort();
       const sprints = [...new Set(DATA.tasks.map(t=>t.sprint))].sort((a,b)=>a-b);
       trilhas.forEach(v => {{ const o=document.createElement('option'); o.value=v; o.textContent=v;
         document.getElementById('filterTrilha').appendChild(o); }});
       sprints.forEach(v => {{ const o=document.createElement('option'); o.value=v; o.textContent='Sprint '+v;
         document.getElementById('filterSprint').appendChild(o); }});
-      ['search','filterTrilha','filterSprint','filterBaseline','filterBlocker'].forEach(id =>
+      ['search','filterStatus','filterAgent','filterTrilha','filterSprint','filterBaseline','filterBlocker'].forEach(id =>
         document.getElementById(id).addEventListener('input', renderBoard));
       document.querySelectorAll('.view-toggle button').forEach(btn => {{
         btn.addEventListener('click', () => {{
@@ -281,10 +424,16 @@ def build_html(board: dict, tasks: list[dict]) -> str:
 
 def main() -> None:
     board = json.loads(JSON_PATH.read_text(encoding="utf-8"))
-    tasks = compact_tasks(board)
+    agent_map = load_agent_map()
+    tasks = compact_tasks(board, agent_map)
     html = build_html(board, tasks)
     OUT_PATH.write_text(html, encoding="utf-8")
+    by_status: dict[str, int] = {}
+    for t in tasks:
+        by_status[t["status"]] = by_status.get(t["status"], 0) + 1
     print(f"Dashboard: {OUT_PATH} ({len(tasks)} tasks)")
+    for st in STATUSES:
+        print(f"  {st}: {by_status.get(st, 0)}")
 
 
 if __name__ == "__main__":

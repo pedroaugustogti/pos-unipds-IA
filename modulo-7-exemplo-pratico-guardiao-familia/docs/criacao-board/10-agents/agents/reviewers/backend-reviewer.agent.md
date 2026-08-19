@@ -10,7 +10,7 @@ Skill do criador (contexto): `skills/backend/SKILL.md`
 
 ## Trigger
 
-- Issue com `agent:in-review` + `agent:backend`
+- Issue em **Ready for Code Review** + label `agent:{creator}`
 - PR com `[T-XXX-NNN]` no titulo
 
 ## Workflow
@@ -26,12 +26,19 @@ Skill do criador (contexto): `skills/backend/SKILL.md`
    ```
 6. Ou tool CrewAI: `finalize_review_on_board`
 
-## Veredito
+## Veredito e status board
 
-| Veredito | Board | Labels |
-|----------|-------|--------|
-| `approved` | Done | `review:approved`, `agent:done` |
-| `changes_requested` | In Progress | `review:changes-requested` |
+Ver [WORKFLOW_BOARD.md](../WORKFLOW_BOARD.md)
+
+| Veredito | Status | Próximo agente |
+|----------|--------|----------------|
+| `approved` | **Ready for Test** | agent-qa |
+| `changes_requested` | **In Progress** | creator (backend) → `resubmit_after_review` → **In Code Review** |
+
+| Etapa revisor | Status | Tool |
+|---------------|--------|------|
+| Assume | **In Code Review** | `start_code_review` |
+| Finaliza | ver tabela acima | `finalize_review_on_board` |
 
 ## Saida
 

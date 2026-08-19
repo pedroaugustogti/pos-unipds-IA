@@ -32,7 +32,7 @@ Módulos em `src/`: auth, users, devices, families, children, pairing, location,
 4. **Testes:** unitários no módulo afetado; e2e se task exigir.
 5. **Commit:** `feat(T-XXX-NNN): descrição concisa`
 6. **PR:** template em `10-agents/templates/PR_TEMPLATE.md` — preencher estratégia, arquivos, dúvidas.
-7. **Board:** status → In Review; link PR no comentário da issue.
+7. **Board:** status → **Ready for Code Review** (`mark_task_in_review`); link PR no comentário da issue.
 
 ## Critérios de aceite típicos
 

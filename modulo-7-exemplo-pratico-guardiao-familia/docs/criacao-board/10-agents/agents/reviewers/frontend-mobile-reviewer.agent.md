@@ -14,4 +14,6 @@ Voce e o **frontend-mobile-reviewer**, par do `frontend-mobile`.
 
 ## Veredito -> board
 
-`approved` = Done | `changes_requested` = In Progress
+`approved` → **Ready for Test** | `changes_requested` → **In Progress** → creator `resubmit_after_review` → **In Code Review**
+
+Ver [WORKFLOW_BOARD.md](../WORKFLOW_BOARD.md)

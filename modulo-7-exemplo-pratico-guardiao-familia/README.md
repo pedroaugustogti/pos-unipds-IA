@@ -5,8 +5,13 @@ Caso de estudo real para **planejamento, board v2, agentes autônomos e entrega*
 **Clone local:** `C:\Users\pedro\Documents\guardiao-familia`  
 **Board GitHub:** [Project #2](https://github.com/orgs/guardiaofamilia/projects/2)
 
----
+> ### 📊 [Abrir Dashboard HTML — 272 tasks](./docs/criacao-board/08-board/backlog-dashboard.html)
+>
+> Backlog completo **offline** no navegador ou Live Preview do Cursor: filtros (trilha, sprint, agente, status, blockers), modal com refinamento, visão **Trilha → Sprint → Epic** (padrão) e **Workflow Kanban** (8 status alinhados aos agentes).
+>
+> Regenerar: `python docs/criacao-board/scripts/generate_backlog_dashboard.py`
 
+---
 ## Entregáveis principais
 
 | Entrega | Pasta | Descrição |
@@ -14,7 +19,7 @@ Caso de estudo real para **planejamento, board v2, agentes autônomos e entrega*
 | Contexto produto | [`docs/contexto/`](./docs/contexto/) | Visão, arquitetura, maturidade, board legado |
 | Planejamento 6M | [`docs/planejamento/`](./docs/planejamento/README.md) | Briefing, RICE/WSJF, sprints, Monte Carlo |
 | **Board v2** | [`docs/criacao-board/`](./docs/criacao-board/README.md) | 272 tasks, OKRs, épicos, priorização, import GitHub |
-| **Dashboard HTML** | [`docs/criacao-board/08-board/backlog-dashboard.html`](./docs/criacao-board/08-board/backlog-dashboard.html) | Backlog completo offline (Trilha → Sprint → Epic) |
+| **Dashboard HTML** | **[`backlog-dashboard.html`](./docs/criacao-board/08-board/backlog-dashboard.html)** | 272 tasks · Kanban workflow · filtros · refinamento por card |
 | **Agentes IA** | [`docs/criacao-board/10-agents/`](./docs/criacao-board/10-agents/README.md) | 8 criadores + 8 revisores + CrewAI + board sync |
 
 ---
@@ -23,10 +28,13 @@ Caso de estudo real para **planejamento, board v2, agentes autônomos e entrega*
 
 ### 1. Ver backlog local (272 tasks)
 
+**Abra direto:** [`docs/criacao-board/08-board/backlog-dashboard.html`](./docs/criacao-board/08-board/backlog-dashboard.html) (navegador ou Live Preview no Cursor)
+
+Para regenerar após alterar o JSON:
+
 ```powershell
 cd docs/criacao-board
 python scripts/generate_backlog_dashboard.py
-# Abrir backlog-dashboard.html no Cursor (Live Preview) ou navegador
 ```
 
 ### 2. Regenerar board a partir do código
@@ -95,7 +103,7 @@ Cada task inclui **refinamento**: contexto, arquivos sugeridos e critérios de a
 
 Extensões recomendadas: **Live Preview** / **Live Server** (`.vscode/extensions.json` na raiz do repo).
 
-Abra `backlog-dashboard.html` → `Ctrl+Shift+P` → **Live Preview: Show Preview**
+Abra [`backlog-dashboard.html`](./docs/criacao-board/08-board/backlog-dashboard.html) → `Ctrl+Shift+P` → **Live Preview: Show Preview**
 
 ---
 

@@ -47,13 +47,13 @@ def build_crew(sprint: int = 1, dry_run: bool = False) -> Crew:
     orchestrator = Agent(
         role="Engineering Manager / Scrum Orchestrator",
         goal=(
-            f"Planejar sprint {sprint}, rotear tasks para especialistas via TASK_AGENT_MAP, "
-            "executar claims no GitHub Project #2 e garantir rastreabilidade board -> PR."
+            f"Planejar sprint {sprint}, rotear tasks, sincronizar board Project #2 "
+            "no workflow Todo→Done (8 status) e delegar claims."
         ),
         backstory=(
-            "Voce coordena 8 agentes especializados do Guardiao Familia. "
-            "Usa tools para listar backlog, planejar assignments e atualizar o board. "
-            "Prioriza release_blocker e priority_rank."
+            "Voce coordena 8 criadores + 8 revisores + QA + DevOps. "
+            "Respeita transicoes: claim→In Progress, open_pr→Ready for CR, "
+            "approve→Ready for Test, test_passed→In PR, merge→Done."
         ),
         tools=BOARD_TOOLS,
         verbose=True,
@@ -68,7 +68,7 @@ def build_crew(sprint: int = 1, dry_run: bool = False) -> Crew:
             role=f"Creator {role}",
             goal=f"Implementar tasks {role} e abrir PR estrategico.",
             backstory=_load_skill(role),
-            tools=[BOARD_TOOLS[1], BOARD_TOOLS[2], BOARD_TOOLS[6]],
+            tools=[BOARD_TOOLS[1], BOARD_TOOLS[2], BOARD_TOOLS[12], BOARD_TOOLS[13]],
             verbose=True,
             allow_delegation=False,
             llm=_llm(),
@@ -120,13 +120,13 @@ def build_crew(sprint: int = 1, dry_run: bool = False) -> Crew:
 
     review_task = Task(
         description=(
-            "Para cada PR com agent:in-review: "
+            "Workflow review (Ready for Code Review → In Code Review → Ready for Test): "
             "1) list_prs_pending_review "
-            "2) Revisor correspondente analisa diff e checklist da skill "
-            "3) finalize_review_on_board com verdict approved ou changes_requested "
-            "4) Board Done se approved, In Progress se changes_requested"
+            "2) start_code_review por revisor pareado "
+            "3) finalize_review_on_board: approved → Ready for Test; changes_requested → In Progress "
+            "4) Se creator corrigir: resubmit_after_review → In Code Review"
         ),
-        expected_output="Tabela: task_id | reviewer | verdict | board_status | findings.",
+        expected_output="Tabela: task_id | reviewer | verdict | board_status | proximo agente (qa/creator).",
         agent=orchestrator,
         context=[report_task],
         output_file=str(CREW_DIR / "output" / "review_report.md"),

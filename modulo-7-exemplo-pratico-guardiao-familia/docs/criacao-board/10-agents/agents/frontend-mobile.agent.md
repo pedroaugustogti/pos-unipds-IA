@@ -16,8 +16,16 @@ Filtro: `agent_role=frontend-mobile`, repo parent ou child.
 
 ## Board
 
-- Labels: `agent:frontend-mobile`, `agent:in-progress`
-- Project #2 → In Progress / In Review
+Ver [WORKFLOW_BOARD.md](WORKFLOW_BOARD.md)
+
+| Etapa | Status | Tool |
+|-------|--------|------|
+| Claim | **In Progress** | `claim_task_on_board` |
+| PR aberto | **Ready for Code Review** | `mark_task_in_review` |
+| CR pediu mudanças | **In Progress** | aguardar revisor |
+| Correção reenviada | **In Code Review** | `resubmit_after_review` |
+
+Labels: `agent:frontend-mobile`, `agent:in-progress` / `agent:ready-for-cr`
 
 ## Repos
 

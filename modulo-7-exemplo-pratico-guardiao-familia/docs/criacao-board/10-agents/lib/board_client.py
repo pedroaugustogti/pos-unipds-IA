@@ -18,6 +18,7 @@ from lib.task_status_workflow import (  # noqa: E402
     STATUSES,
     apply_event,
     label_for_status,
+    merge_owner_for_task,
     resolve_status,
     status_after_review_verdict,
 )
@@ -346,3 +347,94 @@ def finalize_pr_review(
         "pr_comment": pr_comment,
         "board": status_result,
     }
+
+
+def _apply_status_with_labels(
+    task: dict,
+    status: str,
+    labels: list[str],
+    comment: str,
+    dry_run: bool = False,
+) -> dict:
+    repo = task["repo"]
+    task_id = task["id"]
+    label_result = add_labels(repo, task_id, labels, dry_run=dry_run) if labels else {"ok": True}
+    comment_result = comment_issue(repo, task_id, comment, dry_run=dry_run) if comment else {"ok": True}
+    status_result = update_project_status(task_id, task["title"], status, dry_run=dry_run)
+    return {
+        "task_id": task_id,
+        "status": _resolve_board_status(status),
+        "labels": label_result,
+        "comment": comment_result,
+        "board": status_result,
+    }
+
+
+def start_code_review(task: dict, reviewer_role: str, dry_run: bool = False) -> dict:
+    """Revisor assume → In Code Review."""
+    return _apply_status_with_labels(
+        task, "In Code Review",
+        [f"agent:{reviewer_role}", "agent:in-review"],
+        f"**{reviewer_role}** iniciou code review → **In Code Review**",
+        dry_run,
+    )
+
+
+def resubmit_after_changes(task: dict, creator_role: str, pr_url: str = "", dry_run: bool = False) -> dict:
+    """Correcao CR → In Code Review (re-review)."""
+    body = f"**{creator_role}** — correcoes CR aplicadas → **In Code Review**"
+    if pr_url:
+        body += f"\n\n{pr_url}"
+    return _apply_status_with_labels(
+        task, "In Code Review",
+        ["agent:in-review", f"agent:{creator_role}"],
+        body,
+        dry_run,
+    )
+
+
+def start_qa(task: dict, dry_run: bool = False) -> dict:
+    """QA inicia testes → In Test."""
+    return _apply_status_with_labels(
+        task, "In Test",
+        ["agent:qa", "agent:in-test"],
+        "**agent-qa** iniciou testes → **In Test**",
+        dry_run,
+    )
+
+
+def complete_qa_pass(task: dict, summary: str = "", dry_run: bool = False) -> dict:
+    """Testes OK → In Pull Request."""
+    track = task.get("track", "produto")
+    merge_agent = merge_owner_for_task(track)
+    body = f"**agent-qa** testes aprovados → **In Pull Request** (@{merge_agent})"
+    if summary:
+        body += f"\n\n{summary[:2000]}"
+    return _apply_status_with_labels(
+        task, "In Pull Request",
+        ["agent:in-pr", f"agent:{merge_agent}"],
+        body,
+        dry_run,
+    )
+
+
+def report_qa_bug(task: dict, summary: str, dry_run: bool = False) -> dict:
+    """Bug em QA → In Progress (creator corrige)."""
+    creator = task.get("agent_role", "backend")
+    body = f"**agent-qa** bug/regressao → **In Progress** (@{creator})\n\n{summary[:2000]}"
+    return _apply_status_with_labels(
+        task, "In Progress",
+        ["type:bug", "agent:in-progress", f"agent:{creator}"],
+        body,
+        dry_run,
+    )
+
+
+def complete_merge(task: dict, agent: str = "devops-cicd", dry_run: bool = False) -> dict:
+    """Merge concluido → Done."""
+    return _apply_status_with_labels(
+        task, "Done",
+        ["agent:done", "review:approved"],
+        f"**{agent}** merge concluido → **Done**",
+        dry_run,
+    )

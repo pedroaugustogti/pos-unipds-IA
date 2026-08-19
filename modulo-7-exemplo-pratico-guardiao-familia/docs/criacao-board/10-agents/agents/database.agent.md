@@ -26,4 +26,8 @@ Orchestrator: `--agent database`
 
 Coordenar com backend se breaking API change.
 
+## Board
+
+Ver [WORKFLOW_BOARD.md](WORKFLOW_BOARD.md): In Progress → Ready for CR → In CR → Ready for Test → …
+
 Reporte: task_id, migration_files[], PR URL.

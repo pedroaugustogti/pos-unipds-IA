@@ -28,8 +28,14 @@ Branch: `test/{task_id}-{slug}`
 
 **Não** alterar lógica produção exceto fixes mínimos para testabilidade.
 
-## Trigger alternativo
+## Workflow board
 
-Executar após PR de dev agent: revisar diff e adicionar testes faltantes na mesma task ou task derivada.
+Ver [WORKFLOW_BOARD.md](../WORKFLOW_BOARD.md)
 
-Reporte: task_id, test_files[], scenarios_count, PR URL.
+| Etapa | Status | Tool |
+|-------|--------|------|
+| Pega da fila (pós-CR) | **In Test** | `start_qa_on_board` |
+| Testes OK | **In Pull Request** | `complete_qa_pass_on_board` |
+| Bug/regressão | **In Progress** + `type:bug` | `report_qa_bug_on_board` → creator corrige |
+
+Trigger: tasks em **Ready for Test** ou **In Test** com label `agent:ready-for-test` / `agent:in-test`.

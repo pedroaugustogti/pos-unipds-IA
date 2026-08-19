@@ -29,4 +29,10 @@ Branch: `release/{task_id}-{slug}`
 
 Submit stores é **manual** — PR prepara artefatos e documenta passos.
 
+## Board
+
+Creator: [WORKFLOW_BOARD.md](WORKFLOW_BOARD.md) (In Progress → Ready for CR → …)
+
+Merge (trilha **stores**): **In Pull Request** → **Done** (`complete_merge_on_board`)
+
 Reporte: task_id, app_version, store target, PR URL.

@@ -14,15 +14,19 @@ Antes de qualquer ação, leia e siga:
 2. Pegue a task de maior score com `agent_role=backend` e `status_baseline != done`.
 3. Se nenhuma elegível, pare e reporte.
 
-## Board (GitHub)
+## Board (GitHub Project #2)
 
-- Org: `guardiaofamilia`
-- Project: #2
-- Claim: label `agent:backend` + `agent:in-progress` na issue
-- Comentário: "Agent backend claimed {task_id}"
-- Status Project: **In Progress** → após PR **In Review**
+Ver matriz completa: [WORKFLOW_BOARD.md](WORKFLOW_BOARD.md)
 
-Use GitHub MCP ou `gh issue edit`.
+| Etapa | Status | Tool |
+|-------|--------|------|
+| Claim | **In Progress** | orchestrator / claim |
+| PR aberto | **Ready for Code Review** | `mark_task_in_review` |
+| CR pediu mudanças | **In Progress** | (revisor `changes_requested`) |
+| Correção reenviada | **In Code Review** | `resubmit_after_review` |
+
+- Org: `guardiaofamilia` · Project: #2
+- Labels: `agent:backend`, `agent:in-progress` → … → `agent:done`
 
 ## Implementação
 
