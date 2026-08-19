@@ -601,7 +601,12 @@ def item_to_json(t: Task) -> dict:
             "Release Blocker": "yes" if t.release_blocker else "no",
         },
         "commit_evidence": t.commit_evidence,
+        "release_blocker": t.release_blocker,
     })
+    blocker_motivo = ref.get("blocker_reason", "")
+    refinamento_text = ref["context_summary"]
+    if len(refinamento_text) > 900:
+        refinamento_text = refinamento_text[:897] + "..."
     return {
         "id": t.id,
         "title": t.title,
@@ -623,9 +628,10 @@ def item_to_json(t: Task) -> dict:
             "PERT (d)": t.pert_expected,
             "Baseline": t.status_baseline,
             "Release Blocker": "yes" if t.release_blocker else "no",
+            "Blocker Motivo": blocker_motivo,
             "Priority Rank": t.priority_rank,
             "Repo alvo": t.repo,
-            "Refinamento": ref["context_summary"][:500],
+            "Refinamento": refinamento_text,
         },
         "labels": t.labels + [t.track, t.okr, t.epic_id],
         "commit_evidence": t.commit_evidence,
@@ -662,6 +668,7 @@ def build_json_board(tasks: list[Task]) -> dict:
             {"name": "PERT (d)", "type": "number"},
             {"name": "Baseline", "type": "single_select", "options": ["done", "partial", "todo"]},
             {"name": "Release Blocker", "type": "single_select", "options": ["yes", "no"]},
+            {"name": "Blocker Motivo", "type": "text"},
             {"name": "Priority Rank", "type": "number"},
             {"name": "Repo alvo", "type": "text"},
             {"name": "Refinamento", "type": "text"},
@@ -725,11 +732,12 @@ def main() -> None:
         ref_rows.append({
             "id": t.id, "title": t.title, "repo": t.repo,
             "suggested_files": ";".join(ref["suggested_files"]),
-            "context_summary": ref["context_summary"].replace("\n", " ")[:400],
+            "context_summary": ref["context_summary"].replace("\n", " ")[:500],
             "acceptance_hints": ";".join(ref["acceptance_hints"]),
+            "blocker_reason": ref.get("blocker_reason", ""),
         })
     write_csv(PLANILHAS / "REFINAMENTO_TASKS.csv", ref_rows,
-              ["id", "title", "repo", "suggested_files", "context_summary", "acceptance_hints"])
+              ["id", "title", "repo", "suggested_files", "context_summary", "acceptance_hints", "blocker_reason"])
 
     board = build_json_board(tasks)
     (BOARD / "github-project-2-import.json").write_text(

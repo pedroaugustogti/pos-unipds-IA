@@ -36,6 +36,7 @@ FIELD_SPECS = [
     ("PERT (d)", "NUMBER", None),
     ("Baseline", "SINGLE_SELECT", ["done", "partial", "todo"]),
     ("Release Blocker", "SINGLE_SELECT", ["yes", "no"]),
+    ("Blocker Motivo", "TEXT", None),
     ("Priority Rank", "NUMBER", None),
     ("Repo alvo", "TEXT", None),
     ("Refinamento", "TEXT", None),
@@ -339,6 +340,10 @@ def apply_fields(item_id: str, fields: dict[str, dict], it: dict) -> None:
     set_field(item_id, fields["PERT (d)"]["id"], {"number": float(f["PERT (d)"])})
     set_field(item_id, fields["Baseline"]["id"], {"singleSelectOptionId": option_id(fields["Baseline"], f["Baseline"])})
     set_field(item_id, fields["Release Blocker"]["id"], {"singleSelectOptionId": option_id(fields["Release Blocker"], f["Release Blocker"])})
+    if "Blocker Motivo" in fields:
+        motivo = f.get("Blocker Motivo") or ""
+        if motivo:
+            set_field(item_id, fields["Blocker Motivo"]["id"], {"text": str(motivo)[:1000]})
     set_field(item_id, fields["Priority Rank"]["id"], {"number": float(f["Priority Rank"])})
     set_field(item_id, fields["Repo alvo"]["id"], {"text": it["repository"]})
     refin = f.get("Refinamento") or (it.get("refinement") or {}).get("context_summary", "")
@@ -349,6 +354,7 @@ def apply_fields(item_id: str, fields: dict[str, dict], it: dict) -> None:
 def main() -> int:
     dry = "--dry-run" in sys.argv
     drafts_only = "--drafts-only" in sys.argv
+    force_fields = "--force-fields" in sys.argv
     fields_only = "--fields-only" in sys.argv
     update_bodies = "--update-bodies" in sys.argv
     board = json.loads(JSON_PATH.read_text(encoding="utf-8"))
@@ -383,8 +389,9 @@ def main() -> int:
                 update_draft_body(item_id, body)
                 bodies_updated += 1
                 time.sleep(0.8)
-            if item_id and fields and (fields_only or (not drafts_only and not update_bodies)):
-                if title not in synced_titles:
+            if item_id and fields and (fields_only or force_fields or (not drafts_only and not update_bodies)):
+                needs_sync = title not in synced_titles or force_fields
+                if needs_sync:
                     apply_fields(item_id, fields, it)
                     updated += 1
                     time.sleep(1.0)

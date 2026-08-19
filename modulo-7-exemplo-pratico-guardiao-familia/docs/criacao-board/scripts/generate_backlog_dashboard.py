@@ -39,6 +39,7 @@ def compact_tasks(board: dict) -> list[dict]:
             "wsjf": f.get("WSJF", 0),
             "baseline": f.get("Baseline", "todo"),
             "blocker": f.get("Release Blocker") == "yes",
+            "blockerReason": f.get("Blocker Motivo") or (ref.get("blocker_reason") if ref else ""),
             "rank": int(f.get("Priority Rank", 999)),
             "files": ref.get("suggested_files", []),
             "hints": ref.get("acceptance_hints", []),
@@ -248,6 +249,7 @@ def build_html(board: dict, tasks: list[dict]) -> str:
         <strong>Métricas</strong><ul>
           <li>SP: ${{t.sp}} · RICE: ${{t.rice}} · WSJF: ${{t.wsjf}} · PERT implícito no board</li>
           <li>Baseline: ${{t.baseline}} · Blocker: ${{t.blocker?'sim':'não'}} · OKR: ${{t.okr}}</li>
+          ${{t.blockerReason ? '<li><strong>Motivo blocker:</strong> '+esc(t.blockerReason)+'</li>' : ''}}
           ${{t.commit ? '<li>Commit: <code>'+esc(t.commit)+'</code></li>' : ''}}
         </ul>`;
       document.getElementById('modalBg').classList.add('open');

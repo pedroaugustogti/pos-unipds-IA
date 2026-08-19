@@ -1,0 +1,151 @@
+{
+  "generated": "2026-08-19",
+  "local": {
+    "source": "local_json",
+    "total": 272,
+    "gaps": {
+      "missing_trilha": {
+        "count": 0,
+        "ids": []
+      },
+      "missing_okr": {
+        "count": 0,
+        "ids": []
+      },
+      "missing_epic": {
+        "count": 0,
+        "ids": []
+      },
+      "missing_refinamento": {
+        "count": 0,
+        "ids": []
+      },
+      "missing_files": {
+        "count": 0,
+        "ids": []
+      },
+      "blocker_without_reason": {
+        "count": 0,
+        "ids": []
+      }
+    },
+    "fixed_refinement": 0,
+    "blockers_with_reason": 36,
+    "release_blockers": 36
+  },
+  "github": {
+    "source": "github_project",
+    "total_cards": 272,
+    "expected": 272,
+    "gaps": {
+      "missing_cards": {
+        "count": 0,
+        "ids": []
+      },
+      "missing_trilha": {
+        "count": 228,
+        "ids": [
+          "T-P04-008",
+          "T-P03-002",
+          "T-P03-003",
+          "T-S01-001",
+          "T-S01-003",
+          "T-S01-004",
+          "T-S02-001",
+          "T-S02-003",
+          "T-S02-004",
+          "T-I02-001",
+          "T-I02-006",
+          "T-I02-008",
+          "T-I02-009",
+          "T-P02-011",
+          "T-P14-031",
+          "T-P14-032",
+          "T-P05-008",
+          "T-P05-010",
+          "T-P12-007",
+          "T-I06-001"
+        ]
+      },
+      "missing_okr": {
+        "count": 228,
+        "ids": [
+          "T-P04-008",
+          "T-P03-002",
+          "T-P03-003",
+          "T-S01-001",
+          "T-S01-003",
+          "T-S01-004",
+          "T-S02-001",
+          "T-S02-003",
+          "T-S02-004",
+          "T-I02-001",
+          "T-I02-006",
+          "T-I02-008",
+          "T-I02-009",
+          "T-P02-011",
+          "T-P14-031",
+          "T-P14-032",
+          "T-P05-008",
+          "T-P05-010",
+          "T-P12-007",
+          "T-I06-001"
+        ]
+      },
+      "missing_epic": {
+        "count": 228,
+        "ids": [
+          "T-P04-008",
+          "T-P03-002",
+          "T-P03-003",
+          "T-S01-001",
+          "T-S01-003",
+          "T-S01-004",
+          "T-S02-001",
+          "T-S02-003",
+          "T-S02-004",
+          "T-I02-001",
+          "T-I02-006",
+          "T-I02-008",
+          "T-I02-009",
+          "T-P02-011",
+          "T-P14-031",
+          "T-P14-032",
+          "T-P05-008",
+          "T-P05-010",
+          "T-P12-007",
+          "T-I06-001"
+        ]
+      },
+      "missing_refinamento": {
+        "count": 0,
+        "ids": []
+      },
+      "blocker_without_reason": {
+        "count": 36,
+        "ids": [
+          "T-P05-001",
+          "T-P05-002",
+          "T-P05-003",
+          "T-P05-004",
+          "T-P05-009",
+          "T-I01-001",
+          "T-I01-002",
+          "T-I01-003",
+          "T-I01-004",
+          "T-I04-001",
+          "T-I04-003",
+          "T-P04-005",
+          "T-P04-006",
+          "T-P03-005",
+          "T-P03-006",
+          "T-S01-005",
+          "T-S01-006",
+          "T-S02-005",
+          "T-S06-008",
+          "T-S06-009"
+        ]
+      }
+    }
+  }
+}

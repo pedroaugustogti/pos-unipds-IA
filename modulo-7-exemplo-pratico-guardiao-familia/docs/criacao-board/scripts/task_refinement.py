@@ -95,6 +95,70 @@ TRACK_CONTEXT = {
     "stores": "Publicação App Store / Google Play — versões, review notes, checklist.",
 }
 
+EPIC_BLOCKER_REASON: dict[str, str] = {
+    "E-I01": "Fundação AWS (VPC, ECS, ALB, DNS/TLS) bloqueia deploy produção da API e validação E2E real.",
+    "E-I04": "Plataforma de dados (RDS + Redis + backups) é pré-requisito para staging/prod e fluxos produto.",
+    "E-I05": "Segurança pré-release (pen test) é gate obrigatório antes de submit nas stores.",
+    "E-I06": "Cutover produção depende de infra + dados + checklist operacional completo.",
+    "E-P03": "E2E geofence depende de push nativo (E-P05) e localização (E-P02) estáveis.",
+    "E-P04": "SOS <30s é KR O1 — requer push nativo configurado e infra prod.",
+    "E-P05": "Push com sons customizados é upstream de SOS E2E, geofences e alertas críticos.",
+    "E-P11": "DPO sign-off LGPD é gate legal antes de publicação nas stores.",
+    "E-S01": "Submit App Store parent exige compliance, push, SOS e review notes aprovados.",
+    "E-S02": "Submit App Store child exige parental gate, polish e dependências produto.",
+    "E-S03": "Production Google Play parent depende de data safety, testes e infra prod.",
+    "E-S04": "Production Google Play child depende de families policy e testes internos.",
+    "E-S05": "Coordenação release — checklist consolidado e sync de versões bloqueiam go-live.",
+}
+
+TITLE_BLOCKER_PATTERNS: list[tuple[re.Pattern[str], str]] = [
+    (re.compile(r"version sync|rollback store", re.I),
+     "Matriz de versão e plano de rollback são obrigatórios para release coordenado das 4 apps."),
+    (re.compile(r"checklist release blocker", re.I),
+     "Consolida todos os release blockers técnicos e de compliance antes do go-live."),
+    (re.compile(r"submit production|production rollout", re.I),
+     "Publicação nas stores — rejeição ou delay bloqueia receita e KR O2."),
+    (re.compile(r"review notes", re.I),
+     "Apple rejeita apps com background location sem review notes adequadas."),
+    (re.compile(r"push.*SOS|SOS.*<30", re.I),
+     "KR O1: notificação SOS ao responsável em menos de 30 segundos."),
+    (re.compile(r"geofence.*E2E|cerca E2E|entrada/saída cerca", re.I),
+     "KR O1: alerta entrada/saída de cerca validado ponta a ponta."),
+    (re.compile(r"sons push|Bundlar sons|push SOS som", re.I),
+     "Upstream: apps precisam de assets de som no bundle antes dos testes E2E push."),
+    (re.compile(r"DPO sign", re.I),
+     "Gate legal LGPD — obrigatório antes de release público."),
+    (re.compile(r"Pen test", re.I),
+     "Checklist segurança pré-release exigido pela política O2."),
+    (re.compile(r"cutover", re.I),
+     "Migração staging→prod — erro causa downtime ou perda de dados."),
+    (re.compile(r"Terraform|ECS|ALB|Route53|ACM|ECR|Secrets Manager", re.I),
+     "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável."),
+    (re.compile(r"RDS|Redis|Backup|PITR|Migration strategy|Índices performance", re.I),
+     "Capacidade de dados em prod — bloqueia cutover e testes de carga reais."),
+]
+
+
+def is_release_blocker(item: dict) -> bool:
+    f = item.get("fields", {})
+    if f.get("Release Blocker") == "yes":
+        return True
+    return bool(item.get("release_blocker"))
+
+
+def blocker_reason(item: dict) -> str:
+    if not is_release_blocker(item):
+        return ""
+    title = item.get("title", "")
+    for pattern, reason in TITLE_BLOCKER_PATTERNS:
+        if pattern.search(title):
+            return reason
+    epic_id = _epic_id_from_item(item)
+    return EPIC_BLOCKER_REASON.get(
+        epic_id,
+        "Critério bloqueante para release produção (KR O1/O2).",
+    )
+
 
 def _epic_id_from_item(item: dict) -> str:
     epic = item.get("fields", {}).get("Epic", "") or item.get("epic_id", "")
@@ -147,6 +211,9 @@ def context_summary(item: dict) -> str:
     ]
     if commit:
         parts.append(f"**Evidência código:** commit `{commit}` — revisar diff como ponto de partida.")
+    reason = blocker_reason(item)
+    if reason:
+        parts.append(f"**Motivo blocker:** {reason}")
     if baseline == "partial":
         parts.append("**Refinamento:** implementação parcial existente — completar gaps e testes.")
     elif baseline == "done":
@@ -181,6 +248,7 @@ def refine_item(item: dict) -> dict[str, Any]:
         "context_summary": context_summary(item),
         "suggested_files": files,
         "acceptance_hints": acceptance_hints(item),
+        "blocker_reason": blocker_reason(item),
     }
 
 
@@ -188,10 +256,13 @@ def format_refinement_markdown(item: dict, refinement: dict | None = None) -> st
     r = refinement or refine_item(item)
     files_md = "\n".join(f"- `{p}`" for p in r["suggested_files"])
     hints_md = "\n".join(f"- {h}" for h in r["acceptance_hints"])
+    blocker_md = ""
+    if r.get("blocker_reason"):
+        blocker_md = f"\n### Motivo release blocker\n- {r['blocker_reason']}\n"
     return f"""## Refinamento
 
 {r["context_summary"]}
-
+{blocker_md}
 ### Arquivos sugeridos
 {files_md}
 
@@ -212,6 +283,9 @@ def build_issue_body(item: dict) -> str:
         f"**Baseline:** {f.get('Baseline', '')} | Blocker: {f.get('Release Blocker', '')}\n"
         f"**Repo:** {item.get('repository', '')}\n"
     )
+    reason = f.get("Blocker Motivo") or blocker_reason(item)
+    if reason and f.get("Release Blocker") == "yes":
+        body += f"**Motivo blocker:** {reason}\n"
     if item.get("commit_evidence"):
         body += f"**Commit:** `{item['commit_evidence']}`\n"
     body += "\n---\n\n"
