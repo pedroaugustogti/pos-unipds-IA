@@ -50,3 +50,6 @@ __screenshots__/
 cypress/screenshots
 cypress/videos
 cypress/downloads
+
+# Uploads pessoais (fora do escopo do repo)
+Pedro_Augusto_Oliveira_*.pdf

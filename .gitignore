@@ -16,7 +16,34 @@ Thumbs.db
 
 # Python
 **/__pycache__/
+**/.pytest_cache/
 *.py[cod]
+*.egg-info/
+**/.venv/
+**/venv/
+
+# SQLite / DB runtime (local)
+**/*.sqlite
+**/*.sqlite3
+**/monitor_local.db
+
+# LangGraph / agent runtime local
+**/.langgraph_api/
+**/runtime/trace.json
+**/runtime/analise.json
+**/runtime/analise-agente.md
+
+# Build / test caches (dist commitado no duck game permanece versionado)
+**/.nx/cache
+**/.angular/
+**/coverage/
+
+# Documentos pessoais (upload local CFP)
+**/Pedro_Augusto_Oliveira_*.pdf
+
+# IDE / Claude local
+.idea/
+**/.claude/settings.local.json
 
 # Terraform (state pode conter dados sensíveis)
 *.tfstate
