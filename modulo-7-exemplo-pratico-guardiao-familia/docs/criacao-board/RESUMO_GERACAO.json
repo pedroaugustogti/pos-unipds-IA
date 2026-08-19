@@ -1,0 +1,17 @@
+{
+  "total_tasks": 272,
+  "total_sp": 831,
+  "total_pert_d": 444.2,
+  "by_track": {
+    "produto": 183,
+    "infraestrutura": 53,
+    "stores": 36
+  },
+  "by_status": {
+    "done": 61,
+    "partial": 80,
+    "todo": 131
+  },
+  "release_blockers": 36,
+  "epics": 24
+}

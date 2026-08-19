@@ -1,0 +1,14 @@
+id,titulo,onda,epic,okr,repo,reach,impact,confidence,effort_sp,rice,cod,job_size,wsjf,release_blocker,sprint
+GF-PLN-001,AWS Fargate foundation,"0,10",E1,O2-KR2,"api;infra",600,3,0.8,13,110.77,34,13,2.62,sim,S1
+GF-PLN-002,Bundling sons push parent/child,4,E4,O1-KR3,"parent;child",500,3,1.0,5,300.00,39,5,7.80,sim,S3
+GF-PLN-003,SOS E2E iOS e Android,4,E4,O1-KR1,"api;parent;child",500,3,0.8,8,150.00,39,8,4.88,sim,S4-S5
+GF-PLN-004,Geofence alert E2E,"2,3",E3,O1-KR2,"api;parent",420,2,0.8,8,84.00,31,8,3.88,sim,S6
+GF-PLN-005,Pedido tempo extra E2E,5,E5,O3-KR1,"api;parent;child",300,2,0.8,5,96.00,24,5,4.80,nao,S7
+GF-PLN-006,LGPD audit flows,transversal,E9,O2-KR1,"api;parent;child;site",600,2,0.8,8,120.00,34,8,4.25,sim,S8
+GF-PLN-007,Store readiness,10,E1,O2-KR3,"parent;child;site",500,2,0.8,8,100.00,34,8,4.25,sim,S11
+GF-PLN-008,App child polish Onda 5/6,"5,6",E6,O3-KR2,"child",260,1,0.8,8,26.00,18,8,2.25,nao,S9
+GF-PLN-009,Parent relatorios e IA MVP,7,E7,O3-KR3,"parent;api",220,1,0.8,8,22.00,17,8,2.12,nao,S10
+GF-PLN-010,Backoffice suporte live,"9,10",E8,O2-KR3,"backoffice",180,1,0.8,5,28.80,22,5,4.40,nao,S12
+GF-PLN-011,SMS/WhatsApp escalacao,4,E4,O1-KR1,"api;backoffice",150,1,0.5,5,15.00,16,5,3.20,nao,post-release
+GF-PLN-012,Monetizacao paywall,9,E8,post-release,"api;parent;backoffice",200,1,0.5,8,12.50,12,8,1.50,nao,post-release
+GF-PLN-013,Rebrand Vinculo,estrategico,E10,out-of-scope,"site;campanha;apps",300,1,0.5,13,11.54,10,13,0.77,nao,out-of-scope

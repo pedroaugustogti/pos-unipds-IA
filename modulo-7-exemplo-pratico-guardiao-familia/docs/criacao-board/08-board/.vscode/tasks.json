@@ -1,0 +1,16 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Preview: Backlog Dashboard",
+      "type": "shell",
+      "command": "cursor",
+      "args": [
+        "--reuse-window",
+        "${workspaceFolder}/backlog-dashboard.html"
+      ],
+      "group": "none",
+      "presentation": { "reveal": "never" }
+    }
+  ]
+}

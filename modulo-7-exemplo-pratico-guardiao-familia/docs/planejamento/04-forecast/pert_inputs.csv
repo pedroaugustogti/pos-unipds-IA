@@ -1,0 +1,9 @@
+epic,descricao,o_dias,m_dias,p_dias,motivo_estimativa
+E1,AWS Fargate foundation,18,25,40,infra multi-componente com dependencias de rede banco cache e pipeline
+E4,Sons push e SOS E2E,12,18,30,apps mobile e devices reais elevam variacao
+E3,Geofence alert E2E,10,14,24,depende de notificacao e calibracao de tempo real
+E5,Pedido tempo extra E2E,8,12,18,fluxo menor e mais controlado
+E9,LGPD audit flows,10,15,25,exige validacao juridica e tecnica
+E6,Child polish,8,12,20,mais ux e estabilidade do que arquitetura
+E7,Parent IA e relatorios,10,14,22,depende de consolidacao de dados e UX
+E1R,Store readiness e release,12,18,30,review externo e checklist infantil elevam incerteza

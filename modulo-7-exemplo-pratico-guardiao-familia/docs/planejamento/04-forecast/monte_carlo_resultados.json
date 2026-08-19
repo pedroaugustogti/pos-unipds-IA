@@ -1,0 +1,83 @@
+{
+  "assumptions": {
+    "runs": 10000,
+    "random_seed": 42,
+    "timebox_days": 180,
+    "method": "triangular sampling per epic with PERT reference"
+  },
+  "epics": [
+    {
+      "epic": "E1",
+      "descricao": "AWS Fargate foundation",
+      "o": 18.0,
+      "m": 25.0,
+      "p": 40.0,
+      "motivo_estimativa": "infra multi-componente com dependencias de rede banco cache e pipeline"
+    },
+    {
+      "epic": "E4",
+      "descricao": "Sons push e SOS E2E",
+      "o": 12.0,
+      "m": 18.0,
+      "p": 30.0,
+      "motivo_estimativa": "apps mobile e devices reais elevam variacao"
+    },
+    {
+      "epic": "E3",
+      "descricao": "Geofence alert E2E",
+      "o": 10.0,
+      "m": 14.0,
+      "p": 24.0,
+      "motivo_estimativa": "depende de notificacao e calibracao de tempo real"
+    },
+    {
+      "epic": "E5",
+      "descricao": "Pedido tempo extra E2E",
+      "o": 8.0,
+      "m": 12.0,
+      "p": 18.0,
+      "motivo_estimativa": "fluxo menor e mais controlado"
+    },
+    {
+      "epic": "E9",
+      "descricao": "LGPD audit flows",
+      "o": 10.0,
+      "m": 15.0,
+      "p": 25.0,
+      "motivo_estimativa": "exige validacao juridica e tecnica"
+    },
+    {
+      "epic": "E6",
+      "descricao": "Child polish",
+      "o": 8.0,
+      "m": 12.0,
+      "p": 20.0,
+      "motivo_estimativa": "mais ux e estabilidade do que arquitetura"
+    },
+    {
+      "epic": "E7",
+      "descricao": "Parent IA e relatorios",
+      "o": 10.0,
+      "m": 14.0,
+      "p": 22.0,
+      "motivo_estimativa": "depende de consolidacao de dados e UX"
+    },
+    {
+      "epic": "E1R",
+      "descricao": "Store readiness e release",
+      "o": 12.0,
+      "m": 18.0,
+      "p": 30.0,
+      "motivo_estimativa": "review externo e checklist infantil elevam incerteza"
+    }
+  ],
+  "summary": {
+    "pert_total_days": 134.83,
+    "p50_days": 141.48,
+    "p80_days": 149.45,
+    "p95_days": 157.35,
+    "min_days": 108.7,
+    "max_days": 175.57,
+    "fits_6_months_at_p80": true
+  }
+}

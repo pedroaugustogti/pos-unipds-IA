@@ -1,0 +1,7 @@
+{
+  "liveServer.settings.root": "${workspaceFolder}",
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.CustomBrowser": "default",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "livePreview.defaultPreviewPath": "backlog-dashboard.html"
+}

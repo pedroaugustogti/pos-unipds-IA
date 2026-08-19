@@ -1,0 +1,273 @@
+task_id,title,optimistic_d,most_likely_d,pessimistic_d,expected_d
+T-P05-001,Bundlar sons push iOS parent,0.5,1.5,3,1.58
+T-P05-002,Bundlar sons push iOS child,0.5,1.5,3,1.58
+T-P05-003,Bundlar sons push Android parent,0.5,1.5,3,1.58
+T-P05-004,Bundlar sons push Android child,0.5,1.5,3,1.58
+T-P05-009,Testes push SOS som emergência,0.5,1.5,3,1.58
+T-I01-001,Terraform VPC subnets multi-AZ,2,4,8,4.33
+T-I01-002,ECS cluster Fargate,2,4,8,4.33
+T-I01-003,Task definition API container,2,4,8,4.33
+T-I01-004,ALB + target group health checks,2,4,8,4.33
+T-I04-001,RDS PostgreSQL multi-AZ staging,2,4,6,4.0
+T-I04-003,Redis ElastiCache session,2,4,6,4.0
+T-P04-005,Push SOS parent em <30s iOS,1,2.5,5,2.67
+T-P04-006,Push SOS parent em <30s Android,1,2.5,5,2.67
+T-P03-005,Notificação entrada/saída cerca E2E iOS,1,2,4,2.17
+T-P03-006,Notificação entrada/saída cerca E2E Android,1,2,4,2.17
+T-S01-005,Review notes location background,0.5,1.5,3,1.58
+T-S01-006,Submit production parent,0.5,1.5,3,1.58
+T-S02-005,Submit production child,0.5,1.5,3,1.58
+T-S06-008,Release: version sync matrix 4 apps,0.25,0.75,2,0.88
+T-S06-009,Release: rollback store version plan,0.25,0.75,2,0.88
+T-S03-005,Production rollout parent,0.5,2,4,2.08
+T-S04-005,Production rollout child,0.5,2,4,2.08
+T-S05-001,Checklist release blocker consolidado,1,2,4,2.17
+T-I01-005,ECR repository e lifecycle,2,4,8,4.33
+T-I01-006,Service autoscaling CPU/mem,2,4,8,4.33
+T-I01-007,Secrets Manager env injection,2,4,8,4.33
+T-I01-008,Route53 DNS api.guardiaofamilia,2,4,8,4.33
+T-I01-009,ACM cert TLS,2,4,8,4.33
+T-I01-010,Documentar runbook deploy ECS,2,4,8,4.33
+T-I06-002,Prod cutover checklist,1,3,5,3.0
+T-P11-009,DPO sign-off release,1,2,4,2.17
+T-I04-002,RDS PostgreSQL multi-AZ prod,2,4,6,4.0
+T-I04-004,Backup automático PITR,2,4,6,4.0
+T-I04-005,Migration strategy zero-downtime,2,4,6,4.0
+T-I04-006,Índices performance geofence/location,2,4,6,4.0
+T-I05-005,Pen test checklist pré-release,1,3,6,3.17
+T-P02-007,Histórico trajetos parent UI paginado,0.5,1.5,3,1.58
+T-P02-010,Testes integração ping batch location,0.5,1.5,3,1.58
+T-P02-012,Fallback quando GPS desligado child,0.5,1.5,3,1.58
+T-P05-005,Configurar APNs production certificates,0.5,1.5,3,1.58
+T-P05-006,Configurar FCM data messages SOS,0.5,1.5,3,1.58
+T-P04-003,Parent histórico SOS error handling,1,2.5,5,2.67
+T-P04-004,Child trigger SOS UI discreto,1,2.5,5,2.67
+T-P04-007,Escalation rules SOS sem ack,1,2.5,5,2.67
+T-P04-008,Backoffice visualizar áudio SOS,1,2.5,5,2.67
+T-P03-002,Melhorar delivery alerta geofence push,1,2,4,2.17
+T-P03-003,Parent UI criar/editar cerca circular,1,2,4,2.17
+T-S01-001,App Store Connect metadata parent PT,0.5,1.5,3,1.58
+T-S01-003,Privacy nutrition labels parent,0.5,1.5,3,1.58
+T-S01-004,TestFlight external beta 50 users,0.5,1.5,3,1.58
+T-S02-001,Metadata child PT minors,0.5,1.5,3,1.58
+T-S02-003,Parental gate App Store,0.5,1.5,3,1.58
+T-S02-004,TestFlight child beta,0.5,1.5,3,1.58
+T-I02-001,Pipeline API build test deploy,0.5,1.5,3,1.58
+T-I02-006,EAS build child production,0.5,1.5,3,1.58
+T-I02-008,Dependabot todos repos,0.5,1.5,3,1.58
+T-I02-009,Template PR org-wide,0.5,1.5,3,1.58
+T-P02-011,Documentar SLA ping P95,0.5,1.5,3,1.58
+T-P14-031,API compliance: data export job async worker,0.25,0.75,2,0.88
+T-P14-032,API compliance: account deletion cascade order,0.25,0.75,2,0.88
+T-P05-008,Testes push geofence som customizado,0.5,1.5,3,1.58
+T-P05-010,Documentar matriz som x evento,0.5,1.5,3,1.58
+T-P12-007,Alertas erro API no dashboard,0.5,1,2,1.08
+T-I06-001,Staging mirror prod config,1,3,5,3.0
+T-I06-003,Feature flags system-config,1,3,5,3.0
+T-I03-001,CloudWatch logs structured API,1,2,4,2.17
+T-I03-003,Dashboard Grafana/BO integrado,1,2,4,2.17
+T-P11-001,Fluxos exportação dados titular,1,2,4,2.17
+T-P11-002,Fluxos exclusão conta menor,1,2,4,2.17
+T-P11-003,Consentimento parental registrado,1,2,4,2.17
+T-P11-007,Parent UI privacy settings,1,2,4,2.17
+T-P11-008,Child UI privacy mínima,1,2,4,2.17
+T-P11-010,Audit log acesso dados sensíveis,1,2,4,2.17
+T-I05-004,S3 bucket policies SOS audio,1,3,6,3.17
+T-P04-009,Testes E2E SOS com mock push,1,2.5,5,2.67
+T-P04-010,Runbook operacional incidente SOS,1,2.5,5,2.67
+T-P03-004,Parent UI criar/editar cerca poligonal,1,2,4,2.17
+T-P03-007,Testes carga geofence 100 cercas/família,1,2,4,2.17
+T-S01-002,Screenshots 6.7 e 5.5 parent,0.5,1.5,3,1.58
+T-S02-002,Screenshots child,0.5,1.5,3,1.58
+T-S06-001,Apple: export compliance encryption doc,0.25,0.75,2,0.88
+T-S06-002,Apple: age rating 4+ questionnaire,0.25,0.75,2,0.88
+T-S06-003,Apple child: COPPA parental consent copy,0.25,0.75,2,0.88
+T-S06-004,Google: target API level 34 parent,0.25,0.75,2,0.88
+T-S06-005,Google: target API level 34 child,0.25,0.75,2,0.88
+T-S06-006,Google: in-app permissions declaration,0.25,0.75,2,0.88
+T-S06-007,Google: designed for families program,0.25,0.75,2,0.88
+T-S03-001,Play Console listing parent,0.5,2,4,2.08
+T-S03-002,Data safety form parent,0.5,2,4,2.08
+T-S03-003,Content rating questionnaire,0.5,2,4,2.08
+T-S03-004,Internal testing track parent,0.5,2,4,2.08
+T-S04-001,Play listing child designed for families,0.5,2,4,2.08
+T-S04-002,Data safety child location,0.5,2,4,2.08
+T-S04-004,Internal testing child,0.5,2,4,2.08
+T-I02-010,Smoke test pós-deploy API,0.5,1.5,3,1.58
+T-S05-002,Beta fechado 100 famílias,1,2,4,2.17
+T-S05-003,Beta aberto child polish gate,1,2,4,2.17
+T-S05-004,Comunicado lançamento site+campanha,1,2,4,2.17
+T-S05-005,Monitoramento 72h pós-release,1,2,4,2.17
+T-S05-006,Retrospectiva e backlog v2,1,2,4,2.17
+T-P12-006,Runbook suporte release,0.5,1,2,1.08
+T-P12-008,Moderação mínima tickets SOS,0.5,1,2,1.08
+T-I06-004,Rollback procedure documentado,1,3,5,3.0
+T-I06-005,Load test staging 1k famílias,1,3,5,3.0
+T-I03-002,Metrics custom SOS latency,1,2,4,2.17
+T-I03-004,Alertas PagerDuty/on-call,1,2,4,2.17
+T-I03-005,Tracing OpenTelemetry API,1,2,4,2.17
+T-I03-006,SLO error rate API 99.5%,1,2,4,2.17
+T-P11-004,Atualizar RIPD com SOS áudio,1,2,4,2.17
+T-P11-005,Atualizar ROPA localização contínua,1,2,4,2.17
+T-P11-006,Incident response drill Q3,1,2,4,2.17
+T-I05-001,WAF ALB rules OWASP,1,3,6,3.17
+T-I05-002,Rotate secrets quarterly,1,3,6,3.17
+T-I05-003,IAM least privilege ECS tasks,1,3,6,3.17
+T-I07-001,Infra: NAT Gateway HA cost review,0.5,1.5,3,1.58
+T-I07-002,Infra: Fargate Spot mix staging,0.5,1.5,3,1.58
+T-I07-003,Infra: OIDC GitHub Actions AWS role,0.5,1.5,3,1.58
+T-I07-004,Infra: Branch protection rules 6 repos,0.5,1.5,3,1.58
+T-I07-005,Infra: Log retention 90d compliance,0.5,1.5,3,1.58
+T-I07-006,Infra: Connection pool tuning API,0.5,1.5,3,1.58
+T-I07-007,Infra: Security group least ingress,0.5,1.5,3,1.58
+T-I07-008,Infra: Blue/green deploy ECS eval,0.5,1.5,3,1.58
+T-P10-007,SOS button acessível,0.5,1,2,1.08
+T-P10-009,Tutorial primeiro uso child,0.5,1,2,1.08
+T-P01-001,Revisar fluxo login parent refresh token persistente,0.5,1,2,1.08
+T-P01-002,Revisar fluxo login child remember device,0.5,1,2,1.08
+T-P01-005,Documentar política supersession device,0.5,1,2,1.08
+T-P01-008,Fluxo recuperação conta responsável,0.5,1,2,1.08
+T-P01-009,Validar onboarding profile API + parent,0.5,1,2,1.08
+T-P14-001,API notifications: push token register/unregister,0.25,0.75,2,0.88
+T-P14-002,API realtime: websocket gateway reconnect policy,0.25,0.75,2,0.88
+T-P14-003,API escalation: SOS escalation timer config,0.25,0.75,2,0.88
+T-P14-007,API payments: Stripe webhook idempotency audit,0.25,0.75,2,0.88
+T-P14-009,API analytics: event schema child location,0.25,0.75,2,0.88
+T-P14-011,API monitoring: health check deep dependencies,0.25,0.75,2,0.88
+T-P14-012,API email: template SOS parent notification,0.25,0.75,2,0.88
+T-P14-015,API tutorials: parent onboarding tutorial fetch,0.25,0.75,2,0.88
+T-P14-016,API client-config: remote config parent minimum version,0.25,0.75,2,0.88
+T-P14-019,API admin: admin audit actions log,0.25,0.75,2,0.88
+T-P14-020,API cache: Redis cache invalidation pairing,0.25,0.75,2,0.88
+T-P14-023,API children: child profile avatar presign,0.25,0.75,2,0.88
+T-P14-024,API pairing: QR code expiry policy,0.25,0.75,2,0.88
+T-P14-025,API families: multi-guardian permission matrix,0.25,0.75,2,0.88
+T-P14-028,API referral: referral reward fulfillment,0.25,0.75,2,0.88
+T-P14-029,API gamification: badge criteria documentation,0.25,0.75,2,0.88
+T-P14-033,API support: support ticket SLA metrics,0.25,0.75,2,0.88
+T-P14-036,API system-config: feature toggle geofence v2,0.25,0.75,2,0.88
+T-P14-037,API i18n: PT-BR string audit parent,0.25,0.75,2,0.88
+T-P14-038,API i18n: PT-BR string audit child,0.25,0.75,2,0.88
+T-P14-039,API health: readiness vs liveness split,0.25,0.75,2,0.88
+T-P06-003,Parent UI pedido tempo extra,0.5,1.5,3,1.58
+T-P06-004,Child UI status tempo de tela,0.5,1.5,3,1.58
+T-P06-007,Relatório uso apps child,0.5,1.5,3,1.58
+T-P09-003,Assistente IA chat parent MVP,0.5,1.5,3,1.58
+T-P09-005,Dashboard home widgets,0.5,1.5,3,1.58
+T-P09-008,Localização permissões UX iOS,0.5,1.5,3,1.58
+T-P09-009,Localização permissões UX Android,0.5,1.5,3,1.58
+T-P08-004,Parent UI gestão família,0.5,1.5,3,1.58
+T-P08-005,Parent UI mensagens família,0.5,1.5,3,1.58
+T-P07-002,Child UI lista conquistas,0.5,1,2,1.08
+T-P07-004,Tutorial gamificação onboarding,0.5,1,2,1.08
+T-P10-008,Indicador conexão offline,0.5,1,2,1.08
+T-P10-010,Testes dispositivos Android baixo RAM,0.5,1,2,1.08
+T-P14-010,API metrics: Prometheus endpoint scrape ECS,0.25,0.75,2,0.88
+T-P14-021,API maps: Mapbox token rotation procedure,0.25,0.75,2,0.88
+T-P14-026,API family-messages: message read receipt,0.25,0.75,2,0.88
+T-P14-027,API family-access: invite link deep link,0.25,0.75,2,0.88
+T-P14-030,API community: community feed out-of-scope flag,0.25,0.75,2,0.88
+T-P14-034,API support: admin reply push notification,0.25,0.75,2,0.88
+T-P01-004,Testes E2E pareamento QR parent-child,0.5,1,2,1.08
+T-P01-007,Auditar expiração JWT e refresh em todos clients,0.5,1,2,1.08
+T-P06-005,Notificação push pedido extra,0.5,1.5,3,1.58
+T-P06-009,Testes E2E pedido extra aprovado,0.5,1.5,3,1.58
+T-P06-010,Testes E2E pedido extra negado,0.5,1.5,3,1.58
+T-P06-011,Exibir features ST ocultas parent,0.5,1.5,3,1.58
+T-P09-004,Relatórios localização semanal,0.5,1.5,3,1.58
+T-P09-006,Deep link push notification,0.5,1.5,3,1.58
+T-P09-007,Acessibilidade VoiceOver mapa,0.5,1.5,3,1.58
+T-P08-007,Community module backlog only,0.5,1.5,3,1.58
+T-P07-003,Animação unlock conquista,0.5,1,2,1.08
+T-P07-005,Testes regressão gamification,0.5,1,2,1.08
+T-P09-013,Parent: Mapbox style tokens produção,0.25,0.75,2,0.88
+T-P09-014,Parent: Safe area insets iPhone notch,0.25,0.75,2,0.88
+T-P09-015,Parent: Tablet layout responsivo,0.25,0.75,2,0.88
+T-P09-016,Parent: Biometria login Face ID,0.25,0.75,2,0.88
+T-P09-017,Parent: Biometria login fingerprint Android,0.25,0.75,2,0.88
+T-P09-018,Parent: Share sheet convite família,0.25,0.75,2,0.88
+T-P09-019,Parent: Push permission prompt timing,0.25,0.75,2,0.88
+T-P09-020,Parent: Settings toggles notificações por tipo,0.25,0.75,2,0.88
+T-P09-021,Parent: SOS histórico filtros data,0.25,0.75,2,0.88
+T-P09-022,Parent: Geofence list empty state UX,0.25,0.75,2,0.88
+T-P09-023,Parent: Loading skeleton mapa,0.25,0.75,2,0.88
+T-P09-024,Parent: Error boundary tela mapa,0.25,0.75,2,0.88
+T-P09-025,Parent: Offline banner sem rede,0.25,0.75,2,0.88
+T-P09-026,Parent: Analytics screen view mapa,0.25,0.75,2,0.88
+T-P09-027,Parent: Crash reporting Sentry parent,0.25,0.75,2,0.88
+T-P10-011,Child: Ícone app adaptive Android,0.25,0.75,2,0.88
+T-P10-012,Child: Splash screen animada,0.25,0.75,2,0.88
+T-P10-013,Child: Haptic feedback SOS,0.25,0.75,2,0.88
+T-P10-014,Child: Low power mode location degrade,0.25,0.75,2,0.88
+T-P10-015,Child: Permissão câmera QR pairing,0.25,0.75,2,0.88
+T-P10-016,Child: Feedback visual ping enviado,0.25,0.75,2,0.88
+T-P10-017,Child: Modo escuro child,0.25,0.75,2,0.88
+T-P10-018,Child: Font scaling acessibilidade,0.25,0.75,2,0.88
+T-P10-019,Child: Crash reporting Sentry child,0.25,0.75,2,0.88
+T-P10-020,Child: Analytics evento SOS triggered,0.25,0.75,2,0.88
+T-P10-021,Child: Widget SOS Android backlog doc,0.25,0.75,2,0.88
+T-P10-022,Child: App shortcuts SOS Android,0.25,0.75,2,0.88
+T-P13-005,SEO meta tags release,0.25,0.5,1,0.54
+T-P13-006,Página status incidentes,0.25,0.5,1,0.54
+T-P13-007,Atualizar screenshots apps release,0.25,0.5,1,0.54
+T-P02-001,Validar Mapbox road-matched routes API,0.5,1.5,3,1.58
+T-P02-002,Validar sync offline batch idempotente,0.5,1.5,3,1.58
+T-P02-003,Persist tracking mode offline routes,0.5,1.5,3,1.58
+T-P02-004,Parent render matched routes no mapa,0.5,1.5,3,1.58
+T-P02-005,Child sample quality offline routes,0.5,1.5,3,1.58
+T-P02-006,Recovery route quando Mapbox indisponível,0.5,1.5,3,1.58
+T-P02-008,Battery policy child location background,0.5,1.5,3,1.58
+T-P02-009,Nudge refresh location child,0.5,1.5,3,1.58
+T-P05-007,API mapear soundId por tipo alerta,0.5,1.5,3,1.58
+T-P04-001,API SOS create/update/attach audio,1,2.5,5,2.67
+T-P04-002,Presign upload áudio SOS S3,1,2.5,5,2.67
+T-P03-001,Avaliar geofence em batch pings API,1,2,4,2.17
+T-P03-008,Documentar regras tolerância stale ping,1,2,4,2.17
+T-S04-003,Validate GP submit secret CI,0.5,2,4,2.08
+T-I02-002,Gate deploy por branch main,0.5,1.5,3,1.58
+T-I02-003,Automate cache purge Cloudflare,0.5,1.5,3,1.58
+T-I02-004,EAS update workflow parent,0.5,1.5,3,1.58
+T-I02-005,EAS submit iOS parent,0.5,1.5,3,1.58
+T-I02-007,Backoffice SSM deploy sa-east-1,0.5,1.5,3,1.58
+T-P12-001,Live support board produção,0.5,1,2,1.08
+T-P12-002,Support audio playback,0.5,1,2,1.08
+T-P12-003,Cloudflare analytics dashboard,0.5,1,2,1.08
+T-P12-004,Role-based menu sidebar,0.5,1,2,1.08
+T-P12-005,Leads listing overview,0.5,1,2,1.08
+T-P10-001,Pairing help simplificado,0.5,1,2,1.08
+T-P10-002,App name PT-BR copy,0.5,1,2,1.08
+T-P10-003,Privacy compliance App Store,0.5,1,2,1.08
+T-P10-004,Background location hardening,0.5,1,2,1.08
+T-P10-005,Invalid session reset,0.5,1,2,1.08
+T-P10-006,Release 2.0.0 estabilização,0.5,1,2,1.08
+T-P01-003,Validar revogação sessão child ao desvincular,0.5,1,2,1.08
+T-P01-006,Hardening rate-limit auth 429 falsos positivos,0.5,1,2,1.08
+T-P01-010,Checklist segurança pareamento child sem guardian,0.5,1,2,1.08
+T-P14-004,API chatbot: site chatbot intent routing,0.25,0.75,2,0.88
+T-P14-005,API ai: support classifier rollout,0.25,0.75,2,0.88
+T-P14-006,API ai: disable placeholder provider default,0.25,0.75,2,0.88
+T-P14-008,API payments: paywall feature flag off prod,0.25,0.75,2,0.88
+T-P14-013,API email: template extra-time request,0.25,0.75,2,0.88
+T-P14-014,API content: tutorial CMS API CRUD,0.25,0.75,2,0.88
+T-P14-017,API pre-launch: waitlist lead capture API,0.25,0.75,2,0.88
+T-P14-018,API accounting: CPC fiscal endpoints BO,0.25,0.75,2,0.88
+T-P14-022,API devices: device supersession integration test,0.25,0.75,2,0.88
+T-P14-035,API storage: SOS audio MIME validation,0.25,0.75,2,0.88
+T-P09-001,Mapa rotas matched estabilidade,0.5,1.5,3,1.58
+T-P09-002,Offline route refresh seguro,0.5,1.5,3,1.58
+T-P09-010,Remover URL plan config stale,0.5,1.5,3,1.58
+T-P09-011,Jest release checks estáveis,0.5,1.5,3,1.58
+T-P09-012,Paywall permanece desabilitado release,0.5,1.5,3,1.58
+T-P06-001,API regras tempo de tela CRUD,0.5,1.5,3,1.58
+T-P06-002,API pedido tempo extra create/decide,0.5,1.5,3,1.58
+T-P06-006,E-mail notificação pedido extra,0.5,1.5,3,1.58
+T-P06-008,Política extra-time applies date,0.5,1.5,3,1.58
+T-P08-001,API family members CRUD,0.5,1.5,3,1.58
+T-P08-002,API family messages,0.5,1.5,3,1.58
+T-P08-003,API family access invites,0.5,1.5,3,1.58
+T-P08-006,Referral rewards API,0.5,1.5,3,1.58
+T-P07-001,API conquistas e pontos child,0.5,1,2,1.08
+T-P13-001,CNPJ páginas legais,0.25,0.5,1,0.54
+T-P13-002,Chatbot widget site,0.25,0.5,1,0.54
+T-P13-003,Links download pré-lançamento,0.25,0.5,1,0.54
+T-P13-004,Campanha 30 dias estrutura,0.25,0.5,1,0.54

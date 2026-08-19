@@ -1,0 +1,25 @@
+epic_id,name,track,okr,repo,task_count,total_sp,total_pert_d
+E-P01,"Auth, sessão e pareamento",produto,O3,guardiao-familia-api,13,36,13.4
+E-P02,Localização e rotas Mapbox,produto,O1,guardiao-familia-api,26,64,31.3
+E-P03,Geofences e alertas,produto,O1,guardiao-familia-api,8,40,17.4
+E-P04,SOS e emergência,produto,O1,guardiao-familia-api,12,54,28.5
+E-P05,Push notifications nativas,produto,O1,guardiao-familia-api,11,32,16.7
+E-P06,Tempo de tela e pedido extra,produto,O3,guardiao-familia-api,13,37,19.1
+E-P07,Gamificação e engajamento child,produto,O3,guardiao-familia-child,6,12,6.3
+E-P08,"Família, mensagens e acesso",produto,O3,guardiao-familia-api,11,29,14.6
+E-P09,"App parent — mapa, relatórios, IA",produto,O3,guardiao-familia-parent,31,74,35.7
+E-P10,App child — UX e estabilidade,produto,O3,guardiao-familia-child,22,44,21.4
+E-P11,LGPD e compliance produto,produto,O2,guardiao-familia-api,12,54,23.5
+E-P12,Backoffice operacional release,produto,O2,guardiao-familia-backoffice,10,20,10.4
+E-P13,Site institucional e campanha,produto,O3,guardiao-familia-site,8,16,4.7
+E-I01,AWS ECS Fargate foundation,infraestrutura,O2,guardiao-familia-api,12,56,46.5
+E-I02,CI/CD multi-repo,infraestrutura,O2,guardiao-familia-api,12,36,19.0
+E-I03,Observabilidade e alertas,infraestrutura,O2,guardiao-familia-api,10,27,17.2
+E-I04,"PostgreSQL, Redis e migrations",infraestrutura,O2,guardiao-familia-api,7,33,25.6
+E-I05,"Segurança, secrets e WAF",infraestrutura,O2,guardiao-familia-api,6,28,17.4
+E-I06,Ambientes staging e produção,infraestrutura,O2,guardiao-familia-api,6,28,16.6
+E-S01,Apple App Store parent,stores,O2,guardiao-familia-parent,8,22,11.2
+E-S02,Apple App Store child,stores,O2,guardiao-familia-child,6,17,8.8
+E-S03,Google Play parent,stores,O2,guardiao-familia-parent,7,19,12.2
+E-S04,Google Play child,stores,O2,guardiao-familia-child,7,19,12.2
+E-S05,Coordenação release e beta,stores,O2,guardiao-familia-api,8,34,14.8

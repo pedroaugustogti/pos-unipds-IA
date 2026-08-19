@@ -1,0 +1,273 @@
+id,title,epic_id,epic_name,track,repo,okr,sprint,reach,impact,confidence,effort_sp,cod,pert_o,pert_m,pert_p,status_baseline,commit_evidence,labels,rice,wsjf,pert_expected,priority_rank,release_blocker
+T-P05-001,Bundlar sons push iOS parent,E-P05,Push notifications nativas,produto,guardiao-familia-parent,O1,3,10,3,0.7,3,11,0.5,1.5,3,todo,,,7.0,3.67,1.58,1,True
+T-P05-002,Bundlar sons push iOS child,E-P05,Push notifications nativas,produto,guardiao-familia-parent,O1,3,10,3,0.7,3,11,0.5,1.5,3,todo,,,7.0,3.67,1.58,2,True
+T-P05-003,Bundlar sons push Android parent,E-P05,Push notifications nativas,produto,guardiao-familia-parent,O1,3,10,3,0.7,3,11,0.5,1.5,3,todo,,,7.0,3.67,1.58,3,True
+T-P05-004,Bundlar sons push Android child,E-P05,Push notifications nativas,produto,guardiao-familia-parent,O1,3,10,3,0.7,3,11,0.5,1.5,3,todo,,,7.0,3.67,1.58,4,True
+T-P05-009,Testes push SOS som emergência,E-P05,Push notifications nativas,produto,guardiao-familia-parent,O1,3,10,3,0.7,3,11,0.5,1.5,3,todo,,,7.0,3.67,1.58,5,True
+T-I01-001,Terraform VPC subnets multi-AZ,E-I01,AWS ECS Fargate foundation,infraestrutura,guardiao-familia-api,O2,1,10,3,0.6,5,12,2,4,8,partial,,,3.6,2.4,4.33,6,True
+T-I01-002,ECS cluster Fargate,E-I01,AWS ECS Fargate foundation,infraestrutura,guardiao-familia-api,O2,1,10,3,0.6,5,12,2,4,8,partial,,,3.6,2.4,4.33,7,True
+T-I01-003,Task definition API container,E-I01,AWS ECS Fargate foundation,infraestrutura,guardiao-familia-api,O2,1,10,3,0.6,5,12,2,4,8,partial,,,3.6,2.4,4.33,8,True
+T-I01-004,ALB + target group health checks,E-I01,AWS ECS Fargate foundation,infraestrutura,guardiao-familia-api,O2,1,10,3,0.6,5,12,2,4,8,partial,,,3.6,2.4,4.33,9,True
+T-I04-001,RDS PostgreSQL multi-AZ staging,E-I04,"PostgreSQL, Redis e migrations",infraestrutura,guardiao-familia-api,O2,2,9,3,0.6,5,10,2,4,6,partial,,,3.24,2.0,4.0,10,True
+T-I04-003,Redis ElastiCache session,E-I04,"PostgreSQL, Redis e migrations",infraestrutura,guardiao-familia-api,O2,2,9,3,0.6,5,10,2,4,6,partial,,,3.24,2.0,4.0,11,True
+T-P04-005,Push SOS parent em <30s iOS,E-P04,SOS e emergência,produto,guardiao-familia-api,O1,5,10,3,0.75,5,12,1,2.5,5,todo,,,4.5,2.4,2.67,12,True
+T-P04-006,Push SOS parent em <30s Android,E-P04,SOS e emergência,produto,guardiao-familia-api,O1,5,10,3,0.75,5,12,1,2.5,5,todo,,,4.5,2.4,2.67,13,True
+T-P03-005,Notificação entrada/saída cerca E2E iOS,E-P03,Geofences e alertas,produto,guardiao-familia-api,O1,6,9,3,0.8,5,10,1,2,4,todo,,,4.32,2.0,2.17,14,True
+T-P03-006,Notificação entrada/saída cerca E2E Android,E-P03,Geofences e alertas,produto,guardiao-familia-api,O1,6,9,3,0.8,5,10,1,2,4,todo,,,4.32,2.0,2.17,15,True
+T-S01-005,Review notes location background,E-S01,Apple App Store parent,stores,guardiao-familia-parent,O2,11,10,3,0.7,3,11,0.5,1.5,3,todo,,,7.0,3.67,1.58,16,True
+T-S01-006,Submit production parent,E-S01,Apple App Store parent,stores,guardiao-familia-parent,O2,11,10,3,0.7,3,11,0.5,1.5,3,todo,,,7.0,3.67,1.58,17,True
+T-S02-005,Submit production child,E-S02,Apple App Store child,stores,guardiao-familia-child,O2,11,10,3,0.7,3,11,0.5,1.5,3,todo,True,,7.0,3.67,1.58,18,True
+T-S06-008,Release: version sync matrix 4 apps,E-S05,Coordenação release e beta,stores,guardiao-familia-api,O2,13,8,2.5,0.65,2,8,0.25,0.75,2,todo,,,6.5,4.0,0.88,19,True
+T-S06-009,Release: rollback store version plan,E-S05,Coordenação release e beta,stores,guardiao-familia-api,O2,13,8,2.5,0.65,2,8,0.25,0.75,2,todo,,,6.5,4.0,0.88,20,True
+T-S03-005,Production rollout parent,E-S03,Google Play parent,stores,guardiao-familia-parent,O2,12,10,3,0.65,3,10,0.5,2,4,todo,,,6.5,3.33,2.08,21,True
+T-S04-005,Production rollout child,E-S04,Google Play child,stores,guardiao-familia-child,O2,12,10,3,0.65,3,10,0.5,2,4,todo,,,6.5,3.33,2.08,22,True
+T-S05-001,Checklist release blocker consolidado,E-S05,Coordenação release e beta,stores,guardiao-familia-api,O2,13,10,3,0.7,5,12,1,2,4,todo,,,4.2,2.4,2.17,23,True
+T-I01-005,ECR repository e lifecycle,E-I01,AWS ECS Fargate foundation,infraestrutura,guardiao-familia-api,O2,1,10,3,0.6,5,12,2,4,8,todo,,,3.6,2.4,4.33,24,True
+T-I01-006,Service autoscaling CPU/mem,E-I01,AWS ECS Fargate foundation,infraestrutura,guardiao-familia-api,O2,1,10,3,0.6,5,12,2,4,8,todo,,,3.6,2.4,4.33,25,True
+T-I01-007,Secrets Manager env injection,E-I01,AWS ECS Fargate foundation,infraestrutura,guardiao-familia-api,O2,1,10,3,0.6,5,12,2,4,8,todo,,,3.6,2.4,4.33,26,True
+T-I01-008,Route53 DNS api.guardiaofamilia,E-I01,AWS ECS Fargate foundation,infraestrutura,guardiao-familia-api,O2,1,10,3,0.6,5,12,2,4,8,todo,,,3.6,2.4,4.33,27,True
+T-I01-009,ACM cert TLS,E-I01,AWS ECS Fargate foundation,infraestrutura,guardiao-familia-api,O2,1,10,3,0.6,5,12,2,4,8,todo,,,3.6,2.4,4.33,28,True
+T-I01-010,Documentar runbook deploy ECS,E-I01,AWS ECS Fargate foundation,infraestrutura,guardiao-familia-api,O2,1,10,3,0.6,5,12,2,4,8,todo,,,3.6,2.4,4.33,29,True
+T-I06-002,Prod cutover checklist,E-I06,Ambientes staging e produção,infraestrutura,guardiao-familia-api,O2,12,10,3,0.65,5,11,1,3,5,todo,,,3.9,2.2,3.0,30,True
+T-P11-009,DPO sign-off release,E-P11,LGPD e compliance produto,produto,guardiao-familia-api,O2,8,8,3,0.75,5,10,1,2,4,todo,,,3.6,2.0,2.17,31,True
+T-I04-002,RDS PostgreSQL multi-AZ prod,E-I04,"PostgreSQL, Redis e migrations",infraestrutura,guardiao-familia-api,O2,2,9,3,0.6,5,10,2,4,6,todo,,,3.24,2.0,4.0,32,True
+T-I04-004,Backup automático PITR,E-I04,"PostgreSQL, Redis e migrations",infraestrutura,guardiao-familia-api,O2,2,9,3,0.6,5,10,2,4,6,todo,,,3.24,2.0,4.0,33,True
+T-I04-005,Migration strategy zero-downtime,E-I04,"PostgreSQL, Redis e migrations",infraestrutura,guardiao-familia-api,O2,2,9,3,0.6,5,10,2,4,6,todo,,,3.24,2.0,4.0,34,True
+T-I04-006,Índices performance geofence/location,E-I04,"PostgreSQL, Redis e migrations",infraestrutura,guardiao-familia-api,O2,2,9,3,0.6,5,10,2,4,6,todo,,,3.24,2.0,4.0,35,True
+T-I05-005,Pen test checklist pré-release,E-I05,"Segurança, secrets e WAF",infraestrutura,guardiao-familia-api,O2,4,9,3,0.6,5,9,1,3,6,todo,,,3.24,1.8,3.17,36,True
+T-P02-007,Histórico trajetos parent UI paginado,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O1,4,10,3,0.85,3,9,0.5,1.5,3,partial,7d4995d,,8.5,3.0,1.58,37,False
+T-P02-010,Testes integração ping batch location,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O1,4,10,3,0.85,3,9,0.5,1.5,3,partial,,,8.5,3.0,1.58,38,False
+T-P02-012,Fallback quando GPS desligado child,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O1,4,10,3,0.85,3,9,0.5,1.5,3,partial,,,8.5,3.0,1.58,39,False
+T-P05-005,Configurar APNs production certificates,E-P05,Push notifications nativas,produto,guardiao-familia-parent,O1,3,10,3,0.7,3,11,0.5,1.5,3,partial,,,7.0,3.67,1.58,40,False
+T-P05-006,Configurar FCM data messages SOS,E-P05,Push notifications nativas,produto,guardiao-familia-parent,O1,3,10,3,0.7,3,11,0.5,1.5,3,partial,,,7.0,3.67,1.58,41,False
+T-P04-003,Parent histórico SOS error handling,E-P04,SOS e emergência,produto,guardiao-familia-api,O1,5,10,3,0.75,5,12,1,2.5,5,partial,f339651,,4.5,2.4,2.67,42,False
+T-P04-004,Child trigger SOS UI discreto,E-P04,SOS e emergência,produto,guardiao-familia-api,O1,5,10,3,0.75,5,12,1,2.5,5,partial,,,4.5,2.4,2.67,43,False
+T-P04-007,Escalation rules SOS sem ack,E-P04,SOS e emergência,produto,guardiao-familia-api,O1,5,10,3,0.75,5,12,1,2.5,5,partial,,,4.5,2.4,2.67,44,False
+T-P04-008,Backoffice visualizar áudio SOS,E-P04,SOS e emergência,produto,guardiao-familia-api,O1,5,10,3,0.75,5,12,1,2.5,5,partial,b870fd6,,4.5,2.4,2.67,45,False
+T-P03-002,Melhorar delivery alerta geofence push,E-P03,Geofences e alertas,produto,guardiao-familia-api,O1,6,9,3,0.8,5,10,1,2,4,partial,18d2dbf,,4.32,2.0,2.17,46,False
+T-P03-003,Parent UI criar/editar cerca circular,E-P03,Geofences e alertas,produto,guardiao-familia-api,O1,6,9,3,0.8,5,10,1,2,4,partial,,,4.32,2.0,2.17,47,False
+T-S01-001,App Store Connect metadata parent PT,E-S01,Apple App Store parent,stores,guardiao-familia-parent,O2,11,10,3,0.7,3,11,0.5,1.5,3,partial,,,7.0,3.67,1.58,48,False
+T-S01-003,Privacy nutrition labels parent,E-S01,Apple App Store parent,stores,guardiao-familia-parent,O2,11,10,3,0.7,3,11,0.5,1.5,3,partial,,,7.0,3.67,1.58,49,False
+T-S01-004,TestFlight external beta 50 users,E-S01,Apple App Store parent,stores,guardiao-familia-parent,O2,11,10,3,0.7,3,11,0.5,1.5,3,partial,c1bb681,,7.0,3.67,1.58,50,False
+T-S02-001,Metadata child PT minors,E-S02,Apple App Store child,stores,guardiao-familia-child,O2,11,10,3,0.7,3,11,0.5,1.5,3,partial,,,7.0,3.67,1.58,51,False
+T-S02-003,Parental gate App Store,E-S02,Apple App Store child,stores,guardiao-familia-child,O2,11,10,3,0.7,3,11,0.5,1.5,3,partial,f26520e,,7.0,3.67,1.58,52,False
+T-S02-004,TestFlight child beta,E-S02,Apple App Store child,stores,guardiao-familia-child,O2,11,10,3,0.7,3,11,0.5,1.5,3,partial,badaa4e,,7.0,3.67,1.58,53,False
+T-I02-001,Pipeline API build test deploy,E-I02,CI/CD multi-repo,infraestrutura,guardiao-familia-api,O2,2,9,2.5,0.8,3,8,0.5,1.5,3,partial,5821a0a,,6.0,2.67,1.58,54,False
+T-I02-006,EAS build child production,E-I02,CI/CD multi-repo,infraestrutura,guardiao-familia-api,O2,2,9,2.5,0.8,3,8,0.5,1.5,3,partial,d787da9,,6.0,2.67,1.58,55,False
+T-I02-008,Dependabot todos repos,E-I02,CI/CD multi-repo,infraestrutura,guardiao-familia-api,O2,2,9,2.5,0.8,3,8,0.5,1.5,3,partial,,,6.0,2.67,1.58,56,False
+T-I02-009,Template PR org-wide,E-I02,CI/CD multi-repo,infraestrutura,guardiao-familia-api,O2,2,9,2.5,0.8,3,8,0.5,1.5,3,partial,9f3a1c3,,6.0,2.67,1.58,57,False
+T-P02-011,Documentar SLA ping P95,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O1,4,10,3,0.85,3,9,0.5,1.5,3,todo,,,8.5,3.0,1.58,58,False
+T-P14-031,API compliance: data export job async worker,E-P11,LGPD e compliance produto,produto,guardiao-familia-api,O2,8,6,2,0.8,2,4,0.25,0.75,2,partial,4c0102b,,4.8,2.0,0.88,59,False
+T-P14-032,API compliance: account deletion cascade order,E-P11,LGPD e compliance produto,produto,guardiao-familia-api,O2,8,6,2,0.8,2,4,0.25,0.75,2,partial,4c0102b,,4.8,2.0,0.88,60,False
+T-P05-008,Testes push geofence som customizado,E-P05,Push notifications nativas,produto,guardiao-familia-parent,O1,3,10,3,0.7,3,11,0.5,1.5,3,todo,,,7.0,3.67,1.58,61,False
+T-P05-010,Documentar matriz som x evento,E-P05,Push notifications nativas,produto,guardiao-familia-parent,O1,3,10,3,0.7,3,11,0.5,1.5,3,todo,,,7.0,3.67,1.58,62,False
+T-P12-007,Alertas erro API no dashboard,E-P12,Backoffice operacional release,produto,guardiao-familia-backoffice,O2,11,5,2,0.85,2,4,0.5,1,2,partial,,,4.25,2.0,1.08,63,False
+T-I06-001,Staging mirror prod config,E-I06,Ambientes staging e produção,infraestrutura,guardiao-familia-api,O2,12,10,3,0.65,5,11,1,3,5,partial,,,3.9,2.2,3.0,64,False
+T-I06-003,Feature flags system-config,E-I06,Ambientes staging e produção,infraestrutura,guardiao-familia-api,O2,12,10,3,0.65,5,11,1,3,5,partial,,,3.9,2.2,3.0,65,False
+T-I03-001,CloudWatch logs structured API,E-I03,Observabilidade e alertas,infraestrutura,guardiao-familia-api,O2,3,8,2,0.65,3,7,1,2,4,partial,,,3.47,2.33,2.17,66,False
+T-I03-003,Dashboard Grafana/BO integrado,E-I03,Observabilidade e alertas,infraestrutura,guardiao-familia-api,O2,3,8,2,0.65,3,7,1,2,4,partial,bf172e8,,3.47,2.33,2.17,67,False
+T-P11-001,Fluxos exportação dados titular,E-P11,LGPD e compliance produto,produto,guardiao-familia-api,O2,8,8,3,0.75,5,10,1,2,4,partial,4c0102b,,3.6,2.0,2.17,68,False
+T-P11-002,Fluxos exclusão conta menor,E-P11,LGPD e compliance produto,produto,guardiao-familia-api,O2,8,8,3,0.75,5,10,1,2,4,partial,4c0102b,,3.6,2.0,2.17,69,False
+T-P11-003,Consentimento parental registrado,E-P11,LGPD e compliance produto,produto,guardiao-familia-api,O2,8,8,3,0.75,5,10,1,2,4,partial,,,3.6,2.0,2.17,70,False
+T-P11-007,Parent UI privacy settings,E-P11,LGPD e compliance produto,produto,guardiao-familia-api,O2,8,8,3,0.75,5,10,1,2,4,partial,,,3.6,2.0,2.17,71,False
+T-P11-008,Child UI privacy mínima,E-P11,LGPD e compliance produto,produto,guardiao-familia-api,O2,8,8,3,0.75,5,10,1,2,4,partial,,,3.6,2.0,2.17,72,False
+T-P11-010,Audit log acesso dados sensíveis,E-P11,LGPD e compliance produto,produto,guardiao-familia-api,O2,8,8,3,0.75,5,10,1,2,4,partial,,,3.6,2.0,2.17,73,False
+T-I05-004,S3 bucket policies SOS audio,E-I05,"Segurança, secrets e WAF",infraestrutura,guardiao-familia-api,O2,4,9,3,0.6,5,9,1,3,6,partial,,,3.24,1.8,3.17,74,False
+T-P04-009,Testes E2E SOS com mock push,E-P04,SOS e emergência,produto,guardiao-familia-api,O1,5,10,3,0.75,5,12,1,2.5,5,todo,,,4.5,2.4,2.67,75,False
+T-P04-010,Runbook operacional incidente SOS,E-P04,SOS e emergência,produto,guardiao-familia-api,O1,5,10,3,0.75,5,12,1,2.5,5,todo,,,4.5,2.4,2.67,76,False
+T-P03-004,Parent UI criar/editar cerca poligonal,E-P03,Geofences e alertas,produto,guardiao-familia-api,O1,6,9,3,0.8,5,10,1,2,4,todo,,,4.32,2.0,2.17,77,False
+T-P03-007,Testes carga geofence 100 cercas/família,E-P03,Geofences e alertas,produto,guardiao-familia-api,O1,6,9,3,0.8,5,10,1,2,4,todo,,,4.32,2.0,2.17,78,False
+T-S01-002,Screenshots 6.7 e 5.5 parent,E-S01,Apple App Store parent,stores,guardiao-familia-parent,O2,11,10,3,0.7,3,11,0.5,1.5,3,todo,,,7.0,3.67,1.58,79,False
+T-S02-002,Screenshots child,E-S02,Apple App Store child,stores,guardiao-familia-child,O2,11,10,3,0.7,3,11,0.5,1.5,3,todo,,,7.0,3.67,1.58,80,False
+T-S06-001,Apple: export compliance encryption doc,E-S01,Apple App Store parent,stores,guardiao-familia-parent,O2,11,8,2.5,0.65,2,8,0.25,0.75,2,todo,,,6.5,4.0,0.88,81,False
+T-S06-002,Apple: age rating 4+ questionnaire,E-S01,Apple App Store parent,stores,guardiao-familia-parent,O2,11,8,2.5,0.65,2,8,0.25,0.75,2,todo,,,6.5,4.0,0.88,82,False
+T-S06-003,Apple child: COPPA parental consent copy,E-S02,Apple App Store child,stores,guardiao-familia-parent,O2,11,8,2.5,0.65,2,8,0.25,0.75,2,todo,,,6.5,4.0,0.88,83,False
+T-S06-004,Google: target API level 34 parent,E-S03,Google Play parent,stores,guardiao-familia-parent,O2,12,8,2.5,0.65,2,8,0.25,0.75,2,todo,,,6.5,4.0,0.88,84,False
+T-S06-005,Google: target API level 34 child,E-S04,Google Play child,stores,guardiao-familia-child,O2,12,8,2.5,0.65,2,8,0.25,0.75,2,todo,,,6.5,4.0,0.88,85,False
+T-S06-006,Google: in-app permissions declaration,E-S03,Google Play parent,stores,guardiao-familia-parent,O2,12,8,2.5,0.65,2,8,0.25,0.75,2,todo,,,6.5,4.0,0.88,86,False
+T-S06-007,Google: designed for families program,E-S04,Google Play child,stores,guardiao-familia-child,O2,12,8,2.5,0.65,2,8,0.25,0.75,2,todo,,,6.5,4.0,0.88,87,False
+T-S03-001,Play Console listing parent,E-S03,Google Play parent,stores,guardiao-familia-parent,O2,12,10,3,0.65,3,10,0.5,2,4,todo,,,6.5,3.33,2.08,88,False
+T-S03-002,Data safety form parent,E-S03,Google Play parent,stores,guardiao-familia-parent,O2,12,10,3,0.65,3,10,0.5,2,4,todo,,,6.5,3.33,2.08,89,False
+T-S03-003,Content rating questionnaire,E-S03,Google Play parent,stores,guardiao-familia-parent,O2,12,10,3,0.65,3,10,0.5,2,4,todo,,,6.5,3.33,2.08,90,False
+T-S03-004,Internal testing track parent,E-S03,Google Play parent,stores,guardiao-familia-parent,O2,12,10,3,0.65,3,10,0.5,2,4,todo,,,6.5,3.33,2.08,91,False
+T-S04-001,Play listing child designed for families,E-S04,Google Play child,stores,guardiao-familia-child,O2,12,10,3,0.65,3,10,0.5,2,4,todo,,,6.5,3.33,2.08,92,False
+T-S04-002,Data safety child location,E-S04,Google Play child,stores,guardiao-familia-child,O2,12,10,3,0.65,3,10,0.5,2,4,todo,,,6.5,3.33,2.08,93,False
+T-S04-004,Internal testing child,E-S04,Google Play child,stores,guardiao-familia-child,O2,12,10,3,0.65,3,10,0.5,2,4,todo,,,6.5,3.33,2.08,94,False
+T-I02-010,Smoke test pós-deploy API,E-I02,CI/CD multi-repo,infraestrutura,guardiao-familia-api,O2,2,9,2.5,0.8,3,8,0.5,1.5,3,todo,,,6.0,2.67,1.58,95,False
+T-S05-002,Beta fechado 100 famílias,E-S05,Coordenação release e beta,stores,guardiao-familia-api,O2,13,10,3,0.7,5,12,1,2,4,todo,,,4.2,2.4,2.17,96,False
+T-S05-003,Beta aberto child polish gate,E-S05,Coordenação release e beta,stores,guardiao-familia-api,O2,13,10,3,0.7,5,12,1,2,4,todo,,,4.2,2.4,2.17,97,False
+T-S05-004,Comunicado lançamento site+campanha,E-S05,Coordenação release e beta,stores,guardiao-familia-api,O2,13,10,3,0.7,5,12,1,2,4,todo,,,4.2,2.4,2.17,98,False
+T-S05-005,Monitoramento 72h pós-release,E-S05,Coordenação release e beta,stores,guardiao-familia-api,O2,13,10,3,0.7,5,12,1,2,4,todo,,,4.2,2.4,2.17,99,False
+T-S05-006,Retrospectiva e backlog v2,E-S05,Coordenação release e beta,stores,guardiao-familia-api,O2,13,10,3,0.7,5,12,1,2,4,todo,,,4.2,2.4,2.17,100,False
+T-P12-006,Runbook suporte release,E-P12,Backoffice operacional release,produto,guardiao-familia-backoffice,O2,11,5,2,0.85,2,4,0.5,1,2,todo,,,4.25,2.0,1.08,101,False
+T-P12-008,Moderação mínima tickets SOS,E-P12,Backoffice operacional release,produto,guardiao-familia-backoffice,O2,11,5,2,0.85,2,4,0.5,1,2,todo,,,4.25,2.0,1.08,102,False
+T-I06-004,Rollback procedure documentado,E-I06,Ambientes staging e produção,infraestrutura,guardiao-familia-api,O2,12,10,3,0.65,5,11,1,3,5,todo,,,3.9,2.2,3.0,103,False
+T-I06-005,Load test staging 1k famílias,E-I06,Ambientes staging e produção,infraestrutura,guardiao-familia-api,O2,12,10,3,0.65,5,11,1,3,5,todo,,,3.9,2.2,3.0,104,False
+T-I03-002,Metrics custom SOS latency,E-I03,Observabilidade e alertas,infraestrutura,guardiao-familia-api,O2,3,8,2,0.65,3,7,1,2,4,todo,,,3.47,2.33,2.17,105,False
+T-I03-004,Alertas PagerDuty/on-call,E-I03,Observabilidade e alertas,infraestrutura,guardiao-familia-api,O2,3,8,2,0.65,3,7,1,2,4,todo,,,3.47,2.33,2.17,106,False
+T-I03-005,Tracing OpenTelemetry API,E-I03,Observabilidade e alertas,infraestrutura,guardiao-familia-api,O2,3,8,2,0.65,3,7,1,2,4,todo,,,3.47,2.33,2.17,107,False
+T-I03-006,SLO error rate API 99.5%,E-I03,Observabilidade e alertas,infraestrutura,guardiao-familia-api,O2,3,8,2,0.65,3,7,1,2,4,todo,,,3.47,2.33,2.17,108,False
+T-P11-004,Atualizar RIPD com SOS áudio,E-P11,LGPD e compliance produto,produto,guardiao-familia-api,O2,8,8,3,0.75,5,10,1,2,4,todo,,,3.6,2.0,2.17,109,False
+T-P11-005,Atualizar ROPA localização contínua,E-P11,LGPD e compliance produto,produto,guardiao-familia-api,O2,8,8,3,0.75,5,10,1,2,4,todo,,,3.6,2.0,2.17,110,False
+T-P11-006,Incident response drill Q3,E-P11,LGPD e compliance produto,produto,guardiao-familia-api,O2,8,8,3,0.75,5,10,1,2,4,todo,,,3.6,2.0,2.17,111,False
+T-I05-001,WAF ALB rules OWASP,E-I05,"Segurança, secrets e WAF",infraestrutura,guardiao-familia-api,O2,4,9,3,0.6,5,9,1,3,6,todo,,,3.24,1.8,3.17,112,False
+T-I05-002,Rotate secrets quarterly,E-I05,"Segurança, secrets e WAF",infraestrutura,guardiao-familia-api,O2,4,9,3,0.6,5,9,1,3,6,todo,,,3.24,1.8,3.17,113,False
+T-I05-003,IAM least privilege ECS tasks,E-I05,"Segurança, secrets e WAF",infraestrutura,guardiao-familia-api,O2,4,9,3,0.6,5,9,1,3,6,todo,,,3.24,1.8,3.17,114,False
+T-I07-001,Infra: NAT Gateway HA cost review,E-I01,AWS ECS Fargate foundation,infraestrutura,guardiao-familia-api,O2,1,7,2,0.6,3,6,0.5,1.5,3,todo,,,2.8,2.0,1.58,115,False
+T-I07-002,Infra: Fargate Spot mix staging,E-I01,AWS ECS Fargate foundation,infraestrutura,guardiao-familia-api,O2,1,7,2,0.6,3,6,0.5,1.5,3,todo,,,2.8,2.0,1.58,116,False
+T-I07-003,Infra: OIDC GitHub Actions AWS role,E-I02,CI/CD multi-repo,infraestrutura,guardiao-familia-api,O2,2,7,2,0.6,3,6,0.5,1.5,3,todo,,,2.8,2.0,1.58,117,False
+T-I07-004,Infra: Branch protection rules 6 repos,E-I02,CI/CD multi-repo,infraestrutura,guardiao-familia-api,O2,2,7,2,0.6,3,6,0.5,1.5,3,todo,,,2.8,2.0,1.58,118,False
+T-I07-005,Infra: Log retention 90d compliance,E-I03,Observabilidade e alertas,infraestrutura,guardiao-familia-api,O2,3,7,2,0.6,3,6,0.5,1.5,3,todo,,,2.8,2.0,1.58,119,False
+T-I07-006,Infra: Connection pool tuning API,E-I04,"PostgreSQL, Redis e migrations",infraestrutura,guardiao-familia-api,O2,2,7,2,0.6,3,6,0.5,1.5,3,todo,,,2.8,2.0,1.58,120,False
+T-I07-007,Infra: Security group least ingress,E-I05,"Segurança, secrets e WAF",infraestrutura,guardiao-familia-api,O2,4,7,2,0.6,3,6,0.5,1.5,3,todo,,,2.8,2.0,1.58,121,False
+T-I07-008,Infra: Blue/green deploy ECS eval,E-I06,Ambientes staging e produção,infraestrutura,guardiao-familia-api,O2,12,7,2,0.6,3,6,0.5,1.5,3,todo,,,2.8,2.0,1.58,122,False
+T-P10-007,SOS button acessível,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,7,2,0.85,2,5,0.5,1,2,partial,,,5.95,2.5,1.08,123,False
+T-P10-009,Tutorial primeiro uso child,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,7,2,0.85,2,5,0.5,1,2,partial,,,5.95,2.5,1.08,124,False
+T-P01-001,Revisar fluxo login parent refresh token persistente,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,2,8,2,0.9,3,6,0.5,1,2,partial,b535706,,4.8,2.0,1.08,125,False
+T-P01-002,Revisar fluxo login child remember device,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,2,8,2,0.9,3,6,0.5,1,2,partial,26c519e,,4.8,2.0,1.08,126,False
+T-P01-005,Documentar política supersession device,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,2,8,2,0.9,3,6,0.5,1,2,partial,f39c9c6,,4.8,2.0,1.08,127,False
+T-P01-008,Fluxo recuperação conta responsável,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,2,8,2,0.9,3,6,0.5,1,2,partial,,,4.8,2.0,1.08,128,False
+T-P01-009,Validar onboarding profile API + parent,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,2,8,2,0.9,3,6,0.5,1,2,partial,,,4.8,2.0,1.08,129,False
+T-P14-001,API notifications: push token register/unregister,E-P05,Push notifications nativas,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,130,False
+T-P14-002,API realtime: websocket gateway reconnect policy,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,131,False
+T-P14-003,API escalation: SOS escalation timer config,E-P04,SOS e emergência,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,132,False
+T-P14-007,API payments: Stripe webhook idempotency audit,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,133,False
+T-P14-009,API analytics: event schema child location,E-I03,Observabilidade e alertas,infraestrutura,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,134,False
+T-P14-011,API monitoring: health check deep dependencies,E-I03,Observabilidade e alertas,infraestrutura,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,135,False
+T-P14-012,API email: template SOS parent notification,E-P04,SOS e emergência,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,136,False
+T-P14-015,API tutorials: parent onboarding tutorial fetch,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,137,False
+T-P14-016,API client-config: remote config parent minimum version,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,138,False
+T-P14-019,API admin: admin audit actions log,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,139,False
+T-P14-020,API cache: Redis cache invalidation pairing,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,140,False
+T-P14-023,API children: child profile avatar presign,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,141,False
+T-P14-024,API pairing: QR code expiry policy,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,142,False
+T-P14-025,API families: multi-guardian permission matrix,E-P08,"Família, mensagens e acesso",produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,143,False
+T-P14-028,API referral: referral reward fulfillment,E-P08,"Família, mensagens e acesso",produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,144,False
+T-P14-029,API gamification: badge criteria documentation,E-P07,Gamificação e engajamento child,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,145,False
+T-P14-033,API support: support ticket SLA metrics,E-P12,Backoffice operacional release,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,97946a2,,4.8,2.0,0.88,146,False
+T-P14-036,API system-config: feature toggle geofence v2,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,147,False
+T-P14-037,API i18n: PT-BR string audit parent,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,148,False
+T-P14-038,API i18n: PT-BR string audit child,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,149,False
+T-P14-039,API health: readiness vs liveness split,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,partial,,,4.8,2.0,0.88,150,False
+T-P06-003,Parent UI pedido tempo extra,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,7,7,2,0.8,3,5,0.5,1.5,3,partial,bfb44c7,,3.73,1.67,1.58,151,False
+T-P06-004,Child UI status tempo de tela,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,7,7,2,0.8,3,5,0.5,1.5,3,partial,,,3.73,1.67,1.58,152,False
+T-P06-007,Relatório uso apps child,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,7,7,2,0.8,3,5,0.5,1.5,3,partial,,,3.73,1.67,1.58,153,False
+T-P09-003,Assistente IA chat parent MVP,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,7,2,0.7,3,5,0.5,1.5,3,partial,,,3.27,1.67,1.58,154,False
+T-P09-005,Dashboard home widgets,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,7,2,0.7,3,5,0.5,1.5,3,partial,,,3.27,1.67,1.58,155,False
+T-P09-008,Localização permissões UX iOS,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,7,2,0.7,3,5,0.5,1.5,3,partial,,,3.27,1.67,1.58,156,False
+T-P09-009,Localização permissões UX Android,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,7,2,0.7,3,5,0.5,1.5,3,partial,,,3.27,1.67,1.58,157,False
+T-P08-004,Parent UI gestão família,E-P08,"Família, mensagens e acesso",produto,guardiao-familia-api,O3,8,6,2,0.8,3,4,0.5,1.5,3,partial,,,3.2,1.33,1.58,158,False
+T-P08-005,Parent UI mensagens família,E-P08,"Família, mensagens e acesso",produto,guardiao-familia-api,O3,8,6,2,0.8,3,4,0.5,1.5,3,partial,,,3.2,1.33,1.58,159,False
+T-P07-002,Child UI lista conquistas,E-P07,Gamificação e engajamento child,produto,guardiao-familia-child,O3,9,5,1.5,0.75,2,3,0.5,1,2,partial,,,2.81,1.5,1.08,160,False
+T-P07-004,Tutorial gamificação onboarding,E-P07,Gamificação e engajamento child,produto,guardiao-familia-child,O3,9,5,1.5,0.75,2,3,0.5,1,2,partial,,,2.81,1.5,1.08,161,False
+T-P10-008,Indicador conexão offline,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,7,2,0.85,2,5,0.5,1,2,todo,,,5.95,2.5,1.08,162,False
+T-P10-010,Testes dispositivos Android baixo RAM,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,7,2,0.85,2,5,0.5,1,2,todo,,,5.95,2.5,1.08,163,False
+T-P14-010,API metrics: Prometheus endpoint scrape ECS,E-I03,Observabilidade e alertas,infraestrutura,guardiao-familia-api,O3,6,6,2,0.65,2,4,0.25,0.75,2,todo,,,3.9,2.0,0.88,164,False
+T-P14-021,API maps: Mapbox token rotation procedure,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.65,2,4,0.25,0.75,2,todo,,,3.9,2.0,0.88,165,False
+T-P14-026,API family-messages: message read receipt,E-P08,"Família, mensagens e acesso",produto,guardiao-familia-api,O3,6,6,2,0.65,2,4,0.25,0.75,2,todo,,,3.9,2.0,0.88,166,False
+T-P14-027,API family-access: invite link deep link,E-P08,"Família, mensagens e acesso",produto,guardiao-familia-api,O3,6,6,2,0.65,2,4,0.25,0.75,2,todo,,,3.9,2.0,0.88,167,False
+T-P14-030,API community: community feed out-of-scope flag,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.65,2,4,0.25,0.75,2,todo,,,3.9,2.0,0.88,168,False
+T-P14-034,API support: admin reply push notification,E-P12,Backoffice operacional release,produto,guardiao-familia-api,O3,6,6,2,0.65,2,4,0.25,0.75,2,todo,,,3.9,2.0,0.88,169,False
+T-P01-004,Testes E2E pareamento QR parent-child,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,2,8,2,0.7,3,6,0.5,1,2,todo,,,3.73,2.0,1.08,170,False
+T-P01-007,Auditar expiração JWT e refresh em todos clients,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,2,8,2,0.7,3,6,0.5,1,2,todo,,,3.73,2.0,1.08,171,False
+T-P06-005,Notificação push pedido extra,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,7,7,2,0.8,3,5,0.5,1.5,3,todo,,,3.73,1.67,1.58,172,False
+T-P06-009,Testes E2E pedido extra aprovado,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,7,7,2,0.8,3,5,0.5,1.5,3,todo,,,3.73,1.67,1.58,173,False
+T-P06-010,Testes E2E pedido extra negado,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,7,7,2,0.8,3,5,0.5,1.5,3,todo,,,3.73,1.67,1.58,174,False
+T-P06-011,Exibir features ST ocultas parent,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,7,7,2,0.8,3,5,0.5,1.5,3,todo,bfb44c7,,3.73,1.67,1.58,175,False
+T-P09-004,Relatórios localização semanal,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,7,2,0.7,3,5,0.5,1.5,3,todo,,,3.27,1.67,1.58,176,False
+T-P09-006,Deep link push notification,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,7,2,0.7,3,5,0.5,1.5,3,todo,,,3.27,1.67,1.58,177,False
+T-P09-007,Acessibilidade VoiceOver mapa,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,7,2,0.7,3,5,0.5,1.5,3,todo,,,3.27,1.67,1.58,178,False
+T-P08-007,Community module backlog only,E-P08,"Família, mensagens e acesso",produto,guardiao-familia-api,O3,8,6,2,0.8,3,4,0.5,1.5,3,todo,,,3.2,1.33,1.58,179,False
+T-P07-003,Animação unlock conquista,E-P07,Gamificação e engajamento child,produto,guardiao-familia-child,O3,9,5,1.5,0.75,2,3,0.5,1,2,todo,,,2.81,1.5,1.08,180,False
+T-P07-005,Testes regressão gamification,E-P07,Gamificação e engajamento child,produto,guardiao-familia-child,O3,9,5,1.5,0.75,2,3,0.5,1,2,todo,,,2.81,1.5,1.08,181,False
+T-P09-013,Parent: Mapbox style tokens produção,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,182,False
+T-P09-014,Parent: Safe area insets iPhone notch,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,183,False
+T-P09-015,Parent: Tablet layout responsivo,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,184,False
+T-P09-016,Parent: Biometria login Face ID,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,185,False
+T-P09-017,Parent: Biometria login fingerprint Android,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,186,False
+T-P09-018,Parent: Share sheet convite família,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,187,False
+T-P09-019,Parent: Push permission prompt timing,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,188,False
+T-P09-020,Parent: Settings toggles notificações por tipo,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,189,False
+T-P09-021,Parent: SOS histórico filtros data,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,190,False
+T-P09-022,Parent: Geofence list empty state UX,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,191,False
+T-P09-023,Parent: Loading skeleton mapa,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,192,False
+T-P09-024,Parent: Error boundary tela mapa,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,193,False
+T-P09-025,Parent: Offline banner sem rede,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,194,False
+T-P09-026,Parent: Analytics screen view mapa,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,195,False
+T-P09-027,Parent: Crash reporting Sentry parent,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,196,False
+T-P10-011,Child: Ícone app adaptive Android,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,197,False
+T-P10-012,Child: Splash screen animada,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,198,False
+T-P10-013,Child: Haptic feedback SOS,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,199,False
+T-P10-014,Child: Low power mode location degrade,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,200,False
+T-P10-015,Child: Permissão câmera QR pairing,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,201,False
+T-P10-016,Child: Feedback visual ping enviado,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,202,False
+T-P10-017,Child: Modo escuro child,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,203,False
+T-P10-018,Child: Font scaling acessibilidade,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,204,False
+T-P10-019,Child: Crash reporting Sentry child,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,205,False
+T-P10-020,Child: Analytics evento SOS triggered,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,206,False
+T-P10-021,Child: Widget SOS Android backlog doc,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,207,False
+T-P10-022,Child: App shortcuts SOS Android,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,5,1.5,0.7,2,3,0.25,0.75,2,todo,,,2.62,1.5,0.88,208,False
+T-P13-005,SEO meta tags release,E-P13,Site institucional e campanha,produto,guardiao-familia-site,O3,12,4,1.5,0.8,2,2,0.25,0.5,1,todo,,,2.4,1.0,0.54,209,False
+T-P13-006,Página status incidentes,E-P13,Site institucional e campanha,produto,guardiao-familia-site,O3,12,4,1.5,0.8,2,2,0.25,0.5,1,todo,,,2.4,1.0,0.54,210,False
+T-P13-007,Atualizar screenshots apps release,E-P13,Site institucional e campanha,produto,guardiao-familia-site,O3,12,4,1.5,0.8,2,2,0.25,0.5,1,todo,,,2.4,1.0,0.54,211,False
+T-P02-001,Validar Mapbox road-matched routes API,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O1,4,10,3,0.85,3,9,0.5,1.5,3,done,cb9a003,,8.5,3.0,1.58,212,False
+T-P02-002,Validar sync offline batch idempotente,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O1,4,10,3,0.85,3,9,0.5,1.5,3,done,b6702bf,,8.5,3.0,1.58,213,False
+T-P02-003,Persist tracking mode offline routes,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O1,4,10,3,0.85,3,9,0.5,1.5,3,done,83156e6,,8.5,3.0,1.58,214,False
+T-P02-004,Parent render matched routes no mapa,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O1,4,10,3,0.85,3,9,0.5,1.5,3,done,94559c0,,8.5,3.0,1.58,215,False
+T-P02-005,Child sample quality offline routes,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O1,4,10,3,0.85,3,9,0.5,1.5,3,done,0dbbc08,,8.5,3.0,1.58,216,False
+T-P02-006,Recovery route quando Mapbox indisponível,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O1,4,10,3,0.85,3,9,0.5,1.5,3,done,a16df36,,8.5,3.0,1.58,217,False
+T-P02-008,Battery policy child location background,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O1,4,10,3,0.85,3,9,0.5,1.5,3,done,ed373a3,,8.5,3.0,1.58,218,False
+T-P02-009,Nudge refresh location child,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O1,4,10,3,0.85,3,9,0.5,1.5,3,done,df2b0ac,,8.5,3.0,1.58,219,False
+T-P05-007,API mapear soundId por tipo alerta,E-P05,Push notifications nativas,produto,guardiao-familia-parent,O1,3,10,3,0.7,3,11,0.5,1.5,3,done,,,7.0,3.67,1.58,220,False
+T-P04-001,API SOS create/update/attach audio,E-P04,SOS e emergência,produto,guardiao-familia-api,O1,5,10,3,0.75,5,12,1,2.5,5,done,,,4.5,2.4,2.67,221,False
+T-P04-002,Presign upload áudio SOS S3,E-P04,SOS e emergência,produto,guardiao-familia-api,O1,5,10,3,0.75,5,12,1,2.5,5,done,,,4.5,2.4,2.67,222,False
+T-P03-001,Avaliar geofence em batch pings API,E-P03,Geofences e alertas,produto,guardiao-familia-api,O1,6,9,3,0.8,5,10,1,2,4,done,aa7a914,,4.32,2.0,2.17,223,False
+T-P03-008,Documentar regras tolerância stale ping,E-P03,Geofences e alertas,produto,guardiao-familia-api,O1,6,9,3,0.8,5,10,1,2,4,done,aa7a914,,4.32,2.0,2.17,224,False
+T-S04-003,Validate GP submit secret CI,E-S04,Google Play child,stores,guardiao-familia-child,O2,12,10,3,0.65,3,10,0.5,2,4,done,3e37e38,,6.5,3.33,2.08,225,False
+T-I02-002,Gate deploy por branch main,E-I02,CI/CD multi-repo,infraestrutura,guardiao-familia-api,O2,2,9,2.5,0.8,3,8,0.5,1.5,3,done,5821a0a,,6.0,2.67,1.58,226,False
+T-I02-003,Automate cache purge Cloudflare,E-I02,CI/CD multi-repo,infraestrutura,guardiao-familia-api,O2,2,9,2.5,0.8,3,8,0.5,1.5,3,done,5821a0a,,6.0,2.67,1.58,227,False
+T-I02-004,EAS update workflow parent,E-I02,CI/CD multi-repo,infraestrutura,guardiao-familia-api,O2,2,9,2.5,0.8,3,8,0.5,1.5,3,done,3ead192,,6.0,2.67,1.58,228,False
+T-I02-005,EAS submit iOS parent,E-I02,CI/CD multi-repo,infraestrutura,guardiao-familia-api,O2,2,9,2.5,0.8,3,8,0.5,1.5,3,done,ce8728d,,6.0,2.67,1.58,229,False
+T-I02-007,Backoffice SSM deploy sa-east-1,E-I02,CI/CD multi-repo,infraestrutura,guardiao-familia-api,O2,2,9,2.5,0.8,3,8,0.5,1.5,3,done,c23d55c,,6.0,2.67,1.58,230,False
+T-P12-001,Live support board produção,E-P12,Backoffice operacional release,produto,guardiao-familia-backoffice,O2,11,5,2,0.85,2,4,0.5,1,2,done,ff7ba8a,,4.25,2.0,1.08,231,False
+T-P12-002,Support audio playback,E-P12,Backoffice operacional release,produto,guardiao-familia-backoffice,O2,11,5,2,0.85,2,4,0.5,1,2,done,b870fd6,,4.25,2.0,1.08,232,False
+T-P12-003,Cloudflare analytics dashboard,E-P12,Backoffice operacional release,produto,guardiao-familia-backoffice,O2,11,5,2,0.85,2,4,0.5,1,2,done,bf172e8,,4.25,2.0,1.08,233,False
+T-P12-004,Role-based menu sidebar,E-P12,Backoffice operacional release,produto,guardiao-familia-backoffice,O2,11,5,2,0.85,2,4,0.5,1,2,done,c69f117,,4.25,2.0,1.08,234,False
+T-P12-005,Leads listing overview,E-P12,Backoffice operacional release,produto,guardiao-familia-backoffice,O2,11,5,2,0.85,2,4,0.5,1,2,done,afa0057,,4.25,2.0,1.08,235,False
+T-P10-001,Pairing help simplificado,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,7,2,0.85,2,5,0.5,1,2,done,fd9882d,,5.95,2.5,1.08,236,False
+T-P10-002,App name PT-BR copy,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,7,2,0.85,2,5,0.5,1,2,done,fd94887,,5.95,2.5,1.08,237,False
+T-P10-003,Privacy compliance App Store,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,7,2,0.85,2,5,0.5,1,2,done,f26520e,,5.95,2.5,1.08,238,False
+T-P10-004,Background location hardening,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,7,2,0.85,2,5,0.5,1,2,done,3d58268,,5.95,2.5,1.08,239,False
+T-P10-005,Invalid session reset,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,7,2,0.85,2,5,0.5,1,2,done,1f9c28f,,5.95,2.5,1.08,240,False
+T-P10-006,Release 2.0.0 estabilização,E-P10,App child — UX e estabilidade,produto,guardiao-familia-child,O3,9,7,2,0.85,2,5,0.5,1,2,done,b099a45,,5.95,2.5,1.08,241,False
+T-P01-003,Validar revogação sessão child ao desvincular,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,2,8,2,0.9,3,6,0.5,1,2,done,0ff10dc,,4.8,2.0,1.08,242,False
+T-P01-006,Hardening rate-limit auth 429 falsos positivos,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,2,8,2,0.9,3,6,0.5,1,2,done,5821a0a,,4.8,2.0,1.08,243,False
+T-P01-010,Checklist segurança pareamento child sem guardian,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,2,8,2,0.9,3,6,0.5,1,2,done,26c519e,,4.8,2.0,1.08,244,False
+T-P14-004,API chatbot: site chatbot intent routing,E-P13,Site institucional e campanha,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,done,,,4.8,2.0,0.88,245,False
+T-P14-005,API ai: support classifier rollout,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,done,e2c6ea8,,4.8,2.0,0.88,246,False
+T-P14-006,API ai: disable placeholder provider default,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,done,1fc606d,,4.8,2.0,0.88,247,False
+T-P14-008,API payments: paywall feature flag off prod,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,done,c64e9f4,,4.8,2.0,0.88,248,False
+T-P14-013,API email: template extra-time request,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,done,,,4.8,2.0,0.88,249,False
+T-P14-014,API content: tutorial CMS API CRUD,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,done,,,4.8,2.0,0.88,250,False
+T-P14-017,API pre-launch: waitlist lead capture API,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,done,,,4.8,2.0,0.88,251,False
+T-P14-018,API accounting: CPC fiscal endpoints BO,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,done,,,4.8,2.0,0.88,252,False
+T-P14-022,API devices: device supersession integration test,E-P01,"Auth, sessão e pareamento",produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,done,f39c9c6,,4.8,2.0,0.88,253,False
+T-P14-035,API storage: SOS audio MIME validation,E-P02,Localização e rotas Mapbox,produto,guardiao-familia-api,O3,6,6,2,0.8,2,4,0.25,0.75,2,done,,,4.8,2.0,0.88,254,False
+T-P09-001,Mapa rotas matched estabilidade,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,7,2,0.85,3,5,0.5,1.5,3,done,f5047fa,,3.97,1.67,1.58,255,False
+T-P09-002,Offline route refresh seguro,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,7,2,0.85,3,5,0.5,1.5,3,done,aef5509,,3.97,1.67,1.58,256,False
+T-P09-010,Remover URL plan config stale,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,7,2,0.85,3,5,0.5,1.5,3,done,dbabadf,,3.97,1.67,1.58,257,False
+T-P09-011,Jest release checks estáveis,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,7,2,0.85,3,5,0.5,1.5,3,done,d9529ab,,3.97,1.67,1.58,258,False
+T-P09-012,Paywall permanece desabilitado release,E-P09,"App parent — mapa, relatórios, IA",produto,guardiao-familia-parent,O3,10,7,2,0.85,3,5,0.5,1.5,3,done,c64e9f4,,3.97,1.67,1.58,259,False
+T-P06-001,API regras tempo de tela CRUD,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,7,7,2,0.8,3,5,0.5,1.5,3,done,,,3.73,1.67,1.58,260,False
+T-P06-002,API pedido tempo extra create/decide,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,7,7,2,0.8,3,5,0.5,1.5,3,done,,,3.73,1.67,1.58,261,False
+T-P06-006,E-mail notificação pedido extra,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,7,7,2,0.8,3,5,0.5,1.5,3,done,,,3.73,1.67,1.58,262,False
+T-P06-008,Política extra-time applies date,E-P06,Tempo de tela e pedido extra,produto,guardiao-familia-api,O3,7,7,2,0.8,3,5,0.5,1.5,3,done,,,3.73,1.67,1.58,263,False
+T-P08-001,API family members CRUD,E-P08,"Família, mensagens e acesso",produto,guardiao-familia-api,O3,8,6,2,0.8,3,4,0.5,1.5,3,done,,,3.2,1.33,1.58,264,False
+T-P08-002,API family messages,E-P08,"Família, mensagens e acesso",produto,guardiao-familia-api,O3,8,6,2,0.8,3,4,0.5,1.5,3,done,,,3.2,1.33,1.58,265,False
+T-P08-003,API family access invites,E-P08,"Família, mensagens e acesso",produto,guardiao-familia-api,O3,8,6,2,0.8,3,4,0.5,1.5,3,done,,,3.2,1.33,1.58,266,False
+T-P08-006,Referral rewards API,E-P08,"Família, mensagens e acesso",produto,guardiao-familia-api,O3,8,6,2,0.8,3,4,0.5,1.5,3,done,,,3.2,1.33,1.58,267,False
+T-P07-001,API conquistas e pontos child,E-P07,Gamificação e engajamento child,produto,guardiao-familia-child,O3,9,5,1.5,0.75,2,3,0.5,1,2,done,,,2.81,1.5,1.08,268,False
+T-P13-001,CNPJ páginas legais,E-P13,Site institucional e campanha,produto,guardiao-familia-site,O3,12,4,1.5,0.8,2,2,0.25,0.5,1,done,8928a7e,,2.4,1.0,0.54,269,False
+T-P13-002,Chatbot widget site,E-P13,Site institucional e campanha,produto,guardiao-familia-site,O3,12,4,1.5,0.8,2,2,0.25,0.5,1,done,637dd2a,,2.4,1.0,0.54,270,False
+T-P13-003,Links download pré-lançamento,E-P13,Site institucional e campanha,produto,guardiao-familia-site,O3,12,4,1.5,0.8,2,2,0.25,0.5,1,done,a6fac08,,2.4,1.0,0.54,271,False
+T-P13-004,Campanha 30 dias estrutura,E-P13,Site institucional e campanha,produto,guardiao-familia-site,O3,12,4,1.5,0.8,2,2,0.25,0.5,1,done,2556642,,2.4,1.0,0.54,272,False

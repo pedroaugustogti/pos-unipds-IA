@@ -1,0 +1,215 @@
+{
+  "mode": "deterministic",
+  "sprint": 1,
+  "assignments_count": 8,
+  "claims": [
+    {
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "branch": "feat/T-P05-001-bundlar-sons-push-ios-parent",
+      "labels": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "labels": [
+          "agent:frontend-mobile",
+          "agent:in-progress"
+        ]
+      },
+      "comment": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "body_preview": "**CrewAI Orchestrator** — agent `frontend-mobile` claimed `T-P05-001` at 2026-08-19T18:38:46.110286+00:00\n\nBranch: `feat/T-P05-001-bundlar-sons-push-ios-parent`\nSprint: 3 | Priority: #1"
+      },
+      "board_status": {
+        "ok": true,
+        "dry_run": true,
+        "task_id": "T-P05-001",
+        "status": "In Progress"
+      }
+    },
+    {
+      "task_id": "T-I04-001",
+      "agent": "database",
+      "branch": "feat/T-I04-001-rds-postgresql-multi-az-staging",
+      "labels": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "labels": [
+          "agent:database",
+          "agent:in-progress"
+        ]
+      },
+      "comment": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "body_preview": "**CrewAI Orchestrator** — agent `database` claimed `T-I04-001` at 2026-08-19T18:38:46.110286+00:00\n\nBranch: `feat/T-I04-001-rds-postgresql-multi-az-staging`\nSprint: 2 | Priority: #10"
+      },
+      "board_status": {
+        "ok": true,
+        "dry_run": true,
+        "task_id": "T-I04-001",
+        "status": "In Progress"
+      }
+    },
+    {
+      "task_id": "T-P04-005",
+      "agent": "backend",
+      "branch": "feat/T-P04-005-push-sos-parent-em-30s-ios",
+      "labels": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "labels": [
+          "agent:backend",
+          "agent:in-progress"
+        ]
+      },
+      "comment": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "body_preview": "**CrewAI Orchestrator** — agent `backend` claimed `T-P04-005` at 2026-08-19T18:38:46.110286+00:00\n\nBranch: `feat/T-P04-005-push-sos-parent-em-30s-ios`\nSprint: 5 | Priority: #12"
+      },
+      "board_status": {
+        "ok": true,
+        "dry_run": true,
+        "task_id": "T-P04-005",
+        "status": "In Progress"
+      }
+    },
+    {
+      "task_id": "T-P03-005",
+      "agent": "qa",
+      "branch": "feat/T-P03-005-notificacao-entrada-saida-cerca-e2e-ios",
+      "labels": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "labels": [
+          "agent:qa",
+          "agent:in-progress"
+        ]
+      },
+      "comment": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "body_preview": "**CrewAI Orchestrator** — agent `qa` claimed `T-P03-005` at 2026-08-19T18:38:46.110286+00:00\n\nBranch: `feat/T-P03-005-notificacao-entrada-saida-cerca-e2e-ios`\nSprint: 6 | Priority: #14"
+      },
+      "board_status": {
+        "ok": true,
+        "dry_run": true,
+        "task_id": "T-P03-005",
+        "status": "In Progress"
+      }
+    },
+    {
+      "task_id": "T-S01-005",
+      "agent": "stores-release",
+      "branch": "feat/T-S01-005-review-notes-location-background",
+      "labels": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "labels": [
+          "agent:stores-release",
+          "agent:in-progress"
+        ]
+      },
+      "comment": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "body_preview": "**CrewAI Orchestrator** — agent `stores-release` claimed `T-S01-005` at 2026-08-19T18:38:46.110286+00:00\n\nBranch: `feat/T-S01-005-review-notes-location-background`\nSprint: 11 | Priority: #16"
+      },
+      "board_status": {
+        "ok": true,
+        "dry_run": true,
+        "task_id": "T-S01-005",
+        "status": "In Progress"
+      }
+    },
+    {
+      "task_id": "T-I01-005",
+      "agent": "cloud-infra",
+      "branch": "feat/T-I01-005-ecr-repository-e-lifecycle",
+      "labels": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "labels": [
+          "agent:cloud-infra",
+          "agent:in-progress"
+        ]
+      },
+      "comment": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "body_preview": "**CrewAI Orchestrator** — agent `cloud-infra` claimed `T-I01-005` at 2026-08-19T18:38:46.110286+00:00\n\nBranch: `feat/T-I01-005-ecr-repository-e-lifecycle`\nSprint: 1 | Priority: #24"
+      },
+      "board_status": {
+        "ok": true,
+        "dry_run": true,
+        "task_id": "T-I01-005",
+        "status": "In Progress"
+      }
+    },
+    {
+      "task_id": "T-I02-006",
+      "agent": "devops-cicd",
+      "branch": "feat/T-I02-006-eas-build-child-production",
+      "labels": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "labels": [
+          "agent:devops-cicd",
+          "agent:in-progress"
+        ]
+      },
+      "comment": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "body_preview": "**CrewAI Orchestrator** — agent `devops-cicd` claimed `T-I02-006` at 2026-08-19T18:38:46.110286+00:00\n\nBranch: `feat/T-I02-006-eas-build-child-production`\nSprint: 2 | Priority: #55"
+      },
+      "board_status": {
+        "ok": true,
+        "dry_run": true,
+        "task_id": "T-I02-006",
+        "status": "In Progress"
+      }
+    },
+    {
+      "task_id": "T-P12-006",
+      "agent": "frontend-web",
+      "branch": "feat/T-P12-006-runbook-suporte-release",
+      "labels": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "labels": [
+          "agent:frontend-web",
+          "agent:in-progress"
+        ]
+      },
+      "comment": {
+        "ok": true,
+        "dry_run": true,
+        "issue": "0",
+        "body_preview": "**CrewAI Orchestrator** — agent `frontend-web` claimed `T-P12-006` at 2026-08-19T18:38:46.110286+00:00\n\nBranch: `feat/T-P12-006-runbook-suporte-release`\nSprint: 11 | Priority: #101"
+      },
+      "board_status": {
+        "ok": true,
+        "dry_run": true,
+        "task_id": "T-P12-006",
+        "status": "In Progress"
+      }
+    }
+  ]
+}

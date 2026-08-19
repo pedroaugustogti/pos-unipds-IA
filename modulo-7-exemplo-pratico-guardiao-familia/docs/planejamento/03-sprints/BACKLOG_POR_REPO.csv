@@ -1,0 +1,24 @@
+repo,sprint,item,sp,motivo
+api,S1,bootstrap ECS/Fargate e deploy base,8,base de release
+api,S2,RDS Redis secrets observabilidade,8,plataforma prod-like
+parent,S3,bundling sons push,3,fecha gap critico
+child,S3,bundling sons push,2,fecha gap critico
+api,S4,ajustes SOS payload e logs,3,homologacao iOS
+parent,S4,recebimento SOS iOS,3,fluxo E2E
+child,S4,disparo SOS iOS,2,fluxo E2E
+api,S5,ajustes SOS Android,2,homologacao Android
+parent,S5,recebimento SOS Android,3,fluxo E2E
+child,S5,disparo SOS Android,2,fluxo E2E
+api,S6,geofences e notificacao,5,alerta em tempo real
+parent,S6,tela/config geofence e recebimento,3,valor ao responsavel
+api,S7,pedido tempo extra backend,2,fluxo de aprovacao
+parent,S7,aprovacao tempo extra,2,fluxo do responsavel
+child,S7,solicitacao tempo extra,1,fluxo da crianca
+api,S8,consentimento purge audit trail,5,LGPD
+site,S8,politicas e consentimento publico,2,release e juridico
+child,S9,polish tela e conquistas,5,usabilidade
+parent,S10,relatorios MVP,3,valor de experiencia
+api,S10,servicos de IA/relatorios,3,apoio ao MVP
+parent,S11,assets e build final,3,store readiness
+child,S11,assets e build final,3,store readiness
+backoffice,S12,suporte live operacional,5,beta e operacao
