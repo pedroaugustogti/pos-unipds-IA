@@ -50,6 +50,16 @@
         "/c",
         "cd /d modulo-5-exemplo-3-openspec-cfp\\cfp-platform && npx playwright run-test-mcp-server --config frontend-e2e/playwright.config.ts"
       ]
+    },
+    "github-cli": {
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/.cursor/github-mcp.ps1"
+      ]
     }
   }
 }

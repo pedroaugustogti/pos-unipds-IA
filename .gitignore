@@ -11,6 +11,13 @@
 .DS_Store
 Thumbs.db
 
+# GitHub MCP local binary
+.cursor/bin/
+
+# Python
+**/__pycache__/
+*.py[cod]
+
 # Terraform (state pode conter dados sensíveis)
 *.tfstate
 *.tfstate.*

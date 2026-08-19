@@ -1,60 +1,43 @@
-# Próxima Aula — Exemplo 2: IaC Copilot + Terraform
+# Próxima Aula — Módulo 7: Planejamento e Escopo (RouteWise)
 
-> **Scaffold previsto:** `modulo-6-exemplo-2-iac-copilot` (Lab 2 do monorepo Nexus)
+> **Módulo 6 encerrado** (Labs 1–12 + M13 stack local). A próxima aula inicia o **Módulo 7 — Ferramentas de IA para Gestão de Projetos**.
 
-**Referência UNIPDS:** [modulo06-aiops-engenharia-agentica/labs/modulo2_iac_copilot.py](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/blob/main/modulo06-aiops-engenharia-agentica/labs/modulo2_iac_copilot.py)
+**Scaffold:** [`modulo-7-exemplo-1-planejamento-e-escopo`](../../modulo-7-exemplo-1-planejamento-e-escopo/)
 
----
+**Resumo completo:** [`modulo-7-exemplo-1-planejamento-e-escopo/docs/RESUMO_PROXIMA_AULA.md`](../../modulo-7-exemplo-1-planejamento-e-escopo/docs/RESUMO_PROXIMA_AULA.md)
 
-## Contexto pedagógico
-
-| Aula anterior | Esta aula | Próxima |
-|---------------|-----------|---------|
-| Ex. 1 — Foundation ✅ | **Ex. 2 — IaC Copilot** | Ex. 3 — K8s GitOps |
-
-**Ponte com o Ex. 1:** na Foundation o agente **consulta** políticas. No IaC Copilot ele **gera código Terraform HCL** e passa por auditoria DevSecOps.
+**Referência UNIPDS:** [modulo-01-planejamento-e-escopo](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo07-ferramentas-de-ia-para-gestao-de-projetos/modulo-01-planejamento-e-escopo)
 
 ---
 
-## Objetivos
+## Ponte M6 → M7
 
-1. Executar `labs/modulo2_iac_copilot.py`
-2. Gerar `main.tf` aderente às normas Nexus
-3. Entender o agente `get_auditor` e validação de compliance
-4. Comparar output HCL antes/depois da auditoria
+| Módulo 6 (concluído) | Módulo 7 (próximo) |
+|----------------------|-------------------|
+| Agentes CrewAI em **operações de plataforma** | IA no **ciclo de gestão de projetos** |
+| Stack Nexus (K8s, LocalStack, Ollama) | **Requirements Copilot** + **Jira** |
+| Groq / Ollama para inferência | **Gemini AI Studio** (ou Claude/GPT/Ollama) |
+| Labs técnicos (IaC, FinOps, ChatOps) | Artefatos PM (stories, épicos, backlog) |
+
+Opcional antes da aula: rodar **Lab 12** com `OLLAMA_BASE_URL` apontando ao container GPU — ver [`OLLAMA_MODULO135.md`](./OLLAMA_MODULO135.md).
 
 ---
 
-## Pré-requisitos
+## Objetivo da primeira aula M7
 
-- Ex. 1 concluído (venv, Groq, familiaridade com CrewAI)
-- Terraform CLI (opcional — para validar HCL gerado)
+1. Configurar o **Requirements Copilot** (system prompt v1.2) no AI Studio
+2. Processar a transcrição de discovery **RouteWise** (`transcricao-discovery-routewise.md`)
+3. Validar output (9 seções: domínios, stakeholders, épicos, stories INVEST, Gherkin, perguntas abertas, cards Jira)
+4. Criar projeto **Scrum** no Jira Cloud e importar `routewise-jira-import.csv`
+5. Comparar backlog importado vs. output do Copilot
 
 ---
 
 ## Início rápido
 
 ```powershell
-cd ../modulo-6-exemplo-1-aiops-foundation/nexus
-.\venv\Scripts\Activate.ps1
-python labs/modulo2_iac_copilot.py
-```
-
----
-
-## Materiais
-
-| Documento | Conteúdo |
-|-----------|----------|
-| [`nexus/slides/slides2.md`](../nexus/slides/slides2.md) | Slides UNIPDS Lab 2 |
-| [`nexus/main.tf`](../nexus/main.tf) | Exemplo de HCL gerado |
-| [`FLUXO_CREWAI.md`](FLUXO_CREWAI.md) | Arquitetura agentes + tools |
-
----
-
-## Comandos de validação
-
-```powershell
-python labs/modulo2_iac_copilot.py
-# Verificar se main.tf foi gerado/atualizado com prefixo nexus- e região us-east-1
+cd ..\modulo-7-exemplo-1-planejamento-e-escopo
+# 1. Abrir requirements-copilot-system-prompt.md → copiar no AI Studio
+# 2. Colar transcricao-discovery-routewise.md como input
+# 3. Seguir guia-board-routewise.md para Jira
 ```

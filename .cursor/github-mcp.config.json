@@ -1,0 +1,6 @@
+{
+  "org": "guardiaofamilia",
+  "projectNumber": 1,
+  "binaryVersion": "v1.9.0",
+  "toolsets": "repos,issues,pull_requests,orgs,projects"
+}

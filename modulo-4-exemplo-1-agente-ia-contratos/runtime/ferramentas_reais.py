@@ -28,6 +28,8 @@ MAPA_MODULOS_UNIPDS = {
     4: "modulo04-agentes-autonomos",
     5: "modulo05-ferramentas-de-IA-para-UI-UX",
     6: "modulo06-aiops-engenharia-agentica",
+    7: "modulo07-ferramentas-de-ia-para-gestao-de-projetos",
+    8: "modulo08-arquitetura-de-sistemas-com-ia",
 }
 
 
