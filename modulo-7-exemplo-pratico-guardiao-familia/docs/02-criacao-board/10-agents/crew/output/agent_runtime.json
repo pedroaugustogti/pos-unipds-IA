@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "updated_at": "2026-08-20T23:01:09.156451+00:00",
+  "agents": {
+    "backend": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T23:01:09.068911+00:00"
+    },
+    "backend-reviewer": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T22:55:41.410752+00:00"
+    },
+    "frontend-mobile": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T23:01:09.021395+00:00"
+    },
+    "frontend-mobile-reviewer": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T22:55:41.410752+00:00"
+    },
+    "frontend-web": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T23:01:09.123923+00:00"
+    },
+    "frontend-web-reviewer": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T22:55:41.410752+00:00"
+    },
+    "cloud-infra": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T23:01:09.042907+00:00"
+    },
+    "cloud-infra-reviewer": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T22:55:41.410752+00:00"
+    },
+    "database": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T23:01:09.055904+00:00"
+    },
+    "database-reviewer": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T22:55:41.410752+00:00"
+    },
+    "devops-cicd": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T23:01:09.111915+00:00"
+    },
+    "devops-cicd-reviewer": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T22:55:41.410752+00:00"
+    },
+    "qa": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T23:01:09.080903+00:00"
+    },
+    "qa-reviewer": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T22:55:41.410752+00:00"
+    },
+    "stores-release": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T23:01:09.097906+00:00"
+    },
+    "stores-release-reviewer": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T22:55:41.410752+00:00"
+    },
+    "orchestrator": {
+      "state": "idle",
+      "task_id": null,
+      "updated_at": "2026-08-20T22:55:41.410752+00:00"
+    }
+  },
+  "bug_counts": {
+    "T-P05-001": {
+      "count": 3,
+      "history": [
+        {
+          "at": "2026-08-20T23:01:09.142445+00:00",
+          "summary": "Bug recorrente #1 (demo orchestrator)"
+        },
+        {
+          "at": "2026-08-20T23:01:09.148451+00:00",
+          "summary": "Bug recorrente #2 (demo orchestrator)"
+        },
+        {
+          "at": "2026-08-20T23:01:09.155453+00:00",
+          "summary": "Bug recorrente #3 (demo orchestrator)"
+        }
+      ],
+      "skill": "frontend-mobile",
+      "blocker": true,
+      "skill_path": "skills/frontend-mobile/SKILL.md",
+      "blocker_reason": "BLOCKER automatico: 3 bugs na mesma task T-P05-001. Skill impactada: `frontend-mobile` (skills/frontend-mobile/SKILL.md). Impacto: Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device. Ultimo resumo: Bug recorrente #3 (demo orchestrator)"
+    }
+  },
+  "blockers": [
+    {
+      "task_id": "T-P05-001",
+      "title": "Bundlar sons push iOS parent",
+      "bug_count": 3,
+      "skill": "frontend-mobile",
+      "skill_path": "skills/frontend-mobile/SKILL.md",
+      "skill_impact": "Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device.",
+      "reason": "BLOCKER automatico: 3 bugs na mesma task T-P05-001. Skill impactada: `frontend-mobile` (skills/frontend-mobile/SKILL.md). Impacto: Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device. Ultimo resumo: Bug recorrente #3 (demo orchestrator)",
+      "at": "2026-08-20T23:01:09.155453+00:00",
+      "local_board": {
+        "ok": true,
+        "dry_run": true,
+        "reason": "BLOCKER automatico: 3 bugs na mesma task T-P05-001. Skill impactada: `frontend-mobile` (skills/frontend-mobile/SKILL.md). Impacto: Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device. Ultimo resumo: Bug recorrente #3 (demo orchestrator)"
+      }
+    }
+  ],
+  "event_log": [],
+  "dispatch_queue": []
+}

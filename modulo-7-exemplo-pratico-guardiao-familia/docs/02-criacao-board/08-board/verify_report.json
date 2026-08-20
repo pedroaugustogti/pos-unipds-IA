@@ -1,0 +1,14 @@
+{
+  "expected": 272,
+  "actual": 272,
+  "v2_cards": 272,
+  "missing_cards": 0,
+  "missing_trilha": 0,
+  "missing_okr": 0,
+  "missing_epic": 0,
+  "missing_refinamento": 0,
+  "missing_blocker_motivo": 0,
+  "sample_missing": [],
+  "sample_gap_trilha": [],
+  "sample_gap_refin": []
+}

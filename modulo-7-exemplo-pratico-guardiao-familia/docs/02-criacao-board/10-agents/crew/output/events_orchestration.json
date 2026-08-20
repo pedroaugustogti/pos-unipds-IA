@@ -1,0 +1,522 @@
+{
+  "mode": "events",
+  "dry_run": true,
+  "idle_after": [
+    "backend",
+    "backend-reviewer",
+    "cloud-infra",
+    "cloud-infra-reviewer",
+    "database",
+    "database-reviewer",
+    "devops-cicd",
+    "devops-cicd-reviewer",
+    "frontend-mobile",
+    "frontend-mobile-reviewer",
+    "frontend-web",
+    "frontend-web-reviewer",
+    "orchestrator",
+    "qa",
+    "qa-reviewer",
+    "stores-release",
+    "stores-release-reviewer"
+  ],
+  "events": [
+    {
+      "task_id": "T-P05-001",
+      "assigned_agent": "frontend-mobile",
+      "notification": {
+        "ok": true,
+        "type": "status_change",
+        "event": "claim",
+        "task_id": "T-P05-001",
+        "title": "Bundlar sons push iOS parent",
+        "from": "Todo",
+        "to": "In Progress",
+        "next_agent": "frontend-mobile",
+        "start_hint": "Iniciar implementacao (In Progress)",
+        "idle_agents": [
+          "backend",
+          "backend-reviewer",
+          "cloud-infra",
+          "cloud-infra-reviewer",
+          "database",
+          "database-reviewer",
+          "devops-cicd",
+          "devops-cicd-reviewer",
+          "frontend-mobile",
+          "frontend-mobile-reviewer",
+          "frontend-web",
+          "frontend-web-reviewer",
+          "orchestrator",
+          "qa",
+          "qa-reviewer",
+          "stores-release",
+          "stores-release-reviewer"
+        ],
+        "agent_idle": true,
+        "dispatch": {
+          "action": "start_task",
+          "call_agent": "frontend-mobile",
+          "task_id": "T-P05-001",
+          "status": "In Progress",
+          "hint": "Iniciar implementacao (In Progress)",
+          "message": "Agente `frontend-mobile` ocioso — chamar para iniciar/continuar `T-P05-001` em **In Progress**."
+        },
+        "queued": false,
+        "blocker": null,
+        "skill_impact": {
+          "skill": "frontend-mobile",
+          "path": "skills/frontend-mobile/SKILL.md",
+          "impact": "Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device.",
+          "agent_role": "frontend-mobile"
+        },
+        "at": "2026-08-20T23:01:09.027916+00:00"
+      }
+    },
+    {
+      "task_id": "T-I01-001",
+      "assigned_agent": "cloud-infra",
+      "notification": {
+        "ok": true,
+        "type": "status_change",
+        "event": "claim",
+        "task_id": "T-I01-001",
+        "title": "Terraform VPC subnets multi-AZ",
+        "from": "Todo",
+        "to": "In Progress",
+        "next_agent": "cloud-infra",
+        "start_hint": "Iniciar implementacao (In Progress)",
+        "idle_agents": [
+          "backend",
+          "backend-reviewer",
+          "cloud-infra",
+          "cloud-infra-reviewer",
+          "database",
+          "database-reviewer",
+          "devops-cicd",
+          "devops-cicd-reviewer",
+          "frontend-mobile",
+          "frontend-mobile-reviewer",
+          "frontend-web",
+          "frontend-web-reviewer",
+          "orchestrator",
+          "qa",
+          "qa-reviewer",
+          "stores-release",
+          "stores-release-reviewer"
+        ],
+        "agent_idle": true,
+        "dispatch": {
+          "action": "start_task",
+          "call_agent": "cloud-infra",
+          "task_id": "T-I01-001",
+          "status": "In Progress",
+          "hint": "Iniciar implementacao (In Progress)",
+          "message": "Agente `cloud-infra` ocioso — chamar para iniciar/continuar `T-I01-001` em **In Progress**."
+        },
+        "queued": false,
+        "blocker": null,
+        "skill_impact": {
+          "skill": "cloud-infra",
+          "path": "skills/cloud-infra/SKILL.md",
+          "impact": "Terraform/AWS ECS — ambiente ou rede inconsistente afeta deploy e testes.",
+          "agent_role": "cloud-infra"
+        },
+        "at": "2026-08-20T23:01:09.048915+00:00"
+      }
+    },
+    {
+      "task_id": "T-I04-001",
+      "assigned_agent": "database",
+      "notification": {
+        "ok": true,
+        "type": "status_change",
+        "event": "claim",
+        "task_id": "T-I04-001",
+        "title": "RDS PostgreSQL multi-AZ staging",
+        "from": "Todo",
+        "to": "In Progress",
+        "next_agent": "database",
+        "start_hint": "Iniciar implementacao (In Progress)",
+        "idle_agents": [
+          "backend",
+          "backend-reviewer",
+          "cloud-infra",
+          "cloud-infra-reviewer",
+          "database",
+          "database-reviewer",
+          "devops-cicd",
+          "devops-cicd-reviewer",
+          "frontend-mobile",
+          "frontend-mobile-reviewer",
+          "frontend-web",
+          "frontend-web-reviewer",
+          "orchestrator",
+          "qa",
+          "qa-reviewer",
+          "stores-release",
+          "stores-release-reviewer"
+        ],
+        "agent_idle": true,
+        "dispatch": {
+          "action": "start_task",
+          "call_agent": "database",
+          "task_id": "T-I04-001",
+          "status": "In Progress",
+          "hint": "Iniciar implementacao (In Progress)",
+          "message": "Agente `database` ocioso — chamar para iniciar/continuar `T-I04-001` em **In Progress**."
+        },
+        "queued": false,
+        "blocker": null,
+        "skill_impact": {
+          "skill": "database",
+          "path": "skills/database/SKILL.md",
+          "impact": "Migrations/PostgreSQL/Redis — schema ou dados corrompem cenarios E2E.",
+          "agent_role": "database"
+        },
+        "at": "2026-08-20T23:01:09.061912+00:00"
+      }
+    },
+    {
+      "task_id": "T-P04-005",
+      "assigned_agent": "backend",
+      "notification": {
+        "ok": true,
+        "type": "status_change",
+        "event": "claim",
+        "task_id": "T-P04-005",
+        "title": "Push SOS parent em <30s iOS",
+        "from": "Todo",
+        "to": "In Progress",
+        "next_agent": "backend",
+        "start_hint": "Iniciar implementacao (In Progress)",
+        "idle_agents": [
+          "backend",
+          "backend-reviewer",
+          "cloud-infra",
+          "cloud-infra-reviewer",
+          "database",
+          "database-reviewer",
+          "devops-cicd",
+          "devops-cicd-reviewer",
+          "frontend-mobile",
+          "frontend-mobile-reviewer",
+          "frontend-web",
+          "frontend-web-reviewer",
+          "orchestrator",
+          "qa",
+          "qa-reviewer",
+          "stores-release",
+          "stores-release-reviewer"
+        ],
+        "agent_idle": true,
+        "dispatch": {
+          "action": "start_task",
+          "call_agent": "backend",
+          "task_id": "T-P04-005",
+          "status": "In Progress",
+          "hint": "Iniciar implementacao (In Progress)",
+          "message": "Agente `backend` ocioso — chamar para iniciar/continuar `T-P04-005` em **In Progress**."
+        },
+        "queued": false,
+        "blocker": null,
+        "skill_impact": {
+          "skill": "backend",
+          "path": "skills/backend/SKILL.md",
+          "impact": "Implementacao NestJS/API, contratos e integracoes — falhas recorrentes em codigo de dominio.",
+          "agent_role": "backend"
+        },
+        "at": "2026-08-20T23:01:09.074903+00:00"
+      }
+    },
+    {
+      "task_id": "T-P03-005",
+      "assigned_agent": "qa",
+      "notification": {
+        "ok": true,
+        "type": "status_change",
+        "event": "claim",
+        "task_id": "T-P03-005",
+        "title": "Notificação entrada/saída cerca E2E iOS",
+        "from": "Todo",
+        "to": "In Progress",
+        "next_agent": "qa",
+        "start_hint": "Iniciar implementacao (In Progress)",
+        "idle_agents": [
+          "backend",
+          "backend-reviewer",
+          "cloud-infra",
+          "cloud-infra-reviewer",
+          "database",
+          "database-reviewer",
+          "devops-cicd",
+          "devops-cicd-reviewer",
+          "frontend-mobile",
+          "frontend-mobile-reviewer",
+          "frontend-web",
+          "frontend-web-reviewer",
+          "orchestrator",
+          "qa",
+          "qa-reviewer",
+          "stores-release",
+          "stores-release-reviewer"
+        ],
+        "agent_idle": true,
+        "dispatch": {
+          "action": "start_task",
+          "call_agent": "qa",
+          "task_id": "T-P03-005",
+          "status": "In Progress",
+          "hint": "Iniciar implementacao (In Progress)",
+          "message": "Agente `qa` ocioso — chamar para iniciar/continuar `T-P03-005` em **In Progress**."
+        },
+        "queued": false,
+        "blocker": null,
+        "skill_impact": {
+          "skill": "qa",
+          "path": "skills/qa/SKILL.md",
+          "impact": "Harness E2E/cenarios — se bugs forem flaky, a skill QA precisa estabilizar evidencias.",
+          "agent_role": "qa"
+        },
+        "at": "2026-08-20T23:01:09.086910+00:00"
+      }
+    },
+    {
+      "task_id": "T-S01-005",
+      "assigned_agent": "stores-release",
+      "notification": {
+        "ok": true,
+        "type": "status_change",
+        "event": "claim",
+        "task_id": "T-S01-005",
+        "title": "Review notes location background",
+        "from": "Todo",
+        "to": "In Progress",
+        "next_agent": "stores-release",
+        "start_hint": "Iniciar implementacao (In Progress)",
+        "idle_agents": [
+          "backend",
+          "backend-reviewer",
+          "cloud-infra",
+          "cloud-infra-reviewer",
+          "database",
+          "database-reviewer",
+          "devops-cicd",
+          "devops-cicd-reviewer",
+          "frontend-mobile",
+          "frontend-mobile-reviewer",
+          "frontend-web",
+          "frontend-web-reviewer",
+          "orchestrator",
+          "qa",
+          "qa-reviewer",
+          "stores-release",
+          "stores-release-reviewer"
+        ],
+        "agent_idle": true,
+        "dispatch": {
+          "action": "start_task",
+          "call_agent": "stores-release",
+          "task_id": "T-S01-005",
+          "status": "In Progress",
+          "hint": "Iniciar implementacao (In Progress)",
+          "message": "Agente `stores-release` ocioso — chamar para iniciar/continuar `T-S01-005` em **In Progress**."
+        },
+        "queued": false,
+        "blocker": null,
+        "skill_impact": {
+          "skill": "stores-release",
+          "path": "skills/stores-release/SKILL.md",
+          "impact": "Release stores/compliance — bloqueio de submissao ou checklist release.",
+          "agent_role": "stores-release"
+        },
+        "at": "2026-08-20T23:01:09.104902+00:00"
+      }
+    },
+    {
+      "task_id": "T-I02-006",
+      "assigned_agent": "devops-cicd",
+      "notification": {
+        "ok": true,
+        "type": "status_change",
+        "event": "claim",
+        "task_id": "T-I02-006",
+        "title": "EAS build child production",
+        "from": "Todo",
+        "to": "In Progress",
+        "next_agent": "devops-cicd",
+        "start_hint": "Iniciar implementacao (In Progress)",
+        "idle_agents": [
+          "backend",
+          "backend-reviewer",
+          "cloud-infra",
+          "cloud-infra-reviewer",
+          "database",
+          "database-reviewer",
+          "devops-cicd",
+          "devops-cicd-reviewer",
+          "frontend-mobile",
+          "frontend-mobile-reviewer",
+          "frontend-web",
+          "frontend-web-reviewer",
+          "orchestrator",
+          "qa",
+          "qa-reviewer",
+          "stores-release",
+          "stores-release-reviewer"
+        ],
+        "agent_idle": true,
+        "dispatch": {
+          "action": "start_task",
+          "call_agent": "devops-cicd",
+          "task_id": "T-I02-006",
+          "status": "In Progress",
+          "hint": "Iniciar implementacao (In Progress)",
+          "message": "Agente `devops-cicd` ocioso — chamar para iniciar/continuar `T-I02-006` em **In Progress**."
+        },
+        "queued": false,
+        "blocker": null,
+        "skill_impact": {
+          "skill": "devops-cicd",
+          "path": "skills/devops-cicd/SKILL.md",
+          "impact": "CI/CD e observabilidade — builds/artefatos instaveis geram falsos bugs.",
+          "agent_role": "devops-cicd"
+        },
+        "at": "2026-08-20T23:01:09.117922+00:00"
+      }
+    },
+    {
+      "task_id": "T-P12-006",
+      "assigned_agent": "frontend-web",
+      "notification": {
+        "ok": true,
+        "type": "status_change",
+        "event": "claim",
+        "task_id": "T-P12-006",
+        "title": "Runbook suporte release",
+        "from": "Todo",
+        "to": "In Progress",
+        "next_agent": "frontend-web",
+        "start_hint": "Iniciar implementacao (In Progress)",
+        "idle_agents": [
+          "backend",
+          "backend-reviewer",
+          "cloud-infra",
+          "cloud-infra-reviewer",
+          "database",
+          "database-reviewer",
+          "devops-cicd",
+          "devops-cicd-reviewer",
+          "frontend-mobile",
+          "frontend-mobile-reviewer",
+          "frontend-web",
+          "frontend-web-reviewer",
+          "orchestrator",
+          "qa",
+          "qa-reviewer",
+          "stores-release",
+          "stores-release-reviewer"
+        ],
+        "agent_idle": true,
+        "dispatch": {
+          "action": "start_task",
+          "call_agent": "frontend-web",
+          "task_id": "T-P12-006",
+          "status": "In Progress",
+          "hint": "Iniciar implementacao (In Progress)",
+          "message": "Agente `frontend-web` ocioso — chamar para iniciar/continuar `T-P12-006` em **In Progress**."
+        },
+        "queued": false,
+        "blocker": null,
+        "skill_impact": {
+          "skill": "frontend-web",
+          "path": "skills/frontend-web/SKILL.md",
+          "impact": "Backoffice/site Next.js — fluxos web e painel operacional.",
+          "agent_role": "frontend-web"
+        },
+        "at": "2026-08-20T23:01:09.130453+00:00"
+      }
+    }
+  ],
+  "bugs_demo": [
+    {
+      "ok": true,
+      "task_id": "T-P05-001",
+      "bug_count": 1,
+      "threshold": 3,
+      "blocker": false,
+      "skill": {
+        "skill": "frontend-mobile",
+        "path": "skills/frontend-mobile/SKILL.md",
+        "impact": "Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device.",
+        "agent_role": "frontend-mobile"
+      },
+      "dry_run": true,
+      "runtime_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-7-exemplo-pratico-guardiao-familia\\docs\\02-criacao-board\\10-agents\\crew\\output\\agent_runtime.json"
+    },
+    {
+      "ok": true,
+      "task_id": "T-P05-001",
+      "bug_count": 2,
+      "threshold": 3,
+      "blocker": false,
+      "skill": {
+        "skill": "frontend-mobile",
+        "path": "skills/frontend-mobile/SKILL.md",
+        "impact": "Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device.",
+        "agent_role": "frontend-mobile"
+      },
+      "dry_run": true,
+      "runtime_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-7-exemplo-pratico-guardiao-familia\\docs\\02-criacao-board\\10-agents\\crew\\output\\agent_runtime.json"
+    },
+    {
+      "ok": true,
+      "task_id": "T-P05-001",
+      "bug_count": 3,
+      "threshold": 3,
+      "blocker": true,
+      "skill": {
+        "skill": "frontend-mobile",
+        "path": "skills/frontend-mobile/SKILL.md",
+        "impact": "Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device.",
+        "agent_role": "frontend-mobile"
+      },
+      "dry_run": true,
+      "blocker_notification": {
+        "task_id": "T-P05-001",
+        "title": "Bundlar sons push iOS parent",
+        "bug_count": 3,
+        "skill": "frontend-mobile",
+        "skill_path": "skills/frontend-mobile/SKILL.md",
+        "skill_impact": "Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device.",
+        "reason": "BLOCKER automatico: 3 bugs na mesma task T-P05-001. Skill impactada: `frontend-mobile` (skills/frontend-mobile/SKILL.md). Impacto: Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device. Ultimo resumo: Bug recorrente #3 (demo orchestrator)",
+        "at": "2026-08-20T23:01:09.155453+00:00",
+        "local_board": {
+          "ok": true,
+          "dry_run": true,
+          "reason": "BLOCKER automatico: 3 bugs na mesma task T-P05-001. Skill impactada: `frontend-mobile` (skills/frontend-mobile/SKILL.md). Impacto: Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device. Ultimo resumo: Bug recorrente #3 (demo orchestrator)"
+        }
+      },
+      "runtime_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-7-exemplo-pratico-guardiao-familia\\docs\\02-criacao-board\\10-agents\\crew\\output\\agent_runtime.json"
+    }
+  ],
+  "dispatched_queue": [],
+  "blockers": [
+    {
+      "task_id": "T-P05-001",
+      "title": "Bundlar sons push iOS parent",
+      "bug_count": 3,
+      "skill": "frontend-mobile",
+      "skill_path": "skills/frontend-mobile/SKILL.md",
+      "skill_impact": "Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device.",
+      "reason": "BLOCKER automatico: 3 bugs na mesma task T-P05-001. Skill impactada: `frontend-mobile` (skills/frontend-mobile/SKILL.md). Impacto: Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device. Ultimo resumo: Bug recorrente #3 (demo orchestrator)",
+      "at": "2026-08-20T23:01:09.155453+00:00",
+      "local_board": {
+        "ok": true,
+        "dry_run": true,
+        "reason": "BLOCKER automatico: 3 bugs na mesma task T-P05-001. Skill impactada: `frontend-mobile` (skills/frontend-mobile/SKILL.md). Impacto: Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device. Ultimo resumo: Bug recorrente #3 (demo orchestrator)"
+      }
+    }
+  ],
+  "event_log_tail": []
+}

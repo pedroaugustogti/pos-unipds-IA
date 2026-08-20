@@ -1,0 +1,335 @@
+{
+  "generated_at": "2026-08-20T23:01:09.135454+00:00",
+  "paths": {
+    "log": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-7-exemplo-pratico-guardiao-familia\\docs\\02-criacao-board\\10-agents\\crew\\output\\observability\\workflow.jsonl",
+    "snapshot": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-7-exemplo-pratico-guardiao-familia\\docs\\02-criacao-board\\10-agents\\crew\\output\\observability\\snapshot.json",
+    "dashboard": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-7-exemplo-pratico-guardiao-familia\\docs\\02-criacao-board\\10-agents\\crew\\output\\observability\\dashboard.html"
+  },
+  "totals": {
+    "events": 8,
+    "by_kind": {
+      "status_change": 8
+    },
+    "by_event": {
+      "claim": 8
+    },
+    "by_agent": {
+      "frontend-mobile": 1,
+      "cloud-infra": 1,
+      "database": 1,
+      "backend": 1,
+      "qa": 1,
+      "stores-release": 1,
+      "devops-cicd": 1,
+      "frontend-web": 1
+    },
+    "by_dispatch": {
+      "start_task": 8
+    },
+    "board_status": {
+      "Todo": 211,
+      "Done": 61
+    },
+    "idle_agents": 17,
+    "busy_agents": 0,
+    "queue_len": 0,
+    "blockers": 1
+  },
+  "idle_agents": [
+    "backend",
+    "backend-reviewer",
+    "cloud-infra",
+    "cloud-infra-reviewer",
+    "database",
+    "database-reviewer",
+    "devops-cicd",
+    "devops-cicd-reviewer",
+    "frontend-mobile",
+    "frontend-mobile-reviewer",
+    "frontend-web",
+    "frontend-web-reviewer",
+    "orchestrator",
+    "qa",
+    "qa-reviewer",
+    "stores-release",
+    "stores-release-reviewer"
+  ],
+  "busy_agents": [],
+  "dispatch_queue": [],
+  "blockers": [
+    {
+      "task_id": "T-P05-001",
+      "title": "Bundlar sons push iOS parent",
+      "bug_count": 3,
+      "skill": "frontend-mobile",
+      "skill_path": "skills/frontend-mobile/SKILL.md",
+      "skill_impact": "Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device.",
+      "reason": "BLOCKER automatico: 3 bugs na mesma task T-P05-001. Skill impactada: `frontend-mobile` (skills/frontend-mobile/SKILL.md). Impacto: Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device. Ultimo resumo: Bug recorrente #3 (demo orchestrator)",
+      "at": "2026-08-20T22:55:41.504234+00:00",
+      "local_board": {
+        "ok": true,
+        "dry_run": true,
+        "reason": "BLOCKER automatico: 3 bugs na mesma task T-P05-001. Skill impactada: `frontend-mobile` (skills/frontend-mobile/SKILL.md). Impacto: Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device. Ultimo resumo: Bug recorrente #3 (demo orchestrator)"
+      }
+    }
+  ],
+  "recent_tasks": [
+    {
+      "task_id": "T-P12-006",
+      "last_event": "claim",
+      "last_kind": "status_change",
+      "agent": "frontend-web",
+      "to_status": "In Progress",
+      "ts": "2026-08-20T23:01:09.130453+00:00",
+      "dispatch_action": "start_task"
+    },
+    {
+      "task_id": "T-I02-006",
+      "last_event": "claim",
+      "last_kind": "status_change",
+      "agent": "devops-cicd",
+      "to_status": "In Progress",
+      "ts": "2026-08-20T23:01:09.117922+00:00",
+      "dispatch_action": "start_task"
+    },
+    {
+      "task_id": "T-S01-005",
+      "last_event": "claim",
+      "last_kind": "status_change",
+      "agent": "stores-release",
+      "to_status": "In Progress",
+      "ts": "2026-08-20T23:01:09.104902+00:00",
+      "dispatch_action": "start_task"
+    },
+    {
+      "task_id": "T-P03-005",
+      "last_event": "claim",
+      "last_kind": "status_change",
+      "agent": "qa",
+      "to_status": "In Progress",
+      "ts": "2026-08-20T23:01:09.086910+00:00",
+      "dispatch_action": "start_task"
+    },
+    {
+      "task_id": "T-P04-005",
+      "last_event": "claim",
+      "last_kind": "status_change",
+      "agent": "backend",
+      "to_status": "In Progress",
+      "ts": "2026-08-20T23:01:09.074903+00:00",
+      "dispatch_action": "start_task"
+    },
+    {
+      "task_id": "T-I04-001",
+      "last_event": "claim",
+      "last_kind": "status_change",
+      "agent": "database",
+      "to_status": "In Progress",
+      "ts": "2026-08-20T23:01:09.062912+00:00",
+      "dispatch_action": "start_task"
+    },
+    {
+      "task_id": "T-I01-001",
+      "last_event": "claim",
+      "last_kind": "status_change",
+      "agent": "cloud-infra",
+      "to_status": "In Progress",
+      "ts": "2026-08-20T23:01:09.048915+00:00",
+      "dispatch_action": "start_task"
+    },
+    {
+      "task_id": "T-P05-001",
+      "last_event": "claim",
+      "last_kind": "status_change",
+      "agent": "frontend-mobile",
+      "to_status": "In Progress",
+      "ts": "2026-08-20T23:01:09.033908+00:00",
+      "dispatch_action": "start_task"
+    }
+  ],
+  "timeline": [
+    {
+      "ts": "2026-08-20T23:01:09.033908+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — chamar para iniciar/continuar `T-P05-001` em **In Progress**.",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Bundlar sons push iOS parent"
+      }
+    },
+    {
+      "ts": "2026-08-20T23:01:09.048915+00:00",
+      "kind": "status_change",
+      "task_id": "T-I01-001",
+      "agent": "cloud-infra",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `cloud-infra` ocioso — chamar para iniciar/continuar `T-I01-001` em **In Progress**.",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "cloud-infra",
+        "blocker": false,
+        "title": "Terraform VPC subnets multi-AZ"
+      }
+    },
+    {
+      "ts": "2026-08-20T23:01:09.062912+00:00",
+      "kind": "status_change",
+      "task_id": "T-I04-001",
+      "agent": "database",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `database` ocioso — chamar para iniciar/continuar `T-I04-001` em **In Progress**.",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "database",
+        "blocker": false,
+        "title": "RDS PostgreSQL multi-AZ staging"
+      }
+    },
+    {
+      "ts": "2026-08-20T23:01:09.074903+00:00",
+      "kind": "status_change",
+      "task_id": "T-P04-005",
+      "agent": "backend",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `backend` ocioso — chamar para iniciar/continuar `T-P04-005` em **In Progress**.",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "backend",
+        "blocker": false,
+        "title": "Push SOS parent em <30s iOS"
+      }
+    },
+    {
+      "ts": "2026-08-20T23:01:09.086910+00:00",
+      "kind": "status_change",
+      "task_id": "T-P03-005",
+      "agent": "qa",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa` ocioso — chamar para iniciar/continuar `T-P03-005` em **In Progress**.",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "qa",
+        "blocker": false,
+        "title": "Notificação entrada/saída cerca E2E iOS"
+      }
+    },
+    {
+      "ts": "2026-08-20T23:01:09.104902+00:00",
+      "kind": "status_change",
+      "task_id": "T-S01-005",
+      "agent": "stores-release",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `stores-release` ocioso — chamar para iniciar/continuar `T-S01-005` em **In Progress**.",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "stores-release",
+        "blocker": false,
+        "title": "Review notes location background"
+      }
+    },
+    {
+      "ts": "2026-08-20T23:01:09.117922+00:00",
+      "kind": "status_change",
+      "task_id": "T-I02-006",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — chamar para iniciar/continuar `T-I02-006` em **In Progress**.",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "devops-cicd",
+        "blocker": false,
+        "title": "EAS build child production"
+      }
+    },
+    {
+      "ts": "2026-08-20T23:01:09.130453+00:00",
+      "kind": "status_change",
+      "task_id": "T-P12-006",
+      "agent": "frontend-web",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web` ocioso — chamar para iniciar/continuar `T-P12-006` em **In Progress**.",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Runbook suporte release"
+      }
+    }
+  ],
+  "bug_counts": {
+    "T-P05-001": {
+      "count": 3,
+      "history": [
+        {
+          "at": "2026-08-20T22:55:41.482243+00:00",
+          "summary": "Bug recorrente #1 (demo orchestrator)"
+        },
+        {
+          "at": "2026-08-20T22:55:41.493238+00:00",
+          "summary": "Bug recorrente #2 (demo orchestrator)"
+        },
+        {
+          "at": "2026-08-20T22:55:41.504234+00:00",
+          "summary": "Bug recorrente #3 (demo orchestrator)"
+        }
+      ],
+      "skill": "frontend-mobile",
+      "blocker": true,
+      "skill_path": "skills/frontend-mobile/SKILL.md",
+      "blocker_reason": "BLOCKER automatico: 3 bugs na mesma task T-P05-001. Skill impactada: `frontend-mobile` (skills/frontend-mobile/SKILL.md). Impacto: Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device. Ultimo resumo: Bug recorrente #3 (demo orchestrator)"
+    }
+  }
+}

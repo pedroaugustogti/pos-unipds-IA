@@ -177,7 +177,7 @@ Detalhes da integração (camadas, diagrama, troubleshooting): [`modulo-3-exempl
 | Exemplo | Pasta | Principais aprendizados |
 |---------|-------|-------------------------|
 | 1 | [`modulo-7-exemplo-1-planejamento-e-escopo`](./modulo-7-exemplo-1-planejamento-e-escopo/) | **RouteWise** — Requirements Copilot (transcrição → INVEST/Gherkin → Jira); priorização RICE/WSJF; What-If; PERT/Monte Carlo; riscos; status reports; NL to Workflow; boards/comunicação; portfólio/OKRs; Danger.js — **11 relatórios didáticos** em `docs/` ([modulo-01 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo07-ferramentas-de-ia-para-gestao-de-projetos/modulo-01-planejamento-e-escopo)) |
-| 2 | [`modulo-7-exemplo-pratico-guardiao-familia`](./modulo-7-exemplo-pratico-guardiao-familia/) | **Guardião Família** — caso real [guardiaofamilia](https://github.com/orgs/guardiaofamilia): planejamento 6M (RICE/WSJF, Monte Carlo), **board v2** com **272 tasks** (24 épicos, 13 sprints), refinamento por task, import GraphQL no [GitHub Project #2](https://github.com/orgs/guardiaofamilia/projects/2), **[dashboard HTML](https://pedroaugustogti.github.io/pos-unipds-IA/modulo-7-exemplo-pratico-guardiao-familia/docs/criacao-board/08-board/backlog-dashboard.html)** offline (Kanban + filtros) e **8 agentes criadores + 8 revisores** com CrewAI e sync de board → PR |
+| 2 | [`modulo-7-exemplo-pratico-guardiao-familia`](./modulo-7-exemplo-pratico-guardiao-familia/) | **Guardião Família** — caso real [guardiaofamilia](https://github.com/orgs/guardiaofamilia): planejamento 6M (RICE/WSJF, Monte Carlo), **board v2** com **272 tasks** (24 épicos, 13 sprints), refinamento por task, import GraphQL no [GitHub Project #2](https://github.com/orgs/guardiaofamilia/projects/2), **[dashboard HTML](https://pedroaugustogti.github.io/pos-unipds-IA/modulo-7-exemplo-pratico-guardiao-familia/docs/02-criacao-board/08-board/backlog-dashboard.html)** offline (Kanban + filtros) e **8 agentes criadores + 8 revisores** com CrewAI e sync de board → PR |
 
 **Competências do módulo:** engenharia de requisitos assistida por IA; INVEST e Gherkin; backlog e governança no Jira; priorização e forecast; riscos e AIOps; status reports multi-audiência; automação de boards e comunicação; alinhamento portfólio/OKRs; pipeline **PM AI Toolkit** (10 módulos UNIPDS); **board v2 GitHub** com populate GraphQL; **agentes autônomos** (skills, orquestrador, CrewAI) operando backlog real.
 
@@ -185,7 +185,25 @@ Resumo da próxima aula: [`modulo-7-exemplo-1-planejamento-e-escopo/docs/RESUMO_
 
 Relatórios didáticos (índice completo): [`modulo-7-exemplo-1-planejamento-e-escopo/README.md`](./modulo-7-exemplo-1-planejamento-e-escopo/README.md)
 
-Exemplo prático Guardião Família: [`modulo-7-exemplo-pratico-guardiao-familia/README.md`](./modulo-7-exemplo-pratico-guardiao-familia/README.md) · **[Dashboard HTML (272 tasks)](https://pedroaugustogti.github.io/pos-unipds-IA/modulo-7-exemplo-pratico-guardiao-familia/docs/criacao-board/08-board/backlog-dashboard.html)** · Board: [`docs/criacao-board/`](./modulo-7-exemplo-pratico-guardiao-familia/docs/criacao-board/README.md) · Agentes: [`10-agents/`](./modulo-7-exemplo-pratico-guardiao-familia/docs/criacao-board/10-agents/README.md)
+Exemplo prático Guardião Família: [`modulo-7-exemplo-pratico-guardiao-familia/README.md`](./modulo-7-exemplo-pratico-guardiao-familia/README.md) · **[Dashboard HTML (272 tasks)](https://pedroaugustogti.github.io/pos-unipds-IA/modulo-7-exemplo-pratico-guardiao-familia/docs/02-criacao-board/08-board/backlog-dashboard.html)** · Board: [`docs/02-criacao-board/`](./modulo-7-exemplo-pratico-guardiao-familia/docs/02-criacao-board/README.md) · Agentes: [`10-agents/`](./modulo-7-exemplo-pratico-guardiao-familia/docs/02-criacao-board/10-agents/README.md)
+
+---
+
+## Módulo 8 — Arquitetura de Sistemas com IA (TrialForge)
+
+**O que você aprende:** projetar arquiteturas **AI-First** de ponta a ponta — do canvas de decisão à implementação de agentes únicos, sistemas multi-agent, padrões específicos (gateway, RAG, HITL) e stack **enterprise** (tiering, eval gates, guardrails, observabilidade). Caso de estudo: **TrialForge**.
+
+| Exemplo | Pasta | Principais aprendizados |
+|---------|-------|-------------------------|
+| 1 | [`modulo-8-exemplo-1-fundamentos-ai-first`](./modulo-8-exemplo-1-fundamentos-ai-first/) | **Fundamentos AI-First** — AI Architecture Decision Canvas, `decision_framework_tool.py` e arquiteturas de referencia ([modulo-01 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo08-arquitetura-de-sistemas-com-ia/modulo-01-fundamentos-ai-first)) |
+| 2 | [`modulo-8-exemplo-2-single-agent`](./modulo-8-exemplo-2-single-agent/) | **Single Agent** — anatomia do agente, ReAct loop, tool schemas e `react_agent_prototype.py` ([modulo-02 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo08-arquitetura-de-sistemas-com-ia/modulo-02-single-agent)) |
+| 3 | [`modulo-8-exemplo-3-multi-agent`](./modulo-8-exemplo-3-multi-agent/) | **Multi-Agent** — fronteiras, filas de mensagens e seletor de orquestracao ([modulo-03 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo08-arquitetura-de-sistemas-com-ia/modulo-03-multi-agent)) |
+| 4 | [`modulo-8-exemplo-4-padroes-ai-especificos`](./modulo-8-exemplo-4-padroes-ai-especificos/) | **Padroes AI** — gateway, RAG pattern selector, HITL e roteamento ([modulo-04 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo08-arquitetura-de-sistemas-com-ia/modulo-04-padroes-ai-especificos)) |
+| 5 | [`modulo-8-exemplo-5-arquitetura-enterprise`](./modulo-8-exemplo-5-arquitetura-enterprise/) | **Arquitetura Enterprise** — model tiering, eval gates, guardrails e observabilidade ([modulo-05 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo08-arquitetura-de-sistemas-com-ia/modulo-05-arquitetura-enterprise)) |
+
+**Competências do módulo:** decisão arquitetural AI-First; prototipação de agentes ReAct; orquestração multi-agent; gateway e padrões RAG/HITL; tiering de modelos; eval gates e guardrails; observabilidade e deployment enterprise.
+
+Relatórios didáticos: cada exemplo em `docs/RELATORIO_DIDATICO_AULA.md` · Scaffold via [`run_delivery_modulo8.py`](./modulo-4-exemplo-1-agente-ia-contratos/runtime/run_delivery_modulo8.py)
 
 ---
 
