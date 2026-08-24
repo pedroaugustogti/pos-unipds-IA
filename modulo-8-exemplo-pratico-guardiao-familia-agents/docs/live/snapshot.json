@@ -1,46 +1,61 @@
 {
-  "generated_at": "2026-08-24T16:07:27.591576+00:00",
+  "generated_at": "2026-08-24T19:08:14.563159+00:00",
   "paths": {
-    "log": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\crew\\output\\observability\\workflow.jsonl",
-    "snapshot": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\crew\\output\\observability\\snapshot.json",
-    "dashboard": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\crew\\output\\observability\\dashboard.html"
+    "log": "/home/runner/work/pos-unipds-IA/pos-unipds-IA/modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/observability/workflow.jsonl",
+    "snapshot": "/home/runner/work/pos-unipds-IA/pos-unipds-IA/modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/observability/snapshot.json",
+    "dashboard": "/home/runner/work/pos-unipds-IA/pos-unipds-IA/modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/observability/dashboard.html"
   },
   "totals": {
-    "events": 43,
+    "events": 160,
     "by_kind": {
-      "status_change": 15,
+      "status_change": 91,
       "autonomy_claim": 12,
       "autonomy_cycle": 9,
       "autonomy_pause": 3,
       "dispatch": 1,
-      "ci_signal": 3
+      "ci_signal": 3,
+      "demo_step": 35,
+      "demo_implement": 6
     },
     "by_event": {
-      "claim": 27,
-      "start_test": 2,
-      "test_failed_bug": 2
+      "claim": 47,
+      "start_test": 18,
+      "test_failed_bug": 2,
+      "open_pr": 16,
+      "start_review": 16,
+      "approve_review": 19,
+      "test_passed": 16,
+      "implement": 6,
+      "merge_pr": 8
     },
     "by_agent": {
-      "frontend-mobile": 13,
-      "devops-cicd": 15,
-      "qa-gate": 2
+      "frontend-mobile": 41,
+      "devops-cicd": 29,
+      "qa-gate": 41,
+      "frontend-mobile-reviewer": 28,
+      "devops-cicd-reviewer": 4,
+      "orchestrator": 4
     },
     "by_dispatch": {
-      "start_task": 15,
+      "start_task": 78,
       "manual_fallback": 1,
-      "enqueue_qa_gate": 2
+      "enqueue_qa_gate": 2,
+      "queue": 9,
+      "orchestrator_only": 4
     },
     "board_status": {
-      "Todo": 272
+      "Todo": 269,
+      "Done": 2,
+      "In Progress": 1
     },
     "idle_agents": 19,
     "busy_agents": 0,
-    "queue_len": 1,
+    "queue_len": 0,
     "blockers": 0,
-    "hitl_pending": 0,
-    "jobs_queued": 0,
+    "hitl_pending": 4,
+    "jobs_queued": 8,
     "jobs_leased": 0,
-    "outbox_pending": 0
+    "outbox_pending": 54
   },
   "idle_agents": [
     "backend",
@@ -64,39 +79,182 @@
     "stores-release-reviewer"
   ],
   "busy_agents": [],
-  "dispatch_queue": [
+  "dispatch_queue": [],
+  "hitl_queue": [
     {
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "status": "queued",
-      "event": "claim",
-      "job_id": "c7078446-9bdd-47a5-82ba-0cc3fb056f17",
-      "at": "2026-08-24T15:27:54.623350+00:00"
+      "task_id": "T-P05-005",
+      "event": "confirm_approve_review",
+      "hitl": {
+        "required": true,
+        "mode": "propose_only",
+        "reasons": [
+          "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
+        ],
+        "reason": "Review aprovado por agente LLM em task de alto risco — veredito só como proposta.",
+        "human_action": "Humano confirma ou rejeita o veredito proposto no PR/board (evento hitl_approved | hitl_rejected).",
+        "task_id": "T-P05-005",
+        "event": "approve_review",
+        "high_risk": true
+      },
+      "payload": {
+        "task_id": "T-P05-005",
+        "event": "approve_review",
+        "from_status": null,
+        "to_status": null,
+        "agent_role": "frontend-mobile",
+        "next_agent": null,
+        "repo": "guardiao-familia-parent",
+        "branch": null,
+        "pr_url": null,
+        "summary": "demo_apresentacao · frontend-mobile-reviewer · approve_review",
+        "doubts": [],
+        "metrics": {},
+        "bug_kind": null,
+        "correlation_id": "8367bce0-853d-4d7f-b70c-97d75ac00638",
+        "idempotency_key": null,
+        "at": "2026-08-24T17:24:24.694815+00:00",
+        "dry_run": false
+      }
+    },
+    {
+      "task_id": "T-P05-005",
+      "event": "merge_pr",
+      "hitl": {
+        "required": true,
+        "mode": "block_until_human",
+        "reasons": [
+          "Merge é irreversível no fluxo do board — Approval Gate humano obrigatório."
+        ],
+        "reason": "Merge é irreversível no fluxo do board — Approval Gate humano obrigatório.",
+        "human_action": "Humano decide no board/PR; só então emitir hitl_approved + evento liberado.",
+        "task_id": "T-P05-005",
+        "event": "merge_pr",
+        "high_risk": true
+      },
+      "payload": {
+        "task_id": "T-P05-005",
+        "event": "merge_pr",
+        "from_status": null,
+        "to_status": null,
+        "agent_role": "frontend-mobile",
+        "next_agent": null,
+        "repo": "guardiao-familia-parent",
+        "branch": null,
+        "pr_url": null,
+        "summary": "demo_apresentacao · qa-gate · merge_pr",
+        "doubts": [],
+        "metrics": {},
+        "bug_kind": null,
+        "correlation_id": "9da8ccf5-2bcf-44fc-af7c-9a1aa7b78eea",
+        "idempotency_key": null,
+        "at": "2026-08-24T17:25:21.269710+00:00",
+        "dry_run": false
+      }
+    },
+    {
+      "task_id": "T-P05-006",
+      "event": "confirm_approve_review",
+      "hitl": {
+        "required": true,
+        "mode": "propose_only",
+        "reasons": [
+          "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
+        ],
+        "reason": "Review aprovado por agente LLM em task de alto risco — veredito só como proposta.",
+        "human_action": "Humano confirma ou rejeita o veredito proposto no PR/board (evento hitl_approved | hitl_rejected).",
+        "task_id": "T-P05-006",
+        "event": "approve_review",
+        "high_risk": true
+      },
+      "payload": {
+        "task_id": "T-P05-006",
+        "event": "approve_review",
+        "from_status": null,
+        "to_status": null,
+        "agent_role": "frontend-mobile",
+        "next_agent": null,
+        "repo": "guardiao-familia-parent",
+        "branch": null,
+        "pr_url": null,
+        "summary": "demo_apresentacao · frontend-mobile-reviewer · approve_review",
+        "doubts": [],
+        "metrics": {},
+        "bug_kind": null,
+        "correlation_id": "39ef11c5-c6f9-4678-80a7-3054279259ed",
+        "idempotency_key": null,
+        "at": "2026-08-24T17:46:29.081862+00:00",
+        "dry_run": false
+      }
+    },
+    {
+      "task_id": "T-P05-006",
+      "event": "merge_pr",
+      "hitl": {
+        "required": true,
+        "mode": "block_until_human",
+        "reasons": [
+          "Merge é irreversível no fluxo do board — Approval Gate humano obrigatório."
+        ],
+        "reason": "Merge é irreversível no fluxo do board — Approval Gate humano obrigatório.",
+        "human_action": "Humano decide no board/PR; só então emitir hitl_approved + evento liberado.",
+        "task_id": "T-P05-006",
+        "event": "merge_pr",
+        "high_risk": true
+      },
+      "payload": {
+        "task_id": "T-P05-006",
+        "event": "merge_pr",
+        "from_status": null,
+        "to_status": null,
+        "agent_role": "frontend-mobile",
+        "next_agent": null,
+        "repo": "guardiao-familia-parent",
+        "branch": null,
+        "pr_url": null,
+        "summary": "demo_apresentacao · qa-gate · merge_pr",
+        "doubts": [],
+        "metrics": {},
+        "bug_kind": null,
+        "correlation_id": "f5c9b0bd-7801-42bd-9473-dfc65e13d124",
+        "idempotency_key": null,
+        "at": "2026-08-24T17:47:27.331890+00:00",
+        "dry_run": false
+      }
     }
   ],
-  "hitl_queue": [],
-  "autonomy_pause": false,
+  "autonomy_pause": true,
   "blockers": [],
   "recent_tasks": [
     {
-      "task_id": "T-P05-005",
-      "last_event": "start_test",
-      "last_kind": "ci_signal",
+      "task_id": "T-P05-006",
+      "last_event": "merge_pr",
+      "last_kind": "demo_step",
       "agent": "qa-gate",
-      "to_status": null,
-      "ts": "2026-08-24T16:02:04.597227+00:00",
-      "dispatch_action": "enqueue_qa_gate",
+      "to_status": "Done",
+      "ts": "2026-08-24T17:47:40.744829+00:00",
+      "dispatch_action": null,
+      "job_id": null,
+      "correlation_id": null
+    },
+    {
+      "task_id": "T-P05-005",
+      "last_event": "merge_pr",
+      "last_kind": "demo_step",
+      "agent": "qa-gate",
+      "to_status": "Done",
+      "ts": "2026-08-24T17:25:39.288152+00:00",
+      "dispatch_action": null,
       "job_id": null,
       "correlation_id": null
     },
     {
       "task_id": "T-I03-001",
-      "last_event": "test_failed_bug",
-      "last_kind": "ci_signal",
-      "agent": null,
-      "to_status": null,
-      "ts": "2026-08-24T16:02:04.473678+00:00",
-      "dispatch_action": null,
+      "last_event": "test_passed",
+      "last_kind": "status_change",
+      "agent": "devops-cicd",
+      "to_status": "In Pull Request",
+      "ts": "2026-08-24T16:20:23.719080+00:00",
+      "dispatch_action": "queue",
       "job_id": null,
       "correlation_id": null
     },
@@ -114,867 +272,1010 @@
   ],
   "timeline": [
     {
-      "ts": "2026-08-24T13:47:27.727793+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile` ocioso — chamar para iniciar/continuar `T-P05-001` em **In Progress**.",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Bundlar sons push iOS parent"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:11:51.304945+00:00",
-      "kind": "status_change",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "devops-cicd",
-        "blocker": false,
-        "title": "CloudWatch logs structured API"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:17:20.434130+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Bundlar sons push iOS parent"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:17:20.484818+00:00",
-      "kind": "status_change",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "devops-cicd",
-        "blocker": false,
-        "title": "CloudWatch logs structured API"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:17:20.502821+00:00",
-      "kind": "autonomy_claim",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "claim simulado",
-      "dry_run": true,
-      "extra": {
-        "emit": {
-          "status": "applied",
-          "code": null,
-          "error": null,
-          "duplicate": null
-        },
-        "job_id": null,
-        "simulated": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:17:20.508282+00:00",
-      "kind": "autonomy_claim",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "claim simulado",
-      "dry_run": true,
-      "extra": {
-        "emit": {
-          "status": "applied",
-          "code": null,
-          "error": null,
-          "duplicate": null
-        },
-        "job_id": null,
-        "simulated": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:17:20.520134+00:00",
-      "kind": "autonomy_cycle",
-      "task_id": null,
-      "agent": null,
-      "event": null,
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "ciclo autonomy_loop dry_run=True",
-      "dry_run": true,
-      "extra": {
-        "autonomy": {
-          "expire": 0,
-          "claims_ok": 2,
-          "claims_simulated": 2,
-          "reconcile_conflicts": 0
-        },
-        "pause": false
-      }
-    },
-    {
-      "ts": "2026-08-24T15:17:48.444523+00:00",
-      "kind": "autonomy_pause",
-      "task_id": null,
-      "agent": null,
-      "event": null,
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "HITL pendente (1) — sem claim de alto risco; sem merge",
-      "dry_run": true,
-      "extra": {
-        "hitl_pending": 1
-      }
-    },
-    {
-      "ts": "2026-08-24T15:17:48.488040+00:00",
-      "kind": "autonomy_cycle",
-      "task_id": null,
-      "agent": null,
-      "event": null,
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "ciclo autonomy_loop dry_run=True",
-      "dry_run": true,
-      "extra": {
-        "autonomy": {
-          "expire": 0,
-          "claims_ok": 0,
-          "claims_simulated": 0,
-          "reconcile_conflicts": 0
-        },
-        "pause": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:13.427503+00:00",
-      "kind": "autonomy_pause",
-      "task_id": null,
-      "agent": null,
-      "event": null,
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "HITL pendente (1) — sem claim de alto risco; sem merge",
-      "dry_run": true,
-      "extra": {
-        "hitl_pending": 1
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:13.467798+00:00",
-      "kind": "autonomy_cycle",
-      "task_id": null,
-      "agent": null,
-      "event": null,
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "ciclo autonomy_loop dry_run=True",
-      "dry_run": true,
-      "extra": {
-        "autonomy": {
-          "expire": 0,
-          "claims_ok": 0,
-          "claims_simulated": 0,
-          "reconcile_conflicts": 0
-        },
-        "pause": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:13.574216+00:00",
-      "kind": "autonomy_pause",
-      "task_id": null,
-      "agent": null,
-      "event": null,
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "HITL pendente (1) — sem claim de alto risco; sem merge",
-      "dry_run": true,
-      "extra": {
-        "hitl_pending": 1
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:13.615254+00:00",
-      "kind": "autonomy_cycle",
-      "task_id": null,
-      "agent": null,
-      "event": null,
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "ciclo autonomy_loop dry_run=True",
-      "dry_run": true,
-      "extra": {
-        "autonomy": {
-          "expire": 0,
-          "claims_ok": 0,
-          "claims_simulated": 0,
-          "reconcile_conflicts": 0
-        },
-        "pause": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:26.655971+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Bundlar sons push iOS parent"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:26.707337+00:00",
-      "kind": "status_change",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "devops-cicd",
-        "blocker": false,
-        "title": "CloudWatch logs structured API"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:26.724328+00:00",
-      "kind": "autonomy_claim",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "claim simulado",
-      "dry_run": true,
-      "extra": {
-        "emit": {
-          "status": "applied",
-          "code": null,
-          "error": null,
-          "duplicate": null
-        },
-        "job_id": null,
-        "simulated": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:26.731328+00:00",
-      "kind": "autonomy_claim",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "claim simulado",
-      "dry_run": true,
-      "extra": {
-        "emit": {
-          "status": "applied",
-          "code": null,
-          "error": null,
-          "duplicate": null
-        },
-        "job_id": null,
-        "simulated": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:26.739329+00:00",
-      "kind": "autonomy_cycle",
-      "task_id": null,
-      "agent": null,
-      "event": null,
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "ciclo autonomy_loop dry_run=True",
-      "dry_run": true,
-      "extra": {
-        "autonomy": {
-          "expire": 0,
-          "claims_ok": 2,
-          "claims_simulated": 2,
-          "reconcile_conflicts": 0
-        },
-        "pause": false
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:26.930873+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Bundlar sons push iOS parent"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:26.982428+00:00",
-      "kind": "status_change",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "devops-cicd",
-        "blocker": false,
-        "title": "CloudWatch logs structured API"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:27.002430+00:00",
-      "kind": "autonomy_claim",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "claim simulado",
-      "dry_run": true,
-      "extra": {
-        "emit": {
-          "status": "applied",
-          "code": null,
-          "error": null,
-          "duplicate": null
-        },
-        "job_id": null,
-        "simulated": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:27.011425+00:00",
-      "kind": "autonomy_claim",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "claim simulado",
-      "dry_run": true,
-      "extra": {
-        "emit": {
-          "status": "applied",
-          "code": null,
-          "error": null,
-          "duplicate": null
-        },
-        "job_id": null,
-        "simulated": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:27.019431+00:00",
-      "kind": "autonomy_cycle",
-      "task_id": null,
-      "agent": null,
-      "event": null,
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "ciclo autonomy_loop dry_run=True",
-      "dry_run": true,
-      "extra": {
-        "autonomy": {
-          "expire": 0,
-          "claims_ok": 2,
-          "claims_simulated": 2,
-          "reconcile_conflicts": 0
-        },
-        "pause": false
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:29.093742+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Bundlar sons push iOS parent"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:29.144850+00:00",
-      "kind": "status_change",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "devops-cicd",
-        "blocker": false,
-        "title": "CloudWatch logs structured API"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:29.160934+00:00",
-      "kind": "autonomy_claim",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "claim simulado",
-      "dry_run": true,
-      "extra": {
-        "emit": {
-          "status": "applied",
-          "code": null,
-          "error": null,
-          "duplicate": null
-        },
-        "job_id": null,
-        "simulated": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:29.167234+00:00",
-      "kind": "autonomy_claim",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "claim simulado",
-      "dry_run": true,
-      "extra": {
-        "emit": {
-          "status": "applied",
-          "code": null,
-          "error": null,
-          "duplicate": null
-        },
-        "job_id": null,
-        "simulated": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:29.174659+00:00",
-      "kind": "autonomy_cycle",
-      "task_id": null,
-      "agent": null,
-      "event": null,
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "ciclo autonomy_loop dry_run=True",
-      "dry_run": true,
-      "extra": {
-        "autonomy": {
-          "expire": 0,
-          "claims_ok": 2,
-          "claims_simulated": 2,
-          "reconcile_conflicts": 0
-        },
-        "pause": false
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:31.253878+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Bundlar sons push iOS parent"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:31.315414+00:00",
-      "kind": "status_change",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "devops-cicd",
-        "blocker": false,
-        "title": "CloudWatch logs structured API"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:31.333952+00:00",
-      "kind": "autonomy_claim",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "claim simulado",
-      "dry_run": true,
-      "extra": {
-        "emit": {
-          "status": "applied",
-          "code": null,
-          "error": null,
-          "duplicate": null
-        },
-        "job_id": null,
-        "simulated": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:31.339953+00:00",
-      "kind": "autonomy_claim",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "claim simulado",
-      "dry_run": true,
-      "extra": {
-        "emit": {
-          "status": "applied",
-          "code": null,
-          "error": null,
-          "duplicate": null
-        },
-        "job_id": null,
-        "simulated": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:31.346955+00:00",
-      "kind": "autonomy_cycle",
-      "task_id": null,
-      "agent": null,
-      "event": null,
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "ciclo autonomy_loop dry_run=True",
-      "dry_run": true,
-      "extra": {
-        "autonomy": {
-          "expire": 0,
-          "claims_ok": 2,
-          "claims_simulated": 2,
-          "reconcile_conflicts": 0
-        },
-        "pause": false
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:33.420026+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Bundlar sons push iOS parent"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:33.478525+00:00",
-      "kind": "status_change",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "devops-cicd",
-        "blocker": false,
-        "title": "CloudWatch logs structured API"
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:33.495524+00:00",
-      "kind": "autonomy_claim",
-      "task_id": "T-P05-001",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "claim simulado",
-      "dry_run": true,
-      "extra": {
-        "emit": {
-          "status": "applied",
-          "code": null,
-          "error": null,
-          "duplicate": null
-        },
-        "job_id": null,
-        "simulated": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:33.504525+00:00",
-      "kind": "autonomy_claim",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "claim simulado",
-      "dry_run": true,
-      "extra": {
-        "emit": {
-          "status": "applied",
-          "code": null,
-          "error": null,
-          "duplicate": null
-        },
-        "job_id": null,
-        "simulated": true
-      }
-    },
-    {
-      "ts": "2026-08-24T15:18:33.511526+00:00",
-      "kind": "autonomy_cycle",
-      "task_id": null,
-      "agent": null,
-      "event": null,
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "ciclo autonomy_loop dry_run=True",
-      "dry_run": true,
-      "extra": {
-        "autonomy": {
-          "expire": 0,
-          "claims_ok": 2,
-          "claims_simulated": 2,
-          "reconcile_conflicts": 0
-        },
-        "pause": false
-      }
-    },
-    {
-      "ts": "2026-08-24T15:27:54.650964+00:00",
-      "kind": "dispatch",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "claim",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": "manual_fallback",
-      "summary": "bundle pronto: c7078446-9bdd-47a5-82ba-0cc3fb056f17.md",
-      "dry_run": false,
-      "extra": {
-        "job_id": "c7078446-9bdd-47a5-82ba-0cc3fb056f17",
-        "repo": "guardiao-familia-api"
-      }
-    },
-    {
-      "ts": "2026-08-24T16:02:04.125061+00:00",
-      "kind": "ci_signal",
-      "task_id": "T-I03-001",
-      "agent": "qa-gate",
-      "event": "start_test",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": "enqueue_qa_gate",
-      "summary": "CI green → qa-gate",
-      "dry_run": true,
-      "extra": {
-        "job_id": null
-      }
-    },
-    {
-      "ts": "2026-08-24T16:02:04.466164+00:00",
-      "kind": "status_change",
-      "task_id": "T-I03-001",
-      "agent": "devops-cicd",
-      "event": "test_failed_bug",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
-      "dry_run": true,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": {
-          "count": 1,
-          "threshold": 3,
-          "blocker": false
-        },
-        "skill": "devops-cicd",
-        "blocker": false,
-        "title": "CloudWatch logs structured API"
-      }
-    },
-    {
-      "ts": "2026-08-24T16:02:04.473678+00:00",
-      "kind": "ci_signal",
-      "task_id": "T-I03-001",
-      "agent": null,
-      "event": "test_failed_bug",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": null,
-      "summary": "CI failed",
-      "dry_run": true,
-      "extra": {
-        "bug_kind": "regression",
-        "emit_status": "applied"
-      }
-    },
-    {
-      "ts": "2026-08-24T16:02:04.597227+00:00",
-      "kind": "ci_signal",
+      "ts": "2026-08-24T16:43:04.735515+00:00",
+      "kind": "demo_step",
       "task_id": "T-P05-005",
       "agent": "qa-gate",
       "event": "start_test",
-      "from_status": null,
-      "to_status": null,
-      "dispatch_action": "enqueue_qa_gate",
-      "summary": "CI green → qa-gate",
-      "dry_run": true,
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": null,
+      "summary": "demo qa-gate/qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
       "extra": {
-        "job_id": null
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T16:43:10.976645+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "devops-cicd",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T16:43:11.000643+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": null,
+      "summary": "demo qa-gate/qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T16:43:17.071756+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "orchestrator",
+      "event": "merge_pr",
+      "from_status": "In Pull Request",
+      "to_status": "Done",
+      "dispatch_action": "orchestrator_only",
+      "summary": "Status Done nao exige specialist — orchestrator fecha/planeja.",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T16:43:17.109144+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "merge_pr",
+      "from_status": "In Pull Request",
+      "to_status": "Done",
+      "dispatch_action": null,
+      "summary": "demo qa-gate/qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T16:52:24.728219+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T16:52:24.785839+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": null,
+      "summary": "demo creator/frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T16:52:30.312100+00:00",
+      "kind": "demo_implement",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile",
+      "event": "implement",
+      "from_status": "In Progress",
+      "to_status": "In Progress",
+      "dispatch_action": null,
+      "summary": "commit local 53b817e",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "paths": [
+          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-005/IMPLEMENTACAO.md",
+          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-005/agent_metrics.json"
+        ],
+        "commit": "53b817e",
+        "ok": true,
+        "error": null
+      }
+    },
+    {
+      "ts": "2026-08-24T16:52:36.762167+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T16:52:36.826219+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": null,
+      "summary": "demo creator/frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T16:52:43.027338+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T16:52:43.070310+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": null,
+      "summary": "demo reviewer/frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T16:52:49.437522+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T16:52:49.522796+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile-reviewer",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": null,
+      "summary": "demo reviewer/frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T16:52:55.903994+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T16:52:56.004533+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": null,
+      "summary": "demo qa-gate/qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T16:53:02.493318+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "devops-cicd",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T16:53:02.584006+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": null,
+      "summary": "demo qa-gate/qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T16:53:08.745179+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "orchestrator",
+      "event": "merge_pr",
+      "from_status": "In Pull Request",
+      "to_status": "Done",
+      "dispatch_action": "orchestrator_only",
+      "summary": "Status Done nao exige specialist — orchestrator fecha/planeja.",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T16:53:08.789484+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "merge_pr",
+      "from_status": "In Pull Request",
+      "to_status": "Done",
+      "dispatch_action": null,
+      "summary": "demo qa-gate/qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:23:32.389863+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:23:32.414581+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": null,
+      "summary": "demo creator/frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:23:38.904410+00:00",
+      "kind": "demo_implement",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile",
+      "event": "implement",
+      "from_status": "In Progress",
+      "to_status": "In Progress",
+      "dispatch_action": null,
+      "summary": "commit local 3918b83",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "paths": [
+          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-005/IMPLEMENTACAO.md",
+          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-005/agent_metrics.json"
+        ],
+        "commit": "3918b83",
+        "ok": true,
+        "error": null
+      }
+    },
+    {
+      "ts": "2026-08-24T17:23:58.505635+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:23:58.544721+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": null,
+      "summary": "demo creator/frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:24:18.584786+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:24:18.607819+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": null,
+      "summary": "demo reviewer/frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:24:38.634337+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:24:38.660160+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "frontend-mobile-reviewer",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": null,
+      "summary": "demo reviewer/frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:24:56.786579+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:24:56.817628+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": null,
+      "summary": "demo qa-gate/qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:25:15.121358+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "devops-cicd",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:25:15.162682+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": null,
+      "summary": "demo qa-gate/qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:25:39.265334+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-005",
+      "agent": "orchestrator",
+      "event": "merge_pr",
+      "from_status": "In Pull Request",
+      "to_status": "Done",
+      "dispatch_action": "orchestrator_only",
+      "summary": "Status Done nao exige specialist — orchestrator fecha/planeja.",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar APNs production certificates"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:25:39.288152+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "merge_pr",
+      "from_status": "In Pull Request",
+      "to_status": "Done",
+      "dispatch_action": null,
+      "summary": "demo qa-gate/qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": true
+      }
+    },
+    {
+      "ts": "2026-08-24T17:45:35.049652+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:45:35.080220+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-006",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": null,
+      "summary": "demo creator/frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:45:41.367555+00:00",
+      "kind": "demo_implement",
+      "task_id": "T-P05-006",
+      "agent": "frontend-mobile",
+      "event": "implement",
+      "from_status": "In Progress",
+      "to_status": "In Progress",
+      "dispatch_action": null,
+      "summary": "commit local a3bbdb8",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "paths": [
+          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-006/IMPLEMENTACAO.md",
+          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-006/agent_metrics.json"
+        ],
+        "commit": "a3bbdb8",
+        "ok": true,
+        "error": null
+      }
+    },
+    {
+      "ts": "2026-08-24T17:46:01.770184+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:46:01.791771+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-006",
+      "agent": "frontend-mobile",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": null,
+      "summary": "demo creator/frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:46:22.980735+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:46:23.003309+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-006",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": null,
+      "summary": "demo reviewer/frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:46:43.101545+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:46:43.126855+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-006",
+      "agent": "frontend-mobile-reviewer",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": null,
+      "summary": "demo reviewer/frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:47:02.162654+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:47:02.192611+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-006",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": null,
+      "summary": "demo qa-gate/qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:47:21.212101+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "devops-cicd",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:47:21.234168+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-006",
+      "agent": "qa-gate",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": null,
+      "summary": "demo qa-gate/qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": false
+      }
+    },
+    {
+      "ts": "2026-08-24T17:47:40.713106+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "orchestrator",
+      "event": "merge_pr",
+      "from_status": "In Pull Request",
+      "to_status": "Done",
+      "dispatch_action": "orchestrator_only",
+      "summary": "Status Done nao exige specialist — orchestrator fecha/planeja.",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-24T17:47:40.744829+00:00",
+      "kind": "demo_step",
+      "task_id": "T-P05-006",
+      "agent": "qa-gate",
+      "event": "merge_pr",
+      "from_status": "In Pull Request",
+      "to_status": "Done",
+      "dispatch_action": null,
+      "summary": "demo qa-gate/qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "ok": true,
+        "hitl_resolved": true
       }
     }
   ],
@@ -1026,13 +1327,6 @@
   "kanban": {
     "Todo": [
       {
-        "task_id": "T-I03-001",
-        "title": "CloudWatch logs structured API",
-        "role": "devops-cicd",
-        "pilot": true,
-        "release_blocker": false
-      },
-      {
         "task_id": "T-I03-002",
         "title": "Metrics custom SOS latency",
         "role": "devops-cicd",
@@ -1054,20 +1348,6 @@
         "release_blocker": true
       },
       {
-        "task_id": "T-P05-005",
-        "title": "Configurar APNs production certificates",
-        "role": "frontend-mobile",
-        "pilot": true,
-        "release_blocker": false
-      },
-      {
-        "task_id": "T-P05-006",
-        "title": "Configurar FCM data messages SOS",
-        "role": "frontend-mobile",
-        "pilot": true,
-        "release_blocker": false
-      },
-      {
         "task_id": "T-P05-008",
         "title": "Testes push geofence som customizado",
         "role": "frontend-mobile",
@@ -1082,28 +1362,343 @@
         "release_blocker": false
       }
     ],
-    "In Progress": [],
+    "In Progress": [
+      {
+        "task_id": "T-I03-001",
+        "title": "CloudWatch logs structured API",
+        "role": "devops-cicd",
+        "pilot": true,
+        "release_blocker": false
+      }
+    ],
     "Ready for Code Review": [],
     "In Code Review": [],
     "Ready for Test": [],
     "In Test": [],
     "In Pull Request": [],
-    "Done": []
+    "Done": [
+      {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "role": "frontend-mobile",
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P05-006",
+        "title": "Configurar FCM data messages SOS",
+        "role": "frontend-mobile",
+        "pilot": true,
+        "release_blocker": false
+      }
+    ]
   },
   "worker_jobs": {
     "by_status": {
-      "done": 2
+      "done": 2,
+      "cancelled": 19,
+      "queued": 8
     },
-    "queued": [],
+    "queued": [
+      {
+        "job_id": "67c3272e-0aa8-4def-a73f-8ad8b9ce8493",
+        "task_id": "T-P05-005",
+        "role": "frontend-mobile",
+        "event": "claim"
+      },
+      {
+        "job_id": "eb8ae582-923c-48a4-a5b7-721e7ef89a69",
+        "task_id": "T-P05-005",
+        "role": "frontend-mobile-reviewer",
+        "event": "open_pr"
+      },
+      {
+        "job_id": "a3c69dfb-876a-4e93-b8d6-f67d2451f745",
+        "task_id": "T-P05-005",
+        "role": "qa-gate",
+        "event": "approve_review"
+      },
+      {
+        "job_id": "bfa700d1-af68-4a61-b8f6-ece8d655dc24",
+        "task_id": "T-P05-005",
+        "role": "devops-cicd",
+        "event": "test_passed"
+      },
+      {
+        "job_id": "a218e727-e5b1-4b61-9e87-04df68661027",
+        "task_id": "T-P05-006",
+        "role": "frontend-mobile",
+        "event": "claim"
+      },
+      {
+        "job_id": "d2834cc1-d740-4d6b-9349-f046be807d4e",
+        "task_id": "T-P05-006",
+        "role": "frontend-mobile-reviewer",
+        "event": "open_pr"
+      },
+      {
+        "job_id": "1a017eea-010d-4c81-ba7d-f39d5bee982d",
+        "task_id": "T-P05-006",
+        "role": "qa-gate",
+        "event": "approve_review"
+      },
+      {
+        "job_id": "c31ab171-4eff-433a-8a2e-4e1323baa1a5",
+        "task_id": "T-P05-006",
+        "role": "devops-cicd",
+        "event": "test_passed"
+      }
+    ],
     "leased": []
   },
-  "outbox_pending": [],
+  "outbox_pending": [
+    {
+      "at": "2026-08-24T16:16:26.460221+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "status": "Ready for Code Review"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'Ready for Code Review' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:16:40.172636+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-I03-001",
+        "title": "CloudWatch logs structured API",
+        "status": "Ready for Code Review"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'Ready for Code Review' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:16:54.326178+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-006",
+        "title": "Configurar FCM data messages SOS",
+        "status": "Ready for Code Review"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'Ready for Code Review' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:18:03.816661+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "status": "In Code Review"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'In Code Review' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:18:17.163958+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-I03-001",
+        "title": "CloudWatch logs structured API",
+        "status": "In Code Review"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'In Code Review' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:18:30.362783+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-006",
+        "title": "Configurar FCM data messages SOS",
+        "status": "In Code Review"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'In Code Review' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:18:43.517087+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "status": "Ready for Test"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'Ready for Test' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:18:58.260861+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-I03-001",
+        "title": "CloudWatch logs structured API",
+        "status": "Ready for Test"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'Ready for Test' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:19:11.979533+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-006",
+        "title": "Configurar FCM data messages SOS",
+        "status": "Ready for Test"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'Ready for Test' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:19:25.147214+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "status": "In Test"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'In Test' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:19:39.956328+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-I03-001",
+        "title": "CloudWatch logs structured API",
+        "status": "In Test"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'In Test' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:19:52.311121+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-006",
+        "title": "Configurar FCM data messages SOS",
+        "status": "In Test"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'In Test' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:20:05.652645+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "status": "In Pull Request"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'In Pull Request' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:20:19.359055+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-I03-001",
+        "title": "CloudWatch logs structured API",
+        "status": "In Pull Request"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'In Pull Request' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:20:32.997559+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-006",
+        "title": "Configurar FCM data messages SOS",
+        "status": "In Pull Request"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'In Pull Request' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:37:22.514831+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "status": "Ready for Code Review"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'Ready for Code Review' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:37:42.809673+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "status": "In Code Review"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'In Code Review' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:38:00.936490+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "status": "Ready for Test"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'Ready for Test' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:38:23.212489+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "status": "In Test"
+      },
+      "attempts": 1,
+      "last_error": "Opcao Status 'In Test' nao encontrada",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-24T16:38:38.901217+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "status": "In Pull Request"
+      },
+      "attempts": 1,
+      "last_error": "GraphQL: API rate limit exceeded for user ID 11397393.\n",
+      "status": "pending"
+    }
+  ],
   "health": {
     "heartbeat_at": "2026-08-24T15:18:33.354484+00:00",
-    "paused_high_risk": false,
-    "hitl_pending": 0,
-    "outbox_pending": 0,
-    "jobs_queued": 0,
+    "paused_high_risk": true,
+    "hitl_pending": 4,
+    "outbox_pending": 54,
+    "jobs_queued": 8,
     "jobs_leased": 0,
     "reconcile_conflicts": 0,
     "merge_policy": "never_auto_merge"
@@ -1117,5 +1712,15 @@
     "T-P05-006",
     "T-P05-008",
     "T-P05-010"
+  ],
+  "task_histories": [
+    {
+      "task_id": "T-P05-005",
+      "url": "tasks/T-P05-005.html"
+    },
+    {
+      "task_id": "T-P05-006",
+      "url": "tasks/T-P05-006.html"
+    }
   ]
 }
