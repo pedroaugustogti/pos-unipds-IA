@@ -3,7 +3,7 @@
 **Titulo:** Configurar APNs production certificates
 **Agente:** frontend-mobile
 **Repo alvo (mapa):** guardiao-familia-parent
-**Gerado em:** 2026-08-24T16:52:30.020870+00:00
+**Gerado em:** 2026-08-24T17:23:38.500155+00:00
 
 ## Raciocinio do developer
 
