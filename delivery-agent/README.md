@@ -33,6 +33,9 @@ python main.py rodar --agente ../../delivery-agent --entrada "modulo 5: preparar
 ```bash
 cd modulo-4-exemplo-1-agente-ia-contratos/runtime
 python run_delivery_modulo5.py    # módulo 5
+python run_delivery_modulo6.py  # módulo 6 (Nexus AI-Ops)
+python run_delivery_modulo7.py  # módulo 7 M01
+python run_delivery_modulo8.py    # módulo 8 completo (5 exemplos TrialForge)
 python run_delivery_proxima_aula.py  # módulo 4 (padrão)
 ```
 

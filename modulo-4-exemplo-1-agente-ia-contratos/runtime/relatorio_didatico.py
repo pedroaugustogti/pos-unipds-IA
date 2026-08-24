@@ -129,6 +129,101 @@ def _topicos_didaticos(slug: str, estrutura: dict, proximo: dict) -> list[dict]:
             "exemplo": 'python main.py rodar --agente ../monitor-agent --arquitetura react --entrada "..."',
         })
 
+    if "arquitetura-enterprise" in slug_l:
+        topicos.extend([
+            {
+                "titulo": "Model tiering e cascade",
+                "conceito": "Roteamento por custo/latencia entre modelos pequenos e grandes com fallback.",
+                "exemplo": "python trialforge_model_tiering_prototype.py",
+            },
+            {
+                "titulo": "Eval gate e guardrails",
+                "conceito": "Porta de qualidade antes do deploy + deteccao de manipulacao/jailbreak.",
+                "exemplo": "python model_eval_gate_prototype.py && python manipulation_guardrail_prototype.py",
+            },
+            {
+                "titulo": "Observabilidade enterprise",
+                "conceito": "Sinais, audit trail tiering e canvas de deployment para producao.",
+                "exemplo": "cat observability-signals-canvas.md deployment-decision-canvas.md",
+            },
+        ])
+
+    if "padroes-ai" in slug_l:
+        topicos.extend([
+            {
+                "titulo": "Gateway e roteamento",
+                "conceito": "API gateway como fronteira unica: auth, rate limit, roteamento de modelos.",
+                "exemplo": "node trialforge-gateway-prototype.js",
+            },
+            {
+                "titulo": "RAG pattern selector",
+                "conceito": "Escolha de padrao RAG (naive, hybrid, agentic) conforme caso de uso.",
+                "exemplo": "python trialforge_gateway_prototype.py",
+            },
+            {
+                "titulo": "HITL formalizado",
+                "conceito": "Human-in-the-loop com canvas de aprovacao e audit trail JSONL.",
+                "exemplo": "cat hitl-formalization-canvas.md audit-trail.jsonl",
+            },
+        ])
+
+    if "multi-agent" in slug_l:
+        topicos.extend([
+            {
+                "titulo": "Fronteiras multi-agent",
+                "conceito": "Delimitar responsabilidades, estado e contratos entre agentes.",
+                "exemplo": "cat multi-agent-boundary-canvas.md",
+            },
+            {
+                "titulo": "Orquestracao e filas",
+                "conceito": "Seletor de padrao (sequencial, paralelo, hierarquico) + message queue.",
+                "exemplo": "python trialforge_message_queue_prototype.py",
+            },
+            {
+                "titulo": "Falhas distribuidas",
+                "conceito": "Canvas de failure modes, retry e compensacao entre agentes.",
+                "exemplo": "cat distributed-failure-canvas.md orchestration-pattern-selector-v2.md",
+            },
+        ])
+
+    if "single-agent" in slug_l:
+        topicos.extend([
+            {
+                "titulo": "Anatomia do agente",
+                "conceito": "Componentes: LLM, tools, memoria, planner e loop de execucao.",
+                "exemplo": "python agent_components_demo.py",
+            },
+            {
+                "titulo": "ReAct loop",
+                "conceito": "Raciocinio + acao iterativo com tool schemas tipados.",
+                "exemplo": "python react_agent_prototype.py",
+            },
+            {
+                "titulo": "Reflection e tools",
+                "conceito": "Prompts de reflexao e contratos de tool (JSON schema).",
+                "exemplo": "cat reflection-prompt-canvas.md tool-schema-canvas.md",
+            },
+        ])
+
+    if "fundamentos-ai" in slug_l or "ai-first" in slug_l:
+        topicos.extend([
+            {
+                "titulo": "AI-First Decision Canvas",
+                "conceito": "Framework visual para decisoes arquiteturais orientadas a IA.",
+                "exemplo": "cat ai-first-architecture-canvas.md reference-architecture-canvas.md",
+            },
+            {
+                "titulo": "Decision framework tool",
+                "conceito": "Checklist automatizado de criterios arquiteturais (Python/JS).",
+                "exemplo": "python decision_framework_tool.py",
+            },
+            {
+                "titulo": "Arquiteturas de referencia",
+                "conceito": "Cheat sheet cloud + canvas preenchido TrialForge como estudo de caso.",
+                "exemplo": "cat decision-framework-checklist.md",
+            },
+        ])
+
     if not topicos:
         topicos.append({
             "titulo": proximo.get("titulo_atividade", "Atividade UNIPDS"),
@@ -279,7 +374,7 @@ def ferramenta_gerar_relatorio_didatico_aula(argumentos: dict) -> dict:
 
 ## Principais topicos abordados
 
-{"".join(bloco_topicos)}
+{chr(10).join(bloco_topicos)}
 
 ---
 

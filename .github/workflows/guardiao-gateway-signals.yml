@@ -1,0 +1,84 @@
+# Meta repo (pos-unipds-IA): recebe repository_dispatch dos repos de produto
+# e aplica sinais no board local via scripts/ci_signal.py.
+#
+# Segredos: nenhum alem do GITHUB_TOKEN padrao (checkout).
+# Runner: ubuntu-latest (muta working tree) — para sincronizar Project remoto,
+# prefira self-hosted no PC do aluno com GUARDAO_* e gh autenticado.
+#
+# Disparo local de teste:
+#   gh api repos/pedroaugustogti/pos-unipds-IA/dispatches \
+#     -f event_type=guardiao-board-signal \
+#     -f client_payload[signal]=ci_green \
+#     -f client_payload[task_id]=T-I03-001
+
+name: Guardião gateway — board signals
+
+on:
+  repository_dispatch:
+    types: [guardiao-board-signal]
+  workflow_dispatch:
+    inputs:
+      signal:
+        description: pr_opened | ci_green | ci_red
+        required: true
+        default: ci_green
+      task_id:
+        description: Task id (ex. T-I03-001)
+        required: true
+      pr_url:
+        description: PR URL (opcional)
+        required: false
+      dry_run:
+        description: "true para nao mutar"
+        required: false
+        default: "true"
+
+jobs:
+  apply-signal:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: modulo-8-exemplo-pratico-guardiao-familia-agents
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build payload
+        id: payload
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            jq -n \
+              --arg signal "${{ inputs.signal }}" \
+              --arg task_id "${{ inputs.task_id }}" \
+              --arg pr_url "${{ inputs.pr_url }}" \
+              '{signal:$signal, task_id:$task_id, pr_url:$pr_url, summary:"workflow_dispatch"}' \
+              > /tmp/guardiao-payload.json
+            echo "dry_run=${{ inputs.dry_run }}" >> "$GITHUB_OUTPUT"
+          else
+            echo '${{ toJSON(github.event.client_payload) }}' > /tmp/guardiao-payload.json
+            echo "dry_run=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "Payload:" && cat /tmp/guardiao-payload.json
+
+      - name: Apply ci_signal
+        shell: bash
+        run: |
+          EXTRA=()
+          if [ "${{ steps.payload.outputs.dry_run }}" = "true" ]; then
+            EXTRA+=(--dry-run)
+          fi
+          python scripts/ci_signal.py --payload /tmp/guardiao-payload.json "${EXTRA[@]}"
+
+      - name: Upload observability snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: guardiao-observability
+          path: |
+            modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/observability/snapshot.json
+            modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/worker_jobs.json
+          if-no-files-found: ignore

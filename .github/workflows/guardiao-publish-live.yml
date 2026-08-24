@@ -1,0 +1,49 @@
+# Publica docs/live (espelho Pages) a partir do snapshot local.
+# Em Actions hosted o board/runtime do runner e efemero — use workflow_dispatch
+# apos `python scripts/publish_live_pages.py` no PC, ou self-hosted runner.
+
+name: Guardião — publish live Pages mirror
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/5 * * * *"
+  push:
+    paths:
+      - "modulo-8-exemplo-pratico-guardiao-familia-agents/docs/live/**"
+      - "modulo-8-exemplo-pratico-guardiao-familia-agents/scripts/publish_live_pages.py"
+      - "modulo-8-exemplo-pratico-guardiao-familia-agents/lib/observability.py"
+      - "modulo-8-exemplo-pratico-guardiao-familia-agents/lib/dashboard_live.html"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: modulo-8-exemplo-pratico-guardiao-familia-agents
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Refresh + copy to docs/live
+        run: python scripts/publish_live_pages.py
+
+      - name: Commit docs/live if changed
+        shell: bash
+        run: |
+          cd "${{ github.workspace }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add modulo-8-exemplo-pratico-guardiao-familia-agents/docs/live/
+          if git diff --staged --quiet; then
+            echo "No changes"
+          else
+            git commit -m "chore(agents): refresh live Pages mirror"
+            git push
+          fi
