@@ -1,0 +1,5 @@
+crewai>=0.86.0
+crewai-tools>=0.17.0
+pydantic>=2.0
+# Fase 2 — dispatch autonomo (opcional; sem isto cai em manual_fallback)
+cursor-sdk>=0.1.0

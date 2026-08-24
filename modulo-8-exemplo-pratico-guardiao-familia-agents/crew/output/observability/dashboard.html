@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Live — Agentes Guardião Família</title>
+<style>
+:root {
+  --bg: #0b1220;
+  --panel: #141c2b;
+  --text: #e8eef7;
+  --muted: #8b9bb0;
+  --line: #243044;
+  --accent: #4da3ff;
+  --ok: #3dd68c;
+  --warn: #f5a524;
+  --bad: #f31260;
+  --hitl: #ff6b8a;
+  font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); }
+header {
+  padding: 16px 20px; border-bottom: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between;
+}
+h1 { margin: 0; font-size: 1.15rem; font-weight: 650; letter-spacing: -0.02em; }
+.muted { color: var(--muted); font-size: 12px; }
+.pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 999px; background: #1c2738; font-size: 12px;
+  border: 1px solid var(--line);
+}
+.pill.live { border-color: #2f6f4e; color: var(--ok); }
+.pill.pause { border-color: #7a3044; color: var(--hitl); background: #2a1520; }
+.grid-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 10px; padding: 14px 20px;
+}
+.stat {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px;
+}
+.stat b { display: block; font-size: 1.35rem; margin-top: 4px; }
+.stat.warn b { color: var(--warn); }
+.stat.bad b { color: var(--bad); }
+.stat.ok b { color: var(--ok); }
+section { padding: 0 20px 18px; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin: 0 0 10px; }
+.kanban {
+  display: grid; grid-auto-flow: column; grid-auto-columns: minmax(160px, 1fr);
+  gap: 10px; overflow-x: auto; padding-bottom: 8px;
+}
+.col {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px; min-height: 120px;
+  padding: 10px;
+}
+.col h3 { margin: 0 0 8px; font-size: 12px; color: var(--muted); font-weight: 600; }
+.card-task {
+  background: #101826; border: 1px solid var(--line); border-radius: 8px;
+  padding: 8px; margin: 0 0 8px; font-size: 12px;
+}
+.card-task.pilot { border-color: #355f9a; }
+.card-task.blocker { border-color: var(--bad); }
+.card-task .tid { font-weight: 650; color: var(--accent); }
+.two {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+@media (max-width: 900px) { .two { grid-template-columns: 1fr; } }
+.panel {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px;
+}
+.hitl-banner {
+  display: none; margin: 0 20px 12px; padding: 12px 14px; border-radius: 10px;
+  background: #2a1520; border: 1px solid #7a3044; color: #ffd0da;
+}
+.hitl-banner.show { display: block; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th, td { text-align: left; padding: 7px 5px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 500; }
+.agent-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.agent {
+  border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; min-width: 140px;
+  background: #101826; font-size: 12px;
+}
+.agent.busy { border-color: var(--warn); }
+.agent.idle { border-color: #2f6f4e; }
+footer { padding: 12px 20px 24px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); }
+a { color: var(--accent); }
+.error { color: var(--bad); padding: 12px 20px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Agentes · tempo real</h1>
+    <div class="muted" id="generated">carregando snapshot…</div>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <span class="pill live" id="livePill">● live 5s</span>
+    <span class="pill" id="healthPill">saúde</span>
+    <a class="pill" href="snapshot.json">snapshot.json</a>
+  </div>
+</header>
+
+<div class="hitl-banner" id="hitlBanner">
+  <strong>HITL pendente</strong> — autonomia em pausa para alto risco; nenhum merge automático.
+  <div id="hitlList" class="muted" style="margin-top:6px"></div>
+</div>
+
+<section class="grid-stats" id="stats"></section>
+
+<section>
+  <h2>Kanban (piloto + ativos)</h2>
+  <div class="kanban" id="kanban"></div>
+</section>
+
+<section class="two">
+  <div class="panel">
+    <h2>Agentes</h2>
+    <div class="agent-row" id="agents"></div>
+  </div>
+  <div class="panel">
+    <h2>Filas</h2>
+    <div id="queues" class="muted">—</div>
+  </div>
+</section>
+
+<section class="two">
+  <div class="panel">
+    <h2>Timeline</h2>
+    <table>
+      <thead><tr><th>Quando</th><th>Agente</th><th>Evento</th><th>Task</th><th>De→Para</th></tr></thead>
+      <tbody id="timeline"></tbody>
+    </table>
+  </div>
+  <div class="panel">
+    <h2>Saúde</h2>
+    <div id="health" class="muted">—</div>
+  </div>
+</section>
+
+<footer>
+  Local: <code>python scripts/live_server.py</code> ·
+  Pages: espelho em <code>docs/live/</code>
+</footer>
+
+<script>
+const POLL_MS = 5000;
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const shortTs = (ts) => (ts || '').replace('T', ' ').slice(0, 19);
+
+function render(snap) {
+  const t = snap.totals || {};
+  const h = snap.health || {};
+  document.getElementById('generated').textContent =
+    `Guardião Família · snapshot ${shortTs(snap.generated_at)}`;
+
+  const pause = !!(snap.autonomy_pause || h.paused_high_risk);
+  const healthPill = document.getElementById('healthPill');
+  healthPill.textContent = pause ? 'HITL pause' : 'ok';
+  healthPill.className = 'pill' + (pause ? ' pause' : '');
+
+  const banner = document.getElementById('hitlBanner');
+  const hitl = snap.hitl_queue || [];
+  banner.classList.toggle('show', hitl.length > 0);
+  document.getElementById('hitlList').innerHTML = hitl.slice(0, 8).map(x =>
+    `<div>${esc(x.task_id)} · ${esc(x.event)} · ${esc((x.hitl||{}).reason || (x.hitl||{}).mode || '')}</div>`
+  ).join('');
+
+  document.getElementById('stats').innerHTML = [
+    ['Eventos', t.events, ''],
+    ['Idle', t.idle_agents, 'ok'],
+    ['Busy', t.busy_agents, ''],
+    ['Jobs Q', t.jobs_queued, 'warn'],
+    ['Leased', t.jobs_leased, ''],
+    ['HITL', t.hitl_pending, hitl.length ? 'bad' : ''],
+    ['Outbox', t.outbox_pending, t.outbox_pending ? 'warn' : ''],
+    ['Blockers', t.blockers, t.blockers ? 'bad' : ''],
+  ].map(([k,v,c]) => `<div class="stat ${c}"><span class="muted">${k}</span><b>${esc(v||0)}</b></div>`).join('');
+
+  const kanban = snap.kanban || {};
+  const order = Object.keys(kanban);
+  document.getElementById('kanban').innerHTML = order.map(col => {
+    const cards = (kanban[col] || []).slice(0, 12);
+    return `<div class="col"><h3>${esc(col)} (${cards.length})</h3>${
+      cards.map(c => `<div class="card-task ${c.pilot?'pilot':''} ${c.release_blocker?'blocker':''}">
+        <div class="tid"><a href="tasks/${esc(c.task_id)}.html">${esc(c.task_id)}</a></div>
+        <div>${esc(c.role||'')}</div>
+        <div class="muted">${esc(c.title||'')}</div>
+        <div class="muted"><a href="tasks/${esc(c.task_id)}.html">historico do agente →</a></div>
+      </div>`).join('') || '<div class="muted">—</div>'
+    }</div>`;
+  }).join('');
+
+  const busy = new Map((snap.busy_agents||[]).map(a => [a.agent, a]));
+  const idle = snap.idle_agents || [];
+  const names = [...new Set([...(busy.keys()), ...idle])].sort();
+  document.getElementById('agents').innerHTML = names.map(n => {
+    const b = busy.get(n);
+    return `<div class="agent ${b?'busy':'idle'}"><strong>${esc(n)}</strong><div class="muted">${
+      b ? `busy · ${esc(b.task_id)}` : 'idle'
+    }</div></div>`;
+  }).join('') || '<span class="muted">sem agentes</span>';
+
+  const wj = snap.worker_jobs || {};
+  const dq = snap.dispatch_queue || [];
+  document.getElementById('queues').innerHTML = `
+    <div><strong>worker_jobs</strong> ${esc(JSON.stringify(wj.by_status||{}))}</div>
+    <div style="margin-top:8px"><strong>queued</strong></div>
+    ${(wj.queued||[]).slice(0,8).map(j => `<div>${esc(j.task_id)} · ${esc(j.role)} · ${esc((j.job_id||'').slice(0,8))}</div>`).join('') || '—'}
+    <div style="margin-top:8px"><strong>leased</strong></div>
+    ${(wj.leased||[]).slice(0,8).map(j => `<div>${esc(j.task_id)} · até ${esc(j.lease_until)}</div>`).join('') || '—'}
+    <div style="margin-top:8px"><strong>dispatch_queue</strong> (${dq.length})</div>
+    ${dq.slice(0,6).map(q => `<div>${esc(q.task_id)} · ${esc(q.agent)} · ${esc(q.event)}</div>`).join('') || '—'}
+  `;
+
+  const tl = [...(snap.timeline||[])].reverse().slice(0, 40);
+  document.getElementById('timeline').innerHTML = tl.map(e => {
+    const tid = e.task_id || '';
+    const link = tid
+      ? `<a href="tasks/${esc(tid)}.html">${esc(tid)}</a>`
+      : '—';
+    return `<tr>
+    <td>${esc(shortTs(e.ts))}</td>
+    <td><strong>${esc(e.agent||'—')}</strong></td>
+    <td>${esc(e.event||e.kind)}</td>
+    <td>${link}</td>
+    <td>${esc(e.from_status||'')}→${esc(e.to_status||'')}</td>
+  </tr>`;
+  }).join('') || '<tr><td colspan="5"><em>Sem eventos</em></td></tr>';
+
+  const th = snap.task_histories || [];
+  document.getElementById('health').innerHTML = `
+    <div>heartbeat: <code>${esc(h.heartbeat_at || '—')}</code></div>
+    <div>merge: <code>${esc(h.merge_policy)}</code></div>
+    <div>reconcile conflicts: <code>${esc(h.reconcile_conflicts)}</code></div>
+    <div>outbox pending: <code>${esc(h.outbox_pending)}</code></div>
+    <div>piloto: <code>${esc((snap.pilot_task_ids||[]).join(', '))}</code></div>
+    <div style="margin-top:8px"><strong>Historicos de task</strong></div>
+    ${th.slice(0, 8).map(x =>
+      `<div><a href="${esc(x.url)}">${esc(x.task_id)}</a></div>`
+    ).join('') || '<div class="muted">—</div>'}
+  `;
+}
+
+async function tick() {
+  try {
+    const r = await fetch('snapshot.json?ts=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    render(await r.json());
+    document.getElementById('livePill').textContent = '● live 5s';
+  } catch (err) {
+    document.getElementById('livePill').textContent = '● offline';
+    document.getElementById('generated').innerHTML =
+      `<span class="error">Falha ao ler snapshot.json — use live_server.py (${esc(err.message)})</span>`;
+  }
+}
+tick();
+setInterval(tick, POLL_MS);
+</script>
+</body>
+</html>

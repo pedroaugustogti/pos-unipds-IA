@@ -1,0 +1,344 @@
+{
+  "ok": true,
+  "phase": 5,
+  "mode": "supervised",
+  "started_at": "2026-08-24T16:18:07.914846+00:00",
+  "finished_at": "2026-08-24T16:20:37.352314+00:00",
+  "task_ids": [
+    "T-P05-005",
+    "T-I03-001",
+    "T-P05-006"
+  ],
+  "steps": [
+    [
+      "claim",
+      "creator"
+    ],
+    [
+      "open_pr",
+      "creator"
+    ],
+    [
+      "start_review",
+      "reviewer"
+    ],
+    [
+      "approve_review",
+      "reviewer"
+    ],
+    [
+      "start_test",
+      "qa-gate"
+    ],
+    [
+      "test_passed",
+      "qa-gate"
+    ]
+  ],
+  "log": [
+    {
+      "task_id": "T-P05-005",
+      "event": "start_review",
+      "role": "frontend-mobile-reviewer",
+      "before": "Ready for Code Review",
+      "after": "In Code Review",
+      "ok": true,
+      "status": "applied",
+      "code": null,
+      "error": null,
+      "hitl": {
+        "required": false,
+        "mode": "auto",
+        "reasons": [],
+        "reason": "",
+        "human_action": "Nenhuma — seguir automação.",
+        "task_id": "T-P05-005",
+        "event": "start_review",
+        "high_risk": true
+      },
+      "hitl_resolved": false,
+      "emit_ok": false,
+      "at": "2026-08-24T16:18:07.914846+00:00"
+    },
+    {
+      "task_id": "T-I03-001",
+      "event": "start_review",
+      "role": "devops-cicd-reviewer",
+      "before": "Ready for Code Review",
+      "after": "In Code Review",
+      "ok": true,
+      "status": "applied",
+      "code": null,
+      "error": null,
+      "hitl": {
+        "required": false,
+        "mode": "auto",
+        "reasons": [],
+        "reason": "",
+        "human_action": "Nenhuma — seguir automação.",
+        "task_id": "T-I03-001",
+        "event": "start_review",
+        "high_risk": true
+      },
+      "hitl_resolved": false,
+      "emit_ok": false,
+      "at": "2026-08-24T16:18:22.481990+00:00"
+    },
+    {
+      "task_id": "T-P05-006",
+      "event": "start_review",
+      "role": "frontend-mobile-reviewer",
+      "before": "Ready for Code Review",
+      "after": "In Code Review",
+      "ok": true,
+      "status": "applied",
+      "code": null,
+      "error": null,
+      "hitl": {
+        "required": false,
+        "mode": "auto",
+        "reasons": [],
+        "reason": "",
+        "human_action": "Nenhuma — seguir automação.",
+        "task_id": "T-P05-006",
+        "event": "start_review",
+        "high_risk": true
+      },
+      "hitl_resolved": false,
+      "emit_ok": false,
+      "at": "2026-08-24T16:18:35.392990+00:00"
+    },
+    {
+      "task_id": "T-P05-005",
+      "event": "approve_review",
+      "role": "frontend-mobile-reviewer",
+      "before": "In Code Review",
+      "after": "Ready for Test",
+      "ok": true,
+      "status": "propose_only",
+      "code": null,
+      "error": null,
+      "hitl": {
+        "required": true,
+        "mode": "propose_only",
+        "reasons": [
+          "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
+        ],
+        "reason": "Review aprovado por agente LLM em task de alto risco — veredito só como proposta.",
+        "human_action": "Humano confirma ou rejeita o veredito proposto no PR/board (evento hitl_approved | hitl_rejected).",
+        "task_id": "T-P05-005",
+        "event": "approve_review",
+        "high_risk": true
+      },
+      "hitl_resolved": false,
+      "emit_ok": false,
+      "at": "2026-08-24T16:18:47.953925+00:00"
+    },
+    {
+      "task_id": "T-I03-001",
+      "event": "approve_review",
+      "role": "devops-cicd-reviewer",
+      "before": "In Code Review",
+      "after": "Ready for Test",
+      "ok": true,
+      "status": "propose_only",
+      "code": null,
+      "error": null,
+      "hitl": {
+        "required": true,
+        "mode": "propose_only",
+        "reasons": [
+          "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
+        ],
+        "reason": "Review aprovado por agente LLM em task de alto risco — veredito só como proposta.",
+        "human_action": "Humano confirma ou rejeita o veredito proposto no PR/board (evento hitl_approved | hitl_rejected).",
+        "task_id": "T-I03-001",
+        "event": "approve_review",
+        "high_risk": true
+      },
+      "hitl_resolved": false,
+      "emit_ok": false,
+      "at": "2026-08-24T16:19:02.402943+00:00"
+    },
+    {
+      "task_id": "T-P05-006",
+      "event": "approve_review",
+      "role": "frontend-mobile-reviewer",
+      "before": "In Code Review",
+      "after": "Ready for Test",
+      "ok": true,
+      "status": "propose_only",
+      "code": null,
+      "error": null,
+      "hitl": {
+        "required": true,
+        "mode": "propose_only",
+        "reasons": [
+          "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
+        ],
+        "reason": "Review aprovado por agente LLM em task de alto risco — veredito só como proposta.",
+        "human_action": "Humano confirma ou rejeita o veredito proposto no PR/board (evento hitl_approved | hitl_rejected).",
+        "task_id": "T-P05-006",
+        "event": "approve_review",
+        "high_risk": true
+      },
+      "hitl_resolved": false,
+      "emit_ok": false,
+      "at": "2026-08-24T16:19:16.339270+00:00"
+    },
+    {
+      "task_id": "T-P05-005",
+      "event": "start_test",
+      "role": "qa-gate",
+      "before": "Ready for Test",
+      "after": "In Test",
+      "ok": true,
+      "status": "applied",
+      "code": null,
+      "error": null,
+      "hitl": {
+        "required": false,
+        "mode": "auto",
+        "reasons": [],
+        "reason": "",
+        "human_action": "Nenhuma — seguir automação.",
+        "task_id": "T-P05-005",
+        "event": "start_test",
+        "high_risk": true
+      },
+      "hitl_resolved": false,
+      "emit_ok": false,
+      "at": "2026-08-24T16:19:30.007788+00:00"
+    },
+    {
+      "task_id": "T-I03-001",
+      "event": "start_test",
+      "role": "qa-gate",
+      "before": "Ready for Test",
+      "after": "In Test",
+      "ok": true,
+      "status": "applied",
+      "code": null,
+      "error": null,
+      "hitl": {
+        "required": false,
+        "mode": "auto",
+        "reasons": [],
+        "reason": "",
+        "human_action": "Nenhuma — seguir automação.",
+        "task_id": "T-I03-001",
+        "event": "start_test",
+        "high_risk": true
+      },
+      "hitl_resolved": false,
+      "emit_ok": false,
+      "at": "2026-08-24T16:19:44.051700+00:00"
+    },
+    {
+      "task_id": "T-P05-006",
+      "event": "start_test",
+      "role": "qa-gate",
+      "before": "Ready for Test",
+      "after": "In Test",
+      "ok": true,
+      "status": "applied",
+      "code": null,
+      "error": null,
+      "hitl": {
+        "required": false,
+        "mode": "auto",
+        "reasons": [],
+        "reason": "",
+        "human_action": "Nenhuma — seguir automação.",
+        "task_id": "T-P05-006",
+        "event": "start_test",
+        "high_risk": true
+      },
+      "hitl_resolved": false,
+      "emit_ok": false,
+      "at": "2026-08-24T16:19:56.858386+00:00"
+    },
+    {
+      "task_id": "T-P05-005",
+      "event": "test_passed",
+      "role": "qa-gate",
+      "before": "In Test",
+      "after": "In Pull Request",
+      "ok": true,
+      "status": "applied",
+      "code": null,
+      "error": null,
+      "hitl": {
+        "required": false,
+        "mode": "auto",
+        "reasons": [],
+        "reason": "",
+        "human_action": "Nenhuma — seguir automação.",
+        "task_id": "T-P05-005",
+        "event": "test_passed",
+        "high_risk": true
+      },
+      "hitl_resolved": false,
+      "emit_ok": false,
+      "at": "2026-08-24T16:20:10.010925+00:00"
+    },
+    {
+      "task_id": "T-I03-001",
+      "event": "test_passed",
+      "role": "qa-gate",
+      "before": "In Test",
+      "after": "In Pull Request",
+      "ok": true,
+      "status": "applied",
+      "code": null,
+      "error": null,
+      "hitl": {
+        "required": false,
+        "mode": "auto",
+        "reasons": [],
+        "reason": "",
+        "human_action": "Nenhuma — seguir automação.",
+        "task_id": "T-I03-001",
+        "event": "test_passed",
+        "high_risk": true
+      },
+      "hitl_resolved": false,
+      "emit_ok": false,
+      "at": "2026-08-24T16:20:23.746697+00:00"
+    },
+    {
+      "task_id": "T-P05-006",
+      "event": "test_passed",
+      "role": "qa-gate",
+      "before": "In Test",
+      "after": "In Pull Request",
+      "ok": true,
+      "status": "applied",
+      "code": null,
+      "error": null,
+      "hitl": {
+        "required": false,
+        "mode": "auto",
+        "reasons": [],
+        "reason": "",
+        "human_action": "Nenhuma — seguir automação.",
+        "task_id": "T-P05-006",
+        "event": "test_passed",
+        "high_risk": true
+      },
+      "hitl_resolved": false,
+      "emit_ok": false,
+      "at": "2026-08-24T16:20:37.334786+00:00"
+    }
+  ],
+  "final_status": {
+    "T-P05-005": "In Pull Request",
+    "T-I03-001": "In Pull Request",
+    "T-P05-006": "In Pull Request"
+  },
+  "success_criterion": "In Pull Request sem merge_pr",
+  "merge_attempted": false,
+  "interleaved": true,
+  "auto_hitl": true,
+  "failures": []
+}

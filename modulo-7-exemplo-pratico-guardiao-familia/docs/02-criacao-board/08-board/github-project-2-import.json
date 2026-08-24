@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generated": "2026-08-19",
+  "generated": "2026-08-24",
   "organization": "guardiaofamilia",
   "project": {
     "title": "Guardião Família v2",
@@ -2172,7 +2172,7 @@
       "repository": "guardiao-familia-parent",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P05 Push notifications nativas",
@@ -2219,7 +2219,7 @@
       "repository": "guardiao-familia-parent",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P05 Push notifications nativas",
@@ -2237,7 +2237,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 41,
         "Repo alvo": "guardiao-familia-parent",
-        "Refinamento": "**Objetivo:** Configurar FCM data messages SOS\n**Épico:** E-P05 Push notifications nativas · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 3** · Repo `guardiao-familia-parent` · Baseline `partial`\n**Refinamento:** implementação parcial existente — completar gaps e testes."
+        "Refinamento": "**Objetivo:** Configurar FCM data messages SOS\n**Épico:** E-P05 Push notifications nativas · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 3** · Repo `guardiao-familia-parent` · Baseline `partial`\n**Refinamento:** implementação parcial existente — completar gaps e testes.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3MpQ8"
       },
       "labels": [
         "produto",
@@ -3401,7 +3402,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "In Progress",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I03 Observabilidade e alertas",
@@ -3419,7 +3420,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 66,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** CloudWatch logs structured API\n**Épico:** E-I03 Observabilidade e alertas · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 3** · Repo `guardiao-familia-api` · Baseline `partial`\n**Refinamento:** implementação parcial existente — completar gaps e testes."
+        "Refinamento": "**Objetivo:** CloudWatch logs structured API\n**Épico:** E-I03 Observabilidade e alertas · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 3** · Repo `guardiao-familia-api` · Baseline `partial`\n**Refinamento:** implementação parcial existente — completar gaps e testes.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M3Rw"
       },
       "labels": [
         "infraestrutura",
@@ -10302,7 +10304,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -10320,7 +10322,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 212,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Validar Mapbox road-matched routes API\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `cb9a003` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Validar Mapbox road-matched routes API\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `cb9a003` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M43c"
       },
       "labels": [
         "produto",
@@ -10349,7 +10352,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -10367,7 +10370,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 213,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Validar sync offline batch idempotente\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `b6702bf` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Validar sync offline batch idempotente\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `b6702bf` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M430"
       },
       "labels": [
         "produto",
@@ -10394,7 +10398,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -10412,7 +10416,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 214,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Persist tracking mode offline routes\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `83156e6` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Persist tracking mode offline routes\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `83156e6` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M44E"
       },
       "labels": [
         "produto",
@@ -10439,7 +10444,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -10457,7 +10462,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 215,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Parent render matched routes no mapa\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `94559c0` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Parent render matched routes no mapa\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `94559c0` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M45g"
       },
       "labels": [
         "produto",
@@ -10486,7 +10492,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -10504,7 +10510,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 216,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Child sample quality offline routes\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `0dbbc08` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Child sample quality offline routes\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `0dbbc08` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M46A"
       },
       "labels": [
         "produto",
@@ -10531,7 +10538,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -10549,7 +10556,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 217,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Recovery route quando Mapbox indisponível\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `a16df36` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Recovery route quando Mapbox indisponível\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `a16df36` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M464"
       },
       "labels": [
         "produto",
@@ -10578,7 +10586,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -10596,7 +10604,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 218,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Battery policy child location background\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `ed373a3` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Battery policy child location background\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `ed373a3` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M47k"
       },
       "labels": [
         "produto",
@@ -10625,7 +10634,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -10643,7 +10652,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 219,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Nudge refresh location child\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `df2b0ac` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Nudge refresh location child\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 4** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `df2b0ac` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M48I"
       },
       "labels": [
         "produto",
@@ -10672,7 +10682,7 @@
       "repository": "guardiao-familia-parent",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P05 Push notifications nativas",
@@ -10690,7 +10700,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 220,
         "Repo alvo": "guardiao-familia-parent",
-        "Refinamento": "**Objetivo:** API mapear soundId por tipo alerta\n**Épico:** E-P05 Push notifications nativas · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 3** · Repo `guardiao-familia-parent` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API mapear soundId por tipo alerta\n**Épico:** E-P05 Push notifications nativas · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 3** · Repo `guardiao-familia-parent` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M480"
       },
       "labels": [
         "produto",
@@ -10721,7 +10732,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P04 SOS e emergência",
@@ -10739,7 +10750,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 221,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API SOS create/update/attach audio\n**Épico:** E-P04 SOS e emergência · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 5** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API SOS create/update/attach audio\n**Épico:** E-P04 SOS e emergência · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 5** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M490"
       },
       "labels": [
         "produto",
@@ -10768,7 +10780,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P04 SOS e emergência",
@@ -10786,7 +10798,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 222,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Presign upload áudio SOS S3\n**Épico:** E-P04 SOS e emergência · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 5** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Presign upload áudio SOS S3\n**Épico:** E-P04 SOS e emergência · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 5** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M4-M"
       },
       "labels": [
         "produto",
@@ -10815,7 +10828,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P03 Geofences e alertas",
@@ -10833,7 +10846,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 223,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Avaliar geofence em batch pings API\n**Épico:** E-P03 Geofences e alertas · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `aa7a914` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Avaliar geofence em batch pings API\n**Épico:** E-P03 Geofences e alertas · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `aa7a914` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M4-s"
       },
       "labels": [
         "produto",
@@ -10861,7 +10875,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P03 Geofences e alertas",
@@ -10879,7 +10893,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 224,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Documentar regras tolerância stale ping\n**Épico:** E-P03 Geofences e alertas · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `aa7a914` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Documentar regras tolerância stale ping\n**Épico:** E-P03 Geofences e alertas · **Trilha:** produto · **OKR O1** — Confiabilidade em tempo real: localização, SOS, push e geofences para pais.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `aa7a914` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M4_E"
       },
       "labels": [
         "produto",
@@ -10906,7 +10921,7 @@
       "repository": "guardiao-familia-child",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "stores",
         "OKR": "O2",
         "Epic": "E-S04 Google Play child",
@@ -10924,7 +10939,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 225,
         "Repo alvo": "guardiao-familia-child",
-        "Refinamento": "**Objetivo:** Validate GP submit secret CI\n**Épico:** E-S04 Google Play child · **Trilha:** stores · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 12** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `3e37e38` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Validate GP submit secret CI\n**Épico:** E-S04 Google Play child · **Trilha:** stores · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 12** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `3e37e38` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5AQ"
       },
       "labels": [
         "stores",
@@ -10956,7 +10972,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I02 CI/CD multi-repo",
@@ -10974,7 +10990,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 226,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Gate deploy por branch main\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `5821a0a` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Gate deploy por branch main\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `5821a0a` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5A4"
       },
       "labels": [
         "infraestrutura",
@@ -11002,7 +11019,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I02 CI/CD multi-repo",
@@ -11020,7 +11037,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 227,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Automate cache purge Cloudflare\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `5821a0a` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Automate cache purge Cloudflare\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `5821a0a` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5BY"
       },
       "labels": [
         "infraestrutura",
@@ -11047,7 +11065,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I02 CI/CD multi-repo",
@@ -11065,7 +11083,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 228,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** EAS update workflow parent\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `3ead192` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** EAS update workflow parent\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `3ead192` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5B8"
       },
       "labels": [
         "infraestrutura",
@@ -11093,7 +11112,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I02 CI/CD multi-repo",
@@ -11111,7 +11130,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 229,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** EAS submit iOS parent\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `ce8728d` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** EAS submit iOS parent\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `ce8728d` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5CU"
       },
       "labels": [
         "infraestrutura",
@@ -11142,7 +11162,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I02 CI/CD multi-repo",
@@ -11160,7 +11180,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 230,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Backoffice SSM deploy sa-east-1\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `c23d55c` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Backoffice SSM deploy sa-east-1\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `c23d55c` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5Cs"
       },
       "labels": [
         "infraestrutura",
@@ -11191,7 +11212,7 @@
       "repository": "guardiao-familia-backoffice",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O2",
         "Epic": "E-P12 Backoffice operacional release",
@@ -11209,7 +11230,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 231,
         "Repo alvo": "guardiao-familia-backoffice",
-        "Refinamento": "**Objetivo:** Live support board produção\n**Épico:** E-P12 Backoffice operacional release · **Trilha:** produto · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 11** · Repo `guardiao-familia-backoffice` · Baseline `done`\n**Evidência código:** commit `ff7ba8a` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Live support board produção\n**Épico:** E-P12 Backoffice operacional release · **Trilha:** produto · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 11** · Repo `guardiao-familia-backoffice` · Baseline `done`\n**Evidência código:** commit `ff7ba8a` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5Dc"
       },
       "labels": [
         "produto",
@@ -11237,7 +11259,7 @@
       "repository": "guardiao-familia-backoffice",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O2",
         "Epic": "E-P12 Backoffice operacional release",
@@ -11255,7 +11277,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 232,
         "Repo alvo": "guardiao-familia-backoffice",
-        "Refinamento": "**Objetivo:** Support audio playback\n**Épico:** E-P12 Backoffice operacional release · **Trilha:** produto · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 11** · Repo `guardiao-familia-backoffice` · Baseline `done`\n**Evidência código:** commit `b870fd6` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Support audio playback\n**Épico:** E-P12 Backoffice operacional release · **Trilha:** produto · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 11** · Repo `guardiao-familia-backoffice` · Baseline `done`\n**Evidência código:** commit `b870fd6` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5EI"
       },
       "labels": [
         "produto",
@@ -11283,7 +11306,7 @@
       "repository": "guardiao-familia-backoffice",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O2",
         "Epic": "E-P12 Backoffice operacional release",
@@ -11301,7 +11324,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 233,
         "Repo alvo": "guardiao-familia-backoffice",
-        "Refinamento": "**Objetivo:** Cloudflare analytics dashboard\n**Épico:** E-P12 Backoffice operacional release · **Trilha:** produto · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 11** · Repo `guardiao-familia-backoffice` · Baseline `done`\n**Evidência código:** commit `bf172e8` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Cloudflare analytics dashboard\n**Épico:** E-P12 Backoffice operacional release · **Trilha:** produto · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 11** · Repo `guardiao-familia-backoffice` · Baseline `done`\n**Evidência código:** commit `bf172e8` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5E0"
       },
       "labels": [
         "produto",
@@ -11329,7 +11353,7 @@
       "repository": "guardiao-familia-backoffice",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O2",
         "Epic": "E-P12 Backoffice operacional release",
@@ -11347,7 +11371,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 234,
         "Repo alvo": "guardiao-familia-backoffice",
-        "Refinamento": "**Objetivo:** Role-based menu sidebar\n**Épico:** E-P12 Backoffice operacional release · **Trilha:** produto · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 11** · Repo `guardiao-familia-backoffice` · Baseline `done`\n**Evidência código:** commit `c69f117` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Role-based menu sidebar\n**Épico:** E-P12 Backoffice operacional release · **Trilha:** produto · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 11** · Repo `guardiao-familia-backoffice` · Baseline `done`\n**Evidência código:** commit `c69f117` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5FY"
       },
       "labels": [
         "produto",
@@ -11375,7 +11400,7 @@
       "repository": "guardiao-familia-backoffice",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O2",
         "Epic": "E-P12 Backoffice operacional release",
@@ -11393,7 +11418,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 235,
         "Repo alvo": "guardiao-familia-backoffice",
-        "Refinamento": "**Objetivo:** Leads listing overview\n**Épico:** E-P12 Backoffice operacional release · **Trilha:** produto · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 11** · Repo `guardiao-familia-backoffice` · Baseline `done`\n**Evidência código:** commit `afa0057` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Leads listing overview\n**Épico:** E-P12 Backoffice operacional release · **Trilha:** produto · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 11** · Repo `guardiao-familia-backoffice` · Baseline `done`\n**Evidência código:** commit `afa0057` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5G0"
       },
       "labels": [
         "produto",
@@ -11421,7 +11447,7 @@
       "repository": "guardiao-familia-child",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P10 App child — UX e estabilidade",
@@ -11439,7 +11465,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 236,
         "Repo alvo": "guardiao-familia-child",
-        "Refinamento": "**Objetivo:** Pairing help simplificado\n**Épico:** E-P10 App child — UX e estabilidade · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `fd9882d` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Pairing help simplificado\n**Épico:** E-P10 App child — UX e estabilidade · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `fd9882d` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5Iw"
       },
       "labels": [
         "produto",
@@ -11470,7 +11497,7 @@
       "repository": "guardiao-familia-child",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P10 App child — UX e estabilidade",
@@ -11488,7 +11515,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 237,
         "Repo alvo": "guardiao-familia-child",
-        "Refinamento": "**Objetivo:** App name PT-BR copy\n**Épico:** E-P10 App child — UX e estabilidade · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `fd94887` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** App name PT-BR copy\n**Épico:** E-P10 App child — UX e estabilidade · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `fd94887` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5Jg"
       },
       "labels": [
         "produto",
@@ -11516,7 +11544,7 @@
       "repository": "guardiao-familia-child",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P10 App child — UX e estabilidade",
@@ -11534,7 +11562,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 238,
         "Repo alvo": "guardiao-familia-child",
-        "Refinamento": "**Objetivo:** Privacy compliance App Store\n**Épico:** E-P10 App child — UX e estabilidade · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `f26520e` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Privacy compliance App Store\n**Épico:** E-P10 App child — UX e estabilidade · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `f26520e` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5Kk"
       },
       "labels": [
         "produto",
@@ -11566,7 +11595,7 @@
       "repository": "guardiao-familia-child",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P10 App child — UX e estabilidade",
@@ -11584,7 +11613,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 239,
         "Repo alvo": "guardiao-familia-child",
-        "Refinamento": "**Objetivo:** Background location hardening\n**Épico:** E-P10 App child — UX e estabilidade · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `3d58268` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Background location hardening\n**Épico:** E-P10 App child — UX e estabilidade · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `3d58268` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5LM"
       },
       "labels": [
         "produto",
@@ -11616,7 +11646,7 @@
       "repository": "guardiao-familia-child",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P10 App child — UX e estabilidade",
@@ -11634,7 +11664,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 240,
         "Repo alvo": "guardiao-familia-child",
-        "Refinamento": "**Objetivo:** Invalid session reset\n**Épico:** E-P10 App child — UX e estabilidade · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `1f9c28f` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Invalid session reset\n**Épico:** E-P10 App child — UX e estabilidade · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `1f9c28f` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5L8"
       },
       "labels": [
         "produto",
@@ -11665,7 +11696,7 @@
       "repository": "guardiao-familia-child",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P10 App child — UX e estabilidade",
@@ -11683,7 +11714,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 241,
         "Repo alvo": "guardiao-familia-child",
-        "Refinamento": "**Objetivo:** Release 2.0.0 estabilização\n**Épico:** E-P10 App child — UX e estabilidade · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `b099a45` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Release 2.0.0 estabilização\n**Épico:** E-P10 App child — UX e estabilidade · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Evidência código:** commit `b099a45` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5Ms"
       },
       "labels": [
         "produto",
@@ -11715,7 +11747,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P01 Auth, sessão e pareamento",
@@ -11733,7 +11765,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 242,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Validar revogação sessão child ao desvincular\n**Épico:** E-P01 Auth, sessão e pareamento · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `0ff10dc` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Validar revogação sessão child ao desvincular\n**Épico:** E-P01 Auth, sessão e pareamento · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `0ff10dc` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5NY"
       },
       "labels": [
         "produto",
@@ -11764,7 +11797,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P01 Auth, sessão e pareamento",
@@ -11782,7 +11815,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 243,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Hardening rate-limit auth 429 falsos positivos\n**Épico:** E-P01 Auth, sessão e pareamento · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `5821a0a` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Hardening rate-limit auth 429 falsos positivos\n**Épico:** E-P01 Auth, sessão e pareamento · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `5821a0a` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5N4"
       },
       "labels": [
         "produto",
@@ -11813,7 +11847,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P01 Auth, sessão e pareamento",
@@ -11831,7 +11865,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 244,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Checklist segurança pareamento child sem guardian\n**Épico:** E-P01 Auth, sessão e pareamento · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `26c519e` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Checklist segurança pareamento child sem guardian\n**Épico:** E-P01 Auth, sessão e pareamento · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `26c519e` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5OI"
       },
       "labels": [
         "produto",
@@ -11862,7 +11897,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P13 Site institucional e campanha",
@@ -11880,7 +11915,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 245,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API chatbot: site chatbot intent routing\n**Épico:** E-P13 Site institucional e campanha · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API chatbot: site chatbot intent routing\n**Épico:** E-P13 Site institucional e campanha · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5PM"
       },
       "labels": [
         "produto",
@@ -11908,7 +11944,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P09 App parent — mapa, relatórios, IA",
@@ -11926,7 +11962,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 246,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API ai: support classifier rollout\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `e2c6ea8` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API ai: support classifier rollout\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `e2c6ea8` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5P4"
       },
       "labels": [
         "produto",
@@ -11954,7 +11991,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P09 App parent — mapa, relatórios, IA",
@@ -11972,7 +12009,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 247,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API ai: disable placeholder provider default\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `1fc606d` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API ai: disable placeholder provider default\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `1fc606d` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5RI"
       },
       "labels": [
         "produto",
@@ -12000,7 +12038,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P06 Tempo de tela e pedido extra",
@@ -12018,7 +12056,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 248,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API payments: paywall feature flag off prod\n**Épico:** E-P06 Tempo de tela e pedido extra · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `c64e9f4` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API payments: paywall feature flag off prod\n**Épico:** E-P06 Tempo de tela e pedido extra · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `c64e9f4` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5SE"
       },
       "labels": [
         "produto",
@@ -12045,7 +12084,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -12063,7 +12102,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 249,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API email: template extra-time request\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API email: template extra-time request\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5S8"
       },
       "labels": [
         "produto",
@@ -12092,7 +12132,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -12110,7 +12150,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 250,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API content: tutorial CMS API CRUD\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API content: tutorial CMS API CRUD\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5TQ"
       },
       "labels": [
         "produto",
@@ -12137,7 +12178,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -12155,7 +12196,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 251,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API pre-launch: waitlist lead capture API\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API pre-launch: waitlist lead capture API\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5T8"
       },
       "labels": [
         "produto",
@@ -12182,7 +12224,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -12200,7 +12242,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 252,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API accounting: CPC fiscal endpoints BO\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API accounting: CPC fiscal endpoints BO\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5Uk"
       },
       "labels": [
         "produto",
@@ -12227,7 +12270,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P01 Auth, sessão e pareamento",
@@ -12245,7 +12288,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 253,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API devices: device supersession integration test\n**Épico:** E-P01 Auth, sessão e pareamento · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `f39c9c6` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API devices: device supersession integration test\n**Épico:** E-P01 Auth, sessão e pareamento · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Evidência código:** commit `f39c9c6` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5VA"
       },
       "labels": [
         "produto",
@@ -12277,7 +12321,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P02 Localização e rotas Mapbox",
@@ -12295,7 +12339,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 254,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API storage: SOS audio MIME validation\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API storage: SOS audio MIME validation\n**Épico:** E-P02 Localização e rotas Mapbox · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 6** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5Vo"
       },
       "labels": [
         "produto",
@@ -12325,7 +12370,7 @@
       "repository": "guardiao-familia-parent",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P09 App parent — mapa, relatórios, IA",
@@ -12343,7 +12388,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 255,
         "Repo alvo": "guardiao-familia-parent",
-        "Refinamento": "**Objetivo:** Mapa rotas matched estabilidade\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 10** · Repo `guardiao-familia-parent` · Baseline `done`\n**Evidência código:** commit `f5047fa` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Mapa rotas matched estabilidade\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 10** · Repo `guardiao-familia-parent` · Baseline `done`\n**Evidência código:** commit `f5047fa` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5W4"
       },
       "labels": [
         "produto",
@@ -12374,7 +12420,7 @@
       "repository": "guardiao-familia-parent",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P09 App parent — mapa, relatórios, IA",
@@ -12392,7 +12438,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 256,
         "Repo alvo": "guardiao-familia-parent",
-        "Refinamento": "**Objetivo:** Offline route refresh seguro\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 10** · Repo `guardiao-familia-parent` · Baseline `done`\n**Evidência código:** commit `aef5509` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Offline route refresh seguro\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 10** · Repo `guardiao-familia-parent` · Baseline `done`\n**Evidência código:** commit `aef5509` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5X4"
       },
       "labels": [
         "produto",
@@ -12420,7 +12467,7 @@
       "repository": "guardiao-familia-parent",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P09 App parent — mapa, relatórios, IA",
@@ -12438,7 +12485,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 257,
         "Repo alvo": "guardiao-familia-parent",
-        "Refinamento": "**Objetivo:** Remover URL plan config stale\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 10** · Repo `guardiao-familia-parent` · Baseline `done`\n**Evidência código:** commit `dbabadf` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Remover URL plan config stale\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 10** · Repo `guardiao-familia-parent` · Baseline `done`\n**Evidência código:** commit `dbabadf` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5Ys"
       },
       "labels": [
         "produto",
@@ -12466,7 +12514,7 @@
       "repository": "guardiao-familia-parent",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P09 App parent — mapa, relatórios, IA",
@@ -12484,7 +12532,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 258,
         "Repo alvo": "guardiao-familia-parent",
-        "Refinamento": "**Objetivo:** Jest release checks estáveis\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 10** · Repo `guardiao-familia-parent` · Baseline `done`\n**Evidência código:** commit `d9529ab` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Jest release checks estáveis\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 10** · Repo `guardiao-familia-parent` · Baseline `done`\n**Evidência código:** commit `d9529ab` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5Zo"
       },
       "labels": [
         "produto",
@@ -12516,7 +12565,7 @@
       "repository": "guardiao-familia-parent",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P09 App parent — mapa, relatórios, IA",
@@ -12534,7 +12583,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 259,
         "Repo alvo": "guardiao-familia-parent",
-        "Refinamento": "**Objetivo:** Paywall permanece desabilitado release\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 10** · Repo `guardiao-familia-parent` · Baseline `done`\n**Evidência código:** commit `c64e9f4` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Paywall permanece desabilitado release\n**Épico:** E-P09 App parent — mapa, relatórios, IA · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 10** · Repo `guardiao-familia-parent` · Baseline `done`\n**Evidência código:** commit `c64e9f4` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5ac"
       },
       "labels": [
         "produto",
@@ -12566,7 +12616,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P06 Tempo de tela e pedido extra",
@@ -12584,7 +12634,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 260,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API regras tempo de tela CRUD\n**Épico:** E-P06 Tempo de tela e pedido extra · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 7** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API regras tempo de tela CRUD\n**Épico:** E-P06 Tempo de tela e pedido extra · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 7** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5bY"
       },
       "labels": [
         "produto",
@@ -12612,7 +12663,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P06 Tempo de tela e pedido extra",
@@ -12630,7 +12681,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 261,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API pedido tempo extra create/decide\n**Épico:** E-P06 Tempo de tela e pedido extra · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 7** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API pedido tempo extra create/decide\n**Épico:** E-P06 Tempo de tela e pedido extra · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 7** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5bs"
       },
       "labels": [
         "produto",
@@ -12657,7 +12709,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P06 Tempo de tela e pedido extra",
@@ -12675,7 +12727,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 262,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** E-mail notificação pedido extra\n**Épico:** E-P06 Tempo de tela e pedido extra · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 7** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** E-mail notificação pedido extra\n**Épico:** E-P06 Tempo de tela e pedido extra · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 7** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5co"
       },
       "labels": [
         "produto",
@@ -12704,7 +12757,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P06 Tempo de tela e pedido extra",
@@ -12722,7 +12775,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 263,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Política extra-time applies date\n**Épico:** E-P06 Tempo de tela e pedido extra · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 7** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Política extra-time applies date\n**Épico:** E-P06 Tempo de tela e pedido extra · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 7** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5dY"
       },
       "labels": [
         "produto",
@@ -12750,7 +12804,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P08 Família, mensagens e acesso",
@@ -12768,7 +12822,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 264,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API family members CRUD\n**Épico:** E-P08 Família, mensagens e acesso · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 8** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API family members CRUD\n**Épico:** E-P08 Família, mensagens e acesso · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 8** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5dw"
       },
       "labels": [
         "produto",
@@ -12795,7 +12850,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P08 Família, mensagens e acesso",
@@ -12813,7 +12868,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 265,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API family messages\n**Épico:** E-P08 Família, mensagens e acesso · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 8** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API family messages\n**Épico:** E-P08 Família, mensagens e acesso · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 8** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5fI"
       },
       "labels": [
         "produto",
@@ -12840,7 +12896,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P08 Família, mensagens e acesso",
@@ -12858,7 +12914,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 266,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** API family access invites\n**Épico:** E-P08 Família, mensagens e acesso · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 8** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API family access invites\n**Épico:** E-P08 Família, mensagens e acesso · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 8** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5fo"
       },
       "labels": [
         "produto",
@@ -12885,7 +12942,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P08 Família, mensagens e acesso",
@@ -12903,7 +12960,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 267,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Referral rewards API\n**Épico:** E-P08 Família, mensagens e acesso · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 8** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Referral rewards API\n**Épico:** E-P08 Família, mensagens e acesso · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 8** · Repo `guardiao-familia-api` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5gA"
       },
       "labels": [
         "produto",
@@ -12932,7 +12990,7 @@
       "repository": "guardiao-familia-child",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P07 Gamificação e engajamento child",
@@ -12950,7 +13008,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 268,
         "Repo alvo": "guardiao-familia-child",
-        "Refinamento": "**Objetivo:** API conquistas e pontos child\n**Épico:** E-P07 Gamificação e engajamento child · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** API conquistas e pontos child\n**Épico:** E-P07 Gamificação e engajamento child · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 9** · Repo `guardiao-familia-child` · Baseline `done`\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5g0"
       },
       "labels": [
         "produto",
@@ -12977,7 +13036,7 @@
       "repository": "guardiao-familia-site",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P13 Site institucional e campanha",
@@ -12995,7 +13054,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 269,
         "Repo alvo": "guardiao-familia-site",
-        "Refinamento": "**Objetivo:** CNPJ páginas legais\n**Épico:** E-P13 Site institucional e campanha · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 12** · Repo `guardiao-familia-site` · Baseline `done`\n**Evidência código:** commit `8928a7e` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** CNPJ páginas legais\n**Épico:** E-P13 Site institucional e campanha · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 12** · Repo `guardiao-familia-site` · Baseline `done`\n**Evidência código:** commit `8928a7e` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5hs"
       },
       "labels": [
         "produto",
@@ -13023,7 +13083,7 @@
       "repository": "guardiao-familia-site",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P13 Site institucional e campanha",
@@ -13041,7 +13101,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 270,
         "Repo alvo": "guardiao-familia-site",
-        "Refinamento": "**Objetivo:** Chatbot widget site\n**Épico:** E-P13 Site institucional e campanha · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 12** · Repo `guardiao-familia-site` · Baseline `done`\n**Evidência código:** commit `637dd2a` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Chatbot widget site\n**Épico:** E-P13 Site institucional e campanha · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 12** · Repo `guardiao-familia-site` · Baseline `done`\n**Evidência código:** commit `637dd2a` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5ig"
       },
       "labels": [
         "produto",
@@ -13069,7 +13130,7 @@
       "repository": "guardiao-familia-site",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P13 Site institucional e campanha",
@@ -13087,7 +13148,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 271,
         "Repo alvo": "guardiao-familia-site",
-        "Refinamento": "**Objetivo:** Links download pré-lançamento\n**Épico:** E-P13 Site institucional e campanha · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 12** · Repo `guardiao-familia-site` · Baseline `done`\n**Evidência código:** commit `a6fac08` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Links download pré-lançamento\n**Épico:** E-P13 Site institucional e campanha · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 12** · Repo `guardiao-familia-site` · Baseline `done`\n**Evidência código:** commit `a6fac08` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5jY"
       },
       "labels": [
         "produto",
@@ -13115,7 +13177,7 @@
       "repository": "guardiao-familia-site",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O3",
         "Epic": "E-P13 Site institucional e campanha",
@@ -13133,7 +13195,8 @@
         "Blocker Motivo": "",
         "Priority Rank": 272,
         "Repo alvo": "guardiao-familia-site",
-        "Refinamento": "**Objetivo:** Campanha 30 dias estrutura\n**Épico:** E-P13 Site institucional e campanha · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 12** · Repo `guardiao-familia-site` · Baseline `done`\n**Evidência código:** commit `2556642` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar."
+        "Refinamento": "**Objetivo:** Campanha 30 dias estrutura\n**Épico:** E-P13 Site institucional e campanha · **Trilha:** produto · **OKR O3** — Experiência familiar: auth, tempo de tela, gamificação e engajamento.\n**Sprint 12** · Repo `guardiao-familia-site` · Baseline `done`\n**Evidência código:** commit `2556642` — revisar diff como ponto de partida.\n**Refinamento:** baseline done — validar regressão ou documentar.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg3M5kI"
       },
       "labels": [
         "produto",

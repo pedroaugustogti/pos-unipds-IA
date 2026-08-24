@@ -1,0 +1,1121 @@
+{
+  "generated_at": "2026-08-24T16:07:27.591576+00:00",
+  "paths": {
+    "log": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\crew\\output\\observability\\workflow.jsonl",
+    "snapshot": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\crew\\output\\observability\\snapshot.json",
+    "dashboard": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\crew\\output\\observability\\dashboard.html"
+  },
+  "totals": {
+    "events": 43,
+    "by_kind": {
+      "status_change": 15,
+      "autonomy_claim": 12,
+      "autonomy_cycle": 9,
+      "autonomy_pause": 3,
+      "dispatch": 1,
+      "ci_signal": 3
+    },
+    "by_event": {
+      "claim": 27,
+      "start_test": 2,
+      "test_failed_bug": 2
+    },
+    "by_agent": {
+      "frontend-mobile": 13,
+      "devops-cicd": 15,
+      "qa-gate": 2
+    },
+    "by_dispatch": {
+      "start_task": 15,
+      "manual_fallback": 1,
+      "enqueue_qa_gate": 2
+    },
+    "board_status": {
+      "Todo": 272
+    },
+    "idle_agents": 19,
+    "busy_agents": 0,
+    "queue_len": 1,
+    "blockers": 0,
+    "hitl_pending": 0,
+    "jobs_queued": 0,
+    "jobs_leased": 0,
+    "outbox_pending": 0
+  },
+  "idle_agents": [
+    "backend",
+    "backend-reviewer",
+    "cloud-infra",
+    "cloud-infra-reviewer",
+    "database",
+    "database-reviewer",
+    "devops-cicd",
+    "devops-cicd-reviewer",
+    "frontend-mobile",
+    "frontend-mobile-reviewer",
+    "frontend-web",
+    "frontend-web-reviewer",
+    "human",
+    "orchestrator",
+    "qa-author",
+    "qa-author-reviewer",
+    "qa-gate",
+    "stores-release",
+    "stores-release-reviewer"
+  ],
+  "busy_agents": [],
+  "dispatch_queue": [
+    {
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "status": "queued",
+      "event": "claim",
+      "job_id": "c7078446-9bdd-47a5-82ba-0cc3fb056f17",
+      "at": "2026-08-24T15:27:54.623350+00:00"
+    }
+  ],
+  "hitl_queue": [],
+  "autonomy_pause": false,
+  "blockers": [],
+  "recent_tasks": [
+    {
+      "task_id": "T-P05-005",
+      "last_event": "start_test",
+      "last_kind": "ci_signal",
+      "agent": "qa-gate",
+      "to_status": null,
+      "ts": "2026-08-24T16:02:04.597227+00:00",
+      "dispatch_action": "enqueue_qa_gate",
+      "job_id": null,
+      "correlation_id": null
+    },
+    {
+      "task_id": "T-I03-001",
+      "last_event": "test_failed_bug",
+      "last_kind": "ci_signal",
+      "agent": null,
+      "to_status": null,
+      "ts": "2026-08-24T16:02:04.473678+00:00",
+      "dispatch_action": null,
+      "job_id": null,
+      "correlation_id": null
+    },
+    {
+      "task_id": "T-P05-001",
+      "last_event": "claim",
+      "last_kind": "autonomy_claim",
+      "agent": "frontend-mobile",
+      "to_status": null,
+      "ts": "2026-08-24T15:18:33.495524+00:00",
+      "dispatch_action": null,
+      "job_id": null,
+      "correlation_id": null
+    }
+  ],
+  "timeline": [
+    {
+      "ts": "2026-08-24T13:47:27.727793+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — chamar para iniciar/continuar `T-P05-001` em **In Progress**.",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Bundlar sons push iOS parent"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:11:51.304945+00:00",
+      "kind": "status_change",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "devops-cicd",
+        "blocker": false,
+        "title": "CloudWatch logs structured API"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:17:20.434130+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Bundlar sons push iOS parent"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:17:20.484818+00:00",
+      "kind": "status_change",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "devops-cicd",
+        "blocker": false,
+        "title": "CloudWatch logs structured API"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:17:20.502821+00:00",
+      "kind": "autonomy_claim",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "claim simulado",
+      "dry_run": true,
+      "extra": {
+        "emit": {
+          "status": "applied",
+          "code": null,
+          "error": null,
+          "duplicate": null
+        },
+        "job_id": null,
+        "simulated": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:17:20.508282+00:00",
+      "kind": "autonomy_claim",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "claim simulado",
+      "dry_run": true,
+      "extra": {
+        "emit": {
+          "status": "applied",
+          "code": null,
+          "error": null,
+          "duplicate": null
+        },
+        "job_id": null,
+        "simulated": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:17:20.520134+00:00",
+      "kind": "autonomy_cycle",
+      "task_id": null,
+      "agent": null,
+      "event": null,
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "ciclo autonomy_loop dry_run=True",
+      "dry_run": true,
+      "extra": {
+        "autonomy": {
+          "expire": 0,
+          "claims_ok": 2,
+          "claims_simulated": 2,
+          "reconcile_conflicts": 0
+        },
+        "pause": false
+      }
+    },
+    {
+      "ts": "2026-08-24T15:17:48.444523+00:00",
+      "kind": "autonomy_pause",
+      "task_id": null,
+      "agent": null,
+      "event": null,
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "HITL pendente (1) — sem claim de alto risco; sem merge",
+      "dry_run": true,
+      "extra": {
+        "hitl_pending": 1
+      }
+    },
+    {
+      "ts": "2026-08-24T15:17:48.488040+00:00",
+      "kind": "autonomy_cycle",
+      "task_id": null,
+      "agent": null,
+      "event": null,
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "ciclo autonomy_loop dry_run=True",
+      "dry_run": true,
+      "extra": {
+        "autonomy": {
+          "expire": 0,
+          "claims_ok": 0,
+          "claims_simulated": 0,
+          "reconcile_conflicts": 0
+        },
+        "pause": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:13.427503+00:00",
+      "kind": "autonomy_pause",
+      "task_id": null,
+      "agent": null,
+      "event": null,
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "HITL pendente (1) — sem claim de alto risco; sem merge",
+      "dry_run": true,
+      "extra": {
+        "hitl_pending": 1
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:13.467798+00:00",
+      "kind": "autonomy_cycle",
+      "task_id": null,
+      "agent": null,
+      "event": null,
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "ciclo autonomy_loop dry_run=True",
+      "dry_run": true,
+      "extra": {
+        "autonomy": {
+          "expire": 0,
+          "claims_ok": 0,
+          "claims_simulated": 0,
+          "reconcile_conflicts": 0
+        },
+        "pause": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:13.574216+00:00",
+      "kind": "autonomy_pause",
+      "task_id": null,
+      "agent": null,
+      "event": null,
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "HITL pendente (1) — sem claim de alto risco; sem merge",
+      "dry_run": true,
+      "extra": {
+        "hitl_pending": 1
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:13.615254+00:00",
+      "kind": "autonomy_cycle",
+      "task_id": null,
+      "agent": null,
+      "event": null,
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "ciclo autonomy_loop dry_run=True",
+      "dry_run": true,
+      "extra": {
+        "autonomy": {
+          "expire": 0,
+          "claims_ok": 0,
+          "claims_simulated": 0,
+          "reconcile_conflicts": 0
+        },
+        "pause": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:26.655971+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Bundlar sons push iOS parent"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:26.707337+00:00",
+      "kind": "status_change",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "devops-cicd",
+        "blocker": false,
+        "title": "CloudWatch logs structured API"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:26.724328+00:00",
+      "kind": "autonomy_claim",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "claim simulado",
+      "dry_run": true,
+      "extra": {
+        "emit": {
+          "status": "applied",
+          "code": null,
+          "error": null,
+          "duplicate": null
+        },
+        "job_id": null,
+        "simulated": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:26.731328+00:00",
+      "kind": "autonomy_claim",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "claim simulado",
+      "dry_run": true,
+      "extra": {
+        "emit": {
+          "status": "applied",
+          "code": null,
+          "error": null,
+          "duplicate": null
+        },
+        "job_id": null,
+        "simulated": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:26.739329+00:00",
+      "kind": "autonomy_cycle",
+      "task_id": null,
+      "agent": null,
+      "event": null,
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "ciclo autonomy_loop dry_run=True",
+      "dry_run": true,
+      "extra": {
+        "autonomy": {
+          "expire": 0,
+          "claims_ok": 2,
+          "claims_simulated": 2,
+          "reconcile_conflicts": 0
+        },
+        "pause": false
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:26.930873+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Bundlar sons push iOS parent"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:26.982428+00:00",
+      "kind": "status_change",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "devops-cicd",
+        "blocker": false,
+        "title": "CloudWatch logs structured API"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:27.002430+00:00",
+      "kind": "autonomy_claim",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "claim simulado",
+      "dry_run": true,
+      "extra": {
+        "emit": {
+          "status": "applied",
+          "code": null,
+          "error": null,
+          "duplicate": null
+        },
+        "job_id": null,
+        "simulated": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:27.011425+00:00",
+      "kind": "autonomy_claim",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "claim simulado",
+      "dry_run": true,
+      "extra": {
+        "emit": {
+          "status": "applied",
+          "code": null,
+          "error": null,
+          "duplicate": null
+        },
+        "job_id": null,
+        "simulated": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:27.019431+00:00",
+      "kind": "autonomy_cycle",
+      "task_id": null,
+      "agent": null,
+      "event": null,
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "ciclo autonomy_loop dry_run=True",
+      "dry_run": true,
+      "extra": {
+        "autonomy": {
+          "expire": 0,
+          "claims_ok": 2,
+          "claims_simulated": 2,
+          "reconcile_conflicts": 0
+        },
+        "pause": false
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:29.093742+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Bundlar sons push iOS parent"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:29.144850+00:00",
+      "kind": "status_change",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "devops-cicd",
+        "blocker": false,
+        "title": "CloudWatch logs structured API"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:29.160934+00:00",
+      "kind": "autonomy_claim",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "claim simulado",
+      "dry_run": true,
+      "extra": {
+        "emit": {
+          "status": "applied",
+          "code": null,
+          "error": null,
+          "duplicate": null
+        },
+        "job_id": null,
+        "simulated": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:29.167234+00:00",
+      "kind": "autonomy_claim",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "claim simulado",
+      "dry_run": true,
+      "extra": {
+        "emit": {
+          "status": "applied",
+          "code": null,
+          "error": null,
+          "duplicate": null
+        },
+        "job_id": null,
+        "simulated": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:29.174659+00:00",
+      "kind": "autonomy_cycle",
+      "task_id": null,
+      "agent": null,
+      "event": null,
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "ciclo autonomy_loop dry_run=True",
+      "dry_run": true,
+      "extra": {
+        "autonomy": {
+          "expire": 0,
+          "claims_ok": 2,
+          "claims_simulated": 2,
+          "reconcile_conflicts": 0
+        },
+        "pause": false
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:31.253878+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Bundlar sons push iOS parent"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:31.315414+00:00",
+      "kind": "status_change",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "devops-cicd",
+        "blocker": false,
+        "title": "CloudWatch logs structured API"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:31.333952+00:00",
+      "kind": "autonomy_claim",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "claim simulado",
+      "dry_run": true,
+      "extra": {
+        "emit": {
+          "status": "applied",
+          "code": null,
+          "error": null,
+          "duplicate": null
+        },
+        "job_id": null,
+        "simulated": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:31.339953+00:00",
+      "kind": "autonomy_claim",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "claim simulado",
+      "dry_run": true,
+      "extra": {
+        "emit": {
+          "status": "applied",
+          "code": null,
+          "error": null,
+          "duplicate": null
+        },
+        "job_id": null,
+        "simulated": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:31.346955+00:00",
+      "kind": "autonomy_cycle",
+      "task_id": null,
+      "agent": null,
+      "event": null,
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "ciclo autonomy_loop dry_run=True",
+      "dry_run": true,
+      "extra": {
+        "autonomy": {
+          "expire": 0,
+          "claims_ok": 2,
+          "claims_simulated": 2,
+          "reconcile_conflicts": 0
+        },
+        "pause": false
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:33.420026+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Bundlar sons push iOS parent"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:33.478525+00:00",
+      "kind": "status_change",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "devops-cicd",
+        "blocker": false,
+        "title": "CloudWatch logs structured API"
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:33.495524+00:00",
+      "kind": "autonomy_claim",
+      "task_id": "T-P05-001",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "claim simulado",
+      "dry_run": true,
+      "extra": {
+        "emit": {
+          "status": "applied",
+          "code": null,
+          "error": null,
+          "duplicate": null
+        },
+        "job_id": null,
+        "simulated": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:33.504525+00:00",
+      "kind": "autonomy_claim",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "claim simulado",
+      "dry_run": true,
+      "extra": {
+        "emit": {
+          "status": "applied",
+          "code": null,
+          "error": null,
+          "duplicate": null
+        },
+        "job_id": null,
+        "simulated": true
+      }
+    },
+    {
+      "ts": "2026-08-24T15:18:33.511526+00:00",
+      "kind": "autonomy_cycle",
+      "task_id": null,
+      "agent": null,
+      "event": null,
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "ciclo autonomy_loop dry_run=True",
+      "dry_run": true,
+      "extra": {
+        "autonomy": {
+          "expire": 0,
+          "claims_ok": 2,
+          "claims_simulated": 2,
+          "reconcile_conflicts": 0
+        },
+        "pause": false
+      }
+    },
+    {
+      "ts": "2026-08-24T15:27:54.650964+00:00",
+      "kind": "dispatch",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "claim",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": "manual_fallback",
+      "summary": "bundle pronto: c7078446-9bdd-47a5-82ba-0cc3fb056f17.md",
+      "dry_run": false,
+      "extra": {
+        "job_id": "c7078446-9bdd-47a5-82ba-0cc3fb056f17",
+        "repo": "guardiao-familia-api"
+      }
+    },
+    {
+      "ts": "2026-08-24T16:02:04.125061+00:00",
+      "kind": "ci_signal",
+      "task_id": "T-I03-001",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": "enqueue_qa_gate",
+      "summary": "CI green → qa-gate",
+      "dry_run": true,
+      "extra": {
+        "job_id": null
+      }
+    },
+    {
+      "ts": "2026-08-24T16:02:04.466164+00:00",
+      "kind": "status_change",
+      "task_id": "T-I03-001",
+      "agent": "devops-cicd",
+      "event": "test_failed_bug",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": true,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": {
+          "count": 1,
+          "threshold": 3,
+          "blocker": false
+        },
+        "skill": "devops-cicd",
+        "blocker": false,
+        "title": "CloudWatch logs structured API"
+      }
+    },
+    {
+      "ts": "2026-08-24T16:02:04.473678+00:00",
+      "kind": "ci_signal",
+      "task_id": "T-I03-001",
+      "agent": null,
+      "event": "test_failed_bug",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": null,
+      "summary": "CI failed",
+      "dry_run": true,
+      "extra": {
+        "bug_kind": "regression",
+        "emit_status": "applied"
+      }
+    },
+    {
+      "ts": "2026-08-24T16:02:04.597227+00:00",
+      "kind": "ci_signal",
+      "task_id": "T-P05-005",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": "enqueue_qa_gate",
+      "summary": "CI green → qa-gate",
+      "dry_run": true,
+      "extra": {
+        "job_id": null
+      }
+    }
+  ],
+  "bug_counts": {
+    "T-I03-001": {
+      "count": 1,
+      "history": [
+        {
+          "at": "2026-08-24T16:02:04.465172+00:00",
+          "summary": "[regression] CI failed",
+          "bug_kind": "regression"
+        }
+      ],
+      "skill": "devops-cicd",
+      "blocker": false,
+      "skill_path": "skills/devops-cicd/SKILL.md",
+      "bug_kind": "regression"
+    }
+  },
+  "autonomy": {
+    "at": "2026-08-24T15:18:33.354484+00:00",
+    "dry_run": true,
+    "paused_high_risk": false,
+    "hitl_pending": 0,
+    "pilot_sprint": 3,
+    "pilot_roles": [
+      "frontend-mobile",
+      "devops-cicd",
+      "qa-gate"
+    ],
+    "pilot_task_ids": [
+      "T-I03-001",
+      "T-I03-002",
+      "T-I03-003",
+      "T-P05-001",
+      "T-P05-005",
+      "T-P05-006",
+      "T-P05-008",
+      "T-P05-010"
+    ],
+    "cycle": {
+      "expire": 0,
+      "claims_ok": 2,
+      "claims_simulated": 2,
+      "reconcile_conflicts": 0
+    },
+    "merge_policy": "never_auto_merge"
+  },
+  "kanban": {
+    "Todo": [
+      {
+        "task_id": "T-I03-001",
+        "title": "CloudWatch logs structured API",
+        "role": "devops-cicd",
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-I03-002",
+        "title": "Metrics custom SOS latency",
+        "role": "devops-cicd",
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-I03-003",
+        "title": "Dashboard Grafana/BO integrado",
+        "role": "devops-cicd",
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P05-001",
+        "title": "Bundlar sons push iOS parent",
+        "role": "frontend-mobile",
+        "pilot": true,
+        "release_blocker": true
+      },
+      {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "role": "frontend-mobile",
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P05-006",
+        "title": "Configurar FCM data messages SOS",
+        "role": "frontend-mobile",
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P05-008",
+        "title": "Testes push geofence som customizado",
+        "role": "frontend-mobile",
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P05-010",
+        "title": "Documentar matriz som x evento",
+        "role": "frontend-mobile",
+        "pilot": true,
+        "release_blocker": false
+      }
+    ],
+    "In Progress": [],
+    "Ready for Code Review": [],
+    "In Code Review": [],
+    "Ready for Test": [],
+    "In Test": [],
+    "In Pull Request": [],
+    "Done": []
+  },
+  "worker_jobs": {
+    "by_status": {
+      "done": 2
+    },
+    "queued": [],
+    "leased": []
+  },
+  "outbox_pending": [],
+  "health": {
+    "heartbeat_at": "2026-08-24T15:18:33.354484+00:00",
+    "paused_high_risk": false,
+    "hitl_pending": 0,
+    "outbox_pending": 0,
+    "jobs_queued": 0,
+    "jobs_leased": 0,
+    "reconcile_conflicts": 0,
+    "merge_policy": "never_auto_merge"
+  },
+  "pilot_task_ids": [
+    "T-I03-001",
+    "T-I03-002",
+    "T-I03-003",
+    "T-P05-001",
+    "T-P05-005",
+    "T-P05-006",
+    "T-P05-008",
+    "T-P05-010"
+  ]
+}
