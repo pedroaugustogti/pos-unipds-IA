@@ -1,0 +1,4 @@
+# CA bundle (Mozilla via certifi). Regenerado por lib/env_load.ensure_ssl_certs se ausente.
+*
+!.gitignore
+!cacert.pem

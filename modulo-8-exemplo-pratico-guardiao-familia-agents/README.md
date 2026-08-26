@@ -1,30 +1,36 @@
 # Módulo 8 — Exemplo prático: Agents Guardião Família
 
-Evolução do [`10-agents`](../modulo-7-exemplo-pratico-guardiao-familia/docs/02-criacao-board/10-agents) com padrões do **Módulo 8** (AI-First, single/multi-agent, HITL, enterprise gates).
+Evolução do [`10-agents`](../modulo-7-exemplo-pratico-guardiao-familia/docs/02-criacao-board/10-agents) com padrões do **Módulo 8** (AI-First, multi-agent, HITL, enterprise gates).
+
+**Orquestração:** somente **LangGraph** (`langgraph_app/`). CrewAI foi removido.
 
 ## O que mudou vs módulo 7
 
 | Tema | Antes | Agora |
 |------|-------|-------|
-| Orquestração | Crew sequential “faz o sprint” | **Supervisor** despacha; workers por handoff |
+| Orquestração | Crew sequential “faz o sprint” | **LangGraph** + policy Kanban + LLM OpenRouter |
 | Eventos | Várias CLIs | **Gateway** `emit_status_event` + contrato |
+| Tools | CLIs soltas | **MCP** `guardiao_mcp` (+ bridge no grafo) |
 | QA | Papel misturado | **qa-author** (harness) × **qa-gate** (pipeline) |
 | Review | LLM finaliza | LLM **propõe**; HITL em alto risco |
 | Merge | Texto “não mergear” | `merge_pr` **bloqueado** até humano |
 | Bugs | Sempre skill creator | `regression` vs `flaky` |
-| ReAct | Implícito | Teto de iterações + trilha no handoff |
+| ReAct | Implícito | Teto de iterações + trilha no handoff / HTML |
 
 ## Estrutura
 
 ```
 modulo-8-exemplo-pratico-guardiao-familia-agents/
 ├── agents/           # prompts Cursor (+ qa-author/qa-gate)
-├── crew/             # supervisor CrewAI
-├── lib/              # gateway, hitl, handoff, react_policy, paths
-├── scripts/          # gateway_cli, orchestrators
-├── skills/           # skills (fonte de verdade)
+├── langgraph_app/    # StateGraph (orquestração)
+├── guardiao_mcp/     # MCP server sobre lib/*
+├── crew/             # .env, requirements, output/ (runtime — não orquestra)
+├── lib/              # gateway, hitl, handoff, react_policy, model_tier
+├── evals/            # dataset estático + avaliadores (Fase D)
+├── scripts/          # langgraph_run, gateway_cli, demo, …
+├── skills/
 ├── templates/
-└── docs/             # autonomia, operacao, apresentacao, comportamento, templates, live
+└── docs/             # autonomia (fases + orquestracao), operacao, …
 ```
 
 Board JSON continua no módulo 7 (não duplicado).
@@ -34,33 +40,31 @@ Board JSON continua no módulo 7 (não duplicado).
 ```powershell
 cd modulo-8-exemplo-pratico-guardiao-familia-agents
 
-# Dry-run de evento
+# Pipeline LangGraph (dry_run)
+python scripts/langgraph_run.py --task T-P05-006 --mode dry_run --from-zero
+
+# Dry-run de evento via gateway
 python scripts/gateway_cli.py --task T-P05-001 --event claim --dry-run
 
-# Worker local (bundle Cursor)
-python scripts/worker_run.py --enqueue --task T-P05-001 --role frontend-mobile
-python scripts/worker_run.py --next --role frontend-mobile
+# MCP (Cursor)
+python -m guardiao_mcp
 
-# Fila humana
-python scripts/gateway_cli.py --list-hitl
-
-# Outbox GitHub
-python scripts/outbox_retry.py --list
+# Eval regressão Kanban
+python scripts/langsmith_eval.py
 ```
-
-Board cards do Project #2 foram convertidos de DraftIssue → Issue nos repos do mapa (`scripts/convert_drafts_to_issues.py`).
 
 ## Documentação
 
 Índice: [docs/README.md](docs/README.md)
 
+- [**Mapa didático de orquestração**](docs/autonomia/orquestracao/README.md) (HTML)
 - [Estado atual — fluxo e processo](docs/autonomia/ESTADO_ATUAL_FLUXO_E_PROCESSO.md)
 - [Configuração e tecnologia](docs/autonomia/CONFIGURACAO_E_TECNOLOGIA.md)
+- [Guia LangGraph + MCP + LLM](docs/autonomia/GUIA_LANGGRAPH_MCP_LLM.md)
+- [Fases A–D](docs/autonomia/fases/README.md)
 - [Execução e observabilidade](docs/autonomia/EXECUCAO_E_OBSERVABILIDADE.md)
-- [Como os agentes trabalham](docs/operacao/RELATORIO_OPERACAO_AGENTES.md)
-- [Processo e pontos de entrada humana](docs/operacao/PROCESSO_HITL.md)
+- [Operação / HITL](docs/operacao/PROCESSO_HITL.md)
 - [Apresentação live](docs/apresentacao/APRESENTACAO_LIVE_DEMO.md)
-- [Comportamento (índice agents/skills)](docs/comportamento/README.md)
 
 ## Dashboard ao vivo
 
@@ -74,9 +78,9 @@ python scripts/publish_live_pages.py   # espelho docs/live
 
 ## Critérios de sucesso
 
-- [x] Pasta `modulo-8-exemplo-pratico-guardiao-familia-agents`
 - [x] Gateway + HITL + handoff + ReAct policy
+- [x] LangGraph + OpenRouter + model_tier
+- [x] MCP `guardiao_mcp` (porta única via gateway)
+- [x] LangSmith tracing + dataset estático de regressão
 - [x] Separação qa-author / qa-gate
-- [x] Relatórios de operação, gaps e HITL
-- [x] Loop + dispatch + Actions + dashboard live (Fases 0–4)
-- [x] Piloto intercalado até In Pull Request (Fase 5, sem merge)
+- [x] Dashboard live / demo

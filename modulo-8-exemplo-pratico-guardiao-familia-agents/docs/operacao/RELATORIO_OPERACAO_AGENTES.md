@@ -102,7 +102,8 @@ python scripts/dispute_run.py --task T-XXX --roles backend,database
 python -m unittest tests.test_merge_owner -v
 ```
 
-Model tier: `lib/model_tier.py` (`CREWAI_MODEL` / `CREWAI_MODEL_HIGH`).
+Model tier: `lib/model_tier.py` (`GUARDIAO_LLM_*`; alias legado `CREWAI_MODEL*`).
+Orquestração: **LangGraph** (`scripts/langgraph_run.py`).
 
 ---
 

@@ -13,9 +13,9 @@ import subprocess
 import urllib.request
 from datetime import datetime, timezone
 
-ORG = "guardiaofamilia"
-PROJECT_NUMBER = 2
-PROJECT_ID = "PVT_kwDOEDZbAM4Bg2rE"
+ORG = (os.environ.get("GUARDAO_GITHUB_ORG") or os.environ.get("GITHUB_ORG") or "guardiaofamilia").strip()
+PROJECT_NUMBER = int(os.environ.get("GUARDAO_GITHUB_PROJECT_NUMBER") or "2")
+PROJECT_ID = (os.environ.get("GUARDAO_GITHUB_PROJECT_ID") or "PVT_kwDOEDZbAM4Bg2rE").strip()
 GH = os.environ.get("GH_PATH", "gh")
 
 from lib.local_board import update_local_status  # noqa: E402
@@ -40,6 +40,11 @@ def _resolve_board_status(status: str) -> str:
     if status in EVENT_TARGET:
         return EVENT_TARGET[status]
     return resolve_status(status)
+
+
+def _github_project_status(status: str) -> str:
+    """Status canônico — 1:1 com opções do Project #2 (sync via sync_project_status_field.py)."""
+    return _resolve_board_status(status)
 
 
 def _token() -> str | None:
@@ -124,16 +129,23 @@ def find_issue_number(repo: str, task_id: str, dry_run: bool = False) -> str | N
         "list",
         "--repo",
         f"{ORG}/{repo}",
+        "--state",
+        "all",
         "--search",
         f"[{task_id}] in:title",
         "--json",
-        "number",
+        "number,title",
         "--limit",
-        "1",
+        "5",
     )
     if proc.returncode != 0:
         return None
     data = json.loads(proc.stdout or "[]")
+    prefix = f"[{task_id}]"
+    for issue in data:
+        title = issue.get("title") or ""
+        if title.startswith(prefix) or prefix in title:
+            return str(issue["number"])
     return str(data[0]["number"]) if data else None
 
 
@@ -175,6 +187,114 @@ def comment_issue(repo: str, task_id: str, body: str, dry_run: bool = False) -> 
     return {"ok": True, "issue": num}
 
 
+def upload_issue_image(
+    repo: str,
+    task_id: str,
+    image_bytes: bytes,
+    *,
+    filename: str = "evidence.png",
+    dry_run: bool = False,
+) -> dict:
+    """Faz upload da imagem no GitHub e retorna URL para embutir no comentario da issue."""
+    import base64
+    from datetime import datetime, timezone
+
+    num = find_issue_number(repo, task_id, dry_run)
+    if not num:
+        return {"ok": False, "error": f"Issue nao encontrada: [{task_id}]"}
+    if dry_run:
+        return {"ok": True, "dry_run": True, "issue": num, "url": f"dry-run://{filename}"}
+
+    safe_name = filename.replace(" ", "_")
+    branch = f"qa-evidence/{task_id.lower()}"
+    path = f".github/qa-evidence/{task_id}/{safe_name}"
+    b64 = base64.b64encode(image_bytes).decode("ascii")
+    message = f"qa-evidence({task_id}): {safe_name}"
+
+    default = _gh_run(
+        "repo", "view", f"{ORG}/{repo}",
+        "--json", "defaultBranchRef", "--jq", ".defaultBranchRef.name",
+    )
+    base_branch = (default.stdout or "main").strip() or "main"
+    base_ref = _gh_run("api", f"repos/{ORG}/{repo}/git/ref/heads/{base_branch}")
+    if base_ref.returncode != 0:
+        return {"ok": False, "error": (base_ref.stderr or base_ref.stdout or "")[:300], "issue": num}
+    base_sha = json.loads(base_ref.stdout)["object"]["sha"]
+    _gh_run(
+        "api", f"repos/{ORG}/{repo}/git/refs",
+        "-X", "POST",
+        "-f", f"ref=refs/heads/{branch}",
+        "-f", f"sha={base_sha}",
+    )
+
+    existing = _gh_run("api", f"repos/{ORG}/{repo}/contents/{path}?ref={branch}")
+    payload: dict = {"message": message, "content": b64, "branch": branch}
+    if existing.returncode == 0 and (existing.stdout or "").strip():
+        try:
+            payload["sha"] = json.loads(existing.stdout)["sha"]
+        except Exception:  # noqa: BLE001
+            pass
+
+    put = subprocess.run(
+        [GH, "api", f"repos/{ORG}/{repo}/contents/{path}", "-X", "PUT", "--input", "-"],
+        input=json.dumps(payload),
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        env=_gh_env(),
+    )
+    if put.returncode != 0:
+        return {
+            "ok": False,
+            "error": (put.stderr or put.stdout or "upload failed")[:500],
+            "issue": num,
+        }
+    data = json.loads(put.stdout or "{}")
+    content = data.get("content") or {}
+    raw_url = content.get("download_url") or content.get("html_url")
+    if raw_url and "github.com" in raw_url and "/blob/" in raw_url:
+        raw_url = raw_url.replace("/blob/", "/raw/")
+    if not raw_url:
+        raw_url = f"https://raw.githubusercontent.com/{ORG}/{repo}/{branch}/{path}"
+    # nao concatenar ?t= em URLs que ja tem query (download_url com token)
+    return {
+        "ok": True,
+        "issue": num,
+        "url": raw_url,
+        "branch": branch,
+        "path": path,
+        "markdown": f"![{safe_name}]({raw_url})",
+    }
+
+
+def comment_issue_with_image(
+    repo: str,
+    task_id: str,
+    body: str,
+    image_bytes: bytes | None,
+    *,
+    filename: str = "evidence.png",
+    dry_run: bool = False,
+) -> dict:
+    """Comenta na issue; se houver PNG, anexa (URL no markdown)."""
+    image_md = ""
+    upload: dict | None = None
+    if image_bytes:
+        upload = upload_issue_image(
+            repo, task_id, image_bytes, filename=filename, dry_run=dry_run,
+        )
+        if upload.get("ok"):
+            image_md = str(upload.get("markdown") or "")
+            body = f"{body.rstrip()}\n\n{image_md}\n"
+        else:
+            body = f"{body.rstrip()}\n\n_(falha ao anexar imagem: {upload.get('error')})_\n"
+    result = comment_issue(repo, task_id, body, dry_run=dry_run)
+    if upload is not None:
+        result["image_upload"] = upload
+    return result
+
+
 def _get_status_field(dry_run: bool = False) -> dict | None:
     if dry_run:
         return {"id": "dry", "options": [{"name": s, "id": s} for s in STATUSES]}
@@ -190,29 +310,63 @@ def _get_status_field(dry_run: bool = False) -> dict | None:
 
 
 def _find_project_item_id(task_id: str, title: str) -> str | None:
-    items: list[dict] = []
-    cursor = None
+    # Cache local (seed / reconcile)
+    try:
+        from lib.paths import MODULE_ROOT
+
+        cache_path = MODULE_ROOT / "crew" / "output" / "project_item_cache.json"
+        if cache_path.exists():
+            cache = json.loads(cache_path.read_text(encoding="utf-8"))
+            hit = (cache.get("items") or {}).get(task_id) or {}
+            if hit.get("item_id"):
+                return str(hit["item_id"])
+    except Exception:  # noqa: BLE001
+        pass
+
     prefix = f"[{task_id}]"
-    while True:
-        args = ["project", "item-list", str(PROJECT_NUMBER), "--owner", ORG, "--limit", "100"]
-        if cursor:
-            args.extend(["--after", cursor])
-        batch = _gh_json(*args)
+    # Prefer query (evita paginacao --after removida no gh recente)
+    try:
+        batch = _gh_json(
+            "project",
+            "item-list",
+            str(PROJECT_NUMBER),
+            "--owner",
+            ORG,
+            "--limit",
+            "100",
+            "--query",
+            task_id,
+        )
         if isinstance(batch, dict):
             batch = batch.get("items", [])
-        for item in batch:
+        for item in batch or []:
             t = item.get("title") or ""
-            if t.startswith(prefix) or t == title:
+            if t.startswith(prefix) or t == title or task_id in t:
                 return item["id"]
-        items.extend(batch)
-        if len(batch) < 100:
-            break
-        cursor = batch[-1].get("id")
+    except Exception:  # noqa: BLE001
+        pass
+
+    batch = _gh_json(
+        "project",
+        "item-list",
+        str(PROJECT_NUMBER),
+        "--owner",
+        ORG,
+        "--limit",
+        "500",
+    )
+    if isinstance(batch, dict):
+        batch = batch.get("items", [])
+    for item in batch or []:
+        t = item.get("title") or ""
+        if t.startswith(prefix) or t == title:
+            return item["id"]
     return None
 
 
 def _update_github_status(task_id: str, title: str, gh_status: str) -> dict:
     """Atualiza Status no Project #2 via gh (item-edit) com fallback GraphQL."""
+    project_status = _github_project_status(gh_status)
     item_id = _find_project_item_id(task_id, f"[{task_id}] {title}")
     if not item_id:
         return {"ok": False, "error": f"Item Project nao encontrado para {task_id}"}
@@ -222,12 +376,20 @@ def _update_github_status(task_id: str, title: str, gh_status: str) -> dict:
         return {"ok": False, "error": "Campo Status nao encontrado no Project"}
 
     option_id = None
+    available = []
     for opt in field.get("options", []):
-        if opt["name"] == gh_status:
+        available.append(opt["name"])
+        if opt["name"] == project_status:
             option_id = opt["id"]
             break
     if not option_id:
-        return {"ok": False, "error": f"Opcao Status '{gh_status}' nao encontrada"}
+        return {
+            "ok": False,
+            "error": (
+                f"Opcao Status '{project_status}' (de '{gh_status}') nao encontrada; "
+                f"disponiveis={available}"
+            ),
+        }
 
     # Preferencia: gh project item-edit
     edit = _gh_run(
@@ -247,6 +409,7 @@ def _update_github_status(task_id: str, title: str, gh_status: str) -> dict:
             "ok": True,
             "task_id": task_id,
             "status": gh_status,
+            "project_status": project_status,
             "item_id": item_id,
             "via": "gh project item-edit",
         }
@@ -271,6 +434,7 @@ def _update_github_status(task_id: str, title: str, gh_status: str) -> dict:
         "ok": True,
         "task_id": task_id,
         "status": gh_status,
+        "project_status": project_status,
         "item_id": item_id,
         "via": "gh api graphql",
         "item_edit_stderr": (edit.stderr or edit.stdout or "")[:300],
@@ -377,7 +541,7 @@ def claim_task(task: dict, agent: str, branch: str, dry_run: bool = False) -> di
     )
     comment_result = comment_issue(
         repo, task_id,
-        f"**CrewAI Orchestrator** — agent `{agent}` claimed `{task_id}` at {ts}\n\n"
+        f"**Guardião / LangGraph** — agent `{agent}` claimed `{task_id}` at {ts}\n\n"
         f"Branch: `{branch}`\n"
         f"Sprint: {task.get('sprint')} | Priority: #{task.get('priority_rank')}",
         dry_run=dry_run,
@@ -407,7 +571,7 @@ def complete_task(task: dict, agent: str, pr_url: str = "", dry_run: bool = Fals
         ["agent:ready-for-review", "agent:in-review"],
         dry_run=dry_run,
     )
-    body = f"**CrewAI** — PR aberto por `{agent}` → **Ready for Code Review**"
+    body = f"**Guardião** — PR aberto por `{agent}` → **Ready for Code Review**"
     if pr_url:
         body += f"\n\n{pr_url}"
     comment = comment_issue(repo, task_id, body, dry_run=dry_run)

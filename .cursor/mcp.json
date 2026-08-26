@@ -60,6 +60,16 @@
         "-File",
         "${workspaceFolder}/.cursor/github-mcp.ps1"
       ]
+    },
+    "guardiao-familia-agents": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "modulo-8-exemplo-pratico-guardiao-familia-agents\\guardiao-mcp.cmd"
+      ],
+      "env": {
+        "PYTHONUTF8": "1"
+      }
     }
   }
 }

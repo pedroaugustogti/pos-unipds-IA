@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Historico · T-P13-012</title>
+<style>
+:root {
+  --bg: #0f1419; --panel: #1a222c; --text: #e7ecf1; --muted: #8b9aab;
+  --accent: #3d8bfd; --ok: #3dd68c; --bad: #f07178; --line: #2a3544;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.45;
+}
+header.top {
+  padding: 20px 24px; border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, #15202b, var(--bg));
+}
+a { color: var(--accent); }
+.muted { color: var(--muted); font-size: 0.9rem; }
+.pill {
+  display: inline-block; padding: 2px 8px; border-radius: 999px;
+  border: 1px solid var(--line); font-size: 0.75rem; margin-left: 8px;
+}
+main { max-width: 1100px; margin: 0 auto; padding: 20px 24px 48px; }
+nav.toc {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 10px; padding: 12px 16px; margin-bottom: 24px;
+}
+nav.toc ul { margin: 8px 0 0; padding-left: 18px; }
+.step {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 16px 18px; margin-bottom: 16px;
+}
+.step.bad { border-color: var(--bad); }
+.step h2 { margin: 0 0 4px; font-size: 1.15rem; }
+.step h3 { margin: 12px 0 6px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.grid { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+pre {
+  white-space: pre-wrap; word-break: break-word; margin: 0;
+  background: #0c1117; border: 1px solid var(--line); border-radius: 8px;
+  padding: 10px 12px; font-size: 0.92rem;
+}
+table.scenarios {
+  width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 6px;
+}
+table.scenarios th, table.scenarios td {
+  border: 1px solid var(--line); padding: 6px 8px; vertical-align: top; text-align: left;
+}
+table.scenarios th { color: var(--muted); font-weight: 600; }
+table.scenarios tr.pass td:nth-child(6) { color: var(--ok); }
+table.scenarios tr.planned td:nth-child(6) { color: var(--accent); }
+table.usage {
+  width: auto; border-collapse: collapse; font-size: 0.9rem; margin-top: 4px;
+}
+table.usage th, table.usage td {
+  border: 1px solid var(--line); padding: 6px 10px; text-align: left;
+}
+table.usage th { color: var(--muted); font-weight: 600; }
+.llm-usage, .token-totals { margin-top: 8px; }
+.token-totals {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 16px 18px; margin-bottom: 24px;
+}
+.token-totals h2 { margin: 0 0 8px; font-size: 1.05rem; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="muted"><a href="../dashboard.html">← Dashboard</a></div>
+  <h1>T-P13-012</h1>
+  <div>T-P13-012</div>
+  <div class="muted">Status final: <strong>In Pull Request</strong> · passos: 9</div>
+</header>
+<main>
+  <nav class="toc">
+    <strong>Indice de acoes por agente</strong>
+    <ul><li><a href="#step-1"><strong>frontend-web</strong> · claim <span class="muted">Todo → In Progress</span></a></li><li><a href="#step-2"><strong>frontend-web</strong> · implement <span class="muted">In Progress → In Progress</span></a></li><li><a href="#step-3"><strong>frontend-web</strong> · open_pr <span class="muted">In Progress → Ready for Code Review</span></a></li><li><a href="#step-4"><strong>frontend-web-reviewer</strong> · start_review <span class="muted">Ready for Code Review → In Code Review</span></a></li><li><a href="#step-5"><strong>frontend-web-reviewer</strong> · approve_review <span class="muted">In Code Review → Ready for Test</span></a></li><li><a href="#step-6"><strong>qa-gate</strong> · start_test <span class="muted">Ready for Test → In Test</span></a></li><li><a href="#step-7"><strong>qa-gate</strong> · qa_gate <span class="muted">In Test → In Test</span></a></li><li><a href="#step-8"><strong>qa-gate</strong> · test_passed <span class="muted">In Test → In Pull Request</span></a></li><li><a href="#step-9"><strong>devops-cicd</strong> · merge_pr <span class="muted">In Pull Request → In Pull Request</span></a></li></ul>
+  </nav>
+  <section class='token-totals'><h2>Gasto de tokens (run)</h2><p>calls=8 · in=1500 · out=585 · <strong>total=2085</strong></p><table class='usage'><thead><tr><th>Modelo</th><th>Calls</th><th>Tokens</th></tr></thead><tbody><tr><td><code>openai/gpt-4o-mini</code></td><td>8</td><td>2085</td></tr></tbody></table></section>
+  
+<article class="step ok" id="step-1">
+  <header>
+    <h2>frontend-web <span class="pill">claim</span></h2>
+    <div class="muted">2026-08-26 02:03:09 · Todo → In Progress</div>
+  </header>
+  <div class="grid">
+    <section>
+      <h3>Pensou (thought)</h3>
+      <pre>A tarefa está atualmente no status &#x27;Todo&#x27; e o próximo passo lógico é reivindicá-la para que o trabalho possa ser iniciado. Isso é consistente com a política sugerida e permite que o agente frontend-web comece a trabalhar na atualização necessária.</pre>
+    </section>
+    <section>
+      <h3>Executou (action)</h3>
+      <pre>Chamar gateway `emit_status_event(task=T-P13-012, event=claim)` from_agent=frontend-web; modo=live; apply_board=true.</pre>
+    </section>
+  </div>
+  <section>
+    <h3>Observacao</h3>
+    <pre>**Foco da execucao:** `frontend-web` aplica `claim` (`Todo` -&gt; `In Progress`)
+gateway_ok=True; awaiting_human=False; local_ok=True; usage=model=openai/gpt-4o-mini in=328 out=88 total=416
+**Resultado operacional:** ok
+**Modelo:** `openai/gpt-4o-mini` · **purpose:** implement_low · **tokens:** in=328 out=88 **total=416**</pre>
+  </section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>implement_low</td></tr><tr><th>Input</th><td>328</td></tr><tr><th>Output</th><td>88</td></tr><tr><th>Total</th><td><strong>416</strong></td></tr></table></section>
+  <section>
+    <h3>Passos executados</h3>
+    <ul><li>acting_agent=frontend-web</li><li>emit_status_event:claim</li><li>board_status-&gt;In Progress</li><li>hitl_pending=False</li></ul>
+  </section>
+</article>
+
+<article class="step ok" id="step-2">
+  <header>
+    <h2>frontend-web <span class="pill">implement</span></h2>
+    <div class="muted">2026-08-26 02:03:14 · In Progress → In Progress</div>
+  </header>
+  <div class="grid">
+    <section>
+      <h3>Pensou (thought)</h3>
+      <pre>Na task T-P13-012, implementei a atualização da seção &quot;Hero Home&quot; do site, focando em transmitir a mensagem de &quot;Tranquilidade para sua família&quot;. Isso envolveu a reformulação do layout e a otimização dos elementos visuais para garantir uma experiência mais envolvente e intuitiva para os usuários. Além disso, ajustei a responsividade para que a apresentação fosse consistente em diferentes dispositivos.</pre>
+    </section>
+    <section>
+      <h3>Executou (action)</h3>
+      <pre>Aplicar mudanca + commit `feat/t-p13-012-hero-sua-familia`</pre>
+    </section>
+  </div>
+  <section>
+    <h3>Observacao</h3>
+    <pre>**Foco da execucao:** implementacao hero/site sha=0cf630d3235f9b081f86607f1362ee4c6aa7aefc
+site_ok=True; model=openai/gpt-4o-mini in=80 out=86 total=166
+**Resultado operacional:** ok
+**Modelo:** `openai/gpt-4o-mini` · **purpose:** implement_low · **tokens:** in=80 out=86 **total=166**</pre>
+  </section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>implement_low</td></tr><tr><th>Input</th><td>80</td></tr><tr><th>Output</th><td>86</td></tr><tr><th>Total</th><td><strong>166</strong></td></tr></table></section><section><h3>O que foi implementado / entregue</h3><ul><li><strong>index.html</strong> — H1+title -&gt; Tranquilidade para sua família</li><li><strong>C:\Users\pedro\Documents\pos-unipds\pos-unipds-IA\modulo-8-exemplo-pratico-guardiao-familia-agents\crew\output\langgraph\workspace\T-P13-012\IMPLEMENTACAO.md</strong> — plano/artefato LangGraph</li></ul></section>
+  <section>
+    <h3>Passos executados</h3>
+    <ul><li>workspace_prepare</li><li>checkout_main</li><li>branch:feat/t-p13-012-hero-sua-familia</li><li>edit_index.html</li><li>commit:0cf630d3235f</li><li>write_IMPLEMENTACAO.md</li></ul>
+  </section>
+</article>
+
+<article class="step ok" id="step-3">
+  <header>
+    <h2>frontend-web <span class="pill">open_pr</span></h2>
+    <div class="muted">2026-08-26 02:03:26 · In Progress → Ready for Code Review</div>
+  </header>
+  <div class="grid">
+    <section>
+      <h3>Pensou (thought)</h3>
+      <pre>Implementacao pronta (sha=0cf630d3235f9b081f86607f1362ee4c6aa7aefc); abrir PR</pre>
+    </section>
+    <section>
+      <h3>Executou (action)</h3>
+      <pre>Chamar gateway `emit_status_event(task=T-P13-012, event=open_pr)` from_agent=frontend-web; modo=live; apply_board=true.</pre>
+    </section>
+  </div>
+  <section>
+    <h3>Observacao</h3>
+    <pre>**Foco da execucao:** `frontend-web` aplica `open_pr` (`In Progress` -&gt; `Ready for Code Review`)
+gateway_ok=True; awaiting_human=False; local_ok=True; usage=model=openai/gpt-4o-mini in=80 out=86 total=166
+**Resultado operacional:** ok
+**Modelo:** `openai/gpt-4o-mini` · **purpose:** implement_low · **tokens:** in=80 out=86 **total=166**</pre>
+  </section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>implement_low</td></tr><tr><th>Input</th><td>80</td></tr><tr><th>Output</th><td>86</td></tr><tr><th>Total</th><td><strong>166</strong></td></tr></table></section>
+  <section>
+    <h3>Passos executados</h3>
+    <ul><li>acting_agent=frontend-web</li><li>emit_status_event:open_pr</li><li>board_status-&gt;Ready for Code Review</li><li>hitl_pending=False</li></ul>
+  </section>
+</article>
+
+<article class="step ok" id="step-4">
+  <header>
+    <h2>frontend-web-reviewer <span class="pill">start_review</span></h2>
+    <div class="muted">2026-08-26 02:03:42 · Ready for Code Review → In Code Review</div>
+  </header>
+  <div class="grid">
+    <section>
+      <h3>Pensou (thought)</h3>
+      <pre>O status atual do board é &#x27;Ready for Code Review&#x27;, o que indica que o código está pronto para ser revisado. Iniciar a revisão agora permitirá que avancemos para a próxima fase do desenvolvimento.</pre>
+    </section>
+    <section>
+      <h3>Executou (action)</h3>
+      <pre>Chamar gateway `emit_status_event(task=T-P13-012, event=start_review)` from_agent=frontend-web-reviewer; modo=live; apply_board=true.</pre>
+    </section>
+  </div>
+  <section>
+    <h3>Observacao</h3>
+    <pre>**Foco da execucao:** `frontend-web-reviewer` aplica `start_review` (`Ready for Code Review` -&gt; `In Code Review`)
+gateway_ok=True; awaiting_human=False; local_ok=True; usage=model=openai/gpt-4o-mini in=332 out=79 total=411
+**Resultado operacional:** ok
+**Modelo:** `openai/gpt-4o-mini` · **purpose:** review · **tokens:** in=332 out=79 **total=411**</pre>
+  </section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>review</td></tr><tr><th>Input</th><td>332</td></tr><tr><th>Output</th><td>79</td></tr><tr><th>Total</th><td><strong>411</strong></td></tr></table></section>
+  <section>
+    <h3>Passos executados</h3>
+    <ul><li>acting_agent=frontend-web-reviewer</li><li>emit_status_event:start_review</li><li>board_status-&gt;In Code Review</li><li>hitl_pending=False</li></ul>
+  </section>
+</article>
+
+<article class="step ok" id="step-5">
+  <header>
+    <h2>frontend-web-reviewer <span class="pill">approve_review</span></h2>
+    <div class="muted">2026-08-26 02:03:56 · In Code Review → Ready for Test</div>
+  </header>
+  <div class="grid">
+    <section>
+      <h3>Pensou (thought)</h3>
+      <pre>approve</pre>
+    </section>
+    <section>
+      <h3>Executou (action)</h3>
+      <pre>Chamar gateway `emit_status_event(task=T-P13-012, event=approve_review)` from_agent=frontend-web-reviewer; modo=live; apply_board=true.</pre>
+    </section>
+  </div>
+  <section>
+    <h3>Observacao</h3>
+    <pre>**Foco da execucao:** `frontend-web-reviewer` aplica `approve_review` (`In Code Review` -&gt; `Ready for Test`)
+gateway_ok=True; awaiting_human=False; local_ok=True; usage=model=openai/gpt-4o-mini in=231 out=47 total=278
+**Resultado operacional:** ok
+**Modelo:** `openai/gpt-4o-mini` · **purpose:** review · **tokens:** in=231 out=47 **total=278**</pre>
+  </section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>review</td></tr><tr><th>Input</th><td>231</td></tr><tr><th>Output</th><td>47</td></tr><tr><th>Total</th><td><strong>278</strong></td></tr></table></section>
+  <section>
+    <h3>Passos executados</h3>
+    <ul><li>acting_agent=frontend-web-reviewer</li><li>emit_status_event:approve_review</li><li>board_status-&gt;Ready for Test</li><li>hitl_pending=False</li></ul>
+  </section>
+</article>
+
+<article class="step ok" id="step-6">
+  <header>
+    <h2>qa-gate <span class="pill">start_test</span></h2>
+    <div class="muted">2026-08-26 02:04:12 · Ready for Test → In Test</div>
+  </header>
+  <div class="grid">
+    <section>
+      <h3>Pensou (thought)</h3>
+      <pre>O board está na fase &#x27;Ready for Test&#x27;, o que indica que a implementação está completa e pronta para ser testada. Iniciar os testes agora é o próximo passo lógico para garantir que a funcionalidade atenda aos requisitos antes de prosseguir para a aprovação ou mesclagem.</pre>
+    </section>
+    <section>
+      <h3>Executou (action)</h3>
+      <pre>Chamar gateway `emit_status_event(task=T-P13-012, event=start_test)` from_agent=qa-gate; modo=live; apply_board=true.</pre>
+    </section>
+  </div>
+  <section>
+    <h3>Observacao</h3>
+    <pre>**Foco da execucao:** `qa-gate` aplica `start_test` (`Ready for Test` -&gt; `In Test`)
+gateway_ok=True; awaiting_human=False; local_ok=True; usage=model=openai/gpt-4o-mini in=331 out=93 total=424
+**Resultado operacional:** ok
+**Modelo:** `openai/gpt-4o-mini` · **purpose:** implement_low · **tokens:** in=331 out=93 **total=424**</pre>
+  </section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>implement_low</td></tr><tr><th>Input</th><td>331</td></tr><tr><th>Output</th><td>93</td></tr><tr><th>Total</th><td><strong>424</strong></td></tr></table></section>
+  <section>
+    <h3>Passos executados</h3>
+    <ul><li>acting_agent=qa-gate</li><li>emit_status_event:start_test</li><li>board_status-&gt;In Test</li><li>hitl_pending=False</li></ul>
+  </section>
+</article>
+
+<article class="step ok" id="step-7">
+  <header>
+    <h2>qa-gate <span class="pill">qa_gate</span></h2>
+    <div class="muted">2026-08-26 02:04:36 · In Test → In Test</div>
+  </header>
+  <div class="grid">
+    <section>
+      <h3>Pensou (thought)</h3>
+      <pre>Playwright PASS — hero validado | O teste de validação do hero &quot;Tranquilidade para sua família&quot; foi executado com sucesso utilizando o Playwright, confirmando que a implementação atende aos requisitos estabelecidos. A funcionalidade está funcionando conforme esperado, garan</pre>
+    </section>
+    <section>
+      <h3>Executou (action)</h3>
+      <pre>Decidir `test_passed` apos evidencias QA</pre>
+    </section>
+  </div>
+  <section>
+    <h3>Observacao</h3>
+    <pre>**Foco da execucao:** QA test_passed (modo=live)
+h1=&#x27;Tranquilidade para sua família&#x27;; title=&#x27;Guardião Família — Tranquilidade para sua família&#x27;; expected_ok=True; forbidden_ok=True; title_ok=True
+**Resultado operacional:** ok
+**Modelo:** `openai/gpt-4o-mini` · **purpose:** summarize · **tokens:** in=59 out=53 **total=112**</pre>
+  </section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>summarize</td></tr><tr><th>Input</th><td>59</td></tr><tr><th>Output</th><td>53</td></tr><tr><th>Total</th><td><strong>112</strong></td></tr></table></section><section><h3>Cenarios de teste (QA)</h3><table class='scenarios'><thead><tr><th>ID</th><th>Cenario</th><th>Tipo</th><th>Passos</th><th>Esperado</th><th>Resultado</th><th>Notas</th></tr></thead><tbody><tr class='pass'><td><code>QA-SITE-HERO-01</code></td><td>Home hero exibe Tranquilidade para sua família</td><td>e2e_playwright</td><td>1. Navegar para http://127.0.0.1:8081/
+2. Localizar H1 do hero
+3. Assert texto contém &#x27;Tranquilidade para sua família&#x27;
+4. Assert H1 não contém &#x27;mais importa&#x27;
+5. Capturar screenshot e anexar na issue</td><td>H1 e title refletem &#x27;Tranquilidade para sua família&#x27;</td><td><strong>PASS</strong></td><td>h1=&#x27;Tranquilidade para sua família&#x27;; title=&#x27;Guardião Família — Tranquilidade para sua família&#x27;; expected_ok=True; forbidden_ok=True; title_ok=True</td></tr></tbody></table></section>
+  <section>
+    <h3>Passos executados</h3>
+    <ul><li>qa_node</li><li>next:test_passed</li></ul>
+  </section>
+</article>
+
+<article class="step ok" id="step-8">
+  <header>
+    <h2>qa-gate <span class="pill">test_passed</span></h2>
+    <div class="muted">2026-08-26 02:04:48 · In Test → In Pull Request</div>
+  </header>
+  <div class="grid">
+    <section>
+      <h3>Pensou (thought)</h3>
+      <pre>h1=&#x27;Tranquilidade para sua família&#x27;; title=&#x27;Guardião Família — Tranquilidade para sua família&#x27;; expected_ok=True; forbidden_ok=True; title_ok=True</pre>
+    </section>
+    <section>
+      <h3>Executou (action)</h3>
+      <pre>Chamar gateway `emit_status_event(task=T-P13-012, event=test_passed)` from_agent=qa-gate; modo=live; apply_board=true.</pre>
+    </section>
+  </div>
+  <section>
+    <h3>Observacao</h3>
+    <pre>**Foco da execucao:** `qa-gate` aplica `test_passed` (`In Test` -&gt; `In Pull Request`)
+gateway_ok=True; awaiting_human=False; local_ok=True; usage=model=openai/gpt-4o-mini in=59 out=53 total=112
+**Resultado operacional:** ok
+**Modelo:** `openai/gpt-4o-mini` · **purpose:** summarize · **tokens:** in=59 out=53 **total=112**</pre>
+  </section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>summarize</td></tr><tr><th>Input</th><td>59</td></tr><tr><th>Output</th><td>53</td></tr><tr><th>Total</th><td><strong>112</strong></td></tr></table></section>
+  <section>
+    <h3>Passos executados</h3>
+    <ul><li>acting_agent=qa-gate</li><li>emit_status_event:test_passed</li><li>board_status-&gt;In Pull Request</li><li>hitl_pending=False</li></ul>
+  </section>
+</article>
+
+<article class="step ok" id="step-9">
+  <header>
+    <h2>devops-cicd <span class="pill">merge_pr</span></h2>
+    <div class="muted">2026-08-26 02:04:50 · In Pull Request → In Pull Request</div>
+  </header>
+  <div class="grid">
+    <section>
+      <h3>Pensou (thought)</h3>
+      <pre>pipeline Fase C — HITL no merge (agente devops-cicd)</pre>
+    </section>
+    <section>
+      <h3>Executou (action)</h3>
+      <pre>Chamar gateway `emit_status_event(task=T-P13-012, event=merge_pr)` from_agent=devops-cicd; modo=live; apply_board=true.</pre>
+    </section>
+  </div>
+  <section>
+    <h3>Observacao</h3>
+    <pre>**Foco da execucao:** `devops-cicd` aplica `merge_pr` (`In Pull Request` -&gt; `In Pull Request`)
+gateway_ok=True; awaiting_human=True; local_ok=False; usage=model=n/a tokens=0
+**Resultado operacional:** ok
+**Modelo:** `openai/gpt-4o-mini` · **purpose:** implement_low · **tokens:** in=0 out=0 **total=0**</pre>
+  </section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>implement_low</td></tr><tr><th>Input</th><td>0</td></tr><tr><th>Output</th><td>0</td></tr><tr><th>Total</th><td><strong>0</strong></td></tr></table></section>
+  <section>
+    <h3>Passos executados</h3>
+    <ul><li>acting_agent=devops-cicd</li><li>emit_status_event:merge_pr</li><li>board_status-&gt;In Pull Request</li><li>hitl_pending=True</li></ul>
+  </section>
+</article>
+
+</main>
+</body>
+</html>

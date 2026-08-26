@@ -1,0 +1,232 @@
+{
+  "task_id": "T-P13-008",
+  "updated_at": "2026-08-26T01:10:00.571074+00:00",
+  "steps": [
+    {
+      "id": "step-1",
+      "uid": "0ca61036-3b28-48fd-a64f-15d977f61b3e",
+      "at": "2026-08-26T01:08:54.793222+00:00",
+      "agent": "frontend-web",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "Todo",
+      "thought": "Task elegível no board; frontend-web assume hero da home.",
+      "action": "claim T-P13-008 branch=feat/t-p13-008-hero-sua-familia",
+      "observation": "**Foco da execucao:** pipeline `claim`: `Todo` → `Todo`\ngateway=None ok=True\n**Resultado operacional:** ok\n**Modelo:** `script/orchestration` · **purpose:** run_t_p13_008 · **tokens:** in=0 out=0 **total=0**",
+      "executed": [
+        "emit_status_event:claim",
+        "board→Todo"
+      ],
+      "ok": true,
+      "extra": {
+        "focus": "transicao `claim` no board",
+        "model": "script/orchestration",
+        "purpose": "run_t_p13_008",
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "id": "step-2",
+      "uid": "d74dab04-b937-4056-a54b-d562dedf8142",
+      "at": "2026-08-26T01:09:00.739995+00:00",
+      "agent": "frontend-web",
+      "event": "open_pr",
+      "from_status": "Todo",
+      "to_status": "Todo",
+      "thought": "Hero atualizado em index.html; commit local 66b32f1 na branch feat/t-p13-008-hero-sua-familia.",
+      "action": "open_pr (local branch feat/t-p13-008-hero-sua-familia)",
+      "observation": "**Foco da execucao:** pipeline `open_pr`: `Todo` → `Todo`\ngateway=None ok=True\n**Resultado operacional:** ok\n**Modelo:** `script/orchestration` · **purpose:** run_t_p13_008 · **tokens:** in=0 out=0 **total=0**",
+      "executed": [
+        "emit_status_event:open_pr",
+        "board→Todo"
+      ],
+      "ok": true,
+      "extra": {
+        "focus": "transicao `open_pr` no board",
+        "model": "script/orchestration",
+        "purpose": "run_t_p13_008",
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "id": "step-3",
+      "uid": "d58c1011-3bfe-4fb4-b828-22c5501a1992",
+      "at": "2026-08-26T01:09:05.059214+00:00",
+      "agent": "frontend-web-reviewer",
+      "event": "start_review",
+      "from_status": "Todo",
+      "to_status": "Todo",
+      "thought": "PR local pronto; iniciar code review do hero.",
+      "action": "start_review",
+      "observation": "**Foco da execucao:** pipeline `start_review`: `Todo` → `Todo`\ngateway=None ok=True\n**Resultado operacional:** ok\n**Modelo:** `script/orchestration` · **purpose:** run_t_p13_008 · **tokens:** in=0 out=0 **total=0**",
+      "executed": [
+        "emit_status_event:start_review",
+        "board→Todo"
+      ],
+      "ok": true,
+      "extra": {
+        "focus": "transicao `start_review` no board",
+        "model": "script/orchestration",
+        "purpose": "run_t_p13_008",
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "id": "step-4",
+      "uid": "de36e442-29f7-44b1-91b8-79c0794eb65c",
+      "at": "2026-08-26T01:09:09.840099+00:00",
+      "agent": "frontend-web-reviewer",
+      "event": "approve_review",
+      "from_status": "Todo",
+      "to_status": "Todo",
+      "thought": "Diff mínimo (H1/title); sem risco de auth/SOS; aprovar para QA.",
+      "action": "approve_review",
+      "observation": "**Foco da execucao:** pipeline `approve_review`: `Todo` → `Todo`\ngateway=None ok=True\n**Resultado operacional:** ok\n**Modelo:** `script/orchestration` · **purpose:** run_t_p13_008 · **tokens:** in=0 out=0 **total=0**",
+      "executed": [
+        "emit_status_event:approve_review",
+        "board→Todo"
+      ],
+      "ok": true,
+      "extra": {
+        "focus": "transicao `approve_review` no board",
+        "model": "script/orchestration",
+        "purpose": "run_t_p13_008",
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "id": "step-5",
+      "uid": "25a211b8-a673-4c2c-9e94-9cd538e3c9b2",
+      "at": "2026-08-26T01:09:13.984253+00:00",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Todo",
+      "to_status": "Todo",
+      "thought": "Iniciar QA Playwright na home local :8080.",
+      "action": "start_test",
+      "observation": "**Foco da execucao:** pipeline `start_test`: `Todo` → `Todo`\ngateway=None ok=True\n**Resultado operacional:** ok\n**Modelo:** `script/orchestration` · **purpose:** run_t_p13_008 · **tokens:** in=0 out=0 **total=0**",
+      "executed": [
+        "emit_status_event:start_test",
+        "board→Todo"
+      ],
+      "ok": true,
+      "extra": {
+        "focus": "transicao `start_test` no board",
+        "model": "script/orchestration",
+        "purpose": "run_t_p13_008",
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "id": "step-6",
+      "uid": "79e6e1f3-ccaa-476d-bffc-5b7d1c626233",
+      "at": "2026-08-26T01:09:52.572505+00:00",
+      "agent": "qa-gate",
+      "event": "playwright_qa",
+      "from_status": "Todo",
+      "to_status": "Todo",
+      "thought": "Validar visualmente o hero da home com Playwright (headless Chrome): texto esperado e screenshot para evidência na issue.",
+      "action": "Rodar QA-SITE-HERO-01; anexar PNG na issue via Contents API.",
+      "observation": "**Foco da execucao:** Playwright: assert H1 hero + captura de viewport\nh1='Tranquilidade para sua família'; title='Guardião Família — Tranquilidade para sua família'; expected_ok=True; forbidden_ok=True; title_ok=True\n**Resultado operacional:** ok\n**Modelo:** `playwright/chrome` · **purpose:** qa_visual · **tokens:** in=0 out=0 **total=0**",
+      "executed": [
+        "playwright_goto_home",
+        "assert_h1",
+        "screenshot_upload"
+      ],
+      "ok": true,
+      "test_scenarios": [
+        {
+          "id": "QA-SITE-HERO-01",
+          "name": "Home hero exibe Tranquilidade para sua família",
+          "type": "e2e_playwright",
+          "steps": "1. Navegar para http://127.0.0.1:8081/\n2. Localizar H1 do hero\n3. Assert texto contém 'Tranquilidade para sua família'\n4. Assert H1 não contém 'mais importa'\n5. Capturar screenshot e anexar na issue",
+          "expected": "H1 e title refletem 'Tranquilidade para sua família'",
+          "result": "PASS",
+          "notes": "h1='Tranquilidade para sua família'; title='Guardião Família — Tranquilidade para sua família'; expected_ok=True; forbidden_ok=True; title_ok=True",
+          "at": "2026-08-26T01:09:18.111961+00:00",
+          "task_id": "T-P13-008",
+          "observed_h1": "Tranquilidade para sua família",
+          "observed_title": "Guardião Família — Tranquilidade para sua família"
+        }
+      ],
+      "extra": {
+        "focus": "Playwright hero home",
+        "model": "playwright/chrome",
+        "purpose": "qa_visual",
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "id": "step-7",
+      "uid": "b07c8b07-b231-4ca5-ab0f-00763e740e5e",
+      "at": "2026-08-26T01:09:52.601976+00:00",
+      "agent": "qa-gate",
+      "event": "test_passed",
+      "from_status": "Todo",
+      "to_status": "Todo",
+      "thought": "Playwright PASS — screenshot anexado na issue; pronto para fila de merge.",
+      "action": "test_passed",
+      "observation": "**Foco da execucao:** pipeline `test_passed`: `Todo` → `Todo`\ngateway=None ok=True\n**Resultado operacional:** ok\n**Modelo:** `script/orchestration` · **purpose:** run_t_p13_008 · **tokens:** in=0 out=0 **total=0**",
+      "executed": [
+        "emit_status_event:test_passed",
+        "board→Todo"
+      ],
+      "ok": true,
+      "extra": {
+        "focus": "transicao `test_passed` no board",
+        "model": "script/orchestration",
+        "purpose": "run_t_p13_008",
+        "tokens": {
+          "input": 0,
+          "output": 0,
+          "total": 0
+        }
+      }
+    },
+    {
+      "id": "step-8",
+      "uid": "ce79a96d-54f9-4bcb-9124-054e7a786264",
+      "at": "2026-08-26T01:10:00.570154+00:00",
+      "agent": "orchestrator",
+      "event": "hitl_pre_merge",
+      "from_status": "In Pull Request",
+      "to_status": "In Pull Request",
+      "thought": "Pausar antes do merge_pr para validação humana (requisito do ticket).",
+      "action": "comment HITL + hold In Pull Request",
+      "observation": "merge_pr NAO emitido; commit=66b32f1b98e6318058cf99b94b92d87b75655e95",
+      "executed": [],
+      "ok": true
+    }
+  ],
+  "title": "Atualizar hero home: Tranquilidade para sua família",
+  "final_status": "In Pull Request",
+  "detail_url": "tasks/T-P13-008.html",
+  "last_issue_comment": {
+    "ok": true,
+    "issue": "74"
+  }
+}

@@ -201,10 +201,33 @@ def resolve_agent_for_status(task: dict, status: str) -> str:
 
 
 def resolve_agent_for_event(task: dict, event: str) -> str:
+    """Agente que deve *assumir* o status *alvo* do evento (handoff / next)."""
     target = EVENT_TARGET.get(event)
     if not target:
         raise ValueError(f"Evento desconhecido: {event}")
     return resolve_agent_for_status(task, target)
+
+
+def acting_agent_for_event(task: dict, event: str) -> str:
+    """Agente que *emite* o evento (assina comentário / from_agent).
+
+    Distinto de resolve_agent_for_event: open_pr é do creator, mas o próximo
+    dono do card (Ready for Code Review) é o reviewer.
+    """
+    creator = normalize_creator_role(task.get("agent_role") or "backend")
+    track = task.get("track") or "produto"
+    if event in ("claim", "start_work", "open_pr", "resubmit_review"):
+        return creator
+    if event in ("start_review", "approve_review", "request_changes"):
+        return reviewer_for(creator)
+    if event in ("start_test", "test_passed", "test_failed_bug"):
+        return QA_GATE_ROLE
+    if event == "merge_pr":
+        return merge_owner_for_task(track)
+    if event == "reopen":
+        return "orchestrator"
+    # fallback: dono do status alvo
+    return resolve_agent_for_event(task, event)
 
 
 def skill_impact_for_task(task: dict, *, bug_kind: str | None = None) -> dict[str, str]:

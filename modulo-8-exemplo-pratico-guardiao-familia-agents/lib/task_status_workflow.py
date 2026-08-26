@@ -98,9 +98,9 @@ AGENT_STAGES: list[dict[str, str]] = [
         "enters": "Backlog priorizado; nenhum agente criador ativo",
         "does": "Planeja sprint, roteia via TASK_AGENT_MAP, executa claim",
         "exits": "claim → assign creator + In Progress",
-        "event_in": "—",
+        "event_in": "-",
         "event_out": "claim",
-        "label": "agent:ready",
+        "label": "agent:todo",
     },
     {
         "status": "In Progress",
@@ -120,7 +120,7 @@ AGENT_STAGES: list[dict[str, str]] = [
         "exits": "start_review → In Code Review",
         "event_in": "open_pr",
         "event_out": "start_review",
-        "label": "agent:ready-for-review",
+        "label": "agent:ready-for-code-review",
     },
     {
         "status": "In Code Review",
@@ -130,7 +130,7 @@ AGENT_STAGES: list[dict[str, str]] = [
         "exits": "approve_review → Ready for Test | request_changes → In Progress",
         "event_in": "start_review / resubmit_review",
         "event_out": "approve_review / request_changes",
-        "label": "agent:in-review",
+        "label": "agent:in-code-review",
     },
     {
         "status": "Ready for Test",
@@ -160,16 +160,16 @@ AGENT_STAGES: list[dict[str, str]] = [
         "exits": "merge_pr → Done",
         "event_in": "test_passed",
         "event_out": "merge_pr",
-        "label": "agent:in-pr",
+        "label": "agent:in-pull-request",
     },
     {
         "status": "Done",
         "owner": "orchestrator",
         "enters": "merge_pr",
         "does": "Fecha ciclo; metricas; retrospectiva opcional",
-        "exits": "—",
+        "exits": "-",
         "event_in": "merge_pr",
-        "event_out": "—",
+        "event_out": "-",
         "label": "agent:done",
     },
 ]
@@ -210,7 +210,7 @@ def stages_for_role(role: str) -> list[dict[str, str]]:
         "exits": "Revisor assume (start_review)",
         "event_in": "open_pr",
         "event_out": "start_review",
-        "label": "agent:ready-for-review",
+        "label": "agent:ready-for-code-review",
     })
     return creator_stages
 

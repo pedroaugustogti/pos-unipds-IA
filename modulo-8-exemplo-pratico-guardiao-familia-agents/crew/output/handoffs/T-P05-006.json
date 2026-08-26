@@ -1,42 +1,162 @@
 {
   "task_id": "T-P05-006",
-  "updated_at": "2026-08-24T17:47:40.736990+00:00",
-  "from_agent": "orchestrator",
+  "updated_at": "2026-08-25T21:23:40.658377+00:00",
+  "from_agent": "frontend-mobile",
   "to_agent": "orchestrator",
   "event": "merge_pr",
   "status": "Done",
   "repo": "guardiao-familia-parent",
   "branch": null,
-  "pr_url": null,
-  "summary": "HITL aprovado por humano",
+  "pr_url": "https://example.com/langgraph/T-P05-006",
+  "summary": "Merge apos QA",
   "doubts": [],
   "findings": [],
   "metrics": {},
   "react_trace": [
     {
-      "thought": "Checklist de CR APNs:\n- Ambiente: production (ok)\n- Bundle id / team documentados no artefato (ok)\n- Fluxo de chave/cert descrito com riscos (ok)\n- Evidencia de commit local presente (ok)\n\nNao ha blocker de seguranca no escopo didatico. Proponho approve; se HITL estiver em propose_only, o humano confirma e a fila segue para qa-gate.",
-      "action": "emit approve_review (+ approve_hitl se necessario) → Ready for Test.",
-      "observation": "Status Ready for Test; handoff segue para QA."
+      "thought": "pipeline Fase C — HITL no merge",
+      "action": "merge_pr",
+      "observation": "Merge apos QA | model=n/a tokens=0",
+      "llm_usage": null
     }
   ],
   "history": [
     {
-      "at": "2026-08-24T17:45:35.071703+00:00",
+      "at": "2026-08-25T20:14:04.636187+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "status": "Ready for Code Review"
+    },
+    {
+      "at": "2026-08-25T20:14:25.346304+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "status": "In Code Review"
+    },
+    {
+      "at": "2026-08-25T20:14:42.446003+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "human",
+      "event": "approve_review",
+      "status": "Ready for Test"
+    },
+    {
+      "at": "2026-08-25T20:15:00.710248+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "qa-gate",
+      "event": "start_test",
+      "status": "In Test"
+    },
+    {
+      "at": "2026-08-25T20:15:15.112534+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "devops-cicd",
+      "event": "test_passed",
+      "status": "In Pull Request"
+    },
+    {
+      "at": "2026-08-25T20:15:29.076727+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "orchestrator",
+      "event": "merge_pr",
+      "status": "Done"
+    },
+    {
+      "at": "2026-08-25T21:06:47.145966+00:00",
       "from_agent": "frontend-mobile",
       "to_agent": "frontend-mobile",
       "event": "claim",
       "status": "In Progress"
     },
     {
-      "at": "2026-08-24T17:46:43.119325+00:00",
-      "from_agent": "frontend-mobile-reviewer",
+      "at": "2026-08-25T21:07:12.193480+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "status": "Ready for Code Review"
+    },
+    {
+      "at": "2026-08-25T21:07:41.546783+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "status": "In Code Review"
+    },
+    {
+      "at": "2026-08-25T21:08:05.522309+00:00",
+      "from_agent": "frontend-mobile",
       "to_agent": "human",
       "event": "approve_review",
       "status": "Ready for Test"
     },
     {
-      "at": "2026-08-24T17:47:40.736990+00:00",
-      "from_agent": "orchestrator",
+      "at": "2026-08-25T21:08:30.515283+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "qa-gate",
+      "event": "start_test",
+      "status": "In Test"
+    },
+    {
+      "at": "2026-08-25T21:08:48.899890+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "devops-cicd",
+      "event": "test_passed",
+      "status": "In Pull Request"
+    },
+    {
+      "at": "2026-08-25T21:09:08.895446+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "orchestrator",
+      "event": "merge_pr",
+      "status": "Done"
+    },
+    {
+      "at": "2026-08-25T21:21:44.793264+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "frontend-mobile",
+      "event": "claim",
+      "status": "In Progress"
+    },
+    {
+      "at": "2026-08-25T21:22:04.988095+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "status": "Ready for Code Review"
+    },
+    {
+      "at": "2026-08-25T21:22:26.636889+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "status": "In Code Review"
+    },
+    {
+      "at": "2026-08-25T21:22:48.130238+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "human",
+      "event": "approve_review",
+      "status": "Ready for Test"
+    },
+    {
+      "at": "2026-08-25T21:23:08.826338+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "qa-gate",
+      "event": "start_test",
+      "status": "In Test"
+    },
+    {
+      "at": "2026-08-25T21:23:23.965031+00:00",
+      "from_agent": "frontend-mobile",
+      "to_agent": "devops-cicd",
+      "event": "test_passed",
+      "status": "In Pull Request"
+    },
+    {
+      "at": "2026-08-25T21:23:40.658377+00:00",
+      "from_agent": "frontend-mobile",
       "to_agent": "orchestrator",
       "event": "merge_pr",
       "status": "Done"

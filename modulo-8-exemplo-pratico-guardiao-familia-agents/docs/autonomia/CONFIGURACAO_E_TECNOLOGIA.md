@@ -1,6 +1,6 @@
 # Configuração e tecnologia dos agentes
 
-> Atualizado: 2026-08-24  
+> Atualizado: 2026-08-25  
 > Par: [ESTADO_ATUAL_FLUXO_E_PROCESSO.md](ESTADO_ATUAL_FLUXO_E_PROCESSO.md) · [EXECUCAO_E_OBSERVABILIDADE.md](EXECUCAO_E_OBSERVABILIDADE.md)
 
 ---
@@ -9,15 +9,15 @@
 
 | Camada | Tecnologia |
 |--------|------------|
-| Orquestração de eventos | Python 3 · `lib/gateway.py` · CLI `gateway_cli.py` |
-| Crew / supervisor (opcional) | CrewAI + OpenRouter (`crew/`, `OPENAI_API_BASE`) |
-| Implementação remota | Cursor SDK (`Agent.prompt`) via `lib/dispatch_adapter.py` |
-| Board remoto | GitHub Project #2 · `gh project item-edit` / GraphQL |
-| Board local | JSON módulo 7 (`GUARDAO_BOARD_JSON` / paths padrão) |
-| Observabilidade | `snapshot.json` + `dashboard_live.html` + `live_server.py` |
-| Histórico ReAct por task | `lib/task_action_history.py` → `observability/tasks/` |
-| CI signals | Actions + `ci_signal.py` / `ci_hint.py` |
-| Config secreta | `crew/.env` (ver `.env.example`) |
+| Orquestração | **LangGraph** (`langgraph_app/`) · CLI `scripts/langgraph_run.py` |
+| Eventos / Status | Python 3 · `lib/gateway.py` · CLI `gateway_cli.py` |
+| Tools tipadas | MCP `guardiao_mcp/` (Cursor) · `tools_bridge` no grafo |
+| LLM orquestração | OpenRouter + `lib/model_tier.py` (`GUARDIAO_LLM_*`) |
+| Implementação código | Cursor SDK (`Agent.prompt`) via `lib/dispatch_adapter.py` |
+| Board remoto | GitHub Project #2 · `gh` / GraphQL |
+| Board local | JSON módulo 7 |
+| Observabilidade | snapshot + dashboard live + LangSmith + HTML ReAct |
+| Config / runtime | `crew/.env`, `crew/requirements.txt`, `crew/output/` (**não orquestra**) |
 
 ---
 
@@ -46,7 +46,7 @@ Reviewers: `agents/reviewers/{role}-reviewer.agent.md` + skill `*-reviewer`, par
 | `hitl_gates.py` | auto / propose_only / block_until_human |
 | `event_schema.py` | Validação (ex.: `open_pr` exige `react_trace`) |
 | `handoff.py` | Pacote between agents |
-| `model_tier.py` | Escolha de modelo por propósito |
+| `lib/model_tier.py` | Escolha de modelo por purpose + budget (Fase A) |
 
 ---
 
@@ -56,16 +56,23 @@ De `crew/.env.example`:
 
 | Variável | Função |
 |----------|--------|
-| `OPENAI_API_KEY` + `OPENAI_API_BASE` | LLM via OpenRouter (CrewAI) |
-| `CREWAI_MODEL` | Modelo default Crew |
+| `OPENAI_API_KEY` + `OPENAI_API_BASE` | LLM via OpenRouter (LangGraph / Fase A) |
+| `GUARDIAO_LLM_DEFAULT` | Modelo orquestração low-risk (alias: `CREWAI_MODEL`) |
+| `GUARDIAO_LLM_HIGH` | Modelo orquestração alto risco (alias: `CREWAI_MODEL_HIGH`) |
+| `GUARDIAO_LLM_ROUTE` | `deterministic` (sem LLM) ou modelo leve de roteamento |
+| `GUARDIAO_CURSOR_MODEL` | Modelo Cursor SDK (código); alias legado `GUARDAO_CURSOR_MODEL` |
+| `CREWAI_MODEL` | Fallback legado se `GUARDIAO_LLM_*` ausente |
 | `CURSOR_API_KEY` | Dispatch Cursor Automation |
 | `GUARDAO_DISPATCH_BACKEND` | `auto` \| `cursor_automation` \| `manual_fallback` |
 | `GUARDAO_CURSOR_RUNTIME` | `local` \| `cloud` |
-| `GUARDAO_CURSOR_MODEL` | Modelo Cursor (ex. composer-2.5) |
 | `GUARDAO_DISPATCH_WAIT` | `1` espera Agent.prompt; `0` só bundle |
 | `GUARDAO_*_PATH` | Clones locais dos repos produto |
 | `GITHUB_TOKEN` / auth `gh` | Project + issues |
+| `GUARDIAO_MCP_ALLOW_DISPATCH` | `1` habilita tool `dispatch_job_tool` no MCP |
+| `LANGSMITH_API_KEY` | Tracing LangSmith |
+| `LANGCHAIN_TRACING_V2` / `LANGCHAIN_PROJECT` | Projeto default `guardiao-familia-agents` |
 
+MCP (Fase B): `python -m guardiao_mcp` · Cursor server `guardiao-familia-agents` (`.cursor/mcp.json`).
 Sem `CURSOR_API_KEY`, o adapter cai em **manual_fallback** (bundle para colar/abrir manualmente) — o gateway de Status continua funcionando.
 
 ---

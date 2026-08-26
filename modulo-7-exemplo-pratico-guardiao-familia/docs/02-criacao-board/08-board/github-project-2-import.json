@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generated": "2026-08-24",
+  "generated": "2026-08-25",
   "organization": "guardiaofamilia",
   "project": {
     "title": "Guardião Família v2",
@@ -2172,7 +2172,7 @@
       "repository": "guardiao-familia-parent",
       "type": "draft_issue",
       "fields": {
-        "Status": "Done",
+        "Status": "Todo",
         "Trilha": "produto",
         "OKR": "O1",
         "Epic": "E-P05 Push notifications nativas",
@@ -13216,6 +13216,52 @@
           "PR com estrategia, arquivos alterados e duvidas (template 10-agents)."
         ],
         "blocker_reason": ""
+      }
+    },
+    {
+      "id": "T-P13-012",
+      "title": "Atualizar hero home: Tranquilidade para sua família",
+      "repository": "guardiao-familia-site",
+      "type": "Issue",
+      "fields": {
+        "Status": "In Pull Request",
+        "Trilha": "produto",
+        "OKR": "O3",
+        "Epic": "E-P13 Site institucional e campanha",
+        "Sprint": 12,
+        "Story Points": 1,
+        "RICE Score": 3.0,
+        "WSJF": 1.5,
+        "Reach": 5,
+        "Impact": 2,
+        "Confidence": 0.9,
+        "CoD": 2,
+        "PERT (d)": 0.3,
+        "Baseline": "todo",
+        "Release Blocker": "no",
+        "Blocker Motivo": "",
+        "Priority Rank": 0,
+        "Repo alvo": "guardiao-familia-site",
+        "Refinamento": "Hero via LangGraph. Acting agents por evento. Playwright. HITL.",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4CNRA"
+      },
+      "labels": [
+        "produto",
+        "O3",
+        "E-P13",
+        "agent:frontend-web"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Trocar hero mais importa por sua familia.",
+        "suggested_files": [
+          "index.html"
+        ],
+        "acceptance_hints": [
+          "H1 = Tranquilidade para sua familia",
+          "screenshot Playwright",
+          "agentes corretos por evento"
+        ]
       }
     }
   ]

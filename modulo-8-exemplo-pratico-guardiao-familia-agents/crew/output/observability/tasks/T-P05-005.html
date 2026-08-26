@@ -53,240 +53,214 @@ table.scenarios th, table.scenarios td {
 table.scenarios th { color: var(--muted); font-weight: 600; }
 table.scenarios tr.pass td:nth-child(6) { color: var(--ok); }
 table.scenarios tr.planned td:nth-child(6) { color: var(--accent); }
+table.usage {
+  width: auto; border-collapse: collapse; font-size: 0.9rem; margin-top: 4px;
+}
+table.usage th, table.usage td {
+  border: 1px solid var(--line); padding: 6px 10px; text-align: left;
+}
+table.usage th { color: var(--muted); font-weight: 600; }
+.llm-usage, .token-totals { margin-top: 8px; }
+.token-totals {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 16px 18px; margin-bottom: 24px;
+}
+.token-totals h2 { margin: 0 0 8px; font-size: 1.05rem; }
 </style>
 </head>
 <body>
 <header class="top">
   <div class="muted"><a href="../dashboard.html">← Dashboard</a></div>
   <h1>T-P05-005</h1>
-  <div>Configurar APNs production certificates</div>
-  <div class="muted">Status final: <strong>Done</strong> · passos: 8</div>
+  <div>T-P05-005</div>
+  <div class="muted">Status final: <strong>Done</strong> · passos: 7</div>
 </header>
 <main>
   <nav class="toc">
     <strong>Indice de acoes por agente</strong>
-    <ul><li><a href="#step-1"><strong>frontend-mobile</strong> · claim <span class="muted">Todo → In Progress</span></a></li><li><a href="#step-2"><strong>frontend-mobile</strong> · __implement__ <span class="muted">In Progress → In Progress</span></a></li><li><a href="#step-3"><strong>frontend-mobile</strong> · open_pr <span class="muted">In Progress → Ready for Code Review</span></a></li><li><a href="#step-4"><strong>frontend-mobile-reviewer</strong> · start_review <span class="muted">Ready for Code Review → In Code Review</span></a></li><li><a href="#step-5"><strong>frontend-mobile-reviewer</strong> · approve_review <span class="muted">In Code Review → Ready for Test</span></a></li><li><a href="#step-6"><strong>qa-gate</strong> · start_test <span class="muted">Ready for Test → In Test</span></a></li><li><a href="#step-7"><strong>qa-gate</strong> · test_passed <span class="muted">In Test → In Pull Request</span></a></li><li><a href="#step-8"><strong>qa-gate</strong> · merge_pr <span class="muted">In Pull Request → Done</span></a></li></ul>
+    <ul><li><a href="#step-1"><strong>frontend-mobile</strong> · claim <span class="muted">Todo → In Progress</span></a></li><li><a href="#step-2"><strong>frontend-mobile</strong> · open_pr <span class="muted">In Progress → Ready for Code Review</span></a></li><li><a href="#step-3"><strong>frontend-mobile</strong> · start_review <span class="muted">Ready for Code Review → In Code Review</span></a></li><li><a href="#step-4"><strong>frontend-mobile</strong> · approve_review <span class="muted">In Code Review → Ready for Test</span></a></li><li><a href="#step-5"><strong>frontend-mobile</strong> · start_test <span class="muted">Ready for Test → In Test</span></a></li><li><a href="#step-6"><strong>frontend-mobile</strong> · test_passed <span class="muted">In Test → In Pull Request</span></a></li><li><a href="#step-7"><strong>frontend-mobile</strong> · merge_pr <span class="muted">In Pull Request → Done</span></a></li></ul>
   </nav>
+  <section class='token-totals'><h2>Gasto de tokens (run)</h2><p>calls=5 · in=1239 · out=314 · <strong>total=1553</strong></p><table class='usage'><thead><tr><th>Modelo</th><th>Calls</th><th>Tokens</th></tr></thead><tbody><tr><td><code>openai/gpt-4o-mini</code></td><td>5</td><td>1553</td></tr></tbody></table></section>
   
 <article class="step ok" id="step-1">
   <header>
     <h2>frontend-mobile <span class="pill">claim</span></h2>
-    <div class="muted">2026-08-24 17:23:32 · Todo → In Progress</div>
+    <div class="muted">2026-08-25 21:28:40 · Todo → In Progress</div>
   </header>
   <div class="grid">
     <section>
       <h3>Pensou (thought)</h3>
-      <pre>A task T-P05-005 (Configurar APNs production certificates) esta em Todo, sem depends_on pendente no mapa. O parent app precisa de certificados APNs de producao para push confiavel (SOS/alertas familiares). Vou claimar com o role frontend-mobile, adquirir lock WIP e comecar pela matriz de certificados e bundle id antes de qualquer commit.</pre>
+      <pre>A tarefa está no status &#x27;Todo&#x27; e é apropriado reivindicá-la para que o trabalho possa ser iniciado. Isso é consistente com a política que sugere o evento &#x27;claim&#x27; como o próximo passo.</pre>
     </section>
     <section>
       <h3>Executou (action)</h3>
-      <pre>Validar elegibilidade (WIP/depends_on), emitir claim no gateway e mover o card para In Progress com lock do creator.</pre>
+      <pre>simulate:claim</pre>
     </section>
   </div>
   <section>
     <h3>Observacao</h3>
-    <pre>Board local em In Progress; agente frontend-mobile busy; historico da task aberto para registrar o restante do ciclo.</pre>
+    <pre>Todo-&gt;In Progress | model=openai/gpt-4o-mini in=323 out=83 total=406</pre>
   </section>
-  
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>implement_low</td></tr><tr><th>Input</th><td>323</td></tr><tr><th>Output</th><td>83</td></tr><tr><th>Total</th><td><strong>406</strong></td></tr></table></section>
   <section>
     <h3>Passos executados</h3>
-    <ul><li>check_claim_allowed(frontend-mobile)</li><li>dependencies_satisfied(T-P05-005)</li><li>emit_status_event(claim)</li><li>update_local_status(In Progress)</li><li>acquire_lock WIP</li></ul>
+    <p class='muted'>—</p>
   </section>
 </article>
 
 <article class="step ok" id="step-2">
   <header>
-    <h2>frontend-mobile <span class="pill">__implement__</span></h2>
-    <div class="muted">2026-08-24 17:23:38 · In Progress → In Progress</div>
+    <h2>frontend-mobile <span class="pill">open_pr</span></h2>
+    <div class="muted">2026-08-25 21:28:42 · In Progress → Ready for Code Review</div>
   </header>
   <div class="grid">
     <section>
       <h3>Pensou (thought)</h3>
-      <pre>Com a task claimada, preciso entregar evidencia didatica de implementacao APNs production sem depender do SDK Cursor ao vivo.
-
-Plano de implementacao:
-1) Documentar ambiente production (nao sandbox) e bundle id do parent app.
-2) Descrever o fluxo de certificado: Apple Developer → Key/Certificate → export .p12/.p8 → configuracao no provedor de push (Expo/FCM bridge / APNs direto).
-3) Listar riscos: certificado expirado, ambiente errado (sandbox vs prod), mismatch de bundle id, token device invalido.
-4) Gerar artefato local commitavel (IMPLEMENTACAO.md + metricas) para o reviewer e o QA terem evidencia concreta no historico.
-
-Decisao: manter o trabalho no demo_workspace da task (escopo academico), com commit git apenas desses arquivos — suficiente para narrar claim→implement→PR.</pre>
+      <pre>Artefato de implementacao pronto; abrir PR</pre>
     </section>
     <section>
       <h3>Executou (action)</h3>
-      <pre>Escrever IMPLEMENTACAO.md com matriz APNs (ambiente, bundle, certs, validacoes) e agent_metrics.json; git add + git commit local desses paths.</pre>
+      <pre>simulate:open_pr</pre>
     </section>
   </div>
   <section>
     <h3>Observacao</h3>
-    <pre>Artefatos gravados em crew/output/demo_workspace/T-P05-005/; commit local criado; pronto para open_pr simbolico com react_trace.</pre>
+    <pre>In Progress-&gt;Ready for Code Review | model=openai/gpt-4o-mini in=37 out=35 total=72</pre>
   </section>
-  <section><h3>O que foi implementado / entregue</h3><ul><li><strong>IMPLEMENTACAO.md</strong> — Matriz didatica APNs production: ambiente, bundle id, tipo de chave (Auth Key .p8 ou certificado .p12), checklist de configuracao no parent app e notas de validacao de push.</li><li><strong>agent_metrics.json</strong> — Metadados do passo (task_id, agent_role, timestamp) para auditoria no dashboard.</li></ul></section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>summarize</td></tr><tr><th>Input</th><td>37</td></tr><tr><th>Output</th><td>35</td></tr><tr><th>Total</th><td><strong>72</strong></td></tr></table></section>
   <section>
     <h3>Passos executados</h3>
-    <ul><li>mkdir demo_workspace/T-P05-005</li><li>escrever matriz APNs em IMPLEMENTACAO.md</li><li>escrever agent_metrics.json (agent_role, demo=true)</li><li>git add (apenas paths da task)</li><li>git commit (author demo local)</li></ul>
+    <p class='muted'>—</p>
   </section>
 </article>
 
 <article class="step ok" id="step-3">
   <header>
-    <h2>frontend-mobile <span class="pill">open_pr</span></h2>
-    <div class="muted">2026-08-24 17:23:58 · In Progress → Ready for Code Review</div>
+    <h2>frontend-mobile <span class="pill">start_review</span></h2>
+    <div class="muted">2026-08-25 21:28:46 · Ready for Code Review → In Code Review</div>
   </header>
   <div class="grid">
     <section>
       <h3>Pensou (thought)</h3>
-      <pre>Implementacao local commitada. Preciso abrir PR simbolica para o board avançar a Ready for Code Review e entregar handoff com react_trace ao reviewer (politica ReAct exige trace no open_pr).</pre>
+      <pre>O status atual do board é &#x27;Ready for Code Review&#x27;, o que indica que o código está pronto para ser revisado. Iniciar a revisão agora permitirá que a equipe de revisão avalie as alterações e avance no processo de integração.</pre>
     </section>
     <section>
       <h3>Executou (action)</h3>
-      <pre>emit open_pr com branch demo/t-p05-005, pr_url de exemplo e react_trace descrevendo a matriz APNs commitada; liberar lock de claim.</pre>
+      <pre>simulate:start_review</pre>
     </section>
   </div>
   <section>
     <h3>Observacao</h3>
-    <pre>Status Ready for Code Review; lock liberado; handoff aponta para frontend-mobile-reviewer.</pre>
+    <pre>Ready for Code Review-&gt;In Code Review | model=openai/gpt-4o-mini in=327 out=88 total=415</pre>
   </section>
-  <section><h3>O que foi implementado / entregue</h3><ul><li><strong>PR simbolica</strong> — https://example.com/demo/T-P05-005 — evidencia de entrega para CR (demo academica).</li></ul></section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>review</td></tr><tr><th>Input</th><td>327</td></tr><tr><th>Output</th><td>88</td></tr><tr><th>Total</th><td><strong>415</strong></td></tr></table></section>
   <section>
     <h3>Passos executados</h3>
-    <ul><li>montar react_trace da implementacao</li><li>emit_status_event(open_pr)</li><li>write_handoff → reviewer</li><li>release_lock(T-P05-005)</li></ul>
+    <p class='muted'>—</p>
   </section>
 </article>
 
 <article class="step ok" id="step-4">
   <header>
-    <h2>frontend-mobile-reviewer <span class="pill">start_review</span></h2>
-    <div class="muted">2026-08-24 17:24:18 · Ready for Code Review → In Code Review</div>
+    <h2>frontend-mobile <span class="pill">approve_review</span></h2>
+    <div class="muted">2026-08-25 21:28:48 · In Code Review → Ready for Test</div>
   </header>
   <div class="grid">
     <section>
       <h3>Pensou (thought)</h3>
-      <pre>Como frontend-mobile-reviewer, entro em Code Review focando: (a) ambiente production declarado, (b) bundle id coerente, (c) tipo de credencial APNs documentado, (d) riscos de mismatch sandbox/prod e expiracao de cert.</pre>
+      <pre>approve</pre>
     </section>
     <section>
       <h3>Executou (action)</h3>
-      <pre>Carregar handoff da task e emitir start_review (In Code Review).</pre>
+      <pre>simulate:approve_review</pre>
     </section>
   </div>
   <section>
     <h3>Observacao</h3>
-    <pre>Status In Code Review; reviewer busy no dashboard.</pre>
+    <pre>In Code Review-&gt;Ready for Test | model=openai/gpt-4o-mini in=226 out=43 total=269</pre>
   </section>
-  
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>review</td></tr><tr><th>Input</th><td>226</td></tr><tr><th>Output</th><td>43</td></tr><tr><th>Total</th><td><strong>269</strong></td></tr></table></section>
   <section>
     <h3>Passos executados</h3>
-    <ul><li>load_handoff(T-P05-005)</li><li>ler IMPLEMENTACAO.md / react_trace</li><li>emit_status_event(start_review)</li></ul>
+    <p class='muted'>—</p>
   </section>
 </article>
 
 <article class="step ok" id="step-5">
   <header>
-    <h2>frontend-mobile-reviewer <span class="pill">approve_review</span></h2>
-    <div class="muted">2026-08-24 17:24:38 · In Code Review → Ready for Test</div>
+    <h2>frontend-mobile <span class="pill">start_test</span></h2>
+    <div class="muted">2026-08-25 21:28:49 · Ready for Test → In Test</div>
   </header>
   <div class="grid">
     <section>
       <h3>Pensou (thought)</h3>
-      <pre>Checklist de CR APNs:
-- Ambiente: production (ok)
-- Bundle id / team documentados no artefato (ok)
-- Fluxo de chave/cert descrito com riscos (ok)
-- Evidencia de commit local presente (ok)
-
-Nao ha blocker de seguranca no escopo didatico. Proponho approve; se HITL estiver em propose_only, o humano confirma e a fila segue para qa-gate.</pre>
+      <pre>O board está pronto para teste e a ação de iniciar os testes é a próxima etapa lógica para validar a configuração dos certificados APNs.</pre>
     </section>
     <section>
       <h3>Executou (action)</h3>
-      <pre>emit approve_review (+ approve_hitl se necessario) → Ready for Test.</pre>
+      <pre>simulate:start_test</pre>
     </section>
   </div>
   <section>
     <h3>Observacao</h3>
-    <pre>Status Ready for Test; handoff segue para QA.</pre>
+    <pre>Ready for Test-&gt;In Test | model=openai/gpt-4o-mini in=326 out=65 total=391</pre>
   </section>
-  <section><h3>Findings (review)</h3><ul><li><span class='pill'>pass</span> Ambiente APNs production declarado</li><li><span class='pill'>pass</span> Bundle id / escopo parent app documentado</li><li><span class='pill'>pass</span> Riscos sandbox vs prod e expiracao de cert citados</li><li><span class='pill'>pass</span> Commit local de evidencia presente</li></ul></section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>implement_low</td></tr><tr><th>Input</th><td>326</td></tr><tr><th>Output</th><td>65</td></tr><tr><th>Total</th><td><strong>391</strong></td></tr></table></section>
   <section>
     <h3>Passos executados</h3>
-    <ul><li>checklist CR APNs</li><li>emit_status_event(approve_review)</li><li>HITL confirm se propose_only</li></ul>
+    <p class='muted'>—</p>
   </section>
 </article>
 
 <article class="step ok" id="step-6">
   <header>
-    <h2>qa-gate <span class="pill">start_test</span></h2>
-    <div class="muted">2026-08-24 17:24:56 · Ready for Test → In Test</div>
+    <h2>frontend-mobile <span class="pill">test_passed</span></h2>
+    <div class="muted">2026-08-25 21:28:49 · In Test → In Pull Request</div>
   </header>
   <div class="grid">
     <section>
       <h3>Pensou (thought)</h3>
-      <pre>Sou o qa-gate. Vou montar o plano de testes de aceite para APNs production com base no artefato do creator e no veredito do reviewer. O objetivo e provar (didaticamente) que a configuracao cobre os caminhos criticos de push antes de liberar In Pull Request / Done.</pre>
+      <pre>qa_gate tipado (Fase C)</pre>
     </section>
     <section>
       <h3>Executou (action)</h3>
-      <pre>emit start_test e registrar o plano formal de cenarios (matriz de aceite) no historico da task.</pre>
+      <pre>simulate:test_passed</pre>
     </section>
   </div>
   <section>
     <h3>Observacao</h3>
-    <pre>Status In Test; plano de cenarios publicado no detalhe da task.</pre>
+    <pre>In Test-&gt;In Pull Request | model=n/a tokens=0</pre>
   </section>
-  <section><h3>Cenarios de teste (QA)</h3><table class='scenarios'><thead><tr><th>ID</th><th>Cenario</th><th>Tipo</th><th>Passos</th><th>Esperado</th><th>Resultado</th><th>Notas</th></tr></thead><tbody><tr class='planned'><td><code>QA-APNS-01</code></td><td>Certificado/Auth Key production carregado</td><td>config</td><td>Verificar no artefato se o ambiente e production e se o tipo de credencial (.p8 Auth Key ou .p12) esta definido.</td><td>Ambiente production + credencial documentada sem ambiguidade.</td><td><strong>planned</strong></td><td>—</td></tr><tr class='planned'><td><code>QA-APNS-02</code></td><td>Bundle id do parent app coerente</td><td>config</td><td>Confrontar bundle id citado na IMPLEMENTACAO com o escopo do parent app.</td><td>Bundle id alinhado; sem referencia a target de sandbox/dev.</td><td><strong>planned</strong></td><td>—</td></tr><tr class='planned'><td><code>QA-APNS-03</code></td><td>Push foreground (app aberto)</td><td>funcional</td><td>Simular recebimento de notificacao com app em foreground; validar que o handler de notificacao esta previsto na documentacao.</td><td>Caminho foreground descrito; sem erro de ambiente sandbox.</td><td><strong>planned</strong></td><td>—</td></tr><tr class='planned'><td><code>QA-APNS-04</code></td><td>Push background / app morto</td><td>funcional</td><td>Simular push com app em background ou killed; checar expectativa de delivery APNs prod.</td><td>Cenario background documentado como coberto pela config production.</td><td><strong>planned</strong></td><td>—</td></tr><tr class='planned'><td><code>QA-APNS-05</code></td><td>Falha controlada: cert expirado / ambiente errado</td><td>negativo</td><td>Validar se o artefato lista sintoma e mitigacao para certificado expirado ou uso acidental de sandbox em prod.</td><td>Riscos e mitigacoes presentes (reemissao / troca de ambiente).</td><td><strong>planned</strong></td><td>—</td></tr><tr class='planned'><td><code>QA-APNS-06</code></td><td>Regressao SOS / alerta familiar (smoke)</td><td>smoke</td><td>Checar se a documentacao conecta APNs prod ao fluxo de alerta critico do Guardião Família (smoke de aceite).</td><td>Trilha critica mencionada; sem regressao de escopo.</td><td><strong>planned</strong></td><td>—</td></tr></tbody></table></section>
+  
   <section>
     <h3>Passos executados</h3>
-    <ul><li>ler criterios de aceite da task</li><li>montar matriz de cenarios QA</li><li>emit_status_event(start_test)</li></ul>
+    <p class='muted'>—</p>
   </section>
 </article>
 
 <article class="step ok" id="step-7">
   <header>
-    <h2>qa-gate <span class="pill">test_passed</span></h2>
-    <div class="muted">2026-08-24 17:25:15 · In Test → In Pull Request</div>
+    <h2>frontend-mobile <span class="pill">merge_pr</span></h2>
+    <div class="muted">2026-08-25 21:28:49 · In Pull Request → Done</div>
   </header>
   <div class="grid">
     <section>
       <h3>Pensou (thought)</h3>
-      <pre>Executei a matriz de aceite contra o artefato e o handoff. Todos os cenarios planejados passaram no escopo didatico (evidencia documental + checklist). Posso emitir test_passed e mover para In Pull Request.</pre>
+      <pre>pipeline Fase C — HITL no merge</pre>
     </section>
     <section>
       <h3>Executou (action)</h3>
-      <pre>Registrar resultados PASS da matriz e emitir test_passed.</pre>
+      <pre>simulate:merge_pr</pre>
     </section>
   </div>
   <section>
     <h3>Observacao</h3>
-    <pre>Status In Pull Request; evidencia de QA no historico da task.</pre>
-  </section>
-  <section><h3>Cenarios de teste (QA)</h3><table class='scenarios'><thead><tr><th>ID</th><th>Cenario</th><th>Tipo</th><th>Passos</th><th>Esperado</th><th>Resultado</th><th>Notas</th></tr></thead><tbody><tr class='pass'><td><code>QA-APNS-01</code></td><td>Certificado/Auth Key production carregado</td><td>config</td><td>Conferir ambiente production + tipo de credencial no artefato.</td><td>Production + credencial clara.</td><td><strong>PASS</strong></td><td>IMPLEMENTACAO.md declara production e fluxo de chave/cert.</td></tr><tr class='pass'><td><code>QA-APNS-02</code></td><td>Bundle id do parent app coerente</td><td>config</td><td>Validar bundle id / escopo parent.</td><td>Sem mismatch sandbox/dev.</td><td><strong>PASS</strong></td><td>Escopo parent app e bundle citados na matriz.</td></tr><tr class='pass'><td><code>QA-APNS-03</code></td><td>Push foreground (app aberto)</td><td>funcional</td><td>Simular aceite foreground via checklist documentado.</td><td>Caminho foreground coberto.</td><td><strong>PASS</strong></td><td>Checklist de validacao de push inclui foreground.</td></tr><tr class='pass'><td><code>QA-APNS-04</code></td><td>Push background / app morto</td><td>funcional</td><td>Simular aceite background via checklist.</td><td>Delivery APNs prod esperado.</td><td><strong>PASS</strong></td><td>Cenario background listado nas notas de validacao.</td></tr><tr class='pass'><td><code>QA-APNS-05</code></td><td>Falha controlada: cert expirado / ambiente errado</td><td>negativo</td><td>Conferir riscos e mitigacoes no artefato.</td><td>Riscos documentados.</td><td><strong>PASS</strong></td><td>Risco sandbox vs prod e expiracao de cert presentes.</td></tr><tr class='pass'><td><code>QA-APNS-06</code></td><td>Regressao SOS / alerta familiar (smoke)</td><td>smoke</td><td>Smoke de trilha critica Guardião Família.</td><td>Sem regressao de escopo.</td><td><strong>PASS</strong></td><td>Contexto SOS/alertas familiares amarrado a APNs prod.</td></tr></tbody></table></section>
-  <section>
-    <h3>Passos executados</h3>
-    <ul><li>executar QA-APNS-01..06 contra artefato</li><li>marcar resultados PASS</li><li>emit_status_event(test_passed)</li></ul>
-  </section>
-</article>
-
-<article class="step ok" id="step-8">
-  <header>
-    <h2>qa-gate <span class="pill">merge_pr</span></h2>
-    <div class="muted">2026-08-24 17:25:39 · In Pull Request → Done</div>
-  </header>
-  <div class="grid">
-    <section>
-      <h3>Pensou (thought)</h3>
-      <pre>Validacao final do QA: matriz QA-APNS-01..06 em PASS, CR aprovado, evidencia de commit local. Com HITL humano no merge, defino a task como Done — encerrando o ciclo academico completo.</pre>
-    </section>
-    <section>
-      <h3>Executou (action)</h3>
-      <pre>emit merge_pr (HITL) — QA + humano marcam Done.</pre>
-    </section>
-  </div>
-  <section>
-    <h3>Observacao</h3>
-    <pre>Status Done. Historico completo permanece em tasks/T-P05-005.html.</pre>
+    <pre>In Pull Request-&gt;Done | model=n/a tokens=0</pre>
   </section>
   
   <section>
     <h3>Passos executados</h3>
-    <ul><li>revisar matriz QA PASS</li><li>HITL approve merge (se block_until_human)</li><li>emit_status_event(merge_pr)</li><li>update_local_status(Done)</li></ul>
+    <p class='muted'>—</p>
   </section>
 </article>
 

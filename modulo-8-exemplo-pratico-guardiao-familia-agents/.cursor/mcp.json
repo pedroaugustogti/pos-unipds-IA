@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "guardiao-familia-agents": {
+      "command": "cmd",
+      "args": ["/c", "guardiao-mcp.cmd"],
+      "env": {
+        "PYTHONUTF8": "1"
+      }
+    }
+  }
+}

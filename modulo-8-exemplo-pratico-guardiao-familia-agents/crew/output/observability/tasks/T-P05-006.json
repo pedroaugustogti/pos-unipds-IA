@@ -1,328 +1,332 @@
 {
   "task_id": "T-P05-006",
-  "updated_at": "2026-08-24T17:47:40.764781+00:00",
+  "updated_at": "2026-08-25T21:23:40.666402+00:00",
   "steps": [
     {
       "id": "step-1",
-      "uid": "14486d11-49c1-4740-a7f6-ba980ede4b4f",
-      "at": "2026-08-24T17:45:35.099347+00:00",
+      "uid": "a39133e1-7a44-40c2-9be4-29d3c010469e",
+      "at": "2026-08-25T21:21:44.801185+00:00",
       "agent": "frontend-mobile",
       "event": "claim",
       "from_status": "Todo",
       "to_status": "In Progress",
-      "thought": "Task T-P05-006 (Configurar FCM data messages SOS) elegivel no Project #2 (Status Todo, sem depends_on). Preciso claimar frontend-mobile para documentar data messages FCM do fluxo SOS.",
-      "action": "emit claim + lock WIP frontend-mobile (Project #2 + board local)",
-      "observation": "In Progress no board local; sync Project via gateway/gh.",
-      "executed": [
-        "check_claim_allowed",
-        "dependencies_satisfied",
-        "emit claim",
-        "update Project Status In Progress"
-      ],
+      "thought": "Status=Todo, agent_role=frontend-mobile, policy suggests claim, no blockers visible",
+      "action": "emit:claim",
+      "observation": "ok=True status=In Progress | model=x-ai/grok-4.3 in=519 out=488 total=1007",
+      "executed": [],
       "ok": true,
       "extra": {
-        "hitl_resolved": false,
-        "gateway_status": "applied"
+        "stage": "claim",
+        "model": "x-ai/grok-4.3",
+        "purpose": "implement_high",
+        "llm_usage": {
+          "model": "x-ai/grok-4.3",
+          "purpose": "implement_high",
+          "input_tokens": 519,
+          "output_tokens": 488,
+          "total_tokens": 1007
+        },
+        "tokens": {
+          "input": 519,
+          "output": 488,
+          "total": 1007
+        },
+        "token_usage_total": {
+          "input_tokens": 519,
+          "output_tokens": 488,
+          "total_tokens": 1007,
+          "calls": 1,
+          "by_model": {
+            "x-ai/grok-4.3": {
+              "calls": 1,
+              "total_tokens": 1007
+            }
+          }
+        }
       }
     },
     {
       "id": "step-2",
-      "uid": "5233e245-d446-4945-ab68-542aa6b0a1d0",
-      "at": "2026-08-24T17:45:41.389408+00:00",
-      "agent": "frontend-mobile",
-      "event": "__implement__",
-      "from_status": "In Progress",
-      "to_status": "In Progress",
-      "thought": "Plano FCM data messages SOS:\n1) Distinguir notification vs data message no parent.\n2) Payload minimo SOS (type, childId, lat/lng, ts).\n3) Handler em foreground/background sem perder data.\n4) Evidencia didatica commitavel para CR/QA.",
-      "action": "Escrever IMPLEMENTACAO.md (matriz FCM SOS) + metrics + git commit",
-      "observation": "Artefato local pronto; Project ainda In Progress ate open_pr.",
-      "executed": [
-        "mkdir demo_workspace/T-P05-006",
-        "matriz FCM data message SOS",
-        "git commit paths da task"
-      ],
-      "ok": true,
-      "deliverables": [
-        {
-          "path": "IMPLEMENTACAO.md",
-          "what": "Matriz FCM data messages SOS: payload, handlers, riscos, criterios QA."
-        },
-        {
-          "path": "agent_metrics.json",
-          "what": "Metadados do passo para auditoria."
-        }
-      ],
-      "extra": {
-        "commit": "a3bbdb8",
-        "paths": [
-          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-006/IMPLEMENTACAO.md",
-          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-006/agent_metrics.json"
-        ]
-      }
-    },
-    {
-      "id": "step-3",
-      "uid": "6242cade-38dd-4036-9538-25d6a20de5c6",
-      "at": "2026-08-24T17:46:01.814928+00:00",
+      "uid": "12ee5ec9-9f0c-4b56-9117-7ff653c140b8",
+      "at": "2026-08-25T21:22:05.000130+00:00",
       "agent": "frontend-mobile",
       "event": "open_pr",
       "from_status": "In Progress",
       "to_status": "Ready for Code Review",
-      "thought": "Implementacao local commitada. Preciso abrir PR simbolica para o board avançar a Ready for Code Review e entregar handoff com react_trace ao reviewer (politica ReAct exige trace no open_pr).",
-      "action": "emit open_pr com branch demo/t-p05-005, pr_url de exemplo e react_trace descrevendo a matriz APNs commitada; liberar lock de claim.",
-      "observation": "Status Ready for Code Review; lock liberado; handoff aponta para frontend-mobile-reviewer.",
-      "executed": [
-        "montar react_trace da implementacao",
-        "emit_status_event(open_pr)",
-        "write_handoff → reviewer",
-        "release_lock(T-P05-005)"
-      ],
+      "thought": "Artefato de implementacao pronto; abrir PR",
+      "action": "emit:open_pr",
+      "observation": "ok=True status=Ready for Code Review | model=openai/gpt-4o-mini in=38 out=38 total=76",
+      "executed": [],
       "ok": true,
-      "deliverables": [
-        {
-          "path": "PR simbolica",
-          "what": "https://example.com/demo/T-P05-005 — evidencia de entrega para CR (demo academica)."
-        }
-      ],
       "extra": {
-        "hitl_resolved": false,
-        "gateway_status": "applied"
+        "stage": "open_pr",
+        "model": "openai/gpt-4o-mini",
+        "purpose": "summarize",
+        "llm_usage": {
+          "model": "openai/gpt-4o-mini",
+          "purpose": "summarize",
+          "input_tokens": 38,
+          "output_tokens": 38,
+          "total_tokens": 76
+        },
+        "tokens": {
+          "input": 38,
+          "output": 38,
+          "total": 76
+        },
+        "token_usage_total": {
+          "input_tokens": 557,
+          "output_tokens": 526,
+          "total_tokens": 1083,
+          "calls": 2,
+          "by_model": {
+            "x-ai/grok-4.3": {
+              "calls": 1,
+              "total_tokens": 1007
+            },
+            "openai/gpt-4o-mini": {
+              "calls": 1,
+              "total_tokens": 76
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "step-3",
+      "uid": "79f7e550-6729-4c40-91cc-483ae0db560d",
+      "at": "2026-08-25T21:22:26.650888+00:00",
+      "agent": "frontend-mobile",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "thought": "Status 'Ready for Code Review' e policy indica start_review; sem bloqueios claros e evento permitido",
+      "action": "emit:start_review",
+      "observation": "ok=True status=In Code Review | model=x-ai/grok-4.3 in=523 out=580 total=1103",
+      "executed": [],
+      "ok": true,
+      "extra": {
+        "stage": "start_review",
+        "model": "x-ai/grok-4.3",
+        "purpose": "review",
+        "llm_usage": {
+          "model": "x-ai/grok-4.3",
+          "purpose": "review",
+          "input_tokens": 523,
+          "output_tokens": 580,
+          "total_tokens": 1103
+        },
+        "tokens": {
+          "input": 523,
+          "output": 580,
+          "total": 1103
+        },
+        "token_usage_total": {
+          "input_tokens": 1080,
+          "output_tokens": 1106,
+          "total_tokens": 2186,
+          "calls": 3,
+          "by_model": {
+            "x-ai/grok-4.3": {
+              "calls": 2,
+              "total_tokens": 2110
+            },
+            "openai/gpt-4o-mini": {
+              "calls": 1,
+              "total_tokens": 76
+            }
+          }
+        }
       }
     },
     {
       "id": "step-4",
-      "uid": "1a74c6b6-76eb-44fb-9dc5-d02f41aeae69",
-      "at": "2026-08-24T17:46:23.025367+00:00",
-      "agent": "frontend-mobile-reviewer",
-      "event": "start_review",
-      "from_status": "Ready for Code Review",
-      "to_status": "In Code Review",
-      "thought": "Como frontend-mobile-reviewer, entro em Code Review focando: (a) ambiente production declarado, (b) bundle id coerente, (c) tipo de credencial APNs documentado, (d) riscos de mismatch sandbox/prod e expiracao de cert.",
-      "action": "Carregar handoff da task e emitir start_review (In Code Review).",
-      "observation": "Status In Code Review; reviewer busy no dashboard.",
-      "executed": [
-        "load_handoff(T-P05-005)",
-        "ler IMPLEMENTACAO.md / react_trace",
-        "emit_status_event(start_review)"
-      ],
+      "uid": "052d4f92-6fc0-49a5-9289-57978ec691af",
+      "at": "2026-08-25T21:22:48.138756+00:00",
+      "agent": "frontend-mobile",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "thought": "approve",
+      "action": "emit:approve_review",
+      "observation": "ok=True status=Ready for Test | model=x-ai/grok-4.3 in=444 out=405 total=849",
+      "executed": [],
       "ok": true,
       "extra": {
-        "hitl_resolved": false,
-        "gateway_status": "applied"
+        "stage": "approve_review",
+        "model": "x-ai/grok-4.3",
+        "purpose": "review",
+        "llm_usage": {
+          "model": "x-ai/grok-4.3",
+          "purpose": "review",
+          "input_tokens": 444,
+          "output_tokens": 405,
+          "total_tokens": 849
+        },
+        "tokens": {
+          "input": 444,
+          "output": 405,
+          "total": 849
+        },
+        "token_usage_total": {
+          "input_tokens": 1524,
+          "output_tokens": 1511,
+          "total_tokens": 3035,
+          "calls": 4,
+          "by_model": {
+            "x-ai/grok-4.3": {
+              "calls": 3,
+              "total_tokens": 2959
+            },
+            "openai/gpt-4o-mini": {
+              "calls": 1,
+              "total_tokens": 76
+            }
+          }
+        }
       }
     },
     {
       "id": "step-5",
-      "uid": "06d47dcc-cd69-4644-b94c-edb8bdb787d5",
-      "at": "2026-08-24T17:46:43.149954+00:00",
-      "agent": "frontend-mobile-reviewer",
-      "event": "approve_review",
-      "from_status": "In Code Review",
-      "to_status": "Ready for Test",
-      "thought": "Checklist de CR APNs:\n- Ambiente: production (ok)\n- Bundle id / team documentados no artefato (ok)\n- Fluxo de chave/cert descrito com riscos (ok)\n- Evidencia de commit local presente (ok)\n\nNao ha blocker de seguranca no escopo didatico. Proponho approve; se HITL estiver em propose_only, o humano confirma e a fila segue para qa-gate.",
-      "action": "emit approve_review (+ approve_hitl se necessario) → Ready for Test.",
-      "observation": "Status Ready for Test; handoff segue para QA.",
-      "executed": [
-        "checklist CR APNs",
-        "emit_status_event(approve_review)",
-        "HITL confirm se propose_only"
-      ],
+      "uid": "cb15a88f-ff8b-4499-91c2-0178484023c8",
+      "at": "2026-08-25T21:23:08.839443+00:00",
+      "agent": "frontend-mobile",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "thought": "Status Ready for Test + policy sugere start_test + evento permitido para role frontend-mobile",
+      "action": "emit:start_test",
+      "observation": "ok=True status=In Test | model=x-ai/grok-4.3 in=522 out=388 total=910",
+      "executed": [],
       "ok": true,
-      "findings": [
-        {
-          "severity": "pass",
-          "item": "Ambiente APNs production declarado"
-        },
-        {
-          "severity": "pass",
-          "item": "Bundle id / escopo parent app documentado"
-        },
-        {
-          "severity": "pass",
-          "item": "Riscos sandbox vs prod e expiracao de cert citados"
-        },
-        {
-          "severity": "pass",
-          "item": "Commit local de evidencia presente"
-        }
-      ],
       "extra": {
-        "hitl_resolved": false,
-        "gateway_status": "propose_only"
+        "stage": "start_test",
+        "model": "x-ai/grok-4.3",
+        "purpose": "implement_high",
+        "llm_usage": {
+          "model": "x-ai/grok-4.3",
+          "purpose": "implement_high",
+          "input_tokens": 522,
+          "output_tokens": 388,
+          "total_tokens": 910
+        },
+        "tokens": {
+          "input": 522,
+          "output": 388,
+          "total": 910
+        },
+        "token_usage_total": {
+          "input_tokens": 2046,
+          "output_tokens": 1899,
+          "total_tokens": 3945,
+          "calls": 5,
+          "by_model": {
+            "x-ai/grok-4.3": {
+              "calls": 4,
+              "total_tokens": 3869
+            },
+            "openai/gpt-4o-mini": {
+              "calls": 1,
+              "total_tokens": 76
+            }
+          }
+        }
       }
     },
     {
       "id": "step-6",
-      "uid": "69185330-3d38-4c29-a86c-be809077b1d0",
-      "at": "2026-08-24T17:47:02.219013+00:00",
-      "agent": "qa-gate",
-      "event": "start_test",
-      "from_status": "Ready for Test",
-      "to_status": "In Test",
-      "thought": "QA-gate: plano de aceite FCM data messages SOS contra o artefato.",
-      "action": "emit start_test + registrar cenarios QA-FCM-01..06",
-      "observation": "In Test; matriz de cenarios no historico.",
-      "executed": [
-        "montar matriz QA FCM",
-        "emit start_test"
-      ],
+      "uid": "f4a0cf4e-782e-4c8d-b95f-48c42903a11f",
+      "at": "2026-08-25T21:23:23.974535+00:00",
+      "agent": "frontend-mobile",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "thought": "qa_gate tipado (Fase C)",
+      "action": "emit:test_passed",
+      "observation": "ok=True status=In Pull Request | model=n/a tokens=0",
+      "executed": [],
       "ok": true,
-      "test_scenarios": [
-        {
-          "id": "QA-FCM-01",
-          "name": "Data message vs notification message",
-          "type": "config",
-          "steps": "Conferir documentacao da diferenca data/notification no artefato.",
-          "expected": "Data message SOS documentada.",
-          "result": "planned"
-        },
-        {
-          "id": "QA-FCM-02",
-          "name": "Payload minimo SOS",
-          "type": "contrato",
-          "steps": "Validar campos type/childId/coords/ts.",
-          "expected": "Campos obrigatorios listados.",
-          "result": "planned"
-        },
-        {
-          "id": "QA-FCM-03",
-          "name": "Handler foreground",
-          "type": "funcional",
-          "steps": "Checklist recebimento com app aberto.",
-          "expected": "Handler foreground descrito.",
-          "result": "planned"
-        },
-        {
-          "id": "QA-FCM-04",
-          "name": "Handler background / killed",
-          "type": "funcional",
-          "steps": "Checklist data message em background.",
-          "expected": "Caminho background coberto.",
-          "result": "planned"
-        },
-        {
-          "id": "QA-FCM-05",
-          "name": "Falha: payload incompleto",
-          "type": "negativo",
-          "steps": "Riscos de campos ausentes / parse.",
-          "expected": "Mitigacao documentada.",
-          "result": "planned"
-        },
-        {
-          "id": "QA-FCM-06",
-          "name": "Smoke latencia SOS (KR O1)",
-          "type": "smoke",
-          "steps": "Amarrar data message ao KR <30s.",
-          "expected": "Trilha critica citada.",
-          "result": "planned"
-        }
-      ],
       "extra": {
-        "hitl_resolved": false,
-        "gateway_status": "applied"
+        "stage": "test_passed",
+        "token_usage_total": {
+          "input_tokens": 2046,
+          "output_tokens": 1899,
+          "total_tokens": 3945,
+          "calls": 5,
+          "by_model": {
+            "x-ai/grok-4.3": {
+              "calls": 4,
+              "total_tokens": 3869
+            },
+            "openai/gpt-4o-mini": {
+              "calls": 1,
+              "total_tokens": 76
+            }
+          }
+        }
       }
     },
     {
       "id": "step-7",
-      "uid": "4bbd186d-0716-41f1-8a6c-394f758c5a94",
-      "at": "2026-08-24T17:47:21.256728+00:00",
-      "agent": "qa-gate",
-      "event": "test_passed",
-      "from_status": "In Test",
-      "to_status": "In Pull Request",
-      "thought": "Matriz QA-FCM-01..06 PASS no escopo didatico. Liberar In Pull Request.",
-      "action": "Registrar PASS e emit test_passed",
-      "observation": "In Pull Request no board; sync Project.",
-      "executed": [
-        "executar QA-FCM-01..06",
-        "emit test_passed"
-      ],
-      "ok": true,
-      "test_scenarios": [
-        {
-          "id": "QA-FCM-01",
-          "name": "Data message vs notification message",
-          "type": "config",
-          "steps": "Conferir artefato.",
-          "expected": "Data message documentada.",
-          "result": "PASS",
-          "notes": "Matriz FCM distingue data vs notification."
-        },
-        {
-          "id": "QA-FCM-02",
-          "name": "Payload minimo SOS",
-          "type": "contrato",
-          "steps": "Campos obrigatorios.",
-          "expected": "Contrato presente.",
-          "result": "PASS",
-          "notes": "type/childId/coords/ts listados."
-        },
-        {
-          "id": "QA-FCM-03",
-          "name": "Handler foreground",
-          "type": "funcional",
-          "steps": "Checklist foreground.",
-          "expected": "Coberto.",
-          "result": "PASS",
-          "notes": "Handler foreground no artefato."
-        },
-        {
-          "id": "QA-FCM-04",
-          "name": "Handler background / killed",
-          "type": "funcional",
-          "steps": "Checklist background.",
-          "expected": "Coberto.",
-          "result": "PASS",
-          "notes": "Background/killed descritos."
-        },
-        {
-          "id": "QA-FCM-05",
-          "name": "Falha: payload incompleto",
-          "type": "negativo",
-          "steps": "Riscos.",
-          "expected": "Mitigacao.",
-          "result": "PASS",
-          "notes": "Riscos de parse documentados."
-        },
-        {
-          "id": "QA-FCM-06",
-          "name": "Smoke latencia SOS (KR O1)",
-          "type": "smoke",
-          "steps": "KR O1.",
-          "expected": "Trilha critica.",
-          "result": "PASS",
-          "notes": "Amarrado ao SOS <30s."
-        }
-      ],
-      "extra": {
-        "hitl_resolved": false,
-        "gateway_status": "applied"
-      }
-    },
-    {
-      "id": "step-8",
-      "uid": "868b2bcb-2fbc-46c9-9415-410058f1bc91",
-      "at": "2026-08-24T17:47:40.764781+00:00",
-      "agent": "qa-gate",
+      "uid": "db4befa7-9ce4-4600-9121-bcc8a5f6c990",
+      "at": "2026-08-25T21:23:40.666402+00:00",
+      "agent": "frontend-mobile",
       "event": "merge_pr",
       "from_status": "In Pull Request",
       "to_status": "Done",
-      "thought": "QA valida FCM SOS no Project #2: cenarios PASS + HITL. Marco Done no board local e Project.",
-      "action": "emit merge_pr (HITL) → Done no Project #2",
-      "observation": "Done local + remoto (ou outbox se gh falhar).",
-      "executed": [
-        "HITL merge",
-        "emit merge_pr",
-        "Project Status Done"
-      ],
+      "thought": "pipeline Fase C — HITL no merge",
+      "action": "emit:merge_pr",
+      "observation": "ok=True status=Done | model=n/a tokens=0",
+      "executed": [],
       "ok": true,
       "extra": {
-        "hitl_resolved": true,
-        "gateway_status": "applied"
+        "stage": "merge_pr",
+        "token_usage_total": {
+          "input_tokens": 2046,
+          "output_tokens": 1899,
+          "total_tokens": 3945,
+          "calls": 5,
+          "by_model": {
+            "x-ai/grok-4.3": {
+              "calls": 4,
+              "total_tokens": 3869
+            },
+            "openai/gpt-4o-mini": {
+              "calls": 1,
+              "total_tokens": 76
+            }
+          }
+        }
       }
     }
   ],
-  "title": "Configurar FCM data messages SOS",
+  "token_usage": {
+    "input_tokens": 2046,
+    "output_tokens": 1899,
+    "total_tokens": 3945,
+    "calls": 5,
+    "by_model": {
+      "x-ai/grok-4.3": {
+        "calls": 4,
+        "total_tokens": 3869,
+        "purposes": [
+          "implement_high",
+          "review"
+        ]
+      },
+      "openai/gpt-4o-mini": {
+        "calls": 1,
+        "total_tokens": 76,
+        "purposes": [
+          "summarize"
+        ]
+      }
+    }
+  },
   "final_status": "Done",
-  "detail_url": "tasks/T-P05-006.html"
+  "detail_url": "tasks/T-P05-006.html",
+  "last_issue_comment": {
+    "ok": true,
+    "issue": "87"
+  }
 }

@@ -271,3 +271,4 @@ T-P13-001,CNPJ páginas legais,frontend-web,,produto,guardiao-familia-site,E-P13
 T-P13-002,Chatbot widget site,frontend-web,,produto,guardiao-familia-site,E-P13,12,270,2,2.4,1.0,done,False,"track=produto,repo=guardiao-familia-site,epic=E-P13",
 T-P13-003,Links download pré-lançamento,frontend-web,,produto,guardiao-familia-site,E-P13,12,271,2,2.4,1.0,done,False,"track=produto,repo=guardiao-familia-site,epic=E-P13",
 T-P13-004,Campanha 30 dias estrutura,frontend-web,,produto,guardiao-familia-site,E-P13,12,272,2,2.4,1.0,done,False,"track=produto,repo=guardiao-familia-site,epic=E-P13",
+T-P13-012,Atualizar hero home: Tranquilidade para sua família,frontend-web,,produto,guardiao-familia-site,E-P13,12,0,1,3.0,1.5,todo,False,"track=produto,repo=guardiao-familia-site,epic=E-P13",

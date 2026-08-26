@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Guardião Família — Mapa de orquestração</title>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "dark",
+      securityLevel: "loose",
+      flowchart: { curve: "basis", htmlLabels: true },
+      themeVariables: {
+        primaryColor: "#1e3a4c",
+        primaryTextColor: "#e8eef4",
+        primaryBorderColor: "#3d6a80",
+        lineColor: "#8fa3b5",
+        secondaryColor: "#243040",
+        tertiaryColor: "#152028",
+        fontFamily: "Segoe UI, system-ui, sans-serif",
+      },
+    });
+    window.mermaid = mermaid;
+  </script>
+  <style>
+    :root {
+      --bg: #0e1419;
+      --panel: #161e27;
+      --panel2: #1c2632;
+      --text: #e8eef4;
+      --muted: #8fa3b5;
+      --line: #2a3848;
+      --accent: #3d9aad;
+      --accent2: #c4a35a;
+      --ok: #4caf82;
+      --warn: #d4a017;
+      --bad: #d16b6b;
+      --chip: #243040;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    a { color: var(--accent); }
+    header.hero {
+      padding: 28px 28px 20px;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+    }
+    header.hero h1 { margin: 0 0 6px; font-size: 1.65rem; font-weight: 650; }
+    header.hero .sub { color: var(--muted); max-width: 72ch; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 20px 28px 64px; }
+    nav.toc {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin: 16px 0 28px;
+    }
+    nav.toc a {
+      text-decoration: none;
+      background: var(--chip);
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+    nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
+    h2 {
+      margin: 36px 0 12px;
+      font-size: 1.25rem;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+    }
+    h3 { margin: 20px 0 8px; font-size: 1.02rem; color: var(--accent2); }
+    .muted { color: var(--muted); font-size: 0.92rem; }
+    .callout {
+      background: var(--panel2);
+      border-left: 3px solid var(--accent);
+      padding: 12px 14px;
+      margin: 12px 0 18px;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout.warn { border-left-color: var(--warn); }
+    .layers {
+      display: grid;
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .layer {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 12px;
+      align-items: start;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .layer .tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-top: 2px;
+    }
+    .mermaid {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 12px 0 20px;
+    }
+    details.step {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    details.step[open] { border-color: var(--accent); }
+    details.step summary {
+      cursor: pointer;
+      padding: 12px 14px;
+      font-weight: 600;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    details.step summary::-webkit-details-marker { display: none; }
+    details.step .body { padding: 0 14px 14px; border-top: 1px solid var(--line); }
+    .pill {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--chip);
+      color: var(--muted);
+    }
+    .pill.llm { border-color: #3d6a80; color: var(--accent); }
+    .pill.mcp { border-color: #6a5a3d; color: var(--accent2); }
+    .pill.gw { border-color: #3d6a55; color: var(--ok); }
+    .pill.agent { border-color: #5a3d6a; color: #c9a0e8; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin: 10px 0 18px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: var(--panel2); color: var(--muted); font-weight: 600; }
+    code, .mono {
+      font-family: ui-monospace, Consolas, monospace;
+      font-size: 0.86em;
+    }
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 800px) {
+      .layer { grid-template-columns: 1fr; }
+      .grid2 { grid-template-columns: 1fr; }
+    }
+    .refs a { display: block; margin: 4px 0; }
+    footer {
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0; }
+    .tabs button {
+      background: var(--chip);
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.85rem;
+    }
+    .tabs button.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap" style="padding-top:0;padding-bottom:0">
+      <div class="muted">Módulo 8 · docs/autonomia/orquestracao</div>
+      <h1>Mapa didático da orquestração</h1>
+      <p class="sub">
+        Fluxo completo: entrada CLI/Cursor → LangGraph → LLM (OpenRouter) e tools (MCP/bridge) →
+        <strong>gateway</strong> (porta única de Status) → board local + Project #2 · traces LangSmith · HTML ReAct.
+      </p>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <nav class="toc">
+      <a href="#camadas">Camadas</a>
+      <a href="#grafo">StateGraph</a>
+      <a href="#etapas">Etapas</a>
+      <a href="#llm">LLM / tiers</a>
+      <a href="#mcp">MCP</a>
+      <a href="#agentes">Agentes</a>
+      <a href="#modes">Modes</a>
+      <a href="#obs">Observabilidade</a>
+      <a href="#refs">Referências</a>
+    </nav>
+
+    <div class="callout">
+      <strong>Regra de ouro:</strong> LangGraph e MCP <em>chamam</em>
+      <code>lib/gateway.emit_status_event</code>. Não existe segunda porta de Status.
+      Código de produto continua via Cursor dispatch / demo local — o LLM de orquestração decide e resume; não substitui o Kanban.
+      <strong>CrewAI foi removido</strong> — orquestração somente LangGraph.
+    </div>
+
+    <!-- ========== CAMADAS ========== -->
+    <h2 id="camadas">1. Onde cada tecnologia começa</h2>
+    <p class="muted">Leia de cima para baixo: a orquestração “desce” até o board; observabilidade “sobe” em paralelo.</p>
+    <div class="layers">
+      <div class="layer">
+        <div class="tag">Entrada</div>
+        <div>
+          <strong>CLI / Cursor / demo</strong><br/>
+          <code>scripts/langgraph_run.py</code> · <code>scripts/demo_apresentacao.py</code> · chat Cursor com MCP
+          <code>guardiao-familia-agents</code>. Env: <code>lib/env_load.ensure_env()</code>
+          (OpenRouter, LangSmith, SSL).
+        </div>
+      </div>
+      <div class="layer">
+        <div class="tag">Orquestração</div>
+        <div>
+          <strong>LangGraph</strong> (<code>langgraph_app/graph.py</code>) —
+          StateGraph com loop até Done / HITL / max_steps.
+          Flag <code>GUARDIAO_ORCHESTRATOR=langgraph</code>.
+          Pasta <code>crew/</code> = env + output runtime (não orquestra).
+        </div>
+      </div>
+      <div class="layer">
+        <div class="tag">Decisão LLM</div>
+        <div>
+          <strong>OpenRouter</strong> via <code>langchain_openai.ChatOpenAI</code>
+          (<code>langgraph_app/llm.py</code>) + <code>lib/model_tier.select_model</code>
+          (Fase A). Purpose: route (sem LLM), summarize, implement_*, review.
+        </div>
+      </div>
+      <div class="layer">
+        <div class="tag">Tools</div>
+        <div>
+          <strong>MCP</strong> <code>guardiao_mcp/</code> (Cursor) <em>ou</em>
+          <strong>tools_bridge</strong> in-process no grafo (mesmas APIs).
+          Escrita default <code>dry_run=true</code>; dispatch só com
+          <code>GUARDIAO_MCP_ALLOW_DISPATCH=1</code>.
+        </div>
+      </div>
+      <div class="layer">
+        <div class="tag">Domínio</div>
+        <div>
+          <strong>Gateway</strong> <code>lib/gateway.py</code> + board, HITL, handoff, router, react_policy.
+          Project #2 via <code>gh</code> quando autenticado.
+        </div>
+      </div>
+      <div class="layer">
+        <div class="tag">Código</div>
+        <div>
+          <strong>Cursor Automation / SDK</strong> (<code>GUARDIAO_CURSOR_MODEL</code>) —
+          implementação real nos repos; na demo/dry_run o nó <code>implement</code> só resume / artefato local.
+        </div>
+      </div>
+      <div class="layer">
+        <div class="tag">Obs.</div>
+        <div>
+          <strong>LangSmith</strong> (Fase D) + <code>crew/output/observability/tasks/*.html</code>
+          (ReAct + tokens) + dataset estático <code>evals/</code>.
+        </div>
+      </div>
+    </div>
+
+    <div class="mermaid">
+flowchart TB
+  subgraph IN["Entrada"]
+    CLI["langgraph_run.py / demo / Cursor"]
+  end
+  subgraph ORCH["Orquestração"]
+    LG["LangGraph StateGraph"]
+    LS["LangSmith traces"]
+  end
+  subgraph DEC["Decisão"]
+    MT["model_tier.select_model"]
+    OR["OpenRouter ChatOpenAI"]
+  end
+  subgraph TOOLS["Tools"]
+    MCP["guardiao_mcp FastMCP"]
+    BR["tools_bridge in-process"]
+  end
+  subgraph DOM["Domínio"]
+    GW["gateway.emit_status_event"]
+    BD["board JSON + Project #2"]
+    HT["HITL queue"]
+  end
+  CLI --> LG
+  LG --> MT
+  MT --> OR
+  LG --> BR
+  CLI -.-> MCP
+  MCP --> GW
+  BR --> GW
+  GW --> BD
+  GW --> HT
+  LG --> LS
+    </div>
+
+    <!-- ========== GRAFO ========== -->
+    <h2 id="grafo">2. StateGraph — nós e roteamento</h2>
+    <p class="muted">Arquivo: <code>langgraph_app/graph.py</code>. Entry: <code>route</code>. Após cada <code>apply</code>, volta a <code>route</code> até Done/HITL/max_steps.</p>
+
+    <div class="mermaid">
+flowchart TD
+  R[route] --> C[load_context]
+  C -->|In Progress| I[implement]
+  C -->|Ready/In Code Review| RV[review]
+  C -->|Ready/In Test| Q[qa]
+  C -->|In Pull Request| H[hitl]
+  C -->|Todo / outros| D[decide]
+  C -->|Done / erro / max| E((END))
+  I --> A[apply]
+  RV --> A
+  Q --> A
+  D --> A
+  H --> A
+  A -->|continua| R
+  A -->|Done / HITL / max| E
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nó LangGraph</th>
+          <th>O que faz</th>
+          <th>LLM?</th>
+          <th>Span LangSmith</th>
+          <th>Próximo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>route</code></td>
+          <td>Lê task / Status; <code>select_model(purpose=route)</code></td>
+          <td>Não (tier só)</td>
+          <td>nó graph</td>
+          <td><code>load_context</code></td>
+        </tr>
+        <tr>
+          <td><code>load_context</code></td>
+          <td>Handoff / contexto; roteia por Status</td>
+          <td>Não</td>
+          <td>nó graph</td>
+          <td>implement / review / qa / hitl / decide</td>
+        </tr>
+        <tr>
+          <td><code>decide</code></td>
+          <td>Policy + LLM (summary/rationale); evento canônico</td>
+          <td>Sim (structured)</td>
+          <td><code>decide</code></td>
+          <td><code>apply</code></td>
+        </tr>
+        <tr>
+          <td><code>implement</code></td>
+          <td>Artefato demo + summarize; força <code>open_pr</code></td>
+          <td>Sim (texto)</td>
+          <td><code>implement</code></td>
+          <td><code>apply</code></td>
+        </tr>
+        <tr>
+          <td><code>review</code></td>
+          <td>Veredito approve / request_changes</td>
+          <td>Sim (structured)</td>
+          <td><code>review</code></td>
+          <td><code>apply</code></td>
+        </tr>
+        <tr>
+          <td><code>qa</code></td>
+          <td>Gate tipado → <code>test_passed</code></td>
+          <td>Não (MVP)</td>
+          <td><code>qa</code></td>
+          <td><code>apply</code></td>
+        </tr>
+        <tr>
+          <td><code>hitl</code></td>
+          <td>Prepara <code>merge_pr</code>; live pode pausar</td>
+          <td>Não</td>
+          <td><code>hitl</code></td>
+          <td><code>apply</code></td>
+        </tr>
+        <tr>
+          <td><code>apply</code></td>
+          <td>Emite/simula evento; histórico HTML + tokens</td>
+          <td>Não (usa last_llm_usage)</td>
+          <td><code>claim</code> / <code>open_pr</code> / <code>merge</code>…</td>
+          <td><code>route</code> ou END</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ========== ETAPAS ========== -->
+    <h2 id="etapas">3. Detalhe de cada etapa do Kanban</h2>
+    <p class="muted">MVP Fase C compacta alguns Status intermediários (salta In Code Review / In Test via approve_review / test_passed).</p>
+
+    <details class="step" open>
+      <summary>
+        <span class="pill">1</span> Todo → In Progress
+        <span class="pill agent">orchestrator / creator</span>
+        <span class="pill llm">LLM decide</span>
+        <span class="pill gw">claim</span>
+      </summary>
+      <div class="body">
+        <p><strong>Nós:</strong> <code>route</code> → <code>load_context</code> → <code>decide</code> → <code>apply</code></p>
+        <p><strong>Tecnologia:</strong> policy sugere <code>claim</code>; LLM preenche summary/rationale
+          (<code>purpose=implement_low|high</code> (SOS → high). Apply simula (dry_run) ou chama gateway.</p>
+        <p><strong>MCP equivalente:</strong> <code>emit_status_event(event=claim)</code>, <code>pick_task_tool</code>, <code>resolve_agent_for_board_event</code></p>
+        <p><strong>Agente:</strong> role do CSV (<code>TASK_AGENT_MAP</code>) — ex. <code>frontend-mobile</code> em T-P05-006.</p>
+      </div>
+    </details>
+
+    <details class="step">
+      <summary>
+        <span class="pill">2</span> In Progress → Ready for Code Review
+        <span class="pill agent">creator</span>
+        <span class="pill llm">summarize</span>
+        <span class="pill gw">open_pr</span>
+      </summary>
+      <div class="body">
+        <p><strong>Nós:</strong> <code>route</code> → <code>load_context</code> → <code>implement</code> → <code>apply</code></p>
+        <p><strong>Tecnologia:</strong> nó implement (workspace demo ou só resumo); LLM
+          <code>purpose=summarize</code> (mini). Evento forçado <code>open_pr</code>.</p>
+        <p><strong>Código real:</strong> fora do grafo — Cursor dispatch / skill do agente
+          (<code>agents/*.agent.md</code> quando não é dry_run acadêmico.</p>
+        <p><strong>MCP:</strong> <code>write_handoff_tool</code>, <code>append_task_action_tool</code>,
+          <code>dispatch_job_tool</code> (gated), <code>emit_status_event(open_pr)</code></p>
+      </div>
+    </details>
+
+    <details class="step">
+      <summary>
+        <span class="pill">3</span> Ready for Code Review → Ready for Test
+        <span class="pill agent">*-reviewer</span>
+        <span class="pill llm">review</span>
+        <span class="pill gw">approve_review</span>
+      </summary>
+      <div class="body">
+        <p><strong>Nós:</strong> <code>review</code> → <code>apply</code></p>
+        <p><strong>Tecnologia:</strong> structured output <code>ReviewVerdict</code>;
+          modelo high se risco / purpose review. Approve → <code>approve_review</code>;
+          senão <code>request_changes</code> (volta In Progress).</p>
+        <p><strong>Agente doc:</strong> <code>agents/reviewers/*-reviewer.agent.md</code></p>
+      </div>
+    </details>
+
+    <details class="step">
+      <summary>
+        <span class="pill">4</span> Ready for Test → In Pull Request
+        <span class="pill agent">qa-gate</span>
+        <span class="pill gw">test_passed</span>
+      </summary>
+      <div class="body">
+        <p><strong>Nós:</strong> <code>qa</code> → <code>apply</code></p>
+        <p><strong>Tecnologia:</strong> gate tipado (MVP sem LLM). Evento <code>test_passed</code>.
+          Em operação plena existiria <code>start_test</code> / <code>test_failed_bug</code>.</p>
+      </div>
+    </details>
+
+    <details class="step">
+      <summary>
+        <span class="pill">5</span> In Pull Request → Done
+        <span class="pill agent">devops-cicd + humano</span>
+        <span class="pill mcp">HITL</span>
+        <span class="pill gw">merge_pr</span>
+      </summary>
+      <div class="body">
+        <p><strong>Nós:</strong> <code>hitl</code> → <code>apply</code></p>
+        <p><strong>Modes:</strong></p>
+        <ul>
+          <li><code>dry_run</code> — simula Done</li>
+          <li><code>demo</code> — gateway com <code>force_hitl_approved</code></li>
+          <li><code>live</code> — pode ficar <code>hitl_pending</code>; humano
+            <code>approve_hitl</code> (MCP/dashboard)</li>
+        </ul>
+        <p>Não há Status “Awaiting Human” no Kanban — a pausa vive em <code>hitl_queue</code>.</p>
+      </div>
+    </details>
+
+    <div class="mermaid">
+sequenceDiagram
+  participant CLI as langgraph_run
+  participant LG as LangGraph
+  participant LLM as OpenRouter
+  participant BR as tools_bridge
+  participant GW as gateway
+  participant OBS as HTML/LangSmith
+  CLI->>LG: run_once(task, mode)
+  LG->>LG: route + load_context
+  LG->>LLM: decide / implement / review
+  LLM-->>LG: decision + usage
+  LG->>BR: emit / append_task_action
+  BR->>GW: emit_status_event
+  GW-->>BR: ok / awaiting_human
+  LG->>OBS: spans + task HTML tokens
+  LG-->>CLI: Done / hitl_pending
+    </div>
+
+    <!-- ========== LLM ========== -->
+    <h2 id="llm">4. Modelos LLM (Fase A)</h2>
+    <div class="grid2">
+      <div>
+        <table>
+          <thead><tr><th>Purpose</th><th>Uso no grafo</th><th>Modelo típico</th></tr></thead>
+          <tbody>
+            <tr><td><code>route</code></td><td>só metadata</td><td>— (sem call)</td></tr>
+            <tr><td><code>summarize</code></td><td>implement</td><td>gpt-4o-mini</td></tr>
+            <tr><td><code>implement_low</code></td><td>decide</td><td>gpt-4o-mini</td></tr>
+            <tr><td><code>implement_high</code></td><td>decide (SOS…)</td><td>x-ai/grok-4.3</td></tr>
+            <tr><td><code>review</code></td><td>review_node</td><td>high ou default</td></tr>
+            <tr><td><code>cursor</code></td><td>dispatch código</td><td>composer-2.5</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        Hints de risco em <code>lib/model_tier.HIGH_HINTS</code>:
+        sos, pagamento, lgpd, auth, terraform, release…
+        Env: <code>GUARDIAO_LLM_DEFAULT</code>, <code>GUARDIAO_LLM_HIGH</code>,
+        <code>OPENAI_API_BASE=https://openrouter.ai/api/v1</code>.
+        Relatório: <a href="../fases/RELATORIO_FASE_A_MODEL_TIER.md">Fase A</a>.
+      </div>
+    </div>
+
+    <!-- ========== MCP ========== -->
+    <h2 id="mcp">5. MCP — tools e quando entram</h2>
+    <p class="muted">Server: <code>python -m guardiao_mcp</code> · Cursor: <code>guardiao-familia-agents</code>.
+      No grafo, o bridge chama as mesmas libs <em>sem</em> subprocess MCP.</p>
+    <table>
+      <thead>
+        <tr><th>Grupo</th><th>Tools</th><th>Quando no fluxo</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Gateway / HITL</td>
+          <td><code>emit_status_event</code>, <code>list_hitl_queue</code>, <code>approve_hitl</code></td>
+          <td>Todo apply; merge live</td>
+        </tr>
+        <tr>
+          <td>Board / agents</td>
+          <td><code>load_tasks_tool</code>, <code>pick_task_tool</code>, <code>list_idle_agents_tool</code>,
+            <code>resolve_agent_for_board_event</code>, <code>mark_agent_idle</code></td>
+          <td>Roteamento / claim / idle</td>
+        </tr>
+        <tr>
+          <td>Handoff / history</td>
+          <td><code>get_handoff</code>, <code>write_handoff_tool</code>, <code>append_task_action_tool</code></td>
+          <td>Entre agentes; HTML ReAct</td>
+        </tr>
+        <tr>
+          <td>Model / obs</td>
+          <td><code>select_model_tier</code>, <code>snapshot_observability</code>, <code>list_mcp_tools</code></td>
+          <td>Tier + dashboard</td>
+        </tr>
+        <tr>
+          <td>Dispatch</td>
+          <td><code>drain_dispatch_queue</code>, <code>dispatch_job_tool</code></td>
+          <td>Fila Cursor (gated)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- ========== AGENTES ========== -->
+    <h2 id="agentes">6. Agentes (papéis) × Status</h2>
+    <table>
+      <thead>
+        <tr><th>Status</th><th>Agente</th><th>Doc</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Todo</td><td>orchestrator / creator elegível</td><td>mapa CSV + policy</td></tr>
+        <tr><td>In Progress</td><td>creator (backend, frontend-mobile, …)</td><td><code>agents/*.agent.md</code></td></tr>
+        <tr><td>Code Review</td><td><code>*-reviewer</code></td><td><code>agents/reviewers/</code></td></tr>
+        <tr><td>Test</td><td>qa-gate / qa</td><td><code>agents/qa-gate.agent.md</code></td></tr>
+        <tr><td>In Pull Request</td><td>devops-cicd + HITL humano</td><td><code>agents/devops-cicd.agent.md</code></td></tr>
+      </tbody>
+    </table>
+    <p class="muted">Creators: backend, frontend-mobile, frontend-web, database, cloud-infra, devops-cicd, stores-release, qa, qa-author…</p>
+
+    <!-- ========== MODES ========== -->
+    <h2 id="modes">7. Modes de execução</h2>
+    <div class="tabs" id="mode-tabs">
+      <button type="button" class="active" data-tab="dry">dry_run</button>
+      <button type="button" data-tab="demo">demo</button>
+      <button type="button" data-tab="live">live</button>
+    </div>
+    <div id="tab-dry" class="tab-panel active">
+      <div class="callout">
+        LLM + simulação de Status (não grava board). Ideal para banca local e evals.
+        Histórico HTML ainda registra tokens/modelo. Comando:
+        <code>python scripts/langgraph_run.py --task T-P05-006 --mode dry_run --from-zero</code>
+      </div>
+    </div>
+    <div id="tab-demo" class="tab-panel">
+      <div class="callout">
+        Emite gateway de verdade; merge com <code>force_hitl_approved</code>.
+        Dashboard live reflete Status. Bom smoke “quase produção”.
+      </div>
+    </div>
+    <div id="tab-live" class="tab-panel">
+      <div class="callout warn">
+        Emite gateway; merge pode pausar em HITL. Aprovar via MCP
+        <code>approve_hitl</code> ou fluxo operacional. Não pular HITL em produção acadêmica/piloto.
+      </div>
+    </div>
+
+    <!-- ========== OBS ========== -->
+    <h2 id="obs">8. Observabilidade e regressão</h2>
+    <div class="grid2">
+      <div>
+        <h3>Didático (banca)</h3>
+        <ul>
+          <li><code>crew/output/observability/dashboard.html</code></li>
+          <li><code>tasks/{id}.html</code> — thought / action / tokens</li>
+          <li><code>workflow.jsonl</code></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Engenharia (Fase D)</h3>
+        <ul>
+          <li>LangSmith projeto <code>guardiao-familia-agents</code></li>
+          <li>Spans: claim, open_pr, review, qa, hitl, merge</li>
+          <li>Dataset estático <code>evals/datasets/kanban_pipeline.json</code></li>
+          <li><code>python scripts/langsmith_eval.py</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ========== REFS ========== -->
+    <h2 id="refs">9. Referências (relatórios .md)</h2>
+    <div class="refs">
+      <a href="../ESTADO_ATUAL_FLUXO_E_PROCESSO.md">Estado atual — fluxo e processo</a>
+      <a href="../CONFIGURACAO_E_TECNOLOGIA.md">Configuração e tecnologia</a>
+      <a href="../EXECUCAO_E_OBSERVABILIDADE.md">Execução e observabilidade</a>
+      <a href="../GUIA_LANGGRAPH_MCP_LLM.md">Guia LangGraph + MCP + LLM</a>
+      <a href="../fases/RELATORIO_FASE_A_MODEL_TIER.md">Relatório Fase A — model tier</a>
+      <a href="../fases/RELATORIO_FASE_B_MCP.md">Relatório Fase B — MCP</a>
+      <a href="../fases/RELATORIO_FASE_C_LANGGRAPH.md">Relatório Fase C — LangGraph</a>
+      <a href="../fases/RELATORIO_FASE_D_LANGSMITH.md">Relatório Fase D — LangSmith + dataset</a>
+      <a href="README.md">README desta pasta</a>
+    </div>
+
+    <footer>
+      Guardião Família · módulo 8 · mapa de orquestração · Mermaid 11 (CDN).
+      Atualize este HTML quando nós do grafo ou catálogo MCP mudarem.
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll("#mode-tabs button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#mode-tabs button").forEach((b) => b.classList.remove("active"));
+        document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>

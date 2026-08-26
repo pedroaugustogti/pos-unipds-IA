@@ -1,334 +1,298 @@
 {
   "task_id": "T-P05-005",
-  "updated_at": "2026-08-24T17:25:39.308595+00:00",
+  "updated_at": "2026-08-25T21:28:49.873380+00:00",
   "steps": [
     {
       "id": "step-1",
-      "uid": "66d8e53e-6632-49fb-9461-698d35784c67",
-      "at": "2026-08-24T17:23:32.435782+00:00",
+      "uid": "e0c0d1df-ec45-45bd-b7e9-dde3e1d6ba13",
+      "at": "2026-08-25T21:28:40.681539+00:00",
       "agent": "frontend-mobile",
       "event": "claim",
       "from_status": "Todo",
       "to_status": "In Progress",
-      "thought": "A task T-P05-005 (Configurar APNs production certificates) esta em Todo, sem depends_on pendente no mapa. O parent app precisa de certificados APNs de producao para push confiavel (SOS/alertas familiares). Vou claimar com o role frontend-mobile, adquirir lock WIP e comecar pela matriz de certificados e bundle id antes de qualquer commit.",
-      "action": "Validar elegibilidade (WIP/depends_on), emitir claim no gateway e mover o card para In Progress com lock do creator.",
-      "observation": "Board local em In Progress; agente frontend-mobile busy; historico da task aberto para registrar o restante do ciclo.",
-      "executed": [
-        "check_claim_allowed(frontend-mobile)",
-        "dependencies_satisfied(T-P05-005)",
-        "emit_status_event(claim)",
-        "update_local_status(In Progress)",
-        "acquire_lock WIP"
-      ],
+      "thought": "A tarefa está no status 'Todo' e é apropriado reivindicá-la para que o trabalho possa ser iniciado. Isso é consistente com a política que sugere o evento 'claim' como o próximo passo.",
+      "action": "simulate:claim",
+      "observation": "Todo->In Progress | model=openai/gpt-4o-mini in=323 out=83 total=406",
+      "executed": [],
       "ok": true,
       "extra": {
-        "hitl_resolved": false,
-        "gateway_status": "applied"
+        "stage": "claim",
+        "model": "openai/gpt-4o-mini",
+        "purpose": "implement_low",
+        "llm_usage": {
+          "model": "openai/gpt-4o-mini",
+          "purpose": "implement_low",
+          "input_tokens": 323,
+          "output_tokens": 83,
+          "total_tokens": 406
+        },
+        "tokens": {
+          "input": 323,
+          "output": 83,
+          "total": 406
+        },
+        "token_usage_total": {
+          "input_tokens": 323,
+          "output_tokens": 83,
+          "total_tokens": 406,
+          "calls": 1,
+          "by_model": {
+            "openai/gpt-4o-mini": {
+              "calls": 1,
+              "total_tokens": 406
+            }
+          }
+        }
       }
     },
     {
       "id": "step-2",
-      "uid": "e25f0235-0e31-406c-8881-2fe2e2eabefb",
-      "at": "2026-08-24T17:23:38.935829+00:00",
-      "agent": "frontend-mobile",
-      "event": "__implement__",
-      "from_status": "In Progress",
-      "to_status": "In Progress",
-      "thought": "Com a task claimada, preciso entregar evidencia didatica de implementacao APNs production sem depender do SDK Cursor ao vivo.\n\nPlano de implementacao:\n1) Documentar ambiente production (nao sandbox) e bundle id do parent app.\n2) Descrever o fluxo de certificado: Apple Developer → Key/Certificate → export .p12/.p8 → configuracao no provedor de push (Expo/FCM bridge / APNs direto).\n3) Listar riscos: certificado expirado, ambiente errado (sandbox vs prod), mismatch de bundle id, token device invalido.\n4) Gerar artefato local commitavel (IMPLEMENTACAO.md + metricas) para o reviewer e o QA terem evidencia concreta no historico.\n\nDecisao: manter o trabalho no demo_workspace da task (escopo academico), com commit git apenas desses arquivos — suficiente para narrar claim→implement→PR.",
-      "action": "Escrever IMPLEMENTACAO.md com matriz APNs (ambiente, bundle, certs, validacoes) e agent_metrics.json; git add + git commit local desses paths.",
-      "observation": "Artefatos gravados em crew/output/demo_workspace/T-P05-005/; commit local criado; pronto para open_pr simbolico com react_trace.",
-      "executed": [
-        "mkdir demo_workspace/T-P05-005",
-        "escrever matriz APNs em IMPLEMENTACAO.md",
-        "escrever agent_metrics.json (agent_role, demo=true)",
-        "git add (apenas paths da task)",
-        "git commit (author demo local)"
-      ],
-      "ok": true,
-      "deliverables": [
-        {
-          "path": "IMPLEMENTACAO.md",
-          "what": "Matriz didatica APNs production: ambiente, bundle id, tipo de chave (Auth Key .p8 ou certificado .p12), checklist de configuracao no parent app e notas de validacao de push."
-        },
-        {
-          "path": "agent_metrics.json",
-          "what": "Metadados do passo (task_id, agent_role, timestamp) para auditoria no dashboard."
-        }
-      ],
-      "extra": {
-        "commit": "3918b83",
-        "paths": [
-          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-005/IMPLEMENTACAO.md",
-          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-005/agent_metrics.json"
-        ]
-      }
-    },
-    {
-      "id": "step-3",
-      "uid": "eee44a88-4c27-4959-b8bf-474380003613",
-      "at": "2026-08-24T17:23:58.567024+00:00",
+      "uid": "7bece3bd-a9d0-4024-9d51-787d4dc7c14b",
+      "at": "2026-08-25T21:28:42.155511+00:00",
       "agent": "frontend-mobile",
       "event": "open_pr",
       "from_status": "In Progress",
       "to_status": "Ready for Code Review",
-      "thought": "Implementacao local commitada. Preciso abrir PR simbolica para o board avançar a Ready for Code Review e entregar handoff com react_trace ao reviewer (politica ReAct exige trace no open_pr).",
-      "action": "emit open_pr com branch demo/t-p05-005, pr_url de exemplo e react_trace descrevendo a matriz APNs commitada; liberar lock de claim.",
-      "observation": "Status Ready for Code Review; lock liberado; handoff aponta para frontend-mobile-reviewer.",
-      "executed": [
-        "montar react_trace da implementacao",
-        "emit_status_event(open_pr)",
-        "write_handoff → reviewer",
-        "release_lock(T-P05-005)"
-      ],
+      "thought": "Artefato de implementacao pronto; abrir PR",
+      "action": "simulate:open_pr",
+      "observation": "In Progress->Ready for Code Review | model=openai/gpt-4o-mini in=37 out=35 total=72",
+      "executed": [],
       "ok": true,
-      "deliverables": [
-        {
-          "path": "PR simbolica",
-          "what": "https://example.com/demo/T-P05-005 — evidencia de entrega para CR (demo academica)."
-        }
-      ],
       "extra": {
-        "hitl_resolved": false,
-        "gateway_status": "applied"
+        "stage": "open_pr",
+        "model": "openai/gpt-4o-mini",
+        "purpose": "summarize",
+        "llm_usage": {
+          "model": "openai/gpt-4o-mini",
+          "purpose": "summarize",
+          "input_tokens": 37,
+          "output_tokens": 35,
+          "total_tokens": 72
+        },
+        "tokens": {
+          "input": 37,
+          "output": 35,
+          "total": 72
+        },
+        "token_usage_total": {
+          "input_tokens": 360,
+          "output_tokens": 118,
+          "total_tokens": 478,
+          "calls": 2,
+          "by_model": {
+            "openai/gpt-4o-mini": {
+              "calls": 2,
+              "total_tokens": 478
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "step-3",
+      "uid": "9bf2f996-1f4e-4577-9d4b-a57fc9f4b042",
+      "at": "2026-08-25T21:28:46.779341+00:00",
+      "agent": "frontend-mobile",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "thought": "O status atual do board é 'Ready for Code Review', o que indica que o código está pronto para ser revisado. Iniciar a revisão agora permitirá que a equipe de revisão avalie as alterações e avance no processo de integração.",
+      "action": "simulate:start_review",
+      "observation": "Ready for Code Review->In Code Review | model=openai/gpt-4o-mini in=327 out=88 total=415",
+      "executed": [],
+      "ok": true,
+      "extra": {
+        "stage": "start_review",
+        "model": "openai/gpt-4o-mini",
+        "purpose": "review",
+        "llm_usage": {
+          "model": "openai/gpt-4o-mini",
+          "purpose": "review",
+          "input_tokens": 327,
+          "output_tokens": 88,
+          "total_tokens": 415
+        },
+        "tokens": {
+          "input": 327,
+          "output": 88,
+          "total": 415
+        },
+        "token_usage_total": {
+          "input_tokens": 687,
+          "output_tokens": 206,
+          "total_tokens": 893,
+          "calls": 3,
+          "by_model": {
+            "openai/gpt-4o-mini": {
+              "calls": 3,
+              "total_tokens": 893
+            }
+          }
+        }
       }
     },
     {
       "id": "step-4",
-      "uid": "4c8f098b-6578-463a-ab99-3c1e3fcd5ffc",
-      "at": "2026-08-24T17:24:18.630292+00:00",
-      "agent": "frontend-mobile-reviewer",
-      "event": "start_review",
-      "from_status": "Ready for Code Review",
-      "to_status": "In Code Review",
-      "thought": "Como frontend-mobile-reviewer, entro em Code Review focando: (a) ambiente production declarado, (b) bundle id coerente, (c) tipo de credencial APNs documentado, (d) riscos de mismatch sandbox/prod e expiracao de cert.",
-      "action": "Carregar handoff da task e emitir start_review (In Code Review).",
-      "observation": "Status In Code Review; reviewer busy no dashboard.",
-      "executed": [
-        "load_handoff(T-P05-005)",
-        "ler IMPLEMENTACAO.md / react_trace",
-        "emit_status_event(start_review)"
-      ],
+      "uid": "978b6c3b-a1cf-4151-abf5-2d0469046f46",
+      "at": "2026-08-25T21:28:48.455160+00:00",
+      "agent": "frontend-mobile",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "thought": "approve",
+      "action": "simulate:approve_review",
+      "observation": "In Code Review->Ready for Test | model=openai/gpt-4o-mini in=226 out=43 total=269",
+      "executed": [],
       "ok": true,
       "extra": {
-        "hitl_resolved": false,
-        "gateway_status": "applied"
+        "stage": "approve_review",
+        "model": "openai/gpt-4o-mini",
+        "purpose": "review",
+        "llm_usage": {
+          "model": "openai/gpt-4o-mini",
+          "purpose": "review",
+          "input_tokens": 226,
+          "output_tokens": 43,
+          "total_tokens": 269
+        },
+        "tokens": {
+          "input": 226,
+          "output": 43,
+          "total": 269
+        },
+        "token_usage_total": {
+          "input_tokens": 913,
+          "output_tokens": 249,
+          "total_tokens": 1162,
+          "calls": 4,
+          "by_model": {
+            "openai/gpt-4o-mini": {
+              "calls": 4,
+              "total_tokens": 1162
+            }
+          }
+        }
       }
     },
     {
       "id": "step-5",
-      "uid": "adfd90bb-7f42-40bd-8028-02e13dffe2de",
-      "at": "2026-08-24T17:24:38.681151+00:00",
-      "agent": "frontend-mobile-reviewer",
-      "event": "approve_review",
-      "from_status": "In Code Review",
-      "to_status": "Ready for Test",
-      "thought": "Checklist de CR APNs:\n- Ambiente: production (ok)\n- Bundle id / team documentados no artefato (ok)\n- Fluxo de chave/cert descrito com riscos (ok)\n- Evidencia de commit local presente (ok)\n\nNao ha blocker de seguranca no escopo didatico. Proponho approve; se HITL estiver em propose_only, o humano confirma e a fila segue para qa-gate.",
-      "action": "emit approve_review (+ approve_hitl se necessario) → Ready for Test.",
-      "observation": "Status Ready for Test; handoff segue para QA.",
-      "executed": [
-        "checklist CR APNs",
-        "emit_status_event(approve_review)",
-        "HITL confirm se propose_only"
-      ],
+      "uid": "1f21c8d0-0cee-414e-b911-1dc58e149e1a",
+      "at": "2026-08-25T21:28:49.845050+00:00",
+      "agent": "frontend-mobile",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "thought": "O board está pronto para teste e a ação de iniciar os testes é a próxima etapa lógica para validar a configuração dos certificados APNs.",
+      "action": "simulate:start_test",
+      "observation": "Ready for Test->In Test | model=openai/gpt-4o-mini in=326 out=65 total=391",
+      "executed": [],
       "ok": true,
-      "findings": [
-        {
-          "severity": "pass",
-          "item": "Ambiente APNs production declarado"
-        },
-        {
-          "severity": "pass",
-          "item": "Bundle id / escopo parent app documentado"
-        },
-        {
-          "severity": "pass",
-          "item": "Riscos sandbox vs prod e expiracao de cert citados"
-        },
-        {
-          "severity": "pass",
-          "item": "Commit local de evidencia presente"
-        }
-      ],
       "extra": {
-        "hitl_resolved": false,
-        "gateway_status": "propose_only"
+        "stage": "start_test",
+        "model": "openai/gpt-4o-mini",
+        "purpose": "implement_low",
+        "llm_usage": {
+          "model": "openai/gpt-4o-mini",
+          "purpose": "implement_low",
+          "input_tokens": 326,
+          "output_tokens": 65,
+          "total_tokens": 391
+        },
+        "tokens": {
+          "input": 326,
+          "output": 65,
+          "total": 391
+        },
+        "token_usage_total": {
+          "input_tokens": 1239,
+          "output_tokens": 314,
+          "total_tokens": 1553,
+          "calls": 5,
+          "by_model": {
+            "openai/gpt-4o-mini": {
+              "calls": 5,
+              "total_tokens": 1553
+            }
+          }
+        }
       }
     },
     {
       "id": "step-6",
-      "uid": "e38ddb0b-ac5a-490b-a742-1de4bbc6e930",
-      "at": "2026-08-24T17:24:56.848215+00:00",
-      "agent": "qa-gate",
-      "event": "start_test",
-      "from_status": "Ready for Test",
-      "to_status": "In Test",
-      "thought": "Sou o qa-gate. Vou montar o plano de testes de aceite para APNs production com base no artefato do creator e no veredito do reviewer. O objetivo e provar (didaticamente) que a configuracao cobre os caminhos criticos de push antes de liberar In Pull Request / Done.",
-      "action": "emit start_test e registrar o plano formal de cenarios (matriz de aceite) no historico da task.",
-      "observation": "Status In Test; plano de cenarios publicado no detalhe da task.",
-      "executed": [
-        "ler criterios de aceite da task",
-        "montar matriz de cenarios QA",
-        "emit_status_event(start_test)"
-      ],
+      "uid": "5deca167-cd41-4826-9c96-b34d7015ddc4",
+      "at": "2026-08-25T21:28:49.858493+00:00",
+      "agent": "frontend-mobile",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "thought": "qa_gate tipado (Fase C)",
+      "action": "simulate:test_passed",
+      "observation": "In Test->In Pull Request | model=n/a tokens=0",
+      "executed": [],
       "ok": true,
-      "test_scenarios": [
-        {
-          "id": "QA-APNS-01",
-          "name": "Certificado/Auth Key production carregado",
-          "type": "config",
-          "steps": "Verificar no artefato se o ambiente e production e se o tipo de credencial (.p8 Auth Key ou .p12) esta definido.",
-          "expected": "Ambiente production + credencial documentada sem ambiguidade.",
-          "result": "planned"
-        },
-        {
-          "id": "QA-APNS-02",
-          "name": "Bundle id do parent app coerente",
-          "type": "config",
-          "steps": "Confrontar bundle id citado na IMPLEMENTACAO com o escopo do parent app.",
-          "expected": "Bundle id alinhado; sem referencia a target de sandbox/dev.",
-          "result": "planned"
-        },
-        {
-          "id": "QA-APNS-03",
-          "name": "Push foreground (app aberto)",
-          "type": "funcional",
-          "steps": "Simular recebimento de notificacao com app em foreground; validar que o handler de notificacao esta previsto na documentacao.",
-          "expected": "Caminho foreground descrito; sem erro de ambiente sandbox.",
-          "result": "planned"
-        },
-        {
-          "id": "QA-APNS-04",
-          "name": "Push background / app morto",
-          "type": "funcional",
-          "steps": "Simular push com app em background ou killed; checar expectativa de delivery APNs prod.",
-          "expected": "Cenario background documentado como coberto pela config production.",
-          "result": "planned"
-        },
-        {
-          "id": "QA-APNS-05",
-          "name": "Falha controlada: cert expirado / ambiente errado",
-          "type": "negativo",
-          "steps": "Validar se o artefato lista sintoma e mitigacao para certificado expirado ou uso acidental de sandbox em prod.",
-          "expected": "Riscos e mitigacoes presentes (reemissao / troca de ambiente).",
-          "result": "planned"
-        },
-        {
-          "id": "QA-APNS-06",
-          "name": "Regressao SOS / alerta familiar (smoke)",
-          "type": "smoke",
-          "steps": "Checar se a documentacao conecta APNs prod ao fluxo de alerta critico do Guardião Família (smoke de aceite).",
-          "expected": "Trilha critica mencionada; sem regressao de escopo.",
-          "result": "planned"
-        }
-      ],
       "extra": {
-        "hitl_resolved": false,
-        "gateway_status": "applied"
+        "stage": "test_passed",
+        "token_usage_total": {
+          "input_tokens": 1239,
+          "output_tokens": 314,
+          "total_tokens": 1553,
+          "calls": 5,
+          "by_model": {
+            "openai/gpt-4o-mini": {
+              "calls": 5,
+              "total_tokens": 1553
+            }
+          }
+        }
       }
     },
     {
       "id": "step-7",
-      "uid": "334b7cc6-7595-4d34-b475-a50ed2be2e74",
-      "at": "2026-08-24T17:25:15.188730+00:00",
-      "agent": "qa-gate",
-      "event": "test_passed",
-      "from_status": "In Test",
-      "to_status": "In Pull Request",
-      "thought": "Executei a matriz de aceite contra o artefato e o handoff. Todos os cenarios planejados passaram no escopo didatico (evidencia documental + checklist). Posso emitir test_passed e mover para In Pull Request.",
-      "action": "Registrar resultados PASS da matriz e emitir test_passed.",
-      "observation": "Status In Pull Request; evidencia de QA no historico da task.",
-      "executed": [
-        "executar QA-APNS-01..06 contra artefato",
-        "marcar resultados PASS",
-        "emit_status_event(test_passed)"
-      ],
-      "ok": true,
-      "test_scenarios": [
-        {
-          "id": "QA-APNS-01",
-          "name": "Certificado/Auth Key production carregado",
-          "type": "config",
-          "steps": "Conferir ambiente production + tipo de credencial no artefato.",
-          "expected": "Production + credencial clara.",
-          "result": "PASS",
-          "notes": "IMPLEMENTACAO.md declara production e fluxo de chave/cert."
-        },
-        {
-          "id": "QA-APNS-02",
-          "name": "Bundle id do parent app coerente",
-          "type": "config",
-          "steps": "Validar bundle id / escopo parent.",
-          "expected": "Sem mismatch sandbox/dev.",
-          "result": "PASS",
-          "notes": "Escopo parent app e bundle citados na matriz."
-        },
-        {
-          "id": "QA-APNS-03",
-          "name": "Push foreground (app aberto)",
-          "type": "funcional",
-          "steps": "Simular aceite foreground via checklist documentado.",
-          "expected": "Caminho foreground coberto.",
-          "result": "PASS",
-          "notes": "Checklist de validacao de push inclui foreground."
-        },
-        {
-          "id": "QA-APNS-04",
-          "name": "Push background / app morto",
-          "type": "funcional",
-          "steps": "Simular aceite background via checklist.",
-          "expected": "Delivery APNs prod esperado.",
-          "result": "PASS",
-          "notes": "Cenario background listado nas notas de validacao."
-        },
-        {
-          "id": "QA-APNS-05",
-          "name": "Falha controlada: cert expirado / ambiente errado",
-          "type": "negativo",
-          "steps": "Conferir riscos e mitigacoes no artefato.",
-          "expected": "Riscos documentados.",
-          "result": "PASS",
-          "notes": "Risco sandbox vs prod e expiracao de cert presentes."
-        },
-        {
-          "id": "QA-APNS-06",
-          "name": "Regressao SOS / alerta familiar (smoke)",
-          "type": "smoke",
-          "steps": "Smoke de trilha critica Guardião Família.",
-          "expected": "Sem regressao de escopo.",
-          "result": "PASS",
-          "notes": "Contexto SOS/alertas familiares amarrado a APNs prod."
-        }
-      ],
-      "extra": {
-        "hitl_resolved": false,
-        "gateway_status": "applied"
-      }
-    },
-    {
-      "id": "step-8",
-      "uid": "0a7c6e07-6d86-4e4c-a1f2-a145aef22785",
-      "at": "2026-08-24T17:25:39.308595+00:00",
-      "agent": "qa-gate",
+      "uid": "24f4cb5e-98f7-452c-bdbe-e723bd47ca6d",
+      "at": "2026-08-25T21:28:49.873380+00:00",
+      "agent": "frontend-mobile",
       "event": "merge_pr",
       "from_status": "In Pull Request",
       "to_status": "Done",
-      "thought": "Validacao final do QA: matriz QA-APNS-01..06 em PASS, CR aprovado, evidencia de commit local. Com HITL humano no merge, defino a task como Done — encerrando o ciclo academico completo.",
-      "action": "emit merge_pr (HITL) — QA + humano marcam Done.",
-      "observation": "Status Done. Historico completo permanece em tasks/T-P05-005.html.",
-      "executed": [
-        "revisar matriz QA PASS",
-        "HITL approve merge (se block_until_human)",
-        "emit_status_event(merge_pr)",
-        "update_local_status(Done)"
-      ],
+      "thought": "pipeline Fase C — HITL no merge",
+      "action": "simulate:merge_pr",
+      "observation": "In Pull Request->Done | model=n/a tokens=0",
+      "executed": [],
       "ok": true,
       "extra": {
-        "hitl_resolved": true,
-        "gateway_status": "applied"
+        "stage": "merge_pr",
+        "token_usage_total": {
+          "input_tokens": 1239,
+          "output_tokens": 314,
+          "total_tokens": 1553,
+          "calls": 5,
+          "by_model": {
+            "openai/gpt-4o-mini": {
+              "calls": 5,
+              "total_tokens": 1553
+            }
+          }
+        }
       }
     }
   ],
-  "title": "Configurar APNs production certificates",
+  "token_usage": {
+    "input_tokens": 1239,
+    "output_tokens": 314,
+    "total_tokens": 1553,
+    "calls": 5,
+    "by_model": {
+      "openai/gpt-4o-mini": {
+        "calls": 5,
+        "total_tokens": 1553,
+        "purposes": [
+          "implement_low",
+          "summarize",
+          "review"
+        ]
+      }
+    }
+  },
   "final_status": "Done",
   "detail_url": "tasks/T-P05-005.html"
 }

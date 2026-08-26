@@ -1,0 +1,66 @@
+{
+  "task_id": "T-P13-010",
+  "updated_at": "2026-08-26T01:28:20.124641+00:00",
+  "from_agent": "qa-gate",
+  "to_agent": "devops-cicd",
+  "event": "test_passed",
+  "status": "In Pull Request",
+  "repo": "guardiao-familia-site",
+  "branch": "feat/t-p13-010-hero-sua-familia",
+  "pr_url": "local://feat/t-p13-010-hero-sua-familia@a4fd13fe03f4",
+  "summary": "Playwright PASS com screenshot; mover para In Pull Request e pausar merge.",
+  "doubts": [],
+  "findings": [],
+  "metrics": {},
+  "react_trace": [
+    {
+      "thought": "Alterar apenas H1 e title do hero",
+      "action": "edit index.html + git commit",
+      "observation": "sha=a4fd13fe03f4374110a6b53ab29221b879a1cd8d"
+    }
+  ],
+  "history": [
+    {
+      "at": "2026-08-26T01:26:12.965209+00:00",
+      "from_agent": "frontend-web",
+      "to_agent": "frontend-web",
+      "event": "claim",
+      "status": "In Progress"
+    },
+    {
+      "at": "2026-08-26T01:26:31.064016+00:00",
+      "from_agent": "frontend-web",
+      "to_agent": "frontend-web-reviewer",
+      "event": "open_pr",
+      "status": "Ready for Code Review"
+    },
+    {
+      "at": "2026-08-26T01:26:48.551649+00:00",
+      "from_agent": "frontend-web-reviewer",
+      "to_agent": "frontend-web-reviewer",
+      "event": "start_review",
+      "status": "In Code Review"
+    },
+    {
+      "at": "2026-08-26T01:27:08.222010+00:00",
+      "from_agent": "frontend-web-reviewer",
+      "to_agent": "qa-gate",
+      "event": "approve_review",
+      "status": "Ready for Test"
+    },
+    {
+      "at": "2026-08-26T01:27:26.055422+00:00",
+      "from_agent": "qa-gate",
+      "to_agent": "qa-gate",
+      "event": "start_test",
+      "status": "In Test"
+    },
+    {
+      "at": "2026-08-26T01:28:20.124641+00:00",
+      "from_agent": "qa-gate",
+      "to_agent": "devops-cicd",
+      "event": "test_passed",
+      "status": "In Pull Request"
+    }
+  ]
+}

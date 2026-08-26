@@ -24,7 +24,11 @@ from lib.gateway import approve_hitl, emit_status_event  # noqa: E402
 from lib.local_board import get_local_status, update_local_status  # noqa: E402
 from lib.observability import build_snapshot, log_workflow_event, write_dashboard  # noqa: E402
 from lib.reviewer_pairs import normalize_creator_role, reviewer_for  # noqa: E402
-from lib.task_action_history import append_task_action, clear_task_history  # noqa: E402
+from lib.task_action_history import (  # noqa: E402
+    append_task_action,
+    build_agent_observation,
+    clear_task_history,
+)
 from lib.task_router import load_tasks  # noqa: E402
 from lib.task_status_workflow import EVENT_TARGET  # noqa: E402
 from lib.worker_jobs import load_jobs, save_jobs  # noqa: E402
@@ -639,6 +643,19 @@ def _record_history(
 ) -> None:
     demo = _demo_for(task_id, event)
     task = _task(task_id)
+    hist_extra = dict(extra or {})
+    hist_extra.setdefault(
+        "focus",
+        str(demo.get("focus") or f"evento `{event}` ({before} → {after})"),
+    )
+    hist_extra.setdefault("model", hist_extra.get("model") or "demo/scripted")
+    hist_extra.setdefault("purpose", hist_extra.get("purpose") or "demo_apresentacao")
+    observation = build_agent_observation(
+        str(hist_extra["focus"]),
+        extra=hist_extra,
+        detail=str(demo.get("observation") or ""),
+        ok=ok,
+    )
     append_task_action(
         task_id,
         agent=role,
@@ -647,14 +664,14 @@ def _record_history(
         to_status=after,
         thought=str(demo.get("thought") or f"Passo {event}"),
         action=str(demo.get("action") or event),
-        observation=str(demo.get("observation") or ""),
+        observation=observation,
         executed=list(demo.get("executed") or []),
         deliverables=list(demo.get("deliverables") or []) or None,
         test_scenarios=list(demo.get("test_scenarios") or []) or None,
         findings=list(demo.get("findings") or []) or None,
         title=str(task.get("title") or task_id),
         ok=ok,
-        extra=extra,
+        extra=hist_extra,
     )
 
 

@@ -1360,6 +1360,16 @@
       "item_id": "PVTI_lADOEDZbAM4Bg2rEzg3M5kI",
       "status": "Todo",
       "title": "[T-P13-004] Campanha 30 dias estrutura"
+    },
+    "T-P13-008": {
+      "item_id": "PVTI_lADOEDZbAM4Bg2rEzg4Bunw",
+      "status": "Todo",
+      "title": "[T-P13-008] Atualizar hero home: Tranquilidade para sua família"
     }
+  },
+  "T-P13-012": {
+    "item_id": "PVTI_lADOEDZbAM4Bg2rEzg4CNRA",
+    "issue": "78",
+    "title": "[T-P13-012] Atualizar hero home: Tranquilidade para sua família"
   }
 }

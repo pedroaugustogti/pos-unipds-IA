@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-08-24T17:47:40.743827+00:00",
+  "updated_at": "2026-08-26T02:04:50.668453+00:00",
   "agents": {
     "backend": {
       "state": "idle",
@@ -15,22 +15,22 @@
     "frontend-mobile": {
       "state": "idle",
       "task_id": null,
-      "updated_at": "2026-08-24T17:46:01.790771+00:00"
+      "updated_at": "2026-08-25T21:22:04.952402+00:00"
     },
     "frontend-mobile-reviewer": {
       "state": "idle",
       "task_id": null,
-      "updated_at": "2026-08-24T17:46:43.125855+00:00"
+      "updated_at": "2026-08-25T21:22:48.093161+00:00"
     },
     "frontend-web": {
       "state": "idle",
       "task_id": null,
-      "updated_at": "2026-08-24T13:47:27.548783+00:00"
+      "updated_at": "2026-08-26T02:03:26.329084+00:00"
     },
     "frontend-web-reviewer": {
       "state": "idle",
       "task_id": null,
-      "updated_at": "2026-08-24T13:47:27.548783+00:00"
+      "updated_at": "2026-08-26T02:03:56.871170+00:00"
     },
     "cloud-infra": {
       "state": "idle",
@@ -53,9 +53,9 @@
       "updated_at": "2026-08-24T13:47:27.548783+00:00"
     },
     "devops-cicd": {
-      "state": "idle",
-      "task_id": null,
-      "updated_at": "2026-08-24T17:47:40.696048+00:00"
+      "state": "busy",
+      "task_id": "T-P13-008",
+      "updated_at": "2026-08-26T00:38:44.076543+00:00"
     },
     "devops-cicd-reviewer": {
       "state": "idle",
@@ -85,7 +85,7 @@
     "qa-gate": {
       "state": "idle",
       "task_id": null,
-      "updated_at": "2026-08-24T17:47:40.743827+00:00"
+      "updated_at": "2026-08-26T02:04:48.583799+00:00"
     },
     "orchestrator": {
       "state": "idle",
@@ -116,126 +116,6 @@
   },
   "blockers": [],
   "event_log": [
-    {
-      "at": "2026-08-24T16:15:46.564496+00:00",
-      "event": "claim",
-      "task_id": "T-P05-005",
-      "from": "Todo",
-      "to": "In Progress",
-      "next_agent": "frontend-mobile",
-      "dispatch": "start_task",
-      "blocker": false
-    },
-    {
-      "at": "2026-08-24T16:16:01.629159+00:00",
-      "event": "claim",
-      "task_id": "T-I03-001",
-      "from": "Todo",
-      "to": "In Progress",
-      "next_agent": "devops-cicd",
-      "dispatch": "start_task",
-      "blocker": false
-    },
-    {
-      "at": "2026-08-24T16:16:16.153516+00:00",
-      "event": "claim",
-      "task_id": "T-P05-006",
-      "from": "Todo",
-      "to": "In Progress",
-      "next_agent": "frontend-mobile",
-      "dispatch": "queue",
-      "blocker": false
-    },
-    {
-      "at": "2026-08-24T16:16:30.606779+00:00",
-      "event": "open_pr",
-      "task_id": "T-P05-005",
-      "from": "In Progress",
-      "to": "Ready for Code Review",
-      "next_agent": "frontend-mobile-reviewer",
-      "dispatch": "start_task",
-      "blocker": false
-    },
-    {
-      "at": "2026-08-24T16:16:45.038685+00:00",
-      "event": "open_pr",
-      "task_id": "T-I03-001",
-      "from": "In Progress",
-      "to": "Ready for Code Review",
-      "next_agent": "devops-cicd-reviewer",
-      "dispatch": "start_task",
-      "blocker": false
-    },
-    {
-      "at": "2026-08-24T16:16:58.540473+00:00",
-      "event": "open_pr",
-      "task_id": "T-P05-006",
-      "from": "In Progress",
-      "to": "Ready for Code Review",
-      "next_agent": "frontend-mobile-reviewer",
-      "dispatch": "queue",
-      "blocker": false
-    },
-    {
-      "at": "2026-08-24T16:18:07.888149+00:00",
-      "event": "start_review",
-      "task_id": "T-P05-005",
-      "from": "Ready for Code Review",
-      "to": "In Code Review",
-      "next_agent": "frontend-mobile-reviewer",
-      "dispatch": "start_task",
-      "blocker": false
-    },
-    {
-      "at": "2026-08-24T16:18:22.449836+00:00",
-      "event": "start_review",
-      "task_id": "T-I03-001",
-      "from": "Ready for Code Review",
-      "to": "In Code Review",
-      "next_agent": "devops-cicd-reviewer",
-      "dispatch": "start_task",
-      "blocker": false
-    },
-    {
-      "at": "2026-08-24T16:18:35.360645+00:00",
-      "event": "start_review",
-      "task_id": "T-P05-006",
-      "from": "Ready for Code Review",
-      "to": "In Code Review",
-      "next_agent": "frontend-mobile-reviewer",
-      "dispatch": "queue",
-      "blocker": false
-    },
-    {
-      "at": "2026-08-24T16:18:47.926309+00:00",
-      "event": "approve_review",
-      "task_id": "T-P05-005",
-      "from": "In Code Review",
-      "to": "Ready for Test",
-      "next_agent": "qa-gate",
-      "dispatch": "start_task",
-      "blocker": false
-    },
-    {
-      "at": "2026-08-24T16:19:02.364946+00:00",
-      "event": "approve_review",
-      "task_id": "T-I03-001",
-      "from": "In Code Review",
-      "to": "Ready for Test",
-      "next_agent": "qa-gate",
-      "dispatch": "queue",
-      "blocker": false
-    },
-    {
-      "at": "2026-08-24T16:19:16.302291+00:00",
-      "event": "approve_review",
-      "task_id": "T-P05-006",
-      "from": "In Code Review",
-      "to": "Ready for Test",
-      "next_agent": "qa-gate",
-      "dispatch": "queue",
-      "blocker": false
-    },
     {
       "at": "2026-08-24T16:19:29.974232+00:00",
       "event": "start_test",
@@ -635,81 +515,640 @@
       "next_agent": "orchestrator",
       "dispatch": "orchestrator_only",
       "blocker": false
+    },
+    {
+      "at": "2026-08-25T17:06:33.441544+00:00",
+      "event": "claim",
+      "task_id": "T-P05-006",
+      "from": "Todo",
+      "to": "In Progress",
+      "next_agent": "frontend-mobile",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T17:06:45.027480+00:00",
+      "event": "open_pr",
+      "task_id": "T-P05-006",
+      "from": "In Progress",
+      "to": "Ready for Code Review",
+      "next_agent": "frontend-mobile-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T17:10:22.752923+00:00",
+      "event": "claim",
+      "task_id": "T-P05-006",
+      "from": "Todo",
+      "to": "In Progress",
+      "next_agent": "frontend-mobile",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T17:10:34.534533+00:00",
+      "event": "open_pr",
+      "task_id": "T-P05-006",
+      "from": "In Progress",
+      "to": "Ready for Code Review",
+      "next_agent": "frontend-mobile-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T17:18:33.300535+00:00",
+      "event": "claim",
+      "task_id": "T-P05-006",
+      "from": "Todo",
+      "to": "In Progress",
+      "next_agent": "frontend-mobile",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T17:18:45.072181+00:00",
+      "event": "open_pr",
+      "task_id": "T-P05-006",
+      "from": "In Progress",
+      "to": "Ready for Code Review",
+      "next_agent": "frontend-mobile-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T17:19:00.629830+00:00",
+      "event": "start_review",
+      "task_id": "T-P05-006",
+      "from": "Ready for Code Review",
+      "to": "In Code Review",
+      "next_agent": "frontend-mobile-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T17:19:15.061156+00:00",
+      "event": "approve_review",
+      "task_id": "T-P05-006",
+      "from": "In Code Review",
+      "to": "Ready for Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T17:19:29.740103+00:00",
+      "event": "start_test",
+      "task_id": "T-P05-006",
+      "from": "Ready for Test",
+      "to": "In Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T20:13:47.989459+00:00",
+      "event": "claim",
+      "task_id": "T-P05-006",
+      "from": "Todo",
+      "to": "In Progress",
+      "next_agent": "frontend-mobile",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T20:14:04.604030+00:00",
+      "event": "open_pr",
+      "task_id": "T-P05-006",
+      "from": "In Progress",
+      "to": "Ready for Code Review",
+      "next_agent": "frontend-mobile-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T20:14:25.325303+00:00",
+      "event": "start_review",
+      "task_id": "T-P05-006",
+      "from": "Ready for Code Review",
+      "to": "In Code Review",
+      "next_agent": "frontend-mobile-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T20:14:42.420991+00:00",
+      "event": "approve_review",
+      "task_id": "T-P05-006",
+      "from": "In Code Review",
+      "to": "Ready for Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T20:15:00.691243+00:00",
+      "event": "start_test",
+      "task_id": "T-P05-006",
+      "from": "Ready for Test",
+      "to": "In Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T20:15:15.085535+00:00",
+      "event": "test_passed",
+      "task_id": "T-P05-006",
+      "from": "In Test",
+      "to": "In Pull Request",
+      "next_agent": "devops-cicd",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T20:15:29.058179+00:00",
+      "event": "merge_pr",
+      "task_id": "T-P05-006",
+      "from": "In Pull Request",
+      "to": "Done",
+      "next_agent": "orchestrator",
+      "dispatch": "orchestrator_only",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:06:47.120954+00:00",
+      "event": "claim",
+      "task_id": "T-P05-006",
+      "from": "Todo",
+      "to": "In Progress",
+      "next_agent": "frontend-mobile",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:07:12.163956+00:00",
+      "event": "open_pr",
+      "task_id": "T-P05-006",
+      "from": "In Progress",
+      "to": "Ready for Code Review",
+      "next_agent": "frontend-mobile-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:07:41.517829+00:00",
+      "event": "start_review",
+      "task_id": "T-P05-006",
+      "from": "Ready for Code Review",
+      "to": "In Code Review",
+      "next_agent": "frontend-mobile-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:08:05.500311+00:00",
+      "event": "approve_review",
+      "task_id": "T-P05-006",
+      "from": "In Code Review",
+      "to": "Ready for Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:08:30.493752+00:00",
+      "event": "start_test",
+      "task_id": "T-P05-006",
+      "from": "Ready for Test",
+      "to": "In Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:08:48.869883+00:00",
+      "event": "test_passed",
+      "task_id": "T-P05-006",
+      "from": "In Test",
+      "to": "In Pull Request",
+      "next_agent": "devops-cicd",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:09:08.872445+00:00",
+      "event": "merge_pr",
+      "task_id": "T-P05-006",
+      "from": "In Pull Request",
+      "to": "Done",
+      "next_agent": "orchestrator",
+      "dispatch": "orchestrator_only",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:21:44.773179+00:00",
+      "event": "claim",
+      "task_id": "T-P05-006",
+      "from": "Todo",
+      "to": "In Progress",
+      "next_agent": "frontend-mobile",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:22:04.960402+00:00",
+      "event": "open_pr",
+      "task_id": "T-P05-006",
+      "from": "In Progress",
+      "to": "Ready for Code Review",
+      "next_agent": "frontend-mobile-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:22:26.607863+00:00",
+      "event": "start_review",
+      "task_id": "T-P05-006",
+      "from": "Ready for Code Review",
+      "to": "In Code Review",
+      "next_agent": "frontend-mobile-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:22:48.102241+00:00",
+      "event": "approve_review",
+      "task_id": "T-P05-006",
+      "from": "In Code Review",
+      "to": "Ready for Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:23:08.803346+00:00",
+      "event": "start_test",
+      "task_id": "T-P05-006",
+      "from": "Ready for Test",
+      "to": "In Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:23:23.937851+00:00",
+      "event": "test_passed",
+      "task_id": "T-P05-006",
+      "from": "In Test",
+      "to": "In Pull Request",
+      "next_agent": "devops-cicd",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-25T21:23:40.635888+00:00",
+      "event": "merge_pr",
+      "task_id": "T-P05-006",
+      "from": "In Pull Request",
+      "to": "Done",
+      "next_agent": "orchestrator",
+      "dispatch": "orchestrator_only",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T00:36:19.007164+00:00",
+      "event": "claim",
+      "task_id": "T-P13-008",
+      "from": "Todo",
+      "to": "In Progress",
+      "next_agent": "frontend-web",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T00:36:30.997163+00:00",
+      "event": "open_pr",
+      "task_id": "T-P13-008",
+      "from": "In Progress",
+      "to": "Ready for Code Review",
+      "next_agent": "frontend-web-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T00:36:45.028747+00:00",
+      "event": "start_review",
+      "task_id": "T-P13-008",
+      "from": "Ready for Code Review",
+      "to": "In Code Review",
+      "next_agent": "frontend-web-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T00:36:58.542652+00:00",
+      "event": "approve_review",
+      "task_id": "T-P13-008",
+      "from": "In Code Review",
+      "to": "Ready for Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T00:37:11.284664+00:00",
+      "event": "start_test",
+      "task_id": "T-P13-008",
+      "from": "Ready for Test",
+      "to": "In Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T00:38:44.076543+00:00",
+      "event": "test_passed",
+      "task_id": "T-P13-008",
+      "from": "In Test",
+      "to": "In Pull Request",
+      "next_agent": "devops-cicd",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:14:13.643775+00:00",
+      "event": "claim",
+      "task_id": "T-P13-009",
+      "from": "Todo",
+      "to": "In Progress",
+      "next_agent": "frontend-web",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:14:27.617206+00:00",
+      "event": "open_pr",
+      "task_id": "T-P13-009",
+      "from": "In Progress",
+      "to": "Ready for Code Review",
+      "next_agent": "frontend-web-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:14:41.922965+00:00",
+      "event": "start_review",
+      "task_id": "T-P13-009",
+      "from": "Ready for Code Review",
+      "to": "In Code Review",
+      "next_agent": "frontend-web-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:14:55.492552+00:00",
+      "event": "approve_review",
+      "task_id": "T-P13-009",
+      "from": "In Code Review",
+      "to": "Ready for Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:15:08.655014+00:00",
+      "event": "start_test",
+      "task_id": "T-P13-009",
+      "from": "Ready for Test",
+      "to": "In Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:15:36.512924+00:00",
+      "event": "test_passed",
+      "task_id": "T-P13-009",
+      "from": "In Test",
+      "to": "In Pull Request",
+      "next_agent": "devops-cicd",
+      "dispatch": "queue",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:26:12.875642+00:00",
+      "event": "claim",
+      "task_id": "T-P13-010",
+      "from": "Todo",
+      "to": "In Progress",
+      "next_agent": "frontend-web",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:26:30.972925+00:00",
+      "event": "open_pr",
+      "task_id": "T-P13-010",
+      "from": "In Progress",
+      "to": "Ready for Code Review",
+      "next_agent": "frontend-web-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:26:48.471466+00:00",
+      "event": "start_review",
+      "task_id": "T-P13-010",
+      "from": "Ready for Code Review",
+      "to": "In Code Review",
+      "next_agent": "frontend-web-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:27:08.140392+00:00",
+      "event": "approve_review",
+      "task_id": "T-P13-010",
+      "from": "In Code Review",
+      "to": "Ready for Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:27:25.986150+00:00",
+      "event": "start_test",
+      "task_id": "T-P13-010",
+      "from": "Ready for Test",
+      "to": "In Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:28:20.033575+00:00",
+      "event": "test_passed",
+      "task_id": "T-P13-010",
+      "from": "In Test",
+      "to": "In Pull Request",
+      "next_agent": "devops-cicd",
+      "dispatch": "queue",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:39:10.959171+00:00",
+      "event": "claim",
+      "task_id": "T-P13-011",
+      "from": "Todo",
+      "to": "In Progress",
+      "next_agent": "frontend-web",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:39:29.843418+00:00",
+      "event": "open_pr",
+      "task_id": "T-P13-011",
+      "from": "In Progress",
+      "to": "Ready for Code Review",
+      "next_agent": "frontend-web-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:39:45.882019+00:00",
+      "event": "start_review",
+      "task_id": "T-P13-011",
+      "from": "Ready for Code Review",
+      "to": "In Code Review",
+      "next_agent": "frontend-web-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:39:58.700125+00:00",
+      "event": "approve_review",
+      "task_id": "T-P13-011",
+      "from": "In Code Review",
+      "to": "Ready for Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:40:15.424481+00:00",
+      "event": "start_test",
+      "task_id": "T-P13-011",
+      "from": "Ready for Test",
+      "to": "In Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T01:40:53.374071+00:00",
+      "event": "test_passed",
+      "task_id": "T-P13-011",
+      "from": "In Test",
+      "to": "In Pull Request",
+      "next_agent": "devops-cicd",
+      "dispatch": "queue",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T02:03:09.090436+00:00",
+      "event": "claim",
+      "task_id": "T-P13-012",
+      "from": "Todo",
+      "to": "In Progress",
+      "next_agent": "frontend-web",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T02:03:26.338077+00:00",
+      "event": "open_pr",
+      "task_id": "T-P13-012",
+      "from": "In Progress",
+      "to": "Ready for Code Review",
+      "next_agent": "frontend-web-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T02:03:42.049891+00:00",
+      "event": "start_review",
+      "task_id": "T-P13-012",
+      "from": "Ready for Code Review",
+      "to": "In Code Review",
+      "next_agent": "frontend-web-reviewer",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T02:03:56.880178+00:00",
+      "event": "approve_review",
+      "task_id": "T-P13-012",
+      "from": "In Code Review",
+      "to": "Ready for Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T02:04:12.105006+00:00",
+      "event": "start_test",
+      "task_id": "T-P13-012",
+      "from": "Ready for Test",
+      "to": "In Test",
+      "next_agent": "qa-gate",
+      "dispatch": "start_task",
+      "blocker": false
+    },
+    {
+      "at": "2026-08-26T02:04:48.590800+00:00",
+      "event": "test_passed",
+      "task_id": "T-P13-012",
+      "from": "In Test",
+      "to": "In Pull Request",
+      "next_agent": "devops-cicd",
+      "dispatch": "queue",
+      "blocker": false
     }
   ],
-  "dispatch_queue": [],
+  "dispatch_queue": [
+    {
+      "task_id": "T-P13-009",
+      "agent": "devops-cicd",
+      "status": "In Pull Request",
+      "event": "test_passed",
+      "at": "2026-08-26T01:15:36.513924+00:00"
+    },
+    {
+      "task_id": "T-P13-010",
+      "agent": "devops-cicd",
+      "status": "In Pull Request",
+      "event": "test_passed",
+      "at": "2026-08-26T01:28:20.035572+00:00"
+    },
+    {
+      "task_id": "T-P13-011",
+      "agent": "devops-cicd",
+      "status": "In Pull Request",
+      "event": "test_passed",
+      "at": "2026-08-26T01:40:53.375077+00:00"
+    },
+    {
+      "task_id": "T-P13-012",
+      "agent": "devops-cicd",
+      "status": "In Pull Request",
+      "event": "test_passed",
+      "at": "2026-08-26T02:04:48.590800+00:00"
+    }
+  ],
   "hitl_queue": [
     {
-      "task_id": "T-P05-005",
-      "event": "confirm_approve_review",
-      "hitl": {
-        "required": true,
-        "mode": "propose_only",
-        "reasons": [
-          "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
-        ],
-        "reason": "Review aprovado por agente LLM em task de alto risco — veredito só como proposta.",
-        "human_action": "Humano confirma ou rejeita o veredito proposto no PR/board (evento hitl_approved | hitl_rejected).",
-        "task_id": "T-P05-005",
-        "event": "approve_review",
-        "high_risk": true
-      },
-      "payload": {
-        "task_id": "T-P05-005",
-        "event": "approve_review",
-        "from_status": null,
-        "to_status": null,
-        "agent_role": "frontend-mobile",
-        "next_agent": null,
-        "repo": "guardiao-familia-parent",
-        "branch": null,
-        "pr_url": null,
-        "summary": "demo_apresentacao · frontend-mobile-reviewer · approve_review",
-        "doubts": [],
-        "metrics": {},
-        "bug_kind": null,
-        "correlation_id": "8367bce0-853d-4d7f-b70c-97d75ac00638",
-        "idempotency_key": null,
-        "at": "2026-08-24T17:24:24.694815+00:00",
-        "dry_run": false
-      }
-    },
-    {
-      "task_id": "T-P05-005",
-      "event": "merge_pr",
-      "hitl": {
-        "required": true,
-        "mode": "block_until_human",
-        "reasons": [
-          "Merge é irreversível no fluxo do board — Approval Gate humano obrigatório."
-        ],
-        "reason": "Merge é irreversível no fluxo do board — Approval Gate humano obrigatório.",
-        "human_action": "Humano decide no board/PR; só então emitir hitl_approved + evento liberado.",
-        "task_id": "T-P05-005",
-        "event": "merge_pr",
-        "high_risk": true
-      },
-      "payload": {
-        "task_id": "T-P05-005",
-        "event": "merge_pr",
-        "from_status": null,
-        "to_status": null,
-        "agent_role": "frontend-mobile",
-        "next_agent": null,
-        "repo": "guardiao-familia-parent",
-        "branch": null,
-        "pr_url": null,
-        "summary": "demo_apresentacao · qa-gate · merge_pr",
-        "doubts": [],
-        "metrics": {},
-        "bug_kind": null,
-        "correlation_id": "9da8ccf5-2bcf-44fc-af7c-9a1aa7b78eea",
-        "idempotency_key": null,
-        "at": "2026-08-24T17:25:21.269710+00:00",
-        "dry_run": false
-      }
-    },
-    {
       "task_id": "T-P05-006",
       "event": "confirm_approve_review",
       "hitl": {
@@ -734,18 +1173,53 @@
         "repo": "guardiao-familia-parent",
         "branch": null,
         "pr_url": null,
-        "summary": "demo_apresentacao · frontend-mobile-reviewer · approve_review",
+        "summary": "No critical risks documented in demo/academic mode; task is in code review with no provided details indicating issues.",
         "doubts": [],
         "metrics": {},
         "bug_kind": null,
-        "correlation_id": "39ef11c5-c6f9-4678-80a7-3054279259ed",
+        "correlation_id": "bede5c3a-117e-4692-9a56-b504fd93854b",
         "idempotency_key": null,
-        "at": "2026-08-24T17:46:29.081862+00:00",
+        "at": "2026-08-25T21:22:33.813240+00:00",
         "dry_run": false
       }
     },
     {
-      "task_id": "T-P05-006",
+      "task_id": "T-P13-011",
+      "event": "confirm_approve_review",
+      "hitl": {
+        "required": true,
+        "mode": "propose_only",
+        "reasons": [
+          "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
+        ],
+        "reason": "Review aprovado por agente LLM em task de alto risco — veredito só como proposta.",
+        "human_action": "Humano confirma ou rejeita o veredito proposto no PR/board (evento hitl_approved | hitl_rejected).",
+        "task_id": "T-P13-011",
+        "event": "approve_review",
+        "high_risk": true
+      },
+      "payload": {
+        "task_id": "T-P13-011",
+        "event": "approve_review",
+        "from_status": null,
+        "to_status": null,
+        "agent_role": "frontend-web",
+        "next_agent": null,
+        "repo": "guardiao-familia-site",
+        "branch": null,
+        "pr_url": null,
+        "summary": "A atualização do hero home foi revisada e não apresenta riscos críticos. A implementação parece estar em conformidade com os requisitos.",
+        "doubts": [],
+        "metrics": {},
+        "bug_kind": null,
+        "correlation_id": "1e12d6ba-10c9-4a55-9c52-f42f8e4dc8a6",
+        "idempotency_key": null,
+        "at": "2026-08-26T01:39:49.230412+00:00",
+        "dry_run": false
+      }
+    },
+    {
+      "task_id": "T-P13-011",
       "event": "merge_pr",
       "hitl": {
         "required": true,
@@ -755,54 +1229,248 @@
         ],
         "reason": "Merge é irreversível no fluxo do board — Approval Gate humano obrigatório.",
         "human_action": "Humano decide no board/PR; só então emitir hitl_approved + evento liberado.",
-        "task_id": "T-P05-006",
+        "task_id": "T-P13-011",
         "event": "merge_pr",
         "high_risk": true
       },
       "payload": {
-        "task_id": "T-P05-006",
+        "task_id": "T-P13-011",
         "event": "merge_pr",
         "from_status": null,
         "to_status": null,
-        "agent_role": "frontend-mobile",
+        "agent_role": "frontend-web",
         "next_agent": null,
-        "repo": "guardiao-familia-parent",
+        "repo": "guardiao-familia-site",
         "branch": null,
         "pr_url": null,
-        "summary": "demo_apresentacao · qa-gate · merge_pr",
+        "summary": "Merge apos QA",
         "doubts": [],
         "metrics": {},
         "bug_kind": null,
-        "correlation_id": "f5c9b0bd-7801-42bd-9473-dfc65e13d124",
+        "correlation_id": "07cd3eb5-7fbb-497f-bb83-2e62e184ede6",
         "idempotency_key": null,
-        "at": "2026-08-24T17:47:27.331890+00:00",
+        "at": "2026-08-26T01:40:56.043167+00:00",
+        "dry_run": false
+      }
+    },
+    {
+      "task_id": "T-P13-012",
+      "event": "confirm_approve_review",
+      "hitl": {
+        "required": true,
+        "mode": "propose_only",
+        "reasons": [
+          "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
+        ],
+        "reason": "Review aprovado por agente LLM em task de alto risco — veredito só como proposta.",
+        "human_action": "Humano confirma ou rejeita o veredito proposto no PR/board (evento hitl_approved | hitl_rejected).",
+        "task_id": "T-P13-012",
+        "event": "approve_review",
+        "high_risk": true
+      },
+      "payload": {
+        "task_id": "T-P13-012",
+        "event": "approve_review",
+        "from_status": null,
+        "to_status": null,
+        "agent_role": "frontend-web",
+        "next_agent": null,
+        "repo": "guardiao-familia-site",
+        "branch": null,
+        "pr_url": null,
+        "summary": "A atualização do hero home foi revisada e não apresenta riscos críticos. O conteúdo está adequado e atende aos requisitos.",
+        "doubts": [],
+        "metrics": {},
+        "bug_kind": null,
+        "correlation_id": "af5ddfd9-49be-4bdf-b907-58e871c7fb9c",
+        "idempotency_key": null,
+        "at": "2026-08-26T02:03:46.065105+00:00",
+        "dry_run": false
+      }
+    },
+    {
+      "task_id": "T-P13-012",
+      "event": "merge_pr",
+      "hitl": {
+        "required": true,
+        "mode": "block_until_human",
+        "reasons": [
+          "Merge é irreversível no fluxo do board — Approval Gate humano obrigatório."
+        ],
+        "reason": "Merge é irreversível no fluxo do board — Approval Gate humano obrigatório.",
+        "human_action": "Humano decide no board/PR; só então emitir hitl_approved + evento liberado.",
+        "task_id": "T-P13-012",
+        "event": "merge_pr",
+        "high_risk": true
+      },
+      "payload": {
+        "task_id": "T-P13-012",
+        "event": "merge_pr",
+        "from_status": null,
+        "to_status": null,
+        "agent_role": "frontend-web",
+        "next_agent": null,
+        "repo": "guardiao-familia-site",
+        "branch": null,
+        "pr_url": null,
+        "summary": "Merge apos QA",
+        "doubts": [],
+        "metrics": {},
+        "bug_kind": null,
+        "correlation_id": "c5645020-cea3-483e-b777-b6b768920855",
+        "idempotency_key": null,
+        "at": "2026-08-26T02:04:50.666449+00:00",
         "dry_run": false
       }
     }
   ],
   "idempotency": {
-    "T-P05-005:claim:None:None": {
-      "at": "2026-08-24T17:23:32.385172+00:00",
-      "ok": true
-    },
-    "T-P05-005:approve_review:None:None": {
-      "at": "2026-08-24T17:24:38.631251+00:00",
-      "ok": false
-    },
-    "T-P05-005:merge_pr:None:None": {
-      "at": "2026-08-24T17:25:39.263334+00:00",
-      "ok": true
-    },
     "T-P05-006:claim:None:None": {
-      "at": "2026-08-24T17:45:35.043643+00:00",
+      "at": "2026-08-25T21:21:44.773179+00:00",
+      "ok": true
+    },
+    "T-P05-006:open_pr:None:None": {
+      "at": "2026-08-25T21:22:04.960402+00:00",
+      "ok": true
+    },
+    "T-P05-006:start_review:None:None": {
+      "at": "2026-08-25T21:22:26.607863+00:00",
       "ok": true
     },
     "T-P05-006:approve_review:None:None": {
-      "at": "2026-08-24T17:46:43.094558+00:00",
-      "ok": false
+      "at": "2026-08-25T21:22:48.102241+00:00",
+      "ok": true
+    },
+    "T-P05-006:start_test:None:None": {
+      "at": "2026-08-25T21:23:08.803346+00:00",
+      "ok": true
+    },
+    "T-P05-006:test_passed:None:None": {
+      "at": "2026-08-25T21:23:23.937851+00:00",
+      "ok": true
     },
     "T-P05-006:merge_pr:None:None": {
-      "at": "2026-08-24T17:47:40.708585+00:00",
+      "at": "2026-08-25T21:23:40.635888+00:00",
+      "ok": true
+    },
+    "T-P13-008:claim:None:None": {
+      "at": "2026-08-26T00:36:19.007164+00:00",
+      "ok": true
+    },
+    "T-P13-008:open_pr:None:None": {
+      "at": "2026-08-26T00:36:30.997163+00:00",
+      "ok": true
+    },
+    "T-P13-008:start_review:None:None": {
+      "at": "2026-08-26T00:36:45.028747+00:00",
+      "ok": true
+    },
+    "T-P13-008:approve_review:None:None": {
+      "at": "2026-08-26T00:36:58.542652+00:00",
+      "ok": true
+    },
+    "T-P13-008:start_test:None:None": {
+      "at": "2026-08-26T00:37:11.284664+00:00",
+      "ok": true
+    },
+    "T-P13-008:test_passed:None:None": {
+      "at": "2026-08-26T00:38:44.076543+00:00",
+      "ok": true
+    },
+    "T-P13-009:claim:None:None": {
+      "at": "2026-08-26T01:14:13.643775+00:00",
+      "ok": true
+    },
+    "T-P13-009:open_pr:None:None": {
+      "at": "2026-08-26T01:14:27.617206+00:00",
+      "ok": true
+    },
+    "T-P13-009:start_review:None:None": {
+      "at": "2026-08-26T01:14:41.922965+00:00",
+      "ok": true
+    },
+    "T-P13-009:approve_review:None:None": {
+      "at": "2026-08-26T01:14:55.492552+00:00",
+      "ok": true
+    },
+    "T-P13-009:start_test:None:None": {
+      "at": "2026-08-26T01:15:08.655014+00:00",
+      "ok": true
+    },
+    "T-P13-009:test_passed:None:None": {
+      "at": "2026-08-26T01:15:36.512924+00:00",
+      "ok": true
+    },
+    "T-P13-010:claim:None:None": {
+      "at": "2026-08-26T01:26:12.875642+00:00",
+      "ok": true
+    },
+    "T-P13-010:open_pr:None:None": {
+      "at": "2026-08-26T01:26:30.972925+00:00",
+      "ok": true
+    },
+    "T-P13-010:start_review:None:None": {
+      "at": "2026-08-26T01:26:48.471466+00:00",
+      "ok": true
+    },
+    "T-P13-010:approve_review:None:None": {
+      "at": "2026-08-26T01:27:08.140392+00:00",
+      "ok": true
+    },
+    "T-P13-010:start_test:None:None": {
+      "at": "2026-08-26T01:27:25.986150+00:00",
+      "ok": true
+    },
+    "T-P13-010:test_passed:None:None": {
+      "at": "2026-08-26T01:28:20.033575+00:00",
+      "ok": true
+    },
+    "T-P13-011:claim:None:None": {
+      "at": "2026-08-26T01:39:10.959171+00:00",
+      "ok": true
+    },
+    "T-P13-011:open_pr:None:None": {
+      "at": "2026-08-26T01:39:29.843418+00:00",
+      "ok": true
+    },
+    "T-P13-011:start_review:None:None": {
+      "at": "2026-08-26T01:39:45.882019+00:00",
+      "ok": true
+    },
+    "T-P13-011:approve_review:None:None": {
+      "at": "2026-08-26T01:39:58.700125+00:00",
+      "ok": true
+    },
+    "T-P13-011:start_test:None:None": {
+      "at": "2026-08-26T01:40:15.424481+00:00",
+      "ok": true
+    },
+    "T-P13-011:test_passed:None:None": {
+      "at": "2026-08-26T01:40:53.374071+00:00",
+      "ok": true
+    },
+    "T-P13-012:claim:None:None": {
+      "at": "2026-08-26T02:03:09.090436+00:00",
+      "ok": true
+    },
+    "T-P13-012:open_pr:None:None": {
+      "at": "2026-08-26T02:03:26.338077+00:00",
+      "ok": true
+    },
+    "T-P13-012:start_review:None:None": {
+      "at": "2026-08-26T02:03:42.049891+00:00",
+      "ok": true
+    },
+    "T-P13-012:approve_review:None:None": {
+      "at": "2026-08-26T02:03:56.880178+00:00",
+      "ok": true
+    },
+    "T-P13-012:start_test:None:None": {
+      "at": "2026-08-26T02:04:12.105006+00:00",
+      "ok": true
+    },
+    "T-P13-012:test_passed:None:None": {
+      "at": "2026-08-26T02:04:48.590800+00:00",
       "ok": true
     }
   },
@@ -857,5 +1525,7 @@
       "reconcile_conflicts": 0
     },
     "merge_policy": "never_auto_merge"
-  }
+  },
+  "hitl_issue_comment_keys": {},
+  "applied_events": {}
 }

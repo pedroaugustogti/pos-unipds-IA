@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "task_id": "T-P13-008",
+  "issue": "https://github.com/guardiaofamilia/guardiao-familia-site/issues/74",
+  "branch": "feat/t-p13-008-hero-sua-familia",
+  "sha": "66b32f1b98e6318058cf99b94b92d87b75655e95",
+  "commit_url": "https://github.com/guardiaofamilia/guardiao-familia-site/commit/66b32f1b98e6318058cf99b94b92d87b75655e95",
+  "board_status": "Todo",
+  "qa": "PASS",
+  "hitl": "awaiting_human_pre_merge",
+  "steps": [
+    {
+      "event": "claim",
+      "from": "Todo",
+      "to": "Todo"
+    },
+    {
+      "event": "open_pr",
+      "from": "Todo",
+      "to": "Todo"
+    },
+    {
+      "event": "start_review",
+      "from": "Todo",
+      "to": "Todo"
+    },
+    {
+      "event": "approve_review",
+      "from": "Todo",
+      "to": "Todo"
+    },
+    {
+      "event": "start_test",
+      "from": "Todo",
+      "to": "Todo"
+    },
+    {
+      "event": "test_passed",
+      "from": "Todo",
+      "to": "Todo"
+    }
+  ]
+}

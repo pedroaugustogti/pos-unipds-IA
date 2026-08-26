@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-08-24T17:47:46.805610+00:00",
+  "generated_at": "2026-08-26T02:04:48.607079+00:00",
   "paths": {
     "log": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\crew\\output\\observability\\workflow.jsonl",
     "snapshot": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\crew\\output\\observability\\snapshot.json",
     "dashboard": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\crew\\output\\observability\\dashboard.html"
   },
   "totals": {
-    "events": 160,
+    "events": 221,
     "by_kind": {
-      "status_change": 91,
+      "status_change": 152,
       "autonomy_claim": 12,
       "autonomy_cycle": 9,
       "autonomy_pause": 3,
@@ -18,44 +18,47 @@
       "demo_implement": 6
     },
     "by_event": {
-      "claim": 47,
-      "start_test": 18,
+      "claim": 59,
+      "start_test": 27,
       "test_failed_bug": 2,
-      "open_pr": 16,
-      "start_review": 16,
-      "approve_review": 19,
-      "test_passed": 16,
+      "open_pr": 27,
+      "start_review": 25,
+      "approve_review": 28,
+      "test_passed": 24,
       "implement": 6,
-      "merge_pr": 8
+      "merge_pr": 11
     },
     "by_agent": {
-      "frontend-mobile": 41,
-      "devops-cicd": 29,
-      "qa-gate": 41,
-      "frontend-mobile-reviewer": 28,
+      "frontend-mobile": 48,
+      "devops-cicd": 37,
+      "qa-gate": 59,
+      "frontend-mobile-reviewer": 38,
       "devops-cicd-reviewer": 4,
-      "orchestrator": 4
+      "orchestrator": 7,
+      "frontend-web": 5,
+      "frontend-web-reviewer": 10
     },
     "by_dispatch": {
-      "start_task": 78,
+      "start_task": 132,
       "manual_fallback": 1,
       "enqueue_qa_gate": 2,
-      "queue": 9,
-      "orchestrator_only": 4
+      "queue": 13,
+      "orchestrator_only": 7
     },
     "board_status": {
-      "Todo": 269,
-      "Done": 2,
-      "In Progress": 1
+      "Todo": 270,
+      "Done": 1,
+      "In Progress": 1,
+      "In Pull Request": 1
     },
-    "idle_agents": 19,
-    "busy_agents": 0,
-    "queue_len": 0,
+    "idle_agents": 18,
+    "busy_agents": 1,
+    "queue_len": 4,
     "blockers": 0,
     "hitl_pending": 4,
-    "jobs_queued": 8,
+    "jobs_queued": 20,
     "jobs_leased": 0,
-    "outbox_pending": 54
+    "outbox_pending": 69
   },
   "idle_agents": [
     "backend",
@@ -64,7 +67,6 @@
     "cloud-infra-reviewer",
     "database",
     "database-reviewer",
-    "devops-cicd",
     "devops-cicd-reviewer",
     "frontend-mobile",
     "frontend-mobile-reviewer",
@@ -78,80 +80,46 @@
     "stores-release",
     "stores-release-reviewer"
   ],
-  "busy_agents": [],
-  "dispatch_queue": [],
+  "busy_agents": [
+    {
+      "agent": "devops-cicd",
+      "state": "busy",
+      "task_id": "T-P13-008",
+      "updated_at": "2026-08-26T00:38:44.076543+00:00"
+    }
+  ],
+  "dispatch_queue": [
+    {
+      "task_id": "T-P13-009",
+      "agent": "devops-cicd",
+      "status": "In Pull Request",
+      "event": "test_passed",
+      "at": "2026-08-26T01:15:36.513924+00:00"
+    },
+    {
+      "task_id": "T-P13-010",
+      "agent": "devops-cicd",
+      "status": "In Pull Request",
+      "event": "test_passed",
+      "at": "2026-08-26T01:28:20.035572+00:00"
+    },
+    {
+      "task_id": "T-P13-011",
+      "agent": "devops-cicd",
+      "status": "In Pull Request",
+      "event": "test_passed",
+      "at": "2026-08-26T01:40:53.375077+00:00"
+    },
+    {
+      "task_id": "T-P13-012",
+      "agent": "devops-cicd",
+      "status": "In Pull Request",
+      "event": "test_passed",
+      "at": "2026-08-26T02:04:48.590800+00:00"
+    }
+  ],
   "hitl_queue": [
     {
-      "task_id": "T-P05-005",
-      "event": "confirm_approve_review",
-      "hitl": {
-        "required": true,
-        "mode": "propose_only",
-        "reasons": [
-          "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
-        ],
-        "reason": "Review aprovado por agente LLM em task de alto risco — veredito só como proposta.",
-        "human_action": "Humano confirma ou rejeita o veredito proposto no PR/board (evento hitl_approved | hitl_rejected).",
-        "task_id": "T-P05-005",
-        "event": "approve_review",
-        "high_risk": true
-      },
-      "payload": {
-        "task_id": "T-P05-005",
-        "event": "approve_review",
-        "from_status": null,
-        "to_status": null,
-        "agent_role": "frontend-mobile",
-        "next_agent": null,
-        "repo": "guardiao-familia-parent",
-        "branch": null,
-        "pr_url": null,
-        "summary": "demo_apresentacao · frontend-mobile-reviewer · approve_review",
-        "doubts": [],
-        "metrics": {},
-        "bug_kind": null,
-        "correlation_id": "8367bce0-853d-4d7f-b70c-97d75ac00638",
-        "idempotency_key": null,
-        "at": "2026-08-24T17:24:24.694815+00:00",
-        "dry_run": false
-      }
-    },
-    {
-      "task_id": "T-P05-005",
-      "event": "merge_pr",
-      "hitl": {
-        "required": true,
-        "mode": "block_until_human",
-        "reasons": [
-          "Merge é irreversível no fluxo do board — Approval Gate humano obrigatório."
-        ],
-        "reason": "Merge é irreversível no fluxo do board — Approval Gate humano obrigatório.",
-        "human_action": "Humano decide no board/PR; só então emitir hitl_approved + evento liberado.",
-        "task_id": "T-P05-005",
-        "event": "merge_pr",
-        "high_risk": true
-      },
-      "payload": {
-        "task_id": "T-P05-005",
-        "event": "merge_pr",
-        "from_status": null,
-        "to_status": null,
-        "agent_role": "frontend-mobile",
-        "next_agent": null,
-        "repo": "guardiao-familia-parent",
-        "branch": null,
-        "pr_url": null,
-        "summary": "demo_apresentacao · qa-gate · merge_pr",
-        "doubts": [],
-        "metrics": {},
-        "bug_kind": null,
-        "correlation_id": "9da8ccf5-2bcf-44fc-af7c-9a1aa7b78eea",
-        "idempotency_key": null,
-        "at": "2026-08-24T17:25:21.269710+00:00",
-        "dry_run": false
-      }
-    },
-    {
       "task_id": "T-P05-006",
       "event": "confirm_approve_review",
       "hitl": {
@@ -176,18 +144,53 @@
         "repo": "guardiao-familia-parent",
         "branch": null,
         "pr_url": null,
-        "summary": "demo_apresentacao · frontend-mobile-reviewer · approve_review",
+        "summary": "No critical risks documented in demo/academic mode; task is in code review with no provided details indicating issues.",
         "doubts": [],
         "metrics": {},
         "bug_kind": null,
-        "correlation_id": "39ef11c5-c6f9-4678-80a7-3054279259ed",
+        "correlation_id": "bede5c3a-117e-4692-9a56-b504fd93854b",
         "idempotency_key": null,
-        "at": "2026-08-24T17:46:29.081862+00:00",
+        "at": "2026-08-25T21:22:33.813240+00:00",
         "dry_run": false
       }
     },
     {
-      "task_id": "T-P05-006",
+      "task_id": "T-P13-011",
+      "event": "confirm_approve_review",
+      "hitl": {
+        "required": true,
+        "mode": "propose_only",
+        "reasons": [
+          "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
+        ],
+        "reason": "Review aprovado por agente LLM em task de alto risco — veredito só como proposta.",
+        "human_action": "Humano confirma ou rejeita o veredito proposto no PR/board (evento hitl_approved | hitl_rejected).",
+        "task_id": "T-P13-011",
+        "event": "approve_review",
+        "high_risk": true
+      },
+      "payload": {
+        "task_id": "T-P13-011",
+        "event": "approve_review",
+        "from_status": null,
+        "to_status": null,
+        "agent_role": "frontend-web",
+        "next_agent": null,
+        "repo": "guardiao-familia-site",
+        "branch": null,
+        "pr_url": null,
+        "summary": "A atualização do hero home foi revisada e não apresenta riscos críticos. A implementação parece estar em conformidade com os requisitos.",
+        "doubts": [],
+        "metrics": {},
+        "bug_kind": null,
+        "correlation_id": "1e12d6ba-10c9-4a55-9c52-f42f8e4dc8a6",
+        "idempotency_key": null,
+        "at": "2026-08-26T01:39:49.230412+00:00",
+        "dry_run": false
+      }
+    },
+    {
+      "task_id": "T-P13-011",
       "event": "merge_pr",
       "hitl": {
         "required": true,
@@ -197,27 +200,62 @@
         ],
         "reason": "Merge é irreversível no fluxo do board — Approval Gate humano obrigatório.",
         "human_action": "Humano decide no board/PR; só então emitir hitl_approved + evento liberado.",
-        "task_id": "T-P05-006",
+        "task_id": "T-P13-011",
         "event": "merge_pr",
         "high_risk": true
       },
       "payload": {
-        "task_id": "T-P05-006",
+        "task_id": "T-P13-011",
         "event": "merge_pr",
         "from_status": null,
         "to_status": null,
-        "agent_role": "frontend-mobile",
+        "agent_role": "frontend-web",
         "next_agent": null,
-        "repo": "guardiao-familia-parent",
+        "repo": "guardiao-familia-site",
         "branch": null,
         "pr_url": null,
-        "summary": "demo_apresentacao · qa-gate · merge_pr",
+        "summary": "Merge apos QA",
         "doubts": [],
         "metrics": {},
         "bug_kind": null,
-        "correlation_id": "f5c9b0bd-7801-42bd-9473-dfc65e13d124",
+        "correlation_id": "07cd3eb5-7fbb-497f-bb83-2e62e184ede6",
         "idempotency_key": null,
-        "at": "2026-08-24T17:47:27.331890+00:00",
+        "at": "2026-08-26T01:40:56.043167+00:00",
+        "dry_run": false
+      }
+    },
+    {
+      "task_id": "T-P13-012",
+      "event": "confirm_approve_review",
+      "hitl": {
+        "required": true,
+        "mode": "propose_only",
+        "reasons": [
+          "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
+        ],
+        "reason": "Review aprovado por agente LLM em task de alto risco — veredito só como proposta.",
+        "human_action": "Humano confirma ou rejeita o veredito proposto no PR/board (evento hitl_approved | hitl_rejected).",
+        "task_id": "T-P13-012",
+        "event": "approve_review",
+        "high_risk": true
+      },
+      "payload": {
+        "task_id": "T-P13-012",
+        "event": "approve_review",
+        "from_status": null,
+        "to_status": null,
+        "agent_role": "frontend-web",
+        "next_agent": null,
+        "repo": "guardiao-familia-site",
+        "branch": null,
+        "pr_url": null,
+        "summary": "A atualização do hero home foi revisada e não apresenta riscos críticos. O conteúdo está adequado e atende aos requisitos.",
+        "doubts": [],
+        "metrics": {},
+        "bug_kind": null,
+        "correlation_id": "af5ddfd9-49be-4bdf-b907-58e871c7fb9c",
+        "idempotency_key": null,
+        "at": "2026-08-26T02:03:46.065105+00:00",
         "dry_run": false
       }
     }
@@ -226,13 +264,68 @@
   "blockers": [],
   "recent_tasks": [
     {
+      "task_id": "T-P13-012",
+      "last_event": "test_passed",
+      "last_kind": "status_change",
+      "agent": "devops-cicd",
+      "to_status": "In Pull Request",
+      "ts": "2026-08-26T02:04:48.594806+00:00",
+      "dispatch_action": "queue",
+      "job_id": null,
+      "correlation_id": null
+    },
+    {
+      "task_id": "T-P13-011",
+      "last_event": "test_passed",
+      "last_kind": "status_change",
+      "agent": "devops-cicd",
+      "to_status": "In Pull Request",
+      "ts": "2026-08-26T01:40:53.380071+00:00",
+      "dispatch_action": "queue",
+      "job_id": null,
+      "correlation_id": null
+    },
+    {
+      "task_id": "T-P13-010",
+      "last_event": "test_passed",
+      "last_kind": "status_change",
+      "agent": "devops-cicd",
+      "to_status": "In Pull Request",
+      "ts": "2026-08-26T01:28:20.052902+00:00",
+      "dispatch_action": "queue",
+      "job_id": null,
+      "correlation_id": null
+    },
+    {
+      "task_id": "T-P13-009",
+      "last_event": "test_passed",
+      "last_kind": "status_change",
+      "agent": "devops-cicd",
+      "to_status": "In Pull Request",
+      "ts": "2026-08-26T01:15:36.519922+00:00",
+      "dispatch_action": "queue",
+      "job_id": null,
+      "correlation_id": null
+    },
+    {
+      "task_id": "T-P13-008",
+      "last_event": "test_passed",
+      "last_kind": "status_change",
+      "agent": "devops-cicd",
+      "to_status": "In Pull Request",
+      "ts": "2026-08-26T00:38:44.086548+00:00",
+      "dispatch_action": "start_task",
+      "job_id": null,
+      "correlation_id": null
+    },
+    {
       "task_id": "T-P05-006",
       "last_event": "merge_pr",
-      "last_kind": "demo_step",
-      "agent": "qa-gate",
+      "last_kind": "status_change",
+      "agent": "orchestrator",
       "to_status": "Done",
-      "ts": "2026-08-24T17:47:40.744829+00:00",
-      "dispatch_action": null,
+      "ts": "2026-08-25T21:23:40.637887+00:00",
+      "dispatch_action": "orchestrator_only",
       "job_id": null,
       "correlation_id": null
     },
@@ -272,27 +365,97 @@
   ],
   "timeline": [
     {
-      "ts": "2026-08-24T16:43:04.735515+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "start_test",
-      "from_status": "Ready for Test",
-      "to_status": "In Test",
-      "dispatch_action": null,
-      "summary": "demo qa-gate/qa-gate",
+      "ts": "2026-08-25T20:14:04.610075+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
       "dry_run": false,
       "correlation_id": null,
       "job_id": null,
       "extra": {
-        "ok": true,
-        "hitl_resolved": false
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
       }
     },
     {
-      "ts": "2026-08-24T16:43:10.976645+00:00",
+      "ts": "2026-08-25T20:14:25.329303+00:00",
       "kind": "status_change",
-      "task_id": "T-P05-005",
+      "task_id": "T-P05-006",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-25T20:14:42.426001+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-25T20:15:00.694195+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-25T20:15:15.089535+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
       "agent": "devops-cicd",
       "event": "test_passed",
       "from_status": "In Test",
@@ -308,31 +471,13 @@
         "bug": null,
         "skill": "frontend-mobile",
         "blocker": false,
-        "title": "Configurar APNs production certificates"
+        "title": "Configurar FCM data messages SOS"
       }
     },
     {
-      "ts": "2026-08-24T16:43:11.000643+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "test_passed",
-      "from_status": "In Test",
-      "to_status": "In Pull Request",
-      "dispatch_action": null,
-      "summary": "demo qa-gate/qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T16:43:17.071756+00:00",
+      "ts": "2026-08-25T20:15:29.060187+00:00",
       "kind": "status_change",
-      "task_id": "T-P05-005",
+      "task_id": "T-P05-006",
       "agent": "orchestrator",
       "event": "merge_pr",
       "from_status": "In Pull Request",
@@ -348,635 +493,11 @@
         "bug": null,
         "skill": "frontend-mobile",
         "blocker": false,
-        "title": "Configurar APNs production certificates"
+        "title": "Configurar FCM data messages SOS"
       }
     },
     {
-      "ts": "2026-08-24T16:43:17.109144+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "merge_pr",
-      "from_status": "In Pull Request",
-      "to_status": "Done",
-      "dispatch_action": null,
-      "summary": "demo qa-gate/qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T16:52:24.728219+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T16:52:24.785839+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": null,
-      "summary": "demo creator/frontend-mobile",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T16:52:30.312100+00:00",
-      "kind": "demo_implement",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile",
-      "event": "implement",
-      "from_status": "In Progress",
-      "to_status": "In Progress",
-      "dispatch_action": null,
-      "summary": "commit local 53b817e",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "paths": [
-          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-005/IMPLEMENTACAO.md",
-          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-005/agent_metrics.json"
-        ],
-        "commit": "53b817e",
-        "ok": true,
-        "error": null
-      }
-    },
-    {
-      "ts": "2026-08-24T16:52:36.762167+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile-reviewer",
-      "event": "open_pr",
-      "from_status": "In Progress",
-      "to_status": "Ready for Code Review",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T16:52:36.826219+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile",
-      "event": "open_pr",
-      "from_status": "In Progress",
-      "to_status": "Ready for Code Review",
-      "dispatch_action": null,
-      "summary": "demo creator/frontend-mobile",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T16:52:43.027338+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile-reviewer",
-      "event": "start_review",
-      "from_status": "Ready for Code Review",
-      "to_status": "In Code Review",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T16:52:43.070310+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile-reviewer",
-      "event": "start_review",
-      "from_status": "Ready for Code Review",
-      "to_status": "In Code Review",
-      "dispatch_action": null,
-      "summary": "demo reviewer/frontend-mobile-reviewer",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T16:52:49.437522+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "approve_review",
-      "from_status": "In Code Review",
-      "to_status": "Ready for Test",
-      "dispatch_action": "start_task",
-      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T16:52:49.522796+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile-reviewer",
-      "event": "approve_review",
-      "from_status": "In Code Review",
-      "to_status": "Ready for Test",
-      "dispatch_action": null,
-      "summary": "demo reviewer/frontend-mobile-reviewer",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T16:52:55.903994+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "start_test",
-      "from_status": "Ready for Test",
-      "to_status": "In Test",
-      "dispatch_action": "start_task",
-      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T16:52:56.004533+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "start_test",
-      "from_status": "Ready for Test",
-      "to_status": "In Test",
-      "dispatch_action": null,
-      "summary": "demo qa-gate/qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T16:53:02.493318+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "devops-cicd",
-      "event": "test_passed",
-      "from_status": "In Test",
-      "to_status": "In Pull Request",
-      "dispatch_action": "start_task",
-      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T16:53:02.584006+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "test_passed",
-      "from_status": "In Test",
-      "to_status": "In Pull Request",
-      "dispatch_action": null,
-      "summary": "demo qa-gate/qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T16:53:08.745179+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "orchestrator",
-      "event": "merge_pr",
-      "from_status": "In Pull Request",
-      "to_status": "Done",
-      "dispatch_action": "orchestrator_only",
-      "summary": "Status Done nao exige specialist — orchestrator fecha/planeja.",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T16:53:08.789484+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "merge_pr",
-      "from_status": "In Pull Request",
-      "to_status": "Done",
-      "dispatch_action": null,
-      "summary": "demo qa-gate/qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:23:32.389863+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T17:23:32.414581+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": null,
-      "summary": "demo creator/frontend-mobile",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:23:38.904410+00:00",
-      "kind": "demo_implement",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile",
-      "event": "implement",
-      "from_status": "In Progress",
-      "to_status": "In Progress",
-      "dispatch_action": null,
-      "summary": "commit local 3918b83",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "paths": [
-          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-005/IMPLEMENTACAO.md",
-          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-005/agent_metrics.json"
-        ],
-        "commit": "3918b83",
-        "ok": true,
-        "error": null
-      }
-    },
-    {
-      "ts": "2026-08-24T17:23:58.505635+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile-reviewer",
-      "event": "open_pr",
-      "from_status": "In Progress",
-      "to_status": "Ready for Code Review",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T17:23:58.544721+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile",
-      "event": "open_pr",
-      "from_status": "In Progress",
-      "to_status": "Ready for Code Review",
-      "dispatch_action": null,
-      "summary": "demo creator/frontend-mobile",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:24:18.584786+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile-reviewer",
-      "event": "start_review",
-      "from_status": "Ready for Code Review",
-      "to_status": "In Code Review",
-      "dispatch_action": "start_task",
-      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T17:24:18.607819+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile-reviewer",
-      "event": "start_review",
-      "from_status": "Ready for Code Review",
-      "to_status": "In Code Review",
-      "dispatch_action": null,
-      "summary": "demo reviewer/frontend-mobile-reviewer",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:24:38.634337+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "approve_review",
-      "from_status": "In Code Review",
-      "to_status": "Ready for Test",
-      "dispatch_action": "start_task",
-      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T17:24:38.660160+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "frontend-mobile-reviewer",
-      "event": "approve_review",
-      "from_status": "In Code Review",
-      "to_status": "Ready for Test",
-      "dispatch_action": null,
-      "summary": "demo reviewer/frontend-mobile-reviewer",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:24:56.786579+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "start_test",
-      "from_status": "Ready for Test",
-      "to_status": "In Test",
-      "dispatch_action": "start_task",
-      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T17:24:56.817628+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "start_test",
-      "from_status": "Ready for Test",
-      "to_status": "In Test",
-      "dispatch_action": null,
-      "summary": "demo qa-gate/qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:25:15.121358+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "devops-cicd",
-      "event": "test_passed",
-      "from_status": "In Test",
-      "to_status": "In Pull Request",
-      "dispatch_action": "start_task",
-      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T17:25:15.162682+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "test_passed",
-      "from_status": "In Test",
-      "to_status": "In Pull Request",
-      "dispatch_action": null,
-      "summary": "demo qa-gate/qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:25:39.265334+00:00",
-      "kind": "status_change",
-      "task_id": "T-P05-005",
-      "agent": "orchestrator",
-      "event": "merge_pr",
-      "from_status": "In Pull Request",
-      "to_status": "Done",
-      "dispatch_action": "orchestrator_only",
-      "summary": "Status Done nao exige specialist — orchestrator fecha/planeja.",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "agent_idle": true,
-        "queued": false,
-        "bug": null,
-        "skill": "frontend-mobile",
-        "blocker": false,
-        "title": "Configurar APNs production certificates"
-      }
-    },
-    {
-      "ts": "2026-08-24T17:25:39.288152+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-005",
-      "agent": "qa-gate",
-      "event": "merge_pr",
-      "from_status": "In Pull Request",
-      "to_status": "Done",
-      "dispatch_action": null,
-      "summary": "demo qa-gate/qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": true
-      }
-    },
-    {
-      "ts": "2026-08-24T17:45:35.049652+00:00",
+      "ts": "2026-08-25T21:06:47.124954+00:00",
       "kind": "status_change",
       "task_id": "T-P05-006",
       "agent": "frontend-mobile",
@@ -998,48 +519,7 @@
       }
     },
     {
-      "ts": "2026-08-24T17:45:35.080220+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-006",
-      "agent": "frontend-mobile",
-      "event": "claim",
-      "from_status": "Todo",
-      "to_status": "In Progress",
-      "dispatch_action": null,
-      "summary": "demo creator/frontend-mobile",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:45:41.367555+00:00",
-      "kind": "demo_implement",
-      "task_id": "T-P05-006",
-      "agent": "frontend-mobile",
-      "event": "implement",
-      "from_status": "In Progress",
-      "to_status": "In Progress",
-      "dispatch_action": null,
-      "summary": "commit local a3bbdb8",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "paths": [
-          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-006/IMPLEMENTACAO.md",
-          "modulo-8-exemplo-pratico-guardiao-familia-agents/crew/output/demo_workspace/T-P05-006/agent_metrics.json"
-        ],
-        "commit": "a3bbdb8",
-        "ok": true,
-        "error": null
-      }
-    },
-    {
-      "ts": "2026-08-24T17:46:01.770184+00:00",
+      "ts": "2026-08-25T21:07:12.170478+00:00",
       "kind": "status_change",
       "task_id": "T-P05-006",
       "agent": "frontend-mobile-reviewer",
@@ -1061,25 +541,7 @@
       }
     },
     {
-      "ts": "2026-08-24T17:46:01.791771+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-006",
-      "agent": "frontend-mobile",
-      "event": "open_pr",
-      "from_status": "In Progress",
-      "to_status": "Ready for Code Review",
-      "dispatch_action": null,
-      "summary": "demo creator/frontend-mobile",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:46:22.980735+00:00",
+      "ts": "2026-08-25T21:07:41.521840+00:00",
       "kind": "status_change",
       "task_id": "T-P05-006",
       "agent": "frontend-mobile-reviewer",
@@ -1101,25 +563,7 @@
       }
     },
     {
-      "ts": "2026-08-24T17:46:23.003309+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-006",
-      "agent": "frontend-mobile-reviewer",
-      "event": "start_review",
-      "from_status": "Ready for Code Review",
-      "to_status": "In Code Review",
-      "dispatch_action": null,
-      "summary": "demo reviewer/frontend-mobile-reviewer",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:46:43.101545+00:00",
+      "ts": "2026-08-25T21:08:05.504314+00:00",
       "kind": "status_change",
       "task_id": "T-P05-006",
       "agent": "qa-gate",
@@ -1141,25 +585,7 @@
       }
     },
     {
-      "ts": "2026-08-24T17:46:43.126855+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-006",
-      "agent": "frontend-mobile-reviewer",
-      "event": "approve_review",
-      "from_status": "In Code Review",
-      "to_status": "Ready for Test",
-      "dispatch_action": null,
-      "summary": "demo reviewer/frontend-mobile-reviewer",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:47:02.162654+00:00",
+      "ts": "2026-08-25T21:08:30.498706+00:00",
       "kind": "status_change",
       "task_id": "T-P05-006",
       "agent": "qa-gate",
@@ -1181,25 +607,7 @@
       }
     },
     {
-      "ts": "2026-08-24T17:47:02.192611+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-006",
-      "agent": "qa-gate",
-      "event": "start_test",
-      "from_status": "Ready for Test",
-      "to_status": "In Test",
-      "dispatch_action": null,
-      "summary": "demo qa-gate/qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:47:21.212101+00:00",
+      "ts": "2026-08-25T21:08:48.876883+00:00",
       "kind": "status_change",
       "task_id": "T-P05-006",
       "agent": "devops-cicd",
@@ -1221,25 +629,7 @@
       }
     },
     {
-      "ts": "2026-08-24T17:47:21.234168+00:00",
-      "kind": "demo_step",
-      "task_id": "T-P05-006",
-      "agent": "qa-gate",
-      "event": "test_passed",
-      "from_status": "In Test",
-      "to_status": "In Pull Request",
-      "dispatch_action": null,
-      "summary": "demo qa-gate/qa-gate",
-      "dry_run": false,
-      "correlation_id": null,
-      "job_id": null,
-      "extra": {
-        "ok": true,
-        "hitl_resolved": false
-      }
-    },
-    {
-      "ts": "2026-08-24T17:47:40.713106+00:00",
+      "ts": "2026-08-25T21:09:08.873446+00:00",
       "kind": "status_change",
       "task_id": "T-P05-006",
       "agent": "orchestrator",
@@ -1261,21 +651,817 @@
       }
     },
     {
-      "ts": "2026-08-24T17:47:40.744829+00:00",
-      "kind": "demo_step",
+      "ts": "2026-08-25T21:21:44.777184+00:00",
+      "kind": "status_change",
       "task_id": "T-P05-006",
-      "agent": "qa-gate",
-      "event": "merge_pr",
-      "from_status": "In Pull Request",
-      "to_status": "Done",
-      "dispatch_action": null,
-      "summary": "demo qa-gate/qa-gate",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile",
       "dry_run": false,
       "correlation_id": null,
       "job_id": null,
       "extra": {
-        "ok": true,
-        "hitl_resolved": true
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-25T21:22:04.965500+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-25T21:22:26.611856+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-25T21:22:48.107242+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-25T21:23:08.805347+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-25T21:23:23.941859+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "devops-cicd",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-25T21:23:40.637887+00:00",
+      "kind": "status_change",
+      "task_id": "T-P05-006",
+      "agent": "orchestrator",
+      "event": "merge_pr",
+      "from_status": "In Pull Request",
+      "to_status": "Done",
+      "dispatch_action": "orchestrator_only",
+      "summary": "Status Done nao exige specialist — orchestrator fecha/planeja.",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Configurar FCM data messages SOS"
+      }
+    },
+    {
+      "ts": "2026-08-26T00:36:19.013163+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-008",
+      "agent": "frontend-web",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T00:36:31.004162+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-008",
+      "agent": "frontend-web-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T00:36:45.035667+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-008",
+      "agent": "frontend-web-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T00:36:58.552600+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-008",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T00:37:11.293670+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-008",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T00:38:44.086548+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-008",
+      "agent": "devops-cicd",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role devops-cicd",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:14:13.651284+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-009",
+      "agent": "frontend-web",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:14:27.623454+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-009",
+      "agent": "frontend-web-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:14:41.929656+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-009",
+      "agent": "frontend-web-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:14:55.501565+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-009",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:15:08.663991+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-009",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:15:36.519922+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-009",
+      "agent": "devops-cicd",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": "queue",
+      "summary": "Agente `devops-cicd` ocupado — evento enfileirado. Ociosos agora: ['backend', 'backend-reviewer', 'cloud-infra', 'cloud-infra-reviewer', 'database', 'database-reviewer', 'devops-cicd-reviewer', 'frontend-mobile', 'frontend-mobile-reviewer', 'frontend-web', 'frontend-web-reviewer', 'human', 'orchestrator', 'qa-author', 'qa-author-reviewer', 'qa-gate', 'stores-release', 'stores-release-reviewer']",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": false,
+        "queued": true,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:26:12.894644+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-010",
+      "agent": "frontend-web",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:26:30.995721+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-010",
+      "agent": "frontend-web-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:26:48.485513+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-010",
+      "agent": "frontend-web-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:27:08.157917+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-010",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:27:26.001234+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-010",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:28:20.052902+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-010",
+      "agent": "devops-cicd",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": "queue",
+      "summary": "Agente `devops-cicd` ocupado — evento enfileirado. Ociosos agora: ['backend', 'backend-reviewer', 'cloud-infra', 'cloud-infra-reviewer', 'database', 'database-reviewer', 'devops-cicd-reviewer', 'frontend-mobile', 'frontend-mobile-reviewer', 'frontend-web', 'frontend-web-reviewer', 'human', 'orchestrator', 'qa-author', 'qa-author-reviewer', 'qa-gate', 'stores-release', 'stores-release-reviewer']",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": false,
+        "queued": true,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:39:10.965168+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-011",
+      "agent": "frontend-web",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:39:29.849753+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-011",
+      "agent": "frontend-web-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:39:45.886028+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-011",
+      "agent": "frontend-web-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:39:58.708119+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-011",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:40:15.428956+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-011",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T01:40:53.380071+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-011",
+      "agent": "devops-cicd",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": "queue",
+      "summary": "Agente `devops-cicd` ocupado — evento enfileirado. Ociosos agora: ['backend', 'backend-reviewer', 'cloud-infra', 'cloud-infra-reviewer', 'database', 'database-reviewer', 'devops-cicd-reviewer', 'frontend-mobile', 'frontend-mobile-reviewer', 'frontend-web', 'frontend-web-reviewer', 'human', 'orchestrator', 'qa-author', 'qa-author-reviewer', 'qa-gate', 'stores-release', 'stores-release-reviewer']",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": false,
+        "queued": true,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T02:03:09.096094+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-012",
+      "agent": "frontend-web",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T02:03:26.343077+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-012",
+      "agent": "frontend-web-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T02:03:42.053889+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-012",
+      "agent": "frontend-web-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-web-reviewer` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role frontend-web-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T02:03:56.887179+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-012",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T02:04:12.110005+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-012",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python scripts/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
+      }
+    },
+    {
+      "ts": "2026-08-26T02:04:48.594806+00:00",
+      "kind": "status_change",
+      "task_id": "T-P13-012",
+      "agent": "devops-cicd",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": "queue",
+      "summary": "Agente `devops-cicd` ocupado — evento enfileirado. Ociosos agora: ['backend', 'backend-reviewer', 'cloud-infra', 'cloud-infra-reviewer', 'database', 'database-reviewer', 'devops-cicd-reviewer', 'frontend-mobile', 'frontend-mobile-reviewer', 'frontend-web', 'frontend-web-reviewer', 'human', 'orchestrator', 'qa-author', 'qa-author-reviewer', 'qa-gate', 'stores-release', 'stores-release-reviewer']",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": false,
+        "queued": true,
+        "bug": null,
+        "skill": "frontend-web",
+        "blocker": false,
+        "title": "Atualizar hero home: Tranquilidade para sua família"
       }
     }
   ],
@@ -1348,6 +1534,13 @@
         "release_blocker": true
       },
       {
+        "task_id": "T-P05-005",
+        "title": "Configurar APNs production certificates",
+        "role": "frontend-mobile",
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
         "task_id": "T-P05-008",
         "title": "Testes push geofence som customizado",
         "role": "frontend-mobile",
@@ -1359,6 +1552,34 @@
         "title": "Documentar matriz som x evento",
         "role": "frontend-mobile",
         "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P13-008",
+        "title": "",
+        "role": null,
+        "pilot": false,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P13-009",
+        "title": "",
+        "role": null,
+        "pilot": false,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P13-010",
+        "title": "",
+        "role": null,
+        "pilot": false,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P13-011",
+        "title": "",
+        "role": null,
+        "pilot": false,
         "release_blocker": false
       }
     ],
@@ -1375,15 +1596,16 @@
     "In Code Review": [],
     "Ready for Test": [],
     "In Test": [],
-    "In Pull Request": [],
-    "Done": [
+    "In Pull Request": [
       {
-        "task_id": "T-P05-005",
-        "title": "Configurar APNs production certificates",
-        "role": "frontend-mobile",
-        "pilot": true,
+        "task_id": "T-P13-012",
+        "title": "Atualizar hero home: Tranquilidade para sua família",
+        "role": "frontend-web",
+        "pilot": false,
         "release_blocker": false
-      },
+      }
+    ],
+    "Done": [
       {
         "task_id": "T-P05-006",
         "title": "Configurar FCM data messages SOS",
@@ -1396,57 +1618,129 @@
   "worker_jobs": {
     "by_status": {
       "done": 2,
-      "cancelled": 19,
-      "queued": 8
+      "cancelled": 42,
+      "queued": 20
     },
     "queued": [
       {
-        "job_id": "67c3272e-0aa8-4def-a73f-8ad8b9ce8493",
-        "task_id": "T-P05-005",
-        "role": "frontend-mobile",
-        "event": "claim"
-      },
-      {
-        "job_id": "eb8ae582-923c-48a4-a5b7-721e7ef89a69",
-        "task_id": "T-P05-005",
-        "role": "frontend-mobile-reviewer",
-        "event": "open_pr"
-      },
-      {
-        "job_id": "a3c69dfb-876a-4e93-b8d6-f67d2451f745",
-        "task_id": "T-P05-005",
-        "role": "qa-gate",
-        "event": "approve_review"
-      },
-      {
-        "job_id": "bfa700d1-af68-4a61-b8f6-ece8d655dc24",
-        "task_id": "T-P05-005",
-        "role": "devops-cicd",
-        "event": "test_passed"
-      },
-      {
-        "job_id": "a218e727-e5b1-4b61-9e87-04df68661027",
+        "job_id": "c99208ea-0282-4d3d-bd47-49a373d7a92f",
         "task_id": "T-P05-006",
         "role": "frontend-mobile",
         "event": "claim"
       },
       {
-        "job_id": "d2834cc1-d740-4d6b-9349-f046be807d4e",
+        "job_id": "d5de789a-6de6-4c2e-a775-a282b5c5facc",
         "task_id": "T-P05-006",
         "role": "frontend-mobile-reviewer",
         "event": "open_pr"
       },
       {
-        "job_id": "1a017eea-010d-4c81-ba7d-f39d5bee982d",
+        "job_id": "7f5d78f9-ce39-4892-9dae-f50c3965f4ab",
         "task_id": "T-P05-006",
         "role": "qa-gate",
         "event": "approve_review"
       },
       {
-        "job_id": "c31ab171-4eff-433a-8a2e-4e1323baa1a5",
+        "job_id": "c985ba9a-ef9c-4321-972a-19bde637db1e",
         "task_id": "T-P05-006",
         "role": "devops-cicd",
         "event": "test_passed"
+      },
+      {
+        "job_id": "0ef04542-f679-4397-9a95-ea10bbb65b13",
+        "task_id": "T-P13-008",
+        "role": "frontend-web",
+        "event": "claim"
+      },
+      {
+        "job_id": "e7e99f95-69b5-4a90-9542-095741061e32",
+        "task_id": "T-P13-008",
+        "role": "frontend-web-reviewer",
+        "event": "open_pr"
+      },
+      {
+        "job_id": "ec221640-aef7-4fc4-aa54-b085ce7ba7e5",
+        "task_id": "T-P13-008",
+        "role": "qa-gate",
+        "event": "approve_review"
+      },
+      {
+        "job_id": "2b3de157-5837-4b70-9670-ba7486cf2ef9",
+        "task_id": "T-P13-008",
+        "role": "devops-cicd",
+        "event": "test_passed"
+      },
+      {
+        "job_id": "045bc66f-9a77-4753-86bb-07661e4b58b2",
+        "task_id": "T-P13-009",
+        "role": "frontend-web",
+        "event": "claim"
+      },
+      {
+        "job_id": "16ece54f-b3e3-45a2-8028-80d686616850",
+        "task_id": "T-P13-009",
+        "role": "frontend-web-reviewer",
+        "event": "open_pr"
+      },
+      {
+        "job_id": "dce7638e-12b3-4780-9e5c-0c57012a7606",
+        "task_id": "T-P13-009",
+        "role": "qa-gate",
+        "event": "approve_review"
+      },
+      {
+        "job_id": "b6d1ac72-6ff3-4000-a931-1ad33a062428",
+        "task_id": "T-P13-010",
+        "role": "frontend-web",
+        "event": "claim"
+      },
+      {
+        "job_id": "191e0b00-8320-4f15-a806-9a02f0755e01",
+        "task_id": "T-P13-010",
+        "role": "frontend-web-reviewer",
+        "event": "open_pr"
+      },
+      {
+        "job_id": "56add366-f367-4943-89e5-c02adb46022e",
+        "task_id": "T-P13-010",
+        "role": "qa-gate",
+        "event": "approve_review"
+      },
+      {
+        "job_id": "8bb5b5ed-02d4-4a73-b785-9f82b5e11834",
+        "task_id": "T-P13-011",
+        "role": "frontend-web",
+        "event": "claim"
+      },
+      {
+        "job_id": "a03babe2-21da-4e90-837d-d02b3a0ace6c",
+        "task_id": "T-P13-011",
+        "role": "frontend-web-reviewer",
+        "event": "open_pr"
+      },
+      {
+        "job_id": "d91e6afb-8300-4752-91d0-b7d891ae4a17",
+        "task_id": "T-P13-011",
+        "role": "qa-gate",
+        "event": "approve_review"
+      },
+      {
+        "job_id": "e1f245d4-fbb3-423e-9f5c-19779b05c3ae",
+        "task_id": "T-P13-012",
+        "role": "frontend-web",
+        "event": "claim"
+      },
+      {
+        "job_id": "94dce5bb-49bf-4e1d-a8ec-4237bdc8bd21",
+        "task_id": "T-P13-012",
+        "role": "frontend-web-reviewer",
+        "event": "open_pr"
+      },
+      {
+        "job_id": "4fac9ae5-4f79-4628-9401-7eb6190f1c64",
+        "task_id": "T-P13-012",
+        "role": "qa-gate",
+        "event": "approve_review"
       }
     ],
     "leased": []
@@ -1697,8 +1991,8 @@
     "heartbeat_at": "2026-08-24T15:18:33.354484+00:00",
     "paused_high_risk": true,
     "hitl_pending": 4,
-    "outbox_pending": 54,
-    "jobs_queued": 8,
+    "outbox_pending": 69,
+    "jobs_queued": 20,
     "jobs_leased": 0,
     "reconcile_conflicts": 0,
     "merge_policy": "never_auto_merge"
@@ -1721,6 +2015,26 @@
     {
       "task_id": "T-P05-006",
       "url": "tasks/T-P05-006.html"
+    },
+    {
+      "task_id": "T-P13-008",
+      "url": "tasks/T-P13-008.html"
+    },
+    {
+      "task_id": "T-P13-009",
+      "url": "tasks/T-P13-009.html"
+    },
+    {
+      "task_id": "T-P13-010",
+      "url": "tasks/T-P13-010.html"
+    },
+    {
+      "task_id": "T-P13-011",
+      "url": "tasks/T-P13-011.html"
+    },
+    {
+      "task_id": "T-P13-012",
+      "url": "tasks/T-P13-012.html"
     }
   ]
 }

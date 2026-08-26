@@ -1,0 +1,59 @@
+---
+description: Papéis e responsabilidades por evento Kanban (creator/reviewer/qa-gate/devops)
+globs: modulo-8-exemplo-pratico-guardiao-familia-agents/**/{langgraph_app,lib,guardiao_mcp,scripts,evals}/**
+alwaysApply: false
+---
+
+# Agentes × eventos (obrigatório)
+
+Fonte canônica: `lib/reviewer_pairs.py`, `lib/task_status_workflow.py`, `docs/operacao/WORKFLOW_BOARD.md` (módulo 8).
+
+Em todo `emit_status_event`, `append_task_action`, comentário de issue e handoff: o **agente do passo** deve ser o dono do evento — nunca reutilizar o creator em review/QA/merge.
+
+## Mapa evento → agente
+
+`creator` = `agent_role` da task (ex. `frontend-web`).  
+`reviewer` = `reviewer_for(creator)` (ex. `frontend-web-reviewer`).
+
+| Evento | Agente que emite / assina |
+|--------|---------------------------|
+| `claim` | creator |
+| `open_pr` / `resubmit_review` | creator |
+| `start_review` | reviewer |
+| `approve_review` / `request_changes` | reviewer |
+| `start_test` | `qa-gate` |
+| `test_passed` / `test_failed_bug` | `qa-gate` |
+| `merge_pr` | `devops-cicd` (HITL humano obrigatório em live) |
+| `reopen` | orchestrator / creator conforme contexto |
+
+## Status → owner
+
+| Status | Owner |
+|--------|--------|
+| Todo | orchestrator (despacha claim) |
+| In Progress | creator |
+| Ready / In Code Review | reviewer (`*-reviewer`) |
+| Ready / In Test | **qa-gate** (não `qa-author`) |
+| In Pull Request | devops-cicd |
+| Done | só após HITL em `merge_pr` |
+
+## QA: dois papéis
+
+- **qa-author**: cria harness (tasks `agent_role=qa` no CSV). Não gateia a pipeline deste fluxo.
+- **qa-gate**: único dono de Ready/In Test na pipeline.
+
+## LangGraph / histórico
+
+```text
+❌ BAD: agent_role fixo = frontend-web em start_review / approve_review / start_test
+✅ GOOD: trocar agent_role (e from_agent) por estágio antes de apply/comentário
+```
+
+- `decide` / `review` / `qa` / `hitl` setam o evento; **`apply` resolve `acting_agent_for_event`** e assina `from_agent` + histórico com o dono correto.
+- Não confundir com `resolve_agent_for_event` (próximo dono do status *alvo* / handoff).
+- Comentários: thought/action/observation + modelo/tokens, assinados pelo agente da tabela acima.
+
+## Exemplos
+
+- Task `frontend-web` → review = `frontend-web-reviewer` → test = `qa-gate` → merge = `devops-cicd`.
+- Task `frontend-mobile` → `frontend-mobile-reviewer` → `qa-gate` → `devops-cicd`.

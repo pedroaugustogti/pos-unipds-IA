@@ -21,7 +21,11 @@ RESULTS_DIR = MODULE_ROOT / "crew" / "output" / "dispatch_results"
 DEFAULT_BACKEND = os.environ.get("GUARDAO_DISPATCH_BACKEND", "auto")
 # local | cloud
 CURSOR_RUNTIME = os.environ.get("GUARDAO_CURSOR_RUNTIME", "local")
-CURSOR_MODEL = os.environ.get("GUARDAO_CURSOR_MODEL", "composer-2.5")
+CURSOR_MODEL = (
+    os.environ.get("GUARDIAO_CURSOR_MODEL")
+    or os.environ.get("GUARDAO_CURSOR_MODEL")
+    or "composer-2.5"
+)
 # 1 = Agent.prompt e espera; 0 = só lease+bundle
 DISPATCH_WAIT = os.environ.get("GUARDAO_DISPATCH_WAIT", "1").strip() not in ("0", "false", "False")
 
