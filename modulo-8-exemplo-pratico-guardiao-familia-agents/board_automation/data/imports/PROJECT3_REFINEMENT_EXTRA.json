@@ -1,0 +1,283 @@
+{
+  "T-P3-001": {
+    "branch": "feat/t-p3-001-sandbox-marker",
+    "refinement": {
+      "state_before": "GET /api/v1/health retorna `{ status, version, timestamp, uptime }` — ver `src/health/health.controller.ts` método `check()` linha ~54.",
+      "state_after": "Mesma resposta + `sandboxMarker: \"P3-backend\"` (string literal, sem env var).",
+      "do_not_touch": ["src/health/health.controller.ts métodos ready/live/metrics", "infra/", "migrations/"],
+      "implementation_steps": [
+        "Abrir `src/health/health.controller.ts` — método `check()`",
+        "Adicionar propriedade `sandboxMarker: 'P3-backend'` no objeto return",
+        "Abrir `test/app.e2e-spec.ts` — teste GET /api/v1/health",
+        "Adicionar `expect(res.body.sandboxMarker).toBe('P3-backend')`",
+        "Rodar `npm run test:e2e -- --testPathPattern=app.e2e-spec`",
+        "Commit + push branch · PR com PR_TEMPLATE.md · comentário sec.10.1 · `open_pr`"
+      ],
+      "ac_verification": [
+        {"id": "AC-01", "command": "curl -s http://localhost:3000/api/v1/health | jq .sandboxMarker", "expected": "\"P3-backend\""},
+        {"id": "AC-02", "command": "npm run test:e2e -- --testPathPattern=app.e2e-spec", "expected": "exit 0, teste health passa"},
+        {"id": "AC-03", "command": "(manual) PR link + board Ready for Code Review", "expected": "PR aberta, template preenchido"}
+      ],
+      "stop_and_redirect": [
+        "Se precisar migration → parar, redirecionar database",
+        "Se precisar alterar Dockerfile/terraform → cloud-infra/devops-cicd"
+      ]
+    }
+  },
+  "T-P3-002": {
+    "branch": "feat/t-p3-002-splash-tagline",
+    "refinement": {
+      "user_flow": {
+        "app": "guardiao-familia-parent",
+        "entry_point": "Cold start — app não em foreground",
+        "preconditions": [
+          "Emulador emulator-5554 booted (Pixel API 34)",
+          "Metro parent na porta 8082 (dev client com.guardiaofamilia.parent)",
+          "App instalado via expo run:android ou dev build E2E",
+          "Manutenção remota desligada (App.tsx não entra em maintenance gate)"
+        ],
+        "navigation_files": ["App.tsx", "screens/ParentSplashScreen.tsx"],
+        "target_screen": "ParentSplashScreen",
+        "target_element": "Text tagline (styles.tagline) — string exata Project 3 — Parent OK",
+        "emulator": "emulator-5554",
+        "metro_port": 8082,
+        "steps": [
+          {
+            "order": 1,
+            "screen": "(launcher Android)",
+            "user_action": "Tocar ícone Guardião Família Parent",
+            "system_behavior": "Processo app inicia",
+            "file": "android/app/src/main/AndroidManifest.xml",
+            "route_condition": "LAUNCHER intent"
+          },
+          {
+            "order": 2,
+            "screen": "App.tsx (bootstrap)",
+            "user_action": "(automático)",
+            "system_behavior": "Carrega fonts, remote config; se !startupSplashDone → splash",
+            "file": "App.tsx",
+            "route_condition": "linha ~791: if (!startupSplashDone)"
+          },
+          {
+            "order": 3,
+            "screen": "ParentSplashScreen",
+            "user_action": "Aguardar ~2s (splash visível)",
+            "system_behavior": "Exibe escudo, app name, tagline, loader segmentado",
+            "file": "screens/ParentSplashScreen.tsx",
+            "route_condition": "componente montado até onFinish"
+          },
+          {
+            "order": 4,
+            "screen": "ParentSplashScreen",
+            "user_action": "Olhar tagline abaixo de Guardião Família",
+            "system_behavior": "Texto = Project 3 — Parent OK (AC-01)",
+            "file": "screens/ParentSplashScreen.tsx",
+            "route_condition": "styles.tagline ~linha 138"
+          }
+        ],
+        "mermaid": "flowchart LR\n  launch[Tocar app Parent] --> boot[App.tsx bootstrap]\n  boot --> splash[ParentSplashScreen]\n  splash --> tagline[Tagline Project 3 Parent OK]",
+        "qa_repro_steps": [
+          "adb -s emulator-5554 shell am force-stop com.guardiaofamilia.parent",
+          "adb -s emulator-5554 shell am start -n com.guardiaofamilia.parent/.MainActivity",
+          "Aguardar splash; screenshot tagline (AC-02)",
+          "Gravar MP4 10–15s cold start → splash (AC-03)"
+        ]
+      },
+      "state_before": "`ParentSplashScreen.tsx` linha ~138: `<Text style={styles.tagline}>Proteção inteligente para sua família</Text>`",
+      "state_after": "Tagline = `Project 3 — Parent OK` (texto exato, incluindo em dash).",
+      "do_not_touch": ["screens/PairingCodesScreen.tsx", "app.json version", "android/", "ios/ nativo"],
+      "implementation_steps": [
+        "Abrir `screens/ParentSplashScreen.tsx`",
+        "Substituir string da tagline por `Project 3 — Parent OK`",
+        "Se houver testID/accessibilityLabel na tagline, atualizar para coerência",
+        "Metro: `npx expo start --port 8082` · emulador 5554",
+        "Validar visualmente splash · screenshot",
+        "PR + comentário implementação · `open_pr`"
+      ],
+      "ac_verification": [
+        {"id": "AC-01", "command": "(visual) emulador parent splash", "expected": "texto Project 3 — Parent OK visível"},
+        {"id": "AC-02", "command": "adb -s emulator-5554 exec-out screencap -p > p3-002.png", "expected": "PNG mostra tagline"},
+        {"id": "AC-03", "command": "Appium startRecordingScreen / stop (qa-gate)", "expected": "MP4 <15s com splash"}
+      ],
+      "stop_and_redirect": [
+        "Pairing E2E → não nesta task",
+        "Alterar child app → frontend-mobile em issue separada"
+      ]
+    }
+  },
+  "T-P3-003": {
+    "branch": "feat/t-p3-003-footer-badge",
+    "refinement": {
+      "state_before": "Footer `index.html` ~651: copyright sem badge sandbox.",
+      "state_after": "Footer-bottom inclui `<span data-testid=\"p3-sandbox-badge\">Sandbox P3 Web</span>`.",
+      "do_not_touch": ["campanha/", "hero H1 (não alterar T-P13)"],
+      "implementation_steps": [
+        "Abrir `index.html` seção footer-bottom (~linha 651)",
+        "Inserir span com data-testid e texto exato Sandbox P3 Web",
+        "Estilo inline ou classe: opacity ~0.7, font-size menor",
+        "Servir local: `npx serve . -p 4173`",
+        "Playwright ou curl HTML contém data-testid",
+        "PR + open_pr"
+      ],
+      "ac_verification": [
+        {"id": "AC-01", "command": "curl -s http://localhost:4173 | findstr p3-sandbox-badge", "expected": "Sandbox P3 Web presente"},
+        {"id": "AC-02", "command": "npx playwright test (spec footer se existir) ou manual", "expected": "locator visible"},
+        {"id": "AC-03", "command": "playwright screenshot", "expected": "PNG home com badge footer"}
+      ]
+    }
+  },
+  "T-P3-004": {
+    "branch": "feat/t-p3-004-tf-variable",
+    "refinement": {
+      "state_before": "`infra/environments/prod/variables.tf` sem variable project3_sandbox_enabled.",
+      "state_after": "Variable bool `project3_sandbox_enabled { default = false }` + comentário HCL.",
+      "do_not_touch": ["infra/modules/*/main.tf", "terraform.tfstate", ".terraform/"],
+      "implementation_steps": [
+        "Criar/editar variable em `infra/environments/prod/variables.tf`",
+        "Documentar em comentário # Project 3 sandbox — never apply in prod training",
+        "Opcional: linha comentada em terraform.tfvars.example",
+        "cd infra/environments/prod && terraform init -backend=false && terraform validate",
+        "PR — body deve dizer: SEM terraform apply",
+        "open_pr"
+      ],
+      "ac_verification": [
+        {"id": "AC-01", "command": "grep project3_sandbox_enabled infra/environments/prod/variables.tf", "expected": "variable block encontrado"},
+        {"id": "AC-02", "command": "terraform validate (dir prod)", "expected": "Success"},
+        {"id": "AC-03", "command": "(review) PR description mentions no apply", "expected": "explícito"}
+      ],
+      "stop_and_redirect": [
+        "terraform apply → PROIBIDO nesta org sandbox",
+        "Alterar workflow CI → devops-cicd"
+      ]
+    }
+  },
+  "T-P3-005": {
+    "branch": "feat/t-p3-005-db-comment",
+    "refinement": {
+      "state_before": "Sem migration Project3 sandbox comment.",
+      "state_after": "Migration TypeORM aplica COMMENT ON DATABASE; down remove.",
+      "do_not_touch": ["entities/*.ts (sem alterar schema tabelas)", "src/modules/*"],
+      "implementation_steps": [
+        "Criar `src/migrations/1779900000001-Project3SandboxComment.ts`",
+        "up: queryRunner.query COMMENT ON DATABASE",
+        "down: COMMENT ON DATABASE IS NULL ou string anterior",
+        "docker compose up postgres · npm run migration:run",
+        "npm run migration:revert (validar down)",
+        "PR + open_pr"
+      ],
+      "ac_verification": [
+        {"id": "AC-01", "command": "npm run migration:run", "expected": "exit 0"},
+        {"id": "AC-02", "command": "psql -c \"SELECT shobj_description(d.oid, 'd') FROM pg_database d WHERE datname=current_database();\"", "expected": "contém Guardiao P3 ou sandbox"},
+        {"id": "AC-03", "command": "npm run migration:revert", "expected": "exit 0, comment removido"}
+      ]
+    }
+  },
+  "T-P3-006": {
+    "branch": "feat/t-p3-006-ci-marker",
+    "refinement": {
+      "state_before": "`.github/workflows/ci.yml` job test sem env PROJECT3_SANDBOX.",
+      "state_after": "Job test tem env PROJECT3_SANDBOX: 'true' + step `echo Project 3 sandbox CI marker`.",
+      "do_not_touch": ["deploy.yml", "terraform.yml", "secrets"],
+      "implementation_steps": [
+        "Abrir `.github/workflows/ci.yml`",
+        "No job de test/unit, adicionar env PROJECT3_SANDBOX: 'true'",
+        "Adicionar step run: echo 'Project 3 sandbox CI marker' antes dos testes",
+        "Validar YAML (actionlint se disponível)",
+        "Push · PR · open_pr"
+      ],
+      "ac_verification": [
+        {"id": "AC-01", "command": "grep PROJECT3_SANDBOX .github/workflows/ci.yml", "expected": "env presente"},
+        {"id": "AC-02", "command": "gh run list --workflow=ci.yml -L 1", "expected": "log contém marker após merge/push"},
+        {"id": "AC-03", "command": "CI tests green", "expected": "sem regressão"}
+      ]
+    }
+  },
+  "T-P3-007": {
+    "branch": "feat/t-p3-007-qa-spec",
+    "refinement": {
+      "state_before": "Sem test/project3-sandbox.spec.ts. T-P3-001 pode não estar merged.",
+      "state_after": "Spec dedicado asserta sandboxMarker; doc em docs/qa/PROJECT3_SANDBOX.md.",
+      "do_not_touch": ["src/health/health.controller.ts (implementação é T-P3-001)"],
+      "implementation_steps": [
+        "Confirmar T-P3-001 merged ou usar branch feat/t-p3-001 como base",
+        "Criar `test/project3-sandbox.spec.ts` copiando padrão app.e2e-spec health test",
+        "Criar `docs/qa/PROJECT3_SANDBOX.md` com AC e comando run",
+        "npm run test:e2e -- --testPathPattern=project3-sandbox",
+        "PR + open_pr"
+      ],
+      "ac_verification": [
+        {"id": "AC-01", "command": "npm run test:e2e -- --testPathPattern=project3-sandbox", "expected": "exit 0"},
+        {"id": "AC-02", "command": "test -f docs/qa/PROJECT3_SANDBOX.md", "expected": "arquivo existe"},
+        {"id": "AC-03", "command": "(qa-gate) re-run spec in In Test", "expected": "PASS"}
+      ],
+      "stop_and_redirect": [
+        "Se sandboxMarker não existe na API → aguardar T-P3-001 Done",
+        "Implementar sandboxMarker aqui → errado, redirecionar backend"
+      ]
+    }
+  },
+  "T-P3-008": {
+    "branch": "feat/t-p3-008-release-doc",
+    "refinement": {
+      "state_before": "Sem RELEASE_SANDBOX.md no parent repo.",
+      "state_after": "RELEASE_SANDBOX.md com version 2.4.2-p3, changelog 3 bullets, checklist dry-run.",
+      "do_not_touch": ["app.json expo.version", "eas.json production profile"],
+      "implementation_steps": [
+        "Criar `RELEASE_SANDBOX.md` na raiz do repo parent",
+        "Seções: Version 2.4.2-p3, Changelog (3 bullets), Checklist dry-run stores",
+        "NÃO alterar app.json version real",
+        "Screenshot do markdown preview ou PNG checklist",
+        "PR + open_pr"
+      ],
+      "ac_verification": [
+        {"id": "AC-01", "command": "grep 2.4.2-p3 RELEASE_SANDBOX.md", "expected": "versão presente"},
+        {"id": "AC-02", "command": "(manual) checklist 5 itens stores-release SKILL", "expected": "todos marcados dry-run"},
+        {"id": "AC-03", "command": "screenshot PNG doc", "expected": "anexo na issue qa-gate"}
+      ],
+      "stop_and_redirect": [
+        "Submit App Store/Play → PROIBIDO sandbox",
+        "Bump app.json → fora escopo"
+      ]
+    }
+  },
+  "T-P3-009": {
+    "branch": "feat/t-p3-009-child-greeting",
+    "agent_responsibilities": {
+      "frontend-mobile": [
+        "Criar branch `feat/t-p3-009-child-greeting` a partir da base do repo `guardiao-familia-child`",
+        "Implementar saudação dinâmica no header da `ChildHomeV2` usando `dynamicGreeting()` de `childHome.state.ts`",
+        "Garantir regras: 00:00–11:59 Bom dia · 12:00–17:59 Boa tarde · 18:00–23:59 Boa noite (hora local)",
+        "Criar/ajustar testes unitários em `childHome.state.test.ts` validando os três cenários (manhã, tarde, noite) e bordas 11:59/12:00 e 17:59/18:00",
+        "Propagar `accessibilityLabel` coerente no header",
+        "Abrir PR e disparar evento `open_pr` — **não** executar QA Appium nem merge"
+      ],
+      "frontend-mobile-reviewer": [
+        "Assumir PR em **Ready for Code Review** (`start_review`)",
+        "Validar qualidade do código entregue pelo `frontend-mobile` (legibilidade, padrões RN, escopo)",
+        "Validar cobertura e assertividade dos testes unitários dos três períodos de saudação",
+        "Identificar gaps, riscos ou melhorias (comentários acionáveis no PR)",
+        "Aprovar com `approve_review` ou devolver com `request_changes` — **não** implementar feature nem rodar Appium"
+      ],
+      "qa-gate": [
+        "Executar seed no banco local: `python agents/qa-gate/scripts/mobile_e2e_seed.py --task T-P3-009 --profile child_home` (ou automático via `qa_mobile_evidence.py`)",
+        "Subir suite Appium dual-emulator (`qa_mobile_evidence.py --feature pairing --mode cycle`)",
+        "Validar no app `guardiao-familia-child` os três cenários injetando hora no emulador: 08:00 (Bom dia), 15:00 (Boa tarde), 21:00 (Boa noite)",
+        "Gerar evidências: 3 PNG + 3 MP4 + report JSON em `crew/output/evidence/T-P3-009/`",
+        "Cleanup pós-evidência (purge Postgres + reset handoff) quando `qa.db_seed.cleanup=true`",
+        "Disparar `test_passed` ou `test_failed_bug` com comentário sec. 10.3 — **não** alterar código da feature"
+      ]
+    },
+    "refinement": {
+      "do_not_touch": ["SOS button", "screen time card", "pairing API contracts"],
+      "ac_verification": [
+        {"id": "AC-01", "command": "npm test -- childHome.state", "expected": "exit 0 — casos 08:00 Bom dia, 15:00 Boa tarde, 21:00 Boa noite"},
+        {"id": "AC-02", "command": "adb -s emulator-5556 shell date 080800002026.00 && relaunch child home", "expected": "header contém Bom dia"},
+        {"id": "AC-03", "command": "python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle --record-video", "expected": "3 PNG + 3 MP4 em crew/output/mobile_evidence/T-P3-009/"}
+      ],
+      "stop_and_redirect": [
+        "Alterar pairing parent → frontend-mobile parent task",
+        "Mudar API health → backend T-P3-001"
+      ]
+    }
+  }
+}

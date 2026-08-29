@@ -65,7 +65,7 @@
       "command": "cmd",
       "args": [
         "/c",
-        "modulo-8-exemplo-pratico-guardiao-familia-agents\\guardiao-mcp.cmd"
+        "modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-orchestration\\guardiao_mcp\\guardiao-mcp.cmd"
       ],
       "env": {
         "PYTHONUTF8": "1"

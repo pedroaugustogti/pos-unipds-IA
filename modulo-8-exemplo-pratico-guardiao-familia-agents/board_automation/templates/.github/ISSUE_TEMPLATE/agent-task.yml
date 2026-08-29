@@ -1,0 +1,281 @@
+name: "Agent Task — Guardião Família"
+description: Ticket completo para agentes autônomos (implementação → review → QA → merge)
+title: "[T-XXX-NNN] "
+labels:
+  - agent:todo
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Instruções
+        Preencha **todos** os campos obrigatórios. O orquestrador LangGraph, o `TASK_AGENT_MAP.csv` e o **qa-gate** consomem este conteúdo.
+        Referências: `agents/_shared/STATEGRAPH_FLOW.md` · `agents/_shared/REPOS_AND_ROUTING.md`
+
+  - type: input
+    id: task_id
+    attributes:
+      label: "Task ID (obrigatório)"
+      description: "Formato T-XXX-NNN — deve bater com TASK_AGENT_MAP.csv"
+      placeholder: "T-P05-003"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: agent_role
+    attributes:
+      label: "Agent role primário (creator)"
+      description: "Quem implementa em In Progress"
+      options:
+        - backend
+        - frontend-mobile
+        - frontend-web
+        - cloud-infra
+        - database
+        - devops-cicd
+        - qa
+        - stores-release
+    validations:
+      required: true
+
+  - type: dropdown
+    id: agent_role_secondary
+    attributes:
+      label: "Agent role secundário (opcional)"
+      options:
+        - "(nenhum)"
+        - backend
+        - frontend-mobile
+        - frontend-web
+        - cloud-infra
+        - database
+        - devops-cicd
+        - qa
+        - stores-release
+
+  - type: dropdown
+    id: track
+    attributes:
+      label: Trilha
+      options:
+        - produto
+        - infraestrutura
+        - stores
+    validations:
+      required: true
+
+  - type: input
+    id: repo
+    attributes:
+      label: Repo alvo (GitHub)
+      description: "Ex.: guardiao-familia-api"
+      placeholder: guardiao-familia-api
+    validations:
+      required: true
+
+  - type: input
+    id: epic_id
+    attributes:
+      label: Épico
+      placeholder: "E-P05"
+    validations:
+      required: true
+
+  - type: input
+    id: repo_path
+    attributes:
+      label: Path local (Windows)
+      description: "Base C:\\Users\\pedro\\Documents\\guardiao-familia\\..."
+      placeholder: "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-api"
+
+  - type: textarea
+    id: context_summary
+    attributes:
+      label: "Contexto (obrigatório)"
+      description: "2–5 frases factuais — o que existe hoje e o que muda. Sem suposições."
+      placeholder: "Hoje X. Esta task entrega Y para Z."
+    validations:
+      required: true
+
+  - type: textarea
+    id: user_story
+    attributes:
+      label: User story (opcional)
+      placeholder: "Como [pai/mãe/filho], quero [ação], para [benefício]."
+
+  - type: textarea
+    id: user_flow_map
+    attributes:
+      label: "Fluxo do usuário até a funcionalidade (obrigatório se frontend-mobile)"
+      description: "Tabela passo a passo + tela alvo. Ver board_automation/templates/MOBILE_USER_FLOW_TEMPLATE.md"
+      placeholder: |
+        App: guardiao-familia-parent
+        Entry: cold start
+        Emulador: 5554 · Metro: 8082
+        | # | Tela | Ação | Comportamento | Arquivo |
+        | 1 | ParentSplashScreen | Abrir app | Splash exibido | screens/ParentSplashScreen.tsx |
+        Alvo: tagline Text → "Project 3 — Parent OK"
+
+  - type: textarea
+    id: in_scope
+    attributes:
+      label: "Dentro do escopo (obrigatório — lista)"
+      description: "Um item por linha"
+      placeholder: |
+        - Alterar módulo X
+        - Atualizar testes Y
+    validations:
+      required: true
+
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: "Fora do escopo (obrigatório — redirecionar agente)"
+      description: "Se tocar isto, comentar issue e redirecionar — ver REPOS_AND_ROUTING.md"
+      placeholder: |
+        - Terraform → cloud-infra
+        - Apps mobile → frontend-mobile
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested_files
+    attributes:
+      label: "Arquivos / paths sugeridos (obrigatório)"
+      description: "Um path por linha — reduz alucinação do LLM"
+      placeholder: |
+        src/modules/foo/foo.service.ts
+        test/foo.spec.ts
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: "Critérios de aceite — checklist QA (obrigatório)"
+      description: "Testável, binário (PASS/FAIL). Um critério por linha."
+      placeholder: |
+        - [ ] AC-01: POST /api/v1/foo retorna 201 com body válido
+        - [ ] AC-02: Playwright home exibe texto X
+        - [ ] AC-03: Appium cenário 1 pareamento PASS
+    validations:
+      required: true
+
+  - type: dropdown
+    id: test_suite
+    attributes:
+      label: Suite de teste QA (qa-gate)
+      description: "Qual runner o qa-gate deve executar"
+      options:
+        - "(nenhuma — definir manualmente)"
+        - qa-site-hero-playwright
+        - qa-mobile-pairing-api
+        - qa-mobile-pairing-appium-dual
+        - qa-api-jest-unit
+        - qa-api-jest-integration
+        - qa-custom
+    validations:
+      required: true
+
+  - type: textarea
+    id: qa_scenarios
+    attributes:
+      label: "Cenários QA / IDs Appium (obrigatório se E2E)"
+      description: "Ex.: S0, S0.1, 1 (pairing) ou passos numerados"
+      placeholder: |
+        - S0: login parent
+        - 1: pairing happy path (dual emulator 5554+5556)
+
+  - type: checkboxes
+    id: evidence_required
+    attributes:
+      label: Evidências obrigatórias (qa-gate anexa na issue)
+      options:
+        - label: Screenshot PNG (Playwright ou Appium)
+          required: false
+        - label: Vídeo MP4 (Appium startRecordingScreen)
+          required: false
+        - label: Report JSON da suite
+          required: false
+        - label: Log CI / workflow link
+          required: false
+
+  - type: dropdown
+    id: db_seed_profile
+    attributes:
+      label: "DB seed Appium (opcional)"
+      description: "Evita cadastro/config/família do zero — ver agents/qa-gate/scripts/mobile_e2e_seed.py"
+      options:
+        - "(desabilitado)"
+        - child_home
+        - pairing_warm
+        - permissions_resume
+
+  - type: checkboxes
+    id: db_seed_cleanup
+    attributes:
+      label: Cleanup pós-evidência
+      options:
+        - label: Purge Postgres + reset stage-handoff após coleta
+          required: false
+
+  - type: textarea
+    id: how_to_run
+    attributes:
+      label: "Como rodar localmente (obrigatório)"
+      placeholder: |
+        docker compose -f docker-compose.dev.yml up -d postgres redis
+        npm run migration:run && npm run seed
+        powershell -File agents/qa-gate/scripts/local_e2e_stack.ps1 -Mode Full
+    validations:
+      required: true
+
+  - type: textarea
+    id: local_env
+    attributes:
+      label: Pré-requisitos de ambiente
+      placeholder: |
+        - Docker Desktop
+        - ANDROID_HOME + AVD Pixel API 34 (5554, 5556)
+        - Dev clients parent (8082) e child (9090) instalados
+
+  - type: textarea
+    id: depends_on
+    attributes:
+      label: Dependências (tasks bloqueantes)
+      description: "IDs T-XXX-NNN, um por linha, ou 'nenhuma'"
+      placeholder: "T-I08-011"
+
+  - type: checkboxes
+    id: release_blocker
+    attributes:
+      label: Release
+      options:
+        - label: Release blocker
+          required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Handoff entre agentes (não editar — referência)
+        | Status board | Agente ativo | Evento de saída | Próximo agente |
+        |--------------|--------------|-----------------|----------------|
+        | Todo | orchestrator | claim | **creator** (acima) |
+        | In Progress | creator | open_pr | {creator}-reviewer |
+        | In Code Review | reviewer | approve_review | qa-gate |
+        | In Code Review | reviewer | request_changes | creator |
+        | In Test | qa-gate | test_passed | devops-cicd / stores-release |
+        | In Test | qa-gate | test_failed_bug | creator |
+        | In Pull Request | merge owner | merge_pr | Done |
+
+  - type: textarea
+    id: agent_payload_json
+    attributes:
+      label: "Payload JSON (opcional — preencher se criar via script)"
+      description: "Bloco `agent-task` para parsers — ver board_automation/templates/ISSUE_AGENT_TASK.md"
+      render: json
+      placeholder: |
+        {
+          "task_id": "T-XXX-NNN",
+          "agent_role": "backend",
+          "acceptance_hints": ["AC-01: ..."]
+        }

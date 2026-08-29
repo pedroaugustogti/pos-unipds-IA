@@ -231,7 +231,7 @@
       <strong>Regra de ouro:</strong> LangGraph e MCP <em>chamam</em>
       <code>lib/gateway.emit_status_event</code>. Não existe segunda porta de Status.
       Código de produto continua via Cursor dispatch / demo local — o LLM de orquestração decide e resume; não substitui o Kanban.
-      <strong>CrewAI foi removido</strong> — orquestração somente LangGraph.
+      Orquestração via <strong>LangGraph</strong>.
     </div>
 
     <!-- ========== CAMADAS ========== -->
@@ -242,7 +242,7 @@
         <div class="tag">Entrada</div>
         <div>
           <strong>CLI / Cursor / demo</strong><br/>
-          <code>scripts/langgraph_run.py</code> · <code>scripts/demo_apresentacao.py</code> · chat Cursor com MCP
+          <code>agents/00-orchestration/scripts/langgraph/langgraph_run.py</code> · <code>agents/00-orchestration/scripts/demo/demo_apresentacao.py</code> · chat Cursor com MCP
           <code>guardiao-familia-agents</code>. Env: <code>lib/env_load.ensure_env()</code>
           (OpenRouter, LangSmith, SSL).
         </div>
@@ -250,24 +250,24 @@
       <div class="layer">
         <div class="tag">Orquestração</div>
         <div>
-          <strong>LangGraph</strong> (<code>langgraph_app/graph.py</code>) —
+          <strong>LangGraph</strong> (<code>agents/00-orchestration/langgraph_app/graph.py</code>) —
           StateGraph com loop até Done / HITL / max_steps.
           Flag <code>GUARDIAO_ORCHESTRATOR=langgraph</code>.
-          Pasta <code>crew/</code> = env + output runtime (não orquestra).
+          Pasta <code>agents/00-runtime/</code> = requirements + output (não orquestra).
         </div>
       </div>
       <div class="layer">
         <div class="tag">Decisão LLM</div>
         <div>
           <strong>OpenRouter</strong> via <code>langchain_openai.ChatOpenAI</code>
-          (<code>langgraph_app/llm.py</code>) + <code>lib/model_tier.select_model</code>
+          (<code>agents/00-orchestration/langgraph_app/llm.py</code>) + <code>lib/model_tier.select_model</code>
           (Fase A). Purpose: route (sem LLM), summarize, implement_*, review.
         </div>
       </div>
       <div class="layer">
         <div class="tag">Tools</div>
         <div>
-          <strong>MCP</strong> <code>guardiao_mcp/</code> (Cursor) <em>ou</em>
+          <strong>MCP</strong> <code>agents/00-orchestration/guardiao_mcp/</code> (Cursor) <em>ou</em>
           <strong>tools_bridge</strong> in-process no grafo (mesmas APIs).
           Escrita default <code>dry_run=true</code>; dispatch só com
           <code>GUARDIAO_MCP_ALLOW_DISPATCH=1</code>.
@@ -290,7 +290,7 @@
       <div class="layer">
         <div class="tag">Obs.</div>
         <div>
-          <strong>LangSmith</strong> (Fase D) + <code>crew/output/observability/tasks/*.html</code>
+          <strong>LangSmith</strong> (Fase D) + <code>agents/00-runtime/output/observability/tasks/*.html</code>
           (ReAct + tokens) + dataset estático <code>evals/</code>.
         </div>
       </div>
@@ -332,7 +332,7 @@ flowchart TB
 
     <!-- ========== GRAFO ========== -->
     <h2 id="grafo">2. StateGraph — nós e roteamento</h2>
-    <p class="muted">Arquivo: <code>langgraph_app/graph.py</code>. Entry: <code>route</code>. Após cada <code>apply</code>, volta a <code>route</code> até Done/HITL/max_steps.</p>
+    <p class="muted">Arquivo: <code>agents/00-orchestration/langgraph_app/graph.py</code>. Entry: <code>route</code>. Após cada <code>apply</code>, volta a <code>route</code> até Done/HITL/max_steps.</p>
 
     <div class="mermaid">
 flowchart TD
@@ -618,7 +618,7 @@ sequenceDiagram
       <div class="callout">
         LLM + simulação de Status (não grava board). Ideal para banca local e evals.
         Histórico HTML ainda registra tokens/modelo. Comando:
-        <code>python scripts/langgraph_run.py --task T-P05-006 --mode dry_run --from-zero</code>
+        <code>python agents/00-orchestration/scripts/langgraph/langgraph_run.py --task T-P05-006 --mode dry_run --from-zero</code>
       </div>
     </div>
     <div id="tab-demo" class="tab-panel">
@@ -640,7 +640,7 @@ sequenceDiagram
       <div>
         <h3>Didático (banca)</h3>
         <ul>
-          <li><code>crew/output/observability/dashboard.html</code></li>
+          <li><code>agents/00-runtime/output/observability/dashboard.html</code></li>
           <li><code>tasks/{id}.html</code> — thought / action / tokens</li>
           <li><code>workflow.jsonl</code></li>
         </ul>
@@ -651,7 +651,7 @@ sequenceDiagram
           <li>LangSmith projeto <code>guardiao-familia-agents</code></li>
           <li>Spans: claim, open_pr, review, qa, hitl, merge</li>
           <li>Dataset estático <code>evals/datasets/kanban_pipeline.json</code></li>
-          <li><code>python scripts/langsmith_eval.py</code></li>
+          <li><code>python agents/00-orchestration/scripts/langgraph/langsmith_eval.py</code></li>
         </ul>
       </div>
     </div>

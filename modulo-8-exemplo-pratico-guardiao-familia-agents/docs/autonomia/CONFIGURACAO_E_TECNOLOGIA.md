@@ -9,15 +9,15 @@
 
 | Camada | Tecnologia |
 |--------|------------|
-| Orquestração | **LangGraph** (`langgraph_app/`) · CLI `scripts/langgraph_run.py` |
-| Eventos / Status | Python 3 · `lib/gateway.py` · CLI `gateway_cli.py` |
-| Tools tipadas | MCP `guardiao_mcp/` (Cursor) · `tools_bridge` no grafo |
+| Orquestração | **LangGraph** (`agents/00-orchestration/langgraph_app/`) · CLI `agents/00-orchestration/scripts/langgraph/langgraph_run.py` |
+| Eventos / Status | Python 3 · `lib/gateway` · CLI `agents/00-orchestration/scripts/cli/gateway_cli.py` |
+| Tools tipadas | MCP `agents/00-orchestration/guardiao_mcp/` (Cursor) · `tools_bridge` no grafo |
 | LLM orquestração | OpenRouter + `lib/model_tier.py` (`GUARDIAO_LLM_*`) |
 | Implementação código | Cursor SDK (`Agent.prompt`) via `lib/dispatch_adapter.py` |
 | Board remoto | GitHub Project #2 · `gh` / GraphQL |
 | Board local | JSON módulo 7 |
 | Observabilidade | snapshot + dashboard live + LangSmith + HTML ReAct |
-| Config / runtime | `crew/.env`, `crew/requirements.txt`, `crew/output/` (**não orquestra**) |
+| Config / runtime | `.env` + `.env.example` na raiz · `agents/00-runtime/requirements.txt` · `agents/00-runtime/output/` |
 
 ---
 
@@ -26,12 +26,14 @@
 Cada papel tem **três camadas** (não misturar):
 
 ```text
-agents/{role}.agent.md     → prompt / política Cursor (o que o agente “é”)
-skills/{role}/SKILL.md     → fronteiras de código e checklist
-TASK_AGENT_MAP.csv         → qual task esse role pode claimar
+agents/{role}/agent.md     → prompt / política Cursor (o que o agente “é”)
+agents/{role}/SKILL.md     → fronteiras de código e checklist
+board_automation/data/maps/TASK_AGENT_MAP.csv  → qual task esse role pode claimar
 ```
 
-Reviewers: `agents/reviewers/{role}-reviewer.agent.md` + skill `*-reviewer`, pareados em `lib/reviewer_pairs.py`.
+Reviewers: `agents/{role}-reviewer/agent.md` + `SKILL.md`, pareados em `lib/reviewer_pairs.py`.
+
+Resolução de paths: `lib/agent_paths.py`.
 
 Índice de leitura: [../comportamento/README.md](../comportamento/README.md).
 
@@ -52,7 +54,7 @@ Reviewers: `agents/reviewers/{role}-reviewer.agent.md` + skill `*-reviewer`, par
 
 ## 3. Variáveis de ambiente relevantes
 
-De `crew/.env.example`:
+De `.env.example` (raiz do módulo):
 
 | Variável | Função |
 |----------|--------|
@@ -72,7 +74,7 @@ De `crew/.env.example`:
 | `LANGSMITH_API_KEY` | Tracing LangSmith |
 | `LANGCHAIN_TRACING_V2` / `LANGCHAIN_PROJECT` | Projeto default `guardiao-familia-agents` |
 
-MCP (Fase B): `python -m guardiao_mcp` · Cursor server `guardiao-familia-agents` (`.cursor/mcp.json`).
+MCP (Fase B): `python -m guardiao_mcp` · launcher Windows `agents/00-orchestration/guardiao_mcp/guardiao-mcp.cmd` · Cursor server `guardiao-familia-agents` (`.cursor/mcp.json`).
 Sem `CURSOR_API_KEY`, o adapter cai em **manual_fallback** (bundle para colar/abrir manualmente) — o gateway de Status continua funcionando.
 
 ---
@@ -80,29 +82,29 @@ Sem `CURSOR_API_KEY`, o adapter cai em **manual_fallback** (bundle para colar/ab
 ## 4. Artefatos de runtime (onde o estado vive)
 
 ```text
-crew/output/
-  agent_runtime.json      # agents idle/busy, hitl_queue, idempotency
-  claim_locks.json        # WIP
-  worker_jobs.json        # fila de jobs
+agents/00-runtime/output/
+  orchestrator/agent_runtime.json   # agents idle/busy, hitl_queue, idempotency
+  orchestrator/claim_locks.json     # WIP
+  dispatch/worker_jobs.json         # fila de jobs
   handoffs/{task}.json
-  dispatch_results/
-  outbox.jsonl            # falhas gh para retry
+  dispatch/results/
+  orchestrator/outbox.jsonl         # falhas gh para retry
   observability/
     snapshot.json
     dashboard.html
     workflow.jsonl
     tasks/{task}.json|.html
-  demo_workspace/{task}/  # artefatos da demo acadêmica
+  demo/                             # artefatos da demo acadêmica
 ```
 
 ---
 
 ## 5. Integração com o Project #2
 
-1. **Leitura / alinhamento:** `scripts/reconcile_board.py --project-wins`  
+1. **Leitura / alinhamento:** `python board_automation/scripts/cli/reconcile_board.py --project-wins`  
 2. **Escrita:** `lib/board_client.update_project_status` (chamado pelo fluxo de board no emit)  
 3. **Falha remota:** enfileira outbox; Status **local** já aplicado (fail-open local, fail-closed no merge HITL)  
-4. **Retry:** `scripts/outbox_retry.py`
+4. **Retry:** `python board_automation/scripts/cli/outbox_retry.py`
 
 Labels `agent:*` nas issues acompanham o Status quando o cliente consegue atualizar.
 

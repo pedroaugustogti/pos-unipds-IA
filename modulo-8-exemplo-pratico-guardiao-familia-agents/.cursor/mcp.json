@@ -2,7 +2,7 @@
   "mcpServers": {
     "guardiao-familia-agents": {
       "command": "cmd",
-      "args": ["/c", "guardiao-mcp.cmd"],
+      "args": ["/c", "agents\\00-orchestration\\guardiao_mcp\\guardiao-mcp.cmd"],
       "env": {
         "PYTHONUTF8": "1"
       }

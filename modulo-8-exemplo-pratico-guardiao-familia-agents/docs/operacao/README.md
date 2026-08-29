@@ -1,10 +1,12 @@
-# Operação
+# operacao — guias do operador humano
 
-| Documento | Descrição |
-|-----------|-----------|
-| [RELATORIO_OPERACAO_AGENTES.md](RELATORIO_OPERACAO_AGENTES.md) | Como os agentes operam no dia a dia |
-| [PROCESSO_HITL.md](PROCESSO_HITL.md) | Gates humanos H1–H5 |
-| [WORKFLOW_BOARD.md](WORKFLOW_BOARD.md) | Status, papéis e porta única do board |
-| [CLASSIFICACAO_TASKS.md](CLASSIFICACAO_TASKS.md) | Classificação de tasks → agent_role |
+Procedimentos HITL, operação diária e E2E mobile local.
 
-Estado atual (fluxo/tecnologia/execução): [../autonomia/](../autonomia/)
+| Documento | Quando ler |
+|-----------|------------|
+| `PROCESSO_HITL.md` | Aprovar merge, fila HITL |
+| `RELATORIO_OPERACAO_AGENTES.md` | Como os agentes operam no dia a dia |
+| `LOCAL_E2E_MOBILE.md` | Stack mobile local |
+| `PERF_GAPS_EMULATOR_BUILD.md` | Performance emuladores |
+
+Agentes autônomos: consultar antes de simular ações humanas (approve, merge).

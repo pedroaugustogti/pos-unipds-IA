@@ -1,7 +1,0 @@
-query($login: String!) {
-  organization(login: $login) {
-    repositories(first: 40) {
-      nodes { name id url isPrivate }
-    }
-  }
-}

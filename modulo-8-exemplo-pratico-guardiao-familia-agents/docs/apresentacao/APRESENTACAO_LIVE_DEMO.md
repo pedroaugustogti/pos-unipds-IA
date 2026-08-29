@@ -10,7 +10,7 @@ Demo paced para banca: gateway real, delays ≥6s, implementação local + commi
 2. Terminal A — dashboard:
    ```powershell
    cd modulo-8-exemplo-pratico-guardiao-familia-agents
-   python scripts/live_server.py
+   python agents/00-orchestration/scripts/demo/live_server.py
    ```
    Abrir: http://127.0.0.1:8765/dashboard.html  
    Confirmar pill **live 5s** (poll).
@@ -20,7 +20,7 @@ Demo paced para banca: gateway real, delays ≥6s, implementação local + commi
 ## Durante a demo
 
 ```powershell
-python scripts/demo_apresentacao.py --task T-P05-005 --from-zero --delay 6
+python agents/00-orchestration/scripts/demo/demo_apresentacao.py --task T-P05-005 --from-zero --delay 6
 ```
 
 | Momento | O que apontar no dashboard |
@@ -48,8 +48,8 @@ Cada passo mostra: **thought**, **action**, **observation**, lista do que foi ex
 
 ```powershell
 git log -1 --oneline
-# artefato: crew/output/demo_workspace/T-P05-005/
-# historico: crew/output/observability/tasks/T-P05-005.html
+# artefato: agents/00-runtime/output/demo/T-P05-005/
+# historico: agents/00-runtime/output/observability/tasks/T-P05-005.html
 ```
 
 ## Troubleshooting
@@ -58,7 +58,7 @@ git log -1 --oneline
 |---------|------|
 | Dashboard offline | Conferir Terminal A; abrir URL correta |
 | Transição rápida demais | `--delay 8` |
-| Falha no meio | `python scripts/demo_apresentacao.py --task T-P05-005 --from-zero --delay 6` de novo |
+| Falha no meio | `python agents/00-orchestration/scripts/demo/demo_apresentacao.py --task T-P05-005 --from-zero --delay 6` de novo |
 | Link 404 na task | Aguardar 1 passo da demo (HTML gerado a cada append) |
 | Card some do Kanban em Done | Normal (Kanban foca ativos); usar link em Saúde → Historicos |
 

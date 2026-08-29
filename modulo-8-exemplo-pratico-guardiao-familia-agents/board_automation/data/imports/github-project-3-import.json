@@ -1,0 +1,967 @@
+{
+  "version": "3.0",
+  "organization": "guardiaofamilia",
+  "project": {
+    "title": "Guardião Família v3 — Sandbox Agentes",
+    "number": 3,
+    "description": "Uma task simples por agente creator; fluxo completo Todo→Done com rastreio em comentários."
+  },
+  "fields": [
+    {
+      "name": "Status",
+      "type": "single_select",
+      "options": [
+        "Todo",
+        "In Progress",
+        "Ready for Code Review",
+        "In Code Review",
+        "Ready for Test",
+        "In Test",
+        "In Pull Request",
+        "Done"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "T-P3-001",
+      "title": "Health API: campo sandboxMarker P3-backend",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "issue_number": "313",
+      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-api/issues/313",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "produto",
+        "Epic": "E-P3 Project 3 Sandbox",
+        "Sprint": 1,
+        "Story Points": 1,
+        "RICE Score": 8.0,
+        "WSJF": 4.0,
+        "Release Blocker": "no",
+        "Priority Rank": 1,
+        "Repo alvo": "guardiao-familia-api",
+        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg4LaVI"
+      },
+      "labels": [
+        "agent:backend"
+      ],
+      "refinement": {
+        "context_summary": "GET /api/v1/health retorna status, version, uptime. Adicionar campo sandboxMarker fixo para validar fluxo backend no Project 3.",
+        "user_story": "Como qa-gate, quero um campo JSON previsível no health, para validar deploy sandbox sem side effects.",
+        "suggested_files": [
+          "src/health/health.controller.ts",
+          "test/app.e2e-spec.ts"
+        ],
+        "in_scope": [
+          "Adicionar sandboxMarker: \"P3-backend\" na resposta de GET /health",
+          "Atualizar teste e2e existente do health"
+        ],
+        "out_of_scope": [
+          "Alterar /ready ou /live",
+          "Migrations ou infra"
+        ],
+        "acceptance_hints": [
+          "AC-01: GET /api/v1/health retorna 200 com sandboxMarker igual a P3-backend",
+          "AC-02: test/app.e2e-spec.ts inclui assert do campo",
+          "AC-03: PR com template preenchido e board em Ready for Code Review"
+        ],
+        "technical_notes": "Controller prefix global: /api/v1. Não expor segredos.",
+        "state_before": "GET /api/v1/health retorna `{ status, version, timestamp, uptime }` — ver `src/health/health.controller.ts` método `check()` linha ~54.",
+        "state_after": "Mesma resposta + `sandboxMarker: \"P3-backend\"` (string literal, sem env var).",
+        "do_not_touch": [
+          "src/health/health.controller.ts métodos ready/live/metrics",
+          "infra/",
+          "migrations/"
+        ],
+        "implementation_steps": [
+          "Abrir `src/health/health.controller.ts` — método `check()`",
+          "Adicionar propriedade `sandboxMarker: 'P3-backend'` no objeto return",
+          "Abrir `test/app.e2e-spec.ts` — teste GET /api/v1/health",
+          "Adicionar `expect(res.body.sandboxMarker).toBe('P3-backend')`",
+          "Rodar `npm run test:e2e -- --testPathPattern=app.e2e-spec`",
+          "Commit + push branch · PR com PR_TEMPLATE.md · comentário sec.10.1 · `open_pr`"
+        ],
+        "ac_verification": [
+          {
+            "id": "AC-01",
+            "command": "curl -s http://localhost:3000/api/v1/health | jq .sandboxMarker",
+            "expected": "\"P3-backend\""
+          },
+          {
+            "id": "AC-02",
+            "command": "npm run test:e2e -- --testPathPattern=app.e2e-spec",
+            "expected": "exit 0, teste health passa"
+          },
+          {
+            "id": "AC-03",
+            "command": "(manual) PR link + board Ready for Code Review",
+            "expected": "PR aberta, template preenchido"
+          }
+        ],
+        "stop_and_redirect": [
+          "Se precisar migration → parar, redirecionar database",
+          "Se precisar alterar Dockerfile/terraform → cloud-infra/devops-cicd"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-api-jest-integration",
+        "scenarios": [
+          "health-sandbox-marker"
+        ],
+        "evidence": {
+          "screenshot_png": false,
+          "video_mp4": false,
+          "json_report": true,
+          "ci_link": true
+        },
+        "how_to_run": "cd guardiao-familia-api && npm run test:e2e -- --testPathPattern=app.e2e-spec"
+      }
+    },
+    {
+      "id": "T-P3-002",
+      "title": "Parent splash: tagline Project 3 — Parent OK",
+      "repository": "guardiao-familia-parent",
+      "type": "Issue",
+      "issue_number": "131",
+      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-parent/issues/131",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "produto",
+        "Epic": "E-P3 Project 3 Sandbox",
+        "Sprint": 1,
+        "Story Points": 1,
+        "RICE Score": 8.0,
+        "WSJF": 4.0,
+        "Release Blocker": "no",
+        "Priority Rank": 2,
+        "Repo alvo": "guardiao-familia-parent",
+        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg4LaZE"
+      },
+      "labels": [
+        "agent:frontend-mobile"
+      ],
+      "refinement": {
+        "context_summary": "ParentSplashScreen exibe tagline \"Proteção inteligente para sua família\". Trocar temporariamente para marcar sandbox P3 mobile parent.",
+        "suggested_files": [
+          "screens/ParentSplashScreen.tsx"
+        ],
+        "in_scope": [
+          "Alterar styles.tagline para texto: Project 3 — Parent OK",
+          "Manter accessibilityLabel coerente se existir"
+        ],
+        "out_of_scope": [
+          "Pairing / Appium dual nesta task",
+          "Alterações no app child"
+        ],
+        "acceptance_hints": [
+          "AC-01: Tagline visível no splash = Project 3 — Parent OK",
+          "AC-02: Screenshot PNG do emulador parent (5554)",
+          "AC-03: Vídeo MP4 curto (<15s) mostrando splash"
+        ],
+        "user_flow": {
+          "app": "guardiao-familia-parent",
+          "entry_point": "Cold start — app não em foreground",
+          "preconditions": [
+            "Emulador emulator-5554 booted (Pixel API 34)",
+            "Metro parent na porta 8082 (dev client com.guardiaofamilia.parent)",
+            "App instalado via expo run:android ou dev build E2E",
+            "Manutenção remota desligada (App.tsx não entra em maintenance gate)"
+          ],
+          "navigation_files": [
+            "App.tsx",
+            "screens/ParentSplashScreen.tsx"
+          ],
+          "target_screen": "ParentSplashScreen",
+          "target_element": "Text tagline (styles.tagline) — string exata Project 3 — Parent OK",
+          "emulator": "emulator-5554",
+          "metro_port": 8082,
+          "steps": [
+            {
+              "order": 1,
+              "screen": "(launcher Android)",
+              "user_action": "Tocar ícone Guardião Família Parent",
+              "system_behavior": "Processo app inicia",
+              "file": "android/app/src/main/AndroidManifest.xml",
+              "route_condition": "LAUNCHER intent"
+            },
+            {
+              "order": 2,
+              "screen": "App.tsx (bootstrap)",
+              "user_action": "(automático)",
+              "system_behavior": "Carrega fonts, remote config; se !startupSplashDone → splash",
+              "file": "App.tsx",
+              "route_condition": "linha ~791: if (!startupSplashDone)"
+            },
+            {
+              "order": 3,
+              "screen": "ParentSplashScreen",
+              "user_action": "Aguardar ~2s (splash visível)",
+              "system_behavior": "Exibe escudo, app name, tagline, loader segmentado",
+              "file": "screens/ParentSplashScreen.tsx",
+              "route_condition": "componente montado até onFinish"
+            },
+            {
+              "order": 4,
+              "screen": "ParentSplashScreen",
+              "user_action": "Olhar tagline abaixo de Guardião Família",
+              "system_behavior": "Texto = Project 3 — Parent OK (AC-01)",
+              "file": "screens/ParentSplashScreen.tsx",
+              "route_condition": "styles.tagline ~linha 138"
+            }
+          ],
+          "mermaid": "flowchart LR\n  launch[Tocar app Parent] --> boot[App.tsx bootstrap]\n  boot --> splash[ParentSplashScreen]\n  splash --> tagline[Tagline Project 3 Parent OK]",
+          "qa_repro_steps": [
+            "adb -s emulator-5554 shell am force-stop com.guardiaofamilia.parent",
+            "adb -s emulator-5554 shell am start -n com.guardiaofamilia.parent/.MainActivity",
+            "Aguardar splash; screenshot tagline (AC-02)",
+            "Gravar MP4 10–15s cold start → splash (AC-03)"
+          ]
+        },
+        "state_before": "`ParentSplashScreen.tsx` linha ~138: `<Text style={styles.tagline}>Proteção inteligente para sua família</Text>`",
+        "state_after": "Tagline = `Project 3 — Parent OK` (texto exato, incluindo em dash).",
+        "do_not_touch": [
+          "screens/PairingCodesScreen.tsx",
+          "app.json version",
+          "android/",
+          "ios/ nativo"
+        ],
+        "implementation_steps": [
+          "Abrir `screens/ParentSplashScreen.tsx`",
+          "Substituir string da tagline por `Project 3 — Parent OK`",
+          "Se houver testID/accessibilityLabel na tagline, atualizar para coerência",
+          "Metro: `npx expo start --port 8082` · emulador 5554",
+          "Validar visualmente splash · screenshot",
+          "PR + comentário implementação · `open_pr`"
+        ],
+        "ac_verification": [
+          {
+            "id": "AC-01",
+            "command": "(visual) emulador parent splash",
+            "expected": "texto Project 3 — Parent OK visível"
+          },
+          {
+            "id": "AC-02",
+            "command": "adb -s emulator-5554 exec-out screencap -p > p3-002.png",
+            "expected": "PNG mostra tagline"
+          },
+          {
+            "id": "AC-03",
+            "command": "Appium startRecordingScreen / stop (qa-gate)",
+            "expected": "MP4 <15s com splash"
+          }
+        ],
+        "stop_and_redirect": [
+          "Pairing E2E → não nesta task",
+          "Alterar child app → frontend-mobile em issue separada"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-custom",
+        "scenarios": [
+          "splash-tagline-visual"
+        ],
+        "evidence": {
+          "screenshot_png": true,
+          "video_mp4": true,
+          "json_report": false,
+          "ci_link": false
+        },
+        "how_to_run": "powershell -File modulo-8-exemplo-pratico-guardiao-familia-agents/agents/qa-gate/scripts/local_e2e_stack.ps1 -Mode Full"
+      }
+    },
+    {
+      "id": "T-P3-003",
+      "title": "Site: badge footer Sandbox P3 Web",
+      "repository": "guardiao-familia-site",
+      "type": "Issue",
+      "issue_number": "79",
+      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-site/issues/79",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "produto",
+        "Epic": "E-P3 Project 3 Sandbox",
+        "Sprint": 1,
+        "Story Points": 1,
+        "RICE Score": 8.0,
+        "WSJF": 4.0,
+        "Release Blocker": "no",
+        "Priority Rank": 3,
+        "Repo alvo": "guardiao-familia-site",
+        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg4LadE"
+      },
+      "labels": [
+        "agent:frontend-web"
+      ],
+      "refinement": {
+        "context_summary": "Site estático index.html. Adicionar span visível no footer-bottom com texto Sandbox P3 Web.",
+        "suggested_files": [
+          "index.html"
+        ],
+        "in_scope": [
+          "Inserir <span data-testid=\"p3-sandbox-badge\">Sandbox P3 Web</span> no footer-bottom",
+          "Estilo discreto (opacity 0.7)"
+        ],
+        "out_of_scope": [
+          "Backoffice Next.js",
+          "Campanha"
+        ],
+        "acceptance_hints": [
+          "AC-01: Footer contém texto Sandbox P3 Web",
+          "AC-02: Playwright localiza [data-testid=p3-sandbox-badge]",
+          "AC-03: Screenshot PNG da página home"
+        ],
+        "state_before": "Footer `index.html` ~651: copyright sem badge sandbox.",
+        "state_after": "Footer-bottom inclui `<span data-testid=\"p3-sandbox-badge\">Sandbox P3 Web</span>`.",
+        "do_not_touch": [
+          "campanha/",
+          "hero H1 (não alterar T-P13)"
+        ],
+        "implementation_steps": [
+          "Abrir `index.html` seção footer-bottom (~linha 651)",
+          "Inserir span com data-testid e texto exato Sandbox P3 Web",
+          "Estilo inline ou classe: opacity ~0.7, font-size menor",
+          "Servir local: `npx serve . -p 4173`",
+          "Playwright ou curl HTML contém data-testid",
+          "PR + open_pr"
+        ],
+        "ac_verification": [
+          {
+            "id": "AC-01",
+            "command": "curl -s http://localhost:4173 | findstr p3-sandbox-badge",
+            "expected": "Sandbox P3 Web presente"
+          },
+          {
+            "id": "AC-02",
+            "command": "npx playwright test (spec footer se existir) ou manual",
+            "expected": "locator visible"
+          },
+          {
+            "id": "AC-03",
+            "command": "playwright screenshot",
+            "expected": "PNG home com badge footer"
+          }
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-site-hero-playwright",
+        "scenarios": [
+          "footer-p3-badge"
+        ],
+        "evidence": {
+          "screenshot_png": true,
+          "video_mp4": false,
+          "json_report": true,
+          "ci_link": false
+        },
+        "how_to_run": "npx serve guardiao-familia-site -p 4173 && npx playwright test (spec footer P3)"
+      }
+    },
+    {
+      "id": "T-P3-004",
+      "title": "Terraform: variable project3_sandbox_enabled",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "issue_number": "314",
+      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-api/issues/314",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "Epic": "E-P3 Project 3 Sandbox",
+        "Sprint": 1,
+        "Story Points": 1,
+        "RICE Score": 6.0,
+        "WSJF": 3.0,
+        "Release Blocker": "no",
+        "Priority Rank": 4,
+        "Repo alvo": "guardiao-familia-api",
+        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg4Laj8"
+      },
+      "labels": [
+        "agent:cloud-infra"
+      ],
+      "refinement": {
+        "context_summary": "Adicionar variable bool project3_sandbox_enabled default false em infra/environments/prod/variables.tf — apenas documentação sandbox, sem apply AWS.",
+        "suggested_files": [
+          "infra/environments/prod/variables.tf",
+          "infra/environments/prod/terraform.tfvars.example"
+        ],
+        "in_scope": [
+          "Variable project3_sandbox_enabled (bool, default false)",
+          "Comentário HCL explicando uso Project 3",
+          "terraform fmt + terraform validate (local)"
+        ],
+        "out_of_scope": [
+          "terraform apply",
+          "Alterar módulos RDS/ALB"
+        ],
+        "acceptance_hints": [
+          "AC-01: variable definida com default false",
+          "AC-02: terraform validate passa no dir prod",
+          "AC-03: PR descreve que não há apply"
+        ],
+        "state_before": "`infra/environments/prod/variables.tf` sem variable project3_sandbox_enabled.",
+        "state_after": "Variable bool `project3_sandbox_enabled { default = false }` + comentário HCL.",
+        "do_not_touch": [
+          "infra/modules/*/main.tf",
+          "terraform.tfstate",
+          ".terraform/"
+        ],
+        "implementation_steps": [
+          "Criar/editar variable em `infra/environments/prod/variables.tf`",
+          "Documentar em comentário # Project 3 sandbox — never apply in prod training",
+          "Opcional: linha comentada em terraform.tfvars.example",
+          "cd infra/environments/prod && terraform init -backend=false && terraform validate",
+          "PR — body deve dizer: SEM terraform apply",
+          "open_pr"
+        ],
+        "ac_verification": [
+          {
+            "id": "AC-01",
+            "command": "grep project3_sandbox_enabled infra/environments/prod/variables.tf",
+            "expected": "variable block encontrado"
+          },
+          {
+            "id": "AC-02",
+            "command": "terraform validate (dir prod)",
+            "expected": "Success"
+          },
+          {
+            "id": "AC-03",
+            "command": "(review) PR description mentions no apply",
+            "expected": "explícito"
+          }
+        ],
+        "stop_and_redirect": [
+          "terraform apply → PROIBIDO nesta org sandbox",
+          "Alterar workflow CI → devops-cicd"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-custom",
+        "scenarios": [
+          "terraform-validate-prod"
+        ],
+        "evidence": {
+          "screenshot_png": false,
+          "video_mp4": false,
+          "json_report": true,
+          "ci_link": true
+        },
+        "how_to_run": "cd infra/environments/prod && terraform init -backend=false && terraform validate"
+      }
+    },
+    {
+      "id": "T-P3-005",
+      "title": "DB: migration COMMENT sandbox project3",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "issue_number": "315",
+      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-api/issues/315",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "Epic": "E-P3 Project 3 Sandbox",
+        "Sprint": 1,
+        "Story Points": 1,
+        "RICE Score": 6.0,
+        "WSJF": 3.0,
+        "Release Blocker": "no",
+        "Priority Rank": 5,
+        "Repo alvo": "guardiao-familia-api",
+        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg4LapY"
+      },
+      "labels": [
+        "agent:database"
+      ],
+      "refinement": {
+        "context_summary": "Migration TypeORM que executa COMMENT ON DATABASE postgres IS 'Guardiao P3 sandbox marker' — reversível, sem alterar schema de tabelas.",
+        "suggested_files": [
+          "src/migrations/1779900000001-Project3SandboxComment.ts"
+        ],
+        "in_scope": [
+          "Nova migration up/down com COMMENT",
+          "Rodar migration:run em Docker local"
+        ],
+        "out_of_scope": [
+          "Novas tabelas/colunas em produção",
+          "Índices performance"
+        ],
+        "acceptance_hints": [
+          "AC-01: migration:run aplica sem erro",
+          "AC-02: SELECT obj_description(0::oid) ou query documentada retorna marker",
+          "AC-03: migration:revert desfaz COMMENT"
+        ],
+        "state_before": "Sem migration Project3 sandbox comment.",
+        "state_after": "Migration TypeORM aplica COMMENT ON DATABASE; down remove.",
+        "do_not_touch": [
+          "entities/*.ts (sem alterar schema tabelas)",
+          "src/modules/*"
+        ],
+        "implementation_steps": [
+          "Criar `src/migrations/1779900000001-Project3SandboxComment.ts`",
+          "up: queryRunner.query COMMENT ON DATABASE",
+          "down: COMMENT ON DATABASE IS NULL ou string anterior",
+          "docker compose up postgres · npm run migration:run",
+          "npm run migration:revert (validar down)",
+          "PR + open_pr"
+        ],
+        "ac_verification": [
+          {
+            "id": "AC-01",
+            "command": "npm run migration:run",
+            "expected": "exit 0"
+          },
+          {
+            "id": "AC-02",
+            "command": "psql -c \"SELECT shobj_description(d.oid, 'd') FROM pg_database d WHERE datname=current_database();\"",
+            "expected": "contém Guardiao P3 ou sandbox"
+          },
+          {
+            "id": "AC-03",
+            "command": "npm run migration:revert",
+            "expected": "exit 0, comment removido"
+          }
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-api-jest-integration",
+        "scenarios": [
+          "migration-project3-comment"
+        ],
+        "evidence": {
+          "screenshot_png": false,
+          "video_mp4": false,
+          "json_report": true,
+          "ci_link": false
+        },
+        "how_to_run": "docker compose -f docker-compose.dev.yml up -d postgres && npm run migration:run"
+      }
+    },
+    {
+      "id": "T-P3-006",
+      "title": "CI: step label PROJECT3_SANDBOX no workflow",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "issue_number": "316",
+      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-api/issues/316",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "Epic": "E-P3 Project 3 Sandbox",
+        "Sprint": 1,
+        "Story Points": 1,
+        "RICE Score": 6.0,
+        "WSJF": 3.0,
+        "Release Blocker": "no",
+        "Priority Rank": 6,
+        "Repo alvo": "guardiao-familia-api",
+        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg4Lat8"
+      },
+      "labels": [
+        "agent:devops-cicd"
+      ],
+      "refinement": {
+        "context_summary": "Adicionar env PROJECT3_SANDBOX=true e name identificável no job test de .github/workflows/ci.yml — sem alterar secrets.",
+        "suggested_files": [
+          ".github/workflows/ci.yml"
+        ],
+        "in_scope": [
+          "env PROJECT3_SANDBOX: 'true' no job principal de test",
+          "Step echo 'Project 3 sandbox CI marker' antes dos testes"
+        ],
+        "out_of_scope": [
+          "Deploy ECS",
+          "Novos secrets OIDC"
+        ],
+        "acceptance_hints": [
+          "AC-01: workflow YAML válido (actionlint ou gh workflow view)",
+          "AC-02: log CI mostra linha Project 3 sandbox CI marker",
+          "AC-03: testes existentes continuam verdes"
+        ],
+        "state_before": "`.github/workflows/ci.yml` job test sem env PROJECT3_SANDBOX.",
+        "state_after": "Job test tem env PROJECT3_SANDBOX: 'true' + step `echo Project 3 sandbox CI marker`.",
+        "do_not_touch": [
+          "deploy.yml",
+          "terraform.yml",
+          "secrets"
+        ],
+        "implementation_steps": [
+          "Abrir `.github/workflows/ci.yml`",
+          "No job de test/unit, adicionar env PROJECT3_SANDBOX: 'true'",
+          "Adicionar step run: echo 'Project 3 sandbox CI marker' antes dos testes",
+          "Validar YAML (actionlint se disponível)",
+          "Push · PR · open_pr"
+        ],
+        "ac_verification": [
+          {
+            "id": "AC-01",
+            "command": "grep PROJECT3_SANDBOX .github/workflows/ci.yml",
+            "expected": "env presente"
+          },
+          {
+            "id": "AC-02",
+            "command": "gh run list --workflow=ci.yml -L 1",
+            "expected": "log contém marker após merge/push"
+          },
+          {
+            "id": "AC-03",
+            "command": "CI tests green",
+            "expected": "sem regressão"
+          }
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-custom",
+        "scenarios": [
+          "ci-workflow-log-marker"
+        ],
+        "evidence": {
+          "screenshot_png": false,
+          "video_mp4": false,
+          "json_report": false,
+          "ci_link": true
+        },
+        "how_to_run": "gh workflow run ci.yml --repo guardiaofamilia/guardiao-familia-api"
+      }
+    },
+    {
+      "id": "T-P3-007",
+      "title": "QA spec: teste sandboxMarker health",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "issue_number": "317",
+      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-api/issues/317",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "produto",
+        "Epic": "E-P3 Project 3 Sandbox",
+        "Sprint": 1,
+        "Story Points": 1,
+        "RICE Score": 7.0,
+        "WSJF": 3.5,
+        "Release Blocker": "no",
+        "Priority Rank": 7,
+        "Repo alvo": "guardiao-familia-api",
+        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg4Lax4"
+      },
+      "labels": [
+        "agent:qa"
+      ],
+      "refinement": {
+        "context_summary": "Agente qa (author) adiciona test/project3-sandbox.spec.ts que asserta sandboxMarker — depende de T-P3-001 merged ou branch feat.",
+        "suggested_files": [
+          "test/project3-sandbox.spec.ts",
+          "docs/qa/PROJECT3_SANDBOX.md"
+        ],
+        "in_scope": [
+          "Spec Jest/e2e dedicado ao marker P3",
+          "Doc curta com cenários e dados de teste"
+        ],
+        "out_of_scope": [
+          "Implementar sandboxMarker (backend)",
+          "Appium mobile"
+        ],
+        "acceptance_hints": [
+          "AC-01: test/project3-sandbox.spec.ts existe e passa com T-P3-001",
+          "AC-02: docs/qa/PROJECT3_SANDBOX.md lista AC e comando run",
+          "AC-03: qa-gate reutiliza spec no In Test"
+        ],
+        "state_before": "Sem test/project3-sandbox.spec.ts. T-P3-001 pode não estar merged.",
+        "state_after": "Spec dedicado asserta sandboxMarker; doc em docs/qa/PROJECT3_SANDBOX.md.",
+        "do_not_touch": [
+          "src/health/health.controller.ts (implementação é T-P3-001)"
+        ],
+        "implementation_steps": [
+          "Confirmar T-P3-001 merged ou usar branch feat/t-p3-001 como base",
+          "Criar `test/project3-sandbox.spec.ts` copiando padrão app.e2e-spec health test",
+          "Criar `docs/qa/PROJECT3_SANDBOX.md` com AC e comando run",
+          "npm run test:e2e -- --testPathPattern=project3-sandbox",
+          "PR + open_pr"
+        ],
+        "ac_verification": [
+          {
+            "id": "AC-01",
+            "command": "npm run test:e2e -- --testPathPattern=project3-sandbox",
+            "expected": "exit 0"
+          },
+          {
+            "id": "AC-02",
+            "command": "test -f docs/qa/PROJECT3_SANDBOX.md",
+            "expected": "arquivo existe"
+          },
+          {
+            "id": "AC-03",
+            "command": "(qa-gate) re-run spec in In Test",
+            "expected": "PASS"
+          }
+        ],
+        "stop_and_redirect": [
+          "Se sandboxMarker não existe na API → aguardar T-P3-001 Done",
+          "Implementar sandboxMarker aqui → errado, redirecionar backend"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-api-jest-integration",
+        "scenarios": [
+          "project3-sandbox-spec"
+        ],
+        "evidence": {
+          "screenshot_png": false,
+          "video_mp4": false,
+          "json_report": true,
+          "ci_link": true
+        },
+        "how_to_run": "npm run test:e2e -- --testPathPattern=project3-sandbox"
+      }
+    },
+    {
+      "id": "T-P3-008",
+      "title": "Stores: RELEASE_SANDBOX.md versão P3",
+      "repository": "guardiao-familia-parent",
+      "type": "Issue",
+      "issue_number": "132",
+      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-parent/issues/132",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "stores",
+        "Epic": "E-P3 Project 3 Sandbox",
+        "Sprint": 1,
+        "Story Points": 1,
+        "RICE Score": 5.0,
+        "WSJF": 2.5,
+        "Release Blocker": "no",
+        "Priority Rank": 8,
+        "Repo alvo": "guardiao-familia-parent",
+        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg4La2s"
+      },
+      "labels": [
+        "agent:stores-release"
+      ],
+      "refinement": {
+        "context_summary": "Criar RELEASE_SANDBOX.md com versão fictícia 2.4.2-p3 e notas de release sandbox — sem submit real às stores.",
+        "suggested_files": [
+          "RELEASE_SANDBOX.md",
+          "app.json"
+        ],
+        "in_scope": [
+          "Arquivo RELEASE_SANDBOX.md com version 2.4.2-p3 e changelog 3 bullets",
+          "Comentário em app.json (expo.version) NÃO alterar produção — só doc"
+        ],
+        "out_of_scope": [
+          "Submit App Store / Play",
+          "Build EAS production"
+        ],
+        "acceptance_hints": [
+          "AC-01: RELEASE_SANDBOX.md contém 2.4.2-p3",
+          "AC-02: Checklist release preenchido (dry-run)",
+          "AC-03: Screenshot do markdown renderizado ou PNG do checklist"
+        ],
+        "state_before": "Sem RELEASE_SANDBOX.md no parent repo.",
+        "state_after": "RELEASE_SANDBOX.md com version 2.4.2-p3, changelog 3 bullets, checklist dry-run.",
+        "do_not_touch": [
+          "app.json expo.version",
+          "eas.json production profile"
+        ],
+        "implementation_steps": [
+          "Criar `RELEASE_SANDBOX.md` na raiz do repo parent",
+          "Seções: Version 2.4.2-p3, Changelog (3 bullets), Checklist dry-run stores",
+          "NÃO alterar app.json version real",
+          "Screenshot do markdown preview ou PNG checklist",
+          "PR + open_pr"
+        ],
+        "ac_verification": [
+          {
+            "id": "AC-01",
+            "command": "grep 2.4.2-p3 RELEASE_SANDBOX.md",
+            "expected": "versão presente"
+          },
+          {
+            "id": "AC-02",
+            "command": "(manual) checklist 5 itens stores-release SKILL",
+            "expected": "todos marcados dry-run"
+          },
+          {
+            "id": "AC-03",
+            "command": "screenshot PNG doc",
+            "expected": "anexo na issue qa-gate"
+          }
+        ],
+        "stop_and_redirect": [
+          "Submit App Store/Play → PROIBIDO sandbox",
+          "Bump app.json → fora escopo"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-custom",
+        "scenarios": [
+          "release-doc-review"
+        ],
+        "evidence": {
+          "screenshot_png": true,
+          "video_mp4": false,
+          "json_report": false,
+          "ci_link": false
+        },
+        "how_to_run": "Revisão manual do RELEASE_SANDBOX.md + checklist stores-release SKILL"
+      }
+    },
+    {
+      "id": "T-P3-009",
+      "title": "Child home: saudação dinâmica por horário no cabeçalho",
+      "repository": "guardiao-familia-child",
+      "type": "Issue",
+      "issue_number": "103",
+      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-child/issues/103",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "produto",
+        "Epic": "E-P3 Project 3 Sandbox",
+        "Sprint": 1,
+        "Story Points": 2,
+        "RICE Score": 8.0,
+        "WSJF": 4.0,
+        "Release Blocker": "no",
+        "Priority Rank": 9,
+        "Repo alvo": "guardiao-familia-child",
+        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg4fE4Y"
+      },
+      "labels": [
+        "agent:frontend-mobile"
+      ],
+      "refinement": {
+        "context_summary": "O cabeçalho azul da ChildHome (ChildHomeV2) exibe saudação + nome do filho. Garantir que o texto alterna entre Bom dia, Boa tarde e Boa noite conforme hora local do dispositivo.",
+        "user_story": "Como criança, quero ver uma saudação adequada ao horário no topo da home, para me sentir acolhida no app.",
+        "suggested_files": [
+          "screens/ChildHomeV2.tsx",
+          "screens/childHome.state.ts",
+          "screens/__tests__/childHome.state.test.ts"
+        ],
+        "in_scope": [
+          "Centralizar `dynamicGreeting()` em `childHome.state.ts` (única fonte)",
+          "ChildHomeV2: `greetingTitle` = `{dynamicGreeting()}, {nome}!` no header azul",
+          "Regras: 00:00–11:59 Bom dia · 12:00–17:59 Boa tarde · 18:00–23:59 Boa noite (hora local)",
+          "Testes unitários cobrindo os 3 períodos + bordas 11:59/12:00 e 17:59/18:00",
+          "Propagar `accessibilityLabel` coerente no header"
+        ],
+        "out_of_scope": [
+          "Alterar app parent",
+          "Mudar layout SOS / tempo de tela / locais seguros",
+          "i18n EN/ES"
+        ],
+        "state_before": "ChildHomeV2 usa `dynamicGreeting()` importado de `childHome.state.ts`, mas a validação visual dos 3 períodos não está documentada nas evidências de QA do Project 3.",
+        "state_after": "Header da home child mostra exatamente um dos três textos conforme hora; testes unitários verdes; evidências QA com PNG+MP4 para manhã, tarde e noite após fluxo pairing→home.",
+        "acceptance_hints": [
+          "AC-01: Entre 00:00–11:59 o header mostra prefixo Bom dia",
+          "AC-02: Entre 12:00–17:59 o header mostra prefixo Boa tarde",
+          "AC-03: Entre 18:00–23:59 o header mostra prefixo Boa noite",
+          "AC-04: `npm test -- childHome.state` passa com casos manhã/tarde/noite",
+          "AC-05: QA anexa 3 PNG (um por período) + 3 MP4 do fluxo pairing até ChildHome"
+        ],
+        "implementation_steps": [
+          "git checkout -b feat/t-p3-009-child-greeting",
+          "Revisar `dynamicGreeting` em childHome.state.ts e uso em ChildHomeV2.tsx",
+          "Ajustar testes em childHome.state.test.ts se necessário",
+          "Validar no emulador child (5556) com mock de hora ou ajuste manual do relógio",
+          "Abrir PR com screenshots de referência"
+        ],
+        "user_flow": {
+          "app": "guardiao-familia-child",
+          "entry_point": "App já pareado (parent+child) ou executar pairing E2E antes",
+          "emulator": "emulator-5556",
+          "metro_port": 9090,
+          "target_screen": "child:ChildHomeV2",
+          "target_element": "header.greetingTitle (Bom dia|Boa tarde|Boa noite, {nome}!)",
+          "preconditions": [
+            "Stack mobile-setup: API + emuladores dual + pairing concluído (PAIRING_COMPLETE)",
+            "Child na home após paste_code_parent + allow_permissions + go_to_home_child"
+          ],
+          "steps": [
+            {
+              "order": 1,
+              "screen": "Child PrePairing",
+              "user_action": "Colar código 6 dígitos",
+              "system_behavior": "Valida pareamento",
+              "file": "screens/PrePairingScreen.tsx"
+            },
+            {
+              "order": 2,
+              "screen": "PermissionsOnboarding",
+              "user_action": "Conceder localização",
+              "system_behavior": "Avança onboarding",
+              "file": "screens/PermissionsOnboardingScreen.tsx"
+            },
+            {
+              "order": 3,
+              "screen": "ChildHomeV2",
+              "user_action": "Visualizar header azul",
+              "system_behavior": "Saudação dinâmica + nome",
+              "file": "screens/ChildHomeV2.tsx"
+            }
+          ],
+          "qa_repro_steps": [
+            "Subir stack: `python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle`",
+            "Ajustar hora do emulador para 08:00 → screenshot header (Bom dia)",
+            "Ajustar hora para 15:00 → screenshot header (Boa tarde)",
+            "Ajustar hora para 21:00 → screenshot header (Boa noite)",
+            "Gravar MP4 de cada cenário desde PrePairing até home (ou pairing completo + jump de relógio)"
+          ],
+          "mermaid": "flowchart LR\n  pairing[Pairing child] --> perms[Permissões]\n  perms --> home[ChildHomeV2 header]"
+        },
+        "do_not_touch": [
+          "SOS button",
+          "screen time card",
+          "pairing API contracts"
+        ],
+        "ac_verification": [
+          {
+            "id": "AC-01",
+            "command": "npm test -- childHome.state",
+            "expected": "exit 0 — casos 08:00 Bom dia, 15:00 Boa tarde, 21:00 Boa noite"
+          },
+          {
+            "id": "AC-02",
+            "command": "adb -s emulator-5556 shell date 080800002026.00 && relaunch child home",
+            "expected": "header contém Bom dia"
+          },
+          {
+            "id": "AC-03",
+            "command": "python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle --record-video",
+            "expected": "3 PNG + 3 MP4 em crew/output/mobile_evidence/T-P3-009/"
+          }
+        ],
+        "stop_and_redirect": [
+          "Alterar pairing parent → frontend-mobile parent task",
+          "Mudar API health → backend T-P3-001"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-mobile-pairing-appium-dual",
+        "scenarios": [
+          "greeting-morning-08h",
+          "greeting-afternoon-15h",
+          "greeting-evening-21h",
+          "pairing-to-child-home-e2e"
+        ],
+        "evidence": {
+          "screenshot_png": true,
+          "video_mp4": true,
+          "json_report": true,
+          "ci_link": false,
+          "scenarios_count": 3,
+          "video_scope": "pairing_start_to_child_home_per_period"
+        },
+        "db_seed": {
+          "enabled": true,
+          "profile": "child_home",
+          "family_name": "QA Evidence T-P3-009",
+          "child_name": "Filho QA T-P3-009",
+          "resume_after_step": "paste_code_parent",
+          "cleanup": true,
+          "bootstrap_api": true
+        },
+        "how_to_run": "cd modulo-8-exemplo-pratico-guardiao-familia-agents && python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle --record-video"
+      }
+    }
+  ]
+}

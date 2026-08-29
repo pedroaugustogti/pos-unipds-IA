@@ -1,7 +1,11 @@
-# Apresentação
+# apresentacao — demo live
 
-| Documento | Descrição |
-|-----------|-----------|
-| [APRESENTACAO_LIVE_DEMO.md](APRESENTACAO_LIVE_DEMO.md) | Roteiro da banca (dashboard + demo paced) |
+Material para banca e demonstrações paced.
 
-Contexto técnico: [../autonomia/EXECUCAO_E_OBSERVABILIDADE.md](../autonomia/EXECUCAO_E_OBSERVABILIDADE.md)
+| Documento | Uso |
+|-----------|-----|
+| `APRESENTACAO_LIVE_DEMO.md` | Roteiro demo com delays e histórico |
+
+Scripts: `agents/00-orchestration/scripts/demo/`
+
+Dashboard publicado: [`../live/`](../live/)

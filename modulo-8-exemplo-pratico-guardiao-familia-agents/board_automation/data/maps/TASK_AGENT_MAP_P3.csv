@@ -1,0 +1,10 @@
+id,title,agent_role,agent_role_secondary,track,repo,epic_id,sprint,priority_rank,effort_sp,rice,wsjf,status_baseline,release_blocker,match_reason,depends_on
+T-P3-001,Health API: campo sandboxMarker P3-backend,backend,,produto,guardiao-familia-api,E-P3,1,1,1,8.0,4.0,todo,False,"track=produto,repo=guardiao-familia-api,epic=E-P3",
+T-P3-002,Parent splash: tagline Project 3 — Parent OK,frontend-mobile,,produto,guardiao-familia-parent,E-P3,1,2,1,8.0,4.0,todo,False,"track=produto,repo=guardiao-familia-parent,epic=E-P3",
+T-P3-003,Site: badge footer Sandbox P3 Web,frontend-web,,produto,guardiao-familia-site,E-P3,1,3,1,8.0,4.0,todo,False,"track=produto,repo=guardiao-familia-site,epic=E-P3",
+T-P3-004,Terraform: variable project3_sandbox_enabled,cloud-infra,,infraestrutura,guardiao-familia-api,E-P3,1,4,1,6.0,3.0,todo,False,"track=infraestrutura,repo=guardiao-familia-api,epic=E-P3",
+T-P3-005,DB: migration COMMENT sandbox project3,database,,infraestrutura,guardiao-familia-api,E-P3,1,5,1,6.0,3.0,todo,False,"track=infraestrutura,repo=guardiao-familia-api,epic=E-P3",
+T-P3-006,CI: step label PROJECT3_SANDBOX no workflow,devops-cicd,,infraestrutura,guardiao-familia-api,E-P3,1,6,1,6.0,3.0,todo,False,"track=infraestrutura,repo=guardiao-familia-api,epic=E-P3",
+T-P3-007,QA spec: teste sandboxMarker health,qa,backend,produto,guardiao-familia-api,E-P3,1,7,1,7.0,3.5,todo,False,"track=produto,repo=guardiao-familia-api,epic=E-P3",T-P3-001
+T-P3-008,Stores: RELEASE_SANDBOX.md versão P3,stores-release,,stores,guardiao-familia-parent,E-P3,1,8,1,5.0,2.5,todo,False,"track=stores,repo=guardiao-familia-parent,epic=E-P3",
+T-P3-009,Child home: saudação dinâmica por horário no cabeçalho,frontend-mobile,,produto,guardiao-familia-child,E-P3,1,9,2,8.0,4.0,todo,False,"track=produto,repo=guardiao-familia-child,epic=E-P3,greeting=time-of-day",

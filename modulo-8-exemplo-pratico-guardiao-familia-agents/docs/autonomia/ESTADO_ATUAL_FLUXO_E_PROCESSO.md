@@ -38,8 +38,8 @@ flowchart TD
 | In Pull Request | devops-cicd / preparação de merge | `merge_pr` |
 | Done | só após **HITL humano** no merge | — |
 
-Papéis creators e reviewers vivem em `agents/*.agent.md` e `agents/reviewers/`.  
-Mapeamento task → role: `TASK_AGENT_MAP.csv` + `lib/task_router.py`.
+Papéis creators e reviewers: `agents/{role}/agent.md` e `agents/{role}-reviewer/`.  
+Mapeamento task → role: `board_automation/data/maps/TASK_AGENT_MAP.csv` + `board_automation.board.task_router`.
 
 ---
 
@@ -83,8 +83,8 @@ Documentados em [PROCESSO_HITL.md](../operacao/PROCESSO_HITL.md):
 
 | Modo | Script / caminho | Uso |
 |------|------------------|-----|
-| **Demo acadêmica paced** | `scripts/demo_apresentacao.py` | Banca: delays ≥6s, histórico thought/action, sync Project, até Done com auto-HITL |
-| **Operação / piloto** | `autonomy_loop`, `pilot_session`, gateway + dispatch | Ciclo real com jobs, outbox, HITL manual |
+| **Demo acadêmica paced** | `agents/00-orchestration/scripts/demo/demo_apresentacao.py` | Banca: delays ≥6s, histórico thought/action, sync Project, até Done com auto-HITL |
+| **Operação / piloto** | `autonomy_loop`, gateway + dispatch + worker | Ciclo real com jobs, outbox, HITL manual |
 
 A demo **não substitui** o produto: ela prova o **mesmo gateway, Status, papéis e Project #2**, com implementação didática local.
 
@@ -96,10 +96,10 @@ A demo **não substitui** o produto: ela prova o **mesmo gateway, Status, papéi
 |----------|--------|
 | GitHub Project #2 | Status remoto (política reconcile: Project vence) |
 | `github-project-2-import.json` (módulo 7) | Espelho local de Status |
-| `TASK_AGENT_MAP.csv` | Role, repo, depends_on, blocker |
-| `crew/output/handoffs/{task}.json` | Contrato entre agentes |
-| `crew/output/observability/tasks/{task}.html` | Histórico detalhado (demo / append explícito) |
-| `crew/output/agent_runtime.json` | idle/busy, HITL, idempotência |
+| `board_automation/data/maps/TASK_AGENT_MAP.csv` | Role, repo, depends_on, blocker |
+| `agents/00-runtime/output/handoffs/{task}.json` | Contrato entre agentes |
+| `agents/00-runtime/output/observability/tasks/{task}.html` | Histórico detalhado (demo / append explícito) |
+| `agents/00-runtime/output/agent_runtime.json` | idle/busy, HITL, idempotência |
 
 ---
 
@@ -115,7 +115,7 @@ A demo **não substitui** o produto: ela prova o **mesmo gateway, Status, papéi
 **Híbrido / opcional**
 
 - Implementação no repo produto via Cursor SDK (`GUARDAO_DISPATCH_BACKEND=auto`).  
-- Histórico HTML rico: gerado pela demo; piloto antigo sem `append_task_action` não cria página.  
+- Histórico HTML rico: gerado pela demo; tasks sem `append_task_action` não criam página.  
 - Kanban do dashboard **não** lista o Project inteiro (só piloto + ativos).
 
 ---

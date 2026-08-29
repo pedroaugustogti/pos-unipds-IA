@@ -4,7 +4,7 @@
 > Status: **Concluída**  
 > Contexto: [RELATORIO_FASE_A_MODEL_TIER.md](RELATORIO_FASE_A_MODEL_TIER.md)  
 > Base: [GUIA_LANGGRAPH_MCP_LLM.md](../GUIA_LANGGRAPH_MCP_LLM.md) §3  
-> Pacote: `guardiao_mcp/` (evita conflito com o PyPI `mcp`)
+> Pacote: `agents/00-orchestration/guardiao_mcp/` (import: `guardiao_mcp`)
 
 ---
 
@@ -21,12 +21,12 @@ Expor `lib/*` como tools MCP com contrato JSON uniforme, sem abrir segunda porta
 | Server FastMCP (stdio) | `guardiao_mcp/server.py` |
 | Contrato `ok` / `fail` / `wrap_call` | `guardiao_mcp/contract.py` |
 | Entry `python -m guardiao_mcp` | `guardiao_mcp/__main__.py` |
-| Launcher Windows | `guardiao-mcp.cmd` |
+| Launcher Windows | `agents/00-orchestration/guardiao_mcp/guardiao-mcp.cmd` |
 | README MCP | `guardiao_mcp/README.md` |
 | Cursor (módulo) | `modulo-8-.../.cursor/mcp.json` |
 | Cursor (workspace) | `.cursor/mcp.json` → server **`guardiao-familia-agents`** |
-| Deps | `crew/requirements.txt` → `mcp>=1.9,<2` |
-| Testes parity | `tests/test_mcp_gateway_parity.py` (6 OK) |
+| Deps | `agents/00-runtime/requirements.txt` → `mcp>=1.9,<2` |
+| Validação parity | MCP + `list_mcp_tools` |
 
 ### Segurança aplicada
 
@@ -70,7 +70,7 @@ Registrado como **`guardiao-familia-agents`**:
 ```json
 "guardiao-familia-agents": {
   "command": "cmd",
-  "args": ["/c", "modulo-8-exemplo-pratico-guardiao-familia-agents\\guardiao-mcp.cmd"],
+  "args": ["/c", "modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-orchestration\\guardiao_mcp\\guardiao-mcp.cmd"],
   "env": { "PYTHONUTF8": "1" }
 }
 ```
@@ -86,7 +86,6 @@ Arquivos: raiz `.cursor/mcp.json` + `modulo-8-.../.cursor/mcp.json`.
 ```powershell
 cd modulo-8-exemplo-pratico-guardiao-familia-agents
 pip install "mcp>=1.9,<2"
-python -m unittest tests.test_mcp_gateway_parity -v
 python -c "from guardiao_mcp.server import list_mcp_tools; print(list_mcp_tools())"
 ```
 
@@ -99,7 +98,7 @@ python -c "from guardiao_mcp.server import list_mcp_tools; print(list_mcp_tools(
 | `select_model_tier` ≡ `select_model` | OK |
 | `list_hitl_queue` OK | OK |
 | Dispatch bloqueado sem flag | OK |
-| Testes unitários | **6/6 OK** |
+| Parity gateway dry-run | OK |
 
 ### Nota de versão
 
@@ -113,7 +112,7 @@ python -c "from guardiao_mcp.server import list_mcp_tools; print(list_mcp_tools(
 |------|--------|
 | Gateway / Kanban | Neutro — mesma lib |
 | Cursor | Tools de board/HITL/model disponíveis via MCP |
-| Orquestração | **LangGraph** (CrewAI removido) |
+| Orquestração | **LangGraph** |
 | Fase C | Grafo consome tools via bridge / MCP |
 | OpenRouter | No loop na Fase C+ |
 

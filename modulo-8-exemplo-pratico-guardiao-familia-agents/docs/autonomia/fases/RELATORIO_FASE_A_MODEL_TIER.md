@@ -20,14 +20,12 @@ Configurar política de modelos de orquestração (OpenRouter) separada do model
 | Entregável | Descrição |
 |------------|-----------|
 | `lib/model_tier.py` | `select_model` com purposes + budget + HIGH_HINTS |
-| `scripts/model_tier_cli.py` | Inspeciona seleção; `--smoke` / `--smoke-high` opcional |
-| `tests/test_model_tier.py` | 7 testes unitários de aceite |
-| `crew/.env.example` | `GUARDIAO_LLM_*`, `GUARDIAO_CURSOR_MODEL` |
-| `crew/.env` (local) | Chaves Fase A adicionadas (gitignored) |
-| `crew/crew.py` | `_llm()` via `select_model` (fixo na montagem do Agent) |
+| `agents/00-orchestration/scripts/cli/model_tier_cli.py` | Inspeciona seleção; `--smoke` / `--smoke-high` opcional |
+| `.env.example` | `GUARDIAO_LLM_*`, `GUARDIAO_CURSOR_MODEL` |
+| `.env` (local) | Chaves Fase A (gitignored) |
 | `lib/dispatch_adapter.py` | Prefere `GUARDIAO_CURSOR_MODEL`, fallback `GUARDAO_*` |
 | `lib/env_load.py` | Leitura `.env` com fallback de encoding |
-| `crew/requirements.txt` | `openai>=1.40.0` para smoke |
+| `agents/00-runtime/requirements.txt` | `openai>=1.40.0` para smoke |
 | Docs | `CONFIGURACAO_E_TECNOLOGIA.md` + aceite no guia |
 
 ### Purposes disponíveis
@@ -48,7 +46,7 @@ Configurar política de modelos de orquestração (OpenRouter) separada do model
 | Área | Impacto |
 |------|---------|
 | Autonomia / gateway / demo | **Nenhum** no caminho crítico — Status e demo inalterados |
-| LangGraph | Consome `select_model` em `langgraph_app/llm.py` por purpose |
+| LangGraph | Consome `select_model` em `agents/00-orchestration/langgraph_app/llm.py` por purpose |
 | Dispatch código | Continua Cursor; alias `GUARDIAO_CURSOR_MODEL` |
 | OpenRouter | Usado no loop LangGraph (decide/implement/review) |
 | Operador | CLI `model_tier_cli` para auditar low vs high |
@@ -59,15 +57,14 @@ Configurar política de modelos de orquestração (OpenRouter) separada do model
 
 ```powershell
 cd modulo-8-exemplo-pratico-guardiao-familia-agents
-python -m unittest tests.test_model_tier -v
-python scripts/model_tier_cli.py --title "Ajuste layout" --json
-python scripts/model_tier_cli.py --title "pagamento Stripe" --json
-python scripts/model_tier_cli.py --smoke --smoke-high --json
+python agents/00-orchestration/scripts/cli/model_tier_cli.py --title "Ajuste layout" --json
+python agents/00-orchestration/scripts/cli/model_tier_cli.py --title "pagamento Stripe" --json
+python agents/00-orchestration/scripts/cli/model_tier_cli.py --smoke --smoke-high --json
 ```
 
 | Critério do guia | Resultado |
 |------------------|-----------|
-| Low-risk → default | OK (testes + CLI) |
+| Low-risk → default | OK (CLI) |
 | HIGH_HINTS → high | OK |
 | `route` sem LLM | OK (`deterministic`) |
 | Orquestração ≠ Cursor | OK (`cursor_model` separado) |
@@ -77,7 +74,7 @@ python scripts/model_tier_cli.py --smoke --smoke-high --json
 
 ## 5. Limitações conhecidas
 
-- Alias legado `CREWAI_MODEL*` ainda aceito se `GUARDIAO_LLM_*` ausente.  
+- Alias `CREWAI_MODEL*` aceito se `GUARDIAO_LLM_*` ausente.  
 - Smoke de rede depende de certificados/proxy da máquina.
 
 ---

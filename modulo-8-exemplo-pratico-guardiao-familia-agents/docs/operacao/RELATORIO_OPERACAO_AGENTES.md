@@ -69,25 +69,25 @@ CSV `agent_role=qa` → claim como **qa-author**.
 ## 4. Porta única e contratos
 
 ```powershell
-python scripts/gateway_cli.py --task T-XXX --event claim --dry-run
-python scripts/gateway_cli.py --list-hitl
-python scripts/outbox_retry.py --once
-python scripts/reconcile_board.py --dry-run   # Project → JSON (conflitos exigem --force)
+python agents/00-orchestration/scripts/cli/gateway_cli.py --task T-XXX --event claim --dry-run
+python agents/00-orchestration/scripts/cli/gateway_cli.py --list-hitl
+python board_automation/scripts/cli/outbox_retry.py --once
+python board_automation/scripts/cli/reconcile_board.py --dry-run   # Project → JSON (conflitos exigem --force)
 ```
 
-Schema: `schemas/board_events.json` + `lib/event_schema.py`.  
-Outbox: falha `gh` não some — `crew/output/outbox.jsonl`.
+Schema: `agents/00-orchestration/schemas/board_events.json` + `lib/event_schema.py`.  
+Outbox: falha `gh` não some — `agents/00-runtime/output/outbox.jsonl`.
 
 ---
 
 ## 5. Worker local
 
 ```powershell
-python scripts/worker_run.py --enqueue --task T-XXX --role backend
-python scripts/worker_run.py --next --role backend
+python agents/00-orchestration/scripts/worker/worker_run.py --enqueue --task T-XXX --role backend
+python agents/00-orchestration/scripts/worker/worker_run.py --next --role backend
 # cole o prompt_bundle no Cursor
-python scripts/worker_run.py --complete --job {job_id}
-python scripts/worker_run.py --expire
+python agents/00-orchestration/scripts/worker/worker_run.py --complete --job {job_id}
+python agents/00-orchestration/scripts/worker/worker_run.py --expire
 ```
 
 ---
@@ -95,21 +95,21 @@ python scripts/worker_run.py --expire
 ## 6. Qualidade e índice
 
 ```powershell
-python scripts/eval_gate.py --task T-XXX --write-handoff
-python scripts/code_index.py --role backend --query SOS
-python scripts/ci_hint.py --task T-XXX --green
-python scripts/dispute_run.py --task T-XXX --roles backend,database
-python -m unittest tests.test_merge_owner -v
+python agents/00-orchestration/scripts/langgraph/eval_gate.py --task T-XXX --write-handoff
+python agents/00-orchestration/scripts/cli/code_index.py --role backend --query SOS
+python agents/00-orchestration/scripts/cli/ci_hint.py --task T-XXX --green
+python agents/00-orchestration/scripts/cli/gateway_cli.py --task T-XXX --roles backend,database
+python agents/00-orchestration/scripts/langgraph/langsmith_eval.py
 ```
 
 Model tier: `lib/model_tier.py` (`GUARDIAO_LLM_*`; alias legado `CREWAI_MODEL*`).
-Orquestração: **LangGraph** (`scripts/langgraph_run.py`).
+Orquestração: **LangGraph** (`agents/00-orchestration/scripts/langgraph/langgraph_run.py`).
 
 ---
 
 ## 7. Dependências
 
-Coluna `depends_on` em `TASK_AGENT_MAP.csv` (ex.: `T-I01-002` → `T-I01-001`).  
+Coluna `depends_on` em `board_automation/data/maps/TASK_AGENT_MAP.csv` (ex.: `T-I01-002` → `T-I01-001`).  
 Claim recusa se dependência ≠ `Done`.
 
 ---
@@ -118,13 +118,13 @@ Claim recusa se dependência ≠ `Done`.
 
 | Artefato | Path |
 |----------|------|
-| Runtime | `crew/output/agent_runtime.json` |
-| Jobs | `crew/output/worker_jobs.json` |
-| Handoffs | `crew/output/handoffs/` |
-| Disputes | `crew/output/disputes/` |
-| Audit | `crew/output/audit-trail.jsonl` |
-| Convert log | `crew/output/convert_drafts_log.jsonl` |
-| Item cache | `crew/output/project_item_cache.json` |
+| Runtime | `agents/00-runtime/output/agent_runtime.json` |
+| Jobs | `agents/00-runtime/output/worker_jobs.json` |
+| Handoffs | `agents/00-runtime/output/handoffs/` |
+| Disputes | `agents/00-runtime/output/disputes/` |
+| Audit | `agents/00-runtime/output/audit-trail.jsonl` |
+| Convert log | `agents/00-runtime/output/convert_drafts_log.jsonl` |
+| Item cache | `agents/00-runtime/output/project_item_cache.json` |
 
 ---
 

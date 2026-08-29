@@ -39,7 +39,7 @@ flowchart TD
 | **H2** | 3× `test_failed_bug` | Spec ruim / flaky / skill errada | Triagem flaky vs regression | Liberar blocker / split / reopen |
 | **H3** | `merge_pr` | Irreversível | Autoriza merge pós-CI | `--event merge_pr --approve-hitl` |
 | **H4** | Lease worker TTL / ReAct no limite | Automação esgotada | Redefine escopo ou pairing | `worker_run --expire` + HITL |
-| **H5** | `dispute_run` (2 turnos) | Conflito de fronteira (ex. API×DB) | Escolhe contrato | Lê `crew/output/disputes/*` |
+| **H5** | `dispute_run` (2 turnos) | Conflito de fronteira (ex. API×DB) | Escolhe contrato | Lê `agents/00-runtime/output/disputes/*` |
 
 ---
 
@@ -71,9 +71,9 @@ flowchart TD
 ## 5. Operação da fila
 
 ```powershell
-python scripts/gateway_cli.py --list-hitl
-python scripts/gateway_cli.py --task T-XXX --event merge_pr --approve-hitl
-python scripts/dispute_run.py --task T-XXX --roles backend,database
+python agents/00-orchestration/scripts/cli/gateway_cli.py --list-hitl
+python agents/00-orchestration/scripts/cli/gateway_cli.py --task T-XXX --event merge_pr --approve-hitl
+python agents/00-orchestration/scripts/cli/gateway_cli.py --task T-XXX --roles backend,database
 ```
 
 Runtime: `hitl_queue` em `agent_runtime.json`.  

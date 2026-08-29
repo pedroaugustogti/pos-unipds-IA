@@ -1,36 +1,12 @@
-# Comportamento dos agentes (índice)
+# comportamento — índice de prompts
 
-Os **prompts de runtime** e **skills** permanecem em `agents/` e `skills/` (carregados por scripts/Cursor).  
-Este índice só organiza a leitura acadêmica/operacional.
+Aponta para `agents/{role}/agent.md` e `SKILL.md` de cada papel.
 
-## Creators (`agents/`)
+## Fluxo de decisão
 
-| Arquivo | Papel |
-|---------|-------|
-| [backend.agent.md](../../agents/backend.agent.md) | Backend |
-| [frontend-mobile.agent.md](../../agents/frontend-mobile.agent.md) | Mobile parent/child |
-| [frontend-web.agent.md](../../agents/frontend-web.agent.md) | Web |
-| [database.agent.md](../../agents/database.agent.md) | Database |
-| [cloud-infra.agent.md](../../agents/cloud-infra.agent.md) | Cloud / Terraform |
-| [devops-cicd.agent.md](../../agents/devops-cicd.agent.md) | CI/CD / observabilidade |
-| [stores-release.agent.md](../../agents/stores-release.agent.md) | Stores / release |
-| [qa-author.agent.md](../../agents/qa-author.agent.md) | Escreve harness |
-| [qa-gate.agent.md](../../agents/qa-gate.agent.md) | Gate de teste na pipeline |
-| [qa.agent.md](../../agents/qa.agent.md) | Ponte legado author/gate |
+1. Identificar `agent_role` da task (CSV ou issue)
+2. Abrir `agents/{role}/README.md` — quando acionar
+3. Carregar `agent.md` + `SKILL.md` + **`KNOWLEDGE.md`** (digest de 73 READMEs do módulo)
+4. Ler `agents/_shared/MCP_TOOLS.md` antes de chamar tools
 
-## Reviewers (`agents/reviewers/`)
-
-Ver [agents/reviewers/README.md](../../agents/reviewers/README.md).
-
-## Skills (`skills/*/SKILL.md`)
-
-Cada role tem skill creator e, quando aplicável, `*-reviewer`.  
-Fonte de verdade operacional para fronteiras de código.
-
-## Workflow e operação (docs)
-
-- [ESTADO_ATUAL_FLUXO_E_PROCESSO.md](../autonomia/ESTADO_ATUAL_FLUXO_E_PROCESSO.md)
-- [WORKFLOW_BOARD.md](../operacao/WORKFLOW_BOARD.md)
-- [PROCESSO_HITL.md](../operacao/PROCESSO_HITL.md)
-- [RELATORIO_OPERACAO_AGENTES.md](../operacao/RELATORIO_OPERACAO_AGENTES.md)
-- [CLASSIFICACAO_TASKS.md](../operacao/CLASSIFICACAO_TASKS.md)
+Não duplicar prompts nesta pasta — apenas índice e links.

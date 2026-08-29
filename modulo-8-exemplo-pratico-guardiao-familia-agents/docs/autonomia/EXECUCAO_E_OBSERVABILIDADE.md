@@ -11,7 +11,7 @@
 
 ```powershell
 cd modulo-8-exemplo-pratico-guardiao-familia-agents
-python scripts/live_server.py
+python agents/00-orchestration/scripts/demo/live_server.py
 # http://127.0.0.1:8765/dashboard.html
 ```
 
@@ -20,12 +20,12 @@ Poll a cada **5s** de `snapshot.json`. Mostra Kanban (piloto), agentes busy/idle
 ### 1.2 Demo acadêmica (fluxo completo até Done)
 
 ```powershell
-python scripts/demo_apresentacao.py --task T-P05-006 --from-zero --delay 6
+python agents/00-orchestration/scripts/demo/demo_apresentacao.py --task T-P05-006 --from-zero --delay 6
 ```
 
 - Reseta locks/HITL/idempotência da task.  
 - Passos: claim → implement/commit → open_pr → review → QA → merge_pr (HITL).  
-- Gera `crew/output/observability/tasks/{task}.html`.  
+- Gera `agents/00-runtime/output/observability/tasks/{task}.html`.  
 - Tenta atualizar Project #2 a cada Status.
 
 Roteiro: [../apresentacao/APRESENTACAO_LIVE_DEMO.md](../apresentacao/APRESENTACAO_LIVE_DEMO.md).
@@ -33,25 +33,25 @@ Roteiro: [../apresentacao/APRESENTACAO_LIVE_DEMO.md](../apresentacao/APRESENTACA
 ### 1.3 Gateway manual
 
 ```powershell
-python scripts/gateway_cli.py --task T-XXX --event claim --dry-run
-python scripts/gateway_cli.py --list-hitl
-python scripts/gateway_cli.py --task T-XXX --event merge_pr --approve-hitl
+python agents/00-orchestration/scripts/cli/gateway_cli.py --task T-XXX --event claim --dry-run
+python agents/00-orchestration/scripts/cli/gateway_cli.py --list-hitl
+python agents/00-orchestration/scripts/cli/gateway_cli.py --task T-XXX --event merge_pr --approve-hitl
 ```
 
 ### 1.4 Alinhar com Project #2
 
 ```powershell
-python scripts/reconcile_board.py --dry-run
-python scripts/reconcile_board.py --project-wins
-python scripts/outbox_retry.py --once
+python board_automation/scripts/cli/reconcile_board.py --dry-run
+python board_automation/scripts/cli/reconcile_board.py --project-wins
+python board_automation/scripts/cli/outbox_retry.py --once
 ```
 
 ### 1.5 Loop de autonomia / piloto
 
 ```powershell
-python scripts/autonomy_loop.py --once --dry-run
-python scripts/pilot_session.py --help
-python scripts/dispatch_cli.py --help
+python agents/00-orchestration/scripts/worker/autonomy_loop.py --once --dry-run
+python agents/00-orchestration/scripts/demo/demo_apresentacao.py
+python agents/00-orchestration/scripts/worker/dispatch_cli.py --help
 ```
 
 ---
@@ -66,7 +66,7 @@ python scripts/dispatch_cli.py --help
 | HITL banner | itens de `hitl_queue` |
 | Link “historico do agente” | aponta para `tasks/{id}.html` — **só existe se o histórico foi gerado** |
 
-Tasks avançadas só pelo piloto antigo **sem** `append_task_action` aparecem no Kanban sem página de detalhe (404). A demo gera o histórico automaticamente.
+Tasks avançadas **sem** `append_task_action` aparecem no Kanban sem página de detalhe (404). A demo gera o histórico automaticamente.
 
 ---
 
@@ -80,7 +80,7 @@ Cada passo pode registrar:
 - `findings` (review)  
 - `test_scenarios` (QA)
 
-Arquivos: `crew/output/observability/tasks/{task_id}.json` + `.html`.  
+Arquivos: `agents/00-runtime/output/observability/tasks/{task_id}.json` + `.html`.  
 URL local: `http://127.0.0.1:8765/tasks/{task_id}.html`.
 
 ---
@@ -111,14 +111,15 @@ Validação já feita em lab: **T-P05-005** e **T-P05-006** chegaram a **Done** 
 
 ## 6. Mapa rápido scripts × responsabilidade
 
+Paths sob `agents/00-orchestration/scripts/` e `board_automation/scripts/` — ver [ESTRUTURA.md](../ESTRUTURA.md).
+
 | Script | Faz |
 |--------|-----|
-| `gateway_cli.py` | Emite eventos / lista HITL |
-| `demo_apresentacao.py` | Pipeline paced + histórico + commit demo |
-| `live_server.py` | Serve observability/ |
-| `reconcile_board.py` | Project → JSON |
-| `autonomy_loop.py` | Ciclo expire/outbox/reconcile/claims |
-| `dispatch_cli.py` / `complete_dispatch.py` | Disparo e conclusão de jobs |
-| `worker_run.py` | Consome job → bundle |
-| `pilot_session.py` | Sessão piloto supervisionada |
-| `observability_cli.py` | Snapshot/dashboard sob demanda |
+| `cli/gateway_cli.py` | Emite eventos / lista HITL |
+| `demo/demo_apresentacao.py` | Pipeline paced + histórico + commit demo |
+| `demo/live_server.py` | Serve observability/ |
+| `board_automation/.../reconcile_board.py` | Project → JSON |
+| `worker/autonomy_loop.py` | Ciclo expire/outbox/reconcile/claims |
+| `worker/dispatch_cli.py` / `complete_dispatch.py` | Disparo e conclusão de jobs |
+| `worker/worker_run.py` | Consome job → bundle |
+| `cli/observability_cli.py` | Snapshot/dashboard sob demanda |

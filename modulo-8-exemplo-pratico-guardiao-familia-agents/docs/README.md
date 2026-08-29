@@ -1,26 +1,25 @@
-# Documentação — Agentes Guardião Família (módulo 8)
+# Documentação — módulo 8
 
-Índice dos documentos de **comportamento, operação e autonomia** dos agentes.
+Índice para **agentes e operadores**: comportamento, operação, autonomia.
+
+Layout: [`ESTRUTURA.md`](ESTRUTURA.md)
 
 ## Pastas
 
-| Pasta | Conteúdo |
-|-------|----------|
-| [autonomia/](autonomia/) | Estado atual: fluxo, processo, tecnologia e execução |
-| [operacao/](operacao/) | HITL, workflow do board, classificação de tasks, relatório de operação |
-| [apresentacao/](apresentacao/) | Roteiro da demo live (dashboard + histórico) |
-| [comportamento/](comportamento/) | Índice dos prompts (`agents/`) e skills (`skills/`) — arquivos runtime ficam nas pastas originais |
-| [templates/](templates/) | Templates de PR e review usados pelos agentes |
-| [live/](live/) | Espelho do dashboard (Pages / artefatos estáticos) |
+| Pasta | Base de conhecimento |
+|-------|----------------------|
+| [`autonomia/`](autonomia/) | Fluxo, stack, execução, fases |
+| [`operacao/`](operacao/) | HITL, operação diária, E2E |
+| [`comportamento/`](comportamento/) | Índice dos prompts em `agents/` |
+| [`apresentacao/`](apresentacao/) | Demo live |
+| [`templates/`](templates/) | PR e review |
+| [`live/`](live/) | Dashboard estático (Pages) |
 
-## Atalhos
+Board: [`../board_automation/docs/`](../board_automation/docs/) · templates: [`../board_automation/templates/`](../board_automation/templates/)
 
-- [Estado atual — fluxo e processo](autonomia/ESTADO_ATUAL_FLUXO_E_PROCESSO.md)
-- [Configuração e tecnologia](autonomia/CONFIGURACAO_E_TECNOLOGIA.md)
-- [Execução e observabilidade](autonomia/EXECUCAO_E_OBSERVABILIDADE.md)
-- [Como os agentes trabalham](operacao/RELATORIO_OPERACAO_AGENTES.md)
-- [Processo HITL](operacao/PROCESSO_HITL.md)
-- [Workflow do board](operacao/WORKFLOW_BOARD.md)
-- [Classificação de tasks](operacao/CLASSIFICACAO_TASKS.md)
-- [Apresentação live](apresentacao/APRESENTACAO_LIVE_DEMO.md)
-- [Comportamento (índice)](comportamento/README.md)
+## Atalhos para decisão
+
+- Estado atual → [`autonomia/ESTADO_ATUAL_FLUXO_E_PROCESSO.md`](autonomia/ESTADO_ATUAL_FLUXO_E_PROCESSO.md)
+- Escolher agente → [`comportamento/README.md`](comportamento/README.md) + `board_automation/data/maps/`
+- Emitir Status → `lib/gateway` (ver [`autonomia/CONFIGURACAO_E_TECNOLOGIA.md`](autonomia/CONFIGURACAO_E_TECNOLOGIA.md))
+- Workflow board → [`../board_automation/docs/WORKFLOW_BOARD.md`](../board_automation/docs/WORKFLOW_BOARD.md)

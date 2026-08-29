@@ -541,7 +541,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I01 AWS ECS Fargate foundation",
@@ -554,7 +554,7 @@
         "Confidence": 0.6,
         "CoD": 12,
         "PERT (d)": 4.33,
-        "Baseline": "partial",
+        "Baseline": "done",
         "Release Blocker": "yes",
         "Blocker Motivo": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.",
         "Priority Rank": 6,
@@ -583,105 +583,12 @@
       }
     },
     {
-      "id": "T-I01-002",
-      "title": "ECS cluster Fargate",
-      "repository": "guardiao-familia-api",
-      "type": "draft_issue",
-      "fields": {
-        "Status": "Todo",
-        "Trilha": "infraestrutura",
-        "OKR": "O2",
-        "Epic": "E-I01 AWS ECS Fargate foundation",
-        "Sprint": 1,
-        "Story Points": 5,
-        "RICE Score": 3.6,
-        "WSJF": 2.4,
-        "Reach": 10,
-        "Impact": 3,
-        "Confidence": 0.6,
-        "CoD": 12,
-        "PERT (d)": 4.33,
-        "Baseline": "partial",
-        "Release Blocker": "yes",
-        "Blocker Motivo": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.",
-        "Priority Rank": 7,
-        "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** ECS cluster Fargate\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `partial` · **Release blocker**\n**Motivo blocker:** Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.\n**Refinamento:** implementação parcial existente — completar gaps e testes."
-      },
-      "labels": [
-        "infraestrutura",
-        "O2",
-        "E-I01"
-      ],
-      "commit_evidence": "",
-      "refinement": {
-        "context_summary": "**Objetivo:** ECS cluster Fargate\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `partial` · **Release blocker**\n**Motivo blocker:** Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.\n**Refinamento:** implementação parcial existente — completar gaps e testes.",
-        "suggested_files": [
-          "guardiao-familia-api/infra/terraform",
-          "guardiao-familia-api/terraform/ecs",
-          "guardiao-familia-api/docker",
-          "guardiao-familia-api/docs/runbooks",
-          "guardiao-familia-api/terraform/modules"
-        ],
-        "acceptance_hints": [
-          "Critério bloqueante release — exigir review + testes antes merge."
-        ],
-        "blocker_reason": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável."
-      }
-    },
-    {
-      "id": "T-I01-003",
-      "title": "Task definition API container",
-      "repository": "guardiao-familia-api",
-      "type": "draft_issue",
-      "fields": {
-        "Status": "Todo",
-        "Trilha": "infraestrutura",
-        "OKR": "O2",
-        "Epic": "E-I01 AWS ECS Fargate foundation",
-        "Sprint": 1,
-        "Story Points": 5,
-        "RICE Score": 3.6,
-        "WSJF": 2.4,
-        "Reach": 10,
-        "Impact": 3,
-        "Confidence": 0.6,
-        "CoD": 12,
-        "PERT (d)": 4.33,
-        "Baseline": "partial",
-        "Release Blocker": "yes",
-        "Blocker Motivo": "Fundação AWS (VPC, ECS, ALB, DNS/TLS) bloqueia deploy produção da API e validação E2E real.",
-        "Priority Rank": 8,
-        "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Task definition API container\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `partial` · **Release blocker**\n**Motivo blocker:** Fundação AWS (VPC, ECS, ALB, DNS/TLS) bloqueia deploy produção da API e validação E2E real.\n**Refinamento:** implementação parcial existente — completar gaps e testes."
-      },
-      "labels": [
-        "infraestrutura",
-        "O2",
-        "E-I01"
-      ],
-      "commit_evidence": "",
-      "refinement": {
-        "context_summary": "**Objetivo:** Task definition API container\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `partial` · **Release blocker**\n**Motivo blocker:** Fundação AWS (VPC, ECS, ALB, DNS/TLS) bloqueia deploy produção da API e validação E2E real.\n**Refinamento:** implementação parcial existente — completar gaps e testes.",
-        "suggested_files": [
-          "guardiao-familia-api/infra/terraform",
-          "guardiao-familia-api/terraform/ecs",
-          "guardiao-familia-api/docker",
-          "guardiao-familia-api/docs/runbooks"
-        ],
-        "acceptance_hints": [
-          "Critério bloqueante release — exigir review + testes antes merge."
-        ],
-        "blocker_reason": "Fundação AWS (VPC, ECS, ALB, DNS/TLS) bloqueia deploy produção da API e validação E2E real."
-      }
-    },
-    {
       "id": "T-I01-004",
       "title": "ALB + target group health checks",
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I01 AWS ECS Fargate foundation",
@@ -694,7 +601,7 @@
         "Confidence": 0.6,
         "CoD": 12,
         "PERT (d)": 4.33,
-        "Baseline": "partial",
+        "Baseline": "done",
         "Release Blocker": "yes",
         "Blocker Motivo": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.",
         "Priority Rank": 9,
@@ -728,7 +635,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I04 PostgreSQL, Redis e migrations",
@@ -741,7 +648,7 @@
         "Confidence": 0.6,
         "CoD": 10,
         "PERT (d)": 4.0,
-        "Baseline": "partial",
+        "Baseline": "done",
         "Release Blocker": "yes",
         "Blocker Motivo": "Capacidade de dados em prod — bloqueia cutover e testes de carga reais.",
         "Priority Rank": 10,
@@ -774,7 +681,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I04 PostgreSQL, Redis e migrations",
@@ -787,7 +694,7 @@
         "Confidence": 0.6,
         "CoD": 10,
         "PERT (d)": 4.0,
-        "Baseline": "partial",
+        "Baseline": "done",
         "Release Blocker": "yes",
         "Blocker Motivo": "Capacidade de dados em prod — bloqueia cutover e testes de carga reais.",
         "Priority Rank": 11,
@@ -1409,105 +1316,12 @@
       }
     },
     {
-      "id": "T-I01-005",
-      "title": "ECR repository e lifecycle",
-      "repository": "guardiao-familia-api",
-      "type": "draft_issue",
-      "fields": {
-        "Status": "Todo",
-        "Trilha": "infraestrutura",
-        "OKR": "O2",
-        "Epic": "E-I01 AWS ECS Fargate foundation",
-        "Sprint": 1,
-        "Story Points": 5,
-        "RICE Score": 3.6,
-        "WSJF": 2.4,
-        "Reach": 10,
-        "Impact": 3,
-        "Confidence": 0.6,
-        "CoD": 12,
-        "PERT (d)": 4.33,
-        "Baseline": "todo",
-        "Release Blocker": "yes",
-        "Blocker Motivo": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.",
-        "Priority Rank": 24,
-        "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** ECR repository e lifecycle\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `todo` · **Release blocker**\n**Motivo blocker:** Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
-      },
-      "labels": [
-        "infraestrutura",
-        "O2",
-        "E-I01"
-      ],
-      "commit_evidence": "",
-      "refinement": {
-        "context_summary": "**Objetivo:** ECR repository e lifecycle\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `todo` · **Release blocker**\n**Motivo blocker:** Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
-        "suggested_files": [
-          "guardiao-familia-api/infra/terraform",
-          "guardiao-familia-api/terraform/ecs",
-          "guardiao-familia-api/docker",
-          "guardiao-familia-api/docs/runbooks",
-          "guardiao-familia-api/terraform/modules"
-        ],
-        "acceptance_hints": [
-          "Critério bloqueante release — exigir review + testes antes merge."
-        ],
-        "blocker_reason": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável."
-      }
-    },
-    {
-      "id": "T-I01-006",
-      "title": "Service autoscaling CPU/mem",
-      "repository": "guardiao-familia-api",
-      "type": "draft_issue",
-      "fields": {
-        "Status": "Todo",
-        "Trilha": "infraestrutura",
-        "OKR": "O2",
-        "Epic": "E-I01 AWS ECS Fargate foundation",
-        "Sprint": 1,
-        "Story Points": 5,
-        "RICE Score": 3.6,
-        "WSJF": 2.4,
-        "Reach": 10,
-        "Impact": 3,
-        "Confidence": 0.6,
-        "CoD": 12,
-        "PERT (d)": 4.33,
-        "Baseline": "todo",
-        "Release Blocker": "yes",
-        "Blocker Motivo": "Fundação AWS (VPC, ECS, ALB, DNS/TLS) bloqueia deploy produção da API e validação E2E real.",
-        "Priority Rank": 25,
-        "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Service autoscaling CPU/mem\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `todo` · **Release blocker**\n**Motivo blocker:** Fundação AWS (VPC, ECS, ALB, DNS/TLS) bloqueia deploy produção da API e validação E2E real.\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
-      },
-      "labels": [
-        "infraestrutura",
-        "O2",
-        "E-I01"
-      ],
-      "commit_evidence": "",
-      "refinement": {
-        "context_summary": "**Objetivo:** Service autoscaling CPU/mem\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `todo` · **Release blocker**\n**Motivo blocker:** Fundação AWS (VPC, ECS, ALB, DNS/TLS) bloqueia deploy produção da API e validação E2E real.\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
-        "suggested_files": [
-          "guardiao-familia-api/infra/terraform",
-          "guardiao-familia-api/terraform/ecs",
-          "guardiao-familia-api/docker",
-          "guardiao-familia-api/docs/runbooks"
-        ],
-        "acceptance_hints": [
-          "Critério bloqueante release — exigir review + testes antes merge."
-        ],
-        "blocker_reason": "Fundação AWS (VPC, ECS, ALB, DNS/TLS) bloqueia deploy produção da API e validação E2E real."
-      }
-    },
-    {
       "id": "T-I01-007",
       "title": "Secrets Manager env injection",
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I01 AWS ECS Fargate foundation",
@@ -1520,7 +1334,7 @@
         "Confidence": 0.6,
         "CoD": 12,
         "PERT (d)": 4.33,
-        "Baseline": "todo",
+        "Baseline": "done",
         "Release Blocker": "yes",
         "Blocker Motivo": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.",
         "Priority Rank": 26,
@@ -1549,59 +1363,12 @@
       }
     },
     {
-      "id": "T-I01-008",
-      "title": "Route53 DNS api.guardiaofamilia",
-      "repository": "guardiao-familia-api",
-      "type": "draft_issue",
-      "fields": {
-        "Status": "Todo",
-        "Trilha": "infraestrutura",
-        "OKR": "O2",
-        "Epic": "E-I01 AWS ECS Fargate foundation",
-        "Sprint": 1,
-        "Story Points": 5,
-        "RICE Score": 3.6,
-        "WSJF": 2.4,
-        "Reach": 10,
-        "Impact": 3,
-        "Confidence": 0.6,
-        "CoD": 12,
-        "PERT (d)": 4.33,
-        "Baseline": "todo",
-        "Release Blocker": "yes",
-        "Blocker Motivo": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.",
-        "Priority Rank": 27,
-        "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Route53 DNS api.guardiaofamilia\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `todo` · **Release blocker**\n**Motivo blocker:** Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
-      },
-      "labels": [
-        "infraestrutura",
-        "O2",
-        "E-I01"
-      ],
-      "commit_evidence": "",
-      "refinement": {
-        "context_summary": "**Objetivo:** Route53 DNS api.guardiaofamilia\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `todo` · **Release blocker**\n**Motivo blocker:** Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
-        "suggested_files": [
-          "guardiao-familia-api/infra/terraform",
-          "guardiao-familia-api/terraform/ecs",
-          "guardiao-familia-api/docker",
-          "guardiao-familia-api/docs/runbooks",
-          "guardiao-familia-api/terraform/modules"
-        ],
-        "acceptance_hints": [
-          "Critério bloqueante release — exigir review + testes antes merge."
-        ],
-        "blocker_reason": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável."
-      }
-    },
-    {
       "id": "T-I01-009",
       "title": "ACM cert TLS",
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I01 AWS ECS Fargate foundation",
@@ -1614,7 +1381,7 @@
         "Confidence": 0.6,
         "CoD": 12,
         "PERT (d)": 4.33,
-        "Baseline": "todo",
+        "Baseline": "done",
         "Release Blocker": "yes",
         "Blocker Motivo": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.",
         "Priority Rank": 28,
@@ -1637,56 +1404,6 @@
           "guardiao-familia-api/terraform/modules"
         ],
         "acceptance_hints": [
-          "Critério bloqueante release — exigir review + testes antes merge."
-        ],
-        "blocker_reason": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável."
-      }
-    },
-    {
-      "id": "T-I01-010",
-      "title": "Documentar runbook deploy ECS",
-      "repository": "guardiao-familia-api",
-      "type": "draft_issue",
-      "fields": {
-        "Status": "Todo",
-        "Trilha": "infraestrutura",
-        "OKR": "O2",
-        "Epic": "E-I01 AWS ECS Fargate foundation",
-        "Sprint": 1,
-        "Story Points": 5,
-        "RICE Score": 3.6,
-        "WSJF": 2.4,
-        "Reach": 10,
-        "Impact": 3,
-        "Confidence": 0.6,
-        "CoD": 12,
-        "PERT (d)": 4.33,
-        "Baseline": "todo",
-        "Release Blocker": "yes",
-        "Blocker Motivo": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.",
-        "Priority Rank": 29,
-        "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Documentar runbook deploy ECS\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `todo` · **Release blocker**\n**Motivo blocker:** Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
-      },
-      "labels": [
-        "infraestrutura",
-        "O2",
-        "E-I01"
-      ],
-      "commit_evidence": "",
-      "refinement": {
-        "context_summary": "**Objetivo:** Documentar runbook deploy ECS\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `todo` · **Release blocker**\n**Motivo blocker:** Componente crítico da fundação AWS — sem ele não há ambiente prod confiável.\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
-        "suggested_files": [
-          "guardiao-familia-api/infra/terraform",
-          "guardiao-familia-api/terraform/ecs",
-          "guardiao-familia-api/docker",
-          "guardiao-familia-api/docs/runbooks",
-          "guardiao-familia-api/terraform/modules",
-          "guardiao-familia-api/.github/workflows",
-          "guardiao-familia-api/scripts/ci"
-        ],
-        "acceptance_hints": [
-          "Entregável em markdown no repo; linkar no PR.",
           "Critério bloqueante release — exigir review + testes antes merge."
         ],
         "blocker_reason": "Componente crítico da fundação AWS — sem ele não há ambiente prod confiável."
@@ -1880,48 +1597,49 @@
     },
     {
       "id": "T-I04-005",
-      "title": "Migration strategy zero-downtime",
+      "title": "Migration strategy zero-downtime (RDS)",
       "repository": "guardiao-familia-api",
-      "type": "draft_issue",
+      "type": "Issue",
       "fields": {
         "Status": "Todo",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I04 PostgreSQL, Redis e migrations",
-        "Sprint": 2,
+        "Sprint": 6,
         "Story Points": 5,
-        "RICE Score": 3.24,
+        "RICE Score": 2.52,
         "WSJF": 2.0,
         "Reach": 9,
-        "Impact": 3,
-        "Confidence": 0.6,
+        "Impact": 2,
+        "Confidence": 0.7,
         "CoD": 10,
-        "PERT (d)": 4.0,
+        "PERT (d)": 2.5,
         "Baseline": "todo",
         "Release Blocker": "yes",
-        "Blocker Motivo": "Capacidade de dados em prod — bloqueia cutover e testes de carga reais.",
-        "Priority Rank": 34,
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 13,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Migration strategy zero-downtime\n**Épico:** E-I04 PostgreSQL, Redis e migrations · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `todo` · **Release blocker**\n**Motivo blocker:** Capacidade de dados em prod — bloqueia cutover e testes de carga reais.\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
+        "Refinamento": "Dados compartilhados EC2/Fargate durante cutover",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LB5M"
       },
       "labels": [
         "infraestrutura",
         "O2",
-        "E-I04"
+        "E-I04",
+        "agent:database",
+        "agent:cloud-infra"
       ],
       "commit_evidence": "",
       "refinement": {
-        "context_summary": "**Objetivo:** Migration strategy zero-downtime\n**Épico:** E-I04 PostgreSQL, Redis e migrations · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `todo` · **Release blocker**\n**Motivo blocker:** Capacidade de dados em prod — bloqueia cutover e testes de carga reais.\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
+        "context_summary": "Dados compartilhados EC2/Fargate durante cutover",
         "suggested_files": [
-          "guardiao-familia-api/src/migrations",
-          "guardiao-familia-api/src/database",
-          "guardiao-familia-api/prisma",
-          "guardiao-familia-api/docker-compose.yml"
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
         ],
         "acceptance_hints": [
-          "Critério bloqueante release — exigir review + testes antes merge."
-        ],
-        "blocker_reason": "Capacidade de dados em prod — bloqueia cutover e testes de carga reais."
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
       }
     },
     {
@@ -2840,56 +2558,6 @@
       }
     },
     {
-      "id": "T-I02-001",
-      "title": "Pipeline API build test deploy",
-      "repository": "guardiao-familia-api",
-      "type": "draft_issue",
-      "fields": {
-        "Status": "Todo",
-        "Trilha": "infraestrutura",
-        "OKR": "O2",
-        "Epic": "E-I02 CI/CD multi-repo",
-        "Sprint": 2,
-        "Story Points": 3,
-        "RICE Score": 6.0,
-        "WSJF": 2.67,
-        "Reach": 9,
-        "Impact": 2.5,
-        "Confidence": 0.8,
-        "CoD": 8,
-        "PERT (d)": 1.58,
-        "Baseline": "partial",
-        "Release Blocker": "no",
-        "Blocker Motivo": "",
-        "Priority Rank": 54,
-        "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Pipeline API build test deploy\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `partial`\n**Evidência código:** commit `5821a0a` — revisar diff como ponto de partida.\n**Refinamento:** implementação parcial existente — completar gaps e testes."
-      },
-      "labels": [
-        "infraestrutura",
-        "O2",
-        "E-I02"
-      ],
-      "commit_evidence": "5821a0a",
-      "refinement": {
-        "context_summary": "**Objetivo:** Pipeline API build test deploy\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `partial`\n**Evidência código:** commit `5821a0a` — revisar diff como ponto de partida.\n**Refinamento:** implementação parcial existente — completar gaps e testes.",
-        "suggested_files": [
-          "guardiao-familia-api/.github/workflows",
-          "guardiao-familia-api/scripts/deploy",
-          "guardiao-familia-api/eas.json",
-          "guardiao-familia-api/scripts/ci",
-          "guardiao-familia-api/test",
-          "guardiao-familia-api/tests",
-          "guardiao-familia-api/__tests__",
-          "guardiao-familia-api/e2e"
-        ],
-        "acceptance_hints": [
-          "PR com estrategia, arquivos alterados e duvidas (template 10-agents)."
-        ],
-        "blocker_reason": ""
-      }
-    },
-    {
       "id": "T-I02-006",
       "title": "EAS build child production",
       "repository": "guardiao-familia-api",
@@ -3765,7 +3433,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I05 Segurança, secrets e WAF",
@@ -3778,7 +3446,7 @@
         "Confidence": 0.6,
         "CoD": 9,
         "PERT (d)": 3.17,
-        "Baseline": "partial",
+        "Baseline": "done",
         "Release Blocker": "no",
         "Blocker Motivo": "",
         "Priority Rank": 74,
@@ -4752,56 +4420,6 @@
       }
     },
     {
-      "id": "T-I02-010",
-      "title": "Smoke test pós-deploy API",
-      "repository": "guardiao-familia-api",
-      "type": "draft_issue",
-      "fields": {
-        "Status": "Todo",
-        "Trilha": "infraestrutura",
-        "OKR": "O2",
-        "Epic": "E-I02 CI/CD multi-repo",
-        "Sprint": 2,
-        "Story Points": 3,
-        "RICE Score": 6.0,
-        "WSJF": 2.67,
-        "Reach": 9,
-        "Impact": 2.5,
-        "Confidence": 0.8,
-        "CoD": 8,
-        "PERT (d)": 1.58,
-        "Baseline": "todo",
-        "Release Blocker": "no",
-        "Blocker Motivo": "",
-        "Priority Rank": 95,
-        "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Smoke test pós-deploy API\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
-      },
-      "labels": [
-        "infraestrutura",
-        "O2",
-        "E-I02"
-      ],
-      "commit_evidence": "",
-      "refinement": {
-        "context_summary": "**Objetivo:** Smoke test pós-deploy API\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
-        "suggested_files": [
-          "guardiao-familia-api/.github/workflows",
-          "guardiao-familia-api/scripts/deploy",
-          "guardiao-familia-api/eas.json",
-          "guardiao-familia-api/scripts/ci",
-          "guardiao-familia-api/test",
-          "guardiao-familia-api/tests",
-          "guardiao-familia-api/__tests__",
-          "guardiao-familia-api/e2e"
-        ],
-        "acceptance_hints": [
-          "PR com estrategia, arquivos alterados e duvidas (template 10-agents)."
-        ],
-        "blocker_reason": ""
-      }
-    },
-    {
       "id": "T-S05-002",
       "title": "Beta fechado 100 famílias",
       "repository": "guardiao-familia-api",
@@ -5184,51 +4802,49 @@
     },
     {
       "id": "T-I06-005",
-      "title": "Load test staging 1k famílias",
+      "title": "Load test staging 1k famílias (pós-Fargate)",
       "repository": "guardiao-familia-api",
-      "type": "draft_issue",
+      "type": "Issue",
       "fields": {
         "Status": "Todo",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I06 Ambientes staging e produção",
-        "Sprint": 12,
+        "Sprint": 8,
         "Story Points": 5,
-        "RICE Score": 3.9,
-        "WSJF": 2.2,
-        "Reach": 10,
-        "Impact": 3,
+        "RICE Score": 2.08,
+        "WSJF": 1.8,
+        "Reach": 8,
+        "Impact": 2,
         "Confidence": 0.65,
-        "CoD": 11,
-        "PERT (d)": 3.0,
+        "CoD": 9,
+        "PERT (d)": 2.5,
         "Baseline": "todo",
-        "Release Blocker": "no",
-        "Blocker Motivo": "",
-        "Priority Rank": 104,
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 20,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Load test staging 1k famílias\n**Épico:** E-I06 Ambientes staging e produção · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 12** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
+        "Refinamento": "Load test staging 1k famílias (pós-Fargate)",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LCfs"
       },
       "labels": [
         "infraestrutura",
         "O2",
-        "E-I06"
+        "E-I06",
+        "agent:qa-gate",
+        "agent:devops-cicd"
       ],
       "commit_evidence": "",
       "refinement": {
-        "context_summary": "**Objetivo:** Load test staging 1k famílias\n**Épico:** E-I06 Ambientes staging e produção · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 12** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
+        "context_summary": "",
         "suggested_files": [
-          "guardiao-familia-api/infra/terraform/environments",
-          "guardiao-familia-api/docs/runbooks",
-          "guardiao-familia-api/.env.example",
-          "guardiao-familia-api/test",
-          "guardiao-familia-api/tests",
-          "guardiao-familia-api/__tests__",
-          "guardiao-familia-api/e2e"
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
         ],
         "acceptance_hints": [
-          "PR com estrategia, arquivos alterados e duvidas (template 10-agents)."
-        ],
-        "blocker_reason": ""
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
       }
     },
     {
@@ -5284,13 +4900,13 @@
       "id": "T-I03-004",
       "title": "Alertas PagerDuty/on-call",
       "repository": "guardiao-familia-api",
-      "type": "draft_issue",
+      "type": "Issue",
       "fields": {
         "Status": "Todo",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I03 Observabilidade e alertas",
-        "Sprint": 3,
+        "Sprint": 7,
         "Story Points": 3,
         "RICE Score": 3.47,
         "WSJF": 2.33,
@@ -5298,79 +4914,78 @@
         "Impact": 2,
         "Confidence": 0.65,
         "CoD": 7,
-        "PERT (d)": 2.17,
+        "PERT (d)": 1.5,
         "Baseline": "todo",
         "Release Blocker": "no",
         "Blocker Motivo": "",
-        "Priority Rank": 106,
+        "Priority Rank": 23,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Alertas PagerDuty/on-call\n**Épico:** E-I03 Observabilidade e alertas · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 3** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
+        "Refinamento": "Alertas PagerDuty/on-call",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LCsI"
       },
       "labels": [
         "infraestrutura",
         "O2",
-        "E-I03"
+        "E-I03",
+        "agent:devops-cicd"
       ],
       "commit_evidence": "",
       "refinement": {
-        "context_summary": "**Objetivo:** Alertas PagerDuty/on-call\n**Épico:** E-I03 Observabilidade e alertas · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 3** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
+        "context_summary": "",
         "suggested_files": [
-          "guardiao-familia-api/src/monitoring",
-          "guardiao-familia-api/src/metrics",
-          "guardiao-familia-api/sentry.config",
-          "guardiao-familia-api/.github/workflows",
-          "guardiao-familia-api/sentry.config.js"
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
         ],
         "acceptance_hints": [
-          "PR com estrategia, arquivos alterados e duvidas (template 10-agents)."
-        ],
-        "blocker_reason": ""
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
       }
     },
     {
       "id": "T-I03-005",
-      "title": "Tracing OpenTelemetry API",
+      "title": "Tracing OpenTelemetry API (ECS sidecar/collector)",
       "repository": "guardiao-familia-api",
-      "type": "draft_issue",
+      "type": "Issue",
       "fields": {
         "Status": "Todo",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I03 Observabilidade e alertas",
-        "Sprint": 3,
-        "Story Points": 3,
-        "RICE Score": 3.47,
-        "WSJF": 2.33,
+        "Sprint": 8,
+        "Story Points": 5,
+        "RICE Score": 1.92,
+        "WSJF": 1.4,
         "Reach": 8,
         "Impact": 2,
-        "Confidence": 0.65,
+        "Confidence": 0.6,
         "CoD": 7,
-        "PERT (d)": 2.17,
+        "PERT (d)": 2.5,
         "Baseline": "todo",
         "Release Blocker": "no",
         "Blocker Motivo": "",
-        "Priority Rank": 107,
+        "Priority Rank": 26,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Tracing OpenTelemetry API\n**Épico:** E-I03 Observabilidade e alertas · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 3** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
+        "Refinamento": "Tracing OpenTelemetry API (ECS sidecar/collector)",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LC4I"
       },
       "labels": [
         "infraestrutura",
         "O2",
-        "E-I03"
+        "E-I03",
+        "agent:devops-cicd"
       ],
       "commit_evidence": "",
       "refinement": {
-        "context_summary": "**Objetivo:** Tracing OpenTelemetry API\n**Épico:** E-I03 Observabilidade e alertas · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 3** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
+        "context_summary": "",
         "suggested_files": [
-          "guardiao-familia-api/src/monitoring",
-          "guardiao-familia-api/src/metrics",
-          "guardiao-familia-api/sentry.config",
-          "guardiao-familia-api/.github/workflows"
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
         ],
         "acceptance_hints": [
-          "PR com estrategia, arquivos alterados e duvidas (template 10-agents)."
-        ],
-        "blocker_reason": ""
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
       }
     },
     {
@@ -5748,59 +5363,12 @@
       }
     },
     {
-      "id": "T-I07-002",
-      "title": "Infra: Fargate Spot mix staging",
-      "repository": "guardiao-familia-api",
-      "type": "draft_issue",
-      "fields": {
-        "Status": "Todo",
-        "Trilha": "infraestrutura",
-        "OKR": "O2",
-        "Epic": "E-I01 AWS ECS Fargate foundation",
-        "Sprint": 1,
-        "Story Points": 3,
-        "RICE Score": 2.8,
-        "WSJF": 2.0,
-        "Reach": 7,
-        "Impact": 2,
-        "Confidence": 0.6,
-        "CoD": 6,
-        "PERT (d)": 1.58,
-        "Baseline": "todo",
-        "Release Blocker": "no",
-        "Blocker Motivo": "",
-        "Priority Rank": 116,
-        "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Infra: Fargate Spot mix staging\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
-      },
-      "labels": [
-        "infraestrutura",
-        "O2",
-        "E-I01"
-      ],
-      "commit_evidence": "",
-      "refinement": {
-        "context_summary": "**Objetivo:** Infra: Fargate Spot mix staging\n**Épico:** E-I01 AWS ECS Fargate foundation · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 1** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
-        "suggested_files": [
-          "guardiao-familia-api/infra/terraform",
-          "guardiao-familia-api/terraform/ecs",
-          "guardiao-familia-api/docker",
-          "guardiao-familia-api/docs/runbooks",
-          "guardiao-familia-api/terraform/modules"
-        ],
-        "acceptance_hints": [
-          "PR com estrategia, arquivos alterados e duvidas (template 10-agents)."
-        ],
-        "blocker_reason": ""
-      }
-    },
-    {
       "id": "T-I07-003",
       "title": "Infra: OIDC GitHub Actions AWS role",
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I02 CI/CD multi-repo",
@@ -5813,7 +5381,7 @@
         "Confidence": 0.6,
         "CoD": 6,
         "PERT (d)": 1.58,
-        "Baseline": "todo",
+        "Baseline": "done",
         "Release Blocker": "no",
         "Blocker Motivo": "",
         "Priority Rank": 117,
@@ -5842,15 +5410,15 @@
     },
     {
       "id": "T-I07-004",
-      "title": "Infra: Branch protection rules 6 repos",
+      "title": "Branch protection rules 6 repos",
       "repository": "guardiao-familia-api",
-      "type": "draft_issue",
+      "type": "Issue",
       "fields": {
         "Status": "Todo",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I02 CI/CD multi-repo",
-        "Sprint": 2,
+        "Sprint": 6,
         "Story Points": 3,
         "RICE Score": 2.8,
         "WSJF": 2.0,
@@ -5858,44 +5426,45 @@
         "Impact": 2,
         "Confidence": 0.6,
         "CoD": 6,
-        "PERT (d)": 1.58,
+        "PERT (d)": 1.5,
         "Baseline": "todo",
         "Release Blocker": "no",
         "Blocker Motivo": "",
-        "Priority Rank": 118,
+        "Priority Rank": 24,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Infra: Branch protection rules 6 repos\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
+        "Refinamento": "Processo org-wide; independente compute",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LCvU"
       },
       "labels": [
         "infraestrutura",
         "O2",
-        "E-I02"
+        "E-I02",
+        "agent:devops-cicd"
       ],
       "commit_evidence": "",
       "refinement": {
-        "context_summary": "**Objetivo:** Infra: Branch protection rules 6 repos\n**Épico:** E-I02 CI/CD multi-repo · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 2** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
+        "context_summary": "Processo org-wide; independente compute",
         "suggested_files": [
-          "guardiao-familia-api/.github/workflows",
-          "guardiao-familia-api/scripts/deploy",
-          "guardiao-familia-api/eas.json"
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
         ],
         "acceptance_hints": [
-          "PR com estrategia, arquivos alterados e duvidas (template 10-agents)."
-        ],
-        "blocker_reason": ""
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
       }
     },
     {
       "id": "T-I07-005",
-      "title": "Infra: Log retention 90d compliance",
+      "title": "Log retention 90d compliance CloudWatch",
       "repository": "guardiao-familia-api",
-      "type": "draft_issue",
+      "type": "Issue",
       "fields": {
         "Status": "Todo",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I03 Observabilidade e alertas",
-        "Sprint": 3,
+        "Sprint": 6,
         "Story Points": 3,
         "RICE Score": 2.8,
         "WSJF": 2.0,
@@ -5903,35 +5472,32 @@
         "Impact": 2,
         "Confidence": 0.6,
         "CoD": 6,
-        "PERT (d)": 1.58,
+        "PERT (d)": 1.5,
         "Baseline": "todo",
         "Release Blocker": "no",
         "Blocker Motivo": "",
-        "Priority Rank": 119,
+        "Priority Rank": 25,
         "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Infra: Log retention 90d compliance\n**Épico:** E-I03 Observabilidade e alertas · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 3** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
+        "Refinamento": "Log retention 90d compliance CloudWatch",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LCz8"
       },
       "labels": [
         "infraestrutura",
         "O2",
-        "E-I03"
+        "E-I03",
+        "agent:devops-cicd"
       ],
       "commit_evidence": "",
       "refinement": {
-        "context_summary": "**Objetivo:** Infra: Log retention 90d compliance\n**Épico:** E-I03 Observabilidade e alertas · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 3** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
+        "context_summary": "",
         "suggested_files": [
-          "guardiao-familia-api/src/monitoring",
-          "guardiao-familia-api/src/metrics",
-          "guardiao-familia-api/sentry.config",
-          "guardiao-familia-api/.github/workflows",
-          "guardiao-familia-api/src/compliance",
-          "guardiao-familia-api/docs/lgpd",
-          "guardiao-familia-api/privacy"
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
         ],
         "acceptance_hints": [
-          "PR com estrategia, arquivos alterados e duvidas (template 10-agents)."
-        ],
-        "blocker_reason": ""
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
       }
     },
     {
@@ -6018,55 +5584,6 @@
           "guardiao-familia-api/infra/terraform/waf",
           "guardiao-familia-api/infra/secrets",
           "guardiao-familia-api/src/config"
-        ],
-        "acceptance_hints": [
-          "PR com estrategia, arquivos alterados e duvidas (template 10-agents)."
-        ],
-        "blocker_reason": ""
-      }
-    },
-    {
-      "id": "T-I07-008",
-      "title": "Infra: Blue/green deploy ECS eval",
-      "repository": "guardiao-familia-api",
-      "type": "draft_issue",
-      "fields": {
-        "Status": "Todo",
-        "Trilha": "infraestrutura",
-        "OKR": "O2",
-        "Epic": "E-I06 Ambientes staging e produção",
-        "Sprint": 12,
-        "Story Points": 3,
-        "RICE Score": 2.8,
-        "WSJF": 2.0,
-        "Reach": 7,
-        "Impact": 2,
-        "Confidence": 0.6,
-        "CoD": 6,
-        "PERT (d)": 1.58,
-        "Baseline": "todo",
-        "Release Blocker": "no",
-        "Blocker Motivo": "",
-        "Priority Rank": 122,
-        "Repo alvo": "guardiao-familia-api",
-        "Refinamento": "**Objetivo:** Infra: Blue/green deploy ECS eval\n**Épico:** E-I06 Ambientes staging e produção · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 12** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks."
-      },
-      "labels": [
-        "infraestrutura",
-        "O2",
-        "E-I06"
-      ],
-      "commit_evidence": "",
-      "refinement": {
-        "context_summary": "**Objetivo:** Infra: Blue/green deploy ECS eval\n**Épico:** E-I06 Ambientes staging e produção · **Trilha:** infraestrutura · **OKR O2** — Fundação produção: infra AWS, compliance, stores e operação.\n**Sprint 12** · Repo `guardiao-familia-api` · Baseline `todo`\n**Refinamento:** AWS, CI/CD, banco, observabilidade — priorizar IaC e runbooks.",
-        "suggested_files": [
-          "guardiao-familia-api/infra/terraform/environments",
-          "guardiao-familia-api/docs/runbooks",
-          "guardiao-familia-api/.env.example",
-          "guardiao-familia-api/infra/terraform",
-          "guardiao-familia-api/terraform/modules",
-          "guardiao-familia-api/.github/workflows",
-          "guardiao-familia-api/scripts/ci"
         ],
         "acceptance_hints": [
           "PR com estrategia, arquivos alterados e duvidas (template 10-agents)."
@@ -10972,7 +10489,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I02 CI/CD multi-repo",
@@ -11019,7 +10536,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I02 CI/CD multi-repo",
@@ -11065,7 +10582,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I02 CI/CD multi-repo",
@@ -11112,7 +10629,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I02 CI/CD multi-repo",
@@ -11162,7 +10679,7 @@
       "repository": "guardiao-familia-api",
       "type": "draft_issue",
       "fields": {
-        "Status": "Todo",
+        "Status": "Done",
         "Trilha": "infraestrutura",
         "OKR": "O2",
         "Epic": "E-I02 CI/CD multi-repo",
@@ -13261,6 +12778,930 @@
           "H1 = Tranquilidade para sua familia",
           "screenshot Playwright",
           "agentes corretos por evento"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-003",
+      "title": "Terraform: ECR repository API + lifecycle policy",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I01 AWS ECS Fargate foundation",
+        "Sprint": 1,
+        "Story Points": 3,
+        "RICE Score": 6.0,
+        "WSJF": 3.67,
+        "Reach": 10,
+        "Impact": 2,
+        "Confidence": 0.9,
+        "CoD": 11,
+        "PERT (d)": 1.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 1,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "GHCR hoje; ECR exigido pelo deploy ECS nativo",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LA8I"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I01",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "GHCR hoje; ECR exigido pelo deploy ECS nativo",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-006",
+      "title": "Terraform: Secrets Manager → ECS task secrets/env",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I01 AWS ECS Fargate foundation",
+        "Sprint": 2,
+        "Story Points": 3,
+        "RICE Score": 5.67,
+        "WSJF": 3.33,
+        "Reach": 10,
+        "Impact": 2,
+        "Confidence": 0.85,
+        "CoD": 10,
+        "PERT (d)": 1.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 2,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Migrar injeção do user-data EC2",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LBBw"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I01",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Migrar injeção do user-data EC2",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-009",
+      "title": "Terraform: Route53 records + ACM validation as code",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I01 AWS ECS Fargate foundation",
+        "Sprint": 4,
+        "Story Points": 3,
+        "RICE Score": 5.1,
+        "WSJF": 3.0,
+        "Reach": 9,
+        "Impact": 2,
+        "Confidence": 0.85,
+        "CoD": 9,
+        "PERT (d)": 1.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 3,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Substitui T-I01-008 manual DNS",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LBH4"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I01",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Substitui T-I01-008 manual DNS",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-019",
+      "title": "Rollback procedure ECS documentado",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I06 Ambientes staging e produção",
+        "Sprint": 7,
+        "Story Points": 3,
+        "RICE Score": 5.1,
+        "WSJF": 3.0,
+        "Reach": 9,
+        "Impact": 2,
+        "Confidence": 0.85,
+        "CoD": 9,
+        "PERT (d)": 1.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 4,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Substitui T-I06-004",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LBNQ"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I06",
+        "agent:devops-cicd"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Substitui T-I06-004",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-010",
+      "title": "Documentar runbook operação ECS/Fargate",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I01 AWS ECS Fargate foundation",
+        "Sprint": 5,
+        "Story Points": 3,
+        "RICE Score": 4.8,
+        "WSJF": 2.67,
+        "Reach": 8,
+        "Impact": 2,
+        "Confidence": 0.9,
+        "CoD": 8,
+        "PERT (d)": 1.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 5,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Substitui T-I01-010 (runbook EC2/SSM)",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LBTU"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I01",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Substitui T-I01-010 (runbook EC2/SSM)",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-001",
+      "title": "Terraform: ECS cluster Fargate + capacity providers",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I01 AWS ECS Fargate foundation",
+        "Sprint": 1,
+        "Story Points": 5,
+        "RICE Score": 4.8,
+        "WSJF": 2.6,
+        "Reach": 10,
+        "Impact": 3,
+        "Confidence": 0.8,
+        "CoD": 13,
+        "PERT (d)": 2.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 6,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Base da migração; substitui stack EC2+Docker",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LBX8"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I01",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Base da migração; substitui stack EC2+Docker",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-012",
+      "title": "GitHub Actions OIDC: ECR push + ecs:UpdateService (prod gate)",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I02 CI/CD multi-repo",
+        "Sprint": 4,
+        "Story Points": 5,
+        "RICE Score": 5.1,
+        "WSJF": 2.4,
+        "Reach": 10,
+        "Impact": 3,
+        "Confidence": 0.85,
+        "CoD": 12,
+        "PERT (d)": 2.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 7,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Estende OIDC existente; sem keys estáticas prod",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LBdg"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I02",
+        "agent:devops-cicd"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Estende OIDC existente; sem keys estáticas prod",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-004",
+      "title": "Terraform: ALB target groups → ECS (desacoplar EC2)",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I01 AWS ECS Fargate foundation",
+        "Sprint": 3,
+        "Story Points": 5,
+        "RICE Score": 4.8,
+        "WSJF": 2.4,
+        "Reach": 10,
+        "Impact": 3,
+        "Confidence": 0.8,
+        "CoD": 12,
+        "PERT (d)": 2.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 8,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Reutiliza ALB existente; retarget attachments",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LBiE"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I01",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Reutiliza ALB existente; retarget attachments",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-018",
+      "title": "Cutover checklist EC2 → Fargate produção",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I06 Ambientes staging e produção",
+        "Sprint": 7,
+        "Story Points": 5,
+        "RICE Score": 4.2,
+        "WSJF": 2.6,
+        "Reach": 10,
+        "Impact": 3,
+        "Confidence": 0.7,
+        "CoD": 13,
+        "PERT (d)": 2.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 9,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Substitui T-I06-002; gate humano antes apply prod",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LBmg"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I06",
+        "agent:cloud-infra",
+        "agent:devops-cicd"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Substitui T-I06-002; gate humano antes apply prod",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-005",
+      "title": "Terraform: IAM execution/task roles least privilege ECS",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I05 Segurança, secrets e WAF",
+        "Sprint": 2,
+        "Story Points": 5,
+        "RICE Score": 3.2,
+        "WSJF": 2.2,
+        "Reach": 10,
+        "Impact": 2,
+        "Confidence": 0.8,
+        "CoD": 11,
+        "PERT (d)": 2.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 10,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Substitui T-I05-003 (ECS tasks)",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LBrQ"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I05",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Substitui T-I05-003 (ECS tasks)",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-007",
+      "title": "Terraform: Application Auto Scaling ECS CPU/mem",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I01 AWS ECS Fargate foundation",
+        "Sprint": 3,
+        "Story Points": 5,
+        "RICE Score": 2.88,
+        "WSJF": 2.0,
+        "Reach": 9,
+        "Impact": 2,
+        "Confidence": 0.8,
+        "CoD": 10,
+        "PERT (d)": 2.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 11,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Substitui T-I01-006 e auto_scaler EC2-centric",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LBwA"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I01",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Substitui T-I01-006 e auto_scaler EC2-centric",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-013",
+      "title": "Smoke test pós-deploy API Fargate (workflow)",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I02 CI/CD multi-repo",
+        "Sprint": 4,
+        "Story Points": 5,
+        "RICE Score": 2.88,
+        "WSJF": 2.0,
+        "Reach": 9,
+        "Impact": 2,
+        "Confidence": 0.8,
+        "CoD": 10,
+        "PERT (d)": 2.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 12,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Substitui T-I02-010",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LBz4"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I02",
+        "agent:devops-cicd",
+        "agent:qa-gate"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Substitui T-I02-010",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-014",
+      "title": "Observabilidade ECS: log drivers + Container Insights",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I03 Observabilidade e alertas",
+        "Sprint": 5,
+        "Story Points": 5,
+        "RICE Score": 2.7,
+        "WSJF": 1.8,
+        "Reach": 9,
+        "Impact": 2,
+        "Confidence": 0.75,
+        "CoD": 9,
+        "PERT (d)": 2.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 14,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Complementa T-I03-001 para tasks Fargate",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LB9Y"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I03",
+        "agent:devops-cicd"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Complementa T-I03-001 para tasks Fargate",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-002",
+      "title": "Terraform: task definition + service API Fargate",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I01 AWS ECS Fargate foundation",
+        "Sprint": 2,
+        "Story Points": 8,
+        "RICE Score": 2.81,
+        "WSJF": 1.62,
+        "Reach": 10,
+        "Impact": 3,
+        "Confidence": 0.75,
+        "CoD": 13,
+        "PERT (d)": 4.0,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 15,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Substitui T-I01-002/T-I01-003",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LCCo"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I01",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Substitui T-I01-002/T-I01-003",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-011",
+      "title": "GitHub Actions: build API → push ECR → deploy ECS staging",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I02 CI/CD multi-repo",
+        "Sprint": 3,
+        "Story Points": 8,
+        "RICE Score": 2.81,
+        "WSJF": 1.62,
+        "Reach": 10,
+        "Impact": 3,
+        "Confidence": 0.75,
+        "CoD": 13,
+        "PERT (d)": 4.0,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 16,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Substitui pipeline SSM/EC2; T-I02-001",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LCHg"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I02",
+        "agent:devops-cicd",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Substitui pipeline SSM/EC2; T-I02-001",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-017",
+      "title": "Terraform: WAF v2 ALB OWASP rules",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I05 Segurança, secrets e WAF",
+        "Sprint": 5,
+        "Story Points": 5,
+        "RICE Score": 2.52,
+        "WSJF": 1.8,
+        "Reach": 9,
+        "Impact": 2,
+        "Confidence": 0.7,
+        "CoD": 9,
+        "PERT (d)": 2.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 17,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Roadmap onda 3 README; T-I05-001",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LCOI"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I05",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Roadmap onda 3 README; T-I05-001",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-008",
+      "title": "Terraform: environment staging mirror Fargate",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I06 Ambientes staging e produção",
+        "Sprint": 4,
+        "Story Points": 8,
+        "RICE Score": 2.62,
+        "WSJF": 1.5,
+        "Reach": 10,
+        "Impact": 3,
+        "Confidence": 0.7,
+        "CoD": 12,
+        "PERT (d)": 4.0,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 18,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Substitui T-I06-001; só prod/ hoje",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LCUU"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I06",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Substitui T-I06-001; só prod/ hoje",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-020",
+      "title": "Terraform: deprecar módulo EC2 pós-cutover",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I01 AWS ECS Fargate foundation",
+        "Sprint": 8,
+        "Story Points": 5,
+        "RICE Score": 2.4,
+        "WSJF": 1.6,
+        "Reach": 8,
+        "Impact": 2,
+        "Confidence": 0.75,
+        "CoD": 8,
+        "PERT (d)": 2.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 19,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Remove drift EC2 após cutover validado",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LCao"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I01",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Remove drift EC2 após cutover validado",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-016",
+      "title": "Terraform: Fargate Spot capacity provider (staging)",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I01 AWS ECS Fargate foundation",
+        "Sprint": 5,
+        "Story Points": 3,
+        "RICE Score": 1.63,
+        "WSJF": 2.0,
+        "Reach": 7,
+        "Impact": 1,
+        "Confidence": 0.7,
+        "CoD": 6,
+        "PERT (d)": 1.5,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 21,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Substitui T-I07-002",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LCkQ"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I01",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Substitui T-I07-002",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
+        ]
+      }
+    },
+    {
+      "id": "T-I08-015",
+      "title": "Deploy ECS: circuit breaker / blue-green eval",
+      "repository": "guardiao-familia-api",
+      "type": "Issue",
+      "fields": {
+        "Status": "Todo",
+        "Trilha": "infraestrutura",
+        "OKR": "O2",
+        "Epic": "E-I06 Ambientes staging e produção",
+        "Sprint": 6,
+        "Story Points": 8,
+        "RICE Score": 1.46,
+        "WSJF": 1.25,
+        "Reach": 9,
+        "Impact": 2,
+        "Confidence": 0.65,
+        "CoD": 10,
+        "PERT (d)": 4.0,
+        "Baseline": "todo",
+        "Release Blocker": "yes",
+        "Blocker Motivo": "Onda migração ECS Fargate (O2)",
+        "Priority Rank": 22,
+        "Repo alvo": "guardiao-familia-api",
+        "Refinamento": "Substitui T-I07-008",
+        "Project Item Id": "PVTI_lADOEDZbAM4Bg2rEzg4LCoU"
+      },
+      "labels": [
+        "infraestrutura",
+        "O2",
+        "E-I06",
+        "agent:devops-cicd",
+        "agent:cloud-infra"
+      ],
+      "commit_evidence": "",
+      "refinement": {
+        "context_summary": "Substitui T-I07-008",
+        "suggested_files": [
+          "guardiao-familia-api/infra/modules",
+          "guardiao-familia-api/infra/environments"
+        ],
+        "acceptance_hints": [
+          "Diff Terraform ou workflow revisável no PR",
+          "Sem terraform apply / deploy prod sem gate humano"
         ]
       }
     }

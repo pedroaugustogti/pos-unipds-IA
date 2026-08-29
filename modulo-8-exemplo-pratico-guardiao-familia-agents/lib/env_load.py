@@ -1,4 +1,4 @@
-"""Carrega `crew/.env` e herda LangSmith/LangChain dos outros módulos do monorepo."""
+"""Carrega `.env` do módulo 8 e herda LangSmith/LangChain dos outros módulos do monorepo."""
 
 from __future__ import annotations
 
@@ -61,6 +61,31 @@ def _apply_vars(data: dict[str, str], *, override: bool = False, only: set[str] 
             os.environ[key] = val
 
 
+def _alias_openrouter() -> None:
+    """OpenRouter é a fonte canônica; espelha aliases legados OPENAI_*."""
+    or_key = (os.environ.get("OPENROUTER_API_KEY") or "").strip()
+    oa_key = (os.environ.get("OPENAI_API_KEY") or "").strip()
+    if or_key and not oa_key:
+        os.environ["OPENAI_API_KEY"] = or_key
+    elif oa_key and not or_key:
+        os.environ["OPENROUTER_API_KEY"] = oa_key
+
+    or_base = (os.environ.get("OPENROUTER_BASE_URL") or "").strip()
+    oa_base = (
+        (os.environ.get("OPENAI_API_BASE") or "").strip()
+        or (os.environ.get("OPENAI_BASE_URL") or "").strip()
+    )
+    if or_base and not oa_base:
+        os.environ.setdefault("OPENAI_API_BASE", or_base)
+        os.environ.setdefault("OPENAI_BASE_URL", or_base)
+    elif oa_base and not or_base:
+        os.environ.setdefault("OPENROUTER_BASE_URL", oa_base)
+    elif not or_base and not oa_base:
+        os.environ.setdefault("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+        os.environ.setdefault("OPENAI_API_BASE", "https://openrouter.ai/api/v1")
+        os.environ.setdefault("OPENAI_BASE_URL", "https://openrouter.ai/api/v1")
+
+
 def _alias_langsmith_langchain() -> None:
     """LangChain aceita LANGCHAIN_API_KEY; outros módulos usam LANGSMITH_API_KEY."""
     ls = (os.environ.get("LANGSMITH_API_KEY") or "").strip()
@@ -121,20 +146,18 @@ def ensure_ssl_certs() -> Path | None:
 
 def load_dotenv(override: bool = False) -> Path | None:
     """
-    Lê chave=valor de crew/.env (preferido) ou .env na raiz do módulo.
+    Lê chave=valor de .env na raiz do módulo 8.
     Depois herda LANGSMITH_* / LANGCHAIN_* dos outros módulos se ainda vazias.
     Nao sobrescreve variaveis ja definidas, salvo override=True.
     """
     global _LOADED
-    candidates = (
-        MODULE_ROOT / "crew" / ".env",
-        MODULE_ROOT / ".env",
-    )
+    candidates = (MODULE_ROOT / ".env",)
     path = next((p for p in candidates if p.exists()), None)
     if path is not None:
         _apply_vars(_read_env_file(path), override=override)
 
     inherit_langsmith_from_monorepo(override=False)
+    _alias_openrouter()
     ensure_ssl_certs()
     _LOADED = True
     return path
@@ -143,3 +166,22 @@ def load_dotenv(override: bool = False) -> Path | None:
 def ensure_env() -> None:
     if not _LOADED:
         load_dotenv()
+    _ensure_python_path()
+    try:
+        from lib.paths import ensure_output_dirs
+
+        ensure_output_dirs()
+    except Exception:
+        pass
+
+
+def _ensure_python_path() -> None:
+    """MODULE_ROOT + agents/00-orchestration no sys.path (langgraph_app, guardiao_mcp, evals)."""
+    import sys
+
+    from lib.paths import MODULE_ROOT, ORCHESTRATION_DIR
+
+    for p in (MODULE_ROOT, ORCHESTRATION_DIR):
+        sp = str(p)
+        if sp not in sys.path:
+            sys.path.insert(0, sp)

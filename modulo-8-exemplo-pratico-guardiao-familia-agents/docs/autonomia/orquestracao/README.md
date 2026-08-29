@@ -2,7 +2,7 @@
 
 Visão completa do fluxo Guardião Família (módulo 8): **onde cada tecnologia entra**, papéis de agentes, modelos LLM, MCP, nós LangGraph e porta única do gateway.
 
-**Orquestração:** somente LangGraph. CrewAI removido (`crew/` = env + `output/` runtime).
+**Orquestração:** LangGraph em `agents/00-orchestration/`. Runtime: `agents/00-runtime/output/`.
 
 ## Abrir o relatório visual
 
@@ -45,7 +45,7 @@ Plugins usados no HTML (CDN, sem instalar no repo):
 
 ```powershell
 cd modulo-8-exemplo-pratico-guardiao-familia-agents
-python scripts/langgraph_run.py --task T-P05-006 --mode dry_run --from-zero
-python scripts/langsmith_eval.py
+python agents/00-orchestration/scripts/langgraph/langgraph_run.py --task T-P05-006 --mode dry_run --from-zero
+python agents/00-orchestration/scripts/langgraph/langsmith_eval.py
 python -m guardiao_mcp   # server MCP stdio (Cursor)
 ```

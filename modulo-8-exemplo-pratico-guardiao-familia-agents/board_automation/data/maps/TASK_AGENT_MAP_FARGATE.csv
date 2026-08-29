@@ -1,0 +1,27 @@
+id,title,agent_role,agent_role_secondary,track,repo,epic_id,sprint,priority_rank,effort_sp,rice,wsjf,status_baseline,release_blocker,match_reason,depends_on
+T-I08-003,Terraform: ECR repository API + lifecycle policy,cloud-infra,,infraestrutura,guardiao-familia-api,E-I01,1,1,3,6.0,3.67,todo,True,"fargate_wave,modules/ecr (novo)",
+T-I08-006,Terraform: Secrets Manager → ECS task secrets/env,cloud-infra,,infraestrutura,guardiao-familia-api,E-I01,2,2,3,5.67,3.33,todo,True,"fargate_wave,modules/ecs + kms_secrets",T-I08-005
+T-I08-009,Terraform: Route53 records + ACM validation as code,cloud-infra,,infraestrutura,guardiao-familia-api,E-I01,4,3,3,5.1,3.0,todo,True,"fargate_wave,modules/route53 (novo)",T-I08-004
+T-I08-019,Rollback procedure ECS documentado,devops-cicd,,infraestrutura,guardiao-familia-api,E-I06,7,4,3,5.1,3.0,todo,True,"fargate_wave,workflow",T-I08-015
+T-I08-010,Documentar runbook operação ECS/Fargate,cloud-infra,,infraestrutura,guardiao-familia-api,E-I01,5,5,3,4.8,2.67,todo,True,"fargate_wave,docs/infra",T-I08-002
+T-I08-001,Terraform: ECS cluster Fargate + capacity providers,cloud-infra,,infraestrutura,guardiao-familia-api,E-I01,1,6,5,4.8,2.6,todo,True,"fargate_wave,modules/ecs (novo)",
+T-I08-012,GitHub Actions OIDC: ECR push + ecs:UpdateService (prod gate),devops-cicd,,infraestrutura,guardiao-familia-api,E-I02,4,7,5,5.1,2.4,todo,True,"fargate_wave,workflow",T-I08-011
+T-I08-004,Terraform: ALB target groups → ECS (desacoplar EC2),cloud-infra,,infraestrutura,guardiao-familia-api,E-I01,3,8,5,4.8,2.4,todo,True,"fargate_wave,modules/alb + modules/ecs",T-I08-002
+T-I08-018,Cutover checklist EC2 → Fargate produção,cloud-infra,devops-cicd,infraestrutura,guardiao-familia-api,E-I06,7,9,5,4.2,2.6,todo,True,"fargate_wave,workflow","T-I08-012,T-I08-013"
+T-I08-005,Terraform: IAM execution/task roles least privilege ECS,cloud-infra,,infraestrutura,guardiao-familia-api,E-I05,2,10,5,3.2,2.2,todo,True,"fargate_wave,modules/ecs + iam",T-I08-002
+T-I08-007,Terraform: Application Auto Scaling ECS CPU/mem,cloud-infra,,infraestrutura,guardiao-familia-api,E-I01,3,11,5,2.88,2.0,todo,True,"fargate_wave,modules/ecs",T-I08-002
+T-I08-013,Smoke test pós-deploy API Fargate (workflow),devops-cicd,qa-gate,infraestrutura,guardiao-familia-api,E-I02,4,12,5,2.88,2.0,todo,True,"fargate_wave,workflow",T-I08-011
+T-I04-005,Migration strategy zero-downtime (RDS),database,cloud-infra,infraestrutura,guardiao-familia-api,E-I04,6,13,5,2.52,2.0,todo,True,"fargate_wave,workflow",
+T-I08-014,Observabilidade ECS: log drivers + Container Insights,devops-cicd,,infraestrutura,guardiao-familia-api,E-I03,5,14,5,2.7,1.8,todo,True,"fargate_wave,workflow",T-I08-002
+T-I08-002,Terraform: task definition + service API Fargate,cloud-infra,,infraestrutura,guardiao-familia-api,E-I01,2,15,8,2.81,1.62,todo,True,"fargate_wave,modules/ecs",T-I08-001
+T-I08-011,GitHub Actions: build API → push ECR → deploy ECS staging,devops-cicd,cloud-infra,infraestrutura,guardiao-familia-api,E-I02,3,16,8,2.81,1.62,todo,True,"fargate_wave,workflow","T-I08-003,T-I08-008"
+T-I08-017,Terraform: WAF v2 ALB OWASP rules,cloud-infra,,infraestrutura,guardiao-familia-api,E-I05,5,17,5,2.52,1.8,todo,True,"fargate_wave,modules/waf (novo)",T-I08-004
+T-I08-008,Terraform: environment staging mirror Fargate,cloud-infra,,infraestrutura,guardiao-familia-api,E-I06,4,18,8,2.62,1.5,todo,True,"fargate_wave,environments/staging (novo)","T-I08-001,T-I08-002"
+T-I08-020,Terraform: deprecar módulo EC2 pós-cutover,cloud-infra,,infraestrutura,guardiao-familia-api,E-I01,8,19,5,2.4,1.6,todo,True,"fargate_wave,modules/ec2 (remover)",T-I08-018
+T-I06-005,Load test staging 1k famílias (pós-Fargate),qa-gate,devops-cicd,infraestrutura,guardiao-familia-api,E-I06,8,20,5,2.08,1.8,todo,True,"fargate_wave,workflow","T-I08-008,T-I08-013"
+T-I08-016,Terraform: Fargate Spot capacity provider (staging),cloud-infra,,infraestrutura,guardiao-familia-api,E-I01,5,21,3,1.63,2.0,todo,True,"fargate_wave,modules/ecs",T-I08-008
+T-I08-015,Deploy ECS: circuit breaker / blue-green eval,devops-cicd,cloud-infra,infraestrutura,guardiao-familia-api,E-I06,6,22,8,1.46,1.25,todo,True,"fargate_wave,workflow",T-I08-012
+T-I03-004,Alertas PagerDuty/on-call,devops-cicd,,infraestrutura,guardiao-familia-api,E-I03,7,23,3,3.47,2.33,todo,False,"fargate_wave,workflow",T-I08-014
+T-I07-004,Branch protection rules 6 repos,devops-cicd,,infraestrutura,guardiao-familia-api,E-I02,6,24,3,2.8,2.0,todo,False,"fargate_wave,workflow",
+T-I07-005,Log retention 90d compliance CloudWatch,devops-cicd,,infraestrutura,guardiao-familia-api,E-I03,6,25,3,2.8,2.0,todo,False,"fargate_wave,workflow",T-I08-014
+T-I03-005,Tracing OpenTelemetry API (ECS sidecar/collector),devops-cicd,,infraestrutura,guardiao-familia-api,E-I03,8,26,5,1.92,1.4,todo,False,"fargate_wave,workflow",T-I08-014

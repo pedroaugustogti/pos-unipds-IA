@@ -1,0 +1,520 @@
+{
+  "epic_id": "E-P3",
+  "epic_name": "Project 3 — Sandbox fluxo agentes",
+  "project_number": 3,
+  "project_title": "Guardião Família v3 — Sandbox Agentes",
+  "description": "Uma task simples por agente creator; fluxo completo Todo→Done com rastreio em comentários.",
+  "comment_conventions": {
+    "implementation": "## [{agent_role}] Implementação\n\n**Status board:** In Progress → Ready for Code Review\n\n### O que foi feito\n- \n\n### Arquivos alterados\n| Arquivo | Mudança |\n|---------|--------|\n| | |\n\n### Como validar localmente\n```\n\n```\n\n### Handoff\n→ `{reviewer}` via evento `open_pr`",
+    "review": "## [{reviewer}] Code Review\n\n**Status board:** In Code Review → Ready for Test\n\n### Escopo verificado\n- [ ] Alteração dentro do escopo da issue\n- [ ] Sem secrets / credenciais\n- [ ] Testes unitários incluídos ou N/A documentado\n\n### Avaliação\n| Critério | OK | Notas |\n|----------|----|-------|\n| Correção | | |\n| Estilo / convenções repo | | |\n| Segurança | | |\n\n### Decisão\n- [ ] **approve_review** — segue para qa-gate\n- [ ] **request_changes** — motivo:\n",
+    "qa": "## [qa-gate] QA\n\n**Status board:** In Test → In Pull Request (ou In Progress se fail)\n\n### Critérios de aceite\n| ID | Critério | Resultado | Evidência |\n|----|----------|-----------|----------|\n| AC-01 | | PASS / FAIL | screenshot abaixo |\n| AC-02 | | PASS / FAIL | |\n\n### Comandos executados\n```\n\n```\n\n### Evidências\n_(anexar PNG + link vídeo MP4 se aplicável)_\n\n### Decisão\n- [ ] **test_passed** — todos AC PASS\n- [ ] **test_failed_bug** — AC falhou:\n",
+    "merge": "## [devops-cicd] Merge / Release\n\n**Status board:** In Pull Request → Done\n\n- PR merged: \n- CI green: \n- Deploy N/A (sandbox)\n\nEvento: `merge_pr`"
+  },
+  "tasks": [
+    {
+      "id": "T-P3-001",
+      "title": "Health API: campo sandboxMarker P3-backend",
+      "agent_role": "backend",
+      "agent_role_secondary": "",
+      "track": "produto",
+      "repo": "guardiao-familia-api",
+      "repo_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-api",
+      "epic_id": "E-P3",
+      "sprint": 1,
+      "priority_rank": 1,
+      "effort_sp": 1,
+      "rice": 8.0,
+      "wsjf": 4.0,
+      "release_blocker": false,
+      "depends_on": "",
+      "refinement": {
+        "context_summary": "GET /api/v1/health retorna status, version, uptime. Adicionar campo sandboxMarker fixo para validar fluxo backend no Project 3.",
+        "user_story": "Como qa-gate, quero um campo JSON previsível no health, para validar deploy sandbox sem side effects.",
+        "suggested_files": [
+          "src/health/health.controller.ts",
+          "test/app.e2e-spec.ts"
+        ],
+        "in_scope": [
+          "Adicionar sandboxMarker: \"P3-backend\" na resposta de GET /health",
+          "Atualizar teste e2e existente do health"
+        ],
+        "out_of_scope": [
+          "Alterar /ready ou /live",
+          "Migrations ou infra"
+        ],
+        "acceptance_hints": [
+          "AC-01: GET /api/v1/health retorna 200 com sandboxMarker igual a P3-backend",
+          "AC-02: test/app.e2e-spec.ts inclui assert do campo",
+          "AC-03: PR com template preenchido e board em Ready for Code Review"
+        ],
+        "technical_notes": "Controller prefix global: /api/v1. Não expor segredos."
+      },
+      "qa": {
+        "test_suite": "qa-api-jest-integration",
+        "scenarios": ["health-sandbox-marker"],
+        "evidence": {
+          "screenshot_png": false,
+          "video_mp4": false,
+          "json_report": true,
+          "ci_link": true
+        },
+        "how_to_run": "cd guardiao-familia-api && npm run test:e2e -- --testPathPattern=app.e2e-spec"
+      }
+    },
+    {
+      "id": "T-P3-002",
+      "title": "Parent splash: tagline Project 3 — Parent OK",
+      "agent_role": "frontend-mobile",
+      "agent_role_secondary": "",
+      "track": "produto",
+      "repo": "guardiao-familia-parent",
+      "repo_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-parent",
+      "epic_id": "E-P3",
+      "sprint": 1,
+      "priority_rank": 2,
+      "effort_sp": 1,
+      "rice": 8.0,
+      "wsjf": 4.0,
+      "release_blocker": false,
+      "depends_on": "",
+      "refinement": {
+        "context_summary": "ParentSplashScreen exibe tagline \"Proteção inteligente para sua família\". Trocar temporariamente para marcar sandbox P3 mobile parent.",
+        "suggested_files": ["screens/ParentSplashScreen.tsx"],
+        "in_scope": [
+          "Alterar styles.tagline para texto: Project 3 — Parent OK",
+          "Manter accessibilityLabel coerente se existir"
+        ],
+        "out_of_scope": [
+          "Pairing / Appium dual nesta task",
+          "Alterações no app child"
+        ],
+        "acceptance_hints": [
+          "AC-01: Tagline visível no splash = Project 3 — Parent OK",
+          "AC-02: Screenshot PNG do emulador parent (5554)",
+          "AC-03: Vídeo MP4 curto (<15s) mostrando splash"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-custom",
+        "scenarios": ["splash-tagline-visual"],
+        "evidence": {
+          "screenshot_png": true,
+          "video_mp4": true,
+          "json_report": false,
+          "ci_link": false
+        },
+        "how_to_run": "powershell -File modulo-8-exemplo-pratico-guardiao-familia-agents/agents/qa-gate/scripts/local_e2e_stack.ps1 -Mode Full"
+      }
+    },
+    {
+      "id": "T-P3-003",
+      "title": "Site: badge footer Sandbox P3 Web",
+      "agent_role": "frontend-web",
+      "agent_role_secondary": "",
+      "track": "produto",
+      "repo": "guardiao-familia-site",
+      "repo_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-site",
+      "epic_id": "E-P3",
+      "sprint": 1,
+      "priority_rank": 3,
+      "effort_sp": 1,
+      "rice": 8.0,
+      "wsjf": 4.0,
+      "release_blocker": false,
+      "depends_on": "",
+      "refinement": {
+        "context_summary": "Site estático index.html. Adicionar span visível no footer-bottom com texto Sandbox P3 Web.",
+        "suggested_files": ["index.html"],
+        "in_scope": [
+          "Inserir <span data-testid=\"p3-sandbox-badge\">Sandbox P3 Web</span> no footer-bottom",
+          "Estilo discreto (opacity 0.7)"
+        ],
+        "out_of_scope": ["Backoffice Next.js", "Campanha"],
+        "acceptance_hints": [
+          "AC-01: Footer contém texto Sandbox P3 Web",
+          "AC-02: Playwright localiza [data-testid=p3-sandbox-badge]",
+          "AC-03: Screenshot PNG da página home"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-site-hero-playwright",
+        "scenarios": ["footer-p3-badge"],
+        "evidence": {
+          "screenshot_png": true,
+          "video_mp4": false,
+          "json_report": true,
+          "ci_link": false
+        },
+        "how_to_run": "npx serve guardiao-familia-site -p 4173 && npx playwright test (spec footer P3)"
+      }
+    },
+    {
+      "id": "T-P3-004",
+      "title": "Terraform: variable project3_sandbox_enabled",
+      "agent_role": "cloud-infra",
+      "agent_role_secondary": "",
+      "track": "infraestrutura",
+      "repo": "guardiao-familia-api",
+      "repo_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-api\\infra",
+      "epic_id": "E-P3",
+      "sprint": 1,
+      "priority_rank": 4,
+      "effort_sp": 1,
+      "rice": 6.0,
+      "wsjf": 3.0,
+      "release_blocker": false,
+      "depends_on": "",
+      "refinement": {
+        "context_summary": "Adicionar variable bool project3_sandbox_enabled default false em infra/environments/prod/variables.tf — apenas documentação sandbox, sem apply AWS.",
+        "suggested_files": [
+          "infra/environments/prod/variables.tf",
+          "infra/environments/prod/terraform.tfvars.example"
+        ],
+        "in_scope": [
+          "Variable project3_sandbox_enabled (bool, default false)",
+          "Comentário HCL explicando uso Project 3",
+          "terraform fmt + terraform validate (local)"
+        ],
+        "out_of_scope": [
+          "terraform apply",
+          "Alterar módulos RDS/ALB"
+        ],
+        "acceptance_hints": [
+          "AC-01: variable definida com default false",
+          "AC-02: terraform validate passa no dir prod",
+          "AC-03: PR descreve que não há apply"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-custom",
+        "scenarios": ["terraform-validate-prod"],
+        "evidence": {
+          "screenshot_png": false,
+          "video_mp4": false,
+          "json_report": true,
+          "ci_link": true
+        },
+        "how_to_run": "cd infra/environments/prod && terraform init -backend=false && terraform validate"
+      }
+    },
+    {
+      "id": "T-P3-005",
+      "title": "DB: migration COMMENT sandbox project3",
+      "agent_role": "database",
+      "agent_role_secondary": "",
+      "track": "infraestrutura",
+      "repo": "guardiao-familia-api",
+      "repo_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-api",
+      "epic_id": "E-P3",
+      "sprint": 1,
+      "priority_rank": 5,
+      "effort_sp": 1,
+      "rice": 6.0,
+      "wsjf": 3.0,
+      "release_blocker": false,
+      "depends_on": "",
+      "refinement": {
+        "context_summary": "Migration TypeORM que executa COMMENT ON DATABASE postgres IS 'Guardiao P3 sandbox marker' — reversível, sem alterar schema de tabelas.",
+        "suggested_files": [
+          "src/migrations/1779900000001-Project3SandboxComment.ts"
+        ],
+        "in_scope": [
+          "Nova migration up/down com COMMENT",
+          "Rodar migration:run em Docker local"
+        ],
+        "out_of_scope": [
+          "Novas tabelas/colunas em produção",
+          "Índices performance"
+        ],
+        "acceptance_hints": [
+          "AC-01: migration:run aplica sem erro",
+          "AC-02: SELECT obj_description(0::oid) ou query documentada retorna marker",
+          "AC-03: migration:revert desfaz COMMENT"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-api-jest-integration",
+        "scenarios": ["migration-project3-comment"],
+        "evidence": {
+          "screenshot_png": false,
+          "video_mp4": false,
+          "json_report": true,
+          "ci_link": false
+        },
+        "how_to_run": "docker compose -f docker-compose.dev.yml up -d postgres && npm run migration:run"
+      }
+    },
+    {
+      "id": "T-P3-006",
+      "title": "CI: step label PROJECT3_SANDBOX no workflow",
+      "agent_role": "devops-cicd",
+      "agent_role_secondary": "",
+      "track": "infraestrutura",
+      "repo": "guardiao-familia-api",
+      "repo_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-api",
+      "epic_id": "E-P3",
+      "sprint": 1,
+      "priority_rank": 6,
+      "effort_sp": 1,
+      "rice": 6.0,
+      "wsjf": 3.0,
+      "release_blocker": false,
+      "depends_on": "",
+      "refinement": {
+        "context_summary": "Adicionar env PROJECT3_SANDBOX=true e name identificável no job test de .github/workflows/ci.yml — sem alterar secrets.",
+        "suggested_files": [".github/workflows/ci.yml"],
+        "in_scope": [
+          "env PROJECT3_SANDBOX: 'true' no job principal de test",
+          "Step echo 'Project 3 sandbox CI marker' antes dos testes"
+        ],
+        "out_of_scope": [
+          "Deploy ECS",
+          "Novos secrets OIDC"
+        ],
+        "acceptance_hints": [
+          "AC-01: workflow YAML válido (actionlint ou gh workflow view)",
+          "AC-02: log CI mostra linha Project 3 sandbox CI marker",
+          "AC-03: testes existentes continuam verdes"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-custom",
+        "scenarios": ["ci-workflow-log-marker"],
+        "evidence": {
+          "screenshot_png": false,
+          "video_mp4": false,
+          "json_report": false,
+          "ci_link": true
+        },
+        "how_to_run": "gh workflow run ci.yml --repo guardiaofamilia/guardiao-familia-api"
+      }
+    },
+    {
+      "id": "T-P3-007",
+      "title": "QA spec: teste sandboxMarker health",
+      "agent_role": "qa",
+      "agent_role_secondary": "backend",
+      "track": "produto",
+      "repo": "guardiao-familia-api",
+      "repo_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-api",
+      "epic_id": "E-P3",
+      "sprint": 1,
+      "priority_rank": 7,
+      "effort_sp": 1,
+      "rice": 7.0,
+      "wsjf": 3.5,
+      "release_blocker": false,
+      "depends_on": "T-P3-001",
+      "refinement": {
+        "context_summary": "Agente qa (author) adiciona test/project3-sandbox.spec.ts que asserta sandboxMarker — depende de T-P3-001 merged ou branch feat.",
+        "suggested_files": [
+          "test/project3-sandbox.spec.ts",
+          "docs/qa/PROJECT3_SANDBOX.md"
+        ],
+        "in_scope": [
+          "Spec Jest/e2e dedicado ao marker P3",
+          "Doc curta com cenários e dados de teste"
+        ],
+        "out_of_scope": [
+          "Implementar sandboxMarker (backend)",
+          "Appium mobile"
+        ],
+        "acceptance_hints": [
+          "AC-01: test/project3-sandbox.spec.ts existe e passa com T-P3-001",
+          "AC-02: docs/qa/PROJECT3_SANDBOX.md lista AC e comando run",
+          "AC-03: qa-gate reutiliza spec no In Test"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-api-jest-integration",
+        "scenarios": ["project3-sandbox-spec"],
+        "evidence": {
+          "screenshot_png": false,
+          "video_mp4": false,
+          "json_report": true,
+          "ci_link": true
+        },
+        "how_to_run": "npm run test:e2e -- --testPathPattern=project3-sandbox"
+      }
+    },
+    {
+      "id": "T-P3-008",
+      "title": "Stores: RELEASE_SANDBOX.md versão P3",
+      "agent_role": "stores-release",
+      "agent_role_secondary": "",
+      "track": "stores",
+      "repo": "guardiao-familia-parent",
+      "repo_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-parent",
+      "epic_id": "E-P3",
+      "sprint": 1,
+      "priority_rank": 8,
+      "effort_sp": 1,
+      "rice": 5.0,
+      "wsjf": 2.5,
+      "release_blocker": false,
+      "depends_on": "",
+      "refinement": {
+        "context_summary": "Criar RELEASE_SANDBOX.md com versão fictícia 2.4.2-p3 e notas de release sandbox — sem submit real às stores.",
+        "suggested_files": [
+          "RELEASE_SANDBOX.md",
+          "app.json"
+        ],
+        "in_scope": [
+          "Arquivo RELEASE_SANDBOX.md com version 2.4.2-p3 e changelog 3 bullets",
+          "Comentário em app.json (expo.version) NÃO alterar produção — só doc"
+        ],
+        "out_of_scope": [
+          "Submit App Store / Play",
+          "Build EAS production"
+        ],
+        "acceptance_hints": [
+          "AC-01: RELEASE_SANDBOX.md contém 2.4.2-p3",
+          "AC-02: Checklist release preenchido (dry-run)",
+          "AC-03: Screenshot do markdown renderizado ou PNG do checklist"
+        ]
+      },
+      "qa": {
+        "test_suite": "qa-custom",
+        "scenarios": ["release-doc-review"],
+        "evidence": {
+          "screenshot_png": true,
+          "video_mp4": false,
+          "json_report": false,
+          "ci_link": false
+        },
+        "how_to_run": "Revisão manual do RELEASE_SANDBOX.md + checklist stores-release SKILL"
+      }
+    },
+    {
+      "id": "T-P3-009",
+      "title": "Child home: saudação dinâmica por horário no cabeçalho",
+      "agent_role": "frontend-mobile",
+      "agent_role_secondary": "",
+      "track": "produto",
+      "repo": "guardiao-familia-child",
+      "repo_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-child",
+      "epic_id": "E-P3",
+      "sprint": 1,
+      "priority_rank": 9,
+      "effort_sp": 2,
+      "rice": 8.0,
+      "wsjf": 4.0,
+      "release_blocker": false,
+      "depends_on": "",
+      "agent_responsibilities": {
+        "frontend-mobile": [
+          "Criar branch `feat/t-p3-009-child-greeting` a partir da base do repo `guardiao-familia-child`",
+          "Implementar saudação dinâmica no header da `ChildHomeV2` usando `dynamicGreeting()` de `childHome.state.ts`",
+          "Garantir regras: 00:00–11:59 Bom dia · 12:00–17:59 Boa tarde · 18:00–23:59 Boa noite (hora local)",
+          "Criar/ajustar testes unitários em `childHome.state.test.ts` validando os três cenários (manhã, tarde, noite) e bordas 11:59/12:00 e 17:59/18:00",
+          "Propagar `accessibilityLabel` coerente no header",
+          "Abrir PR e disparar evento `open_pr` — **não** executar QA Appium nem merge"
+        ],
+        "frontend-mobile-reviewer": [
+          "Assumir PR em **Ready for Code Review** (`start_review`)",
+          "Validar qualidade do código entregue pelo `frontend-mobile` (legibilidade, padrões RN, escopo)",
+          "Validar cobertura e assertividade dos testes unitários dos três períodos de saudação",
+          "Identificar gaps, riscos ou melhorias (comentários acionáveis no PR)",
+          "Aprovar com `approve_review` ou devolver com `request_changes` — **não** implementar feature nem rodar Appium"
+        ],
+        "qa-gate": [
+          "Executar seed no banco local: `python agents/qa-gate/scripts/mobile_e2e_seed.py --task T-P3-009 --profile child_home` (ou automático via `qa_mobile_evidence.py`)",
+          "Subir suite Appium dual-emulator (`qa_mobile_evidence.py --feature pairing --mode cycle`)",
+          "Validar no app `guardiao-familia-child` os três cenários injetando hora no emulador: 08:00 (Bom dia), 15:00 (Boa tarde), 21:00 (Boa noite)",
+          "Gerar evidências: 3 PNG + 3 MP4 + report JSON em `crew/output/evidence/T-P3-009/`",
+          "Cleanup pós-evidência (purge Postgres + reset handoff) quando `qa.db_seed.cleanup=true`",
+          "Disparar `test_passed` ou `test_failed_bug` com comentário sec. 10.3 — **não** alterar código da feature"
+        ]
+      },
+      "refinement": {
+        "context_summary": "O cabeçalho azul da ChildHome (ChildHomeV2) exibe saudação + nome do filho. Garantir que o texto alterna entre Bom dia, Boa tarde e Boa noite conforme hora local do dispositivo.",
+        "user_story": "Como criança, quero ver uma saudação adequada ao horário no topo da home, para me sentir acolhida no app.",
+        "suggested_files": [
+          "screens/ChildHomeV2.tsx",
+          "screens/childHome.state.ts",
+          "screens/__tests__/childHome.state.test.ts"
+        ],
+        "in_scope": [
+          "Centralizar `dynamicGreeting()` em `childHome.state.ts` (única fonte)",
+          "ChildHomeV2: `greetingTitle` = `{dynamicGreeting()}, {nome}!` no header azul",
+          "Regras: 00:00–11:59 Bom dia · 12:00–17:59 Boa tarde · 18:00–23:59 Boa noite (hora local)",
+          "Testes unitários cobrindo os 3 períodos + bordas 11:59/12:00 e 17:59/18:00",
+          "Propagar `accessibilityLabel` coerente no header"
+        ],
+        "out_of_scope": [
+          "Alterar app parent",
+          "Mudar layout SOS / tempo de tela / locais seguros",
+          "i18n EN/ES"
+        ],
+        "state_before": "ChildHomeV2 usa `dynamicGreeting()` importado de `childHome.state.ts`, mas a validação visual dos 3 períodos não está documentada nas evidências de QA do Project 3.",
+        "state_after": "Header da home child mostra exatamente um dos três textos conforme hora; testes unitários verdes; evidências QA com PNG+MP4 para manhã, tarde e noite após fluxo pairing→home.",
+        "acceptance_hints": [
+          "AC-01: Entre 00:00–11:59 o header mostra prefixo Bom dia",
+          "AC-02: Entre 12:00–17:59 o header mostra prefixo Boa tarde",
+          "AC-03: Entre 18:00–23:59 o header mostra prefixo Boa noite",
+          "AC-04: `npm test -- childHome.state` passa com casos manhã/tarde/noite",
+          "AC-05: QA anexa 3 PNG (um por período) + 3 MP4 do fluxo pairing até ChildHome"
+        ],
+        "implementation_steps": [
+          "git checkout -b feat/t-p3-009-child-greeting",
+          "Revisar `dynamicGreeting` em childHome.state.ts e uso em ChildHomeV2.tsx",
+          "Ajustar testes em childHome.state.test.ts se necessário",
+          "Validar no emulador child (5556) com mock de hora ou ajuste manual do relógio",
+          "Abrir PR com screenshots de referência"
+        ],
+        "user_flow": {
+          "app": "guardiao-familia-child",
+          "entry_point": "App já pareado (parent+child) ou executar pairing E2E antes",
+          "emulator": "emulator-5556",
+          "metro_port": 9090,
+          "target_screen": "child:ChildHomeV2",
+          "target_element": "header.greetingTitle (Bom dia|Boa tarde|Boa noite, {nome}!)",
+          "preconditions": [
+            "Stack mobile-setup: API + emuladores dual + pairing concluído (PAIRING_COMPLETE)",
+            "Child na home após paste_code_parent + allow_permissions + go_to_home_child"
+          ],
+          "steps": [
+            {"order": 1, "screen": "Child PrePairing", "user_action": "Colar código 6 dígitos", "system_behavior": "Valida pareamento", "file": "screens/PrePairingScreen.tsx"},
+            {"order": 2, "screen": "PermissionsOnboarding", "user_action": "Conceder localização", "system_behavior": "Avança onboarding", "file": "screens/PermissionsOnboardingScreen.tsx"},
+            {"order": 3, "screen": "ChildHomeV2", "user_action": "Visualizar header azul", "system_behavior": "Saudação dinâmica + nome", "file": "screens/ChildHomeV2.tsx"}
+          ],
+          "qa_repro_steps": [
+            "Subir stack: `python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle`",
+            "Ajustar hora do emulador para 08:00 → screenshot header (Bom dia)",
+            "Ajustar hora para 15:00 → screenshot header (Boa tarde)",
+            "Ajustar hora para 21:00 → screenshot header (Boa noite)",
+            "Gravar MP4 de cada cenário desde PrePairing até home (ou pairing completo + jump de relógio)"
+          ],
+          "mermaid": "flowchart LR\n  pairing[Pairing child] --> perms[Permissões]\n  perms --> home[ChildHomeV2 header]"
+        }
+      },
+      "qa": {
+        "test_suite": "qa-mobile-pairing-appium-dual",
+        "scenarios": [
+          "greeting-morning-08h",
+          "greeting-afternoon-15h",
+          "greeting-evening-21h",
+          "pairing-to-child-home-e2e"
+        ],
+        "evidence": {
+          "screenshot_png": true,
+          "video_mp4": true,
+          "json_report": true,
+          "ci_link": false,
+          "scenarios_count": 3,
+          "video_scope": "pairing_start_to_child_home_per_period"
+        },
+        "db_seed": {
+          "enabled": true,
+          "profile": "child_home",
+          "family_name": "QA Evidence T-P3-009",
+          "child_name": "Filho QA T-P3-009",
+          "resume_after_step": "paste_code_parent",
+          "cleanup": true,
+          "bootstrap_api": true
+        },
+        "how_to_run": "cd modulo-8-exemplo-pratico-guardiao-familia-agents && python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle --record-video"
+      }
+    }
+  ]
+}

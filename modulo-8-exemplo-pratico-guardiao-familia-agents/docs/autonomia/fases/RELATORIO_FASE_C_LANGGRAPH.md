@@ -1,7 +1,7 @@
 # Relatório — Fase C: LangGraph + OpenRouter
 
 > Data: 2026-08-25  
-> Status: **Concluída (MVP)** · orquestração **somente LangGraph** (CrewAI removido)  
+> Status: **Concluída (MVP)** · orquestração **LangGraph**  
 > Pré-requisitos: [Fase A](RELATORIO_FASE_A_MODEL_TIER.md) · [Fase B](RELATORIO_FASE_B_MCP.md)
 
 ---
@@ -21,8 +21,8 @@ OpenRouter no loop de orquestração para decidir/resumir passos do Kanban; Stat
 | `langgraph_app/graph.py` | StateGraph com loop até Done |
 | `langgraph_app/llm.py` | ChatOpenAI + `select_model` |
 | `langgraph_app/tools_bridge.py` | Gateway/MCP |
-| `langgraph_app/persist.py` | `crew/output/langgraph/{task}.json` |
-| `scripts/langgraph_run.py` | CLI `--from-zero` / `--mode` |
+| `langgraph_app/persist.py` | `agents/00-runtime/output/langgraph/{task}.json` |
+| `agents/00-orchestration/scripts/langgraph/langgraph_run.py` | CLI `--from-zero` / `--mode` |
 
 ### Env
 
@@ -61,7 +61,7 @@ Todo -> claim -> In Progress -> implement/open_pr
 
 ```powershell
 python -m unittest tests.test_langgraph_decisions -v
-python scripts/langgraph_run.py --task T-P05-006 --mode dry_run --from-zero
+python agents/00-orchestration/scripts/langgraph/langgraph_run.py --task T-P05-006 --mode dry_run --from-zero
 ```
 
 ---

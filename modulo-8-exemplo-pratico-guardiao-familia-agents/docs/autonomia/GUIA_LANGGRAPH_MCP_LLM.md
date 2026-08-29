@@ -13,10 +13,10 @@
 | `lib/gateway.py` (`emit_status_event`)                                      | **Porta única** de Status + HITL + handoff |
 | `lib/board_client.py`, `task_router.py`, `hitl_gates.py`, `react_policy.py` | APIs Python de domínio                     |
 | `lib/model_tier.py`                                                         | Escolha low/high por risco                 |
-| `langgraph_app/`                                                            | **Única** orquestração (StateGraph)        |
-| `guardiao_mcp/`                                                             | Tools MCP sobre as mesmas libs             |
-| `crew/output/observability/`                                                | Snapshot + dashboard live (pasta runtime)  |
-| `agents/*.agent.md` + `skills/*/SKILL.md`                                   | Política e fronteiras por papel            |
+| `agents/00-orchestration/langgraph_app/`                                    | **Única** orquestração (StateGraph)        |
+| `agents/00-orchestration/guardiao_mcp/`                                     | Tools MCP sobre as mesmas libs             |
+| `agents/00-runtime/output/observability/`                                 | Snapshot + dashboard live (pasta runtime)  |
+| `agents/{role}/agent.md` + `agents/{role}/SKILL.md`                         | Política e fronteiras por papel            |
 
 
 **Regra de ouro:** LangGraph/MCP/LLM **chamam** o gateway e as libs; não gravam Status “por fora”.
@@ -26,7 +26,7 @@ Atual:  LangGraph ──► tools_bridge / MCP ──► lib/* ──► board +
         └─ traces ──► LangSmith (+ snapshot / HTML ReAct)
 ```
 
-> **Nota (2026-08-25):** CrewAI foi **removido**. `crew/` = `.env` + `requirements.txt` + `output/` apenas.
+> Config em `.env` na raiz; runtime em `agents/00-runtime/`.
 
 ---
 
@@ -55,12 +55,12 @@ Resultado esperado para o usuário (humano / banca / operador):
 | ----- | ------------------------------------------------------------------------------------------------------------------- |
 | A1    | Manter OpenRouter (`OPENAI_API_BASE`) ou ponto LiteLLM único                                                        |
 | A2    | Expandir `model_tier.py`: `route` (barato/determinístico), `implement_low`, `implement_high`, `review`, `summarize` |
-| A3    | Env: `CREWAI_MODEL` → renomear/alias para `GUARDIAO_LLM_*` (compatível com LangChain `ChatOpenAI`)                  |
+| A3    | Env: `GUARDIAO_LLM_*` (alias `CREWAI_MODEL*` para compatibilidade) |
 | A4    | Separar **modelo de implementação de código** (`GUARDIAO_CURSOR_MODEL`) do **modelo de orquestração** (LangGraph)   |
 | A5    | Budget: max tokens / max tool calls por nó (alinhar a `react_policy.max_iterations_for`)                            |
 
 
-### 2.2 Variáveis sugeridas (`crew/.env`)
+### 2.2 Variáveis sugeridas (`.env` na raiz — ver `.env.example`)
 
 ```env
 # Orquestração LangGraph (OpenAI-compatible)
@@ -89,8 +89,7 @@ GUARDIAO_CURSOR_MODEL=composer-2.5
 **Validação (implementado):**
 
 ```powershell
-python -m unittest tests.test_model_tier -v
-python scripts/model_tier_cli.py --smoke --smoke-high --json
+python agents/00-orchestration/scripts/cli/model_tier_cli.py --smoke --smoke-high --json
 ```
 
 Código: `lib/model_tier.py` · env: `GUARDIAO_LLM_*` + `GUARDIAO_CURSOR_MODEL` (alias `CREWAI_MODEL` / `GUARDAO_CURSOR_MODEL`).
@@ -154,7 +153,7 @@ Parâmetro global `dry_run` (default `false` em prod, `true` em demo/banca).
 ### 3.6 Critério de aceite
 
 - `emit_status_event` via MCP produz o **mesmo** efeito que `gateway_cli.py`.  
-- CrewAI removido; tools só via MCP / tools_bridge.
+- Tools expostas via MCP / `tools_bridge`.
 
 ---
 
@@ -169,7 +168,7 @@ Parâmetro global `dry_run` (default `false` em prod, `true` em demo/banca).
 | `hitl_queue` / `block_until_human` | `interrupt()` / checkpoint + resume         |
 | `react_policy`                     | loop `agent ↔ tools` com teto de iterações  |
 | `event_orchestrator` idle/dispatch | nó `dispatch` + arestas condicionais        |
-| (removido) CrewAI supervisor       | **LangGraph** é o único orquestrador        |
+| Orquestração LangGraph             | **StateGraph** com nós por estágio          |
 
 
 ### 4.2 Estado sugerido (`AgentState`)
@@ -188,7 +187,7 @@ last_tool_results: list
 error: str | None
 ```
 
-Checkpointer: `MemorySaver` (demo) → SQLite/Postgres (piloto) alinhado a `crew/output/`.
+Checkpointer: `MemorySaver` (demo) → SQLite/Postgres (piloto) alinhado a `agents/00-runtime/output/`.
 
 ### 4.3 Grafo canônico (espelha o Kanban)
 
@@ -213,7 +212,7 @@ flowchart TD
 
 Cada nó:
 
-1. Lê skill/prompt do role (`agents/{role}.agent.md` truncado + skill).
+1. Lê skill/prompt do role (`agents/{role}/agent.md` + `SKILL.md`).
 2. Decide **1–N tools MCP** (não “chamar tudo”).
 3. Emite Status só por `emit_status_event`.
 4. Append em `task_action_history` para o HTML live.
@@ -304,7 +303,7 @@ Semana 2  B2 (restante das tools) + smoke Cursor MCP
 Semana 3  C MVP LangGraph (supervisor + 4 nós) dry_run
 Semana 4  C HITL interrupt + integração dispatch Cursor
 Semana 5  D LangSmith datasets + comparar custo vs baseline CLI
-Semana 6  Otimização get_task_context (CrewAI já removido)
+Semana 6  Otimização get_task_context
 ```
 
 **Não fazer no início:** reescrever o board, abandonar o gateway, ou trocar o Kanban por UI LangSmith.
@@ -313,7 +312,7 @@ Semana 6  Otimização get_task_context (CrewAI já removido)
 
 ## 7. Dependências sugeridas
 
-Deps em `crew/requirements.txt` (LangGraph / MCP / LangSmith — **sem** CrewAI):
+Deps em `agents/00-runtime/requirements.txt` (LangGraph / MCP / LangSmith):
 
 ```text
 langgraph>=0.2
@@ -329,8 +328,8 @@ Entry points:
 | Script                                                       | Função                                                 |
 | ------------------------------------------------------------ | ------------------------------------------------------ |
 | `python -m guardiao_mcp`                                     | Sobe MCP                                               |
-| `python scripts/langgraph_run.py --task T-P05-006 --mode dry_run` | Um ciclo do grafo                                 |
-| `python scripts/demo_apresentacao.py`                        | Demo gateway (Status); não usa CrewAI                  |
+| `python agents/00-orchestration/scripts/langgraph/langgraph_run.py --task T-P05-006 --mode dry_run` | Um ciclo do grafo                                 |
+| `python agents/00-orchestration/scripts/demo/demo_apresentacao.py`                        | Demo gateway (Status)                                  |
 
 
 ---
@@ -342,7 +341,7 @@ Entry points:
 | -------------------------- | ---------------------------------------------------------------------------- |
 | LLM inventa Status         | Tools só via gateway; schema estrito; rejeitar evento fora de `EVENT_TARGET` |
 | Loop infinito tool-calling | `react_policy` + max steps no nó + LangSmith alert                           |
-| Dupla escrita (legado)     | Só `GUARDIAO_ORCHESTRATOR=langgraph` (CrewAI removido)               |
+| Dupla escrita (legado)     | `GUARDIAO_ORCHESTRATOR=langgraph`                                    |
 | Secrets no MCP             | Server local; sem expor `GITHUB_TOKEN` como tool                             |
 | Custo OpenRouter           | route sem LLM; batch context; modelo high só com hints                       |
 
@@ -354,7 +353,7 @@ Entry points:
 - [ ] MCP: `emit_status_event` parity com `gateway_cli`  
 - [ ] MCP: tools de idle/HITL/observability  
 - [ ] LangGraph: grafo MVP com checkpoint + interrupt HITL  
-- [ ] Prompts carregados de `agents/` + `skills/`  
+- [ ] Prompts carregados de `agents/{role}/`  
 - [ ] `model_tier` usado antes de nós caros  
 - [ ] LangSmith: traces com `task_id`  
 - [ ] Demo T-P05-005/006 ainda fecha em Done (modo demo)  
@@ -369,7 +368,7 @@ Entry points:
 2. [CONFIGURACAO_E_TECNOLOGIA.md](CONFIGURACAO_E_TECNOLOGIA.md) — env e artefatos
 3. [EXECUCAO_E_OBSERVABILIDADE.md](EXECUCAO_E_OBSERVABILIDADE.md) — como rodar hoje
 4. [../operacao/PROCESSO_HITL.md](../operacao/PROCESSO_HITL.md) — gates humanos (mapear para `interrupt`)
-5. `guardiao_mcp/server.py` — catálogo MCP atual
+5. `agents/00-orchestration/guardiao_mcp/server.py` — catálogo MCP atual
 6. [orquestracao/](orquestracao/README.md) — mapa didático visual
 
 ---

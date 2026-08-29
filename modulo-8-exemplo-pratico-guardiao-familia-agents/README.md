@@ -1,86 +1,46 @@
-# Módulo 8 — Exemplo prático: Agents Guardião Família
+# Módulo 8 — Agents Guardião Família
 
-Evolução do [`10-agents`](../modulo-7-exemplo-pratico-guardiao-familia/docs/02-criacao-board/10-agents) com padrões do **Módulo 8** (AI-First, multi-agent, HITL, enterprise gates).
+Base de conhecimento para **agentes autônomos**: orquestração LangGraph, board GitHub, gateway único de Status, MCP e QA mobile.
 
-**Orquestração:** somente **LangGraph** (`langgraph_app/`). CrewAI foi removido.
+Evolução do módulo 7 com HITL, multi-agent e gates enterprise.
 
-## O que mudou vs módulo 7
+## Estrutura (onde decidir)
 
-| Tema | Antes | Agora |
-|------|-------|-------|
-| Orquestração | Crew sequential “faz o sprint” | **LangGraph** + policy Kanban + LLM OpenRouter |
-| Eventos | Várias CLIs | **Gateway** `emit_status_event` + contrato |
-| Tools | CLIs soltas | **MCP** `guardiao_mcp` (+ bridge no grafo) |
-| QA | Papel misturado | **qa-author** (harness) × **qa-gate** (pipeline) |
-| Review | LLM finaliza | LLM **propõe**; HITL em alto risco |
-| Merge | Texto “não mergear” | `merge_pr` **bloqueado** até humano |
-| Bugs | Sempre skill creator | `regression` vs `flaky` |
-| ReAct | Implícito | Teto de iterações + trilha no handoff / HTML |
+| Pasta | Quando consultar |
+|-------|------------------|
+| [`agents/`](agents/) | Escolher papel, prompt, skill, scripts QA |
+| [`agents/00-orchestration/`](agents/00-orchestration/) | Pipeline LangGraph, MCP, CLIs |
+| [`board_automation/`](board_automation/) | Roteamento task, reconcile, templates issue |
+| [`lib/`](lib/) | Gateway, dispatch, observability, mobile |
+| [`docs/`](docs/) | Fluxo, operação, configuração |
+| [`.env.example`](.env.example) | Variáveis de ambiente |
 
-## Estrutura
+Layout completo: [`docs/ESTRUTURA.md`](docs/ESTRUTURA.md)
 
-```
-modulo-8-exemplo-pratico-guardiao-familia-agents/
-├── agents/           # prompts Cursor (+ qa-author/qa-gate)
-├── langgraph_app/    # StateGraph (orquestração)
-├── guardiao_mcp/     # MCP server sobre lib/*
-├── crew/             # .env, requirements, output/ (runtime — não orquestra)
-├── lib/              # gateway, hitl, handoff, react_policy, model_tier
-├── evals/            # dataset estático + avaliadores (Fase D)
-├── scripts/          # langgraph_run, gateway_cli, demo, …
-├── skills/
-├── templates/
-└── docs/             # autonomia (fases + orquestracao), operacao, …
-```
+## Regras de decisão (resumo)
 
-Board JSON continua no módulo 7 (não duplicado).
+1. **Status** — só via `emit_status_event` (`lib/gateway`)
+2. **Roteamento** — `agent_role` no CSV + `task_router.pick_task`
+3. **Código produto** — dispatch Cursor no repo mapeado em `REPOS_AND_ROUTING`
+4. **Review** — creator → reviewer pareado → qa-gate
+5. **Alto risco** — HITL antes de merge (`hitl_gates`)
 
 ## Quick start
 
 ```powershell
 cd modulo-8-exemplo-pratico-guardiao-familia-agents
 
-# Pipeline LangGraph (dry_run)
-python scripts/langgraph_run.py --task T-P05-006 --mode dry_run --from-zero
-
-# Dry-run de evento via gateway
-python scripts/gateway_cli.py --task T-P05-001 --event claim --dry-run
-
-# MCP (Cursor)
+python agents/00-orchestration/scripts/langgraph/langgraph_run.py --task T-P05-006 --mode dry_run
+python agents/00-orchestration/scripts/cli/gateway_cli.py --task T-P05-001 --event claim --dry-run
 python -m guardiao_mcp
-
-# Eval regressão Kanban
-python scripts/langsmith_eval.py
 ```
 
 ## Documentação
 
-Índice: [docs/README.md](docs/README.md)
+- Índice: [`docs/README.md`](docs/README.md)
+- Fluxo atual: [`docs/autonomia/ESTADO_ATUAL_FLUXO_E_PROCESSO.md`](docs/autonomia/ESTADO_ATUAL_FLUXO_E_PROCESSO.md)
+- Mapa visual: [`docs/autonomia/orquestracao/README.md`](docs/autonomia/orquestracao/README.md)
 
-- [**Mapa didático de orquestração**](docs/autonomia/orquestracao/README.md) (HTML)
-- [Estado atual — fluxo e processo](docs/autonomia/ESTADO_ATUAL_FLUXO_E_PROCESSO.md)
-- [Configuração e tecnologia](docs/autonomia/CONFIGURACAO_E_TECNOLOGIA.md)
-- [Guia LangGraph + MCP + LLM](docs/autonomia/GUIA_LANGGRAPH_MCP_LLM.md)
-- [Fases A–D](docs/autonomia/fases/README.md)
-- [Execução e observabilidade](docs/autonomia/EXECUCAO_E_OBSERVABILIDADE.md)
-- [Operação / HITL](docs/operacao/PROCESSO_HITL.md)
-- [Apresentação live](docs/apresentacao/APRESENTACAO_LIVE_DEMO.md)
+## Dashboard
 
-## Dashboard ao vivo
-
-> ### <a href="https://pedroaugustogti.github.io/pos-unipds-IA/modulo-8-exemplo-pratico-guardiao-familia-agents/docs/live/dashboard.html" target="_blank" rel="noopener noreferrer">Abrir dashboard live (GitHub Pages)</a>
-
-```powershell
-python scripts/live_server.py
-# http://127.0.0.1:8765/dashboard.html
-python scripts/publish_live_pages.py   # espelho docs/live
-```
-
-## Critérios de sucesso
-
-- [x] Gateway + HITL + handoff + ReAct policy
-- [x] LangGraph + OpenRouter + model_tier
-- [x] MCP `guardiao_mcp` (porta única via gateway)
-- [x] LangSmith tracing + dataset estático de regressão
-- [x] Separação qa-author / qa-gate
-- [x] Dashboard live / demo
+[`docs/live/dashboard.html`](docs/live/dashboard.html) · local: `python agents/00-orchestration/scripts/demo/live_server.py`

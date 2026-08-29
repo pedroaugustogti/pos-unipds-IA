@@ -1,0 +1,389 @@
+{
+  "name": "guardiao-kanban-pipeline",
+  "version": "1.4",
+  "description": "Dataset estatico de regressao Kanban (Fase D4). Exemplo canonico T-P13-012 via LangGraph live (acting_agent por evento + LLM + HITL).",
+  "canonical_events": [
+    "claim",
+    "open_pr",
+    "start_review",
+    "approve_review",
+    "start_test",
+    "test_passed",
+    "merge_pr"
+  ],
+  "canonical_status_sequence": [
+    "Todo",
+    "In Progress",
+    "Ready for Code Review",
+    "In Code Review",
+    "Ready for Test",
+    "In Test",
+    "In Pull Request",
+    "Done"
+  ],
+  "example_reference": {
+    "task_id": "T-P13-012",
+    "issue": "https://github.com/guardiaofamilia/guardiao-familia-site/issues/78",
+    "case_id": "example_site_hero_012_langgraph_live",
+    "cli": "python agents/00-orchestration/scripts/langgraph/langgraph_run.py --task T-P13-012 --mode live --from-zero --role frontend-web",
+    "notes": "LangGraph live com acting_agent: creator → *-reviewer → qa-gate → devops-cicd (HITL)."
+  },
+  "cases": [
+    {
+      "id": "example_site_hero_012_langgraph_live",
+      "task_id": "T-P13-012",
+      "title": "Atualizar hero home: Tranquilidade para sua família",
+      "agent_role": "frontend-web",
+      "repo": "guardiao-familia-site",
+      "issue": "https://github.com/guardiaofamilia/guardiao-familia-site/issues/78",
+      "mode": "live",
+      "engine": "fixture",
+      "run_graph": false,
+      "tags": [
+        "example",
+        "langgraph",
+        "acting-agent",
+        "site-hero",
+        "select_model",
+        "llm",
+        "hitl-pre-merge",
+        "enriched-comments"
+      ],
+      "fixture": {
+        "board_status": "In Pull Request",
+        "events": [
+          "claim",
+          "open_pr",
+          "start_review",
+          "approve_review",
+          "start_test",
+          "test_passed",
+          "merge_pr"
+        ],
+        "status_sequence": [
+          "Todo",
+          "In Progress",
+          "Ready for Code Review",
+          "In Code Review",
+          "Ready for Test",
+          "In Test",
+          "In Pull Request"
+        ],
+        "steps": 28,
+        "hitl_pending": true,
+        "mode": "live",
+        "orchestrator": "langgraph",
+        "acting_agents": {
+          "claim": "frontend-web",
+          "open_pr": "frontend-web",
+          "start_review": "frontend-web-reviewer",
+          "approve_review": "frontend-web-reviewer",
+          "start_test": "qa-gate",
+          "test_passed": "qa-gate",
+          "merge_pr": "devops-cicd"
+        },
+        "model_tier": {
+          "tier": "low",
+          "model": "openai/gpt-4o-mini",
+          "purpose": "implement_low",
+          "uses_llm": true
+        },
+        "token_usage": {
+          "input_tokens": 1361,
+          "output_tokens": 446,
+          "total_tokens": 1807,
+          "calls": 6
+        },
+        "qa": "PASS",
+        "branch": "feat/t-p13-012-hero-sua-familia",
+        "comment_quality": {
+          "sections": ["thought", "action", "observation"],
+          "observation_requires": ["focus", "model", "tokens"],
+          "pattern": "Pensou / Executou / Observacao (foco + modelo + tokens) assinado pelo acting_agent"
+        }
+      },
+      "expected_events": [
+        "claim",
+        "open_pr",
+        "start_review",
+        "approve_review",
+        "start_test",
+        "test_passed",
+        "merge_pr"
+      ],
+      "expected_status_sequence": [
+        "Todo",
+        "In Progress",
+        "Ready for Code Review",
+        "In Code Review",
+        "Ready for Test",
+        "In Test",
+        "In Pull Request"
+      ],
+      "expected_final_status": "In Pull Request",
+      "expected_model_tier": "low",
+      "expected_hitl": true,
+      "max_steps": 48,
+      "notes": "Exemplo canonico LangGraph live com agentes intercalados por evento; merge HITL."
+    },
+    {
+      "id": "policy_site_hero_012_pre_merge",
+      "task_id": "T-P13-012",
+      "title": "Atualizar hero home: Tranquilidade para sua família",
+      "agent_role": "frontend-web",
+      "mode": "dry_run",
+      "run_graph": false,
+      "tags": ["example", "policy-replay", "hitl-pre-merge", "langgraph", "acting-agent"],
+      "expected_events": [
+        "claim",
+        "open_pr",
+        "start_review",
+        "approve_review",
+        "start_test",
+        "test_passed"
+      ],
+      "expected_status_sequence": [
+        "Todo",
+        "In Progress",
+        "Ready for Code Review",
+        "In Code Review",
+        "Ready for Test",
+        "In Test",
+        "In Pull Request"
+      ],
+      "expected_final_status": "In Pull Request",
+      "expected_model_tier": "low",
+      "expected_hitl": true,
+      "max_steps": 48,
+      "notes": "Replay barato da politica Kanban do exemplo T-P13-012 (sem merge)."
+    },
+    {
+      "id": "happy_sos_006",
+      "task_id": "T-P05-006",
+      "title": "Configurar FCM data messages SOS",
+      "agent_role": "frontend-mobile",
+      "mode": "dry_run",
+      "run_graph": true,
+      "expected_events": [
+        "claim",
+        "open_pr",
+        "start_review",
+        "approve_review",
+        "start_test",
+        "test_passed",
+        "merge_pr"
+      ],
+      "expected_status_sequence": [
+        "Todo",
+        "In Progress",
+        "Ready for Code Review",
+        "In Code Review",
+        "Ready for Test",
+        "In Test",
+        "In Pull Request",
+        "Done"
+      ],
+      "expected_final_status": "Done",
+      "expected_model_tier": "high",
+      "expected_hitl": false,
+      "max_steps": 40
+    },
+    {
+      "id": "happy_005",
+      "task_id": "T-P05-005",
+      "title": "Configurar APNs production certificates",
+      "agent_role": "frontend-mobile",
+      "mode": "dry_run",
+      "run_graph": false,
+      "expected_events": [
+        "claim",
+        "open_pr",
+        "start_review",
+        "approve_review",
+        "start_test",
+        "test_passed",
+        "merge_pr"
+      ],
+      "expected_status_sequence": [
+        "Todo",
+        "In Progress",
+        "Ready for Code Review",
+        "In Code Review",
+        "Ready for Test",
+        "In Test",
+        "In Pull Request",
+        "Done"
+      ],
+      "expected_final_status": "Done",
+      "expected_hitl": false,
+      "max_steps": 40
+    },
+    {
+      "id": "happy_001_mobile",
+      "task_id": "T-P05-001",
+      "title": "Bundlar sons push iOS parent",
+      "agent_role": "frontend-mobile",
+      "mode": "dry_run",
+      "run_graph": false,
+      "expected_events": [
+        "claim",
+        "open_pr",
+        "start_review",
+        "approve_review",
+        "start_test",
+        "test_passed",
+        "merge_pr"
+      ],
+      "expected_status_sequence": [
+        "Todo",
+        "In Progress",
+        "Ready for Code Review",
+        "In Code Review",
+        "Ready for Test",
+        "In Test",
+        "In Pull Request",
+        "Done"
+      ],
+      "expected_final_status": "Done",
+      "expected_hitl": false,
+      "max_steps": 40
+    },
+    {
+      "id": "high_risk_tier_sos",
+      "task_id": "T-P05-006",
+      "title": "Configurar FCM data messages SOS",
+      "agent_role": "frontend-mobile",
+      "mode": "dry_run",
+      "engine": "model_tier_only",
+      "run_graph": false,
+      "expected_model_tier": "high",
+      "expected_final_status": null,
+      "expected_hitl": false,
+      "max_steps": 40
+    },
+    {
+      "id": "done_noop",
+      "task_id": "T-FIXTURE-DONE",
+      "title": "Task ja Done",
+      "agent_role": "orchestrator",
+      "mode": "dry_run",
+      "engine": "fixture",
+      "run_graph": false,
+      "fixture": {
+        "board_status": "Done",
+        "events": [],
+        "status_sequence": ["Done"],
+        "steps": 1,
+        "hitl_pending": false,
+        "model_tier": {"tier": "default", "model": "n/a", "purpose": "route"}
+      },
+      "expected_events": [],
+      "expected_status_sequence": ["Done"],
+      "expected_final_status": "Done",
+      "expected_hitl": false,
+      "max_steps": 40
+    },
+    {
+      "id": "live_hitl_merge",
+      "task_id": "T-FIXTURE-HITL",
+      "title": "Merge aguardando humano",
+      "agent_role": "devops-cicd",
+      "mode": "live",
+      "engine": "fixture",
+      "run_graph": false,
+      "fixture": {
+        "board_status": "In Pull Request",
+        "events": [
+          "claim",
+          "open_pr",
+          "start_review",
+          "approve_review",
+          "start_test",
+          "test_passed",
+          "merge_pr"
+        ],
+        "status_sequence": [
+          "Todo",
+          "In Progress",
+          "Ready for Code Review",
+          "In Code Review",
+          "Ready for Test",
+          "In Test",
+          "In Pull Request"
+        ],
+        "steps": 24,
+        "hitl_pending": true,
+        "model_tier": {"tier": "default", "model": "openai/gpt-4o-mini", "purpose": "implement_low"}
+      },
+      "expected_events": [
+        "claim",
+        "open_pr",
+        "start_review",
+        "approve_review",
+        "start_test",
+        "test_passed",
+        "merge_pr"
+      ],
+      "expected_status_sequence": [
+        "Todo",
+        "In Progress",
+        "Ready for Code Review",
+        "In Code Review",
+        "Ready for Test",
+        "In Test",
+        "In Pull Request"
+      ],
+      "expected_final_status": "In Pull Request",
+      "expected_hitl": true,
+      "max_steps": 40
+    },
+    {
+      "id": "fixture_invalid_event",
+      "task_id": "T-FIXTURE-BAD",
+      "title": "Evento inventado",
+      "agent_role": "orchestrator",
+      "mode": "dry_run",
+      "engine": "fixture",
+      "run_graph": false,
+      "only_evaluators": ["invalid_event"],
+      "expect_eval_fail": ["invalid_event"],
+      "fixture": {
+        "board_status": "Todo",
+        "events": ["claim", "teleport_done"],
+        "status_sequence": ["Todo", "In Progress", "Done"],
+        "steps": 3,
+        "hitl_pending": false,
+        "model_tier": {"tier": "default", "model": "n/a", "purpose": "route"}
+      },
+      "expected_events": ["claim", "open_pr"],
+      "expected_status_sequence": ["Todo", "In Progress", "Ready for Code Review"],
+      "expected_final_status": "Ready for Code Review",
+      "expected_hitl": false,
+      "max_steps": 40
+    },
+    {
+      "id": "fixture_max_steps",
+      "task_id": "T-FIXTURE-LOOP",
+      "title": "Loop excedeu max_steps",
+      "agent_role": "orchestrator",
+      "mode": "dry_run",
+      "engine": "fixture",
+      "run_graph": false,
+      "only_evaluators": ["max_steps"],
+      "expect_eval_fail": ["max_steps"],
+      "fixture": {
+        "board_status": "In Progress",
+        "events": ["claim"],
+        "status_sequence": ["Todo", "In Progress"],
+        "steps": 99,
+        "hitl_pending": false,
+        "model_tier": {"tier": "default", "model": "n/a", "purpose": "route"}
+      },
+      "expected_events": ["claim"],
+      "expected_status_sequence": ["Todo", "In Progress"],
+      "expected_final_status": "In Progress",
+      "expected_hitl": false,
+      "max_steps": 20
+    }
+  ]
+}

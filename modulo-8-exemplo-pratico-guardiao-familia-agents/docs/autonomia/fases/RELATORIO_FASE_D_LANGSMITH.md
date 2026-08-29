@@ -17,15 +17,15 @@
 | D2 | Spans `claim` / `open_pr` / `review` / `qa` / `hitl` / `merge` | OK — `pipeline_span` nos nós |
 | D3 | Metadata `task_id`, `mode`, `dry_run`, tags | OK — `build_invoke_config` |
 | Dep | `langsmith>=0.1` em `requirements.txt` | OK |
-| Testes | `tests/test_langsmith_tracing.py` | OK (5) |
+| Testes | `agents/00-orchestration/evals/` + `langsmith_eval.py` | OK |
 
 ### D4–D5
 
 | ID | Item | Status |
 |----|------|--------|
 | D4 | Dataset estático `evals/datasets/kanban_pipeline.json` | OK — 10 cases (v1.3; exemplo LangGraph live T-P13-011) |
-| D5 | Avaliadores + `scripts/langsmith_eval.py` | OK — 7 evaluators |
-| Testes | `tests/test_evals_kanban.py` | OK |
+| D5 | Avaliadores + `agents/00-orchestration/scripts/langgraph/langsmith_eval.py` | OK — 7 evaluators |
+| Eval dataset | `agents/00-orchestration/evals/datasets/kanban_pipeline.json` | OK |
 | Validação | 8/8 local + `happy_sos_006` com LangGraph | OK |
 
 ---
@@ -47,9 +47,9 @@ Instrumentar o grafo LangGraph (Fase C) com **tracing LangSmith**, metadata por 
 
 | Item | Onde |
 |------|------|
-| Grafo + CLI | `langgraph_app/`, `scripts/langgraph_run.py` |
+| Grafo + CLI | `agents/00-orchestration/langgraph_app/`, `agents/00-orchestration/scripts/langgraph/langgraph_run.py` |
 | Tokens locais | HTML task + `token_usage` |
-| Env / TLS | `crew/.env`, `env_load`, `certs/` |
+| Env / TLS | `.env`, `lib/env_load`, `certs/` |
 | Tracing P0 | `langgraph_app/tracing.py` |
 
 ### Lacunas restantes (D4–D6)
@@ -140,7 +140,7 @@ Kanban/gateway inalterados; HTML da banca intacto; overhead de rede no export de
 
 ```powershell
 python -m unittest tests.test_langsmith_tracing tests.test_langgraph_decisions -v
-python scripts/langgraph_run.py --task T-P05-006 --mode dry_run --from-zero
+python agents/00-orchestration/scripts/langgraph/langgraph_run.py --task T-P05-006 --mode dry_run --from-zero
 ```
 
 | ID | Esperado | P0 |
@@ -162,8 +162,8 @@ Evidências: projeto `guardiao-familia-agents`; run `guardiao-kanban:T-P05-006`;
 Validar:
 
 ```powershell
-python scripts/langsmith_eval.py
-python scripts/langsmith_eval.py --with-graph --case happy_sos_006
+python agents/00-orchestration/scripts/langgraph/langsmith_eval.py
+python agents/00-orchestration/scripts/langgraph/langsmith_eval.py --with-graph --case happy_sos_006
 ```
 
 ---

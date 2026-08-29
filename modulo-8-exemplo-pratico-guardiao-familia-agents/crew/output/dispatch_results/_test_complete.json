@@ -1,1 +1,0 @@
-{"job_id": "fake", "task_id": "T-I03-001", "role": "devops-cicd", "result_event": "open_pr", "pr_url": "https://example.com/pr/1", "react_trace": [{"thought": "t", "action": "a", "observation": "o"}], "summary": "dry complete test"}
