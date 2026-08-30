@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Agentes × eventos (obrigatório)
 
-Fonte canônica: `lib/reviewer_pairs.py`, `lib/task_status_workflow.py`, `docs/operacao/WORKFLOW_BOARD.md` (módulo 8).
+Fonte canônica: `lib/reviewer_pairs.py`, `lib/task_status_workflow.py`, `agents/_shared/WORKFLOW_BOARD.md` (módulo 8).
 
 Em todo `emit_status_event`, `append_task_action`, comentário de issue e handoff: o **agente do passo** deve ser o dono do evento — nunca reutilizar o creator em review/QA/merge.
 

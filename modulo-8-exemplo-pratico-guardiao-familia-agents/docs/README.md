@@ -22,4 +22,4 @@ Board: [`../board_automation/docs/`](../board_automation/docs/) · templates: [`
 - Estado atual → [`autonomia/ESTADO_ATUAL_FLUXO_E_PROCESSO.md`](autonomia/ESTADO_ATUAL_FLUXO_E_PROCESSO.md)
 - Escolher agente → [`comportamento/README.md`](comportamento/README.md) + `board_automation/data/maps/`
 - Emitir Status → `lib/gateway` (ver [`autonomia/CONFIGURACAO_E_TECNOLOGIA.md`](autonomia/CONFIGURACAO_E_TECNOLOGIA.md))
-- Workflow board → [`../board_automation/docs/WORKFLOW_BOARD.md`](../board_automation/docs/WORKFLOW_BOARD.md)
+- Workflow board → [`../agents/_shared/WORKFLOW_BOARD.md`](../agents/_shared/WORKFLOW_BOARD.md)

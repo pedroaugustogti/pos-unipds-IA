@@ -9,7 +9,7 @@ GitHub Project, roteamento de tasks, templates de issue e sincronização de sta
 | Saber qual agente pega a task | `data/maps/TASK_AGENT_MAP.csv` |
 | Reconciliar CSV ↔ Project | `scripts/cli/reconcile_board.py` |
 | Gerar body de issue | `board/issue_task_body.py` + `templates/` |
-| Entender colunas/eventos | `docs/WORKFLOW_BOARD.md` |
+| Entender colunas/eventos | [`../agents/_shared/WORKFLOW_BOARD.md`](../agents/_shared/WORKFLOW_BOARD.md) |
 | Seed sandbox | `scripts/seeds/` |
 
 ## Subpastas

@@ -9,7 +9,8 @@ body:
       value: |
         ## Instruções
         Preencha **todos** os campos obrigatórios. O orquestrador LangGraph, o `TASK_AGENT_MAP.csv` e o **qa-gate** consomem este conteúdo.
-        Referências: `agents/_shared/STATEGRAPH_FLOW.md` · `agents/_shared/REPOS_AND_ROUTING.md`
+        O corpo completo da issue é gerado por `board_automation/board/issue_task_body.py` (sem links `.md` — conteúdo inline + Anexos A–E).
+        Referência: issue [#103 T-P3-009](https://github.com/guardiaofamilia/guardiao-familia-child/issues/103).
 
   - type: input
     id: task_id
@@ -106,7 +107,7 @@ body:
     id: user_flow_map
     attributes:
       label: "Fluxo do usuário até a funcionalidade (obrigatório se frontend-mobile)"
-      description: "Tabela passo a passo + tela alvo. Ver board_automation/templates/MOBILE_USER_FLOW_TEMPLATE.md"
+      description: "Campos: app, entry_point, preconditions, steps[], target_screen, target_element, emulator, metro_port, qa_repro_steps[]. Reprodução QA/Appium (sec. 2.1) — **sempre MCP** `guardiao-familia-agents`; qa_repro_steps = cenários pós-suite, não comandos CLI"
       placeholder: |
         App: guardiao-familia-parent
         Entry: cold start
@@ -114,6 +115,11 @@ body:
         | # | Tela | Ação | Comportamento | Arquivo |
         | 1 | ParentSplashScreen | Abrir app | Splash exibido | screens/ParentSplashScreen.tsx |
         Alvo: tagline Text → "Project 3 — Parent OK"
+
+        ### Reproduzir (QA / Appium) — via MCP
+        1. qa_db_seed → qa_appium_suite_* (sec. 6)
+        2. Validar elemento alvo + screenshot
+        3. MP4 se AC exigir
 
   - type: textarea
     id: in_scope
@@ -130,7 +136,7 @@ body:
     id: out_of_scope
     attributes:
       label: "Fora do escopo (obrigatório — redirecionar agente)"
-      description: "Se tocar isto, comentar issue e redirecionar — ver REPOS_AND_ROUTING.md"
+      description: "Se tocar isto, comentar na issue e redirecionar (sec. 3 e 7 — ex.: Terraform → cloud-infra, mobile → frontend-mobile)"
       placeholder: |
         - Terraform → cloud-infra
         - Apps mobile → frontend-mobile
@@ -271,7 +277,7 @@ body:
     id: agent_payload_json
     attributes:
       label: "Payload JSON (opcional — preencher se criar via script)"
-      description: "Bloco `agent-task` para parsers — ver board_automation/templates/ISSUE_AGENT_TASK.md"
+      description: "Bloco `agent-task` para parsers — schema na sec. 9 da issue (gerado por issue_task_body.py)"
       render: json
       placeholder: |
         {

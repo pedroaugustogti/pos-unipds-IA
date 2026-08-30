@@ -5,8 +5,6 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from lib.core.agent_paths import agent_prompt_path, skill_path
-from lib.paths import MODULE_ROOT
 from board_automation.board.reviewer_pairs import reviewer_for
 
 GUARDAO_ROOT = r"C:\Users\pedro\Documents\guardiao-familia"
@@ -44,8 +42,86 @@ MOBILE_DEFAULTS = {
     "guardiao-familia-child": {"emulator": "emulator-5556", "metro_port": 9090, "bundle": "com.guardiofilho"},
 }
 
+_QA_REPRO_CLI_MARKERS = (
+    "qa_mobile_evidence.py",
+    "mobile_e2e_seed.py",
+    "qa-gate/scripts/",
+    "python agents/",
+    "subir stack:",
+)
 
-def format_user_flow_section(ref: dict[str, Any], repo: str, agent_role: str) -> list[str]:
+
+def _normalize_qa_repro_steps(steps: list[str], *, mobile: bool) -> list[str]:
+    """Remove passos de execução CLI — qa_repro_steps = o que validar após suite MCP."""
+    if not mobile or not steps:
+        return steps
+    out = [s for s in steps if not any(m in s.lower() for m in _QA_REPRO_CLI_MARKERS)]
+    if out:
+        return out
+    return [
+        "Após `qa_appium_suite_*`: confirmar `target_element` visível",
+        "Screenshot + MP4 conforme AC (gerados pela suite MCP)",
+    ]
+
+
+def format_qa_repro_appium_section(
+    tid: str,
+    qa_steps: list[str],
+    qa: dict[str, Any],
+) -> list[str]:
+    """Secção 2.1 — reprodução QA/Appium sempre via MCP."""
+    raw_seed = qa.get("db_seed")
+    profile = "child_home"
+    if isinstance(raw_seed, dict):
+        profile = str(raw_seed.get("profile") or profile)
+    appium_tool = "qa_appium_suite_child" if profile != "pairing_warm" else "qa_appium_suite_parent"
+    cleanup_note = (
+        f"7. qa_db_cleanup(task_id=\"{tid}\", dry_run=false)  # qa.db_seed.cleanup=true"
+        if isinstance(raw_seed, dict) and raw_seed.get("cleanup")
+        else f"7. qa_db_cleanup(task_id=\"{tid}\", dry_run=false)  # se qa.db_seed.cleanup=true"
+    )
+
+    lines = [
+        "### Reproduzir (QA / Appium)",
+        "",
+        "> **Regra:** reprodução E2E/Appium é **sempre via MCP** (`guardiao-familia-agents`). "
+        "Não usar `qa_mobile_evidence.py`, Appium CLI ou `adb` como caminho principal — "
+        "executar a sequência abaixo (detalhe na **sec. 6** e **Anexo D**). "
+        "Fallback CLI somente se `list_mcp_tools()` falhar.",
+        "",
+        "```",
+        "1. list_mcp_tools()",
+        f"2. get_handoff(task_id=\"{tid}\")",
+        f"3. emit_status_event(task_id=\"{tid}\", event=\"start_test\", dry_run=false)",
+        f"4. query_mobile_flow_rag(query=<feature/tela>, task_id=\"{tid}\")",
+        f"5. qa_db_seed(task_id=\"{tid}\", profile=\"{profile}\", use_task_config=true, dry_run=false)",
+        f"6. {appium_tool}(from_db_seed=true, task_id=\"{tid}\", dry_run=false)",
+        "   # validar cenários abaixo + evidências PNG/MP4",
+        cleanup_note,
+        f"8. emit_status_event(task_id=\"{tid}\", event=\"test_passed\"|\"test_failed_bug\", dry_run=false)",
+        "```",
+        "",
+        "#### Cenários a validar (pós-suite MCP)",
+    ]
+    if qa_steps:
+        lines.extend(f"{i + 1}. {s}" for i, s in enumerate(qa_steps))
+    else:
+        lines.extend([
+            "1. Seguir passos da tabela acima até `target_element`",
+            "2. Screenshot/vídeo no elemento alvo",
+        ])
+    lines.append("")
+    return lines
+
+
+def format_user_flow_section(
+    ref: dict[str, Any],
+    repo: str,
+    agent_role: str,
+    *,
+    tid: str = "",
+    qa: dict[str, Any] | None = None,
+) -> list[str]:
     """Secção 2.1 — obrigatória para frontend-mobile."""
     if agent_role != "frontend-mobile":
         return []
@@ -81,17 +157,29 @@ def format_user_flow_section(ref: dict[str, Any], repo: str, agent_role: str) ->
     else:
         steps_block = "| # | Tela | Ação | Comportamento | Arquivo |\n|---|------|------|---------------|--------|\n| 1 | | | | |"
 
-    mermaid_block = f"```mermaid\n{mermaid}\n```" if mermaid else "_diagrama opcional — ver MOBILE_USER_FLOW_TEMPLATE.md_"
+    mermaid_block = f"```mermaid\n{mermaid}\n```" if mermaid else "_diagrama opcional_"
 
     qa_steps = uf.get("qa_repro_steps") or []
-    qa_block = "\n".join(f"{i + 1}. {s}" for i, s in enumerate(qa_steps)) if qa_steps else "1. Seguir tabela acima no emulador\n2. Screenshot/vídeo no elemento alvo"
+    qa_dict = qa or {}
+    qa_steps = _normalize_qa_repro_steps(qa_steps, mobile=_is_mobile_qa(repo, qa_dict))
+    repro_block = (
+        format_qa_repro_appium_section(tid, qa_steps, qa_dict)
+        if tid and _is_mobile_qa(repo, qa_dict)
+        else [
+            "### Reproduzir (QA / Appium)",
+            "\n".join(f"{i + 1}. {s}" for i, s in enumerate(qa_steps))
+            if qa_steps
+            else "1. Seguir tabela acima no emulador\n2. Screenshot/vídeo no elemento alvo",
+            "",
+        ]
+    )
 
     return [
         "",
         "## 2.1 Fluxo do usuário até a funcionalidade *(frontend-mobile — obrigatório)*",
         db_note,
         "",
-        "> Regra: [`MOBILE_USER_FLOW_TEMPLATE.md`](board_automation/templates/MOBILE_USER_FLOW_TEMPLATE.md). Creator e qa-gate **seguem estes passos**.",
+        "> Creator e qa-gate **seguem os passos abaixo** (user flow obrigatório: `app`, `entry_point`, `preconditions`, `steps`, `target_screen`, `target_element`, `emulator`, `metro_port`).",
         "",
         f"| Campo | Valor |",
         f"|-------|-------|",
@@ -113,9 +201,7 @@ def format_user_flow_section(ref: dict[str, Any], repo: str, agent_role: str) ->
         "### Diagrama",
         mermaid_block,
         "",
-        "### Reproduzir (QA / Appium)",
-        qa_block,
-        "",
+        *repro_block,
     ]
 
 
@@ -151,6 +237,199 @@ def format_agent_responsibilities_section(task: dict[str, Any], reviewer: str) -
     return lines if found else []
 
 
+def _is_mobile_qa(repo: str, qa: dict[str, Any]) -> bool:
+    return repo in MOBILE_APPS or bool(qa.get("db_seed"))
+
+
+def format_phase_table(
+    agent_role: str,
+    reviewer: str,
+    handoff: dict[str, Any],
+    repo: str,
+    qa: dict[str, Any],
+) -> list[str]:
+    mobile = _is_mobile_qa(repo, qa)
+    rag = ", RAG antes de codar" if agent_role == "frontend-mobile" else ""
+    qa_cell = (
+        "MCP `qa_db_seed` → `qa_appium_suite_*` → evidências → `qa_db_cleanup`"
+        if mobile
+        else "Executar suite sec. 6 + evidências"
+    )
+    impl_forbid = "Merge, QA Appium, fora do escopo" if mobile else "Merge, QA E2E, fora do escopo"
+    return [
+        "| Fase | Board Status | Agente | Responsabilidade | Proibido nesta fase |",
+        "|------|--------------|--------|------------------|---------------------|",
+        f"| Claim | Todo → In Progress | **{agent_role}** (creator) | Branch, implementar escopo sec. 3, testes{rag} | Review próprio código |",
+        f"| Implementar | In Progress | **{agent_role}** | Entregar diff no escopo sec. 3 + AC locais | {impl_forbid} |",
+        f"| Review | In Code Review | **{reviewer}** | Review PR, `approve_review` / `request_changes` | Implementar feature, rodar QA gate |",
+        f"| QA | In Test | **qa-gate** | {qa_cell} | Merge PR, alterar código |",
+        f"| Merge | In Pull Request | **{handoff['merge_owner']}** | `merge_pr` após HITL | Alterar código da feature |",
+    ]
+
+
+def format_qa_mcp_steps(tid: str, profile: str = "child_home") -> list[str]:
+    appium_tool = "qa_appium_suite_child" if profile != "pairing_warm" else "qa_appium_suite_parent"
+    return [
+        "",
+        "### DB seed + suite (MCP — obrigatório)",
+        "",
+        "| Passo | Tool MCP | Parâmetros |",
+        "|-------|----------|------------|",
+        f"| 1 | `get_handoff` | `task_id={tid}` |",
+        f"| 2 | `emit_status_event` | `event=start_test`, `dry_run=false` |",
+        f"| 3 | `query_mobile_flow_rag` | `query=<tela/feature>`, `task_id={tid}` |",
+        f"| 4 | `qa_db_seed` | `task_id={tid}`, `profile={profile}`, `use_task_config=true`, `dry_run=false` |",
+        f"| 5 | `{appium_tool}` | `from_db_seed=true`, `task_id={tid}`, `dry_run=false` |",
+        f"| 6 | (evidência) | screenshots / MP4 conforme AC |",
+        f"| 7 | `qa_db_cleanup` | `task_id={tid}`, `dry_run=false` |",
+        f"| 8 | `emit_status_event` | `test_passed` ou `test_failed_bug`, `dry_run=false` |",
+        "",
+    ]
+
+
+def format_qa_section(qa: dict[str, Any], tid: str, repo: str) -> list[str]:
+    ev = qa.get("evidence") or {}
+    ev_list = [k.replace("_", " ") for k, v in ev.items() if v] or ["json report"]
+    mobile = _is_mobile_qa(repo, qa)
+    raw_seed = qa.get("db_seed")
+    profile = "child_home"
+    if isinstance(raw_seed, dict):
+        profile = str(raw_seed.get("profile") or profile)
+
+    lines = [
+        "## 6. QA (qa-gate)",
+        "",
+        "| Campo | Valor |",
+        "|-------|-------|",
+        f"| test_suite | `{qa.get('test_suite', 'qa-custom')}` |",
+        f"| Cenários | {', '.join(qa.get('scenarios') or [])} |",
+        f"| Evidências obrigatórias | {', '.join(ev_list)} |",
+    ]
+    if mobile:
+        lines.append("| MCP server | `guardiao-familia-agents` (`list_mcp_tools`) |")
+    lines.append("| Referência QA | **Anexo D** (qa-gate + evidências) |")
+    if mobile:
+        lines.extend(format_qa_mcp_steps(tid, profile))
+    lines.extend(format_db_seed_section(qa, tid))
+    how = (qa.get("how_to_run") or "").strip()
+    if how:
+        label = "**Fallback CLI (somente se MCP indisponível):**" if mobile else "**Comando principal:**"
+        lines.append(label)
+        lines.append("")
+        lines.append("```powershell")
+        lines.append(how)
+        lines.append("```")
+        lines.append("")
+    lines.append("**Regra:** se qualquer AC = FAIL → `test_failed_bug` + comentário qa-gate (sec. 10). Não merge.")
+    lines.append("")
+    return lines
+
+
+def format_appendices(
+    task: dict[str, Any],
+    agent_role: str,
+    reviewer: str,
+    handoff: dict[str, Any],
+    ref: dict[str, Any],
+    qa: dict[str, Any],
+) -> list[str]:
+    tid = task["id"]
+    title = task["title"]
+    repo = task["repo"]
+    mobile = _is_mobile_qa(repo, qa)
+    defaults = MOBILE_DEFAULTS.get(repo, {})
+    files = ref.get("suggested_files") or []
+    file_rows = "\n".join(f"| `{f}` | alteração conforme escopo |" for f in files[:6]) or "| _(suggested_files)_ | |"
+
+    annex_d_mobile = f"""## Anexo D — Papel `qa-gate` + evidências mobile (resumo)
+
+**MCP (obrigatório):** `get_handoff` → `start_test` → `qa_db_seed` → `qa_appium_suite_child(from_db_seed=true)` → screenshots/MP4 → `qa_db_cleanup` → `test_passed` | `test_failed_bug`
+
+**Stack:** Docker API/Postgres · emuladores 5554+5556 · `fast-stack.ps1` no mobile-setup · Appium dual
+
+**Evidências:** PNG + MP4 + JSON em `agents/00-runtime/output/mobile/qa_evidence/{tid}/`
+
+**Marcadores de sucesso:** `fast-stack-last.json` → `ok: true` · log com `PAIRING_COMPLETE` / `SMOKE_CHILD_OK`
+
+**Anti-patterns:** `test_passed` sem evidência visual · Appium sem `APPS_READY_OK` · commitar `stage-handoff.json`"""
+
+    annex_d_generic = """## Anexo D — Papel `qa-gate` (resumo)
+
+- Ler handoff + `start_test` via MCP `emit_status_event`
+- Executar suite sec. 6 e validar todos os AC
+- Anexar evidências (screenshot, log, JSON) na issue
+- `test_passed` somente se todos AC PASS · senão `test_failed_bug`
+- Não alterar código da feature nem fazer merge"""
+
+    annex_b_extra = ""
+    if agent_role == "frontend-mobile":
+        emu = defaults.get("emulator", "emulator-5554")
+        metro = defaults.get("metro_port", 8082)
+        annex_b_extra = f"""
+- Repo desta task: `{repo}` · Metro **{metro}** · emulador **{emu}**
+- Antes de codar: `query_mobile_flow_rag` (MCP) para fluxo 0→N e arquivos de tela"""
+
+    return [
+        "---",
+        "",
+        "## Anexo A — Fluxo board (eventos)",
+        "",
+        "| Evento | Status alvo | Quem dispara |",
+        "|--------|-------------|--------------|",
+        f"| `claim` | In Progress | {agent_role} |",
+        f"| `open_pr` | Ready for Code Review | {agent_role} |",
+        f"| `start_review` | In Code Review | {reviewer} |",
+        f"| `approve_review` | Ready for Test | {reviewer} |",
+        f"| `request_changes` | In Progress | {reviewer} |",
+        f"| `resubmit_review` | In Code Review | {agent_role} (pós-correção) |",
+        "| `start_test` | In Test | qa-gate |",
+        "| `test_passed` | In Pull Request | qa-gate |",
+        "| `test_failed_bug` | In Progress | qa-gate |",
+        f"| `merge_pr` | Done | {handoff['merge_owner']} |",
+        "",
+        f"## Anexo B — Papel `{agent_role}` (resumo)",
+        "",
+        f"- Implementar apenas escopo sec. 3 · eventos MCP: `claim` → `open_pr`{annex_b_extra}",
+        "- Não executar QA gate nem merge — handoff para reviewer e qa-gate",
+        "- Redirecionar trabalho fora do escopo → agente correto (sec. 3)",
+        "",
+        f"## Anexo C — Papel `{reviewer}` (resumo)",
+        "",
+        "- Assumir PR em **Ready for Code Review** (`start_review`)",
+        "- Validar escopo sec. 3, qualidade do código e testes do creator",
+        "- `approve_review` → Ready for Test · `request_changes` → In Progress com comentários acionáveis",
+        "- Não implementar feature nem rodar suite QA gate",
+        "",
+        annex_d_mobile if mobile else annex_d_generic,
+        "",
+        "## Anexo E — Template PR (preencher no `open_pr`)",
+        "",
+        "```markdown",
+        "## Resumo",
+        f"**Task:** {tid} — {title}",
+        f"**Agente:** {agent_role} · **Repo:** {repo}",
+        "",
+        "## Estratégia",
+        "1. _(decisões técnicas principais)_",
+        "2. _(ordem de implementação)_",
+        "",
+        "## Arquivos alterados",
+        "| Arquivo | Mudança |",
+        "|---------|---------|",
+        file_rows,
+        "",
+        "## Test plan",
+        "- [ ] Todos os AC sec. 5 verificados localmente",
+        "- [ ] Sem regressão nos fluxos críticos",
+        "",
+        "## Board",
+        f"- [ ] Issue {tid} → Ready for Code Review",
+        "- [ ] Comentário sec. 10.1 na issue",
+        "```",
+        "",
+    ]
+
+
 def format_db_seed_section(qa: dict[str, Any], task_id: str) -> list[str]:
     raw = qa.get("db_seed")
     if not raw:
@@ -165,7 +444,7 @@ def format_db_seed_section(qa: dict[str, Any], task_id: str) -> list[str]:
     profiles_doc = " · ".join(f"`{k}`" for k in SEED_PROFILES)
     return [
         "",
-        "### DB seed (evidências Appium — opcional)",
+        "### DB seed (config ticket)",
         "",
         "| Campo | Valor |",
         "|-------|-------|",
@@ -176,14 +455,9 @@ def format_db_seed_section(qa: dict[str, Any], task_id: str) -> list[str]:
         f"| resume_after_step | `{cfg.get('resume_after_step', meta.get('resume_after_step'))}` |",
         f"| cleanup | `{bool(cfg.get('cleanup', True))}` pós-evidência |",
         "",
-        f"Profiles: {profiles_doc}",
+        f"Profiles disponíveis: {profiles_doc}",
         "",
-        "**Dependências:** Docker (Postgres/Redis/API) · `guardiao-familia-mobile-setup` · emuladores 5554/5556 · `psycopg` (purge script)",
-        "",
-        "```powershell",
-        f"python agents/qa-gate/scripts/mobile_e2e_seed.py --task {task_id} --profile {profile}",
-        f"python agents/qa-gate/scripts/qa_mobile_evidence.py --task {task_id} --feature pairing --mode cycle --record-video",
-        "```",
+        "**Dependências:** Docker (Postgres/Redis/API) · `guardiao-familia-mobile-setup` · emuladores 5554/5556 · MCP `guardiao-familia-agents` habilitado no Cursor",
         "",
     ]
 
@@ -301,13 +575,6 @@ def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = 
     depends = task.get("depends_on")
     dep_block = f"`{depends}` deve estar **Done** antes de iniciar." if depends else "Nenhuma."
 
-    ev = qa.get("evidence") or {}
-    ev_list = [k.replace("_", " ") for k, v in ev.items() if v] or ["json report"]
-
-    skill = f"`{MODULE8}/{skill_path(agent_role).relative_to(MODULE_ROOT).as_posix()}`"
-    agent_md = f"`{MODULE8}/{agent_prompt_path(agent_role).relative_to(MODULE_ROOT).as_posix()}`"
-    reviewer_skill = f"`{MODULE8}/{skill_path(reviewer).relative_to(MODULE_ROOT).as_posix()}`"
-
     impl_tpl = (conv.get("implementation") or _DEFAULT_IMPL).replace("{agent_role}", agent_role).replace("{reviewer}", reviewer)
     review_tpl = (conv.get("review") or _DEFAULT_REVIEW).replace("{reviewer}", reviewer)
 
@@ -320,15 +587,9 @@ def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = 
         "",
         "## 0. Quem faz o quê (não confundir papéis)",
         "",
-        "| Fase | Board Status | Agente | Skill | Proibido nesta fase |",
-        "|------|--------------|--------|-------|---------------------|",
-        f"| Claim | Todo → In Progress | **{agent_role}** (creator) | {skill} | Review próprio código |",
-        f"| Implementar | In Progress | **{agent_role}** | {agent_md} | Merge, alterar fora do escopo |",
-        f"| Review | In Code Review | **{reviewer}** | {reviewer_skill} | Implementar features novas |",
-        "| QA | In Test | **qa-gate** | `agents/qa-gate/SKILL.md` | Merge PR |",
-        f"| Merge | In Pull Request | **{handoff['merge_owner']}** | agent correspondente | Alterar código da feature |",
+        *format_phase_table(agent_role, reviewer, handoff, repo, qa),
         "",
-        f"Fluxo: [`STATEGRAPH_FLOW.md`](https://github.com/guardiaofamilia/pos-unipds-IA/blob/main/{MODULE8}/agents/_shared/STATEGRAPH_FLOW.md)",
+        "Fluxo board: ver **Anexo A** (eventos) e sec. 8.",
         *format_agent_responsibilities_section(task, reviewer),
         "",
         "## 1. Identificação",
@@ -365,7 +626,7 @@ def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = 
         "### Notas técnicas (factos)",
         "",
         ref.get("technical_notes") or "Ver arquivos sugeridos e AC.",
-        *format_user_flow_section(ref, repo, agent_role),
+        *format_user_flow_section(ref, repo, agent_role, tid=tid, qa=qa),
         "",
         "## 3. Escopo rígido",
         "",
@@ -398,7 +659,7 @@ def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = 
         "",
         "**Antes de `open_pr`:**",
         f"- [ ] Todos os AC verificados localmente (sec. 5)",
-        f"- [ ] PR preenchido com `docs/templates/PR_TEMPLATE.md`",
+        f"- [ ] PR preenchido conforme **Anexo E** (template inline)",
         f"- [ ] Comentário de implementação (sec. 10) na issue",
         f"- [ ] Board → **Ready for Code Review** · evento open_pr",
     ]
@@ -412,22 +673,7 @@ def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = 
         "",
         ac_verify_block,
         "",
-        "## 6. QA (qa-gate)",
-        "",
-        f"| Campo | Valor |",
-        f"|-------|-------|",
-        f"| test_suite | `{qa.get('test_suite', 'qa-custom')}` |",
-        f"| Cenários | {', '.join(qa.get('scenarios') or [])} |",
-        f"| Evidências obrigatórias | {', '.join(ev_list)} |",
-        "",
-        *format_db_seed_section(qa, tid),
-        "**Comando principal:**",
-        "```powershell",
-        qa.get("how_to_run", ""),
-        "```",
-        "",
-        "**Regra:** se qualquer AC = FAIL → `test_failed_bug` + comentário qa-gate (sec. 10). Não merge.",
-        "",
+        *format_qa_section(qa, tid, repo),
         "## 7. Parar e pedir ajuda (anti-alucinação)",
         "",
         stop_block,
@@ -471,6 +717,7 @@ def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = 
         "```markdown",
         conv.get("merge") or _DEFAULT_MERGE,
         "```",
+        *format_appendices(task, agent_role, reviewer, handoff, ref, qa),
     ]
     return "\n".join(line for line in lines if line is not None)
 
@@ -523,9 +770,9 @@ _DEFAULT_QA = """## [qa-gate] QA
 |----|-----------|-----------|
 | AC-01 | PASS/FAIL | |
 
-### Comandos
+### Comandos executados (MCP)
 ```
-
+qa_db_seed / qa_appium_suite_child / qa_db_cleanup / emit_status_event
 ```
 
 ### Evidências

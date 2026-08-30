@@ -9,9 +9,9 @@ Contrato de **status**, **eventos** e **papéis** compartilhado por todos os age
 | **Status em tempo real** | GitHub Project (import JSON) | Coluna atual da task (`board_status`) |
 | **Roteamento e metadados** | CSV de mapa (`TASK_AGENT_MAP*.csv`) | `agent_role`, repo, track, prioridade, dependências |
 
-O orquestrador **mescla** as duas: status vem do board; creator/reviewer vêm do CSV. Detalhes operacionais:
+O orquestrador **mescla** as duas: status vem do board; creator/reviewer vêm do CSV. Referências:
 
-- GitHub Project → [`board_automation/docs/WORKFLOW_BOARD.md`](../../board_automation/docs/WORKFLOW_BOARD.md)
+- Board automation (reconcile, imports) → [`board_automation/README.md`](../../board_automation/README.md)
 - CSV / roteamento → [`board_automation/data/maps/README.md`](../../board_automation/data/maps/README.md)
 - Nós LangGraph e eventos → [`STATEGRAPH_FLOW.md`](./STATEGRAPH_FLOW.md)
 

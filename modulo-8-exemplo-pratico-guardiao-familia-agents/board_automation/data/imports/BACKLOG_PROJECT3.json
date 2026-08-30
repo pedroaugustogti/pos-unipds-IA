@@ -418,11 +418,10 @@
           "Aprovar com `approve_review` ou devolver com `request_changes` — **não** implementar feature nem rodar Appium"
         ],
         "qa-gate": [
-          "Executar seed no banco local: `python agents/qa-gate/scripts/mobile_e2e_seed.py --task T-P3-009 --profile child_home` (ou automático via `qa_mobile_evidence.py`)",
-          "Subir suite Appium dual-emulator (`qa_mobile_evidence.py --feature pairing --mode cycle`)",
-          "Validar no app `guardiao-familia-child` os três cenários injetando hora no emulador: 08:00 (Bom dia), 15:00 (Boa tarde), 21:00 (Boa noite)",
-          "Gerar evidências: 3 PNG + 3 MP4 + report JSON em `crew/output/evidence/T-P3-009/`",
-          "Cleanup pós-evidência (purge Postgres + reset handoff) quando `qa.db_seed.cleanup=true`",
+          "MCP sec. 6: `get_handoff` → `start_test` → `query_mobile_flow_rag` → `qa_db_seed(profile=child_home)` → `qa_appium_suite_child(from_db_seed=true)`",
+          "Validar header ChildHomeV2 nos 3 horários (emulador 5556): 08:00 Bom dia · 15:00 Boa tarde · 21:00 Boa noite",
+          "Evidências geradas pela suite MCP: 3 PNG + 3 MP4 + JSON em `agents/00-runtime/output/mobile/qa_evidence/T-P3-009/`",
+          "`qa_db_cleanup` quando `qa.db_seed.cleanup=true`",
           "Disparar `test_passed` ou `test_failed_bug` com comentário sec. 10.3 — **não** alterar código da feature"
         ]
       },
@@ -479,11 +478,11 @@
             {"order": 3, "screen": "ChildHomeV2", "user_action": "Visualizar header azul", "system_behavior": "Saudação dinâmica + nome", "file": "screens/ChildHomeV2.tsx"}
           ],
           "qa_repro_steps": [
-            "Subir stack: `python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle`",
-            "Ajustar hora do emulador para 08:00 → screenshot header (Bom dia)",
-            "Ajustar hora para 15:00 → screenshot header (Boa tarde)",
-            "Ajustar hora para 21:00 → screenshot header (Boa noite)",
-            "Gravar MP4 de cada cenário desde PrePairing até home (ou pairing completo + jump de relógio)"
+            "Após `qa_appium_suite_child(from_db_seed=true)`: confirmar PAIRING_COMPLETE e ChildHomeV2 visível",
+            "Emulador 5556 às 08:00 → header exibe **Bom dia** (screenshot MCP)",
+            "Emulador 5556 às 15:00 → header exibe **Boa tarde** (screenshot MCP)",
+            "Emulador 5556 às 21:00 → header exibe **Boa noite** (screenshot MCP)",
+            "MP4 por período gerado pela suite MCP (pairing→home ou jump de relógio na home)"
           ],
           "mermaid": "flowchart LR\n  pairing[Pairing child] --> perms[Permissões]\n  perms --> home[ChildHomeV2 header]"
         }
@@ -513,7 +512,7 @@
           "cleanup": true,
           "bootstrap_api": true
         },
-        "how_to_run": "cd modulo-8-exemplo-pratico-guardiao-familia-agents && python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle --record-video"
+        "how_to_run": "MCP obrigatório (sec. 6). Fallback CLI somente se MCP indisponível: python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle --record-video"
       }
     }
   ]

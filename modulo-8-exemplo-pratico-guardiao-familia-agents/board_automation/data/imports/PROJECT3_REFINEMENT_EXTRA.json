@@ -259,11 +259,10 @@
         "Aprovar com `approve_review` ou devolver com `request_changes` — **não** implementar feature nem rodar Appium"
       ],
       "qa-gate": [
-        "Executar seed no banco local: `python agents/qa-gate/scripts/mobile_e2e_seed.py --task T-P3-009 --profile child_home` (ou automático via `qa_mobile_evidence.py`)",
-        "Subir suite Appium dual-emulator (`qa_mobile_evidence.py --feature pairing --mode cycle`)",
-        "Validar no app `guardiao-familia-child` os três cenários injetando hora no emulador: 08:00 (Bom dia), 15:00 (Boa tarde), 21:00 (Boa noite)",
-        "Gerar evidências: 3 PNG + 3 MP4 + report JSON em `crew/output/evidence/T-P3-009/`",
-        "Cleanup pós-evidência (purge Postgres + reset handoff) quando `qa.db_seed.cleanup=true`",
+        "MCP sec. 6: `get_handoff` → `start_test` → `query_mobile_flow_rag` → `qa_db_seed(profile=child_home)` → `qa_appium_suite_child(from_db_seed=true)`",
+        "Validar header ChildHomeV2 nos 3 horários (emulador 5556): 08:00 Bom dia · 15:00 Boa tarde · 21:00 Boa noite",
+        "Evidências geradas pela suite MCP: 3 PNG + 3 MP4 + JSON em `agents/00-runtime/output/mobile/qa_evidence/T-P3-009/`",
+        "`qa_db_cleanup` quando `qa.db_seed.cleanup=true`",
         "Disparar `test_passed` ou `test_failed_bug` com comentário sec. 10.3 — **não** alterar código da feature"
       ]
     },
@@ -271,8 +270,8 @@
       "do_not_touch": ["SOS button", "screen time card", "pairing API contracts"],
       "ac_verification": [
         {"id": "AC-01", "command": "npm test -- childHome.state", "expected": "exit 0 — casos 08:00 Bom dia, 15:00 Boa tarde, 21:00 Boa noite"},
-        {"id": "AC-02", "command": "adb -s emulator-5556 shell date 080800002026.00 && relaunch child home", "expected": "header contém Bom dia"},
-        {"id": "AC-03", "command": "python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle --record-video", "expected": "3 PNG + 3 MP4 em crew/output/mobile_evidence/T-P3-009/"}
+        {"id": "AC-02", "command": "MCP qa_appium_suite_child + relógio 08:00 no emulator-5556", "expected": "header contém Bom dia"},
+        {"id": "AC-03", "command": "MCP qa_appium_suite_child(from_db_seed=true) + evidências", "expected": "3 PNG + 3 MP4 + JSON em agents/00-runtime/output/mobile/qa_evidence/T-P3-009/"}
       ],
       "stop_and_redirect": [
         "Alterar pairing parent → frontend-mobile parent task",

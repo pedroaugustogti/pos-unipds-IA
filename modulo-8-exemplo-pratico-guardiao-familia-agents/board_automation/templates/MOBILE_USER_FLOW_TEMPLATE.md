@@ -60,10 +60,13 @@ flowchart LR
   splash --> target[Elemento alterado visível]
 ```
 
-### Como reproduzir (QA / Appium)
+### Como reproduzir (QA / Appium) — **sempre MCP**
 
-1. 
-2. Screenshot no passo final · vídeo do fluxo completo (se AC exigir)
+> Reprodução E2E via MCP `guardiao-familia-agents`. Não usar scripts Appium/CLI como caminho principal.
+
+1. `list_mcp_tools()` → `get_handoff` → `start_test` → `query_mobile_flow_rag` → `qa_db_seed` → `qa_appium_suite_*` → evidências → `qa_db_cleanup` → `test_passed`|`test_failed_bug`
+2. Cenários a validar (pós-suite): _(listar qa_repro_steps — ex. screenshot header, horários)_
+3. Fallback CLI somente se MCP indisponível
 
 ---
 
@@ -73,7 +76,7 @@ flowchart LR
 |--------|----------------|
 | **frontend-mobile** | Seguir passos para localizar arquivo; não editar tela errada |
 | **frontend-mobile-reviewer** | Confirmar diff só afeta `target_screen` / navigation citada |
-| **qa-gate** | Executar passos idênticos; evidência deve mostrar último step |
+| **qa-gate** | Executar sec. 2.1 via **MCP** (`qa_appium_suite_*`); evidência deve mostrar último step |
 
 Se o fluxo real no repo **divergir** do ticket → comentar issue e pedir correção do mapa **antes** de codar.
 

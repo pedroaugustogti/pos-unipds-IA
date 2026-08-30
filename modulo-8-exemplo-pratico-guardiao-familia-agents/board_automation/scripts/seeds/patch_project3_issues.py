@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import subprocess
 import time
 from pathlib import Path
 
@@ -16,7 +17,7 @@ assert _spec and _spec.loader
 _spec.loader.exec_module(_mod)
 _mod.setup()
 
-from board_automation.board.board_client import ORG, _gh_run  # noqa: E402
+from board_automation.board.board_client import ORG  # noqa: E402
 from board_automation.board.issue_task_body import build_issue_body  # noqa: E402
 from lib.paths import BOARD_IMPORTS_DIR, PROJECT3_ITEM_CACHE_PATH  # noqa: E402
 
@@ -52,13 +53,16 @@ def update_issue(repo: str, number: str, body: str, *, dry_run: bool) -> None:
     if dry_run:
         print(f"  dry-run issue #{number} ({len(body)} chars)")
         return
-    r = _gh_run(
-        "issue", "edit", number,
-        "--repo", f"{ORG}/{repo}",
-        "--body", body,
+    payload = json.dumps({"body": body}, ensure_ascii=False).encode("utf-8")
+    r = subprocess.run(
+        ["gh", "api", "-X", "PATCH", f"repos/{ORG}/{repo}/issues/{number}", "--input", "-"],
+        input=payload,
+        capture_output=True,
+        check=False,
     )
     if r.returncode != 0:
-        raise RuntimeError((r.stderr or r.stdout or "")[:500])
+        err = (r.stderr or r.stdout or b"").decode("utf-8", errors="replace")
+        raise RuntimeError(err[:500])
 
 
 def main() -> int:

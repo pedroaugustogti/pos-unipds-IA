@@ -900,11 +900,11 @@
             }
           ],
           "qa_repro_steps": [
-            "Subir stack: `python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle`",
-            "Ajustar hora do emulador para 08:00 → screenshot header (Bom dia)",
-            "Ajustar hora para 15:00 → screenshot header (Boa tarde)",
-            "Ajustar hora para 21:00 → screenshot header (Boa noite)",
-            "Gravar MP4 de cada cenário desde PrePairing até home (ou pairing completo + jump de relógio)"
+            "Após `qa_appium_suite_child(from_db_seed=true)`: confirmar PAIRING_COMPLETE e ChildHomeV2 visível",
+            "Emulador 5556 às 08:00 → header exibe **Bom dia** (screenshot MCP)",
+            "Emulador 5556 às 15:00 → header exibe **Boa tarde** (screenshot MCP)",
+            "Emulador 5556 às 21:00 → header exibe **Boa noite** (screenshot MCP)",
+            "MP4 por período gerado pela suite MCP (pairing→home ou jump de relógio na home)"
           ],
           "mermaid": "flowchart LR\n  pairing[Pairing child] --> perms[Permissões]\n  perms --> home[ChildHomeV2 header]"
         },
@@ -921,13 +921,13 @@
           },
           {
             "id": "AC-02",
-            "command": "adb -s emulator-5556 shell date 080800002026.00 && relaunch child home",
+            "command": "MCP qa_appium_suite_child + relógio 08:00 no emulator-5556",
             "expected": "header contém Bom dia"
           },
           {
             "id": "AC-03",
-            "command": "python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle --record-video",
-            "expected": "3 PNG + 3 MP4 em crew/output/mobile_evidence/T-P3-009/"
+            "command": "MCP qa_appium_suite_child(from_db_seed=true) + evidências",
+            "expected": "3 PNG + 3 MP4 + JSON em agents/00-runtime/output/mobile/qa_evidence/T-P3-009/"
           }
         ],
         "stop_and_redirect": [
@@ -960,7 +960,7 @@
           "cleanup": true,
           "bootstrap_api": true
         },
-        "how_to_run": "cd modulo-8-exemplo-pratico-guardiao-familia-agents && python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle --record-video"
+        "how_to_run": "MCP obrigatório (sec. 6). Fallback CLI somente se MCP indisponível: python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle --record-video"
       }
     }
   ]

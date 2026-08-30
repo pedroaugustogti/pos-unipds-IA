@@ -1,7 +1,8 @@
 # MCP — Guardião Família (módulo 8)
 
 Servidor: `guardiao_mcp` · namespace Cursor: `guardiao-familia-agents`  
-Descobrir catálogo: **`list_mcp_tools`**
+Descobrir catálogo: **`list_mcp_tools`**  
+Prompts LLM (descrições por tool): `agents/00-orchestration/guardiao_mcp/tool_prompts.py`
 
 ## Regras gerais
 
