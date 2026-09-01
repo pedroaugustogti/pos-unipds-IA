@@ -39,7 +39,7 @@
 
 - **Gateway:** Status apenas via `emit_status_event`
 - **Handoff:** workflows alterados, impacto em repos em `agents/00-runtime/output/{task_id}/handoff.json`
-- **ReAct:** claim → editar workflow → validar local/dry-run → `open_pr` (ver `agent.md`)
+- **ReAct:** `on_status_event` → `developer_implement` → `execute_agent_actuation_tool` (eventos `devops-cicd_*`; ver `agent.md`)
 - Nunca expor secrets no repositório; nunca mergear sem reviewer
 
 ## Ver também

@@ -8,7 +8,7 @@ Código de domínio do pipeline MCP + LangGraph. Board GitHub: [`board_automatio
 |-------|------------------|
 | [`core/`](core/) | LLM tier, repos, ReAct policy, agent registry |
 | [`gateway/`](gateway/) | Status, handoff, HITL, guardrail de atuação |
-| [`orchestrator/`](orchestrator/) | Runtime de agentes, actuation, claim, outbox |
+| [`orchestrator/`](orchestrator/) | Runtime, actuation MCP, claim lock, fases |
 | [`ci/`](ci/) | Sinais CI → gateway |
 | [`mobile/`](mobile/) | Appium, seed QA, RAG de fluxos |
 | [`site/`](site/) | Tasks web (hero) |

@@ -3,6 +3,33 @@
 Digest gerado de todos os `README.md` (exceto `output/`, `skills/` legado).
 Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 
+## MCP Guardião Família (v2)
+
+Servidor: `guardiao_mcp` · [`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · [`../_shared/MCP_ROLE_GUIDE.md`](../_shared/MCP_ROLE_GUIDE.md) · `list_mcp_tools`
+
+**Classificação:** creator · **Papel:** `frontend-web` · Revisor: `frontend-web-reviewer`
+
+| Tool | Quando |
+|------|--------|
+| `list_status_events` | Filtrar `agent_role=frontend-web` |
+| `on_status_event` | Antes de atuar — ticket, handoff, playbook |
+| `hitl_guard_actuation` | Obrigatório antes de `execute_agent_actuation_tool` |
+| `developer_implement` | Fase implement (`In Progress`) |
+| `execute_agent_actuation_tool` | Fecha fase + emite próximo evento |
+| `emit_status_event` | Única porta de status |
+
+**Sequência:** `on_status_event` → `hitl_guard_actuation` → `developer_implement` → `execute` (use `phase_work`).
+
+| Status | Evento |
+|--------|--------|
+| In Progress | `frontend-web_in_progress` |
+| Ready for Code Review | `frontend-web_ready_for_code_review` (+ `pr_url`) |
+| In Code Review | `frontend-web_in_code_review` |
+
+Handoff: `agents/00-runtime/output/{task_id}/handoff.json`
+
+---
+
 ## agents/
 
 ### `agents/00-orchestration/docs/`

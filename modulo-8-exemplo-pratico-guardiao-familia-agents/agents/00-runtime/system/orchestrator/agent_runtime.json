@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-09-01T02:31:00.625229+00:00",
+  "updated_at": "2026-09-01T02:47:01.490602+00:00",
   "agents": {
     "backend": {
       "state": "idle",
@@ -20,7 +20,7 @@
     "frontend-mobile-reviewer": {
       "state": "idle",
       "task_id": null,
-      "updated_at": "2026-09-01T02:25:15.606992+00:00"
+      "updated_at": "2026-09-01T02:47:01.490602+00:00"
     },
     "frontend-web": {
       "state": "idle",
@@ -1378,6 +1378,204 @@
       "assigned_agent": "frontend-mobile-reviewer",
       "issued_at": 1788229513.670588,
       "expires_at": 1788233113.670588,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-309c266231ac9d7dd8f81ed9": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230731.5830107,
+      "expires_at": 1788234331.5830107,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-f12c6f21b07f9b13175abd3c": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230738.948379,
+      "expires_at": 1788234338.948379,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-e8329db70bff4b5a4e8fbc77": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230744.9525602,
+      "expires_at": 1788234344.9525602,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-88beeca69e8b73a5a8fe4b63": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230754.1421318,
+      "expires_at": 1788234354.1421318,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-055daf08f060767e6736f268": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230775.1425748,
+      "expires_at": 1788234375.1425748,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-97ba81b13f33f03c21e1c865": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230785.885377,
+      "expires_at": 1788234385.885377,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-ef3bc11614c2d84946038a94": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230788.204871,
+      "expires_at": 1788234388.204871,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-4eb33ad7387e946bb284ad87": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230794.6438074,
+      "expires_at": 1788234394.6438074,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-937f1d91fd53734f671b0b0c": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230796.65129,
+      "expires_at": 1788234396.65129,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-9bf070a841e2bc33e3409f77": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230801.837483,
+      "expires_at": 1788234401.837483,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-d8e515dd7ad37b317a63c6d2": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230803.5460484,
+      "expires_at": 1788234403.5460484,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-1045b2f61fb336bf0e0e0323": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230804.6048024,
+      "expires_at": 1788234404.6048024,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-9b0ba147aea7929027a4ef76": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230809.6461291,
+      "expires_at": 1788234409.6461291,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-beb26706d7cc916704c03829": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230811.2850268,
+      "expires_at": 1788234411.2850268,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-752b35562f7baffcc0e195f6": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230812.650244,
+      "expires_at": 1788234412.650244,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-357aab765da026504afcf5fe": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230817.1910884,
+      "expires_at": 1788234417.1910884,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-3dc52749fe425ec4221d4975": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230817.7154663,
+      "expires_at": 1788234417.7154663,
+      "human_cleared": true,
+      "used": true
+    },
+    "guard-T-P3-009-a811acf14cc9090a8e9ac57a": {
+      "context_key": "31719837719de4c8",
+      "task_id": "T-P3-009",
+      "event": "frontend-mobile-reviewer_in_code_review",
+      "target_status": "In Code Review",
+      "assigned_agent": "frontend-mobile-reviewer",
+      "issued_at": 1788230819.491389,
+      "expires_at": 1788234419.491389,
       "human_cleared": true,
       "used": true
     }

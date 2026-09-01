@@ -17,15 +17,17 @@ Revisor pareado: `../frontend-mobile-reviewer/SKILL.md`
 
 ## MCP
 
-[`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · `list_mcp_tools`
+[`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · [`../_shared/MCP_ROLE_GUIDE.md`](../_shared/MCP_ROLE_GUIDE.md) · `list_mcp_tools`
 
 | Tool | Uso neste papel |
 |------|-----------------|
-| `query_mobile_flow_rag` | **Antes de codar** — fluxo 0→N, arquivos, labels |
-| `emit_status_event` | `claim`, `open_pr`, `resubmit_review` |
-| `get_handoff` / `write_handoff_tool` | Handoff + dúvidas mobile |
-| `append_task_action_tool` | Trilha ReAct |
-| `pick_task_tool` | Próxima task `frontend-mobile` |
+| `on_status_event` | Contexto antes de atuar |
+| `hitl_guard_actuation` | Obrigatório antes de `execute` |
+| `developer_implement` | Fase implement |
+| `execute_agent_actuation_tool` | Fecha fase + próximo evento |
+| `emit_status_event` | `frontend-mobile_in_progress`, `_ready_for_code_review`, `_in_code_review` |
+| `list_status_events` | Catálogo filtrado por `frontend-mobile` |
+
 
 ## Task
 

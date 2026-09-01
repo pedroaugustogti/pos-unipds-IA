@@ -1,0 +1,10 @@
+{
+  "step": "login",
+  "serial": "emulator-5554",
+  "error": "WebDriverError: 'POST /element/00000000-0000-0051-ffff-ffff00000045/clear' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details when running \"element/00000000-0000-0051-ffff-ffff00000045/clear\" with method \"POST\"",
+  "at": "2026-08-30T20:23:25.877Z",
+  "screenshotError": "WebDriverError: 'GET /screenshot' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details when running \"screenshot\" with method \"GET\"",
+  "pageSourceError": "WebDriverError: 'GET /session/8b2e300d-6856-46c7-b3e4-817b50ad685d/source' cannot be proxied to UiAutomator2 server because the instrumentation process is not running (probably crashed). Check the server log and/or the logcat output for more details when running \"source\" with method \"GET\"",
+  "uiDump": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\login_2026-08-30T20-23-25-876Z\\ui_dump.xml",
+  "uiDumpAdb": "UI hierchary dumped to: /sdcard/window_dump.xml"
+}

@@ -8,4 +8,4 @@
 | `react_policy.py` | Teto de iterações ReAct |
 | `dependencies.py` | Injeção leve de deps |
 
-Usado por LangGraph, gateway e dispatch.
+Usado por LangGraph v2, gateway e MCP.

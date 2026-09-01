@@ -2,7 +2,7 @@
 
 | Módulo | Função |
 |--------|--------|
-| `event_orchestrator.py` | Runtime de agentes, emit board, dispatch_queue |
+| `event_orchestrator.py` | Runtime de agentes, HITL queue, idempotência |
 | `event_actuation_context.py` | Contexto pós `on_status_event` |
 | `event_actuation_runner.py` | `execute_agent_actuation` |
 | `orchestrator_claim.py` | `orchestrator_enter_in_progress` |

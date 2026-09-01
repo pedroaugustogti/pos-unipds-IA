@@ -40,7 +40,7 @@
 
 - **Gateway:** alterar Status somente via `emit_status_event` (MCP) — nunca editar coluna do board manualmente
 - **Handoff:** gravar PR, branch e dúvidas em `agents/00-runtime/output/{task_id}/handoff.json`
-- **ReAct:** loop claim → implementar → testes do módulo → `open_pr` (máx. 4 voltas; ver `agent.md`)
+- **ReAct:** `on_status_event` → `developer_implement` → `execute_agent_actuation_tool` (eventos `backend_*`; ver `agent.md`)
 - Nunca mergear PR; nunca alterar Terraform ou apps mobile
 
 ## Ver também

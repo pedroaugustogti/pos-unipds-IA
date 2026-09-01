@@ -24,3 +24,5 @@ orchestrator_enter_in_progress (opcional)
 | meta | `list_mcp_tools` |
 
 `qa_validate` orquestra `qa_db_seed` → `qa_appium_suite_*` → `qa_db_cleanup` via MCP.
+
+Guia por papel: [`MCP_ROLE_GUIDE.md`](MCP_ROLE_GUIDE.md)

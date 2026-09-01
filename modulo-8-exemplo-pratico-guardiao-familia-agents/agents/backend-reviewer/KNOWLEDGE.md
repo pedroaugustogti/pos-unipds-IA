@@ -3,6 +3,30 @@
 Digest gerado de todos os `README.md` (exceto `output/`, `skills/` legado).
 Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 
+## MCP Guardião Família (v2)
+
+Servidor: `guardiao_mcp` · [`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · [`../_shared/MCP_ROLE_GUIDE.md`](../_shared/MCP_ROLE_GUIDE.md) · `list_mcp_tools`
+
+**Classificação:** reviewer · **Papel:** `backend-reviewer`
+
+| Tool | Quando |
+|------|--------|
+| `on_status_event` | Contexto + handoff do creator |
+| `hitl_guard_actuation` | Antes de `execute` |
+| `developer_review` | Fase review (`In Code Review`) |
+| `execute_agent_actuation_tool` | Emite aprovação ou retrocesso |
+| `emit_status_event` | Transição manual |
+
+**Sequência:** `on_status_event` → `hitl_guard_actuation` → `developer_review` → `execute`.
+
+| Intenção | Evento |
+|----------|--------|
+| Iniciar review | `backend-reviewer_in_code_review` |
+| Aprovar | `backend-reviewer_ready_for_test` |
+| Pedir mudanças | `backend-reviewer_return_in_progress` |
+
+---
+
 ## agents/
 
 ### `agents/00-orchestration/docs/`

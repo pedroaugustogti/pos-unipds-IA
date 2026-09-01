@@ -38,7 +38,7 @@
 
 - **Gateway:** `start_review`, `approve_review` ou `request_changes` via `emit_status_event`
 - **Handoff:** ler `agents/00-runtime/output/{task_id}/handoff.json` (evidências anexas)
-- **ReAct:** handoff → checklist QA → veredito (máx. 3 voltas; ver `agent.md`)
+- **ReAct:** `on_status_event` → `developer_review` → `execute_agent_actuation_tool` (máx. 3 voltas; ver `agent.md`)
 
 ## Ver também
 

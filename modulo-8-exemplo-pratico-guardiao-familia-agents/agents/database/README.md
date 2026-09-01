@@ -39,7 +39,7 @@
 
 - **Gateway:** Status apenas via `emit_status_event`
 - **Handoff:** migrations, ordem de deploy em `agents/00-runtime/output/{task_id}/handoff.json`
-- **ReAct:** claim → migration + teste local → `open_pr` (ver `agent.md`)
+- **ReAct:** `on_status_event` → `developer_implement` → `execute_agent_actuation_tool` (eventos `database_*`; ver `agent.md`)
 - Nunca dropar dados em produção sem HITL explícito
 
 ## Ver também

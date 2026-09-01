@@ -17,7 +17,8 @@ Gate de qualidade da pipeline — executa testes e evidências após review.
 
 ## Decisões
 
-- Não claimar harness em Todo (`qa-author`)
+- **MCP:** `on_status_event` → `qa_validate` → `execute` — suites em `KNOWLEDGE.md`
+- Não iniciar harness em Todo — responsabilidade do `qa-author` (`orchestrator_enter_in_progress`)
 - Mobile child: **seed parent** (`basic_parent`/`parent_home`) → `qa_appium_suite_child(child_only=true)` → evidência → cleanup
 - Mobile parent UI: sem seed → `qa_appium_suite_parent(feature=...)`
-- Status: `start_test`, `test_passed`, `test_failed_bug` via gateway
+- Status: eventos role-based `qa-gate_in_test`, `qa-gate_in_pull_request`, `qa-gate_return_in_progress`

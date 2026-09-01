@@ -17,36 +17,17 @@ Você é o **gate de qualidade** da pipeline (Status `Ready for Test` / `In Test
 
 ## MCP
 
-Catálogo completo: [`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · `list_mcp_tools`
+[`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · [`../_shared/MCP_ROLE_GUIDE.md`](../_shared/MCP_ROLE_GUIDE.md) · `list_mcp_tools`
 
 | Tool | Uso neste papel |
 |------|-----------------|
-| `get_handoff` | PR URL do revisor |
-| `emit_status_event` | `start_test`, `test_passed`, `test_failed_bug` |
-| `append_task_action_tool` | Trilha ReAct do gate |
-| `query_mobile_flow_rag` | Plano de evidência / telas |
-| `qa_db_seed` | Massa via API (`profile=basic_parent` ou `parent_home`) + `stage-handoff.json` — **omitir** se o AC exige cadastro/família na UI parent |
-| `qa_db_cleanup` | Purge + reset handoff após evidências |
-| `qa_appium_suite_parent` | App parent (5554); `from_db_seed=true` para login→home com dados no DB |
-| `qa_appium_suite_child` | App child (5556); **`child_only=true`** quando a massa veio do seed parent (não subir emulador parent) |
+| `on_status_event` | AC + handoff do revisor |
+| `hitl_guard_actuation` | Antes de `execute` |
+| `qa_validate` | Orquestra QA completo |
+| `qa_db_seed` / `qa_db_cleanup` | Massa API / purge |
+| `qa_appium_suite_parent` / `_child` | Evidências Appium |
+| `execute_agent_actuation_tool` | `qa-gate_in_pull_request` ou retrocesso |
 
-### Validação no app child (padrão qa-gate)
-
-Quando o critério de aceite é **funcionalidade no app child** (ex.: `ChildHomeV2`, saudação, home child):
-
-1. **Seed parent via API** — `qa_db_seed(task_id, profile=basic_parent, dry_run=false)` (ou `parent_home` se a conta+família já bastam).
-2. **Suite só no child** — `qa_appium_suite_child(from_db_seed=true, task_id=..., child_only=true, dry_run=false)`.
-3. Não subir emulador/Metro do parent (5554); parent existe apenas no Postgres.
-4. Evidências → `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/` → `qa_db_cleanup`.
-
-```
-qa_db_seed(task_id, profile=basic_parent, dry_run=false)
-qa_appium_suite_child(from_db_seed=true, task_id=..., child_only=true, dry_run=false)
-qa_db_cleanup(task_id, dry_run=false)
-```
-
-Fluxo típico com seed: `qa_db_seed` → `qa_appium_suite_*(from_db_seed=true, child_only=true quando alvo=child)` → evidência → `qa_db_cleanup`.
-Fluxo UI parent (sem seed): `qa_appium_suite_parent(feature=create_account|config_family)` → evidência.
 
 ## Evidências mobile (gate)
 

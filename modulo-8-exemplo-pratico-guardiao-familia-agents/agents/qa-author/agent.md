@@ -19,15 +19,17 @@ Revisor pareado: `../qa-author-reviewer/SKILL.md`
 
 ## MCP
 
-[`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · `list_mcp_tools`
+[`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · [`../_shared/MCP_ROLE_GUIDE.md`](../_shared/MCP_ROLE_GUIDE.md) · `list_mcp_tools`
 
 | Tool | Uso neste papel |
 |------|-----------------|
-| `query_mobile_flow_rag` | Mapear telas/fluxos ao escrever harness |
-| `ingest_mobile_flow_rag` | Atualizar índice RAG (`dry_run` primeiro) |
-| `emit_status_event` | `claim`, `open_pr` |
-| `get_handoff` / `write_handoff_tool` | `metrics.how_to_run`, gaps flaky |
-| `append_task_action_tool` | Trilha ReAct |
+| `on_status_event` | Contexto antes de atuar |
+| `hitl_guard_actuation` | Obrigatório antes de `execute` |
+| `developer_implement` | Fase implement |
+| `execute_agent_actuation_tool` | Fecha fase + próximo evento |
+| `emit_status_event` | `qa-author_in_progress`, `_ready_for_code_review`, `_in_code_review` |
+| `list_status_events` | Catálogo filtrado por `qa-author` |
+
 
 ## Claim
 

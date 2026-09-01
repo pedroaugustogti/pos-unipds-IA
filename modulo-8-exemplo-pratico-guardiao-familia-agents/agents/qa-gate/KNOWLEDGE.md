@@ -3,6 +3,31 @@
 Digest gerado de todos os `README.md` (exceto `output/`, `skills/` legado).
 Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 
+## MCP Guardião Família (v2)
+
+Servidor: `guardiao_mcp` · [`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · [`../_shared/MCP_ROLE_GUIDE.md`](../_shared/MCP_ROLE_GUIDE.md) · `list_mcp_tools`
+
+**Classificação:** qa-gate · **Papel:** `qa-gate`
+
+| Tool | Quando |
+|------|--------|
+| `on_status_event` | AC, config QA, handoff do revisor |
+| `hitl_guard_actuation` | Antes de `execute` |
+| `qa_validate` | Orquestra seed + Appium + AC |
+| `qa_db_seed` / `qa_db_cleanup` | Massa API / purge pós-evidência |
+| `qa_appium_suite_parent` / `_child` | Evidências mobile |
+| `execute_agent_actuation_tool` | Emite pass/fail role-based |
+
+| Status | Evento |
+|--------|--------|
+| In Test | `qa-gate_in_test` |
+| In Pull Request | `qa-gate_in_pull_request` |
+| Retrocesso | `qa-gate_return_in_progress` |
+
+Evidências: `agents/00-runtime/output/{task_id}/qa-gate-({cycle})/evidence/`
+
+---
+
 ## agents/
 
 ### `agents/00-orchestration/docs/`

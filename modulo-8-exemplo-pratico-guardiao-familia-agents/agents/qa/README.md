@@ -39,8 +39,8 @@
 
 - **Gateway:** `start_test`, `test_passed`, `test_failed_bug` via `emit_status_event`
 - **Handoff:** cenários, logs e artefatos em `agents/00-runtime/output/{task_id}/handoff.json`
-- **ReAct:** claim → executar cenários → registrar evidência → status (ver `agent.md`)
-- Não claimar harness em Todo (responsabilidade do `qa-author`)
+- **ReAct:** `on_status_event` → `developer_implement` → `execute_agent_actuation_tool` (eventos `qa_*`; ver `agent.md`)
+- Não iniciar harness em Todo — responsabilidade do `qa-author`
 
 ## Ver também
 

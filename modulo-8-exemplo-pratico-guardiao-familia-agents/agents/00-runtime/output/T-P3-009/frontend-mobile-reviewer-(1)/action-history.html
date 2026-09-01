@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Historico · T-P3-009</title>
+<style>
+:root {
+  --bg: #0f1419; --panel: #1a222c; --text: #e7ecf1; --muted: #8b9aab;
+  --accent: #3d8bfd; --ok: #3dd68c; --bad: #f07178; --line: #2a3544;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; font-family: "Segoe UI", system-ui, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.45;
+}
+header.top {
+  padding: 20px 24px; border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, #15202b, var(--bg));
+}
+a { color: var(--accent); }
+.muted { color: var(--muted); font-size: 0.9rem; }
+.pill {
+  display: inline-block; padding: 2px 8px; border-radius: 999px;
+  border: 1px solid var(--line); font-size: 0.75rem; margin-left: 8px;
+}
+main { max-width: 1100px; margin: 0 auto; padding: 20px 24px 48px; }
+nav.toc {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 10px; padding: 12px 16px; margin-bottom: 24px;
+}
+nav.toc ul { margin: 8px 0 0; padding-left: 18px; }
+.step {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 16px 18px; margin-bottom: 16px;
+}
+.step.bad { border-color: var(--bad); }
+.step h2 { margin: 0 0 4px; font-size: 1.15rem; }
+.step h3 { margin: 12px 0 6px; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.grid { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 720px) { .grid { grid-template-columns: 1fr; } }
+pre {
+  white-space: pre-wrap; word-break: break-word; margin: 0;
+  background: #0c1117; border: 1px solid var(--line); border-radius: 8px;
+  padding: 10px 12px; font-size: 0.92rem;
+}
+table.scenarios {
+  width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 6px;
+}
+table.scenarios th, table.scenarios td {
+  border: 1px solid var(--line); padding: 6px 8px; vertical-align: top; text-align: left;
+}
+table.scenarios th { color: var(--muted); font-weight: 600; }
+table.scenarios tr.pass td:nth-child(6) { color: var(--ok); }
+table.scenarios tr.planned td:nth-child(6) { color: var(--accent); }
+table.usage {
+  width: auto; border-collapse: collapse; font-size: 0.9rem; margin-top: 4px;
+}
+table.usage th, table.usage td {
+  border: 1px solid var(--line); padding: 6px 10px; text-align: left;
+}
+table.usage th { color: var(--muted); font-weight: 600; }
+.llm-usage, .token-totals { margin-top: 8px; }
+.token-totals {
+  background: var(--panel); border: 1px solid var(--line);
+  border-radius: 12px; padding: 16px 18px; margin-bottom: 24px;
+}
+.token-totals h2 { margin: 0 0 8px; font-size: 1.05rem; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="muted"><a href="../dashboard.html">← Dashboard</a></div>
+  <h1>T-P3-009</h1>
+  <div>T-P3-009</div>
+  <div class="muted">Status final: <strong>—</strong> · passos: 1</div>
+</header>
+<main>
+  <nav class="toc">
+    <strong>Indice de acoes por agente</strong>
+    <ul><li><a href="#step-5"><strong>frontend-mobile-reviewer</strong> · approve_review <span class="muted">In Code Review → Ready for Test</span></a></li></ul>
+  </nav>
+  
+  
+<article class="step ok" id="step-5">
+  <header>
+    <h2>frontend-mobile-reviewer <span class="pill">approve_review</span></h2>
+    <div class="muted">2026-08-31 00:18:25 · In Code Review → Ready for Test</div>
+  </header>
+  <div class="grid">
+    <section>
+      <h3>Pensou (thought)</h3>
+      <pre>approve</pre>
+    </section>
+    <section>
+      <h3>Executou (action)</h3>
+      <pre>Chamar gateway `emit_status_event(task=T-P3-009, event=approve_review)` from_agent=frontend-mobile-reviewer; modo=live; apply_board=true.</pre>
+    </section>
+  </div>
+  <section>
+    <h3>Observacao</h3>
+    <pre>**Foco da execucao:** `frontend-mobile-reviewer` aplica `approve_review` (`In Code Review` -&gt; `Ready for Test`)
+gateway_ok=True; awaiting_human=False; local_ok=True; usage=model=openai/gpt-4o-mini in=232 out=64 total=296
+**Resultado operacional:** ok
+**Modelo:** `openai/gpt-4o-mini` · **purpose:** review · **tokens:** in=232 out=64 **total=296**</pre>
+  </section>
+  <section class='llm-usage'><h3>Modelo / tokens</h3><table class='usage'><tr><th>Modelo</th><td><code>openai/gpt-4o-mini</code></td></tr><tr><th>Purpose</th><td>review</td></tr><tr><th>Input</th><td>232</td></tr><tr><th>Output</th><td>64</td></tr><tr><th>Total</th><td><strong>296</strong></td></tr></table></section>
+  <section>
+    <h3>Passos executados</h3>
+    <ul><li>acting_agent=frontend-mobile-reviewer</li><li>emit_status_event:approve_review</li><li>board_status-&gt;Ready for Test</li><li>hitl_pending=False</li></ul>
+  </section>
+</article>
+
+</main>
+</body>
+</html>

@@ -1,6 +1,6 @@
-# MCP Server — Guardião Família (Fase B)
+# MCP Server — Guardião Família (v2)
 
-Fachada MCP sobre `lib/*`. Status **só** via `emit_status_event` (gateway).
+Fachada MCP sobre `lib/*` — **14 tools**. Status **só** via `emit_status_event` (eventos role-based).
 
 ## Subir
 
@@ -14,18 +14,28 @@ Launcher Windows: `agents/00-orchestration/guardiao_mcp/guardiao-mcp.cmd`.
 
 ## Cursor
 
-Registrado em:
+- Monorepo: `.cursor/mcp.json` → server `guardiao-familia-agents`
+- Módulo: `.cursor/mcp.json`
 
-- Raiz do monorepo: `.cursor/mcp.json` → server `guardiao-familia-agents`
-- Pasta do módulo: `.cursor/mcp.json`
-
-Reinicie o MCP / Cursor após alterar o JSON. Em Settings → MCP, o server deve aparecer como habilitado.
-
-## Segurança
-
-- Tools de escrita usam `dry_run=true` por default (`emit_status_event`, `approve_hitl`, handoff, history).
-- `dispatch_job_tool` exige `GUARDIAO_MCP_ALLOW_DISPATCH=1`.
+Reinicie o MCP após alterar o JSON.
 
 ## Catálogo
 
-Chame a tool `list_mcp_tools` ou veja o relatório em `docs/autonomia/fases/`.
+| Grupo | Tools |
+|-------|-------|
+| gateway | `emit_status_event`, `list_status_events`, `on_status_event`, `hitl_guard_actuation`, `execute_agent_actuation_tool` |
+| phase | `developer_implement`, `developer_review`, `qa_validate` |
+| orchestrator | `orchestrator_enter_in_progress` |
+| qa_mobile | `qa_db_seed`, `qa_db_cleanup`, `qa_appium_suite_parent`, `qa_appium_suite_child` |
+| meta | `list_mcp_tools` |
+
+Documentação: [`agents/_shared/MCP_TOOLS.md`](../../_shared/MCP_TOOLS.md) · [`MCP_ROLE_GUIDE.md`](../../_shared/MCP_ROLE_GUIDE.md)
+
+## Segurança
+
+- Escritas com `dry_run=true` por padrão.
+- `hitl_guard_actuation` obrigatório antes de `execute_agent_actuation_tool`.
+
+## LangGraph v2
+
+O grafo invoca estas tools via `lib/mcp_invoke` em cada nó `evt_*` (`event_registry.py`).

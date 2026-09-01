@@ -2,6 +2,6 @@
 
 Espelho publicado em GitHub Pages (`dashboard.html`, `snapshot.json`).
 
-Atualizar: `python agents/00-orchestration/scripts/demo/publish_live_pages.py`
+Atualizado automaticamente em `agents/00-runtime/system/observability/` durante execuções do grafo.
 
 Somente leitura para banca; fonte dinâmica em `agents/00-runtime/system/observability/`.

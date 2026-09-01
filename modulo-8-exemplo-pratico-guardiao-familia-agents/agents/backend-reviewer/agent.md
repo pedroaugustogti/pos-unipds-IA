@@ -15,7 +15,16 @@ Você é o **backend-reviewer**. Em tasks de **alto risco** (SOS, auth, pagament
 
 ## MCP
 
-[`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · `get_handoff` · `emit_status_event` (`start_review`, `approve_review`, `request_changes`) · `append_task_action_tool`
+[`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · [`../_shared/MCP_ROLE_GUIDE.md`](../_shared/MCP_ROLE_GUIDE.md) · `list_mcp_tools`
+
+| Tool | Uso neste papel |
+|------|-----------------|
+| `on_status_event` | Handoff + ticket do creator |
+| `hitl_guard_actuation` | Antes de `execute` |
+| `developer_review` | Review estruturado |
+| `execute_agent_actuation_tool` | `_ready_for_test` ou `_return_in_progress` |
+| `emit_status_event` | Transições role-based |
+
 
 ## Entrada
 

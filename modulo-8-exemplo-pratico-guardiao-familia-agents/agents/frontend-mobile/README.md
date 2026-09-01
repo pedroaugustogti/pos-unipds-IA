@@ -40,7 +40,7 @@
 
 - **Gateway:** Status apenas via `emit_status_event`
 - **Handoff:** PR, branch, screenshots ou dúvidas em `agents/00-runtime/output/{task_id}/handoff.json`
-- **ReAct:** claim → implementar → testes locais → `open_pr` (ver `agent.md`)
+- **ReAct:** `on_status_event` → `developer_implement` → `execute_agent_actuation_tool` (eventos `frontend-mobile_*`; ver `agent.md`)
 - Nunca mergear; não alterar Terraform ou harness de QA
 
 ## Ver também

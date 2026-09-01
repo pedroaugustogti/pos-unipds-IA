@@ -6,6 +6,6 @@ Material para banca e demonstrações paced.
 |-----------|-----|
 | `APRESENTACAO_LIVE_DEMO.md` | Roteiro demo com delays e histórico |
 
-Scripts: `agents/00-orchestration/scripts/demo/`
+Pipeline: `agents/00-orchestration/scripts/langgraph/langgraph_run.py`
 
 Dashboard publicado: [`../live/`](../live/)

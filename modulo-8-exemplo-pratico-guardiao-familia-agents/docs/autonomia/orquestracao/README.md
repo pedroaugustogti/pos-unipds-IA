@@ -22,7 +22,7 @@ Plugins usados no HTML (CDN, sem instalar no repo):
 1. Visão em camadas (CLI → LangGraph → LLM/MCP → gateway → board)  
 2. Diagrama do StateGraph (nós e arestas condicionais)  
 3. Detalhe etapa a etapa (Status Kanban × nó × evento × agente × modelo)  
-4. Catálogo MCP (16 tools)  
+4. Catálogo MCP (14 tools)  
 5. Model tiers (Fase A)  
 6. Modes `dry_run` / `demo` / `live`  
 7. Observabilidade (HTML task + LangSmith + evals)  

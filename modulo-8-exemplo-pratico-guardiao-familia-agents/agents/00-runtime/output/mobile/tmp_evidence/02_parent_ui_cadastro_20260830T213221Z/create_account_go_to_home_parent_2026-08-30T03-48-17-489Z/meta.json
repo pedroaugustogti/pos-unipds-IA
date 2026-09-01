@@ -1,0 +1,9 @@
+{
+  "step": "go_to_home_parent",
+  "serial": "emulator-5554",
+  "error": "parent nao chegou na home apos vinculo do child",
+  "at": "2026-08-30T03:48:17.490Z",
+  "screenshot": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\go_to_home_parent_2026-08-30T03-48-17-489Z\\screen.png",
+  "pageSource": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\go_to_home_parent_2026-08-30T03-48-17-489Z\\page-source.xml",
+  "uiDumpError": "adb shell uiautomator dump /sdcard/window_dump.xml failed (137): "
+}

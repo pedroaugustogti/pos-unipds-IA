@@ -17,14 +17,17 @@ Revisor pareado: `../backend-reviewer/SKILL.md`
 
 ## MCP
 
-Catálogo: [`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · `list_mcp_tools`
+[`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · [`../_shared/MCP_ROLE_GUIDE.md`](../_shared/MCP_ROLE_GUIDE.md) · `list_mcp_tools`
 
 | Tool | Uso neste papel |
 |------|-----------------|
-| `emit_status_event` | `claim`, `open_pr` (`dry_run=false` só após validar) |
-| `get_handoff` / `write_handoff_tool` | Handoff com PR, branch, dúvidas |
-| `append_task_action_tool` | Trilha ReAct |
-| `pick_task_tool` | Próxima task `backend` em Todo |
+| `on_status_event` | Contexto antes de atuar |
+| `hitl_guard_actuation` | Obrigatório antes de `execute` |
+| `developer_implement` | Fase implement |
+| `execute_agent_actuation_tool` | Fecha fase + próximo evento |
+| `emit_status_event` | `backend_in_progress`, `_ready_for_code_review`, `_in_code_review` |
+| `list_status_events` | Catálogo filtrado por `backend` |
+
 
 ## Anatomia (dimensione antes de codar)
 

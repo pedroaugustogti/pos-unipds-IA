@@ -39,7 +39,7 @@
 
 - **Gateway:** Status apenas via `emit_status_event`
 - **Handoff:** versão, track, links de release em `agents/00-runtime/output/{task_id}/handoff.json`
-- **ReAct:** claim → preparar artefatos → submeter ou abrir PR de config → handoff (ver `agent.md`)
+- **ReAct:** `on_status_event` → `developer_implement` → `execute_agent_actuation_tool` (eventos `stores-release_*`; ver `agent.md`)
 - Nunca publicar em produção sem reviewer e HITL quando `release_blocker`
 
 ## Ver também

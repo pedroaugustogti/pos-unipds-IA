@@ -39,7 +39,7 @@
 
 - **Gateway:** Status apenas via `emit_status_event`
 - **Handoff:** arquivos alterados, contratos de seed em `agents/00-runtime/output/{task_id}/handoff.json`
-- **ReAct:** claim → implementar harness → testes locais → `open_pr` (ver `agent.md`)
+- **ReAct:** `on_status_event` → `developer_implement` → `execute_agent_actuation_tool` (eventos `qa-author_*`; ver `agent.md`)
 - Harness deve ser reutilizável pelo `qa-gate` sem duplicar lógica
 
 ## Ver também

@@ -1,6 +1,6 @@
 # Módulo 8 — Agents Guardião Família
 
-Base de conhecimento para **agentes autônomos**: orquestração LangGraph, board GitHub, gateway único de Status, MCP e QA mobile.
+Base de conhecimento para **agentes autônomos**: LangGraph v2, board GitHub, gateway MCP e QA mobile.
 
 Evolução do módulo 7 com HITL, multi-agent e gates enterprise.
 
@@ -8,10 +8,10 @@ Evolução do módulo 7 com HITL, multi-agent e gates enterprise.
 
 | Pasta | Quando consultar |
 |-------|------------------|
-| [`agents/`](agents/) | Escolher papel, prompt, skill, scripts QA |
-| [`agents/00-orchestration/`](agents/00-orchestration/) | Pipeline LangGraph, MCP, CLIs |
+| [`agents/`](agents/) | Papel, prompt, skill, KNOWLEDGE.md |
+| [`agents/00-orchestration/`](agents/00-orchestration/) | LangGraph v2, MCP (14 tools), CLIs |
 | [`board_automation/`](board_automation/) | Roteamento task, reconcile, templates issue |
-| [`lib/`](lib/) | Gateway, dispatch, observability, mobile |
+| [`lib/`](lib/) | Gateway, orchestrator, `mcp_invoke`, mobile |
 | [`docs/`](docs/) | Fluxo, operação, configuração |
 | [`.env.example`](.env.example) | Variáveis de ambiente |
 
@@ -19,28 +19,30 @@ Layout completo: [`docs/ESTRUTURA.md`](docs/ESTRUTURA.md)
 
 ## Regras de decisão (resumo)
 
-1. **Status** — só via `emit_status_event` (`lib/gateway`)
+1. **Status** — só via `emit_status_event` (eventos role-based, 55 no catálogo)
 2. **Roteamento** — `agent_role` no CSV + `task_router.pick_task`
-3. **Código produto** — dispatch Cursor no repo mapeado em `REPOS_AND_ROUTING`
-4. **Review** — creator → reviewer pareado → qa-gate
-5. **Alto risco** — HITL antes de merge (`hitl_gates`)
+3. **Pipeline** — LangGraph v2 ou MCP manual: `on_status_event` → `hitl_guard` → fase → `execute`
+4. **Review** — creator → reviewer pareado → qa-gate → ops (merge)
+5. **Alto risco** — HITL antes de merge (`hitl_guard_actuation`)
 
 ## Quick start
 
 ```powershell
 cd modulo-8-exemplo-pratico-guardiao-familia-agents
 
-python agents/00-orchestration/scripts/langgraph/langgraph_run.py --task T-P05-006 --mode dry_run
-python agents/00-orchestration/scripts/cli/gateway_cli.py --task T-P05-001 --event claim --dry-run
+python agents/00-orchestration/scripts/langgraph/langgraph_run.py --task T-P3-009 --mode dry_run
+python agents/00-orchestration/scripts/langgraph/smoke_pipeline.py --task T-P3-009 --mode dry_run
+python agents/00-orchestration/scripts/cli/gateway_cli.py --task T-P3-009 --agent-role frontend-mobile --board-status "In Progress" --dry-run
 python -m guardiao_mcp
 ```
 
 ## Documentação
 
 - Índice: [`docs/README.md`](docs/README.md)
-- Fluxo atual: [`docs/autonomia/ESTADO_ATUAL_FLUXO_E_PROCESSO.md`](docs/autonomia/ESTADO_ATUAL_FLUXO_E_PROCESSO.md)
+- Fluxo v2: [`agents/00-orchestration/docs/STATEGRAPH_FLOW.md`](agents/00-orchestration/docs/STATEGRAPH_FLOW.md)
+- MCP por papel: [`agents/_shared/MCP_ROLE_GUIDE.md`](agents/_shared/MCP_ROLE_GUIDE.md)
 - Mapa visual: [`docs/autonomia/orquestracao/README.md`](docs/autonomia/orquestracao/README.md)
 
 ## Dashboard
 
-[`docs/live/dashboard.html`](docs/live/dashboard.html) · local: `python agents/00-orchestration/scripts/demo/live_server.py`
+`agents/00-runtime/system/observability/dashboard.html` (gerado durante execuções do pipeline).

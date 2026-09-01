@@ -1,12 +1,12 @@
-# Orquestração
+# Orquestração — LangGraph v2
 
-Pipeline LangGraph, MCP, evals e CLIs do módulo 8.
+Pipeline LangGraph v2 (55 nós `evt_*`), MCP (14 tools), evals e CLIs.
 
 ## Subpastas
 
 | Pasta | Quando usar |
 |-------|-------------|
-| [`langgraph_app/`](langgraph_app/) | Alterar nós, policy, LLM do grafo |
+| [`langgraph_app/`](langgraph_app/) | Grafo v2: `event_registry`, `event_nodes`, `graph` |
 | [`guardiao_mcp/`](guardiao_mcp/) | Tools MCP para Cursor (`python -m guardiao_mcp`) |
 | [`evals/`](evals/) | Regressão Kanban / LangSmith |
 | [`schemas/`](schemas/) | Contrato JSON de eventos |
