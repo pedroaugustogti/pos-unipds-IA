@@ -112,7 +112,7 @@ def pipeline_span(
     run_type: str = "chain",
     metadata: dict[str, Any] | None = None,
 ) -> Iterator[None]:
-    """Span filho nomeado (claim, open_pr, review, …). No-op se tracing indisponível."""
+    """Span filho nomeado (sync_board, evt_*, review, qa, …). No-op se tracing indisponível."""
     try:
         from langsmith import trace as ls_trace
     except Exception:

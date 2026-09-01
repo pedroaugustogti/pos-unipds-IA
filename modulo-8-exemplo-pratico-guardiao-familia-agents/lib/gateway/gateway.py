@@ -1,23 +1,22 @@
-"""Gateway único: emit_status_event — contrato + HITL + handoff + board."""
+"""Gateway v2 — porta única: emit_status_event (eventos role-based)."""
 
 from __future__ import annotations
 
 import json
-from pathlib import Path
 from typing import Any
 
-from board_automation.board.task_status_workflow import (
-    is_approve_review_event,
-    is_claim_event,
-    is_open_pr_event,
-    is_test_failed_event,
-)
 from lib.gateway.event_contract import EventPayload
+from lib.gateway.v2_events import (
+    is_creator_ready_for_code_review,
+    is_orchestrator_claim,
+    is_qa_return_to_in_progress,
+    is_reviewer_ready_for_test,
+    legacy_event_error,
+)
 from lib.orchestrator.event_orchestrator import (
-    emit_board_event as _emit_board_event_legacy,
+    emit_board_event as _emit_board_event,
     list_idle_agents,
     load_runtime,
-    resolve_agent_for_event,
     save_runtime,
 )
 from lib.gateway.handoff import write_handoff
@@ -48,7 +47,6 @@ def _mark_idempotency(key: str, result: dict[str, Any]) -> None:
     rt = load_runtime()
     seen = rt.setdefault("idempotency", {})
     seen[key] = {"at": result.get("at") or result.get("notification", {}).get("at"), "ok": result.get("ok")}
-    # keep last 200
     if len(seen) > 200:
         for k in list(seen.keys())[: len(seen) - 200]:
             seen.pop(k, None)
@@ -74,27 +72,29 @@ def emit_status_event(
     force_hitl_approved: bool = False,
 ) -> dict[str, Any]:
     """
-    Porta única de eventos do board.
+    Porta única de eventos do board (v2 role-based).
 
-    - Monta EventPayload
-    - Idempotência
-    - HITL (merge / blocker / review alto risco)
-    - Aplica board + despacho idle
-    - Grava handoff + audit trail
+    Rejeita nomes legados (claim, open_pr, …). Aceita:
+    - {agent_role}_{status_slug} / {agent_role}_return_{status_slug}
+    - hitl_approved | hitl_rejected | dispute
     """
+    legacy = legacy_event_error(event)
+    if legacy:
+        return {"ok": False, "code": "legacy_event", "error": legacy}
+
     task = _task_by_id(task_id)
     if not task:
         return {"ok": False, "error": f"Task {task_id} nao encontrada"}
 
-    # Normalizar release_blocker do CSV (yes/true)
     rb = task.get("release_blocker")
     if isinstance(rb, str) and rb.lower() in ("yes", "true", "1"):
         task = {**task, "release_blocker": True}
 
-    if is_claim_event(event) and not force_hitl_approved:
+    if is_orchestrator_claim(event) and not force_hitl_approved:
         from lib.orchestrator.claim_lock import check_claim_allowed
         from lib.core.dependencies import dependencies_satisfied
         from board_automation.board.reviewer_pairs import normalize_creator_role
+
         role = normalize_creator_role(task.get("agent_role") or "backend")
         if from_agent and from_agent != "orchestrator":
             role = normalize_creator_role(from_agent)
@@ -112,6 +112,7 @@ def emit_status_event(
             }
 
     from lib.gateway.event_schema import validate_event_payload
+
     schema = validate_event_payload(
         task_id=task_id,
         event=event,
@@ -122,15 +123,16 @@ def emit_status_event(
     if not schema["ok"]:
         return {"ok": False, "code": "schema", "errors": schema["errors"]}
 
-    if is_open_pr_event(event) and not (react_trace or (metrics or {}).get("react_trace")):
+    if is_creator_ready_for_code_review(event) and not (react_trace or (metrics or {}).get("react_trace")):
         return {
             "ok": False,
             "code": "react_trace_required",
-            "error": "open_pr exige react_trace no handoff (politica ReAct).",
+            "error": "{creator}_ready_for_code_review exige react_trace no handoff (politica ReAct).",
         }
 
-    if is_approve_review_event(event) and not force_hitl_approved:
+    if is_reviewer_ready_for_test(event) and not force_hitl_approved:
         from lib.gateway.handoff import load_handoff
+
         ho = load_handoff(task_id) or {}
         eg = (ho.get("metrics") or {}).get("eval_gate")
         if eg is not None and eg.get("ok") is False:
@@ -161,7 +163,7 @@ def emit_status_event(
 
     rt = load_runtime()
     bug_count = int((rt.get("bug_counts") or {}).get(task_id, {}).get("count") or 0)
-    if is_test_failed_event(event):
+    if is_qa_return_to_in_progress(event):
         bug_count += 1
 
     hitl = evaluate_hitl(task, event, bug_count=bug_count)
@@ -180,13 +182,13 @@ def emit_status_event(
                 f"{hitl['human_action']}"
             ),
         }
-        # fila HITL no runtime
         if not dry_run:
             q = rt.setdefault("hitl_queue", [])
             q[:] = [x for x in q if x.get("task_id") != task_id or x.get("event") != event]
             q.append({
                 "task_id": task_id,
                 "event": event,
+                "awaiting": "hitl_approved",
                 "hitl": hitl,
                 "payload": payload.to_dict(),
             })
@@ -194,12 +196,9 @@ def emit_status_event(
             _append_audit({"type": "hitl_block", **pending["payload"], "hitl": hitl})
         return pending
 
-    # propose_only: aplica board com evento propose_review se approve_review
     board_event = event
-    if hitl["mode"] == "propose_only" and is_approve_review_event(event) and not force_hitl_approved:
-        board_event = event  # status Ready for Test, mas marca proposta
-        # não avança QA automaticamente: enfileira HITL confirm
-        result = _emit_board_event_legacy(
+    if hitl["mode"] == "propose_only" and is_reviewer_ready_for_test(event) and not force_hitl_approved:
+        result = _emit_board_event(
             task_id,
             board_event,
             summary=summary or "Veredito proposto por reviewer LLM — aguardando humano",
@@ -214,7 +213,8 @@ def emit_status_event(
             q = rt.setdefault("hitl_queue", [])
             q.append({
                 "task_id": task_id,
-                "event": "confirm_approve_review",
+                "event": event,
+                "awaiting": "hitl_approved",
                 "hitl": hitl,
                 "payload": payload.to_dict(),
             })
@@ -236,7 +236,6 @@ def emit_status_event(
                 react_trace=react_trace,
             )
             _append_audit({"type": "propose_only", "task_id": task_id, "event": event, "hitl": hitl})
-            # não despachar qa-gate até hitl_approved
             note = result.get("notification") or {}
             if note.get("dispatch"):
                 note["dispatch"] = {
@@ -249,11 +248,10 @@ def emit_status_event(
             _mark_idempotency(key, result)
         return result
 
-    # Classificação de bug → skill impactada
-    if is_test_failed_event(event) and bug_kind:
+    if is_qa_return_to_in_progress(event) and bug_kind:
         summary = f"[{bug_kind}] {summary}".strip()
 
-    result = _emit_board_event_legacy(
+    result = _emit_board_event(
         task_id,
         board_event,
         summary=summary,
@@ -300,7 +298,10 @@ def emit_status_event(
 
 
 def approve_hitl(task_id: str, event: str, *, dry_run: bool = False) -> dict[str, Any]:
-    """Humano libera evento bloqueado (merge, blocker, review alto risco)."""
+    """Humano libera evento role-based bloqueado (merge, blocker, review alto risco)."""
+    legacy = legacy_event_error(event)
+    if legacy:
+        return {"ok": False, "code": "legacy_event", "error": legacy}
     return emit_status_event(
         task_id,
         event,

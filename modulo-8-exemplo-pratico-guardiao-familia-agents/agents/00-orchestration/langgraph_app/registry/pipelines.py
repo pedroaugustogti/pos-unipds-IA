@@ -1,13 +1,8 @@
-"""Catálogo de eventos role-based → pipeline MCP (v2 LangGraph)."""
+"""Regras de pipeline MCP por evento role-based."""
 
 from __future__ import annotations
 
 from typing import Any
-
-from board_automation.board.task_status_workflow import (
-    build_event,
-    role_event_catalog,
-)
 
 # Ordem fixa das MCP tools no pipeline
 MCP_TOOL_NAMES = (
@@ -20,21 +15,6 @@ MCP_TOOL_NAMES = (
     "qa_validate",
     "execute_agent_actuation_tool",
 )
-
-
-def event_node_id(event: str) -> str:
-    """ID de nó LangGraph (sem caracteres inválidos)."""
-    return "evt_" + event.replace("-", "_")
-
-
-def node_id_to_event(node_id: str) -> str | None:
-    if not node_id.startswith("evt_"):
-        return None
-    slug = node_id[4:]
-    for row in role_event_catalog():
-        if event_node_id(row["event"]) == node_id:
-            return row["event"]
-    return None
 
 
 def build_pipeline(row: dict[str, str]) -> tuple[str, ...]:
@@ -67,22 +47,6 @@ def build_pipeline(row: dict[str, str]) -> tuple[str, ...]:
     return tuple(tools)
 
 
-def build_event_registry() -> dict[str, dict[str, Any]]:
-    """Mapa event → spec (metadados + pipeline MCP)."""
-    registry: dict[str, dict[str, Any]] = {}
-    for row in role_event_catalog():
-        event = row["event"]
-        registry[event] = {
-            **row,
-            "node_id": event_node_id(event),
-            "pipeline": build_pipeline(row),
-        }
-    return registry
-
-
-EVENT_REGISTRY: dict[str, dict[str, Any]] = build_event_registry()
-
-
 def effective_pipeline(spec: dict[str, Any], board_status: str) -> tuple[str, ...]:
     """Ajusta pipeline conforme status atual (ex.: já em ICR → review completo)."""
     pipeline = list(spec["pipeline"])
@@ -97,18 +61,3 @@ def effective_pipeline(spec: dict[str, Any], board_status: str) -> tuple[str, ..
             pipeline.remove("developer_review")
 
     return tuple(pipeline)
-
-
-def resolve_event_for_board(task: dict[str, Any], board_status: str) -> str:
-    """Orchestrator: evento role-based para o status atual da task."""
-    from lib.orchestrator.langgraph_mcp_route import actuation_params_for_status
-
-    status = (board_status or "Todo").strip()
-    params = actuation_params_for_status(task, status)
-    if params.get("event"):
-        return str(params["event"])
-    role = params.get("agent_role")
-    bst = params.get("board_status")
-    if role and bst:
-        return build_event(str(role), str(bst))
-    return "noop"

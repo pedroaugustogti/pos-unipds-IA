@@ -34,28 +34,48 @@ def extract_facts(run: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _append_event_status(
+    events: list[str],
+    statuses: list[str],
+    event: str,
+    status: str | None,
+) -> None:
+    if event and event != "noop" and (not events or events[-1] != event):
+        events.append(event)
+    if status and (not statuses or statuses[-1] != status):
+        statuses.append(status)
+
+
 def _parse_messages(messages: list[str]) -> tuple[list[str], list[str]]:
     events: list[str] = []
     statuses: list[str] = ["Todo"]
     for msg in messages:
-        if not msg.startswith("apply:"):
+        if msg.startswith("decide:"):
+            body = msg[len("decide:") :].strip()
+            if body.startswith("noop") or body == "Done":
+                continue
+            event = body.split("[", 1)[0].strip()
+            _append_event_status(events, statuses, event, None)
             continue
-        # apply: claim -> In Progress dry=True | ...
-        body = msg[len("apply:") :].strip()
-        if body.startswith("noop"):
+        if msg.startswith("apply:"):
+            body = msg[len("apply:") :].strip()
+            if body.startswith("noop"):
+                continue
+            parts = body.split("->")
+            if len(parts) < 2:
+                continue
+            left = parts[0].strip()
+            event = left.split()[0] if left else ""
+            right = parts[1].strip()
+            status = right.split("dry")[0].split("|")[0].strip()
+            _append_event_status(events, statuses, event, status)
             continue
-        parts = body.split("->")
-        if len(parts) < 2:
-            continue
-        left = parts[0].strip()
-        event = left.split()[0] if left else ""
-        right = parts[1].strip()
-        status = right.split("dry")[0].split("|")[0].strip()
-        if event and event != "noop":
-            events.append(event)
-        if status:
-            if not statuses or statuses[-1] != status:
-                statuses.append(status)
+        if ": emit=" in msg:
+            part = msg.split(": emit=", 1)[1]
+            if " -> " not in part:
+                continue
+            ev_part, status = part.split(" -> ", 1)
+            _append_event_status(events, statuses, ev_part.strip(), status.strip())
     return events, statuses
 
 
@@ -63,10 +83,15 @@ def _parse_react(trace: list[dict[str, Any]]) -> tuple[list[str], list[str]]:
     events: list[str] = []
     for row in trace:
         action = str(row.get("action") or "")
+        observation = str(row.get("observation") or "")
+        if action == "orchestrator_decide" and observation and observation != "noop":
+            if not events or events[-1] != observation:
+                events.append(observation)
+            continue
         for prefix in ("simulate:", "emit:", "decide:"):
             if action.startswith(prefix):
                 ev = action[len(prefix) :].strip()
-                if ev and ev != "noop":
+                if ev and ev != "noop" and (not events or events[-1] != ev):
                     events.append(ev)
                 break
     return events, []

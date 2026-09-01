@@ -7,9 +7,30 @@ from pathlib import Path
 from typing import Any
 
 from evals.evaluators import extract_facts, score_case
-from langgraph_app.policy import status_after_event
+from langgraph_app.policy import status_after_event, suggested_event
 from lib.core.model_tier import select_model
 from lib.paths import ORCHESTRATION_DIR
+
+
+def canonical_events_for(
+    agent_role: str,
+    *,
+    through_status: str | None = None,
+) -> list[str]:
+    """Sequência feliz v2 (eventos role-based) para policy-replay."""
+    events: list[str] = []
+    status = "Todo"
+    while True:
+        ev = suggested_event(status, creator_role=agent_role)
+        if ev == "noop":
+            break
+        events.append(ev)
+        status = status_after_event(ev, status)
+        if through_status and status == through_status:
+            break
+        if status == "Done":
+            break
+    return events
 
 DEFAULT_DATASET = ORCHESTRATION_DIR / "evals" / "datasets" / "kanban_pipeline.json"
 

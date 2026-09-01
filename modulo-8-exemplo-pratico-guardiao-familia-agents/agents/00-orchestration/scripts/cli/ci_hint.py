@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""C — Sinal de CI: enfileira qa-gate (green) ou test_failed_bug (red)."""
+"""Sinal de CI: enfileira qa-gate (green) ou retrocesso QA (red)."""
 
 from __future__ import annotations
 

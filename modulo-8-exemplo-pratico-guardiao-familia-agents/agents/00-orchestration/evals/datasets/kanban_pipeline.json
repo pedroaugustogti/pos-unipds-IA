@@ -1,15 +1,15 @@
 {
   "name": "guardiao-kanban-pipeline",
-  "version": "1.4",
-  "description": "Dataset estatico de regressao Kanban (Fase D4). Exemplo canonico T-P13-012 via LangGraph live (acting_agent por evento + LLM + HITL).",
+  "version": "2.0",
+  "description": "Dataset estatico de regressao Kanban (Fase D4). LangGraph v2 — 55 eventos role-based (orchestrator_decide → evt_* + MCP pipeline).",
   "canonical_events": [
-    "claim",
-    "open_pr",
-    "start_review",
-    "approve_review",
-    "start_test",
-    "test_passed",
-    "merge_pr"
+    "orchestrator_enter_in_progress",
+    "frontend-web_ready_for_code_review",
+    "frontend-web-reviewer_in_code_review",
+    "frontend-web-reviewer_ready_for_test",
+    "qa-gate_in_test",
+    "qa-gate_in_pull_request",
+    "devops-cicd_done"
   ],
   "canonical_status_sequence": [
     "Todo",
@@ -26,7 +26,7 @@
     "issue": "https://github.com/guardiaofamilia/guardiao-familia-site/issues/78",
     "case_id": "example_site_hero_012_langgraph_live",
     "cli": "python agents/00-orchestration/scripts/langgraph/langgraph_run.py --task T-P13-012 --mode live --from-zero --role frontend-web",
-    "notes": "LangGraph live com acting_agent: creator → *-reviewer → qa-gate → devops-cicd (HITL)."
+    "notes": "LangGraph v2: orchestrator_decide → evt_*; acting_agent por evento role-based; merge HITL em devops-cicd_done."
   },
   "cases": [
     {
@@ -41,8 +41,8 @@
       "run_graph": false,
       "tags": [
         "example",
-        "langgraph",
-        "acting-agent",
+        "langgraph-v2",
+        "role-based-events",
         "site-hero",
         "select_model",
         "llm",
@@ -52,13 +52,13 @@
       "fixture": {
         "board_status": "In Pull Request",
         "events": [
-          "claim",
-          "open_pr",
-          "start_review",
-          "approve_review",
-          "start_test",
-          "test_passed",
-          "merge_pr"
+          "orchestrator_enter_in_progress",
+          "frontend-web_ready_for_code_review",
+          "frontend-web-reviewer_in_code_review",
+          "frontend-web-reviewer_ready_for_test",
+          "qa-gate_in_test",
+          "qa-gate_in_pull_request",
+          "devops-cicd_done"
         ],
         "status_sequence": [
           "Todo",
@@ -72,15 +72,15 @@
         "steps": 28,
         "hitl_pending": true,
         "mode": "live",
-        "orchestrator": "langgraph",
-        "acting_agents": {
-          "claim": "frontend-web",
-          "open_pr": "frontend-web",
-          "start_review": "frontend-web-reviewer",
-          "approve_review": "frontend-web-reviewer",
-          "start_test": "qa-gate",
-          "test_passed": "qa-gate",
-          "merge_pr": "devops-cicd"
+        "orchestrator": "langgraph-v2",
+        "event_agents": {
+          "orchestrator_enter_in_progress": "orchestrator",
+          "frontend-web_ready_for_code_review": "frontend-web",
+          "frontend-web-reviewer_in_code_review": "frontend-web-reviewer",
+          "frontend-web-reviewer_ready_for_test": "frontend-web-reviewer",
+          "qa-gate_in_test": "qa-gate",
+          "qa-gate_in_pull_request": "qa-gate",
+          "devops-cicd_done": "devops-cicd"
         },
         "model_tier": {
           "tier": "low",
@@ -99,17 +99,17 @@
         "comment_quality": {
           "sections": ["thought", "action", "observation"],
           "observation_requires": ["focus", "model", "tokens"],
-          "pattern": "Pensou / Executou / Observacao (foco + modelo + tokens) assinado pelo acting_agent"
+          "pattern": "Pensou / Executou / Observacao (foco + modelo + tokens) assinado pelo agent_role do evento"
         }
       },
       "expected_events": [
-        "claim",
-        "open_pr",
-        "start_review",
-        "approve_review",
-        "start_test",
-        "test_passed",
-        "merge_pr"
+        "orchestrator_enter_in_progress",
+        "frontend-web_ready_for_code_review",
+        "frontend-web-reviewer_in_code_review",
+        "frontend-web-reviewer_ready_for_test",
+        "qa-gate_in_test",
+        "qa-gate_in_pull_request",
+        "devops-cicd_done"
       ],
       "expected_status_sequence": [
         "Todo",
@@ -124,7 +124,7 @@
       "expected_model_tier": "low",
       "expected_hitl": true,
       "max_steps": 48,
-      "notes": "Exemplo canonico LangGraph live com agentes intercalados por evento; merge HITL."
+      "notes": "Exemplo canonico LangGraph v2; merge HITL em devops-cicd_done."
     },
     {
       "id": "policy_site_hero_012_pre_merge",
@@ -133,14 +133,14 @@
       "agent_role": "frontend-web",
       "mode": "dry_run",
       "run_graph": false,
-      "tags": ["example", "policy-replay", "hitl-pre-merge", "langgraph", "acting-agent"],
+      "tags": ["example", "policy-replay", "hitl-pre-merge", "langgraph-v2", "role-based-events"],
       "expected_events": [
-        "claim",
-        "open_pr",
-        "start_review",
-        "approve_review",
-        "start_test",
-        "test_passed"
+        "orchestrator_enter_in_progress",
+        "frontend-web_ready_for_code_review",
+        "frontend-web-reviewer_in_code_review",
+        "frontend-web-reviewer_ready_for_test",
+        "qa-gate_in_test",
+        "qa-gate_in_pull_request"
       ],
       "expected_status_sequence": [
         "Todo",
@@ -155,7 +155,7 @@
       "expected_model_tier": "low",
       "expected_hitl": true,
       "max_steps": 48,
-      "notes": "Replay barato da politica Kanban do exemplo T-P13-012 (sem merge)."
+      "notes": "Replay barato da politica Kanban v2 do exemplo T-P13-012 (sem merge)."
     },
     {
       "id": "happy_sos_006",
@@ -165,13 +165,13 @@
       "mode": "dry_run",
       "run_graph": true,
       "expected_events": [
-        "claim",
-        "open_pr",
-        "start_review",
-        "approve_review",
-        "start_test",
-        "test_passed",
-        "merge_pr"
+        "orchestrator_enter_in_progress",
+        "frontend-mobile_ready_for_code_review",
+        "frontend-mobile-reviewer_in_code_review",
+        "frontend-mobile-reviewer_ready_for_test",
+        "qa-gate_in_test",
+        "qa-gate_in_pull_request",
+        "devops-cicd_done"
       ],
       "expected_status_sequence": [
         "Todo",
@@ -196,13 +196,13 @@
       "mode": "dry_run",
       "run_graph": false,
       "expected_events": [
-        "claim",
-        "open_pr",
-        "start_review",
-        "approve_review",
-        "start_test",
-        "test_passed",
-        "merge_pr"
+        "orchestrator_enter_in_progress",
+        "frontend-mobile_ready_for_code_review",
+        "frontend-mobile-reviewer_in_code_review",
+        "frontend-mobile-reviewer_ready_for_test",
+        "qa-gate_in_test",
+        "qa-gate_in_pull_request",
+        "devops-cicd_done"
       ],
       "expected_status_sequence": [
         "Todo",
@@ -226,13 +226,13 @@
       "mode": "dry_run",
       "run_graph": false,
       "expected_events": [
-        "claim",
-        "open_pr",
-        "start_review",
-        "approve_review",
-        "start_test",
-        "test_passed",
-        "merge_pr"
+        "orchestrator_enter_in_progress",
+        "frontend-mobile_ready_for_code_review",
+        "frontend-mobile-reviewer_in_code_review",
+        "frontend-mobile-reviewer_ready_for_test",
+        "qa-gate_in_test",
+        "qa-gate_in_pull_request",
+        "devops-cicd_done"
       ],
       "expected_status_sequence": [
         "Todo",
@@ -294,13 +294,13 @@
       "fixture": {
         "board_status": "In Pull Request",
         "events": [
-          "claim",
-          "open_pr",
-          "start_review",
-          "approve_review",
-          "start_test",
-          "test_passed",
-          "merge_pr"
+          "orchestrator_enter_in_progress",
+          "frontend-mobile_ready_for_code_review",
+          "frontend-mobile-reviewer_in_code_review",
+          "frontend-mobile-reviewer_ready_for_test",
+          "qa-gate_in_test",
+          "qa-gate_in_pull_request",
+          "devops-cicd_done"
         ],
         "status_sequence": [
           "Todo",
@@ -316,13 +316,13 @@
         "model_tier": {"tier": "default", "model": "openai/gpt-4o-mini", "purpose": "implement_low"}
       },
       "expected_events": [
-        "claim",
-        "open_pr",
-        "start_review",
-        "approve_review",
-        "start_test",
-        "test_passed",
-        "merge_pr"
+        "orchestrator_enter_in_progress",
+        "frontend-mobile_ready_for_code_review",
+        "frontend-mobile-reviewer_in_code_review",
+        "frontend-mobile-reviewer_ready_for_test",
+        "qa-gate_in_test",
+        "qa-gate_in_pull_request",
+        "devops-cicd_done"
       ],
       "expected_status_sequence": [
         "Todo",
@@ -349,13 +349,16 @@
       "expect_eval_fail": ["invalid_event"],
       "fixture": {
         "board_status": "Todo",
-        "events": ["claim", "teleport_done"],
+        "events": ["orchestrator_enter_in_progress", "teleport_done"],
         "status_sequence": ["Todo", "In Progress", "Done"],
         "steps": 3,
         "hitl_pending": false,
         "model_tier": {"tier": "default", "model": "n/a", "purpose": "route"}
       },
-      "expected_events": ["claim", "open_pr"],
+      "expected_events": [
+        "orchestrator_enter_in_progress",
+        "frontend-web_ready_for_code_review"
+      ],
       "expected_status_sequence": ["Todo", "In Progress", "Ready for Code Review"],
       "expected_final_status": "Ready for Code Review",
       "expected_hitl": false,
@@ -373,13 +376,13 @@
       "expect_eval_fail": ["max_steps"],
       "fixture": {
         "board_status": "In Progress",
-        "events": ["claim"],
+        "events": ["orchestrator_enter_in_progress"],
         "status_sequence": ["Todo", "In Progress"],
         "steps": 99,
         "hitl_pending": false,
         "model_tier": {"tier": "default", "model": "n/a", "purpose": "route"}
       },
-      "expected_events": ["claim"],
+      "expected_events": ["orchestrator_enter_in_progress"],
       "expected_status_sequence": ["Todo", "In Progress"],
       "expected_final_status": "In Progress",
       "expected_hitl": false,

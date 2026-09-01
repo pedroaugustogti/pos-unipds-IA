@@ -1,20 +1,23 @@
-"""Sinais GitHub → gateway / filas (Fase 3)."""
+"""Sinais GitHub → gateway (eventos role-based v2)."""
 
 from __future__ import annotations
 
 import re
 from typing import Any
 
+from board_automation.board.board_task_loader import get_board_task
+from board_automation.board.local_board import get_local_status
+from board_automation.board.reviewer_pairs import QA_GATE_ROLE, normalize_creator_role
+from board_automation.board.task_status_workflow import build_event
+from lib.ci.ci_state import patch_ci_state
 from lib.gateway.gateway import emit_status_event
 from lib.gateway.handoff import load_handoff
-from lib.ci.ci_state import patch_ci_state
-from board_automation.board.local_board import get_local_status
 from lib.runtime_log import log_workflow_event
 
 TASK_ID_RE = re.compile(r"\[([A-Z]-[A-Z0-9]+-\d+)\]")
 
-# Status em que open_pr ja foi aplicado (idempotente)
-ALREADY_OPEN_PR = frozenset({
+# Status em que creator já emitiu ready_for_code_review (idempotente)
+ALREADY_PAST_PR = frozenset({
     "Ready for Code Review",
     "In Code Review",
     "Ready for Test",
@@ -22,6 +25,11 @@ ALREADY_OPEN_PR = frozenset({
     "In Pull Request",
     "Done",
 })
+
+
+def _creator_role(task_id: str) -> str:
+    task = get_board_task(task_id) or {}
+    return normalize_creator_role(str(task.get("agent_role") or "backend"))
 
 
 def parse_task_id(*texts: str | None) -> str | None:
@@ -50,21 +58,21 @@ def handle_pr_signal(
     summary: str = "",
     dry_run: bool = False,
 ) -> dict[str, Any]:
-    """PR opened/synchronize → open_pr se ainda In Progress; no-op se ja avancado."""
+    """PR opened/synchronize → creator ready_for_code_review se ainda In Progress."""
     st = get_local_status(task_id) or "Todo"
-    if st in ALREADY_OPEN_PR:
+    if st in ALREADY_PAST_PR:
         out = {
             "ok": True,
             "signal": "pr",
             "task_id": task_id,
             "action": "idempotent_skip",
             "status": st,
-            "message": f"Status `{st}` ja passou de open_pr",
+            "message": f"Status `{st}` ja passou de Ready for Code Review",
         }
         log_workflow_event(
             "ci_signal",
             task_id=task_id,
-            event="open_pr",
+            event="pr_opened",
             to_status=st,
             summary="idempotent skip",
             extra=out,
@@ -79,7 +87,7 @@ def handle_pr_signal(
             "task_id": task_id,
             "action": "skip_bad_status",
             "status": st,
-            "error": f"Status `{st}` nao permite open_pr via CI (esperado In Progress)",
+            "error": f"Status `{st}` nao permite PR via CI (esperado In Progress)",
         }
 
     ho = load_handoff(task_id) or {}
@@ -87,15 +95,18 @@ def handle_pr_signal(
     if not trace:
         trace = _ci_react_trace(pr_url, summary)
 
+    creator = _creator_role(task_id)
+    event = build_event(creator, "Ready for Code Review")
     emit = emit_status_event(
         task_id,
-        "open_pr",
+        event,
         summary=summary or f"CI/PR signal: {pr_url or ''}".strip(),
         pr_url=pr_url or ho.get("pr_url"),
         branch=branch or ho.get("branch"),
         react_trace=trace,
         metrics={"source": "github_actions", **(ho.get("metrics") or {})},
         dry_run=dry_run,
+        from_agent=creator,
     )
     if not dry_run and emit.get("ok"):
         patch_ci_state(
@@ -114,7 +125,7 @@ def handle_pr_signal(
         "ok": bool(emit.get("ok")),
         "signal": "pr",
         "task_id": task_id,
-        "action": "open_pr",
+        "action": event,
         "status_before": st,
         "emit": {
             "status": emit.get("status"),
@@ -128,7 +139,7 @@ def handle_pr_signal(
     log_workflow_event(
         "ci_signal",
         task_id=task_id,
-        event="open_pr",
+        event=event,
         from_status=st,
         to_status=(emit.get("notification") or {}).get("to"),
         summary=summary,
@@ -139,45 +150,45 @@ def handle_pr_signal(
 
 
 def handle_ci_green(*, task_id: str, dry_run: bool = False) -> dict[str, Any]:
-    """CI verde → start_test via gateway (sem fila worker)."""
-    st = get_local_status(task_id) or "Todo"
+    """CI verde → qa-gate_in_test via gateway."""
+    event = build_event(QA_GATE_ROLE, "In Test")
     if dry_run:
         out = {
             "ok": True,
             "signal": "ci_green",
             "task_id": task_id,
-            "action": "would_start_test",
+            "action": f"would_{event}",
             "dry_run": True,
         }
     else:
         emit = emit_status_event(
             task_id,
-            "start_test",
+            event,
             summary="CI green — QA gate inicia testes",
             dry_run=False,
-            from_agent="devops-cicd",
+            from_agent=QA_GATE_ROLE,
         )
         patch_ci_state(
             task_id,
             status="green",
             last_signal="ci_green",
-            summary="CI green — start_test emitido",
-            event="start_test",
+            summary=f"CI green — {event} emitido",
+            event=event,
             from_agent="devops-cicd",
-            to_agent="qa-gate",
+            to_agent=QA_GATE_ROLE,
         )
         out = {
             "ok": bool(emit.get("ok")),
             "signal": "ci_green",
             "task_id": task_id,
-            "action": "start_test",
+            "action": event,
             "emit": emit,
         }
     log_workflow_event(
         "ci_signal",
         task_id=task_id,
-        agent="qa-gate",
-        event="start_test",
+        agent=QA_GATE_ROLE,
+        event=event,
         dispatch_action="enqueue_qa_gate",
         summary="CI green → qa-gate",
         extra={"emit_status": (out.get("emit") or {}).get("status")},
@@ -193,14 +204,16 @@ def handle_ci_red(
     summary: str = "CI failed",
     dry_run: bool = False,
 ) -> dict[str, Any]:
-    """CI vermelho → test_failed_bug no gateway."""
+    """CI vermelho → qa-gate_return_in_progress no gateway."""
+    event = build_event(QA_GATE_ROLE, "In Progress", return_=True)
     try:
         emit = emit_status_event(
             task_id,
-            "test_failed_bug",
+            event,
             summary=summary,
             bug_kind=bug_kind,
             dry_run=dry_run,
+            from_agent=QA_GATE_ROLE,
         )
     except Exception as exc:  # noqa: BLE001
         return {"ok": False, "signal": "ci_red", "task_id": task_id, "error": str(exc)}
@@ -211,16 +224,16 @@ def handle_ci_red(
             status="red",
             last_signal="ci_red",
             summary=summary,
-            event="test_failed_bug",
+            event=event,
             from_agent="devops-cicd",
-            to_agent="qa-gate",
+            to_agent=QA_GATE_ROLE,
         )
 
     out = {
         "ok": bool(emit.get("ok")),
         "signal": "ci_red",
         "task_id": task_id,
-        "action": "test_failed_bug",
+        "action": event,
         "bug_kind": bug_kind,
         "emit": {
             "status": emit.get("status"),
@@ -233,7 +246,7 @@ def handle_ci_red(
     log_workflow_event(
         "ci_signal",
         task_id=task_id,
-        event="test_failed_bug",
+        event=event,
         summary=summary,
         extra={"bug_kind": bug_kind, "emit_status": emit.get("status")},
         dry_run=dry_run,

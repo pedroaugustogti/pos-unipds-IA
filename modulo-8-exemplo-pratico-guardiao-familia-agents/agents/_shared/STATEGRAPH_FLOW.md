@@ -1,6 +1,6 @@
 # StateGraph v2 — fluxo LangGraph
 
-Código: `agents/00-orchestration/langgraph_app/` · catálogo: `list_status_events` / `event_registry.py`
+Código: `agents/00-orchestration/langgraph_app/` · catálogo: MCP `list_status_events` ou `registry/catalog.py`
 
 ## Diagrama
 
@@ -15,11 +15,11 @@ flowchart TD
 
 ## Arquivos
 
-| Arquivo | Conteúdo |
+| Caminho | Conteúdo |
 |---------|----------|
-| `event_registry.py` | Pipeline MCP por evento |
-| `event_nodes.py` | Factory de nós |
+| `registry/catalog.py` | `EVENT_REGISTRY` |
+| `registry/pipelines.py` | Pipeline MCP por evento |
+| `nodes/factory.py` | Factory `evt_*` |
 | `graph.py` | Grafo v2 |
-| `state.py` | `PipelineState` |
 
 Detalhes: `agents/00-orchestration/docs/STATEGRAPH_FLOW.md`

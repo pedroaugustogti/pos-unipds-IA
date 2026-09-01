@@ -1,21 +1,16 @@
-"""Approval Gates humanos — onde a automação para (módulo 8 / P2)."""
+"""Approval Gates humanos — eventos role-based v2."""
 
 from __future__ import annotations
 
 from typing import Any
 
-from board_automation.board.task_status_workflow import (
-    is_approve_review_event,
-    is_merge_event,
-    is_open_pr_event,
-    is_test_failed_event,
-    is_test_passed_event,
+from lib.gateway.v2_events import (
+    is_creator_ready_for_code_review,
+    is_ops_done,
+    is_qa_in_pull_request,
+    is_qa_return_to_in_progress,
+    is_reviewer_ready_for_test,
 )
-
-# Papéis / eventos que exigem humano antes de efeito irreversível (merge via is_merge_event)
-HITL_EVENTS = frozenset({
-    "hitl_required",
-})
 
 HIGH_RISK_KEYWORDS = (
     "sos",
@@ -37,7 +32,7 @@ HIGH_RISK_ROLES = frozenset({
     "devops-cicd",
 })
 
-HIGH_RISK_EPIC_PREFIXES = ("E-P01", "E-P07", "E-P09", "E-P11")  # auth/safety/payments/release (exemplo)
+HIGH_RISK_EPIC_PREFIXES = ("E-P01", "E-P07", "E-P09", "E-P11")
 
 
 def _text_blob(task: dict[str, Any]) -> str:
@@ -72,41 +67,33 @@ def evaluate_hitl(
     bug_threshold: int = 3,
     proposed_verdict: str | None = None,
 ) -> dict[str, Any]:
-    """
-    Decide se o evento pode ser aplicado automaticamente ou exige humano.
-
-    Retorno:
-      required: bool
-      reason: str
-      mode: auto | propose_only | block_until_human
-      human_action: str
-    """
+    """Decide se o evento role-based pode ser aplicado automaticamente ou exige humano."""
     reasons: list[str] = []
     mode = "auto"
 
-    if is_merge_event(event):
+    if is_ops_done(event):
         reasons.append("Merge é irreversível no fluxo do board — Approval Gate humano obrigatório.")
         mode = "block_until_human"
 
     if task.get("release_blocker") in (True, "yes", "true", "True", 1, "1"):
-        if is_approve_review_event(event) or is_test_passed_event(event) or is_merge_event(event):
+        if is_reviewer_ready_for_test(event) or is_qa_in_pull_request(event) or is_ops_done(event):
             reasons.append("Card com release_blocker=True — HITL obrigatório.")
-            mode = "block_until_human" if is_merge_event(event) else "propose_only"
+            mode = "block_until_human" if is_ops_done(event) else "propose_only"
 
-    if is_approve_review_event(event) and is_high_risk_task(task):
+    if is_reviewer_ready_for_test(event) and is_high_risk_task(task):
         reasons.append(
             "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
         )
         if mode == "auto":
             mode = "propose_only"
 
-    if is_test_failed_event(event) and bug_count >= bug_threshold:
+    if is_qa_return_to_in_progress(event) and bug_count >= bug_threshold:
         reasons.append(
             f"Blocker automático após {bug_count} bugs — triagem humana obrigatória."
         )
         mode = "block_until_human"
 
-    if is_open_pr_event(event) and is_high_risk_task(task) and proposed_verdict == "skip_tests":
+    if is_creator_ready_for_code_review(event) and is_high_risk_task(task) and proposed_verdict == "skip_tests":
         reasons.append("PR de alto risco sem evidência de testes.")
         mode = "block_until_human"
 
@@ -115,10 +102,10 @@ def evaluate_hitl(
         "auto": "Nenhuma — seguir automação.",
         "propose_only": (
             "Humano confirma ou rejeita o veredito proposto no PR/board "
-            "(evento hitl_approved | hitl_rejected)."
+            "(reemitir o mesmo evento role-based com hitl_approved ou hitl_rejected)."
         ),
         "block_until_human": (
-            "Humano decide no board/PR; só então emitir hitl_approved + evento liberado."
+            "Humano decide no board/PR; reemitir o evento role-based após hitl_approved."
         ),
     }[mode]
 

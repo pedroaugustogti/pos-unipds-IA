@@ -1,8 +1,8 @@
-# scripts — CLIs de orquestração
+# scripts/
 
 | Subpasta | Responsabilidade |
 |----------|------------------|
-| `langgraph/` | Pipeline grafo, smoke, LangSmith |
-| `cli/` | Gateway, model tier, sinais CI |
+| [`langgraph/`](langgraph/) | Pipeline grafo v2, smoke, LangSmith, catálogo de nós |
+| [`cli/`](cli/) | Gateway manual, model tier, sinais CI (role-based) |
 
 Paths: `lib.paths.orch_script("langgraph/langgraph_run.py")`

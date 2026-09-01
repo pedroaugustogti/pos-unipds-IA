@@ -1,18 +1,16 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "GuardiaoBoardEvent",
+  "title": "GuardiaoBoardEventV2",
+  "description": "Eventos role-based v2: {agent_role}_{status_slug} ou {agent_role}_return_{status_slug}",
   "type": "object",
   "required": ["task_id", "event"],
   "properties": {
     "task_id": { "type": "string", "pattern": "^T-[A-Z0-9]+-\\d+$" },
     "event": {
       "type": "string",
-      "enum": [
-        "claim", "start_work", "open_pr", "start_review", "request_changes",
-        "resubmit_review", "approve_review", "start_test", "test_failed_bug",
-        "test_passed", "merge_pr", "reopen", "dispute", "hitl_approved", "hitl_rejected"
-      ]
+      "pattern": "^(orchestrator_enter_in_progress|orchestrator_todo|[a-z0-9-]+_(in_progress|ready_for_code_review|in_code_review|ready_for_test|in_test|in_pull_request|done|todo|return_in_progress|return_ready_for_code_review|return_in_code_review|return_ready_for_test|return_in_test|return_in_pull_request)|hitl_approved|hitl_rejected|dispute)$"
     },
+    "from_agent": { "type": ["string", "null"] },
     "pr_url": { "type": ["string", "null"] },
     "branch": { "type": ["string", "null"] },
     "summary": { "type": "string" },
@@ -31,7 +29,11 @@
   },
   "allOf": [
     {
-      "if": { "properties": { "event": { "const": "open_pr" } } },
+      "if": {
+        "properties": {
+          "event": { "pattern": ".+_ready_for_code_review$" }
+        }
+      },
       "then": {
         "required": ["pr_url", "react_trace"],
         "properties": {

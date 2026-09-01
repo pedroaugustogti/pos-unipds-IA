@@ -1,30 +1,14 @@
-"""Contrato único de evento de Status (gateway do board)."""
+"""Contrato único de evento de Status (gateway do board) — role-based v2."""
 
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
-from typing import Any, Literal
+from typing import Any
 from uuid import uuid4
 
-EventName = Literal[
-    "claim",
-    "start_work",
-    "open_pr",
-    "start_review",
-    "request_changes",
-    "resubmit_review",
-    "approve_review",
-    "propose_review",  # LLM propõe; humano confirma em risco alto
-    "start_test",
-    "test_failed_bug",
-    "test_passed",
-    "merge_pr",
-    "reopen",
-    "hitl_required",
-    "hitl_approved",
-    "hitl_rejected",
-]
+# Eventos role-based: {agent_role}_{status_slug} ou {agent_role}_return_{status_slug}
+EventName = str
 
 
 def _now() -> str:
@@ -36,7 +20,7 @@ class EventPayload:
     """Payload fechado que atravessa orchestrator → worker → board."""
 
     task_id: str
-    event: str
+    event: EventName
     from_status: str | None = None
     to_status: str | None = None
     agent_role: str | None = None

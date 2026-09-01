@@ -1,0 +1,944 @@
+{
+  "dataset": "guardiao-kanban-pipeline",
+  "version": "2.0",
+  "with_graph": false,
+  "passed": 10,
+  "total": 10,
+  "ok": true,
+  "results": [
+    {
+      "case_id": "example_site_hero_012_langgraph_live",
+      "task_id": "T-P13-012",
+      "ok": true,
+      "evaluators": [
+        {
+          "name": "invalid_event",
+          "ok": true,
+          "detail": {
+            "invalid": []
+          }
+        },
+        {
+          "name": "events",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "orchestrator_enter_in_progress",
+              "frontend-web_ready_for_code_review",
+              "frontend-web-reviewer_in_code_review",
+              "frontend-web-reviewer_ready_for_test",
+              "qa-gate_in_test",
+              "qa-gate_in_pull_request",
+              "devops-cicd_done"
+            ],
+            "actual": [
+              "orchestrator_enter_in_progress",
+              "frontend-web_ready_for_code_review",
+              "frontend-web-reviewer_in_code_review",
+              "frontend-web-reviewer_ready_for_test",
+              "qa-gate_in_test",
+              "qa-gate_in_pull_request",
+              "devops-cicd_done"
+            ]
+          }
+        },
+        {
+          "name": "status_sequence",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "Todo",
+              "In Progress",
+              "Ready for Code Review",
+              "In Code Review",
+              "Ready for Test",
+              "In Test",
+              "In Pull Request"
+            ],
+            "actual": [
+              "Todo",
+              "In Progress",
+              "Ready for Code Review",
+              "In Code Review",
+              "Ready for Test",
+              "In Test",
+              "In Pull Request"
+            ]
+          }
+        },
+        {
+          "name": "final_status",
+          "ok": true,
+          "detail": {
+            "expected": "In Pull Request",
+            "actual": "In Pull Request"
+          }
+        },
+        {
+          "name": "hitl",
+          "ok": true,
+          "detail": {
+            "expected": true,
+            "actual": true,
+            "skipped_hitl": false
+          }
+        },
+        {
+          "name": "max_steps",
+          "ok": true,
+          "detail": {
+            "steps": 28,
+            "max_steps": 48
+          }
+        },
+        {
+          "name": "model_tier",
+          "ok": true,
+          "detail": {
+            "expected": "low",
+            "actual": "low"
+          }
+        }
+      ],
+      "engine": "fixture",
+      "facts": {
+        "events": [
+          "orchestrator_enter_in_progress",
+          "frontend-web_ready_for_code_review",
+          "frontend-web-reviewer_in_code_review",
+          "frontend-web-reviewer_ready_for_test",
+          "qa-gate_in_test",
+          "qa-gate_in_pull_request",
+          "devops-cicd_done"
+        ],
+        "status_sequence": [
+          "Todo",
+          "In Progress",
+          "Ready for Code Review",
+          "In Code Review",
+          "Ready for Test",
+          "In Test",
+          "In Pull Request"
+        ],
+        "board_status": "In Pull Request",
+        "steps": 28,
+        "hitl_pending": true,
+        "model_tier": "low"
+      }
+    },
+    {
+      "case_id": "policy_site_hero_012_pre_merge",
+      "task_id": "T-P13-012",
+      "ok": true,
+      "evaluators": [
+        {
+          "name": "invalid_event",
+          "ok": true,
+          "detail": {
+            "invalid": []
+          }
+        },
+        {
+          "name": "events",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "orchestrator_enter_in_progress",
+              "frontend-web_ready_for_code_review",
+              "frontend-web-reviewer_in_code_review",
+              "frontend-web-reviewer_ready_for_test",
+              "qa-gate_in_test",
+              "qa-gate_in_pull_request"
+            ],
+            "actual": [
+              "orchestrator_enter_in_progress",
+              "frontend-web_ready_for_code_review",
+              "frontend-web-reviewer_in_code_review",
+              "frontend-web-reviewer_ready_for_test",
+              "qa-gate_in_test",
+              "qa-gate_in_pull_request"
+            ]
+          }
+        },
+        {
+          "name": "status_sequence",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "Todo",
+              "In Progress",
+              "Ready for Code Review",
+              "In Code Review",
+              "Ready for Test",
+              "In Test",
+              "In Pull Request"
+            ],
+            "actual": [
+              "Todo",
+              "In Progress",
+              "Ready for Code Review",
+              "In Code Review",
+              "Ready for Test",
+              "In Test",
+              "In Pull Request"
+            ]
+          }
+        },
+        {
+          "name": "final_status",
+          "ok": true,
+          "detail": {
+            "expected": "In Pull Request",
+            "actual": "In Pull Request"
+          }
+        },
+        {
+          "name": "hitl",
+          "ok": true,
+          "detail": {
+            "expected": true,
+            "actual": true,
+            "skipped_hitl": false
+          }
+        },
+        {
+          "name": "max_steps",
+          "ok": true,
+          "detail": {
+            "steps": 24,
+            "max_steps": 48
+          }
+        },
+        {
+          "name": "model_tier",
+          "ok": true,
+          "detail": {
+            "expected": "low",
+            "actual": "low"
+          }
+        }
+      ],
+      "engine": "policy_replay",
+      "facts": {
+        "events": [
+          "orchestrator_enter_in_progress",
+          "frontend-web_ready_for_code_review",
+          "frontend-web-reviewer_in_code_review",
+          "frontend-web-reviewer_ready_for_test",
+          "qa-gate_in_test",
+          "qa-gate_in_pull_request"
+        ],
+        "status_sequence": [
+          "Todo",
+          "In Progress",
+          "Ready for Code Review",
+          "In Code Review",
+          "Ready for Test",
+          "In Test",
+          "In Pull Request"
+        ],
+        "board_status": "In Pull Request",
+        "steps": 24,
+        "hitl_pending": true,
+        "model_tier": "low"
+      }
+    },
+    {
+      "case_id": "happy_sos_006",
+      "task_id": "T-P05-006",
+      "ok": true,
+      "evaluators": [
+        {
+          "name": "invalid_event",
+          "ok": true,
+          "detail": {
+            "invalid": []
+          }
+        },
+        {
+          "name": "events",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "orchestrator_enter_in_progress",
+              "frontend-mobile_ready_for_code_review",
+              "frontend-mobile-reviewer_in_code_review",
+              "frontend-mobile-reviewer_ready_for_test",
+              "qa-gate_in_test",
+              "qa-gate_in_pull_request",
+              "devops-cicd_done"
+            ],
+            "actual": [
+              "orchestrator_enter_in_progress",
+              "frontend-mobile_ready_for_code_review",
+              "frontend-mobile-reviewer_in_code_review",
+              "frontend-mobile-reviewer_ready_for_test",
+              "qa-gate_in_test",
+              "qa-gate_in_pull_request",
+              "devops-cicd_done"
+            ]
+          }
+        },
+        {
+          "name": "status_sequence",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "Todo",
+              "In Progress",
+              "Ready for Code Review",
+              "In Code Review",
+              "Ready for Test",
+              "In Test",
+              "In Pull Request",
+              "Done"
+            ],
+            "actual": [
+              "Todo",
+              "In Progress",
+              "Ready for Code Review",
+              "In Code Review",
+              "Ready for Test",
+              "In Test",
+              "In Pull Request",
+              "Done"
+            ]
+          }
+        },
+        {
+          "name": "final_status",
+          "ok": true,
+          "detail": {
+            "expected": "Done",
+            "actual": "Done"
+          }
+        },
+        {
+          "name": "hitl",
+          "ok": true,
+          "detail": {
+            "expected": false,
+            "actual": false,
+            "skipped_hitl": false
+          }
+        },
+        {
+          "name": "max_steps",
+          "ok": true,
+          "detail": {
+            "steps": 28,
+            "max_steps": 40
+          }
+        },
+        {
+          "name": "model_tier",
+          "ok": true,
+          "detail": {
+            "expected": "high",
+            "actual": "high"
+          }
+        }
+      ],
+      "engine": "policy_replay",
+      "facts": {
+        "events": [
+          "orchestrator_enter_in_progress",
+          "frontend-mobile_ready_for_code_review",
+          "frontend-mobile-reviewer_in_code_review",
+          "frontend-mobile-reviewer_ready_for_test",
+          "qa-gate_in_test",
+          "qa-gate_in_pull_request",
+          "devops-cicd_done"
+        ],
+        "status_sequence": [
+          "Todo",
+          "In Progress",
+          "Ready for Code Review",
+          "In Code Review",
+          "Ready for Test",
+          "In Test",
+          "In Pull Request",
+          "Done"
+        ],
+        "board_status": "Done",
+        "steps": 28,
+        "hitl_pending": false,
+        "model_tier": "high"
+      }
+    },
+    {
+      "case_id": "happy_005",
+      "task_id": "T-P05-005",
+      "ok": true,
+      "evaluators": [
+        {
+          "name": "invalid_event",
+          "ok": true,
+          "detail": {
+            "invalid": []
+          }
+        },
+        {
+          "name": "events",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "orchestrator_enter_in_progress",
+              "frontend-mobile_ready_for_code_review",
+              "frontend-mobile-reviewer_in_code_review",
+              "frontend-mobile-reviewer_ready_for_test",
+              "qa-gate_in_test",
+              "qa-gate_in_pull_request",
+              "devops-cicd_done"
+            ],
+            "actual": [
+              "orchestrator_enter_in_progress",
+              "frontend-mobile_ready_for_code_review",
+              "frontend-mobile-reviewer_in_code_review",
+              "frontend-mobile-reviewer_ready_for_test",
+              "qa-gate_in_test",
+              "qa-gate_in_pull_request",
+              "devops-cicd_done"
+            ]
+          }
+        },
+        {
+          "name": "status_sequence",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "Todo",
+              "In Progress",
+              "Ready for Code Review",
+              "In Code Review",
+              "Ready for Test",
+              "In Test",
+              "In Pull Request",
+              "Done"
+            ],
+            "actual": [
+              "Todo",
+              "In Progress",
+              "Ready for Code Review",
+              "In Code Review",
+              "Ready for Test",
+              "In Test",
+              "In Pull Request",
+              "Done"
+            ]
+          }
+        },
+        {
+          "name": "final_status",
+          "ok": true,
+          "detail": {
+            "expected": "Done",
+            "actual": "Done"
+          }
+        },
+        {
+          "name": "hitl",
+          "ok": true,
+          "detail": {
+            "expected": false,
+            "actual": false,
+            "skipped_hitl": false
+          }
+        },
+        {
+          "name": "max_steps",
+          "ok": true,
+          "detail": {
+            "steps": 28,
+            "max_steps": 40
+          }
+        },
+        {
+          "name": "model_tier",
+          "ok": true,
+          "detail": {
+            "skipped": true
+          }
+        }
+      ],
+      "engine": "policy_replay",
+      "facts": {
+        "events": [
+          "orchestrator_enter_in_progress",
+          "frontend-mobile_ready_for_code_review",
+          "frontend-mobile-reviewer_in_code_review",
+          "frontend-mobile-reviewer_ready_for_test",
+          "qa-gate_in_test",
+          "qa-gate_in_pull_request",
+          "devops-cicd_done"
+        ],
+        "status_sequence": [
+          "Todo",
+          "In Progress",
+          "Ready for Code Review",
+          "In Code Review",
+          "Ready for Test",
+          "In Test",
+          "In Pull Request",
+          "Done"
+        ],
+        "board_status": "Done",
+        "steps": 28,
+        "hitl_pending": false,
+        "model_tier": "low"
+      }
+    },
+    {
+      "case_id": "happy_001_mobile",
+      "task_id": "T-P05-001",
+      "ok": true,
+      "evaluators": [
+        {
+          "name": "invalid_event",
+          "ok": true,
+          "detail": {
+            "invalid": []
+          }
+        },
+        {
+          "name": "events",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "orchestrator_enter_in_progress",
+              "frontend-mobile_ready_for_code_review",
+              "frontend-mobile-reviewer_in_code_review",
+              "frontend-mobile-reviewer_ready_for_test",
+              "qa-gate_in_test",
+              "qa-gate_in_pull_request",
+              "devops-cicd_done"
+            ],
+            "actual": [
+              "orchestrator_enter_in_progress",
+              "frontend-mobile_ready_for_code_review",
+              "frontend-mobile-reviewer_in_code_review",
+              "frontend-mobile-reviewer_ready_for_test",
+              "qa-gate_in_test",
+              "qa-gate_in_pull_request",
+              "devops-cicd_done"
+            ]
+          }
+        },
+        {
+          "name": "status_sequence",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "Todo",
+              "In Progress",
+              "Ready for Code Review",
+              "In Code Review",
+              "Ready for Test",
+              "In Test",
+              "In Pull Request",
+              "Done"
+            ],
+            "actual": [
+              "Todo",
+              "In Progress",
+              "Ready for Code Review",
+              "In Code Review",
+              "Ready for Test",
+              "In Test",
+              "In Pull Request",
+              "Done"
+            ]
+          }
+        },
+        {
+          "name": "final_status",
+          "ok": true,
+          "detail": {
+            "expected": "Done",
+            "actual": "Done"
+          }
+        },
+        {
+          "name": "hitl",
+          "ok": true,
+          "detail": {
+            "expected": false,
+            "actual": false,
+            "skipped_hitl": false
+          }
+        },
+        {
+          "name": "max_steps",
+          "ok": true,
+          "detail": {
+            "steps": 28,
+            "max_steps": 40
+          }
+        },
+        {
+          "name": "model_tier",
+          "ok": true,
+          "detail": {
+            "skipped": true
+          }
+        }
+      ],
+      "engine": "policy_replay",
+      "facts": {
+        "events": [
+          "orchestrator_enter_in_progress",
+          "frontend-mobile_ready_for_code_review",
+          "frontend-mobile-reviewer_in_code_review",
+          "frontend-mobile-reviewer_ready_for_test",
+          "qa-gate_in_test",
+          "qa-gate_in_pull_request",
+          "devops-cicd_done"
+        ],
+        "status_sequence": [
+          "Todo",
+          "In Progress",
+          "Ready for Code Review",
+          "In Code Review",
+          "Ready for Test",
+          "In Test",
+          "In Pull Request",
+          "Done"
+        ],
+        "board_status": "Done",
+        "steps": 28,
+        "hitl_pending": false,
+        "model_tier": "low"
+      }
+    },
+    {
+      "case_id": "high_risk_tier_sos",
+      "task_id": "T-P05-006",
+      "ok": true,
+      "evaluators": [
+        {
+          "name": "invalid_event",
+          "ok": true,
+          "detail": {
+            "invalid": []
+          }
+        },
+        {
+          "name": "events",
+          "ok": true,
+          "detail": {
+            "skipped": true
+          }
+        },
+        {
+          "name": "status_sequence",
+          "ok": true,
+          "detail": {
+            "skipped": true
+          }
+        },
+        {
+          "name": "final_status",
+          "ok": true,
+          "detail": {
+            "skipped": true
+          }
+        },
+        {
+          "name": "hitl",
+          "ok": true,
+          "detail": {
+            "expected": false,
+            "actual": false,
+            "skipped_hitl": false
+          }
+        },
+        {
+          "name": "max_steps",
+          "ok": true,
+          "detail": {
+            "steps": 0,
+            "max_steps": 40
+          }
+        },
+        {
+          "name": "model_tier",
+          "ok": true,
+          "detail": {
+            "expected": "high",
+            "actual": "high"
+          }
+        }
+      ],
+      "engine": "model_tier_only",
+      "facts": {
+        "events": [],
+        "status_sequence": [],
+        "board_status": null,
+        "steps": 0,
+        "hitl_pending": false,
+        "model_tier": "high"
+      }
+    },
+    {
+      "case_id": "done_noop",
+      "task_id": "T-FIXTURE-DONE",
+      "ok": true,
+      "evaluators": [
+        {
+          "name": "invalid_event",
+          "ok": true,
+          "detail": {
+            "invalid": []
+          }
+        },
+        {
+          "name": "events",
+          "ok": true,
+          "detail": {
+            "expected": [],
+            "actual": []
+          }
+        },
+        {
+          "name": "status_sequence",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "Done"
+            ],
+            "actual": [
+              "Done"
+            ]
+          }
+        },
+        {
+          "name": "final_status",
+          "ok": true,
+          "detail": {
+            "expected": "Done",
+            "actual": "Done"
+          }
+        },
+        {
+          "name": "hitl",
+          "ok": true,
+          "detail": {
+            "expected": false,
+            "actual": false,
+            "skipped_hitl": false
+          }
+        },
+        {
+          "name": "max_steps",
+          "ok": true,
+          "detail": {
+            "steps": 1,
+            "max_steps": 40
+          }
+        },
+        {
+          "name": "model_tier",
+          "ok": true,
+          "detail": {
+            "skipped": true
+          }
+        }
+      ],
+      "engine": "fixture",
+      "facts": {
+        "events": [],
+        "status_sequence": [
+          "Done"
+        ],
+        "board_status": "Done",
+        "steps": 1,
+        "hitl_pending": false,
+        "model_tier": "default"
+      }
+    },
+    {
+      "case_id": "live_hitl_merge",
+      "task_id": "T-FIXTURE-HITL",
+      "ok": true,
+      "evaluators": [
+        {
+          "name": "invalid_event",
+          "ok": true,
+          "detail": {
+            "invalid": []
+          }
+        },
+        {
+          "name": "events",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "orchestrator_enter_in_progress",
+              "frontend-mobile_ready_for_code_review",
+              "frontend-mobile-reviewer_in_code_review",
+              "frontend-mobile-reviewer_ready_for_test",
+              "qa-gate_in_test",
+              "qa-gate_in_pull_request",
+              "devops-cicd_done"
+            ],
+            "actual": [
+              "orchestrator_enter_in_progress",
+              "frontend-mobile_ready_for_code_review",
+              "frontend-mobile-reviewer_in_code_review",
+              "frontend-mobile-reviewer_ready_for_test",
+              "qa-gate_in_test",
+              "qa-gate_in_pull_request",
+              "devops-cicd_done"
+            ]
+          }
+        },
+        {
+          "name": "status_sequence",
+          "ok": true,
+          "detail": {
+            "expected": [
+              "Todo",
+              "In Progress",
+              "Ready for Code Review",
+              "In Code Review",
+              "Ready for Test",
+              "In Test",
+              "In Pull Request"
+            ],
+            "actual": [
+              "Todo",
+              "In Progress",
+              "Ready for Code Review",
+              "In Code Review",
+              "Ready for Test",
+              "In Test",
+              "In Pull Request"
+            ]
+          }
+        },
+        {
+          "name": "final_status",
+          "ok": true,
+          "detail": {
+            "expected": "In Pull Request",
+            "actual": "In Pull Request"
+          }
+        },
+        {
+          "name": "hitl",
+          "ok": true,
+          "detail": {
+            "expected": true,
+            "actual": true,
+            "skipped_hitl": false
+          }
+        },
+        {
+          "name": "max_steps",
+          "ok": true,
+          "detail": {
+            "steps": 24,
+            "max_steps": 40
+          }
+        },
+        {
+          "name": "model_tier",
+          "ok": true,
+          "detail": {
+            "skipped": true
+          }
+        }
+      ],
+      "engine": "fixture",
+      "facts": {
+        "events": [
+          "orchestrator_enter_in_progress",
+          "frontend-mobile_ready_for_code_review",
+          "frontend-mobile-reviewer_in_code_review",
+          "frontend-mobile-reviewer_ready_for_test",
+          "qa-gate_in_test",
+          "qa-gate_in_pull_request",
+          "devops-cicd_done"
+        ],
+        "status_sequence": [
+          "Todo",
+          "In Progress",
+          "Ready for Code Review",
+          "In Code Review",
+          "Ready for Test",
+          "In Test",
+          "In Pull Request"
+        ],
+        "board_status": "In Pull Request",
+        "steps": 24,
+        "hitl_pending": true,
+        "model_tier": "default"
+      }
+    },
+    {
+      "case_id": "fixture_invalid_event",
+      "task_id": "T-FIXTURE-BAD",
+      "ok": true,
+      "evaluators": [
+        {
+          "name": "invalid_event",
+          "ok": true,
+          "detail": {
+            "invalid": [
+              "teleport_done"
+            ],
+            "expect_fail": true,
+            "raw_ok": false
+          }
+        }
+      ],
+      "engine": "fixture",
+      "facts": {
+        "events": [
+          "orchestrator_enter_in_progress",
+          "teleport_done"
+        ],
+        "status_sequence": [
+          "Todo",
+          "In Progress",
+          "Done"
+        ],
+        "board_status": "Todo",
+        "steps": 3,
+        "hitl_pending": false,
+        "model_tier": "default"
+      }
+    },
+    {
+      "case_id": "fixture_max_steps",
+      "task_id": "T-FIXTURE-LOOP",
+      "ok": true,
+      "evaluators": [
+        {
+          "name": "max_steps",
+          "ok": true,
+          "detail": {
+            "steps": 99,
+            "max_steps": 20,
+            "expect_fail": true,
+            "raw_ok": false
+          }
+        }
+      ],
+      "engine": "fixture",
+      "facts": {
+        "events": [
+          "orchestrator_enter_in_progress"
+        ],
+        "status_sequence": [
+          "Todo",
+          "In Progress"
+        ],
+        "board_status": "In Progress",
+        "steps": 99,
+        "hitl_pending": false,
+        "model_tier": "default"
+      }
+    }
+  ]
+}

@@ -40,9 +40,19 @@ Entry: `langgraph_app.graph.run_once(task_id, mode=...)`
 
 ## Arquivos
 
-| Arquivo | Conteúdo |
+| Caminho | Conteúdo |
 |---------|----------|
-| `event_registry.py` | 55 eventos + `build_pipeline` |
-| `event_nodes.py` | Factory `make_event_node` |
-| `graph.py` | Grafo v2 |
+| `registry/catalog.py` | 55 eventos + `EVENT_REGISTRY` |
+| `registry/pipelines.py` | `build_pipeline` por classificação |
+| `registry/resolve.py` | status → evento |
+| `nodes/control.py` | `sync_board`, `orchestrator_decide` |
+| `nodes/factory.py` | Factory `make_event_node` → 55 `evt_*` |
+| `nodes/evt/*.py` | Índice por classificação (creator, reviewer, …) |
+| `graph.py` | Grafo v2 + `run_once` |
 | `state.py` | `PipelineState` |
+
+Catálogo CLI: `python agents/00-orchestration/scripts/langgraph/list_nodes.py`
+
+## Diagrama de sequência (loop + arquivos)
+
+Ver [`NODE_LOOP_SEQUENCE.md`](NODE_LOOP_SEQUENCE.md) — encadeamento completo `sync_board` → `orchestrator_decide` → `evt_*` → MCP → gateway → board.

@@ -5,6 +5,8 @@ from __future__ import annotations
 import os
 from typing import Any
 
+from board_automation.board.reviewer_pairs import QA_GATE_ROLE
+from board_automation.board.task_status_workflow import build_event
 from lib.orchestrator.phase_context import load_actuation, read_agent_docs, task_from_ctx
 from lib.orchestrator.phase_qa_validate import _run_mobile_mcp_chain, _validate_ac_with_llm
 
@@ -107,21 +109,23 @@ def step_qa_ac_validate(ctx: dict[str, Any], qa_result: dict[str, Any]) -> dict[
     task = task_from_ctx(ctx)
     ac_report = _validate_ac_with_llm(task, qa_result, docs)
 
-    next_event = "test_passed"
+    pass_event = build_event(QA_GATE_ROLE, "In Pull Request")
+    fail_event = build_event(QA_GATE_ROLE, "In Progress", return_=True)
+    next_event = pass_event
     summary = "QA PASS — evidencias e AC validados"
     rationale = "qa_validate"
 
     if qa_result.get("ok") is False and not qa_result.get("skipped"):
-        next_event = "test_failed_bug"
+        next_event = fail_event
         summary = "QA FAIL"
         rationale = str(qa_result.get("error") or qa_result.get("reason") or "FAIL")[:500]
     elif qa_result.get("infra") and not qa_result.get("ok"):
-        next_event = "test_failed_bug"
+        next_event = fail_event
         summary = f"Violacao politica infra: {qa_result.get('reason')}"
         rationale = str(qa_result.get("reason") or "")
 
     if ac_report.get("ac_checks") and not ac_report.get("all_passed"):
-        next_event = "test_failed_bug"
+        next_event = fail_event
         summary = "AC nao atendidos"
         rationale = ac_report.get("summary") or "AC fail"
 
@@ -132,7 +136,7 @@ def step_qa_ac_validate(ctx: dict[str, Any], qa_result: dict[str, Any]) -> dict[
             "next_event": next_event,
             "summary": summary,
             "rationale": rationale,
-            "confidence": 0.95 if next_event == "test_passed" else 0.7,
+            "confidence": 0.95 if next_event == pass_event else 0.7,
             "needs_human": False,
         },
         "react_trace": [{

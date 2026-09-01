@@ -6,4 +6,4 @@
 
 Cópia espelhada em `board_automation/schemas/` quando aplicável.
 
-Validação: gateway rejeita evento fora de `EVENT_TARGET`.
+Validação: gateway rejeita evento fora de `EVENT_TARGET` (55 eventos role-based v2).

@@ -24,7 +24,7 @@ CREATOR_STEPS = (
     "claim_and_read",
     "implement",
     "module_tests",
-    "open_pr",
+    "ready_for_code_review",
 )
 
 REVIEWER_STEPS = (

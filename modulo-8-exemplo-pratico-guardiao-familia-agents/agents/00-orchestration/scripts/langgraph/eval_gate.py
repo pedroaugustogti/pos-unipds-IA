@@ -16,16 +16,13 @@ _mod.setup()
 import argparse
 import json
 import re
-import sys
-from pathlib import Path
 
-from lib.paths import MODULE_ROOT  # noqa: E402
 from lib.env_load import ensure_env  # noqa: E402
 
 ensure_env()
-from lib.core.repo_paths import DEFAULT_PATHS, REPO_ENV, resolve_repo_path  # noqa: E402
-from lib.gateway.handoff import load_handoff, write_handoff  # noqa: E402
 from board_automation.board.task_router import load_tasks  # noqa: E402
+from lib.core.repo_paths import REPO_ENV, resolve_repo_path  # noqa: E402
+from lib.gateway.handoff import load_handoff, write_handoff  # noqa: E402
 
 SECRET_PATTERNS = [
     re.compile(r"AKIA[0-9A-Z]{16}"),
@@ -33,9 +30,6 @@ SECRET_PATTERNS = [
     re.compile(r"(?i)(api[_-]?key|secret|password)\s*[:=]\s*['\"][^'\"]{8,}"),
     re.compile(r"ghp_[A-Za-z0-9]{20,}"),
 ]
-
-# reexport para CLIs legados
-__all__ = ["resolve_repo_path", "REPO_ENV", "DEFAULT_PATHS"]
 
 
 def scan_secrets(repo_path: Path, max_files: int = 200) -> list[str]:

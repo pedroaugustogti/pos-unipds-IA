@@ -7,12 +7,12 @@ from typing import Any, Literal
 
 from langgraph.graph import END, StateGraph
 
-from langgraph_app.event_nodes import (
+from langgraph_app.nodes import (
     ALL_EVENT_NODES,
     orchestrator_decide_node,
     sync_board_node,
 )
-from langgraph_app.event_registry import EVENT_REGISTRY, event_node_id
+from langgraph_app.registry import EVENT_REGISTRY, event_node_id
 from langgraph_app.persist import save_run
 from langgraph_app.state import PipelineState
 from langgraph_app.task_reset import reset_task

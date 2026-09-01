@@ -7,6 +7,8 @@ import re
 import time
 from typing import Any
 
+from board_automation.board.reviewer_pairs import QA_GATE_ROLE, normalize_creator_role, reviewer_for
+from board_automation.board.task_status_workflow import build_event, merge_owner_for_task
 from lib.gateway.hitl_gates import evaluate_hitl, is_high_risk_task
 from lib.orchestrator.event_actuation_runner import normalize_actuation_context
 from lib.orchestrator.event_orchestrator import load_runtime, save_runtime
@@ -137,13 +139,18 @@ def _importance_score(findings: list[dict[str, Any]], *, ctx: dict[str, Any], mo
 
 def _predicted_emit_event(ctx: dict[str, Any]) -> str:
     target = str(ctx.get("target_status") or "")
-    mapping = {
-        "In Progress": "open_pr",
-        "In Code Review": "approve_review",
-        "In Test": "test_passed",
-        "In Pull Request": "merge_pr",
-    }
-    return mapping.get(target, ctx.get("event") or "noop")
+    board_task = ctx.get("board_task") or {}
+    creator = normalize_creator_role(str(ctx.get("creator_role") or board_task.get("agent_role") or "backend"))
+    track = str(board_task.get("track") or (ctx.get("ticket") or {}).get("track") or "produto")
+    if target == "In Progress":
+        return build_event(creator, "Ready for Code Review")
+    if target == "In Code Review":
+        return build_event(reviewer_for(creator), "Ready for Test")
+    if target == "In Test":
+        return build_event(QA_GATE_ROLE, "In Pull Request")
+    if target == "In Pull Request":
+        return build_event(merge_owner_for_task(track), "Done")
+    return str(ctx.get("event") or "noop")
 
 
 def _should_block(findings: list[dict[str, Any]], importance_score: int) -> bool:

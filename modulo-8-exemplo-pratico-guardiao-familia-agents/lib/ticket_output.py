@@ -9,10 +9,12 @@ from pathlib import Path
 from typing import Any
 
 from lib.paths import HANDOFF_DIR, RUNTIME_OUTPUT_DIR
+from board_automation.board.task_status_workflow import parse_event
 
 TICKET_ID_RE = re.compile(r"^T-P\d+-\d+$", re.IGNORECASE)
 
-REWORK_EVENTS = frozenset({"request_changes", "test_failed_bug"})
+# Retrocesso para In Progress (role-based return ou nomes legados em histórico)
+_LEGACY_REWORK = frozenset({"request_changes", "test_failed_bug"})
 IMPLEMENTER_ROLES = frozenset(
     {
         "backend",
@@ -63,14 +65,45 @@ def resolve_handoff_path(task_id: str) -> Path:
     return ticket_handoff_path(task_id)
 
 
+def _is_rework_event(event: str) -> bool:
+    if event in _LEGACY_REWORK:
+        return True
+    parsed = parse_event(event)
+    return bool(parsed and parsed.get("return") and parsed.get("status") == "In Progress")
+
+
+def _is_qa_start_test(event: str) -> bool:
+    if event == "start_test":
+        return True
+    parsed = parse_event(event)
+    return bool(
+        parsed
+        and parsed.get("agent_role") == "qa-gate"
+        and parsed.get("status") == "In Test"
+        and not parsed.get("return")
+    )
+
+
+def _is_reviewer_start_review(event: str, role: str, *, from_agent: str = "") -> bool:
+    if event == "start_review":
+        return not from_agent or normalize_agent_role(from_agent) == role
+    parsed = parse_event(event)
+    return bool(
+        parsed
+        and normalize_agent_role(str(parsed.get("agent_role") or "")) == role
+        and parsed.get("status") == "In Code Review"
+        and not parsed.get("return")
+    )
+
+
 def resolve_agent_cycle(handoff: dict[str, Any] | None, agent_role: str, *, event: str = "") -> int:
     """Ciclo de trabalho do agente (1 = primeira rodada no ticket)."""
     role = normalize_agent_role(agent_role)
     history = list((handoff or {}).get("history") or [])
 
     if role == "qa-gate":
-        n = sum(1 for h in history if h.get("event") == "start_test")
-        if event == "start_test":
+        n = sum(1 for h in history if _is_qa_start_test(str(h.get("event") or "")))
+        if _is_qa_start_test(event):
             n += 1
         return max(1, n)
 
@@ -78,15 +111,18 @@ def resolve_agent_cycle(handoff: dict[str, Any] | None, agent_role: str, *, even
         n = sum(
             1
             for h in history
-            if h.get("event") == "start_review"
-            and normalize_agent_role(str(h.get("from_agent") or "")) == role
+            if _is_reviewer_start_review(
+                str(h.get("event") or ""),
+                role,
+                from_agent=str(h.get("from_agent") or ""),
+            )
         )
-        if event == "start_review":
+        if _is_reviewer_start_review(event, role):
             n += 1
         return max(1, n if n else 1)
 
-    rework = sum(1 for h in history if h.get("event") in REWORK_EVENTS)
-    if event in REWORK_EVENTS:
+    rework = sum(1 for h in history if _is_rework_event(str(h.get("event") or "")))
+    if _is_rework_event(event):
         pass
     return max(1, 1 + rework)
 
