@@ -16,7 +16,7 @@
 | `agents/00-orchestration/langgraph_app/`                                    | **Única** orquestração (StateGraph)        |
 | `agents/00-orchestration/guardiao_mcp/`                                     | Tools MCP sobre as mesmas libs             |
 | `agents/00-runtime/system/observability/`                                 | Snapshot + dashboard live (pasta runtime)  |
-| `agents/{role}/agent.md` + `agents/{role}/SKILL.md`                         | Política e fronteiras por papel            |
+| `agents/01-role-based/{role}/agent.md` + `agents/01-role-based/{role}/SKILL.md`                         | Política e fronteiras por papel            |
 
 
 **Regra de ouro:** LangGraph/MCP/LLM **chamam** o gateway e as libs; não gravam Status “por fora”.
@@ -212,7 +212,7 @@ flowchart TD
 
 Cada nó:
 
-1. Lê skill/prompt do role (`agents/{role}/agent.md` + `SKILL.md`).
+1. Lê skill/prompt do role (`agents/01-role-based/{role}/agent.md` + `SKILL.md`).
 2. Decide **1–N tools MCP** (não “chamar tudo”).
 3. Emite Status só por `emit_status_event`.
 4. Append em `task_action_history` para o HTML live.
@@ -353,7 +353,7 @@ Entry points:
 - [ ] MCP: `emit_status_event` parity com `gateway_cli`  
 - [ ] MCP: tools de idle/HITL/observability  
 - [ ] LangGraph: grafo MVP com checkpoint + interrupt HITL  
-- [ ] Prompts carregados de `agents/{role}/`  
+- [ ] Prompts carregados de `agents/01-role-based/{role}/`  
 - [ ] `model_tier` usado antes de nós caros  
 - [ ] LangSmith: traces com `task_id`  
 - [ ] Demo T-P05-005/006 ainda fecha em Done (modo demo)  

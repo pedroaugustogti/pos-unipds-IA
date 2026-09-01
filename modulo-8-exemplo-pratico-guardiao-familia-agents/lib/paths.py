@@ -51,11 +51,11 @@ def refresh_canonical_paths() -> None:
     MAP_CSV = _resolve_map_csv()
 
 AGENTS_DIR = MODULE_ROOT / "agents"
-SKILLS_DIR = AGENTS_DIR / "skills"
+ROLE_BASED_DIR = AGENTS_DIR / "01-role-based"
 ORCHESTRATION_DIR = AGENTS_DIR / "00-orchestration"
 ORCH_SCRIPTS_DIR = ORCHESTRATION_DIR / "scripts"
 ORCH_SCHEMAS_DIR = ORCHESTRATION_DIR / "schemas"
-QA_SCRIPTS_DIR = AGENTS_DIR / "qa-gate" / "scripts"
+QA_SCRIPTS_DIR = ROLE_BASED_DIR / "qa-gate" / "scripts"
 RUNTIME_DIR = AGENTS_DIR / "00-runtime"
 
 # output/ = somente pastas de ticket (T-P{n}-{seq})

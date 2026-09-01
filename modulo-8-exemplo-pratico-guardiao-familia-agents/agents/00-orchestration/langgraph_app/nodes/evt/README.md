@@ -6,11 +6,11 @@ Este diretório agrupa os nós por **papel** para navegação no filesystem:
 
 | Arquivo | Classificação | Conteúdo |
 |---------|---------------|----------|
-| `orchestrator.py` | orchestrator | claim Todo, emit todo |
-| `creator.py` | creator | implement, open PR, resubmit |
-| `reviewer.py` | reviewer | start/approve/request review |
-| `qa_gate.py` | qa-gate | start test, pass/fail, PR |
-| `ops.py` | ops | merge, release, done |
+| `orchestrator.py` | orchestrator | `orchestrator_enter_in_progress` |
+| `creator.py` | creator | `{role}_in_progress`, `_ready_for_code_review` |
+| `reviewer.py` | reviewer | `{role}_in_code_review`, `_ready_for_test`, `_return_in_progress` |
+| `qa_gate.py` | qa-gate | `qa-gate_in_test`, `_in_pull_request`, `_return_in_progress` |
+| `ops.py` | ops | `{role}_done` |
 
 Cada arquivo exporta `EVENTS` (specs completas) e `NODE_IDS`.
 

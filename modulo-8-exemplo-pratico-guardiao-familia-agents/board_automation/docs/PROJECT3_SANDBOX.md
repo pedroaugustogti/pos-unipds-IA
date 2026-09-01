@@ -7,8 +7,8 @@ Board de treino isolado do **Project #2**. Cada issue T-P3-* tem corpo **auto-su
 ### Seed fluxos mobile (agente QA — uma vez / após release)
 
 ```powershell
-python agents/qa-gate/scripts/qa_discover_mobile_flows.py --app both
-python agents/qa-gate/scripts/qa_discover_mobile_flows.py --app parent --appium   # emulador ligado
+python agents/01-role-based/qa-gate/scripts/qa_discover_mobile_flows.py --app both
+python agents/01-role-based/qa-gate/scripts/qa_discover_mobile_flows.py --app parent --appium   # emulador ligado
 ```
 
 646+ fluxos (parent+child): telas, labels, passos 0→N. Tickets mobile puxam sec. 2.1 automaticamente.

@@ -9,7 +9,7 @@ modulo-8-exemplo-pratico-guardiao-familia-agents/
 │   ├── 00-orchestration/    LangGraph v2, MCP (14 tools), evals, scripts/langgraph + cli
 │   ├── {role}/              agent.md + SKILL.md
 │   ├── qa-gate/scripts/     CLIs Appium, E2E, RAG
-│   └── skills/              legado (canônico: agents/{role}/)
+│   └── skills/              legado (canônico: agents/01-role-based/{role}/)
 ├── board_automation/
 │   ├── board/               pacote Python (task_router, board_client, …)
 │   ├── data/maps/           TASK_AGENT_MAP*.csv
@@ -33,7 +33,7 @@ modulo-8-exemplo-pratico-guardiao-familia-agents/
 | Smoke | `agents/00-orchestration/scripts/langgraph/smoke_pipeline.py` |
 | Gateway MCP | `agents/00-orchestration/scripts/cli/gateway_cli.py` · `python -m guardiao_mcp` |
 | Board | `board_automation/scripts/cli/reconcile_board.py` |
-| QA mobile | `agents/qa-gate/scripts/qa_mobile_evidence.py` |
+| QA mobile | `agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py` |
 
 ## Runtime
 

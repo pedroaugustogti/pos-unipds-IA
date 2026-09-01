@@ -14,7 +14,7 @@ from lib.orchestrator.event_actuation_runner import normalize_actuation_context
 from lib.orchestrator.event_orchestrator import load_runtime, save_runtime
 from lib.paths import AGENTS_DIR
 
-POLICY_PATH = AGENTS_DIR / "_shared" / "ACTUATION_GUARDRAIL_POLICY.md"
+POLICY_PATH = AGENTS_DIR / "00-orchestration" / "docs" / "policy" / "ACTUATION_GUARDRAIL_POLICY.md"
 POLICY_VERSION = "1.0"
 GUARD_TTL_SEC = 3600
 

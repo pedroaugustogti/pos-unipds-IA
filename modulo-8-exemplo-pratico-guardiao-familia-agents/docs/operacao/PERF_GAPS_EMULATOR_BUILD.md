@@ -70,7 +70,7 @@ adb -s emulator-5554 emu kill; adb -s emulator-5556 emu kill
 # 2) Dia a dia
 .\test\appium\start-emulators.ps1 -WaitBoot   # quick boot
 # Metro já up; API já up
-python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle
+python agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle
 ```
 
 ## Metas

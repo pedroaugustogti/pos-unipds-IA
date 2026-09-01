@@ -42,10 +42,10 @@ Modos:
 CLI Python (agentes):
 
 ```bash
-python agents/qa-gate/scripts/local_e2e_smoke.py check
-python agents/qa-gate/scripts/local_e2e_smoke.py up
-python agents/qa-gate/scripts/local_e2e_smoke.py pairing-api --json
-python agents/qa-gate/scripts/local_e2e_smoke.py full
+python agents/01-role-based/qa-gate/scripts/local_e2e_smoke.py check
+python agents/01-role-based/qa-gate/scripts/local_e2e_smoke.py up
+python agents/01-role-based/qa-gate/scripts/local_e2e_smoke.py pairing-api --json
+python agents/01-role-based/qa-gate/scripts/local_e2e_smoke.py full
 ```
 
 ## Fluxo manual (referência)
@@ -59,7 +59,7 @@ python agents/qa-gate/scripts/local_e2e_smoke.py full
 
 ## Evidências QA
 
-- **Mobile (canônico):** `guardiao-familia-mobile-setup` via `python agents/qa-gate/scripts/qa_mobile_evidence.py` — ver `agents/qa-gate/MOBILE_SETUP_EVIDENCE.md`
+- **Mobile (canônico):** `guardiao-familia-mobile-setup` via `python agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py` — ver `agents/01-role-based/qa-gate/MOBILE_SETUP_EVIDENCE.md`
 - **API:** report JSON em stdout (`task36-prototipo-v2`)
 - Agentes publicam comentário na issue via `lib/qa_mobile.format_qa_mobile_comment` ou `format_evidence_comment`
 

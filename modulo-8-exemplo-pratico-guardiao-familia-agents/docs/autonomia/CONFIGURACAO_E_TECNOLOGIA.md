@@ -26,12 +26,12 @@
 Cada papel tem **três camadas** (não misturar):
 
 ```text
-agents/{role}/agent.md     → prompt / política Cursor (o que o agente “é”)
-agents/{role}/SKILL.md     → fronteiras de código e checklist
+agents/01-role-based/{role}/agent.md     → prompt / política Cursor (o que o agente “é”)
+agents/01-role-based/{role}/SKILL.md     → fronteiras de código e checklist
 board_automation/data/maps/TASK_AGENT_MAP.csv  → qual task esse role pode claimar
 ```
 
-Reviewers: `agents/{role}-reviewer/agent.md` + `SKILL.md`, pareados em `lib/reviewer_pairs.py`.
+Reviewers: `agents/01-role-based/{role}-reviewer/agent.md` + `SKILL.md`, pareados em `lib/reviewer_pairs.py`.
 
 Resolução de paths: `lib/agent_paths.py`.
 

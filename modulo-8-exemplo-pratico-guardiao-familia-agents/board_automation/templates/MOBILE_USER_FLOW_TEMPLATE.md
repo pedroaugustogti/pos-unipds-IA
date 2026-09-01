@@ -100,10 +100,10 @@ Se o fluxo real no repo **divergir** do ticket → comentar issue e pedir corre�
 
 ```powershell
 cd modulo-8-exemplo-pratico-guardiao-familia-agents
-python agents/qa-gate/scripts/qa_discover_mobile_flows.py --app both
-python agents/qa-gate/scripts/qa_discover_mobile_flows.py --app parent --appium   # + dump UIAutomator
-python agents/qa-gate/scripts/qa_discover_mobile_flows.py --lookup ParentSplashScreen
-python agents/qa-gate/scripts/qa_discover_mobile_flows.py --task-id T-P3-002
+python agents/01-role-based/qa-gate/scripts/qa_discover_mobile_flows.py --app both
+python agents/01-role-based/qa-gate/scripts/qa_discover_mobile_flows.py --app parent --appium   # + dump UIAutomator
+python agents/01-role-based/qa-gate/scripts/qa_discover_mobile_flows.py --lookup ParentSplashScreen
+python agents/01-role-based/qa-gate/scripts/qa_discover_mobile_flows.py --task-id T-P3-002
 ```
 
 Tickets `frontend-mobile` **puxam automaticamente** o fluxo do DB via `lib/mobile_flow_discovery.resolve_user_flow_for_task()` → sec. 2.1 no issue body.
@@ -120,8 +120,8 @@ Camada semântica para **agentes LLM** consultarem fluxos, labels e telas.
 
 | Etapa | Comando |
 |-------|---------|
-| 1. Discovery (SQLite) | `python agents/qa-gate/scripts/qa_discover_mobile_flows.py --app both` |
-| 2. Ingest + embed | `python agents/qa-gate/scripts/ingest_mobile_flows_rag.py --ensure-postgres` |
+| 1. Discovery (SQLite) | `python agents/01-role-based/qa-gate/scripts/qa_discover_mobile_flows.py --app both` |
+| 2. Ingest + embed | `python agents/01-role-based/qa-gate/scripts/ingest_mobile_flows_rag.py --ensure-postgres` |
 | 3. Consulta MCP | tool `query_mobile_flow_rag(query="splash tagline parent")` |
 
 **Postgres:** mesmo Docker da API (`127.0.0.1:5432/guardiao_familia`) · extensão `vector` · embeddings via OpenRouter (`GUARDAO_EMBED_MODEL`, default `text-embedding-3-small`, 1536d).

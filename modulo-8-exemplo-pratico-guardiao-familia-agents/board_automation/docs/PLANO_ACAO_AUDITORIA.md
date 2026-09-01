@@ -57,11 +57,11 @@ flowchart LR
 
 | Agente | Gap | Ação |
 |--------|-----|------|
-| mobile, web, infra, db, devops, stores | Apontam skills **modulo-7** | Atualizar paths para `modulo-8-exemplo-pratico-guardiao-familia-agents/skills/...` |
-| qa-gate | Sem skill dedicada | Criar `agents/skills/qa-gate/SKILL.md` (escopo: In Test, evidências, eventos) |
+| mobile, web, infra, db, devops, stores | Apontam skills **modulo-7** | Atualizar paths para `agents/01-role-based/{role}/SKILL.md` |
+| qa-gate | Sem skill dedicada | Criar `agents/01-role-based/qa-gate/SKILL.md` (escopo: In Test, evidências, eventos) |
 | Todos | Falta link issue template | Secção "Abrir task" → `ISSUE_AGENT_TASK.md` |
 
-**Arquivos:** `agents/*.agent.md`, `agents/skills/qa-gate/SKILL.md`, `agents/skills/qa-gate-reviewer/SKILL.md` _(opcional)_.
+**Arquivos:** `agents/01-role-based/{role}/agent.md`, `agents/01-role-based/qa-gate/SKILL.md`.
 
 **Aceite:** cada `agent_role` do CSV tem `.agent.md` + `SKILL.md` modulo-8 com tabela StateGraph.
 
@@ -112,7 +112,7 @@ flowchart LR
 | Python não sobe Metro/emuladores | `lib/local_e2e.py`: modo `full` delega a `local_e2e_stack.ps1 -Mode Full` ou replica steps |
 | Preflight | `preflight()` valida ANDROID_HOME, AVD, portas 8082/9090 antes de Appium |
 
-**Aceite:** `python agents/qa-gate/scripts/local_e2e_smoke.py --mode full` (com env OK) executa mesmo fluxo que PS1.
+**Aceite:** `python agents/01-role-based/qa-gate/scripts/local_e2e_smoke.py --mode full` (com env OK) executa mesmo fluxo que PS1.
 
 ---
 
@@ -175,7 +175,7 @@ Use o template. IDs ilustrativos — ajustar numeração ao CSV.
 |-------------|--------|-------|------------|------------|
 | T-OPS-001 | Backfill refinement CSV + sync script | backend | qa-api-jest-unit | P0 |
 | T-OPS-002 | Atualizar agents/*.agent.md modulo-8 | qa | — | P0 |
-| T-OPS-003 | Criar agents/skills/qa-gate/SKILL.md | qa | — | P0 |
+| T-OPS-003 | Criar agents/01-role-based/qa-gate/SKILL.md | qa | — | P0 |
 | T-QA-001 | Screenshots pairing-android.e2e.mjs | qa | qa-mobile-pairing-appium-dual | P1 |
 | T-QA-002 | qa_node strict + QA_STRICT | backend | qa-api-jest-unit | P1 |
 | T-QA-003 | Paridade local_e2e Python Full | devops-cicd | qa-mobile-pairing-api | P1 |

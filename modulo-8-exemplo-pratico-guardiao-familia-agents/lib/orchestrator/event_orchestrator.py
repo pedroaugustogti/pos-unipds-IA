@@ -28,52 +28,52 @@ BUG_THRESHOLD = 3
 SKILL_IMPACT: dict[str, dict[str, str]] = {
     "backend": {
         "skill": "backend",
-        "path": "agents/backend/SKILL.md",
+        "path": "agents/01-role-based/backend/SKILL.md",
         "impact": "Implementacao NestJS/API, contratos e integracoes — falhas recorrentes em codigo de dominio.",
     },
     "frontend-mobile": {
         "skill": "frontend-mobile",
-        "path": "agents/frontend-mobile/SKILL.md",
+        "path": "agents/01-role-based/frontend-mobile/SKILL.md",
         "impact": "Apps parent/child (Expo/RN), push, SOS e geofence — regressao de UX/device.",
     },
     "frontend-web": {
         "skill": "frontend-web",
-        "path": "agents/frontend-web/SKILL.md",
+        "path": "agents/01-role-based/frontend-web/SKILL.md",
         "impact": "Backoffice/site Next.js — fluxos web e painel operacional.",
     },
     "cloud-infra": {
         "skill": "cloud-infra",
-        "path": "agents/cloud-infra/SKILL.md",
+        "path": "agents/01-role-based/cloud-infra/SKILL.md",
         "impact": "Terraform/AWS ECS — ambiente ou rede inconsistente afeta deploy e testes.",
     },
     "database": {
         "skill": "database",
-        "path": "agents/database/SKILL.md",
+        "path": "agents/01-role-based/database/SKILL.md",
         "impact": "Migrations/PostgreSQL/Redis — schema ou dados corrompem cenarios E2E.",
     },
     "devops-cicd": {
         "skill": "devops-cicd",
-        "path": "agents/devops-cicd/SKILL.md",
+        "path": "agents/01-role-based/devops-cicd/SKILL.md",
         "impact": "CI/CD e observabilidade — builds/artefatos instaveis geram falsos bugs.",
     },
     "qa": {
         "skill": "qa",
-        "path": "agents/qa-author/SKILL.md",
+        "path": "agents/01-role-based/qa-author/SKILL.md",
         "impact": "Harness E2E/cenarios — se bugs forem flaky, a skill QA precisa estabilizar evidencias.",
     },
     "qa-author": {
         "skill": "qa",
-        "path": "agents/qa-author/SKILL.md",
+        "path": "agents/01-role-based/qa-author/SKILL.md",
         "impact": "Harness/cenarios escritos pelo qa-author — estabilizar evidencias.",
     },
     "qa-gate": {
         "skill": "qa",
-        "path": "agents/qa-gate/SKILL.md",
+        "path": "agents/01-role-based/qa-gate/SKILL.md",
         "impact": "Execucao do gate de testes — flaky ou harness instavel.",
     },
     "stores-release": {
         "skill": "stores-release",
-        "path": "agents/stores-release/SKILL.md",
+        "path": "agents/01-role-based/stores-release/SKILL.md",
         "impact": "Release stores/compliance — bloqueio de submissao ou checklist release.",
     },
 }

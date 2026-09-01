@@ -38,7 +38,7 @@ flowchart TD
 | In Pull Request | devops-cicd / preparação de merge | `merge_pr` |
 | Done | só após **HITL humano** no merge | — |
 
-Papéis creators e reviewers: `agents/{role}/agent.md` e `agents/{role}-reviewer/`.  
+Papéis creators e reviewers: `agents/01-role-based/{role}/agent.md` e `agents/01-role-based/{role}-reviewer/`.  
 Mapeamento task → role: `board_automation/data/maps/TASK_AGENT_MAP.csv` + `board_automation.board.task_router`.
 
 ---

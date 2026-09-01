@@ -103,7 +103,7 @@
           "json_report": false,
           "ci_link": false
         },
-        "how_to_run": "powershell -File modulo-8-exemplo-pratico-guardiao-familia-agents/agents/qa-gate/scripts/local_e2e_stack.ps1 -Mode Full"
+        "how_to_run": "powershell -File modulo-8-exemplo-pratico-guardiao-familia-agents/agents/01-role-based/qa-gate/scripts/local_e2e_stack.ps1 -Mode Full"
       }
     },
     {

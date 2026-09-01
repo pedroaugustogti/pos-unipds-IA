@@ -1,5 +1,7 @@
 # LangGraph v2 — motor de eventos · MCP centralizado
 
+**Papel:** Grafo v2 — `sync_board` → `orchestrator_decide` → 55 nós `evt_*` → pipeline MCP → loop até Done.
+
 57 nós no grafo: **2 de controle** + **55 `evt_*`** (factory única, índice por classificação).
 
 ## Estrutura
@@ -63,4 +65,4 @@ Loop até **Done** ou `max_steps`.
 python scripts/langgraph/langgraph_run.py --task T-P3-009 --from-zero --mode dry_run
 ```
 
-Docs detalhadas: [`docs/STATEGRAPH_FLOW.md`](../docs/STATEGRAPH_FLOW.md) · [`docs/NODE_LOOP_SEQUENCE.md`](../docs/NODE_LOOP_SEQUENCE.md)
+Docs detalhadas: [`docs/graph/STATEGRAPH_FLOW.md`](docs/graph/STATEGRAPH_FLOW.md) · [`docs/graph/NODE_LOOP_SEQUENCE.md`](docs/graph/NODE_LOOP_SEQUENCE.md)

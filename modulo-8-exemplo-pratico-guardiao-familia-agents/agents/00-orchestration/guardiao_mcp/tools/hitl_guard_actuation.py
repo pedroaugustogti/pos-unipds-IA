@@ -16,7 +16,7 @@ DESCRIPTION = """\
 **Entrada:** `actuation_context` = JSON de `on_status_event`.
 
 **Faz:**
-1. Carrega `agents/_shared/ACTUATION_GUARDRAIL_POLICY.md`
+1. Carrega `agents/00-orchestration/docs/policy/ACTUATION_GUARDRAIL_POLICY.md`
 2. Analisa ticket, handoff e playbook (injection, alto risco, merge live)
 3. Decide `proceed` ou `blocked` + `importance_score`
 4. Se blocked: enfileira HITL e comenta na issue (`dry_run=false`)

@@ -63,7 +63,7 @@ T-I01-002/003/005/006/008/010, T-I02-001/010, T-I07-002/008 → ver coluna `note
 | T-I03-004 PagerDuty | ✅ Alertas |
 | T-I03-005 OTel | ✅ Stack alvo |
 
-**Gap corrigido:** SKILL anterior citava deploy EC2/SSM e não ECR/ECS Fargate — atualizada em `agents/skills/devops-cicd/SKILL.md`.
+**Gap corrigido:** SKILL anterior citava deploy EC2/SSM e não ECR/ECS Fargate — atualizada em `agents/01-role-based/devops-cicd/SKILL.md`.
 
 ## Sincronização GitHub (2026-08-26)
 

@@ -210,7 +210,7 @@ body:
     id: db_seed_profile
     attributes:
       label: "DB seed Appium (opcional)"
-      description: "Evita cadastro/config/família do zero — ver agents/qa-gate/scripts/mobile_e2e_seed.py"
+      description: "Evita cadastro/config/família do zero — ver agents/01-role-based/qa-gate/scripts/mobile_e2e_seed.py"
       options:
         - "(desabilitado)"
         - child_home
@@ -232,7 +232,7 @@ body:
       placeholder: |
         docker compose -f docker-compose.dev.yml up -d postgres redis
         npm run migration:run && npm run seed
-        powershell -File agents/qa-gate/scripts/local_e2e_stack.ps1 -Mode Full
+        powershell -File agents/01-role-based/qa-gate/scripts/local_e2e_stack.ps1 -Mode Full
     validations:
       required: true
 
