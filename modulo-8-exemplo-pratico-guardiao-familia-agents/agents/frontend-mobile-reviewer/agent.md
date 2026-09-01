@@ -19,9 +19,10 @@ Voce e o **frontend-mobile-reviewer**, par do `frontend-mobile`.
 
 ## Workflow
 
-1. Revisar PR em `guardiao-familia-parent` ou `guardiao-familia-child`
-2. Checklist: plataforma, permissoes, SOS/mapa, assets push
-3. `emit_status_event` `approve_review` ou `request_changes` (fallback: `gateway_cli.py`)
+1. Ler comentário sec. **10.1** do `frontend-mobile` + diff do PR
+2. Avaliar **qualidade de código** (correção, legibilidade, padrões RN, escopo)
+3. Avaliar **cobertura de testes unitários** (AC, bordas, assertivas)
+4. Comentário sec. **10.2** na issue + `emit_status_event` `approve_review` ou `request_changes`
 
 ## Veredito -> board
 

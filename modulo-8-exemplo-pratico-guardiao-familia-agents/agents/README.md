@@ -49,5 +49,5 @@ python agents/00-orchestration/scripts/worker/worker_run.py --next --role backen
 - **Canônico:** `agents/{role}/SKILL.md` (não `skills/`)
 - **Base de conhecimento:** `agents/{role}/KNOWLEDGE.md` ou `agents/_shared/REPO_KNOWLEDGE.md`
 - Regenerar índice: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
-- **Handoff:** `agents/00-runtime/output/handoffs/{task_id}.json`
+- **Handoff:** `agents/00-runtime/output/{task_id}/handoff.json`
 - **Nunca** mergear PR sem passar HITL quando `release_blocker` ou policy exigir

@@ -25,12 +25,28 @@ Catálogo completo: [`../_shared/MCP_TOOLS.md`](../_shared/MCP_TOOLS.md) · `lis
 | `emit_status_event` | `start_test`, `test_passed`, `test_failed_bug` |
 | `append_task_action_tool` | Trilha ReAct do gate |
 | `query_mobile_flow_rag` | Plano de evidência / telas |
-| `qa_db_seed` | Postgres + `stage-handoff.json` (`dry_run=false`) |
+| `qa_db_seed` | Massa via API (`profile=basic_parent` ou `parent_home`) + `stage-handoff.json` — **omitir** se o AC exige cadastro/família na UI parent |
 | `qa_db_cleanup` | Purge + reset handoff após evidências |
-| `qa_appium_suite_parent` | Stack parent; `from_db_seed=true` abre ParentHome |
-| `qa_appium_suite_child` | Stack dual; `from_db_seed=true` abre ChildHome após seed |
+| `qa_appium_suite_parent` | App parent (5554); `from_db_seed=true` para login→home com dados no DB |
+| `qa_appium_suite_child` | App child (5556); **`child_only=true`** quando a massa veio do seed parent (não subir emulador parent) |
 
-Fluxo mobile: `qa_db_seed` → `qa_appium_suite_child(from_db_seed=true, task_id=...)` → evidência → `qa_db_cleanup`.
+### Validação no app child (padrão qa-gate)
+
+Quando o critério de aceite é **funcionalidade no app child** (ex.: `ChildHomeV2`, saudação, home child):
+
+1. **Seed parent via API** — `qa_db_seed(task_id, profile=basic_parent, dry_run=false)` (ou `parent_home` se a conta+família já bastam).
+2. **Suite só no child** — `qa_appium_suite_child(from_db_seed=true, task_id=..., child_only=true, dry_run=false)`.
+3. Não subir emulador/Metro do parent (5554); parent existe apenas no Postgres.
+4. Evidências → `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/` → `qa_db_cleanup`.
+
+```
+qa_db_seed(task_id, profile=basic_parent, dry_run=false)
+qa_appium_suite_child(from_db_seed=true, task_id=..., child_only=true, dry_run=false)
+qa_db_cleanup(task_id, dry_run=false)
+```
+
+Fluxo típico com seed: `qa_db_seed` → `qa_appium_suite_*(from_db_seed=true, child_only=true quando alvo=child)` → evidência → `qa_db_cleanup`.
+Fluxo UI parent (sem seed): `qa_appium_suite_parent(feature=create_account|config_family)` → evidência.
 
 ## Evidências mobile (gate)
 
@@ -40,7 +56,7 @@ Para PRs em `guardiao-familia-parent` ou `guardiao-familia-child` — **preferir
 python agents/qa-gate/scripts/qa_mobile_evidence.py --task {task_id} --feature pairing --mode cycle
 ```
 
-Só emitir `test_passed` com pacote em `agents/00-runtime/output/evidence/{task_id}/manifest.json`.
+Só emitir `test_passed` com pacote em `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/manifest.json`.
 
 ## Fila
 
@@ -48,13 +64,13 @@ Só emitir `test_passed` com pacote em `agents/00-runtime/output/evidence/{task_
 python agents/00-orchestration/scripts/langgraph/langgraph_run.py --task {task_id} --mode live --role qa-gate --json
 ```
 
-Lê handoff do revisor (`agents/00-runtime/output/handoffs/{task_id}.json`) com PR URL.
+Lê handoff do revisor (`agents/00-runtime/output/{task_id}/handoff.json`) com PR URL.
 
 ## ReAct (máx. 3)
 
 1. `get_handoff` + `emit_status_event` `start_test`  
-2. run_suite (MCP `qa_appium_suite_*` ou CLI)  
-3. `emit_status_event` `test_passed` **ou** `test_failed_bug` com `bug_kind=regression|flaky`  
+2. Definir **cenários** e **critérios de aceite** (sec. 5/6) · executar suite via **MCP guardiao-familia-agents**  
+3. Anexar **evidências** (PNG, MP4, JSON) na issue · comentário sec. **10.3** · `test_passed` ou `test_failed_bug`  
 
 ## Bugs
 

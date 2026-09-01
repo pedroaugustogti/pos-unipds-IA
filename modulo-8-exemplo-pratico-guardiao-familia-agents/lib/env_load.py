@@ -166,13 +166,14 @@ def load_dotenv(override: bool = False) -> Path | None:
 def ensure_env() -> None:
     if not _LOADED:
         load_dotenv()
-    _ensure_python_path()
     try:
-        from lib.paths import ensure_output_dirs
+        from lib.paths import ensure_output_dirs, refresh_canonical_paths
 
+        refresh_canonical_paths()
         ensure_output_dirs()
     except Exception:
         pass
+    _ensure_python_path()
 
 
 def _ensure_python_path() -> None:

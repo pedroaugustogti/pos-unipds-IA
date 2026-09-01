@@ -1,24 +1,34 @@
-# langgraph_app — StateGraph
+# LangGraph v2 — motor de eventos · MCP centralizado
 
-Orquestração Kanban: claim → context → decide → implement → review → QA → CI → HITL → apply.
+55 nós `evt_*` (factory em `event_nodes.py`) + `orchestrator_decide` + `sync_board`.
 
-| Módulo | Função |
-|--------|--------|
-| `policy.py` | Evento canônico por Status do board |
-| `nodes.py` | Nós do grafo (route, implement, review, qa, hitl) |
-| `ci_nodes.py` | Integração sinais CI |
-| `llm.py` | OpenRouter via `lib.core.model_tier` |
-| `tools_bridge.py` | Chama libs sem MCP remoto |
-| `schemas.py` | Tipos de estado |
+## Arquivos
 
-## Quando usar
+| Arquivo | Função |
+|---------|--------|
+| `event_registry.py` | Catálogo + pipeline MCP por evento |
+| `event_nodes.py` | Factory de nós + runner MCP (`_run_mcp_tool`) |
+| `graph.py` | StateGraph v2 |
+| `policy.py` | `suggested_event` / `status_after_event` |
+| `llm.py` | LLM structured (fases implement/review) |
+| `schemas.py` | Pydantic verdicts |
+| `persist.py` / `tracing.py` | Observabilidade |
 
-- Executar pipeline de uma task: `scripts/langgraph/langgraph_run.py`
-- Estender fluxo: adicionar nó + aresta em `nodes.py`, respeitar gateway
+## Fluxo
 
-## Quando NÃO usar
+```mermaid
+flowchart TB
+  START([START]) --> sync_board
+  sync_board --> orchestrator_decide
+  orchestrator_decide -->|evt_*| EVENT[55 nós de evento]
+  orchestrator_decide -->|Done / erro| END_NODE([END])
+  EVENT --> sync_board
+```
 
-- Escrever Status direto no GitHub Project
-- Substituir dispatch Cursor para código de produto
+Loop até **Done** ou `max_steps`.
 
-CLI: `python agents/00-orchestration/scripts/langgraph/langgraph_run.py --task T-XXX --mode dry_run`
+## Executar
+
+```bash
+python scripts/langgraph/langgraph_run.py --task T-P3-009 --from-zero --mode dry_run
+```

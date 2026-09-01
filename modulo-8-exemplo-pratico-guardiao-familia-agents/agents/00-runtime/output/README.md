@@ -1,23 +1,26 @@
-# output — artefatos de runtime
+# output — artefatos por ticket
 
-Pasta **efêmera** recriada em execução. Conteúdo em `.gitignore`.
+Pasta **efêmera** (`.gitignore`). Contém **somente pastas de ticket** (`T-P{n}-{seq}/`).
 
-| Subpasta | Conteúdo |
-|----------|----------|
-| `handoffs/` | JSON handoff por `task_id` |
-| `observability/` | `snapshot.json`, `tasks/*.html` |
-| `langgraph/` | Estado/checkpoints por task |
-| `dispatch/` | Jobs worker, prompts, results |
-| `board/` | Cache Project, logs de seed |
-| `mobile/` | Evidências QA, dumps UI, RAG |
-| `orchestrator/` | Locks, outbox, runtime agentes |
-| `audit/` | `audit-trail.jsonl` |
-| `demo/` | Relatórios demo banca |
+## Layout por ticket
 
-## Decisões
+```
+T-P3-009/
+  handoff.json
+  seed-cache.json
+  frontend-mobile-(1)/
+    actions.json
+    action-history.html
+  qa-gate-(1)/
+    evidence/
+  orchestrator-(1)/
+    langgraph-run.json
+```
 
-- Ler handoff antes de implementar: `handoffs/{task_id}.json`
-- Dashboard lê `observability/snapshot.json`
-- Limpar para run limpo: apagar pasta ou `reorganize_output.py`
+- **Handoff:** `{ticket}/handoff.json`
+- **Evidências QA:** `{ticket}/qa-gate-({N})/evidence/`
+- **Histórico ReAct:** `{ticket}/{agent_role}-({N})/actions.json`
 
-Paths: `lib/paths.py` (`RUNTIME_OUTPUT_DIR`, `HANDOFF_DIR`, …)
+Estado global (orquestrador, dispatch, audit, caches legados) fica em `../system/`.
+
+Paths: `lib/paths.py` (`RUNTIME_OUTPUT_DIR`, `lib/ticket_output.py`)

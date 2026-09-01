@@ -36,6 +36,7 @@ def main() -> int:
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--approve-hitl", action="store_true", help="Libera evento HITL")
     p.add_argument("--list-hitl", action="store_true")
+    p.add_argument("--react-trace-json", default="", help="JSON array para open_pr react_trace")
     args = p.parse_args()
 
     if args.list_hitl:
@@ -44,6 +45,10 @@ def main() -> int:
 
     if not args.task or not args.event:
         p.error("--task e --event sao obrigatorios (exceto --list-hitl)")
+
+    react_trace = None
+    if args.react_trace_json:
+        react_trace = json.loads(Path(args.react_trace_json).read_text(encoding="utf-8"))
 
     if args.approve_hitl:
         out = approve_hitl(args.task, args.event, dry_run=args.dry_run)
@@ -56,6 +61,7 @@ def main() -> int:
             branch=args.branch,
             bug_kind=args.bug_kind,
             dry_run=args.dry_run,
+            react_trace=react_trace,
         )
     print(json.dumps(out, ensure_ascii=False, indent=2))
     return 0 if out.get("ok") else 1

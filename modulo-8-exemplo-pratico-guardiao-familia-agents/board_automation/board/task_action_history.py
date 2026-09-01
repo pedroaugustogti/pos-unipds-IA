@@ -10,9 +10,17 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
-from lib.observability.observability import OUT_DIR
+from lib.paths import OBSERVABILITY_DIR
+from lib.ticket_output import (
+    agent_actions_path,
+    agent_cycle_dir,
+    append_agent_action,
+    resolve_agent_cycle,
+    resolve_handoff_path,
+    ticket_dir,
+)
 
-TASKS_DIR = OUT_DIR / "tasks"
+TASKS_DIR = OBSERVABILITY_DIR / "tasks"
 
 
 def _now() -> str:
@@ -293,6 +301,23 @@ def append_task_action(
     jp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     render_task_history_page(data)
 
+    handoff = None
+    try:
+        hp = resolve_handoff_path(task_id)
+        if hp.is_file():
+            handoff = json.loads(hp.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        handoff = None
+    cycle = resolve_agent_cycle(handoff, agent, event=event)
+    cycle_dir = agent_cycle_dir(task_id, agent, cycle=cycle)
+    append_agent_action(task_id, agent, step, cycle=cycle, handoff=handoff, event=event)
+    cycle_html = cycle_dir / "action-history.html"
+    cycle_json = agent_actions_path(task_id, agent, cycle=cycle)
+    data_cycle = json.loads(cycle_json.read_text(encoding="utf-8"))
+    data_cycle["title"] = data.get("title") or task_id
+    data_cycle["detail_url"] = f"{ticket_dir(task_id).name}/{cycle_dir.name}/action-history.html"
+    render_task_history_page(data_cycle, html_path=cycle_html)
+
     should_comment = post_issue_comment if post_issue_comment is not None else issue_history_comments_enabled()
     if should_comment and not dry_run:
         issue_comment = post_issue_transition_comment(task_id, step, dry_run=False)
@@ -454,7 +479,7 @@ def _render_token_totals(data: dict[str, Any]) -> str:
     )
 
 
-def render_task_history_page(data: dict[str, Any]) -> Path:
+def render_task_history_page(data: dict[str, Any], *, html_path: Path | None = None) -> Path:
     task_id = data["task_id"]
     title = data.get("title") or task_id
     steps = data.get("steps") or []
@@ -604,7 +629,8 @@ table.usage th {{ color: var(--muted); font-weight: 600; }}
 </body>
 </html>
 """
-    out = history_html_path(task_id)
+    out = html_path or history_html_path(task_id)
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page, encoding="utf-8")
     return out
 

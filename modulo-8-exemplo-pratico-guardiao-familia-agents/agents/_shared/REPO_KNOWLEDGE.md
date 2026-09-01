@@ -60,7 +60,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - README: [`agents/00-orchestration/scripts/README.md`](../00-orchestration/scripts/README.md)
 
 ### `agents/00-orchestration/scripts/worker/`
-- **Papel:** Artefatos: `agents/00-runtime/output/dispatch/`
+- **Papel:** Artefatos: `agents/00-runtime/system/dispatch/`
 - README: [`agents/00-orchestration/scripts/worker/README.md`](../00-orchestration/scripts/worker/README.md)
 
 ### `agents/00-runtime/`
@@ -68,6 +68,10 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Decisão: Instalar deps: `pip install -r agents/00-runtime/requirements.txt`
 - Decisão: Env: `.env` na raiz do módulo (`lib/env_load.py`)
 - README: [`agents/00-runtime/README.md`](../00-runtime/README.md)
+
+### `agents/00-runtime/system/`
+- **Papel:** Pasta **efêmera** (`.gitignore`). Estado compartilhado entre tickets — **não** coloque aqui pastas `T-P*`.
+- README: [`agents/00-runtime/system/README.md`](../00-runtime/system/README.md)
 
 ### `agents/_shared/`
 - **Papel:** Documentos lidos por **todos** os papéis antes de agir.
@@ -81,7 +85,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Endpoints REST/GraphQL, módulos NestJS, DTOs, guards, integrações de serviço
 - Acionar: Correções de API consumidas por mobile ou web
 - Decisão: **Gateway:** alterar Status somente via `emit_status_event` (MCP) — nunca editar coluna do board manualmente
-- Decisão: **Handoff:** gravar PR, branch e dúvidas em `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** gravar PR, branch e dúvidas em `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/backend/README.md`](../backend/README.md)
 
 ### `agents/backend-reviewer/`
@@ -90,7 +94,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Validação de contratos API, segurança (auth, LGPD), SOS e pagamentos
 - Acionar: Disputa creator/reviewer registrada no handoff
 - Decisão: **Gateway:** `start_review`, `approve_review` ou `request_changes` via `emit_status_event`
-- Decisão: **Handoff:** ler obrigatoriamente `agents/00-runtime/output/handoffs/{task_id}.json` antes de revisar
+- Decisão: **Handoff:** ler obrigatoriamente `agents/00-runtime/output/{task_id}/handoff.json` antes de revisar
 - README: [`agents/backend-reviewer/README.md`](../backend-reviewer/README.md)
 
 ### `agents/cloud-infra/`
@@ -99,7 +103,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Módulos Terraform, variáveis de ambiente, recursos AWS novos ou ajustes
 - Acionar: Alinhamento de infra com requisitos de backend/mobile/web
 - Decisão: **Gateway:** Status apenas via `emit_status_event`
-- Decisão: **Handoff:** plan/PR, ambientes afetados em `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** plan/PR, ambientes afetados em `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/cloud-infra/README.md`](../cloud-infra/README.md)
 
 ### `agents/cloud-infra-reviewer/`
@@ -108,7 +112,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Validação de segurança (IAM, SG), custo, drift e impacto em ambientes
 - Acionar: Disputas de mudanças de infra
 - Decisão: **Gateway:** `start_review`, `approve_review` ou `request_changes` via `emit_status_event`
-- Decisão: **Handoff:** ler `agents/00-runtime/output/handoffs/{task_id}.json` (plan, ambientes)
+- Decisão: **Handoff:** ler `agents/00-runtime/output/{task_id}/handoff.json` (plan, ambientes)
 - README: [`agents/cloud-infra-reviewer/README.md`](../cloud-infra-reviewer/README.md)
 
 ### `agents/database/`
@@ -117,7 +121,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Migrations, índices, constraints, seeds e ajustes de performance SQL
 - Acionar: Alinhamento de modelo de dados com requisitos de backend
 - Decisão: **Gateway:** Status apenas via `emit_status_event`
-- Decisão: **Handoff:** migrations, ordem de deploy em `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** migrations, ordem de deploy em `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/database/README.md`](../database/README.md)
 
 ### `agents/database-reviewer/`
@@ -126,7 +130,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Validação de integridade, rollback, impacto em dados e compatibilidade com API
 - Acionar: Disputas de modelagem
 - Decisão: **Gateway:** `start_review`, `approve_review` ou `request_changes` via `emit_status_event`
-- Decisão: **Handoff:** ler `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** ler `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/database-reviewer/README.md`](../database-reviewer/README.md)
 
 ### `agents/devops-cicd/`
@@ -135,7 +139,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Workflows YAML, secrets de CI, gates de qualidade no pipeline
 - Acionar: Integração de testes automatizados no fluxo de PR/merge
 - Decisão: **Gateway:** Status apenas via `emit_status_event`
-- Decisão: **Handoff:** workflows alterados, impacto em repos em `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** workflows alterados, impacto em repos em `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/devops-cicd/README.md`](../devops-cicd/README.md)
 
 ### `agents/devops-cicd-reviewer/`
@@ -144,7 +148,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Validação de segurança de workflows, permissões, caches e impacto em builds
 - Acionar: Disputas de pipeline
 - Decisão: **Gateway:** `start_review`, `approve_review` ou `request_changes` via `emit_status_event`
-- Decisão: **Handoff:** ler `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** ler `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/devops-cicd-reviewer/README.md`](../devops-cicd-reviewer/README.md)
 
 ### `agents/frontend-mobile/`
@@ -153,7 +157,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Telas, navegação, pairing, fluxos parent/child, integração com API
 - Acionar: Correções de UX mobile ou bugs específicos de emulador/dispositivo
 - Decisão: **Gateway:** Status apenas via `emit_status_event`
-- Decisão: **Handoff:** PR, branch, screenshots ou dúvidas em `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** PR, branch, screenshots ou dúvidas em `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/frontend-mobile/README.md`](../frontend-mobile/README.md)
 
 ### `agents/frontend-mobile-reviewer/`
@@ -162,7 +166,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Validação de navegação, acessibilidade, contratos com API e padrões RN
 - Acionar: Disputas de implementação mobile
 - Decisão: **Gateway:** `start_review`, `approve_review` ou `request_changes` via `emit_status_event`
-- Decisão: **Handoff:** ler `agents/00-runtime/output/handoffs/{task_id}.json` antes de revisar
+- Decisão: **Handoff:** ler `agents/00-runtime/output/{task_id}/handoff.json` antes de revisar
 - README: [`agents/frontend-mobile-reviewer/README.md`](../frontend-mobile-reviewer/README.md)
 
 ### `agents/frontend-web/`
@@ -171,7 +175,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Páginas, componentes, rotas, integração com API no browser
 - Acionar: Ajustes de layout, SEO ou fluxos web do produto
 - Decisão: **Gateway:** Status apenas via `emit_status_event`
-- Decisão: **Handoff:** PR e contexto em `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** PR e contexto em `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/frontend-web/README.md`](../frontend-web/README.md)
 
 ### `agents/frontend-web-reviewer/`
@@ -180,7 +184,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Validação de UX, acessibilidade, performance e contratos com API
 - Acionar: Disputas de implementação web
 - Decisão: **Gateway:** `start_review`, `approve_review` ou `request_changes` via `emit_status_event`
-- Decisão: **Handoff:** ler `agents/00-runtime/output/handoffs/{task_id}.json` antes de revisar
+- Decisão: **Handoff:** ler `agents/00-runtime/output/{task_id}/handoff.json` antes de revisar
 - README: [`agents/frontend-web-reviewer/README.md`](../frontend-web-reviewer/README.md)
 
 ### `agents/qa/`
@@ -189,7 +193,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Cenários E2E integrados, regressão entre stacks, evidências de fluxo completo
 - Acionar: Validação pós-implementação antes ou após gate formal
 - Decisão: **Gateway:** `start_test`, `test_passed`, `test_failed_bug` via `emit_status_event`
-- Decisão: **Handoff:** cenários, logs e artefatos em `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** cenários, logs e artefatos em `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/qa/README.md`](../qa/README.md)
 
 ### `agents/qa-author/`
@@ -198,7 +202,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Novos helpers de teste, seeds de DB para QA, utilitários Appium/E2E
 - Acionar: Refatoração do harness compartilhado entre `qa` e `qa-gate`
 - Decisão: **Gateway:** Status apenas via `emit_status_event`
-- Decisão: **Handoff:** arquivos alterados, contratos de seed em `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** arquivos alterados, contratos de seed em `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/qa-author/README.md`](../qa-author/README.md)
 
 ### `agents/qa-author-reviewer/`
@@ -207,13 +211,13 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Validação de seeds, idempotência, isolamento de ambientes e reuso pelo gate
 - Acionar: Disputas sobre estrutura do harness
 - Decisão: **Gateway:** `start_review`, `approve_review` ou `request_changes` via `emit_status_event`
-- Decisão: **Handoff:** ler `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** ler `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/qa-author-reviewer/README.md`](../qa-author-reviewer/README.md)
 
 ### `agents/qa-gate/`
 - **Título:** qa-gate
 - Decisão: Não claimar harness em Todo (`qa-author`)
-- Decisão: Mobile: seed DB → Appium → evidência → cleanup
+- Decisão: Mobile child: **seed parent** (`basic_parent`/`parent_home`) → `qa_appium_suite_child(child_only=true)` → evidência → cleanup
 - README: [`agents/qa-gate/README.md`](../qa-gate/README.md)
 
 ### `agents/qa-gate/scripts/`
@@ -226,13 +230,13 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Validação de cobertura de cenários, qualidade de evidências e classificação de bugs
 - Acionar: Disputas sobre pass/fail de testes cross-stack
 - Decisão: **Gateway:** `start_review`, `approve_review` ou `request_changes` via `emit_status_event`
-- Decisão: **Handoff:** ler `agents/00-runtime/output/handoffs/{task_id}.json` (evidências anexas)
+- Decisão: **Handoff:** ler `agents/00-runtime/output/{task_id}/handoff.json` (evidências anexas)
 - README: [`agents/qa-reviewer/README.md`](../qa-reviewer/README.md)
 
 ### `agents/`
 - **Papel:** ﻿# Agentes — Guardião Família
 - Decisão: **Canônico:** `agents/{role}/SKILL.md` (não `skills/`)
-- Decisão: **Handoff:** `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Base de conhecimento:** `agents/{role}/KNOWLEDGE.md` ou `agents/_shared/REPO_KNOWLEDGE.md`
 - README: [`agents/README.md`](../README.md)
 
 ### `agents/skills/`
@@ -245,7 +249,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Versionamento, changelogs, metadados de loja, tracks de release
 - Acionar: Coordenação de build assinado e submissão
 - Decisão: **Gateway:** Status apenas via `emit_status_event`
-- Decisão: **Handoff:** versão, track, links de release em `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** versão, track, links de release em `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/stores-release/README.md`](../stores-release/README.md)
 
 ### `agents/stores-release-reviewer/`
@@ -254,7 +258,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - Acionar: Validação de versão, metadados, compliance de loja e rollback plan
 - Acionar: Disputas de submissão
 - Decisão: **Gateway:** `start_review`, `approve_review` ou `request_changes` via `emit_status_event`
-- Decisão: **Handoff:** ler `agents/00-runtime/output/handoffs/{task_id}.json`
+- Decisão: **Handoff:** ler `agents/00-runtime/output/{task_id}/handoff.json`
 - README: [`agents/stores-release-reviewer/README.md`](../stores-release-reviewer/README.md)
 
 ## board_automation/
@@ -304,7 +308,7 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - README: [`board_automation/scripts/README.md`](../../board_automation/scripts/README.md)
 
 ### `board_automation/scripts/seeds/`
-- **Papel:** Logs: `agents/00-runtime/output/board/`
+- **Papel:** Logs: `agents/00-runtime/system/board/`
 - README: [`board_automation/scripts/seeds/README.md`](../../board_automation/scripts/seeds/README.md)
 
 ### `board_automation/templates/.github/ISSUE_TEMPLATE/`
@@ -386,11 +390,11 @@ Regenerar: `python agents/00-orchestration/scripts/ops/build_repo_knowledge.py`
 - README: [`lib/mobile/README.md`](../../lib/mobile/README.md)
 
 ### `lib/observability/`
-- **Papel:** Saída: `agents/00-runtime/output/observability/` (`snapshot.json`, `tasks/*.html`)
+- **Papel:** Saída: `agents/00-runtime/system/observability/` (`snapshot.json`, `tasks/*.json`)
 - README: [`lib/observability/README.md`](../../lib/observability/README.md)
 
 ### `lib/orchestrator/`
-- **Papel:** Estado: `agents/00-runtime/output/orchestrator/`
+- **Papel:** Estado: `agents/00-runtime/system/orchestrator/`
 - README: [`lib/orchestrator/README.md`](../../lib/orchestrator/README.md)
 
 ### `lib/`

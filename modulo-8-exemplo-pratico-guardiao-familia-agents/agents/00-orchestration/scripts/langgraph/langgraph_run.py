@@ -37,7 +37,7 @@ def main() -> int:
 
     task_id = args.task
     if args.smoke:
-        from lib.orchestrator.pilot import pick_smoke_task
+        from lib.orchestrator.smoke_tasks import pick_smoke_task
 
         task_id = pick_smoke_task(prefer_id=task_id or None)["id"]
     elif not task_id:

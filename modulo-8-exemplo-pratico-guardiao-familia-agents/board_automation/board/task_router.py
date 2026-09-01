@@ -216,6 +216,29 @@ def pick_tasks_for_sprint(
     return assigned
 
 
+def pick_priority_todo_task(
+    sprint_atual: int = 1,
+    *,
+    sprint_only: bool = False,
+) -> dict | None:
+    """Retorna a task em Todo de maior prioridade (menor priority_rank)."""
+    tasks = load_tasks()
+    scored: list[tuple[float, dict]] = []
+    for row in tasks:
+        if (row.get("board_status") or "Todo") != "Todo":
+            continue
+        if sprint_only and int(row.get("sprint") or 1) != sprint_atual:
+            continue
+        rank = int(row.get("priority_rank") or 99)
+        sprint = int(row.get("sprint") or 1)
+        score = 1000 - rank + (30 if sprint == sprint_atual else 0)
+        scored.append((score, row))
+    if not scored:
+        return None
+    scored.sort(key=lambda x: (-x[0], int(x[1].get("priority_rank") or 99), x[1]["id"]))
+    return scored[0][1]
+
+
 def slugify(title: str, max_len: int = 40) -> str:
     s = title.lower()
     repl = {

@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "task_id": "QA-LIVE-C",
+  "profile": "child_home",
+  "handoff_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\stage-handoff.json",
+  "handoff": {
+    "task_id": "QA-LIVE-C",
+    "email": "admin@guardiao.local",
+    "password": "GuardiaoDev2026!",
+    "parent_email": "admin@guardiao.local",
+    "familyName": "QA Evidence QA-LIVE-C",
+    "family_name": "QA Evidence QA-LIVE-C",
+    "childName": "Filho QA qa-live-c",
+    "child_name": "Filho QA qa-live-c",
+    "childId": "861703c6-8a57-4b8f-add8-2d58836ff6d6",
+    "child_id": "861703c6-8a57-4b8f-add8-2d58836ff6d6",
+    "pairingCode": "283265",
+    "pairing_code": "283265",
+    "lastStep": "copy_code_pairing",
+    "parentHome": false,
+    "childHome": false,
+    "childBootReset": false,
+    "childPrimedForPaste": false,
+    "childLaunched": false,
+    "seed_profile": "child_home",
+    "seeded_at": "2026-08-30T20:01:20.907681+00:00"
+  },
+  "pairing_cycle": false,
+  "resume_from_handoff": true
+}

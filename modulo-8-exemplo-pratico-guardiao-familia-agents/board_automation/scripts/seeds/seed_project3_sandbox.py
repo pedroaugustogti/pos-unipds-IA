@@ -206,6 +206,53 @@ def seed_board_json(backlog: dict, results: list[dict]) -> None:
     print(f"board json: {BOARD_P3_JSON}")
 
 
+def _patch_board_item(backlog: dict, *, task_id: str, entry: dict) -> None:
+    """Atualiza só um item no github-project-3-import.json."""
+    if not BOARD_P3_JSON.is_file():
+        seed_board_json(backlog, [entry] if entry else [])
+        return
+    board = json.loads(BOARD_P3_JSON.read_text(encoding="utf-8"))
+    task = next((t for t in backlog["tasks"] if t["id"] == task_id), None)
+    if not task:
+        raise ValueError(f"Task {task_id} não encontrada")
+    item = {
+        "id": task_id,
+        "title": task["title"],
+        "repository": task["repo"],
+        "type": "Issue",
+        "issue_number": entry.get("issue_number"),
+        "issue_url": entry.get("issue_url"),
+        "fields": {
+            "Status": "Todo",
+            "Trilha": task["track"],
+            "Epic": f"{task['epic_id']} Project 3 Sandbox",
+            "Sprint": task.get("sprint", 1),
+            "Story Points": task.get("effort_sp", 1),
+            "RICE Score": task.get("rice", 5),
+            "WSJF": task.get("wsjf", 2),
+            "Release Blocker": "no",
+            "Priority Rank": task.get("priority_rank", 0),
+            "Repo alvo": task["repo"],
+            "Project Item Id": entry.get("project_item_id", ""),
+        },
+        "labels": [f"agent:{task['agent_role']}"],
+        "refinement": task.get("refinement"),
+        "qa": task.get("qa"),
+    }
+    items = board.get("items") or []
+    replaced = False
+    for i, row in enumerate(items):
+        if row.get("id") == task_id:
+            items[i] = item
+            replaced = True
+            break
+    if not replaced:
+        items.append(item)
+    board["items"] = items
+    BOARD_P3_JSON.write_text(json.dumps(board, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"board json patched: {task_id} -> issue #{entry.get('issue_number')}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true")
@@ -213,6 +260,8 @@ def main() -> int:
     parser.add_argument("--project-number", type=int, default=0, help="Default: 3 ou criar novo")
     parser.add_argument("--project-id", default="", help="PVT_... override")
     parser.add_argument("--skip-board-json", action="store_true")
+    parser.add_argument("--task", default="", help="Só um task_id (ex: T-P3-009); força recriação se --force")
+    parser.add_argument("--force", action="store_true", help="Ignora cache e recria issue/board para --task")
     args = parser.parse_args()
 
     backlog = load_backlog()
@@ -239,7 +288,15 @@ def main() -> int:
         cache = json.loads(CACHE_PATH.read_text(encoding="utf-8"))
 
     results: list[dict] = []
-    for task in backlog["tasks"]:
+    tasks = backlog["tasks"]
+    if args.task:
+        tasks = [t for t in tasks if t["id"] == args.task]
+        if not tasks:
+            raise SystemExit(f"Task {args.task} não encontrada no backlog")
+        if args.force and args.task in cache:
+            cache.pop(args.task, None)
+
+    for task in tasks:
         tid = task["id"]
         if tid in cache and cache[tid].get("issue_url") and cache[tid].get("issue_number") not in (None, "", "0"):
             print(f"skip {tid} (cache)")
@@ -268,7 +325,10 @@ def main() -> int:
 
     update_cache(cache)
     if not args.skip_board_json:
-        seed_board_json(backlog, results)
+        if args.task:
+            _patch_board_item(backlog, task_id=args.task, entry=cache.get(args.task) or {})
+        else:
+            seed_board_json(backlog, results)
 
     print(json.dumps({"project_number": project_number, "project_id": project_id, "tasks": len(results)}, indent=2))
     print(f"\nConfigure: GUARDAO_GITHUB_PROJECT_NUMBER={project_number} GUARDAO_GITHUB_PROJECT_ID={project_id}")

@@ -15,4 +15,4 @@ API de domínio do GitHub Project e roteamento de tasks.
 
 Import: `from board_automation.board.task_router import load_tasks`
 
-Cache runtime: `agents/00-runtime/output/board/`
+Cache runtime: `agents/00-runtime/system/board/`

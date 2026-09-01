@@ -38,7 +38,7 @@
 ## Decisões
 
 - **Gateway:** Status apenas via `emit_status_event`
-- **Handoff:** plan/PR, ambientes afetados em `agents/00-runtime/output/handoffs/{task_id}.json`
+- **Handoff:** plan/PR, ambientes afetados em `agents/00-runtime/output/{task_id}/handoff.json`
 - **ReAct:** claim → plan/apply local ou dry-run → `open_pr` (ver `agent.md`)
 - Nunca aplicar destroy em produção sem HITL; nunca alterar código de app
 

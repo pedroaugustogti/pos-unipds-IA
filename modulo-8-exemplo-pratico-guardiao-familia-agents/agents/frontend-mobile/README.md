@@ -39,7 +39,7 @@
 ## Decisões
 
 - **Gateway:** Status apenas via `emit_status_event`
-- **Handoff:** PR, branch, screenshots ou dúvidas em `agents/00-runtime/output/handoffs/{task_id}.json`
+- **Handoff:** PR, branch, screenshots ou dúvidas em `agents/00-runtime/output/{task_id}/handoff.json`
 - **ReAct:** claim → implementar → testes locais → `open_pr` (ver `agent.md`)
 - Nunca mergear; não alterar Terraform ou harness de QA
 

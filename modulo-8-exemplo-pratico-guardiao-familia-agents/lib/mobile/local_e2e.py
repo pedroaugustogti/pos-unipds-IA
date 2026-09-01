@@ -278,6 +278,7 @@ def _http_json(
     token: str | None = None,
     body: dict[str, Any] | None = None,
     timeout: int = 15,
+    retries: int = 5,
 ) -> tuple[int, Any]:
     headers = {"Accept": "application/json"}
     if token:
@@ -286,13 +287,32 @@ def _http_json(
     if body is not None:
         headers["Content-Type"] = "application/json"
         data = json.dumps(body).encode("utf-8")
-    req = urllib.request.Request(url, data=data, headers=headers, method=method)
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        raw = resp.read().decode("utf-8", errors="replace")
+
+    last_exc: Exception | None = None
+    for attempt in range(max(1, retries)):
+        req = urllib.request.Request(url, data=data, headers=headers, method=method)
         try:
-            return resp.status, json.loads(raw) if raw else None
-        except json.JSONDecodeError:
-            return resp.status, raw
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                raw = resp.read().decode("utf-8", errors="replace")
+                try:
+                    return resp.status, json.loads(raw) if raw else None
+                except json.JSONDecodeError:
+                    return resp.status, raw
+        except urllib.error.HTTPError as exc:
+            last_exc = exc
+            if exc.code in (429, 502, 503) and attempt + 1 < retries:
+                time.sleep(min(2**attempt, 30))
+                continue
+            raise
+        except (urllib.error.URLError, TimeoutError, OSError) as exc:
+            last_exc = exc
+            if attempt + 1 < retries:
+                time.sleep(min(2**attempt, 15))
+                continue
+            raise
+    if last_exc:
+        raise last_exc
+    raise RuntimeError("_http_json: retries esgotados")
 
 
 def run_pairing_smoke_python(

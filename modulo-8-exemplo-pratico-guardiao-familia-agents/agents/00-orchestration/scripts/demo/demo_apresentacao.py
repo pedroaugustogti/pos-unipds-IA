@@ -28,7 +28,16 @@ from lib.env_load import ensure_env  # noqa: E402
 from lib.orchestrator.event_orchestrator import load_runtime, save_runtime, set_agent_state  # noqa: E402
 from lib.gateway import approve_hitl, emit_status_event  # noqa: E402
 from board_automation.board.local_board import get_local_status, update_local_status  # noqa: E402
-from lib.observability import build_snapshot, log_workflow_event, write_dashboard  # noqa: E402
+from lib.runtime_log import log_workflow_event  # noqa: E402
+
+
+def build_snapshot() -> dict:
+    return {"demo": True}
+
+
+def write_dashboard(_snap: dict | None = None) -> None:
+    return None
+
 from board_automation.board.reviewer_pairs import normalize_creator_role, reviewer_for  # noqa: E402
 from board_automation.board.task_action_history import (  # noqa: E402
     append_task_action,
@@ -37,7 +46,7 @@ from board_automation.board.task_action_history import (  # noqa: E402
 )
 from board_automation.board.task_router import load_tasks  # noqa: E402
 from board_automation.board.task_status_workflow import EVENT_TARGET  # noqa: E402
-from lib.orchestrator.worker_jobs import load_jobs, save_jobs  # noqa: E402
+from lib.orchestrator.claim_lock import load_locks, release_lock, save_locks  # noqa: E402
 
 ensure_env()
 
@@ -601,15 +610,8 @@ def reset_task(task_id: str) -> None:
             meta["task_id"] = None
             meta["updated_at"] = _now()
     save_runtime(rt)
-
-    data = load_jobs()
-    for job in data.get("jobs") or []:
-        if job.get("task_id") == task_id and job.get("status") in ("queued", "leased"):
-            job["status"] = "cancelled"
-            job["cancelled_at"] = _now()
-    save_jobs(data)
     write_dashboard(build_snapshot())
-    _announce(f"RESET {task_id} -> Todo (locks/HITL/jobs limpos)")
+    _announce(f"RESET {task_id} -> Todo (locks/HITL limpos)")
 
 
 def _emit(task_id: str, event: str, role: str, *, force_hitl: bool = False) -> dict[str, Any]:

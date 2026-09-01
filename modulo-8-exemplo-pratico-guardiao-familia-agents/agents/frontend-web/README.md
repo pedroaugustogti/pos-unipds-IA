@@ -38,7 +38,7 @@
 ## Decisões
 
 - **Gateway:** Status apenas via `emit_status_event`
-- **Handoff:** PR e contexto em `agents/00-runtime/output/handoffs/{task_id}.json`
+- **Handoff:** PR e contexto em `agents/00-runtime/output/{task_id}/handoff.json`
 - **ReAct:** claim → implementar → testes locais → `open_pr` (ver `agent.md`)
 - Nunca mergear sem passar pelo reviewer pareado
 

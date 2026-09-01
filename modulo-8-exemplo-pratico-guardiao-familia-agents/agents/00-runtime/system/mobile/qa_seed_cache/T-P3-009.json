@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "task_id": "T-P3-009",
+  "profile": "child_home",
+  "handoff_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\stage-handoff.json",
+  "handoff": {
+    "task_id": "T-P3-009",
+    "email": "admin@guardiao.local",
+    "password": "GuardiaoDev2026!",
+    "parent_email": "admin@guardiao.local",
+    "familyName": "QA Evidence T-P3-009",
+    "family_name": "QA Evidence T-P3-009",
+    "childName": "Filho QA t-p3-009",
+    "child_name": "Filho QA t-p3-009",
+    "childId": "5cd0fd73-5094-4ad6-b328-712b94565b02",
+    "child_id": "5cd0fd73-5094-4ad6-b328-712b94565b02",
+    "pairingCode": "124144",
+    "pairing_code": "124144",
+    "lastStep": "copy_code_pairing",
+    "parentHome": false,
+    "childHome": false,
+    "childBootReset": false,
+    "childPrimedForPaste": false,
+    "childLaunched": false,
+    "seed_profile": "child_home",
+    "seeded_at": "2026-08-30T03:45:43.792548+00:00"
+  },
+  "pairing_cycle": false,
+  "resume_from_handoff": true
+}

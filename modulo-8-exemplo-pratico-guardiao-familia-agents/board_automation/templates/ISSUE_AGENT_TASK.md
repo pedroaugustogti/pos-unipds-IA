@@ -67,16 +67,16 @@ Creator valida no emulador manualmente; **qa-gate** reproduz via **MCP** (sec. 2
 
 | Campo | Exemplo |
 |-------|---------|
-| test_suite | `qa-mobile-pairing-appium-dual` |
+| test_suite | `qa-mobile-child-appium` — Appium no app child (seed parent no DB; `child_only=true`) |
 | Cenários | IDs ou slugs (`greeting-morning-08h`, …) |
 | Evidências | `screenshot_png`, `video_mp4`, `json_report` |
 | MCP | `guardiao-familia-agents` quando mobile |
 
-### Mobile com `qa.db_seed`
+### Mobile com `qa.db_seed` (child-only)
 
-Sequência MCP (8 passos): `get_handoff` → `start_test` → `query_mobile_flow_rag` → `qa_db_seed` → `qa_appium_suite_child` → evidências → `qa_db_cleanup` → `test_passed`|`test_failed_bug`
+Sequência MCP (8 passos): `get_handoff` → `start_test` → `query_mobile_flow_rag` → `qa_db_seed(profile=basic_parent)` → `qa_appium_suite_child(from_db_seed=true, child_only=true)` → evidências → `qa_db_cleanup` → `test_passed`|`test_failed_bug`
 
-Profiles: `pairing_warm` · `child_home` · `permissions_resume`
+Profiles seed: `basic_parent` · `parent_home` · `child_home` · `permissions_resume` · `pairing_warm` (dual)
 
 ---
 
@@ -126,6 +126,21 @@ Regras em `refinement.stop_and_redirect` — exemplos:
   }
 }
 ```
+
+---
+
+## 10. Comentários obrigatórios por agente (sec. 10)
+
+Cada fase exige comentário na issue usando o template inline da sec. 10:
+
+| Agente | Secção | Obrigatório no comentário |
+|--------|--------|---------------------------|
+| **frontend-mobile** | 10.1 | Estratégia de codificação · arquivos alterados · testes unitários (`npm test`) · handoff `open_pr` |
+| **frontend-mobile-reviewer** | 10.2 | Avaliação da implementação · qualidade de código · cobertura de testes · `approve_review` / `request_changes` |
+| **qa-gate** | 10.3 | Cenários de teste · critérios de aceite (tabela) · comandos MCP · mídias PNG/MP4/JSON anexadas |
+| **devops-cicd** | 10.4 | PR merged · CI green · `merge_pr` |
+
+Preencher `agent_responsibilities` no backlog (sec. 0.1) para detalhar o escopo de cada papel na task.
 
 ---
 

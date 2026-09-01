@@ -9,8 +9,7 @@ from lib.gateway.gateway import emit_status_event
 from lib.gateway.handoff import load_handoff
 from lib.ci.ci_state import patch_ci_state
 from board_automation.board.local_board import get_local_status
-from lib.observability.observability import log_workflow_event
-from lib.orchestrator.worker_jobs import enqueue_job
+from lib.runtime_log import log_workflow_event
 
 TASK_ID_RE = re.compile(r"\[([A-Z]-[A-Z0-9]+-\d+)\]")
 
@@ -140,33 +139,39 @@ def handle_pr_signal(
 
 
 def handle_ci_green(*, task_id: str, dry_run: bool = False) -> dict[str, Any]:
-    """CI verde → job qa-gate (nao aplica test_passed sozinho)."""
+    """CI verde → start_test via gateway (sem fila worker)."""
+    st = get_local_status(task_id) or "Todo"
     if dry_run:
         out = {
             "ok": True,
             "signal": "ci_green",
             "task_id": task_id,
-            "action": "would_enqueue_qa_gate",
+            "action": "would_start_test",
             "dry_run": True,
         }
     else:
-        job = enqueue_job(task_id=task_id, role="qa-gate", event="start_test")
+        emit = emit_status_event(
+            task_id,
+            "start_test",
+            summary="CI green — QA gate inicia testes",
+            dry_run=False,
+            from_agent="devops-cicd",
+        )
         patch_ci_state(
             task_id,
             status="green",
             last_signal="ci_green",
-            summary="CI green — liberado para start_test",
-            event="ci_green",
+            summary="CI green — start_test emitido",
+            event="start_test",
             from_agent="devops-cicd",
             to_agent="qa-gate",
         )
         out = {
-            "ok": True,
+            "ok": bool(emit.get("ok")),
             "signal": "ci_green",
             "task_id": task_id,
-            "action": "enqueue_qa_gate",
-            "job": job,
-            "note": "Nao aplica test_passed automaticamente",
+            "action": "start_test",
+            "emit": emit,
         }
     log_workflow_event(
         "ci_signal",
@@ -175,7 +180,7 @@ def handle_ci_green(*, task_id: str, dry_run: bool = False) -> dict[str, Any]:
         event="start_test",
         dispatch_action="enqueue_qa_gate",
         summary="CI green → qa-gate",
-        extra={"job_id": (out.get("job") or {}).get("job_id")},
+        extra={"emit_status": (out.get("emit") or {}).get("status")},
         dry_run=dry_run,
     )
     return out

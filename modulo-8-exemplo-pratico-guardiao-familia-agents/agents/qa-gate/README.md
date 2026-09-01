@@ -18,5 +18,6 @@ Gate de qualidade da pipeline — executa testes e evidências após review.
 ## Decisões
 
 - Não claimar harness em Todo (`qa-author`)
-- Mobile: seed DB → Appium → evidência → cleanup
+- Mobile child: **seed parent** (`basic_parent`/`parent_home`) → `qa_appium_suite_child(child_only=true)` → evidência → cleanup
+- Mobile parent UI: sem seed → `qa_appium_suite_parent(feature=...)`
 - Status: `start_test`, `test_passed`, `test_failed_bug` via gateway

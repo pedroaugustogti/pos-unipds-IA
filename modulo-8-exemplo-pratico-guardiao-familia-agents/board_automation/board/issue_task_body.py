@@ -64,17 +64,45 @@ def _normalize_qa_repro_steps(steps: list[str], *, mobile: bool) -> list[str]:
     ]
 
 
+def _qa_db_seed_profile(repo: str, qa: dict[str, Any]) -> str:
+    raw = qa.get("db_seed")
+    if isinstance(raw, dict) and raw.get("profile"):
+        return str(raw["profile"])
+    if repo == "guardiao-familia-child":
+        return "basic_parent"
+    return "child_home"
+
+
+def _qa_appium_child_only(repo: str, qa: dict[str, Any]) -> bool:
+    """Child com seed na API: Appium só no emulator-5556; parent/família já no Postgres."""
+    scope = qa.get("appium_scope")
+    if scope == "child_only":
+        return True
+    if scope in ("dual", "parent_child"):
+        return False
+    if repo != "guardiao-familia-child":
+        return False
+    raw = qa.get("db_seed")
+    return isinstance(raw, dict) and bool(raw.get("enabled"))
+
+
 def format_qa_repro_appium_section(
     tid: str,
     qa_steps: list[str],
     qa: dict[str, Any],
+    *,
+    repo: str = "",
 ) -> list[str]:
     """Secção 2.1 — reprodução QA/Appium sempre via MCP."""
     raw_seed = qa.get("db_seed")
-    profile = "child_home"
-    if isinstance(raw_seed, dict):
-        profile = str(raw_seed.get("profile") or profile)
+    profile = _qa_db_seed_profile(repo, qa) if repo else "child_home"
+    if isinstance(raw_seed, dict) and raw_seed.get("profile") and not repo:
+        profile = str(raw_seed["profile"])
+    child_only = _qa_appium_child_only(repo, qa) if repo else False
     appium_tool = "qa_appium_suite_child" if profile != "pairing_warm" else "qa_appium_suite_parent"
+    appium_args = f'from_db_seed=true, task_id="{tid}", dry_run=false'
+    if child_only and appium_tool == "qa_appium_suite_child":
+        appium_args += ", child_only=true"
     cleanup_note = (
         f"7. qa_db_cleanup(task_id=\"{tid}\", dry_run=false)  # qa.db_seed.cleanup=true"
         if isinstance(raw_seed, dict) and raw_seed.get("cleanup")
@@ -95,7 +123,7 @@ def format_qa_repro_appium_section(
         f"3. emit_status_event(task_id=\"{tid}\", event=\"start_test\", dry_run=false)",
         f"4. query_mobile_flow_rag(query=<feature/tela>, task_id=\"{tid}\")",
         f"5. qa_db_seed(task_id=\"{tid}\", profile=\"{profile}\", use_task_config=true, dry_run=false)",
-        f"6. {appium_tool}(from_db_seed=true, task_id=\"{tid}\", dry_run=false)",
+        f"6. {appium_tool}({appium_args})",
         "   # validar cenários abaixo + evidências PNG/MP4",
         cleanup_note,
         f"8. emit_status_event(task_id=\"{tid}\", event=\"test_passed\"|\"test_failed_bug\", dry_run=false)",
@@ -163,7 +191,7 @@ def format_user_flow_section(
     qa_dict = qa or {}
     qa_steps = _normalize_qa_repro_steps(qa_steps, mobile=_is_mobile_qa(repo, qa_dict))
     repro_block = (
-        format_qa_repro_appium_section(tid, qa_steps, qa_dict)
+        format_qa_repro_appium_section(tid, qa_steps, qa_dict, repo=repo)
         if tid and _is_mobile_qa(repo, qa_dict)
         else [
             "### Reproduzir (QA / Appium)",
@@ -249,26 +277,49 @@ def format_phase_table(
     qa: dict[str, Any],
 ) -> list[str]:
     mobile = _is_mobile_qa(repo, qa)
-    rag = ", RAG antes de codar" if agent_role == "frontend-mobile" else ""
+    child_only = _qa_appium_child_only(repo, qa)
     qa_cell = (
-        "MCP `qa_db_seed` → `qa_appium_suite_*` → evidências → `qa_db_cleanup`"
-        if mobile
-        else "Executar suite sec. 6 + evidências"
+        "MCP `qa_db_seed(basic_parent)` → `qa_appium_suite_child(child_only=true)` → evidências → `qa_db_cleanup`"
+        if child_only
+        else (
+            "MCP `qa_db_seed` → `qa_appium_suite_*` → evidências → `qa_db_cleanup`"
+            if mobile
+            else "Executar suite sec. 6 + evidências"
+        )
     )
     impl_forbid = "Merge, QA Appium, fora do escopo" if mobile else "Merge, QA E2E, fora do escopo"
+    rag = ", RAG antes de codar" if agent_role == "frontend-mobile" else ""
+    impl_resp = (
+        "Codificar escopo sec. 3 · estratégia no PR/comentário · arquivos alterados · testes unitários"
+        if agent_role == "frontend-mobile"
+        else f"Entregar diff no escopo sec. 3 + AC locais"
+    )
+    review_resp = (
+        "Avaliar implementação do creator · qualidade de código · cobertura de testes unitários"
+        if "mobile" in reviewer or agent_role == "frontend-mobile"
+        else "Review PR, `approve_review` / `request_changes`"
+    )
+    qa_resp = (
+        "Cenários + AC · MCP guardiao-familia-agents · evidências PNG/MP4/JSON"
+        if mobile
+        else qa_cell
+    )
     return [
         "| Fase | Board Status | Agente | Responsabilidade | Proibido nesta fase |",
         "|------|--------------|--------|------------------|---------------------|",
         f"| Claim | Todo → In Progress | **{agent_role}** (creator) | Branch, implementar escopo sec. 3, testes{rag} | Review próprio código |",
-        f"| Implementar | In Progress | **{agent_role}** | Entregar diff no escopo sec. 3 + AC locais | {impl_forbid} |",
-        f"| Review | In Code Review | **{reviewer}** | Review PR, `approve_review` / `request_changes` | Implementar feature, rodar QA gate |",
-        f"| QA | In Test | **qa-gate** | {qa_cell} | Merge PR, alterar código |",
+        f"| Implementar | In Progress | **{agent_role}** | {impl_resp} | {impl_forbid} |",
+        f"| Review | In Code Review | **{reviewer}** | {review_resp} | Implementar feature, rodar QA gate |",
+        f"| QA | In Test | **qa-gate** | {qa_resp} | Merge PR, alterar código |",
         f"| Merge | In Pull Request | **{handoff['merge_owner']}** | `merge_pr` após HITL | Alterar código da feature |",
     ]
 
 
-def format_qa_mcp_steps(tid: str, profile: str = "child_home") -> list[str]:
+def format_qa_mcp_steps(tid: str, profile: str = "child_home", *, child_only: bool = False) -> list[str]:
     appium_tool = "qa_appium_suite_child" if profile != "pairing_warm" else "qa_appium_suite_parent"
+    appium_params = f"`from_db_seed=true`, `task_id={tid}`, `dry_run=false`"
+    if child_only and appium_tool == "qa_appium_suite_child":
+        appium_params += ", `child_only=true`"
     return [
         "",
         "### DB seed + suite (MCP — obrigatório)",
@@ -279,7 +330,7 @@ def format_qa_mcp_steps(tid: str, profile: str = "child_home") -> list[str]:
         f"| 2 | `emit_status_event` | `event=start_test`, `dry_run=false` |",
         f"| 3 | `query_mobile_flow_rag` | `query=<tela/feature>`, `task_id={tid}` |",
         f"| 4 | `qa_db_seed` | `task_id={tid}`, `profile={profile}`, `use_task_config=true`, `dry_run=false` |",
-        f"| 5 | `{appium_tool}` | `from_db_seed=true`, `task_id={tid}`, `dry_run=false` |",
+        f"| 5 | `{appium_tool}` | {appium_params} |",
         f"| 6 | (evidência) | screenshots / MP4 conforme AC |",
         f"| 7 | `qa_db_cleanup` | `task_id={tid}`, `dry_run=false` |",
         f"| 8 | `emit_status_event` | `test_passed` ou `test_failed_bug`, `dry_run=false` |",
@@ -292,9 +343,8 @@ def format_qa_section(qa: dict[str, Any], tid: str, repo: str) -> list[str]:
     ev_list = [k.replace("_", " ") for k, v in ev.items() if v] or ["json report"]
     mobile = _is_mobile_qa(repo, qa)
     raw_seed = qa.get("db_seed")
-    profile = "child_home"
-    if isinstance(raw_seed, dict):
-        profile = str(raw_seed.get("profile") or profile)
+    profile = _qa_db_seed_profile(repo, qa)
+    child_only = _qa_appium_child_only(repo, qa)
 
     lines = [
         "## 6. QA (qa-gate)",
@@ -305,11 +355,16 @@ def format_qa_section(qa: dict[str, Any], tid: str, repo: str) -> list[str]:
         f"| Cenários | {', '.join(qa.get('scenarios') or [])} |",
         f"| Evidências obrigatórias | {', '.join(ev_list)} |",
     ]
+    if child_only:
+        lines.append(
+            "| Execução Appium | **Somente app child** (`emulator-5556`, `child_only=true`) — "
+            f"massa parent/família via `qa_db_seed(profile={profile})`; não abrir emulador parent |"
+        )
     if mobile:
         lines.append("| MCP server | `guardiao-familia-agents` (`list_mcp_tools`) |")
     lines.append("| Referência QA | **Anexo D** (qa-gate + evidências) |")
     if mobile:
-        lines.extend(format_qa_mcp_steps(tid, profile))
+        lines.extend(format_qa_mcp_steps(tid, profile, child_only=child_only))
     lines.extend(format_db_seed_section(qa, tid))
     how = (qa.get("how_to_run") or "").strip()
     if how:
@@ -323,6 +378,39 @@ def format_qa_section(qa: dict[str, Any], tid: str, repo: str) -> list[str]:
     lines.append("**Regra:** se qualquer AC = FAIL → `test_failed_bug` + comentário qa-gate (sec. 10). Não merge.")
     lines.append("")
     return lines
+
+
+def _format_annex_d_mobile(tid: str, repo: str, qa: dict[str, Any]) -> str:
+    child_only = _qa_appium_child_only(repo, qa)
+    profile = _qa_db_seed_profile(repo, qa)
+    appium_call = (
+        "`qa_appium_suite_child(from_db_seed=true, child_only=true)`"
+        if child_only
+        else "`qa_appium_suite_child(from_db_seed=true)`"
+    )
+    if child_only:
+        stack = (
+            f"**Stack Appium:** somente child (`emulator-5556`, Metro `:9090`) + Docker API/Postgres — "
+            f"parent/família via `qa_db_seed(profile={profile})`; **não** subir emulador parent (5554)"
+        )
+        markers = "`fast-stack-last.json` → `ok: true` · log com `SMOKE_CHILD_OK` · ChildHomeV2 visível"
+    else:
+        stack = (
+            "**Stack:** Docker API/Postgres · emuladores 5554+5556 · `fast-stack.ps1` no mobile-setup · Appium dual"
+        )
+        markers = "`fast-stack-last.json` → `ok: true` · log com `PAIRING_COMPLETE` / `SMOKE_CHILD_OK`"
+    evidence = f"agents/00-runtime/output/{tid}/qa-gate-({{N}})/evidence/"
+    return f"""## Anexo D — Papel `qa-gate` + evidências mobile (resumo)
+
+**MCP (obrigatório):** `get_handoff` → `start_test` → `qa_db_seed(profile={profile})` → {appium_call} → screenshots/MP4 → `qa_db_cleanup` → `test_passed` | `test_failed_bug`
+
+{stack}
+
+**Evidências:** PNG + MP4 + JSON em `{evidence}`
+
+**Marcadores de sucesso:** {markers}
+
+**Anti-patterns:** `test_passed` sem evidência visual · Appium sem `APPS_READY_OK` · commitar `stage-handoff.json`"""
 
 
 def format_appendices(
@@ -341,17 +429,7 @@ def format_appendices(
     files = ref.get("suggested_files") or []
     file_rows = "\n".join(f"| `{f}` | alteração conforme escopo |" for f in files[:6]) or "| _(suggested_files)_ | |"
 
-    annex_d_mobile = f"""## Anexo D — Papel `qa-gate` + evidências mobile (resumo)
-
-**MCP (obrigatório):** `get_handoff` → `start_test` → `qa_db_seed` → `qa_appium_suite_child(from_db_seed=true)` → screenshots/MP4 → `qa_db_cleanup` → `test_passed` | `test_failed_bug`
-
-**Stack:** Docker API/Postgres · emuladores 5554+5556 · `fast-stack.ps1` no mobile-setup · Appium dual
-
-**Evidências:** PNG + MP4 + JSON em `agents/00-runtime/output/mobile/qa_evidence/{tid}/`
-
-**Marcadores de sucesso:** `fast-stack-last.json` → `ok: true` · log com `PAIRING_COMPLETE` / `SMOKE_CHILD_OK`
-
-**Anti-patterns:** `test_passed` sem evidência visual · Appium sem `APPS_READY_OK` · commitar `stage-handoff.json`"""
+    annex_d_mobile = _format_annex_d_mobile(tid, repo, qa)
 
     annex_d_generic = """## Anexo D — Papel `qa-gate` (resumo)
 
@@ -724,7 +802,11 @@ def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = 
 
 _DEFAULT_IMPL = """## [{agent_role}] Implementação
 
-**Board:** In Progress → Ready for Code Review
+**Status board:** In Progress → Ready for Code Review
+
+### Estratégia de codificação
+1. _(decisões técnicas: onde centralizar lógica, helpers, padrões RN)_
+2. _(ordem de implementação e trade-offs)_
 
 ### O que foi feito
 - 
@@ -734,51 +816,73 @@ _DEFAULT_IMPL = """## [{agent_role}] Implementação
 |---------|---------|
 | | |
 
-### AC verificados (local)
-- [ ] AC-01: 
-- [ ] AC-02: 
+### Testes unitários
+- [ ] Criados/ajustados em: `path/do/teste.test.ts`
+- [ ] Comando: `npm test -- <suite>`
+- [ ] Output: exit 0
 
-### Comando / output
+### Como validar localmente
 ```
+
 ```
 
 ### Handoff
 PR: 
-→ `{reviewer}` · evento `open_pr`"""
+→ `{reviewer}` via evento `open_pr`"""
 
 _DEFAULT_REVIEW = """## [{reviewer}] Code Review
 
-**Board:** In Code Review → Ready for Test (ou In Progress se changes)
+**Status board:** In Code Review → Ready for Test (ou In Progress se changes)
 
-### Checklist
-- [ ] Só arquivos de suggested_files alterados
-- [ ] AC cobertos pelo diff
-- [ ] Sem secrets
+### Escopo verificado (implementação do frontend-mobile)
+- [ ] Diff alinhado ao comentário sec. 10.1 e escopo sec. 3
+- [ ] Estratégia de codificação coerente com o problema
+- [ ] Sem secrets / credenciais
 
+### Qualidade de código
 | Critério | OK | Notas |
 |----------|----|-------|
-| Correção | | |
-| Escopo | | |
+| Correção / lógica | | |
+| Legibilidade / padrões RN | | |
+| Escopo (só suggested_files) | | |
 
-**Decisão:** approve_review / request_changes — motivo:"""
+### Cobertura de testes unitários
+- [ ] Testes cobrem AC e bordas relevantes
+- [ ] Assertivas adequadas (não só smoke)
+- [ ] `npm test` verde no PR
+
+### Decisão
+- [ ] **approve_review** — segue para qa-gate
+- [ ] **request_changes** — motivo:"""
 
 _DEFAULT_QA = """## [qa-gate] QA
 
-**Board:** In Test → In Pull Request (ou In Progress se fail)
+**Status board:** In Test → In Pull Request (ou In Progress se fail)
 
-| AC | Resultado | Evidência |
-|----|-----------|-----------|
-| AC-01 | PASS/FAIL | |
+### Cenários de teste (sec. 6)
+| Cenário | Passos | Resultado esperado |
+|---------|--------|------------------|
+| | | |
 
-### Comandos executados (MCP)
+### Critérios de aceite
+| ID | Critério | Resultado | Evidência |
+|----|----------|-----------|-----------|
+| AC-01 | | PASS / FAIL | PNG/MP4 abaixo |
+| AC-02 | | PASS / FAIL | |
+
+### Comandos executados (MCP guardiao-familia-agents — obrigatório)
 ```
-qa_db_seed / qa_appium_suite_child / qa_db_cleanup / emit_status_event
+get_handoff → start_test → query_mobile_flow_rag → qa_db_seed → qa_appium_suite_* → qa_db_cleanup → test_passed|test_failed_bug
 ```
 
-### Evidências
-(screenshot / vídeo / JSON)
+### Evidências (anexar mídias)
+- Screenshot PNG: 
+- Vídeo MP4: 
+- JSON report: `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/`
 
-**Decisão:** test_passed / test_failed_bug"""
+### Decisão
+- [ ] **test_passed** — todos AC PASS
+- [ ] **test_failed_bug** — AC falhou:"""
 
 _DEFAULT_MERGE = """## [devops-cicd] Merge
 

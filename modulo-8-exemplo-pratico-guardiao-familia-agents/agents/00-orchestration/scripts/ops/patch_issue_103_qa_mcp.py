@@ -52,7 +52,7 @@ SEC6 = r"""## 6. QA (qa-gate)
 
 | Campo | Valor |
 |-------|-------|
-| test_suite | `qa-mobile-pairing-appium-dual` |
+| test_suite | `qa-mobile-child-appium` |
 | Cenários | greeting-morning-08h, greeting-afternoon-15h, greeting-evening-21h, pairing-to-child-home-e2e |
 | Evidências obrigatórias | screenshot png, video mp4, json report, scenarios count, video scope |
 | MCP server | `guardiao-familia-agents` (`list_mcp_tools`) |

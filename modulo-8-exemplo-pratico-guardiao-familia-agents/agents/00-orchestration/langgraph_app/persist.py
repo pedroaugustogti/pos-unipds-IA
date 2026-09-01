@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from lib.paths import LANGGRAPH_DIR
+from lib.ticket_output import langgraph_run_path, resolve_agent_cycle, resolve_handoff_path
 
 OUT_DIR = LANGGRAPH_DIR
 
@@ -18,7 +19,17 @@ def _now() -> str:
 
 def save_run(task_id: str, state: dict[str, Any]) -> Path:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    path = OUT_DIR / f"{task_id}.json"
+    agent = str(state.get("agent_role") or state.get("from_agent") or "orchestrator")
+    handoff = None
+    try:
+        hp = resolve_handoff_path(task_id)
+        if hp.is_file():
+            handoff = json.loads(hp.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        handoff = None
+    cycle = int(state.get("cycle") or 0) or resolve_agent_cycle(handoff, agent)
+    path = langgraph_run_path(task_id, agent, cycle=cycle)
+    legacy = OUT_DIR / f"{task_id}.json"
     payload = {
         "task_id": task_id,
         "saved_at": _now(),
@@ -36,7 +47,10 @@ def save_run(task_id: str, state: dict[str, Any]) -> Path:
         "react_trace": state.get("react_trace"),
         "last_tool_results": state.get("last_tool_results"),
         "error": state.get("error"),
-        "cycle": state.get("cycle"),
+        "cycle": cycle,
+        "agent_role": agent,
+        "cycle_dir": path.parent.name,
     }
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
+    legacy.write_text(json.dumps(payload, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
     return path

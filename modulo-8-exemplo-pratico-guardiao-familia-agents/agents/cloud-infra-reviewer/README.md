@@ -37,7 +37,7 @@
 ## Decisões
 
 - **Gateway:** `start_review`, `approve_review` ou `request_changes` via `emit_status_event`
-- **Handoff:** ler `agents/00-runtime/output/handoffs/{task_id}.json` (plan, ambientes)
+- **Handoff:** ler `agents/00-runtime/output/{task_id}/handoff.json` (plan, ambientes)
 - **ReAct:** handoff → checklist infra → veredito (máx. 3 voltas; ver `agent.md`)
 - Mudanças de alto risco exigem HITL antes de apply em produção
 

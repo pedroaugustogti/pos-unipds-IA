@@ -97,8 +97,8 @@ A demo **não substitui** o produto: ela prova o **mesmo gateway, Status, papéi
 | GitHub Project #2 | Status remoto (política reconcile: Project vence) |
 | `github-project-2-import.json` (módulo 7) | Espelho local de Status |
 | `board_automation/data/maps/TASK_AGENT_MAP.csv` | Role, repo, depends_on, blocker |
-| `agents/00-runtime/output/handoffs/{task}.json` | Contrato entre agentes |
-| `agents/00-runtime/output/observability/tasks/{task}.html` | Histórico detalhado (demo / append explícito) |
+| `agents/00-runtime/output/{task}/handoff.json` | Contrato entre agentes |
+| `agents/00-runtime/system/observability/tasks/{task}.html` | Histórico detalhado (demo / append explícito) |
 | `agents/00-runtime/output/agent_runtime.json` | idle/busy, HITL, idempotência |
 
 ---

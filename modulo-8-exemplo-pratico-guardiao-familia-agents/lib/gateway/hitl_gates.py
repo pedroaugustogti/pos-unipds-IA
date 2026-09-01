@@ -4,9 +4,16 @@ from __future__ import annotations
 
 from typing import Any
 
-# Papéis / eventos que exigem humano antes de efeito irreversível
+from board_automation.board.task_status_workflow import (
+    is_approve_review_event,
+    is_merge_event,
+    is_open_pr_event,
+    is_test_failed_event,
+    is_test_passed_event,
+)
+
+# Papéis / eventos que exigem humano antes de efeito irreversível (merge via is_merge_event)
 HITL_EVENTS = frozenset({
-    "merge_pr",
     "hitl_required",
 })
 
@@ -77,29 +84,29 @@ def evaluate_hitl(
     reasons: list[str] = []
     mode = "auto"
 
-    if event == "merge_pr":
+    if is_merge_event(event):
         reasons.append("Merge é irreversível no fluxo do board — Approval Gate humano obrigatório.")
         mode = "block_until_human"
 
     if task.get("release_blocker") in (True, "yes", "true", "True", 1, "1"):
-        if event in ("approve_review", "test_passed", "merge_pr"):
+        if is_approve_review_event(event) or is_test_passed_event(event) or is_merge_event(event):
             reasons.append("Card com release_blocker=True — HITL obrigatório.")
-            mode = "block_until_human" if event == "merge_pr" else "propose_only"
+            mode = "block_until_human" if is_merge_event(event) else "propose_only"
 
-    if event == "approve_review" and is_high_risk_task(task):
+    if is_approve_review_event(event) and is_high_risk_task(task):
         reasons.append(
             "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
         )
         if mode == "auto":
             mode = "propose_only"
 
-    if event == "test_failed_bug" and bug_count >= bug_threshold:
+    if is_test_failed_event(event) and bug_count >= bug_threshold:
         reasons.append(
             f"Blocker automático após {bug_count} bugs — triagem humana obrigatória."
         )
         mode = "block_until_human"
 
-    if event in ("open_pr",) and is_high_risk_task(task) and proposed_verdict == "skip_tests":
+    if is_open_pr_event(event) and is_high_risk_task(task) and proposed_verdict == "skip_tests":
         reasons.append("PR de alto risco sem evidência de testes.")
         mode = "block_until_human"
 

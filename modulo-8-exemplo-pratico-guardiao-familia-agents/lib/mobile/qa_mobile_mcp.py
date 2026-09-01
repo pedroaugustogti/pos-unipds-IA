@@ -9,29 +9,28 @@ import subprocess
 from pathlib import Path
 from typing import Any, Literal
 
+from lib.mobile.local_e2e import resolve_android_home
 from lib.mobile.mobile_e2e_seed import (
     SEED_PROFILES,
     cleanup_db_seed,
     default_db_seed_config,
     provision_handoff,
     resolve_db_seed,
+    _reset_handoff_cycle,
 )
 from lib.mobile.mobile_runtime_config import appium_env, stack
-from lib.paths import QA_SEED_CACHE_DIR
-from lib.mobile.qa_mobile_setup_evidence import collect_artifacts, setup_root
+from lib.ticket_output import ticket_seed_cache_path
+from lib.mobile.qa_mobile_setup_evidence import collect_artifacts, setup_root, _package
 from board_automation.board.task_router import load_tasks
 
 AppTarget = Literal["parent", "child"]
 
-SEED_CACHE_DIR = QA_SEED_CACHE_DIR
-
-
 def _seed_cache_path(task_id: str) -> Path:
-    return SEED_CACHE_DIR / f"{task_id}.json"
+    return ticket_seed_cache_path(task_id)
 
 
 def _save_seed_cache(task_id: str, result: dict[str, Any]) -> None:
-    SEED_CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    _seed_cache_path(task_id).parent.mkdir(parents=True, exist_ok=True)
     payload = {k: v for k, v in result.items() if k != "steps"}
     _seed_cache_path(task_id).write_text(
         json.dumps(payload, ensure_ascii=False, indent=2, default=str) + "\n",
@@ -65,12 +64,9 @@ def _stage_handoff_path() -> Path:
 
 def _ensure_stage_handoff(handoff: dict[str, Any], *, source_path: str = "") -> Path:
     """Garante stage-handoff.json no mobile-setup (fonte para ResumeFromHandoff)."""
+    _ = source_path  # legado — sempre regrava para evitar handoff stale sem credenciais
     target = _stage_handoff_path()
     target.parent.mkdir(parents=True, exist_ok=True)
-    if source_path:
-        src = Path(source_path)
-        if src.is_file() and src.resolve() == target.resolve():
-            return target
     target.write_text(json.dumps(handoff, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return target
 
@@ -89,8 +85,59 @@ def _load_handoff_for_seed(*, task_id: str = "") -> tuple[dict[str, Any] | None,
     return None, ""
 
 
-def resolve_from_db_seed(app: AppTarget, *, task_id: str = "") -> dict[str, Any]:
+DUAL_CHILD_FEATURES = frozenset(
+    {"pairing", "copy_code_pairing", "paste_code_parent", "allow_permissions", "go_to_home_child"}
+)
+PARENT_ONLY_SEED_PROFILES = frozenset({"parent_home"})
+CHILD_ONLY_SEED_PROFILES = frozenset({"child_home", "basic_parent", "permissions_resume"})
+
+
+def _infer_emulator_scope(
+    app: AppTarget,
+    handoff: dict[str, Any],
+    *,
+    child_only: bool,
+    parent_only: bool,
+    feature: str = "",
+) -> tuple[bool, bool]:
+    """Infere child_only / parent_only a partir do seed quando não informado explicitamente."""
+    profile = str(handoff.get("seed_profile") or "")
+    meta = SEED_PROFILES.get(profile, {})
+    target = str(meta.get("target_app") or "")
+    feat = feature.strip()
+
+    if app == "parent":
+        if parent_only or child_only:
+            return child_only, parent_only
+        if feat in DUAL_CHILD_FEATURES:
+            return False, False
+        if profile in PARENT_ONLY_SEED_PROFILES or target == "parent":
+            return False, True
+        if last := str(handoff.get("lastStep") or ""):
+            if last in ("config_family", "create_account", "login"):
+                return False, True
+        return False, True
+
+    # child
+    if child_only or parent_only:
+        return child_only, parent_only
+    if feat == "pairing" or profile == "pairing_warm" or target == "dual":
+        return False, False
+    if profile in CHILD_ONLY_SEED_PROFILES or target == "child":
+        return True, False
+    return True, False
+
+
+def resolve_from_db_seed(
+    app: AppTarget,
+    *,
+    task_id: str = "",
+    child_only: bool = False,
+    parent_only: bool = False,
+    feature: str = "",
+) -> dict[str, Any]:
     """Resolve flags para retomar do handoff pós-seed e abrir o app na home."""
+    requested_feature = feature.strip()
     handoff, handoff_path = _load_handoff_for_seed(task_id=task_id)
     if not handoff:
         return {
@@ -113,9 +160,24 @@ def resolve_from_db_seed(app: AppTarget, *, task_id: str = "") -> dict[str, Any]
     elif parent_home:
         feature = "go_to_home_parent"
         mode = "parent_already_home"
+    elif last_step in ("config_family", "create_account"):
+        feature = "login"
+        mode = "resume_parent_after_api_seed"
+    elif last_step == "login":
+        feature = "copy_code_pairing"
+        mode = "resume_parent_pairing"
     else:
         feature = "pairing"
         mode = "resume_to_parent_home"
+
+    if requested_feature:
+        feature = requested_feature
+
+    child_only, parent_only = _infer_emulator_scope(
+        app, handoff, child_only=child_only, parent_only=parent_only, feature=feature
+    )
+
+    single_emulator = (app == "parent" and parent_only) or (app == "child" and child_only) or app == "parent"
 
     return {
         "ok": True,
@@ -124,7 +186,9 @@ def resolve_from_db_seed(app: AppTarget, *, task_id: str = "") -> dict[str, Any]
         "feature": feature,
         "resume_from_handoff": True,
         "skip_appium": False,
-        "single_emulator": False,
+        "single_emulator": single_emulator,
+        "child_only": child_only,
+        "parent_only": parent_only,
         "handoff_path": str(stage_path),
         "last_step": last_step or None,
         "child_home": child_home,
@@ -235,33 +299,91 @@ def _parse_fast_stack_report(setup: Path) -> dict[str, Any]:
         return {}
 
 
+def _emulator_ready(serial: str) -> bool:
+    home = resolve_android_home()
+    if not home:
+        return False
+    adb = home / "platform-tools" / ("adb.exe" if os.name == "nt" else "adb")
+    if not adb.is_file():
+        return False
+    try:
+        state = subprocess.run(
+            [str(adb), "-s", serial, "get-state"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if (state.stdout or "").strip() != "device":
+            return False
+        boot = subprocess.run(
+            [str(adb), "-s", serial, "shell", "getprop", "sys.boot_completed"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        return (boot.stdout or "").strip() == "1"
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+
+
+def _needs_cold_boot(*, dual: bool, child_only: bool = False) -> bool:
+    if os.environ.get("GF_COLD_BOOT", "").strip() in ("1", "true", "yes"):
+        return True
+    parent = stack("parent")["emulator"]
+    child = stack("child")["emulator"]
+    if child_only:
+        return not _emulator_ready(child)
+    if not _emulator_ready(parent):
+        return True
+    if dual and not _emulator_ready(child):
+        return True
+    return False
+
+
 def run_appium_suite(
     app: AppTarget,
     *,
     skip_build: bool = True,
     skip_appium: bool = True,
-    phase: str = "Smoke",
+    phase: str = "All",
     resume_from_handoff: bool = False,
     from_db_seed: bool = False,
     task_id: str = "",
     feature: str = "",
     timeout_sec: int = 1800,
     dry_run: bool = False,
+    cold_boot: bool | None = None,
+    child_only: bool = False,
+    parent_only: bool = False,
+    reset_handoff_after: bool | None = None,
 ) -> dict[str, Any]:
     """Sobe stack Appium (API → emuladores → Metro → build → APPS_READY)."""
     s = stack(app)
     seed_ctx: dict[str, Any] | None = None
     if from_db_seed:
-        seed_ctx = resolve_from_db_seed(app, task_id=task_id)
+        seed_ctx = resolve_from_db_seed(
+            app,
+            task_id=task_id,
+            child_only=child_only,
+            parent_only=parent_only,
+            feature=feature,
+        )
         if not seed_ctx.get("ok"):
             return seed_ctx
         resume_from_handoff = True
         skip_appium = False
+        child_only = bool(seed_ctx.get("child_only"))
+        parent_only = bool(seed_ctx.get("parent_only"))
         if not feature:
             feature = str(seed_ctx["feature"])
 
-    use_single = app == "parent" and not from_db_seed
-    dual_emulator = app == "child" or from_db_seed
+    if reset_handoff_after is None:
+        reset_handoff_after = bool(from_db_seed or task_id)
+
+    use_single = (app == "parent" and parent_only) or (app == "child" and child_only) or (
+        app == "parent" and not from_db_seed
+    )
+    dual_emulator = app == "child" and not child_only
 
     if dry_run:
         payload: dict[str, Any] = {
@@ -272,6 +394,9 @@ def run_appium_suite(
             "dual_emulator": dual_emulator,
             "resume_from_handoff": resume_from_handoff,
             "from_db_seed": from_db_seed,
+            "child_only": child_only,
+            "parent_only": parent_only,
+            "reset_handoff_after": reset_handoff_after,
             "task_id": task_id or None,
             "feature": feature or ("create_account" if app == "parent" else "pairing"),
             "emulator": s["emulator"],
@@ -297,18 +422,42 @@ def run_appium_suite(
         cmd.append("-SkipBuild")
     if skip_appium:
         cmd.append("-SkipAppium")
-    if use_single:
+    if use_single or parent_only:
         cmd.append("-Single")
     if resume_from_handoff:
         cmd.append("-ResumeFromHandoff")
+    if child_only:
+        cmd.append("-ChildOnlyQa")
+    if parent_only:
+        cmd.append("-ParentOnlyQa")
+    use_cold_boot = cold_boot if cold_boot is not None else _needs_cold_boot(dual=dual_emulator, child_only=child_only)
+    if use_cold_boot:
+        cmd.append("-ColdBoot")
 
     env = dict(os.environ)
     env.update(appium_env(dual_emulator=dual_emulator))
+    home = resolve_android_home()
+    if home:
+        env["ANDROID_HOME"] = str(home)
+        env["PATH"] = str(home / "platform-tools") + os.pathsep + env.get("PATH", "")
     env["GF_APPIUM_FEATURE"] = feature or ("create_account" if app == "parent" else "pairing")
     if from_db_seed:
         env["GF_SKIP_DB_CLEANUP"] = "1"
         env["GF_RUN_DEPS"] = "0"
         env["GF_RESUME_FROM_HANDOFF"] = "1"
+        if seed_ctx:
+            handoff = _read_handoff_file(_stage_handoff_path()) or {}
+            cached = seed_ctx.get("handoff") if isinstance(seed_ctx.get("handoff"), dict) else {}
+            if cached.get("email") and cached.get("password"):
+                _ensure_stage_handoff(cached)
+    if child_only:
+        env["GF_QA_CHILD_ONLY"] = "1"
+    elif "GF_QA_CHILD_ONLY" in env:
+        del env["GF_QA_CHILD_ONLY"]
+    if parent_only:
+        env["GF_QA_PARENT_ONLY"] = "1"
+    elif "GF_QA_PARENT_ONLY" in env:
+        del env["GF_QA_PARENT_ONLY"]
 
     proc = subprocess.run(
         cmd,
@@ -357,6 +506,58 @@ def run_appium_suite(
         "artifacts": collect_artifacts(setup),
         "stdout_tail": log_tail[-3000:],
     }
+    handoff_after = _read_handoff_file(_stage_handoff_path()) or {}
+    child_home_reached = bool(handoff_after.get("childHome")) or handoff_after.get("lastStep") == "go_to_home_child"
+    if not ok and app == "child" and child_home_reached and (task_id or child_only):
+        out["partial_success"] = True
+        out["partial_reason"] = (
+            "child_home_reached; parent go_to_home_parent opcional"
+            if child_only
+            else "child_home_reached; parent go_to_home_parent opcional para evidências child"
+        )
+        ok = True
+        out["ok"] = True
+
     if seed_ctx:
         out["seed_context"] = seed_ctx
+        out["handoff_after"] = handoff_after
+
+    if ok and task_id:
+        try:
+            extras: list[Path] = []
+            if app == "child":
+                task = next((t for t in load_tasks() if t.get("id") == task_id), None)
+                scenarios = (task or {}).get("qa", {}).get("scenarios") or []
+                evidence = (task or {}).get("qa", {}).get("evidence") or {}
+                from lib.mobile.scenario_evidence import capture_scenario_evidence, scenarios_need_capture
+
+                if scenarios_need_capture(scenarios):
+                    scenario_out = capture_scenario_evidence(
+                        task_id,
+                        scenarios,
+                        record_video=bool(evidence.get("video_mp4", True)),
+                    )
+                    out["scenario_evidence"] = scenario_out
+                    if not scenario_out.get("ok"):
+                        out["ok"] = False
+                        ok = False
+                    from lib.ticket_output import qa_evidence_dir, resolve_agent_cycle, resolve_handoff_path
+
+                    handoff = _read_handoff_file(_stage_handoff_path()) or {}
+                    hp = resolve_handoff_path(task_id)
+                    if hp.is_file():
+                        loaded = _read_handoff_file(hp)
+                        if loaded:
+                            handoff = loaded
+                    cycle = resolve_agent_cycle(handoff, "qa-gate")
+                    ev_dir = qa_evidence_dir(task_id, cycle=cycle)
+                    extras = [p for p in ev_dir.glob("*") if p.is_file()] if ev_dir.is_dir() else []
+            if ok:
+                out["package_dir"] = str(_package(task_id, setup, extra_paths=extras))
+        except Exception as exc:  # noqa: BLE001
+            out["package_error"] = str(exc)
+
+    if reset_handoff_after:
+        out["handoff_cleanup"] = _reset_handoff_cycle(_stage_handoff_path())
+
     return out

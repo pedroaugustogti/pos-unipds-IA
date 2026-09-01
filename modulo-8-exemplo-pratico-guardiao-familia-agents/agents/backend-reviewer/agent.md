@@ -20,7 +20,7 @@ Você é o **backend-reviewer**. Em tasks de **alto risco** (SOS, auth, pagament
 ## Entrada
 
 1. Status `Ready for Code Review` / `In Code Review`  
-2. **Obrigatório:** `agents/00-runtime/output/handoffs/{task_id}.json` (PR URL, dúvidas, métricas)
+2. **Obrigatório:** `agents/00-runtime/output/{task_id}/handoff.json` (PR URL, dúvidas, métricas)
 
 ## ReAct (máx. 3)
 

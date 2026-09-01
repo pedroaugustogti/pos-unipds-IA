@@ -1,107 +1,48 @@
-# StateGraph Fase C — fluxo LangGraph
+# StateGraph v2 — fluxo LangGraph
 
-Código: `agents/00-orchestration/langgraph_app/graph.py` · transições board: `lib.board.task_status_workflow.py` · agente por status: `lib.orchestrator.event_orchestrator.py`
+Código: `agents/00-orchestration/langgraph_app/` · eventos: `board_automation/board/task_status_workflow.py`
 
-## Diagrama do grafo
+## Diagrama
 
 ```mermaid
 flowchart TD
-    START([invoke task]) --> route
-    route[route_task<br/>resolve agent_role + redirect] --> load_context
-    load_context[load_context<br/>handoff + CI] --> branch{board_status?}
-
-    branch -->|Todo / outros| decide[decide_next]
-    branch -->|In Progress| implement[implement_node]
-    branch -->|In Code Review| review[review_node]
-    branch -->|In Test| qa[qa_node]
-    branch -->|Ready for Test| wait_ci[wait_ci_node]
-    branch -->|In Pull Request| cicd_gate[cicd_gate_node]
-    branch -->|Done / error / max_steps| END_NODE([END])
-
-    decide --> apply[apply_decision]
-    implement --> apply
-    review --> apply
-    qa --> apply
-
-    wait_ci -->|CI green| decide
-    wait_ci -->|test_failed_bug| apply
-    wait_ci -->|waiting| END_NODE
-
-    cicd_gate -->|merge_checks_ok| hitl[hitl merge_pr]
-    cicd_gate -->|fail| END_NODE
-    hitl --> apply
-
-    apply -->|continua ciclo| route
-    apply -->|Done / HITL pending| END_NODE
+    START([invoke task]) --> sync_board
+    sync_board[sync_board] --> decide[orchestrator_decide]
+    decide -->|selected_node_id| evt["evt_* (55 eventos)"]
+    evt -->|MCP pipeline| sync_board
+    decide -->|Done / erro / max_steps| END_NODE([END])
+    sync_board -->|Done| END_NODE
 ```
 
-Loop principal: **`route → load_context → (nó por status) → apply → route`** até `Done`, `hitl_pending` ou `max_steps`.
+## orchestrator_decide → evento
 
-## Board status → nó LangGraph
+| Board status | Evento (ex. frontend-mobile) |
+|--------------|------------------------------|
+| Todo | `orchestrator_enter_in_progress` |
+| In Progress | `{creator}_in_progress` |
+| Ready for Code Review | `{creator}_ready_for_code_review` |
+| In Code Review | `{reviewer}_in_code_review` |
+| Ready for Test | `{reviewer}_ready_for_test` |
+| In Test | `qa-gate_in_test` |
+| In Pull Request | `{ops}_done` |
 
-| Board status | Nó | Owner primário (`agent_role`) |
-|--------------|-----|-------------------------------|
-| Todo | `decide` | `orchestrator` (claim) |
-| In Progress | `implement` | **creator** da task (CSV) |
-| Ready for Code Review | `decide` / fila | **{creator}-reviewer** |
-| In Code Review | `review` | **{creator}-reviewer** |
-| Ready for Test | `wait_ci` | `qa-gate` |
-| In Test | `qa` | `qa-gate` |
-| In Pull Request | `cicd_gate` → `hitl` | `devops-cicd` (prod/infra) ou `stores-release` (track stores) |
-| Done | END | `orchestrator` |
+## Pipeline MCP por classificação
 
-## Eventos → próximo status
+| Classificação | Tools |
+|---------------|-------|
+| orchestrator (claim) | `orchestrator_enter_in_progress` |
+| creator (implement) | `on_status_event` → `hitl_guard_actuation` → `developer_implement` → `execute_agent_actuation_tool` |
+| reviewer (review) | `on_status` → `guard` → `developer_review` → `execute` |
+| qa-gate | `on_status` → `guard` → `qa_validate` → `execute` |
+| leve / ops | `on_status` → `guard` → `execute` |
 
-| Evento | Status alvo | Quem emite (`acting_agent`) |
-|--------|-------------|----------------------------|
-| `claim` | In Progress | creator |
-| `open_pr` | Ready for Code Review | creator |
-| `start_review` | In Code Review | {creator}-reviewer |
-| `approve_review` | Ready for Test | {creator}-reviewer |
-| `request_changes` | In Progress | {creator}-reviewer |
-| `resubmit_review` | In Code Review | creator |
-| `start_test` | In Test | qa-gate |
-| `test_passed` | In Pull Request | qa-gate |
-| `test_failed_bug` | In Progress | qa-gate |
-| `merge_pr` | Done | devops-cicd / stores-release |
-| `scope_redirect` | (sem mudança) | orquestrador — task reclassificada |
+Entry: `langgraph_app.graph.run_once(task_id, mode=...)`
 
-Fonte: `lib.board.task_status_workflow.EVENT_TARGET`
-
-## Roteamento de escopo (início de cada ciclo)
-
-1. **`route_task`** chama `lib/agent_registry.resolve_agent_for_task`
-2. Se `agent_role` do CSV não cobre repo/track → **redireciona** e comenta na issue
-3. **`implement_node`** bloqueia se ainda fora de escopo (`scope_redirect`)
-
-## Papéis especiais
-
-| Papel | Função no grafo |
-|-------|-----------------|
-| **creator** (`backend`, `frontend-mobile`, …) | `implement` em In Progress |
-| **{creator}-reviewer** | `review` em In Code Review |
-| **qa** (CSV) / **qa-author** (normalizado) | Escreve specs — creator em tasks de teste |
-| **qa-gate** | `wait_ci` + `qa` — evidências E2E, não claim de feature |
-| **devops-cicd** | `cicd_gate`, `hitl`, merge prod/infra |
-| **stores-release** | merge quando `track == stores` |
-| **orchestrator** | claim, dispatch, métricas |
-
-## Modos de execução
-
-| Modo | Comportamento |
-|------|----------------|
-| `dry_run` | Simula board/PR sem side effects externos |
-| `live` | Board GitHub real; `hitl` exige humano no merge |
-| `demo` | Apresentação — ver `agents/00-orchestration/scripts/demo/demo_apresentacao.py` |
-
-Entry: `langgraph_app.graph.run_once(task_id, agent_role=..., mode=...)`
-
-## Arquivos relacionados
+## Arquivos
 
 | Arquivo | Conteúdo |
 |---------|----------|
-| `agents/00-orchestration/langgraph_app/state.py` | `AgentState` (task_id, board_status, agent_role, ci_*, scope_redirect) |
-| `agents/00-orchestration/langgraph_app/nodes.py` | implement, review, qa, decide, apply |
-| `agents/00-orchestration/langgraph_app/ci_nodes.py` | wait_ci, cicd_gate |
-| `TASK_AGENT_MAP.csv` | agent_role primário por task |
-| `agents/_shared/REPOS_AND_ROUTING.md` | repos + redirecionamento |
+| `event_registry.py` | 55 eventos + `build_pipeline` |
+| `event_nodes.py` | Factory `make_event_node` |
+| `graph.py` | Grafo v2 |
+| `state.py` | `PipelineState` |

@@ -7,24 +7,25 @@ import tempfile
 from datetime import date
 from pathlib import Path
 
-from lib.paths import BOARD_JSON as _BOARD_FROM_PATHS
-
-BOARD_JSON = _BOARD_FROM_PATHS
-
-
 def board_json_path() -> Path:
+    from lib.paths import BOARD_JSON
+
     return BOARD_JSON
 
 
+def _default_board_path() -> Path:
+    return board_json_path()
+
+
 def load_board(path: Path | None = None) -> dict:
-    p = path or BOARD_JSON
+    p = path or _default_board_path()
     if not p.exists():
         raise FileNotFoundError(f"Board JSON nao encontrado: {p}")
     return json.loads(p.read_text(encoding="utf-8"))
 
 
 def save_board(data: dict, path: Path | None = None) -> Path:
-    p = path or BOARD_JSON
+    p = path or _default_board_path()
     data = dict(data)
     data["generated"] = date.today().isoformat()
     text = json.dumps(data, ensure_ascii=False, indent=2) + "\n"

@@ -15,7 +15,7 @@
 | `lib/model_tier.py`                                                         | Escolha low/high por risco                 |
 | `agents/00-orchestration/langgraph_app/`                                    | **Única** orquestração (StateGraph)        |
 | `agents/00-orchestration/guardiao_mcp/`                                     | Tools MCP sobre as mesmas libs             |
-| `agents/00-runtime/output/observability/`                                 | Snapshot + dashboard live (pasta runtime)  |
+| `agents/00-runtime/system/observability/`                                 | Snapshot + dashboard live (pasta runtime)  |
 | `agents/{role}/agent.md` + `agents/{role}/SKILL.md`                         | Política e fronteiras por papel            |
 
 

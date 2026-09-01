@@ -49,7 +49,7 @@ Cada passo mostra: **thought**, **action**, **observation**, lista do que foi ex
 ```powershell
 git log -1 --oneline
 # artefato: agents/00-runtime/output/demo/T-P05-005/
-# historico: agents/00-runtime/output/observability/tasks/T-P05-005.html
+# historico: agents/00-runtime/system/observability/tasks/T-P05-005.html
 ```
 
 ## Troubleshooting

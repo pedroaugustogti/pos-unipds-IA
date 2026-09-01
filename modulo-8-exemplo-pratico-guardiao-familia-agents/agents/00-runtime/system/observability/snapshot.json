@@ -1,0 +1,1319 @@
+{
+  "generated_at": "2026-08-31T23:50:30.441747+00:00",
+  "paths": {
+    "log": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\system\\observability\\workflow.jsonl",
+    "snapshot": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\system\\observability\\snapshot.json",
+    "dashboard": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\system\\observability\\dashboard.html"
+  },
+  "totals": {
+    "events": 41,
+    "by_kind": {
+      "status_change": 40,
+      "ci_signal": 1
+    },
+    "by_event": {
+      "claim": 21,
+      "start_review": 5,
+      "approve_review": 4,
+      "start_test": 3,
+      "test_passed": 1,
+      "open_pr": 5,
+      "test_failed_bug": 1,
+      "orchestrator_enter_in_progress": 1
+    },
+    "by_agent": {
+      "frontend-mobile": 22,
+      "frontend-mobile-reviewer": 10,
+      "qa-gate": 7,
+      "devops-cicd": 1,
+      "backend": 1
+    },
+    "by_dispatch": {
+      "start_task": 40,
+      "enqueue_qa_gate": 1
+    },
+    "board_status": {
+      "Todo": 267,
+      "Done": 14,
+      "In Progress": 1,
+      "In Pull Request": 1
+    },
+    "idle_agents": 18,
+    "busy_agents": 1,
+    "queue_len": 0,
+    "blockers": 0,
+    "hitl_pending": 1,
+    "jobs_queued": 3,
+    "jobs_leased": 0,
+    "outbox_pending": 9
+  },
+  "idle_agents": [
+    "backend",
+    "backend-reviewer",
+    "cloud-infra",
+    "cloud-infra-reviewer",
+    "database",
+    "database-reviewer",
+    "devops-cicd",
+    "devops-cicd-reviewer",
+    "frontend-mobile",
+    "frontend-web",
+    "frontend-web-reviewer",
+    "human",
+    "orchestrator",
+    "qa-author",
+    "qa-author-reviewer",
+    "qa-gate",
+    "stores-release",
+    "stores-release-reviewer"
+  ],
+  "busy_agents": [
+    {
+      "agent": "frontend-mobile-reviewer",
+      "state": "busy",
+      "task_id": "T-P3-009",
+      "updated_at": "2026-08-31T01:11:04.745912+00:00"
+    }
+  ],
+  "dispatch_queue": [],
+  "hitl_queue": [
+    {
+      "task_id": "T-P3-009",
+      "event": "confirm_approve_review",
+      "hitl": {
+        "required": true,
+        "mode": "propose_only",
+        "reasons": [
+          "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
+        ],
+        "reason": "Review aprovado por agente LLM em task de alto risco — veredito só como proposta.",
+        "human_action": "Humano confirma ou rejeita o veredito proposto no PR/board (evento hitl_approved | hitl_rejected).",
+        "task_id": "T-P3-009",
+        "event": "approve_review",
+        "high_risk": true
+      },
+      "payload": {
+        "task_id": "T-P3-009",
+        "event": "approve_review",
+        "from_status": null,
+        "to_status": null,
+        "agent_role": "frontend-mobile",
+        "next_agent": null,
+        "repo": "guardiao-familia-child",
+        "branch": null,
+        "pr_url": null,
+        "summary": "A implementação da saudação dinâmica por horário no cabeçalho do Child home está adequada e não apresenta riscos críticos.",
+        "doubts": [],
+        "metrics": {},
+        "bug_kind": null,
+        "correlation_id": "1d64614c-4bf5-41c9-b66e-3d3f2fce8952",
+        "idempotency_key": null,
+        "at": "2026-08-31T00:52:34.658336+00:00",
+        "dry_run": false
+      }
+    }
+  ],
+  "autonomy_pause": true,
+  "blockers": [],
+  "recent_tasks": [
+    {
+      "task_id": "T-P3-001",
+      "last_event": "orchestrator_enter_in_progress",
+      "last_kind": "status_change",
+      "agent": "backend",
+      "to_status": "In Progress",
+      "ts": "2026-08-31T23:50:30.417643+00:00",
+      "dispatch_action": "start_task",
+      "job_id": null,
+      "correlation_id": null
+    },
+    {
+      "task_id": "T-P3-009",
+      "last_event": "start_review",
+      "last_kind": "status_change",
+      "agent": "frontend-mobile-reviewer",
+      "to_status": "In Code Review",
+      "ts": "2026-08-31T01:11:04.747912+00:00",
+      "dispatch_action": "start_task",
+      "job_id": null,
+      "correlation_id": null
+    }
+  ],
+  "timeline": [
+    {
+      "ts": "2026-08-30T02:31:36.138480+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-30T02:31:50.652309+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "In Progress",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-30T02:31:59.288925+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-30T02:32:07.093736+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-30T02:32:15.685902+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "devops-cicd",
+      "event": "test_passed",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "dispatch_action": "start_task",
+      "summary": "Agente `devops-cicd` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role devops-cicd",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-30T21:31:42.149562+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-30T21:31:57.112087+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:02:38.942569+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": true,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:14:34.713117+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:14:46.507198+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:14:56.694095+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:15:08.373300+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:15:19.090900+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:15:30.902230+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:15:41.674675+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:15:52.118647+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:16:03.003355+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:16:14.846209+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:16:26.064280+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:16:36.575592+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:16:49.068566+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:16:56.393150+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:17:32.828884+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:17:49.414759+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:18:03.088314+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:18:13.438271+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:18:25.206493+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:19:21.024614+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:19:33.900991+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:19:45.681348+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:19:51.260691+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:52:24.463943+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "claim",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:52:29.280945+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:52:33.046825+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:52:36.670445+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "qa-gate",
+      "event": "approve_review",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:54:33.474607+00:00",
+      "kind": "ci_signal",
+      "task_id": "T-P3-009",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": null,
+      "to_status": null,
+      "dispatch_action": "enqueue_qa_gate",
+      "summary": "CI green → qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": "a934045f-17aa-48c8-aecf-58dcd07dc0f9",
+      "extra": {
+        "job_id": "a934045f-17aa-48c8-aecf-58dcd07dc0f9"
+      }
+    },
+    {
+      "ts": "2026-08-31T00:54:48.596838+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "qa-gate",
+      "event": "start_test",
+      "from_status": "Ready for Test",
+      "to_status": "In Test",
+      "dispatch_action": "start_task",
+      "summary": "Agente `qa-gate` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role qa-gate",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T01:10:42.852466+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile",
+      "event": "test_failed_bug",
+      "from_status": "In Test",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": {
+          "count": 1,
+          "threshold": 3,
+          "blocker": false
+        },
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T01:10:54.862077+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T01:11:04.747912+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-009",
+      "agent": "frontend-mobile-reviewer",
+      "event": "start_review",
+      "from_status": "Ready for Code Review",
+      "to_status": "In Code Review",
+      "dispatch_action": "start_task",
+      "summary": "Agente `frontend-mobile-reviewer` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role frontend-mobile-reviewer",
+      "dry_run": false,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "frontend-mobile",
+        "blocker": false,
+        "title": "Child home: saudação dinâmica por horário no cabeçalho"
+      }
+    },
+    {
+      "ts": "2026-08-31T23:50:30.417643+00:00",
+      "kind": "status_change",
+      "task_id": "T-P3-001",
+      "agent": "backend",
+      "event": "orchestrator_enter_in_progress",
+      "from_status": "Todo",
+      "to_status": "In Progress",
+      "dispatch_action": "start_task",
+      "summary": "Agente `backend` ocioso — job enfileirado. Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role backend",
+      "dry_run": true,
+      "correlation_id": null,
+      "job_id": null,
+      "extra": {
+        "agent_idle": true,
+        "queued": false,
+        "bug": null,
+        "skill": "backend",
+        "blocker": false,
+        "title": "Health API: campo sandboxMarker P3-backend"
+      }
+    }
+  ],
+  "bug_counts": {
+    "T-P3-009": {
+      "count": 1,
+      "history": [
+        {
+          "at": "2026-08-31T01:10:42.847469+00:00",
+          "summary": "QA erro: FileNotFoundError | O erro FileNotFoundError indica que o sistema não conseguiu localizar o arquivo necessário para implementar a saudação dinâmica por horário no cabeçalho. É crucial verificar se todos os arquivos e recursos estão corretamente referenciados e",
+          "bug_kind": "regression"
+        }
+      ],
+      "skill": "frontend-mobile",
+      "blocker": false,
+      "skill_path": "agents/frontend-mobile/SKILL.md",
+      "bug_kind": "regression"
+    }
+  },
+  "autonomy": {},
+  "kanban": {
+    "Todo": [
+      {
+        "task_id": "T-I03-002",
+        "title": "",
+        "role": null,
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-I03-003",
+        "title": "",
+        "role": null,
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P05-001",
+        "title": "",
+        "role": null,
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P05-005",
+        "title": "",
+        "role": null,
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P05-008",
+        "title": "",
+        "role": null,
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P05-010",
+        "title": "",
+        "role": null,
+        "pilot": true,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P3-001",
+        "title": "Health API: campo sandboxMarker P3-backend",
+        "role": "backend",
+        "pilot": false,
+        "release_blocker": false
+      },
+      {
+        "task_id": "T-P3-009",
+        "title": "Child home: saudação dinâmica por horário no cabeçalho",
+        "role": "frontend-mobile",
+        "pilot": false,
+        "release_blocker": false
+      }
+    ],
+    "In Progress": [
+      {
+        "task_id": "T-I03-001",
+        "title": "",
+        "role": null,
+        "pilot": true,
+        "release_blocker": false
+      }
+    ],
+    "Ready for Code Review": [],
+    "In Code Review": [],
+    "Ready for Test": [],
+    "In Test": [],
+    "In Pull Request": [
+      {
+        "task_id": "T-P13-012",
+        "title": "",
+        "role": null,
+        "pilot": false,
+        "release_blocker": false
+      }
+    ],
+    "Done": [
+      {
+        "task_id": "T-P05-006",
+        "title": "",
+        "role": null,
+        "pilot": true,
+        "release_blocker": false
+      }
+    ]
+  },
+  "worker_jobs": {
+    "by_status": {
+      "cancelled": 11,
+      "queued": 3
+    },
+    "queued": [
+      {
+        "job_id": "926f80d7-2dc8-4e17-a18c-83fb4a201201",
+        "task_id": "T-P3-009",
+        "role": "frontend-mobile",
+        "event": "claim"
+      },
+      {
+        "job_id": "c0abff1a-6e3d-4895-99c7-98c6702a5f1a",
+        "task_id": "T-P3-009",
+        "role": "frontend-mobile-reviewer",
+        "event": "open_pr"
+      },
+      {
+        "job_id": "a934045f-17aa-48c8-aecf-58dcd07dc0f9",
+        "task_id": "T-P3-009",
+        "role": "qa-gate",
+        "event": "approve_review"
+      }
+    ],
+    "leased": []
+  },
+  "outbox_pending": [
+    {
+      "at": "2026-08-31T00:19:50.782837+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P3-009",
+        "title": "Child home: saudação dinâmica por horário no cabeçalho",
+        "status": "Ready for Test"
+      },
+      "attempts": 1,
+      "last_error": "unknown owner type\n",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-31T00:19:51.255690+00:00",
+      "op": "add_labels",
+      "payload": {
+        "repo": "guardiao-familia-child",
+        "task_id": "T-P3-009",
+        "labels": [
+          "agent:ready-for-test",
+          "agent:frontend-mobile"
+        ]
+      },
+      "attempts": 1,
+      "last_error": "Issue nao encontrada: [T-P3-009] em guardiao-familia-child",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-31T00:19:51.698189+00:00",
+      "op": "issue_history_comment",
+      "payload": {
+        "repo": "guardiao-familia-child",
+        "task_id": "T-P3-009",
+        "body_preview": "## Transicao de Status — `approve_review`\n\n| | |\n|---|---|\n| **Agente** | `frontend-mobile-reviewer` |\n| **Evento** | `approve_review` |\n| **Status** | `In Code Review` → `Ready for Test` |\n| **Quando** | 2026-08-31 00:19:51 UTC |\n| **Modelo** | `openai/gpt-4o-mini` |\n| **Tokens** | in `232` · out `66` · **total `298`** |\n| **Purpose** | review |\n\n### Pensou (thought)\napprove\n\n### Executou (action"
+      },
+      "attempts": 1,
+      "last_error": "Issue nao encontrada: [T-P3-009]",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-31T00:19:52.356762+00:00",
+      "op": "issue_history_comment",
+      "payload": {
+        "repo": "guardiao-familia-child",
+        "task_id": "T-P3-009",
+        "body_preview": "## Transicao de Status — `wait_ci`\n\n| | |\n|---|---|\n| **Agente** | `devops-cicd` |\n| **Evento** | `wait_ci` |\n| **Status** | `Ready for Test` → `Ready for Test` |\n| **Quando** | 2026-08-31 00:19:51 UTC |\n| **Modelo** | `n/a` |\n| **Tokens** | in `0` · out `0` · **total `0`** |\n| **Purpose** | — |\n\n### Pensou (thought)\nPipeline aguardando conclusao dos checks no repo de produto\n\n### Executou (action"
+      },
+      "attempts": 1,
+      "last_error": "Issue nao encontrada: [T-P3-009]",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-31T00:52:23.476413+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P3-009",
+        "title": "Child home: saudação dinâmica por horário no cabeçalho",
+        "status": "In Progress"
+      },
+      "attempts": 1,
+      "last_error": "unknown owner type\n",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-31T00:52:28.272528+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P3-009",
+        "title": "Child home: saudação dinâmica por horário no cabeçalho",
+        "status": "Ready for Code Review"
+      },
+      "attempts": 1,
+      "last_error": "unknown owner type\n",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-31T00:52:32.158780+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P3-009",
+        "title": "Child home: saudação dinâmica por horário no cabeçalho",
+        "status": "In Code Review"
+      },
+      "attempts": 1,
+      "last_error": "unknown owner type\n",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-31T00:52:35.486387+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P3-009",
+        "title": "Child home: saudação dinâmica por horário no cabeçalho",
+        "status": "Ready for Test"
+      },
+      "attempts": 1,
+      "last_error": "unknown owner type\n",
+      "status": "pending"
+    },
+    {
+      "at": "2026-08-31T00:54:47.401854+00:00",
+      "op": "update_status",
+      "payload": {
+        "task_id": "T-P3-009",
+        "title": "Child home: saudação dinâmica por horário no cabeçalho",
+        "status": "In Test"
+      },
+      "attempts": 1,
+      "last_error": "unknown owner type\n",
+      "status": "pending"
+    }
+  ],
+  "health": {
+    "heartbeat_at": null,
+    "paused_high_risk": true,
+    "hitl_pending": 1,
+    "outbox_pending": 9,
+    "jobs_queued": 3,
+    "jobs_leased": 0,
+    "reconcile_conflicts": 0,
+    "merge_policy": "never_auto_merge"
+  },
+  "pilot_task_ids": [
+    "T-I03-001",
+    "T-I03-002",
+    "T-I03-003",
+    "T-P05-001",
+    "T-P05-005",
+    "T-P05-006",
+    "T-P05-008",
+    "T-P05-010"
+  ],
+  "task_histories": [
+    {
+      "task_id": "T-P3-009",
+      "url": "tasks/T-P3-009.html"
+    }
+  ]
+}

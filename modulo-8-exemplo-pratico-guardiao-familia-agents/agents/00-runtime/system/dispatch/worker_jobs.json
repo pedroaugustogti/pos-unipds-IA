@@ -1,0 +1,171 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "job_id": "9175c70b-d034-4cf6-8f94-5d273abc005f",
+      "task_id": "T-P3-009",
+      "role": "frontend-mobile",
+      "event": "claim",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/frontend-mobile/agent.md",
+      "status": "cancelled",
+      "created_at": "2026-08-30T21:31:42.147562+00:00",
+      "lease_until": null,
+      "cancelled_at": "2026-08-31T00:07:26.267142+00:00"
+    },
+    {
+      "job_id": "24150cc8-c1fd-4def-b1b8-de5370a2cd95",
+      "task_id": "T-P3-009",
+      "role": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/frontend-mobile-reviewer/agent.md",
+      "status": "cancelled",
+      "created_at": "2026-08-30T21:31:57.109355+00:00",
+      "lease_until": null,
+      "cancelled_at": "2026-08-31T00:07:26.267142+00:00"
+    },
+    {
+      "job_id": "e85c275b-793f-4f1a-bde4-68717b01366b",
+      "task_id": "T-P3-009",
+      "role": "frontend-mobile",
+      "event": "claim",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/frontend-mobile/agent.md",
+      "status": "cancelled",
+      "created_at": "2026-08-31T00:14:34.711117+00:00",
+      "lease_until": null,
+      "cancelled_at": "2026-08-31T00:16:42.167554+00:00"
+    },
+    {
+      "job_id": "b6eaff47-396c-4447-a38a-00ad86412942",
+      "task_id": "T-P3-009",
+      "role": "frontend-mobile",
+      "event": "claim",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/frontend-mobile/agent.md",
+      "status": "cancelled",
+      "created_at": "2026-08-31T00:16:49.066565+00:00",
+      "lease_until": null,
+      "cancelled_at": "2026-08-31T00:17:25.709857+00:00"
+    },
+    {
+      "job_id": "75654489-b44f-4ecf-80a7-4dfcee9e40b0",
+      "task_id": "T-P3-009",
+      "role": "frontend-mobile",
+      "event": "claim",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/frontend-mobile/agent.md",
+      "status": "cancelled",
+      "created_at": "2026-08-31T00:17:32.826928+00:00",
+      "lease_until": null,
+      "cancelled_at": "2026-08-31T00:17:39.949394+00:00"
+    },
+    {
+      "job_id": "80d94ab2-9eb6-4053-9307-0a70d385fedd",
+      "task_id": "T-P3-009",
+      "role": "frontend-mobile",
+      "event": "claim",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/frontend-mobile/agent.md",
+      "status": "cancelled",
+      "created_at": "2026-08-31T00:17:49.413759+00:00",
+      "lease_until": null,
+      "cancelled_at": "2026-08-31T00:18:48.232333+00:00"
+    },
+    {
+      "job_id": "0f399c51-ea16-4542-954d-70808cd8fa99",
+      "task_id": "T-P3-009",
+      "role": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/frontend-mobile-reviewer/agent.md",
+      "status": "cancelled",
+      "created_at": "2026-08-31T00:18:03.085726+00:00",
+      "lease_until": null,
+      "cancelled_at": "2026-08-31T00:18:48.232333+00:00"
+    },
+    {
+      "job_id": "308c9e30-8732-4c85-a9ac-6008d99ac717",
+      "task_id": "T-P3-009",
+      "role": "qa-gate",
+      "event": "approve_review",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/qa-gate/agent.md",
+      "status": "cancelled",
+      "created_at": "2026-08-31T00:18:25.202493+00:00",
+      "lease_until": null,
+      "cancelled_at": "2026-08-31T00:18:48.232333+00:00"
+    },
+    {
+      "job_id": "cdd68f8a-26a4-4962-b1b6-1242e93c35af",
+      "task_id": "T-P3-009",
+      "role": "frontend-mobile",
+      "event": "claim",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/frontend-mobile/agent.md",
+      "status": "cancelled",
+      "created_at": "2026-08-31T00:19:21.022609+00:00",
+      "lease_until": null,
+      "cancelled_at": "2026-08-31T00:30:55.258549+00:00"
+    },
+    {
+      "job_id": "04decb6d-6b0d-4082-916e-780afdd1cc9c",
+      "task_id": "T-P3-009",
+      "role": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/frontend-mobile-reviewer/agent.md",
+      "status": "cancelled",
+      "created_at": "2026-08-31T00:19:33.899993+00:00",
+      "lease_until": null,
+      "cancelled_at": "2026-08-31T00:30:55.258549+00:00"
+    },
+    {
+      "job_id": "7b246d9b-0bdb-454c-8522-162da9c701ad",
+      "task_id": "T-P3-009",
+      "role": "qa-gate",
+      "event": "approve_review",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/qa-gate/agent.md",
+      "status": "cancelled",
+      "created_at": "2026-08-31T00:19:51.258695+00:00",
+      "lease_until": null,
+      "cancelled_at": "2026-08-31T00:30:55.258549+00:00"
+    },
+    {
+      "job_id": "926f80d7-2dc8-4e17-a18c-83fb4a201201",
+      "task_id": "T-P3-009",
+      "role": "frontend-mobile",
+      "event": "claim",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/frontend-mobile/agent.md",
+      "status": "queued",
+      "created_at": "2026-08-31T00:52:24.461935+00:00",
+      "lease_until": null
+    },
+    {
+      "job_id": "c0abff1a-6e3d-4895-99c7-98c6702a5f1a",
+      "task_id": "T-P3-009",
+      "role": "frontend-mobile-reviewer",
+      "event": "open_pr",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/frontend-mobile-reviewer/agent.md",
+      "status": "queued",
+      "created_at": "2026-08-31T00:52:29.279928+00:00",
+      "lease_until": null
+    },
+    {
+      "job_id": "a934045f-17aa-48c8-aecf-58dcd07dc0f9",
+      "task_id": "T-P3-009",
+      "role": "qa-gate",
+      "event": "approve_review",
+      "handoff_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\handoff.json",
+      "agent_prompt": "agents/qa-gate/agent.md",
+      "status": "queued",
+      "created_at": "2026-08-31T00:52:36.668280+00:00",
+      "lease_until": null
+    }
+  ],
+  "updated_at": "2026-08-31T00:52:36.668802+00:00"
+}

@@ -37,7 +37,7 @@
 ## Decisões
 
 - **Gateway:** `start_review`, `approve_review` ou `request_changes` via `emit_status_event`
-- **Handoff:** ler `agents/00-runtime/output/handoffs/{task_id}.json` antes de revisar
+- **Handoff:** ler `agents/00-runtime/output/{task_id}/handoff.json` antes de revisar
 - **ReAct:** handoff → checklist → veredito (máx. 3 voltas; ver `agent.md`)
 
 ## Ver também

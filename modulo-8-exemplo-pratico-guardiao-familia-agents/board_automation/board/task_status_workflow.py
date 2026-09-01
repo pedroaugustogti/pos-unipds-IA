@@ -2,7 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal
+
+from board_automation.board.reviewer_pairs import (
+    CREATOR_ROLES,
+    QA_GATE_ROLE,
+    reviewer_for,
+)
 
 TaskKind = Literal["feature", "bug"]
 
@@ -60,23 +66,273 @@ BUG_TRANSITIONS: dict[str, set[str]] = {
     "In Progress": {"Ready for Code Review", "In Code Review", "Todo"},
 }
 
-# Eventos de automação (agentes / orquestrador)
-EVENT_TARGET: dict[str, str] = {
-    "claim": "In Progress",
-    "start_work": "In Progress",
-    "open_pr": "Ready for Code Review",
-    "start_review": "In Code Review",
-    "request_changes": "In Progress",
-    "resubmit_review": "In Code Review",
-    "approve_review": "Ready for Test",
-    "start_test": "In Test",
-    "test_failed_bug": "In Progress",
-    "test_passed": "In Pull Request",
-    "merge_pr": "Done",
-    "reopen": "Todo",
-}
+# Papéis que podem aparecer como prefixo de evento role-based
+PIPELINE_EVENT_ROLES: tuple[str, ...] = (
+    QA_GATE_ROLE,
+    "orchestrator",
+    "devops-cicd",
+    "stores-release",
+)
+ALL_EVENT_ROLES: tuple[str, ...] = tuple(CREATOR_ROLES) + tuple(
+    reviewer_for(r) for r in CREATOR_ROLES
+) + PIPELINE_EVENT_ROLES
 
-EVENT_AFTER_CHANGES_REQUESTED = "resubmit_review"  # volta para In Code Review
+
+def resolve_status(name: str) -> str:
+    key = name.strip().lower().replace(" ", "_")
+    if name in STATUSES:
+        return name
+    if key in STATUS_ALIASES:
+        return STATUS_ALIASES[key]
+    normalized = name.strip()
+    for s in STATUSES:
+        if s.lower() == normalized.lower():
+            return s
+    raise ValueError(f"Status desconhecido: {name!r}")
+
+
+def status_to_slug(status: str) -> str:
+    return resolve_status(status).lower().replace(" ", "_")
+
+
+def slug_to_status(slug: str) -> str:
+    key = slug.strip().lower()
+    if key in STATUS_ALIASES:
+        return STATUS_ALIASES[key]
+    for s in STATUSES:
+        if status_to_slug(s) == key:
+            return s
+    raise ValueError(f"Status slug desconhecido: {slug!r}")
+
+
+def build_event(agent_role: str, status: str, *, return_: bool = False) -> str:
+    """Monta evento `{agent_role}_{status_slug}` ou `{agent_role}_return_{status_slug}`."""
+    slug = status_to_slug(status)
+    if return_:
+        return f"{agent_role}_return_{slug}"
+    return f"{agent_role}_{slug}"
+
+
+def parse_event(event: str) -> dict[str, Any] | None:
+    """Extrai agent_role, status alvo e se é retrocesso. None se inválido."""
+    if event == "orchestrator_enter_in_progress":
+        return {
+            "agent_role": "orchestrator",
+            "status": "In Progress",
+            "return": False,
+            "kind": "advance",
+        }
+    if "_return_" in event:
+        role, _, slug = event.partition("_return_")
+        try:
+            return {
+                "agent_role": role,
+                "status": slug_to_status(slug),
+                "return": True,
+                "kind": "return",
+            }
+        except ValueError:
+            return None
+    for role in sorted(ALL_EVENT_ROLES, key=len, reverse=True):
+        prefix = f"{role}_"
+        if event.startswith(prefix):
+            slug = event[len(prefix) :]
+            try:
+                return {
+                    "agent_role": role,
+                    "status": slug_to_status(slug),
+                    "return": False,
+                    "kind": "advance",
+                }
+            except ValueError:
+                return None
+    return None
+
+
+def resolve_event_target(event: str) -> str:
+    if event in EVENT_TARGET:
+        return EVENT_TARGET[event]
+    parsed = parse_event(event)
+    if parsed:
+        return parsed["status"]
+    raise ValueError(f"Evento desconhecido: {event}")
+
+
+def is_known_event(event: str) -> bool:
+    return event in EVENT_TARGET
+
+
+def is_claim_event(event: str) -> bool:
+    if event == "orchestrator_enter_in_progress":
+        return True
+    parsed = parse_event(event)
+    return bool(
+        parsed
+        and not parsed.get("return")
+        and parsed.get("status") == "In Progress"
+        and parsed.get("agent_role") in CREATOR_ROLES
+    )
+
+
+def is_open_pr_event(event: str) -> bool:
+    parsed = parse_event(event)
+    return bool(
+        parsed
+        and not parsed.get("return")
+        and parsed.get("status") == "Ready for Code Review"
+        and parsed.get("agent_role") in CREATOR_ROLES
+    )
+
+
+def is_approve_review_event(event: str) -> bool:
+    parsed = parse_event(event)
+    return bool(
+        parsed
+        and not parsed.get("return")
+        and parsed.get("status") == "Ready for Test"
+        and parsed.get("agent_role", "").endswith("-reviewer")
+    )
+
+
+def is_test_failed_event(event: str) -> bool:
+    parsed = parse_event(event)
+    return bool(
+        parsed
+        and parsed.get("return")
+        and parsed.get("status") == "In Progress"
+        and parsed.get("agent_role") == QA_GATE_ROLE
+    )
+
+
+def is_merge_event(event: str) -> bool:
+    parsed = parse_event(event)
+    return bool(
+        parsed
+        and not parsed.get("return")
+        and parsed.get("status") == "Done"
+        and parsed.get("agent_role") in ("devops-cicd", "stores-release")
+    )
+
+
+def is_test_passed_event(event: str) -> bool:
+    parsed = parse_event(event)
+    return bool(
+        parsed
+        and not parsed.get("return")
+        and parsed.get("status") == "In Pull Request"
+        and parsed.get("agent_role") == QA_GATE_ROLE
+    )
+
+
+def start_hint_for_event(event: str, target_status: str = "") -> str:
+    """Hint de atuação para notificações e playbook."""
+    if event == "orchestrator_enter_in_progress":
+        return "Orchestrator claim da task prioritária (Todo → In Progress)"
+    parsed = parse_event(event) or {}
+    status = str(parsed.get("status") or target_status or "")
+    if parsed.get("return"):
+        if status == "In Progress":
+            return "Corrigir e retomar implementacao"
+        return f"Retrocesso para {status}"
+    hints = {
+        "In Progress": "Iniciar ou retomar implementacao",
+        "Ready for Code Review": "Aguardar/assumir fila de code review",
+        "In Code Review": "Executar checklist de review",
+        "Ready for Test": "Planejar testes (Ready for Test)",
+        "In Test": "Executar suite QA (In Test)",
+        "In Pull Request": "Preparar merge (In Pull Request)",
+        "Done": "Encerrar ciclo (Done)",
+        "Todo": "Reabrir no backlog (Todo)",
+    }
+    return hints.get(status, f"Atuar em status {status or 'desconhecido'}")
+
+
+def role_event_catalog() -> list[dict[str, str]]:
+    """Catálogo de eventos role-based (avanço e retrocesso) por agente."""
+    rows: list[dict[str, str]] = []
+    creator_statuses = (
+        ("In Progress", "advance"),
+        ("Ready for Code Review", "advance"),
+        ("In Code Review", "advance"),
+    )
+    for role in CREATOR_ROLES:
+        for status, kind in creator_statuses:
+            rows.append({
+                "event": build_event(role, status),
+                "agent_role": role,
+                "board_status": status,
+                "kind": kind,
+                "classification": "creator",
+            })
+    reviewer_advances = (
+        "In Code Review",
+        "Ready for Test",
+    )
+    for role in CREATOR_ROLES:
+        rev = reviewer_for(role)
+        for status in reviewer_advances:
+            rows.append({
+                "event": build_event(rev, status),
+                "agent_role": rev,
+                "board_status": status,
+                "kind": "advance",
+                "classification": "reviewer",
+            })
+        rows.append({
+            "event": build_event(rev, "In Progress", return_=True),
+            "agent_role": rev,
+            "board_status": "In Progress",
+            "kind": "return",
+            "classification": "reviewer",
+        })
+    for status, kind in (
+        ("In Test", "advance"),
+        ("In Pull Request", "advance"),
+    ):
+        rows.append({
+            "event": build_event(QA_GATE_ROLE, status),
+            "agent_role": QA_GATE_ROLE,
+            "board_status": status,
+            "kind": kind,
+            "classification": "qa-gate",
+        })
+    rows.append({
+        "event": build_event(QA_GATE_ROLE, "In Progress", return_=True),
+        "agent_role": QA_GATE_ROLE,
+        "board_status": "In Progress",
+        "kind": "return",
+        "classification": "qa-gate",
+    })
+    for ops in ("devops-cicd", "stores-release"):
+        rows.append({
+            "event": build_event(ops, "Done"),
+            "agent_role": ops,
+            "board_status": "Done",
+            "kind": "advance",
+            "classification": "ops",
+        })
+    rows.append({
+        "event": "orchestrator_enter_in_progress",
+        "agent_role": "orchestrator",
+        "board_status": "In Progress",
+        "kind": "advance",
+        "classification": "orchestrator",
+    })
+    rows.append({
+        "event": build_event("orchestrator", "Todo"),
+        "agent_role": "orchestrator",
+        "board_status": "Todo",
+        "kind": "advance",
+        "classification": "orchestrator",
+    })
+    return rows
+
+
+def _build_role_event_target() -> dict[str, str]:
+    return {row["event"]: row["board_status"] for row in role_event_catalog()}
+
+
+EVENT_TARGET: dict[str, str] = _build_role_event_target()
 
 # Papel responsável por status (primary owner)
 STAGE_OWNERS: dict[str, str] = {
@@ -242,19 +498,6 @@ flowchart TB
 ```"""
 
 
-def resolve_status(name: str) -> str:
-    key = name.strip().lower().replace(" ", "_")
-    if name in STATUSES:
-        return name
-    if key in STATUS_ALIASES:
-        return STATUS_ALIASES[key]
-    normalized = name.strip()
-    for s in STATUSES:
-        if s.lower() == normalized.lower():
-            return s
-    raise ValueError(f"Status desconhecido: {name!r}")
-
-
 def transitions_for(kind: TaskKind = "feature") -> dict[str, set[str]]:
     return BUG_TRANSITIONS if kind == "bug" else FEATURE_TRANSITIONS
 
@@ -277,10 +520,35 @@ def transition(current: str, target: str, kind: TaskKind = "feature") -> str:
 
 
 def apply_event(current: str, event: str, kind: TaskKind = "feature") -> str:
-    if event not in EVENT_TARGET:
+    if not is_known_event(event):
         raise ValueError(f"Evento desconhecido: {event}. Eventos: {sorted(EVENT_TARGET)}")
-    target = EVENT_TARGET[event]
+    target = resolve_event_target(event)
     return transition(current, target, kind)
+
+
+def validate_role_event_for_task(
+    event: str,
+    *,
+    from_agent: str,
+    task_agent_role: str | None = None,
+) -> str | None:
+    """Retorna mensagem de erro ou None se válido."""
+    if not is_known_event(event):
+        return f"Evento invalido: {event}"
+    parsed = parse_event(event)
+    if not parsed or not parsed.get("agent_role"):
+        return None
+    role = parsed["agent_role"]
+    if not from_agent:
+        return "from_agent obrigatorio para eventos role-based"
+    from board_automation.board.reviewer_pairs import normalize_creator_role
+
+    creator = normalize_creator_role(task_agent_role or "")
+    if from_agent == "orchestrator" and role == creator:
+        return None
+    if from_agent != role:
+        return f"from_agent={from_agent!r} nao corresponde ao evento (esperado {role!r})"
+    return None
 
 
 def status_after_review_verdict(verdict: str, *, resubmit: bool = False) -> str:

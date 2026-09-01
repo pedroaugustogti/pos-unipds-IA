@@ -6,4 +6,4 @@
 | `patch_project3_issues.py` | Patch bodies/campos |
 | `_recovered_patch.py` | Utilitário de recuperação |
 
-Logs: `agents/00-runtime/output/board/`
+Logs: `agents/00-runtime/system/board/`

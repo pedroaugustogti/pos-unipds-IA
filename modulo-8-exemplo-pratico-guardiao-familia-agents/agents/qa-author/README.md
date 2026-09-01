@@ -38,7 +38,7 @@
 ## Decisões
 
 - **Gateway:** Status apenas via `emit_status_event`
-- **Handoff:** arquivos alterados, contratos de seed em `agents/00-runtime/output/handoffs/{task_id}.json`
+- **Handoff:** arquivos alterados, contratos de seed em `agents/00-runtime/output/{task_id}/handoff.json`
 - **ReAct:** claim → implementar harness → testes locais → `open_pr` (ver `agent.md`)
 - Harness deve ser reutilizável pelo `qa-gate` sem duplicar lógica
 

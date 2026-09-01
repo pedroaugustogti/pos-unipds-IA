@@ -68,7 +68,7 @@ T-I01-002/003/005/006/008/010, T-I02-001/010, T-I07-002/008 → ver coluna `note
 ## Sincronização GitHub (2026-08-26)
 
 26 issues criadas em `guardiao-familia-api` (#287–#312), **Todo** no Project #2.  
-Log: `agents/00-runtime/output/board/seed_infra_fargate_log.jsonl` · Script: `board_automation/scripts/seeds/seed_infra_fargate_tickets.py`
+Log: `agents/00-runtime/system/board/seed_infra_fargate_log.jsonl` · Script: `board_automation/scripts/seeds/seed_infra_fargate_tickets.py`
 
 10 issues superseded fechadas (#123, #124, #135, #136, #138, #140, #157, #179, #198, #204).  
 Compatíveis TF marcados **Done** no `github-project-2-import.json`.  

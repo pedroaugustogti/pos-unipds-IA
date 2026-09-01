@@ -120,9 +120,9 @@ Claim recusa se dependência ≠ `Done`.
 |----------|------|
 | Runtime | `agents/00-runtime/output/agent_runtime.json` |
 | Jobs | `agents/00-runtime/output/worker_jobs.json` |
-| Handoffs | `agents/00-runtime/output/handoffs/` |
+| Handoffs | `agents/00-runtime/system/handoffs/` |
 | Disputes | `agents/00-runtime/output/disputes/` |
-| Audit | `agents/00-runtime/output/audit-trail.jsonl` |
+| Audit | `agents/00-runtime/system/audit/audit-trail.jsonl` |
 | Convert log | `agents/00-runtime/output/convert_drafts_log.jsonl` |
 | Item cache | `agents/00-runtime/output/project_item_cache.json` |
 

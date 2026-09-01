@@ -1,0 +1,80 @@
+{
+  "task_id": "T-P3-009",
+  "setup_root": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup",
+  "packaged_at": "2026-08-30T15:42:12.075381+00:00",
+  "files": [
+    {
+      "rel": "docs/fast-stack-last.json",
+      "packaged": "fast-stack-last.json"
+    },
+    {
+      "rel": "docs/appium-last.log",
+      "packaged": "appium-last.log"
+    },
+    {
+      "rel": "docs/appium-step-timings.json",
+      "packaged": "appium-step-timings.json"
+    },
+    {
+      "rel": "docs/fast-stack.markers",
+      "packaged": "fast-stack.markers"
+    },
+    {
+      "rel": "docs/apps-ready.markers",
+      "packaged": "apps-ready.markers"
+    },
+    {
+      "rel": "docs/appium-evidence",
+      "packaged": "appium-evidence/"
+    }
+  ],
+  "artifacts": {
+    "setup_root": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup",
+    "files": [
+      {
+        "kind": "file",
+        "path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\fast-stack-last.json",
+        "rel": "docs/fast-stack-last.json"
+      },
+      {
+        "kind": "file",
+        "path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-last.log",
+        "rel": "docs/appium-last.log"
+      },
+      {
+        "kind": "file",
+        "path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-step-timings.json",
+        "rel": "docs/appium-step-timings.json"
+      },
+      {
+        "kind": "file",
+        "path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\fast-stack.markers",
+        "rel": "docs/fast-stack.markers"
+      },
+      {
+        "kind": "file",
+        "path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\apps-ready.markers",
+        "rel": "docs/apps-ready.markers"
+      },
+      {
+        "kind": "analysis",
+        "path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-runs\\analysis-last.json",
+        "rel": "docs/appium-runs/analysis-last.json"
+      }
+    ],
+    "evidence_dirs": [
+      "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\go_to_home_parent_2026-08-30T03-48-17-489Z",
+      "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\allow_permissions_2026-08-30T03-30-24-467Z",
+      "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\paste_code_parent_2026-08-30T03-20-59-094Z",
+      "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\paste_code_parent_2026-08-28T21-46-44-544Z",
+      "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\paste_code_parent_2026-08-28T21-46-46-902Z",
+      "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\config_family_2026-08-28T21-33-44-889Z"
+    ],
+    "run_logs": [
+      "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-runs\\run-2026-08-30T03-46-07-631Z.log",
+      "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-runs\\run-2026-08-30T03-30-15-471Z.log",
+      "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-runs\\run-2026-08-30T03-19-32-353Z.log"
+    ],
+    "collected_at": "2026-08-30T15:42:12.086523+00:00"
+  }
+}

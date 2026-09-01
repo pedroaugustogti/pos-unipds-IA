@@ -49,7 +49,7 @@ def _case_from_report(
 
     if mode == "api":
         case_id = "QA-MOB-PAIR-API-01"
-        name = "Pareamento parent→child via API (task36)"
+        name = "Pareamento parent→child via API"
         steps = (
             "1. Login parent (admin seed)\n"
             "2. Provisionar família/filho\n"
@@ -95,7 +95,7 @@ def run_pairing_api_qa(task_id: str, *, api_base_url: str | None = None) -> dict
         ok = bool(out.get("ok"))
         case = _case_from_report(
             task_id=task_id,
-            suite="task36-prototipo-v2",
+            suite="api-pairing-smoke",
             report=report,
             ok=ok,
             mode="api",
@@ -112,7 +112,7 @@ def run_pairing_api_qa(task_id: str, *, api_base_url: str | None = None) -> dict
     except Exception as exc:  # noqa: BLE001
         case = _case_from_report(
             task_id=task_id,
-            suite="task36-prototipo-v2",
+            suite="api-pairing-smoke",
             report={"error": str(exc)},
             ok=False,
             mode="api",

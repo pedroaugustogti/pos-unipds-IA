@@ -72,7 +72,7 @@ Matriz: [WORKFLOW_BOARD.md](../_shared/WORKFLOW_BOARD.md)
 ## Handoff
 
 Ao abrir PR, grave handoff (automático no gateway) com: `pr_url`, `branch`, `doubts`, `metrics`.
-O revisor **deve** ler `agents/00-runtime/output/handoffs/{task_id}.json`.
+O revisor **deve** ler `agents/00-runtime/output/{task_id}/handoff.json`.
 
 ## HITL
 

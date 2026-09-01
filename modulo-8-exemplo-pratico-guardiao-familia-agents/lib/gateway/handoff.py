@@ -6,7 +6,11 @@ import json
 from datetime import datetime, timezone
 from typing import Any
 
-from lib.paths import HANDOFF_DIR
+from lib.ticket_output import (
+    resolve_handoff_path,
+    snapshot_handoff_for_agent,
+    write_ticket_handoff,
+)
 
 
 def _now() -> str:
@@ -14,8 +18,7 @@ def _now() -> str:
 
 
 def handoff_path(task_id: str):
-    HANDOFF_DIR.mkdir(parents=True, exist_ok=True)
-    return HANDOFF_DIR / f"{task_id}.json"
+    return resolve_handoff_path(task_id)
 
 
 def load_handoff(task_id: str) -> dict[str, Any] | None:
@@ -72,7 +75,8 @@ def write_handoff(
         "react_trace": react_trace if react_trace is not None else prev.get("react_trace") or [],
         "history": history,
     }
-    p = handoff_path(task_id)
-    p.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    p = write_ticket_handoff(task_id, payload)
+    snapshot_handoff_for_agent(task_id, payload, agent_role=from_agent, event=event)
     payload["path"] = str(p)
+    payload["ticket_dir"] = str(p.parent)
     return payload

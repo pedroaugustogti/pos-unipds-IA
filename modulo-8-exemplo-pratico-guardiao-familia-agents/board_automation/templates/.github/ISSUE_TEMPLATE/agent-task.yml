@@ -176,6 +176,7 @@ body:
         - qa-site-hero-playwright
         - qa-mobile-pairing-api
         - qa-mobile-pairing-appium-dual
+        - qa-mobile-child-appium
         - qa-api-jest-unit
         - qa-api-jest-integration
         - qa-custom

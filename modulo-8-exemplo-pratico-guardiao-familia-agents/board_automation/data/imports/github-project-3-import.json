@@ -811,8 +811,8 @@
       "title": "Child home: saudação dinâmica por horário no cabeçalho",
       "repository": "guardiao-familia-child",
       "type": "Issue",
-      "issue_number": "103",
-      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-child/issues/103",
+      "issue_number": "108",
+      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-child/issues/108",
       "fields": {
         "Status": "Todo",
         "Trilha": "produto",
@@ -824,7 +824,7 @@
         "Release Blocker": "no",
         "Priority Rank": 9,
         "Repo alvo": "guardiao-familia-child",
-        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg4fE4Y"
+        "Project Item Id": ""
       },
       "labels": [
         "agent:frontend-mobile"
@@ -850,13 +850,13 @@
           "i18n EN/ES"
         ],
         "state_before": "ChildHomeV2 usa `dynamicGreeting()` importado de `childHome.state.ts`, mas a validação visual dos 3 períodos não está documentada nas evidências de QA do Project 3.",
-        "state_after": "Header da home child mostra exatamente um dos três textos conforme hora; testes unitários verdes; evidências QA com PNG+MP4 para manhã, tarde e noite após fluxo pairing→home.",
+        "state_after": "Header da home child mostra exatamente um dos três textos conforme hora; testes unitários verdes; evidências QA com PNG+MP4 para manhã, tarde e noite na ChildHomeV2 (seed parent no DB + Appium child-only).",
         "acceptance_hints": [
           "AC-01: Entre 00:00–11:59 o header mostra prefixo Bom dia",
           "AC-02: Entre 12:00–17:59 o header mostra prefixo Boa tarde",
           "AC-03: Entre 18:00–23:59 o header mostra prefixo Boa noite",
           "AC-04: `npm test -- childHome.state` passa com casos manhã/tarde/noite",
-          "AC-05: QA anexa 3 PNG (um por período) + 3 MP4 do fluxo pairing até ChildHome"
+          "AC-05: QA anexa 3 PNG (um por período) + 3 MP4 na ChildHomeV2 (Appium child-only; massa via seed parent)"
         ],
         "implementation_steps": [
           "git checkout -b feat/t-p3-009-child-greeting",
@@ -867,14 +867,14 @@
         ],
         "user_flow": {
           "app": "guardiao-familia-child",
-          "entry_point": "App já pareado (parent+child) ou executar pairing E2E antes",
+          "entry_point": "App child com família já seedada no Postgres (`qa_db_seed` profile `basic_parent`)",
           "emulator": "emulator-5556",
           "metro_port": 9090,
           "target_screen": "child:ChildHomeV2",
           "target_element": "header.greetingTitle (Bom dia|Boa tarde|Boa noite, {nome}!)",
           "preconditions": [
-            "Stack mobile-setup: API + emuladores dual + pairing concluído (PAIRING_COMPLETE)",
-            "Child na home após paste_code_parent + allow_permissions + go_to_home_child"
+            "Stack: API + Postgres + emulador child (5556) — **sem** emulador parent",
+            "`qa_db_seed(profile=basic_parent)` concluído; child abre direto na home via `child_only=true`"
           ],
           "steps": [
             {
@@ -900,13 +900,13 @@
             }
           ],
           "qa_repro_steps": [
-            "Após `qa_appium_suite_child(from_db_seed=true)`: confirmar PAIRING_COMPLETE e ChildHomeV2 visível",
+            "Após `qa_appium_suite_child(from_db_seed=true, child_only=true)`: confirmar ChildHomeV2 visível no emulator-5556",
             "Emulador 5556 às 08:00 → header exibe **Bom dia** (screenshot MCP)",
             "Emulador 5556 às 15:00 → header exibe **Boa tarde** (screenshot MCP)",
             "Emulador 5556 às 21:00 → header exibe **Boa noite** (screenshot MCP)",
-            "MP4 por período gerado pela suite MCP (pairing→home ou jump de relógio na home)"
+            "MP4 por período gerado pela suite MCP (home child + ajuste de relógio)"
           ],
-          "mermaid": "flowchart LR\n  pairing[Pairing child] --> perms[Permissões]\n  perms --> home[ChildHomeV2 header]"
+          "mermaid": "flowchart LR\n  seed[qa_db_seed basic_parent] --> child[App child 5556]\n  child --> home[ChildHomeV2 header]"
         },
         "do_not_touch": [
           "SOS button",
@@ -926,8 +926,8 @@
           },
           {
             "id": "AC-03",
-            "command": "MCP qa_appium_suite_child(from_db_seed=true) + evidências",
-            "expected": "3 PNG + 3 MP4 + JSON em agents/00-runtime/output/mobile/qa_evidence/T-P3-009/"
+            "command": "MCP qa_appium_suite_child(from_db_seed=true, child_only=true) + evidências",
+            "expected": "3 PNG + 3 MP4 + JSON em agents/00-runtime/output/T-P3-009/qa-gate-({N})/evidence/"
           }
         ],
         "stop_and_redirect": [
@@ -936,12 +936,12 @@
         ]
       },
       "qa": {
-        "test_suite": "qa-mobile-pairing-appium-dual",
+        "test_suite": "qa-mobile-child-appium",
+        "appium_scope": "child_only",
         "scenarios": [
           "greeting-morning-08h",
           "greeting-afternoon-15h",
-          "greeting-evening-21h",
-          "pairing-to-child-home-e2e"
+          "greeting-evening-21h"
         ],
         "evidence": {
           "screenshot_png": true,
@@ -949,19 +949,20 @@
           "json_report": true,
           "ci_link": false,
           "scenarios_count": 3,
-          "video_scope": "pairing_start_to_child_home_per_period"
+          "video_scope": "child_home_greeting_per_period"
         },
         "db_seed": {
           "enabled": true,
-          "profile": "child_home",
+          "profile": "basic_parent",
           "family_name": "QA Evidence T-P3-009",
           "child_name": "Filho QA T-P3-009",
-          "resume_after_step": "paste_code_parent",
+          "resume_after_step": "go_to_home_child",
           "cleanup": true,
           "bootstrap_api": true
         },
-        "how_to_run": "MCP obrigatório (sec. 6). Fallback CLI somente se MCP indisponível: python agents/qa-gate/scripts/qa_mobile_evidence.py --task T-P3-009 --feature pairing --mode cycle --record-video"
+        "how_to_run": "MCP obrigatório (sec. 6): qa_db_seed(profile=basic_parent) → qa_appium_suite_child(from_db_seed=true, child_only=true). Fallback CLI somente se MCP indisponível."
       }
     }
-  ]
+  ],
+  "generated": "2026-08-31"
 }

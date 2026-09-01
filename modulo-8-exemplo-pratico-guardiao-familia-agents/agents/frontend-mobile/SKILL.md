@@ -101,7 +101,7 @@ Pré-requisitos: Docker Desktop, `ANDROID_HOME`, AVD Pixel API 34, dev clients (
 | parent | `EXPO_PUBLIC_API_BASE_URL` | `http://10.0.2.2:3000/api/v1` |
 | child | `EXPO_PUBLIC_API_BASE_URL_EMULATOR` | `http://10.0.2.2:3000/api/v1` |
 
-Biblioteca: `lib/mobile_work.py`, `lib/local_e2e.py`
+Biblioteca: `lib/mobile/qa_mobile_mcp.py`, `lib/mobile/mobile_task.py`, `lib/mobile/local_e2e.py`
 
 ## Workflow board → PR
 

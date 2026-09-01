@@ -20,7 +20,7 @@ from pathlib import Path
 
 from lib.env_load import ensure_env  # noqa: E402
 from lib.core.model_tier import is_high_risk, select_model  # noqa: E402
-from lib.orchestrator.pilot import pick_smoke_task  # noqa: E402
+from lib.orchestrator.smoke_tasks import pick_smoke_task  # noqa: E402
 
 ensure_env()
 

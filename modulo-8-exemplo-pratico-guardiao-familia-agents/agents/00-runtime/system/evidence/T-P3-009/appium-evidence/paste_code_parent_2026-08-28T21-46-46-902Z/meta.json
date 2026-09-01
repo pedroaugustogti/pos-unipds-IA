@@ -1,0 +1,9 @@
+{
+  "step": "paste_code_parent",
+  "serial": "emulator-5556",
+  "error": "WebDriverError: Request failed with error code ECONNREFUSED when running \"elements\" with method \"POST\"",
+  "at": "2026-08-28T21:46:46.902Z",
+  "screenshotError": "WebDriverError: Request failed with error code ECONNREFUSED when running \"screenshot\" with method \"GET\"",
+  "pageSourceError": "WebDriverError: Request failed with error code ECONNREFUSED when running \"source\" with method \"GET\"",
+  "uiDumpError": "adb shell uiautomator dump /sdcard/window_dump.xml failed (1): error: closed\r\n"
+}

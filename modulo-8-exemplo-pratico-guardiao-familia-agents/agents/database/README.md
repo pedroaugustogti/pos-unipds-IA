@@ -38,7 +38,7 @@
 ## Decisões
 
 - **Gateway:** Status apenas via `emit_status_event`
-- **Handoff:** migrations, ordem de deploy em `agents/00-runtime/output/handoffs/{task_id}.json`
+- **Handoff:** migrations, ordem de deploy em `agents/00-runtime/output/{task_id}/handoff.json`
 - **ReAct:** claim → migration + teste local → `open_pr` (ver `agent.md`)
 - Nunca dropar dados em produção sem HITL explícito
 

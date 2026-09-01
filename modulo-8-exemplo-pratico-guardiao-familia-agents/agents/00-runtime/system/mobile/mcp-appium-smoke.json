@@ -1,0 +1,133 @@
+{
+  "task": "QA-SMOKE-MCP",
+  "live": false,
+  "scenarios": [
+    {
+      "name": "A_parent_create_account",
+      "checks": [
+        {
+          "label": "A_parent_create_account/suite.dry_run",
+          "ok": true,
+          "detail": "{\"phase\": \"All\", \"skip_build\": true, \"skip_appium\": false, \"single_emulator\": true, \"dual_emulator\": false, \"resume_from_handoff\": false, \"from_db_seed\": false, \"child_only\": false, \"parent_only\": fal"
+        }
+      ],
+      "ok": true
+    },
+    {
+      "name": "B_parent_seed_login_home",
+      "checks": [
+        {
+          "label": "B_parent_seed_login_home/seed",
+          "ok": true,
+          "detail": "parent_home"
+        },
+        {
+          "label": "B_parent_seed_login_home/suite.dry_run",
+          "ok": true,
+          "detail": "{\"phase\": \"All\", \"skip_build\": true, \"skip_appium\": false, \"single_emulator\": true, \"dual_emulator\": false, \"resume_from_handoff\": true, \"from_db_seed\": true, \"child_only\": false, \"parent_only\": true,"
+        },
+        {
+          "label": "B_parent_seed_login_home/resolve",
+          "ok": true,
+          "detail": "resume_to_parent_home"
+        },
+        {
+          "label": "B_parent_seed_login_home/resolve.parent_only",
+          "ok": true,
+          "detail": "True"
+        },
+        {
+          "label": "B_parent_seed_login_home/suite.reset_handoff",
+          "ok": true,
+          "detail": "True"
+        },
+        {
+          "label": "B_parent_seed_login_home/suite.parent_only",
+          "ok": true,
+          "detail": "True"
+        }
+      ],
+      "ok": true
+    },
+    {
+      "name": "C_child_seed_child_only",
+      "checks": [
+        {
+          "label": "C_child_seed_child_only/seed",
+          "ok": true,
+          "detail": "child_home"
+        },
+        {
+          "label": "C_child_seed_child_only/suite.dry_run",
+          "ok": true,
+          "detail": "{\"phase\": \"All\", \"skip_build\": true, \"skip_appium\": false, \"single_emulator\": true, \"dual_emulator\": false, \"resume_from_handoff\": true, \"from_db_seed\": true, \"child_only\": true, \"parent_only\": false,"
+        },
+        {
+          "label": "C_child_seed_child_only/resolve",
+          "ok": true,
+          "detail": "resume_to_child_home"
+        },
+        {
+          "label": "C_child_seed_child_only/resolve.child_only",
+          "ok": true,
+          "detail": "True"
+        },
+        {
+          "label": "C_child_seed_child_only/suite.reset_handoff",
+          "ok": true,
+          "detail": "True"
+        },
+        {
+          "label": "C_child_seed_child_only/suite.child_only",
+          "ok": true,
+          "detail": "True"
+        }
+      ],
+      "ok": true
+    },
+    {
+      "name": "D_dual_pairing",
+      "checks": [
+        {
+          "label": "D_dual_pairing/seed",
+          "ok": true,
+          "detail": "child_home"
+        },
+        {
+          "label": "D_dual_pairing/suite.dry_run",
+          "ok": true,
+          "detail": "{\"phase\": \"All\", \"skip_build\": true, \"skip_appium\": false, \"single_emulator\": false, \"dual_emulator\": true, \"resume_from_handoff\": true, \"from_db_seed\": true, \"child_only\": false, \"parent_only\": false"
+        },
+        {
+          "label": "D_dual_pairing/resolve",
+          "ok": true,
+          "detail": "resume_to_child_home"
+        },
+        {
+          "label": "D_dual_pairing/suite.reset_handoff",
+          "ok": true,
+          "detail": "True"
+        },
+        {
+          "label": "D_dual_pairing/suite.dual",
+          "ok": true,
+          "detail": "False"
+        }
+      ],
+      "ok": true
+    }
+  ],
+  "env": [
+    {
+      "label": "ANDROID_HOME",
+      "ok": true,
+      "detail": "C:\\Users\\pedro\\AppData\\Local\\Android\\Sdk"
+    },
+    {
+      "label": "mobile-setup",
+      "ok": true,
+      "detail": "via setup_root"
+    }
+  ],
+  "ok": true
+}

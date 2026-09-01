@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "task_id": "QA-LIVE-EV-01",
+  "profile": "parent_home",
+  "handoff_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\stage-handoff.json",
+  "handoff": {
+    "lastStep": "config_family",
+    "email": "appium-seed-qaliveev01-1788123858564@guardiao.local",
+    "password": "GuardiaoDev2026!",
+    "name": "Appium Seed Parent QA-LIVE-EV-01",
+    "updated_at": "2026-08-30T21:04:18.981Z",
+    "childHome": false,
+    "parentHome": false,
+    "childBootReset": null,
+    "childBootResetAt": null,
+    "pairingCode": "864490",
+    "pairing_code": "864490",
+    "skipped": null,
+    "task_id": "QA-LIVE-EV-01",
+    "parent_email": "appium-seed-qaliveev01-1788123858564@guardiao.local",
+    "familyName": "QA Evidence QA-LIVE-EV-01",
+    "family_name": "QA Evidence QA-LIVE-EV-01",
+    "familyId": "67a1d912-bac5-44f3-86de-303cbee34ab6",
+    "childName": "Filho Alpha qa-live-ev-01",
+    "child_name": "Filho Alpha qa-live-ev-01",
+    "childId": "50b12169-86c0-4b1d-9cf8-cad36b20a77d",
+    "child_id": "50b12169-86c0-4b1d-9cf8-cad36b20a77d",
+    "children": [
+      {
+        "id": "50b12169-86c0-4b1d-9cf8-cad36b20a77d",
+        "name": "Filho Alpha qa-live-ev-01"
+      }
+    ],
+    "child_count": 1,
+    "seed_source": "00-seed_app_parent",
+    "seed_profile": "parent_home",
+    "seeded_at": "2026-08-30T21:04:18.979Z"
+  },
+  "seed_script": "00-seed_app_parent",
+  "registered_via_api": true,
+  "stdout_tail": "SEED_APP_PARENT_START QA-LIVE-EV-01\nSEED_APP_PARENT_REGISTER_OK appium-seed-qaliveev01-1788123858564@guardiao.local\nSEED_APP_PARENT_CHILD_OK Filho Alpha qa-live-ev-01\nSEED_APP_PARENT_OK 1 filhos · appium-seed-qaliveev01-1788123858564@guardiao.local\n{\"ok\":true,\"task_id\":\"QA-LIVE-EV-01\",\"api_base\":\"http://127.0.0.1:3000/api/v1\",\"registered\":true,\"email\":\"appium-seed-qaliveev01-1788123858564@guardiao.local\",\"family_id\":\"67a1d912-bac5-44f3-86de-303cbee34ab6\",\"family_name\":\"QA Evidence QA-LIVE-EV-01\",\"children\":[{\"id\":\"50b12169-86c0-4b1d-9cf8-cad36b20a77d\",\"name\":\"Filho Alpha qa-live-ev-01\"}],\"pairing_code\":\"864490\",\"handoff_path\":\"C:\\\\Users\\\\pedro\\\\Documents\\\\guardiao-familia\\\\guardiao-familia-mobile-setup\\\\docs\\\\stage-handoff.json\",\"seeded_at\":\"2026-08-30T21:04:18.979Z\"}\n",
+  "pairing_cycle": false,
+  "resume_from_handoff": true
+}

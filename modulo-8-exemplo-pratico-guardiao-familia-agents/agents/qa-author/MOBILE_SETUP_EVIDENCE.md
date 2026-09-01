@@ -161,7 +161,7 @@ Limite ADB: ~3 min / arquivo; fluxos longos gravar por step.
 ## Fluxo QA Author (escreve harness)
 
 1. Discovery: `python agents/qa-gate/scripts/qa_discover_mobile_flows.py --app both`
-2. Guia evidência: arquivos static em `agents/00-runtime/output/mobile/guides/mobile_evidence_guide_*.json`
+2. Guia evidência: arquivos static em `agents/00-runtime/system/mobile/guides/mobile_evidence_guide_*.json`
 3. Implementar/ajustar spec se necessário — **execução E2E via mobile-setup**, não API repo
 4. Rodar `qa_mobile_evidence.py` e anexar `manifest.json` ao PR
 

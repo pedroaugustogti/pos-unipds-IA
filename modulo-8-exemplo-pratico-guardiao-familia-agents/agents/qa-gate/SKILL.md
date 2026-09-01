@@ -45,7 +45,7 @@ Engine: `C:\Users\pedro\Documents\guardiao-familia\guardiao-familia-mobile-setup
 | Web | Playwright | backoffice, site |
 | Push/SOS E2E | emulador + mock FCM | parent |
 
-Bibliotecas orquestrador: `lib/qa_mobile.py`, `lib/qa_mobile_setup_evidence.py`, `lib/mobile_setup_client.py`, `lib/local_e2e.py`, `lib/mobile_work.py`, `lib/mobile_flow_discovery.py`
+Bibliotecas orquestrador: `lib/mobile/qa_mobile_mcp.py`, `lib/mobile/mobile_task.py`, `lib/mobile/qa_mobile_setup_evidence.py`, `lib/mobile/local_e2e.py`, `lib/mobile/mobile_flow_discovery.py`
 
 ### Discovery mobile (seed fluxos 0→N)
 

@@ -4,11 +4,10 @@ from __future__ import annotations
 
 from typing import Any
 
-ALLOWED_EVENTS = frozenset({
-    "claim", "start_work", "open_pr", "start_review", "request_changes",
-    "resubmit_review", "approve_review", "start_test", "test_failed_bug",
-    "test_passed", "merge_pr", "reopen", "dispute", "hitl_approved", "hitl_rejected",
-})
+from board_automation.board.task_status_workflow import (
+    is_known_event,
+    is_open_pr_event,
+)
 
 
 def validate_event_payload(
@@ -22,13 +21,13 @@ def validate_event_payload(
     errors: list[str] = []
     if not task_id or not str(task_id).startswith("T-"):
         errors.append("task_id invalido")
-    if event not in ALLOWED_EVENTS:
+    if event not in ("hitl_approved", "hitl_rejected", "dispute") and not is_known_event(event):
         errors.append(f"event desconhecido: {event}")
-    if event == "open_pr":
+    if is_open_pr_event(event):
         if not pr_url or len(str(pr_url)) < 8:
-            errors.append("open_pr exige pr_url")
+            errors.append("ready_for_code_review exige pr_url")
         if not react_trace:
-            errors.append("open_pr exige react_trace com >=1 iteracao")
+            errors.append("ready_for_code_review exige react_trace com >=1 iteracao")
     if bug_kind and bug_kind not in ("regression", "flaky"):
         errors.append("bug_kind deve ser regression|flaky")
     return {"ok": not errors, "errors": errors}

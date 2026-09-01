@@ -1,0 +1,12 @@
+{
+  "feature": "pairing",
+  "steps": {
+    "paste_code_parent:prepare": 18,
+    "paste_code_parent": 34,
+    "allow_permissions": 7,
+    "go_to_home_child": 1,
+    "go_to_home_parent:prepare": 9,
+    "go_to_home_parent": 31
+  },
+  "updated_at": "2026-08-30T03:48:20.960Z"
+}

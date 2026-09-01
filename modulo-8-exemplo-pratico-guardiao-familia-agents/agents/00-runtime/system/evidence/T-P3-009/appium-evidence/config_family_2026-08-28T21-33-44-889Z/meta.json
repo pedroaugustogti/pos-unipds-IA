@@ -1,0 +1,9 @@
+{
+  "step": "config_family",
+  "serial": "emulator-5554",
+  "error": "Timeout waiting for post_registration (20000ms)",
+  "at": "2026-08-28T21:33:44.890Z",
+  "screenshot": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\config_family_2026-08-28T21-33-44-889Z\\screen.png",
+  "pageSource": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\config_family_2026-08-28T21-33-44-889Z\\page-source.xml",
+  "uiDumpError": "adb shell uiautomator dump /sdcard/window_dump.xml failed (137): "
+}

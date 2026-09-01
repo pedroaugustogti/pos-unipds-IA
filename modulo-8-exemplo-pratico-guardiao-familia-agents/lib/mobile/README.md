@@ -1,12 +1,13 @@
-# mobile — QA e fluxos
+# mobile
 
 | Módulo | Função |
 |--------|--------|
-| `qa_mobile_mcp.py` | Tools MCP mobile |
-| `mobile_flow_rag.py` | RAG de fluxos UI |
-| `mobile_user_flow_db.py` | SQLite fluxos |
-| `mobile_evidence_guide.py` | Guias de evidência |
-| `mobile_work.py` | Orquestração trabalho mobile |
-| `qa_playwright.py` | Web QA auxiliar |
+| `qa_mobile_mcp.py` | Tools MCP: seed, cleanup, Appium |
+| `local_e2e.py` | Stack emulador/Metro/Appium |
+| `mobile_e2e_seed.py` | Perfis de seed Postgres |
+| `mobile_flow_rag.py` | Busca pgvector (uso interno LangGraph) |
+| `mobile_flow_discovery.py` | Discovery de fluxos (ingest) |
+| `qa_mobile_setup_evidence.py` | Artefatos de evidência |
+| `scenario_evidence.py` | Captura por cenário |
 
-Scripts CLI: `agents/qa-gate/scripts/`
+Guias estáticos: `agents/00-runtime/system/mobile/guides/`.

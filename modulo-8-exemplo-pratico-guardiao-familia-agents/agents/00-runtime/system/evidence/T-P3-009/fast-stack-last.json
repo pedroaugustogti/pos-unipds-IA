@@ -1,0 +1,75 @@
+﻿{
+    "started":  "2026-08-30T00:45:44.5417865-03:00",
+    "phases":  {
+                   "api":  {
+                               "detail":  "already_up",
+                               "ok":  true,
+                               "seconds":  0.2
+                           },
+                   "boot":  {
+                                "detail":  "already_up",
+                                "ok":  true,
+                                "seconds":  7.2
+                            },
+                   "metro":  {
+                                 "detail":  "already_up",
+                                 "ok":  true,
+                                 "seconds":  0.1
+                             },
+                   "build":  {
+                                 "detail":  "skipped",
+                                 "ok":  true,
+                                 "seconds":  0
+                             },
+                   "apps_ready":  {
+                                      "detail":  {
+                                                     "parent":  "device_booted",
+                                                     "metro_child":  true,
+                                                     "metro_parent":  true,
+                                                     "child":  "device_booted"
+                                                 },
+                                      "ok":  true,
+                                      "seconds":  8.6
+                                  },
+                   "appium":  {
+                                  "detail":  {
+                                                 "feature":  "pairing",
+                                                 "exit":  1
+                                             },
+                                  "ok":  false,
+                                  "seconds":  134.9
+                              }
+               },
+    "api":  "ok",
+    "apps_ready":  true,
+    "appium_steps":  {
+                         "paste_code_parent:prepare":  18,
+                         "paste_code_parent":  34,
+                         "allow_permissions":  7,
+                         "go_to_home_child":  1,
+                         "go_to_home_parent:prepare":  9,
+                         "go_to_home_parent":  31
+                     },
+    "appium_log":  "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-last.log",
+    "appium_log_analysis":  {
+                                "ok":  true,
+                                "analyzed_at":  "2026-08-30T03:48:20.965Z",
+                                "log_file":  "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-runs\\run-2026-08-30T03-46-07-631Z.log",
+                                "line_count":  67,
+                                "step_failures":  {
+                                                      "go_to_home_parent":  1
+                                                  },
+                                "recurring_errors":  [
+
+                                                     ],
+                                "webdriver_bursts":  [
+
+                                                     ],
+                                "recommendations":  [
+
+                                                    ]
+                            },
+    "ok":  false,
+    "total_seconds":  156.5,
+    "ended":  "2026-08-30T00:48:21.0263074-03:00"
+}

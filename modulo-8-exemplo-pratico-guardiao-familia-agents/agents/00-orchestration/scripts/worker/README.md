@@ -1,10 +1,5 @@
-# worker/
+# worker (removido)
 
-| Script | Uso |
-|--------|-----|
-| `worker_run.py` | Claim + dispatch próximo job por role |
-| `dispatch_cli.py` | Enfileirar/completar dispatch Cursor |
-| `autonomy_loop.py` | Loop contínuo (operador) |
-| `complete_dispatch.py` | Finalizar job após Cursor |
+Fila `worker_jobs` / dispatch Cursor foi substituída pelo pipeline MCP:
 
-Artefatos: `agents/00-runtime/output/dispatch/`
+`orchestrator_enter_in_progress` → `on_status_event` → `hitl_guard_actuation` → `execute_agent_actuation_tool`

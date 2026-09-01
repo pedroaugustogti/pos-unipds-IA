@@ -13,8 +13,9 @@ from lib.core.repo_paths import resolve_repo_path
 
 MODULE_ROOT = Path(__file__).resolve().parents[1]
 from lib.paths import EVIDENCE_DIR
+from lib.ticket_output import qa_evidence_dir, resolve_agent_cycle, resolve_handoff_path
 
-EVIDENCE_OUT = EVIDENCE_DIR
+EVIDENCE_OUT = EVIDENCE_DIR  # legado — novos pacotes vão para {ticket}/qa-gate-(N)/evidence/
 
 ARTIFACT_REL = (
     "docs/fast-stack-last.json",
@@ -66,7 +67,17 @@ def collect_artifacts(setup: Path | None = None) -> dict[str, Any]:
 
 
 def _package(task_id: str, setup: Path, *, extra_paths: list[Path] | None = None) -> Path:
-    dest = EVIDENCE_OUT / task_id
+    handoff = None
+    try:
+        hp = resolve_handoff_path(task_id)
+        if hp.is_file():
+            import json
+
+            handoff = json.loads(hp.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        handoff = None
+    cycle = resolve_agent_cycle(handoff, "qa-gate")
+    dest = qa_evidence_dir(task_id, cycle=cycle)
     if dest.exists():
         shutil.rmtree(dest)
     dest.mkdir(parents=True, exist_ok=True)
@@ -108,6 +119,8 @@ def _run_fast_stack(
     timeout_sec: int,
     pairing_cycle: bool = False,
     resume_from_handoff: bool = False,
+    child_only: bool = False,
+    parent_only: bool = False,
 ) -> dict[str, Any]:
     ps1 = setup / "scripts" / "fast-stack.ps1"
     if not ps1.is_file():
@@ -120,9 +133,20 @@ def _run_fast_stack(
     env = dict(__import__("os").environ)
     env["GF_APPIUM_FEATURE"] = feature
     env["GF_SKIP_DB_CLEANUP"] = "1"
+    if child_only:
+        env["GF_QA_CHILD_ONLY"] = "1"
+    elif parent_only:
+        env["GF_QA_PARENT_ONLY"] = "1"
+    video_serials = (
+        [("emulator-5556", "child-flow.mp4")]
+        if child_only
+        else [("emulator-5554", "parent-flow.mp4")]
+        if parent_only
+        else (("emulator-5554", "parent-flow.mp4"), ("emulator-5556", "child-flow.mp4"))
+    )
     video_procs: list[subprocess.Popen[str]] = []
     if record_video:
-        for serial, name in (("emulator-5554", "parent-flow.mp4"), ("emulator-5556", "child-flow.mp4")):
+        for serial, name in video_serials:
             try:
                 subprocess.run(
                     ["adb", "-s", serial, "shell", "rm", "-f", f"/sdcard/{name}"],
@@ -158,6 +182,10 @@ def _run_fast_stack(
             cmd.append("-SkipBuild")
     if resume_from_handoff:
         cmd.append("-ResumeFromHandoff")
+    if child_only:
+        cmd.extend(["-Single", "-ChildOnlyQa"])
+    elif parent_only:
+        cmd.extend(["-Single", "-ParentOnlyQa"])
 
     proc = subprocess.run(
         cmd,
@@ -180,7 +208,7 @@ def _run_fast_stack(
     if record_video:
         vid_dir = EVIDENCE_OUT / "_tmp_video"
         vid_dir.mkdir(parents=True, exist_ok=True)
-        for serial, name in (("emulator-5554", "parent-flow.mp4"), ("emulator-5556", "child-flow.mp4")):
+        for serial, name in video_serials:
             local = vid_dir / name
             subprocess.run(
                 ["adb", "-s", serial, "pull", f"/sdcard/{name}", str(local)],
@@ -225,6 +253,8 @@ def run_mobile_evidence(
     timeout_sec: int = 1200,
     task: dict[str, Any] | None = None,
     db_seed_config: dict[str, Any] | None = None,
+    child_only: bool = False,
+    parent_only: bool = False,
 ) -> dict[str, Any]:
     from lib.mobile.mobile_e2e_seed import apply_db_seed, cleanup_db_seed, format_db_seed_comment
 
@@ -252,6 +282,8 @@ def run_mobile_evidence(
             timeout_sec=timeout_sec,
             pairing_cycle=pairing_cycle,
             resume_from_handoff=resume_from_handoff,
+            child_only=child_only,
+            parent_only=parent_only,
         )
     finally:
         cleanup_result = None
@@ -302,9 +334,88 @@ def _first_png_bytes(package_dir: str | Path | None) -> tuple[bytes | None, str]
     return None, "evidence.png"
 
 
+def _run_mcp_appium_qa_for_task(task: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
+    """Caminho alinhado ao MCP: seed → run_appium_suite(child_only) → cleanup → evidências."""
+    from lib.mobile.qa_mobile_mcp import run_appium_suite, run_db_cleanup, run_db_seed
+
+    tid = str(task.get("id") or "")
+    qa = task.get("qa") if isinstance(task.get("qa"), dict) else {}
+    db_seed_cfg = qa.get("db_seed") if isinstance(qa.get("db_seed"), dict) else {}
+    child_only = bool(params.get("child_only"))
+    parent_only = bool(params.get("parent_only"))
+    feature = str(params.get("feature") or "go_to_home_child")
+    timeout_sec = int(params.get("timeout_sec") or 1200)
+    app: str = "parent" if parent_only else "child"
+
+    seed_result: dict[str, Any] | None = None
+    if db_seed_cfg.get("enabled"):
+        seed_result = run_db_seed(
+            tid,
+            profile=str(db_seed_cfg.get("profile") or "basic_parent"),
+            bootstrap_api=bool(db_seed_cfg.get("bootstrap_api", True)),
+            use_task_config=True,
+            dry_run=False,
+        )
+        if not seed_result.get("ok"):
+            return {
+                "ok": False,
+                "task_id": tid,
+                "mode": "mcp-appium",
+                "error": seed_result.get("error") or "db_seed falhou",
+                "db_seed": seed_result,
+            }
+
+    suite = run_appium_suite(
+        app,  # type: ignore[arg-type]
+        from_db_seed=bool(seed_result and seed_result.get("ok")),
+        task_id=tid,
+        feature=feature,
+        phase="All",
+        skip_build=True,
+        skip_appium=False,
+        child_only=child_only,
+        parent_only=parent_only,
+        timeout_sec=timeout_sec,
+    )
+
+    cleanup_result = None
+    if seed_result and not seed_result.get("skipped") and db_seed_cfg.get("cleanup", True):
+        cleanup_result = run_db_cleanup(task_id=tid)
+
+    result: dict[str, Any] = {
+        "task_id": tid,
+        "feature": feature,
+        "mode": "mcp-appium",
+        "setup_root": str(setup_root()),
+        "run": suite,
+        "artifacts": suite.get("artifacts"),
+        "db_seed": seed_result,
+        "db_cleanup": cleanup_result,
+        "package_dir": suite.get("package_dir"),
+        "ok": bool(suite.get("ok")),
+        "child_only": child_only,
+        "parent_only": parent_only,
+    }
+    png_bytes, png_name = _first_png_bytes(result.get("package_dir"))
+    result["png_bytes"] = png_bytes
+    result["filename"] = png_name
+    result["comment"] = format_evidence_comment(result)
+    result["case"] = {
+        "id": f"QA-MCP-APPium-{tid}",
+        "name": f"MCP Appium {feature} ({'child_only' if child_only else 'parent_only' if parent_only else 'dual'})",
+        "type": "e2e_appium",
+        "result": "PASS" if result.get("ok") else "FAIL",
+        "notes": (
+            f"feature={feature}; child_only={child_only}; parent_only={parent_only}; "
+            f"package={result.get('package_dir')}"
+        ),
+    }
+    return result
+
+
 def run_mobile_setup_qa_for_task(task: dict[str, Any]) -> dict[str, Any]:
     """QA Gate: seed DB (opcional) + fast-stack + empacota evidências."""
-    from lib.mobile.mobile_work import mobile_setup_evidence_params, wants_mobile_setup_evidence
+    from lib.mobile.mobile_task import mobile_setup_evidence_params, uses_mcp_appium_suite, wants_mobile_setup_evidence
 
     tid = str(task.get("id") or "")
     if not tid:
@@ -313,6 +424,9 @@ def run_mobile_setup_qa_for_task(task: dict[str, Any]) -> dict[str, Any]:
         return {"ok": False, "error": "task nao requer mobile-setup evidence", "mode": "mobile-setup"}
 
     params = mobile_setup_evidence_params(task)
+    if uses_mcp_appium_suite(task):
+        return _run_mcp_appium_qa_for_task(task, params)
+
     result = run_mobile_evidence(tid, task=task, **params)
     png_bytes, png_name = _first_png_bytes(result.get("package_dir"))
     result["png_bytes"] = png_bytes
@@ -342,10 +456,18 @@ def format_evidence_comment(result: dict[str, Any]) -> str:
         f"- **Task:** `{task_id}`",
         f"- **Feature Appium:** `{result.get('feature', 'pairing')}`",
         f"- **Modo:** `{result.get('mode', 'cycle')}`",
+    ]
+    if result.get("child_only"):
+        lines.append("- **Escopo:** `child_only` (somente emulator-5556)")
+    if result.get("parent_only"):
+        lines.append("- **Escopo:** `parent_only` (somente emulator-5554)")
+    lines.extend(
+        [
         f"- **Resultado:** **{'PASS' if ok else 'FAIL'}**",
         f"- **Setup:** `{result.get('setup_root', '')}`",
         "",
-    ]
+        ]
+    )
     run = result.get("run") or {}
     if run.get("pairing_complete"):
         lines.append("- Marcador `PAIRING_COMPLETE` detectado no log")

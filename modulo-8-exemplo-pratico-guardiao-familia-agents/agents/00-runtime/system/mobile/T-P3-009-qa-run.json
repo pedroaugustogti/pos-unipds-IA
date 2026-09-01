@@ -1,0 +1,82 @@
+{
+  "seed": {
+    "ok": true,
+    "pairing_code": "124144"
+  },
+  "suite": {
+    "ok": false,
+    "app": "child",
+    "returncode": 1,
+    "report_ok": false,
+    "apps_ready": false,
+    "markers": [
+      "==> Appium runtime OFF (obrigatorio ate APPS_READY_OK)",
+      "==> Appium feature=pairing (prepare->driver como engine API, apos APPS_READY_OK)"
+    ],
+    "fast_stack_report": {},
+    "artifacts": {
+      "setup_root": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup",
+      "files": [
+        {
+          "kind": "file",
+          "path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\fast-stack-last.json",
+          "rel": "docs/fast-stack-last.json"
+        },
+        {
+          "kind": "file",
+          "path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-last.log",
+          "rel": "docs/appium-last.log"
+        },
+        {
+          "kind": "file",
+          "path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-step-timings.json",
+          "rel": "docs/appium-step-timings.json"
+        },
+        {
+          "kind": "file",
+          "path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\fast-stack.markers",
+          "rel": "docs/fast-stack.markers"
+        },
+        {
+          "kind": "file",
+          "path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\apps-ready.markers",
+          "rel": "docs/apps-ready.markers"
+        },
+        {
+          "kind": "analysis",
+          "path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-runs\\analysis-last.json",
+          "rel": "docs/appium-runs/analysis-last.json"
+        }
+      ],
+      "evidence_dirs": [
+        "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\go_to_home_parent_2026-08-30T03-48-17-489Z",
+        "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\allow_permissions_2026-08-30T03-30-24-467Z",
+        "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\paste_code_parent_2026-08-30T03-20-59-094Z",
+        "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\paste_code_parent_2026-08-28T21-46-44-544Z",
+        "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\paste_code_parent_2026-08-28T21-46-46-902Z",
+        "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\config_family_2026-08-28T21-33-44-889Z"
+      ],
+      "run_logs": [
+        "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-runs\\run-2026-08-30T03-46-07-631Z.log",
+        "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-runs\\run-2026-08-30T03-30-15-471Z.log",
+        "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-runs\\run-2026-08-30T03-19-32-353Z.log"
+      ],
+      "collected_at": "2026-08-30T19:28:34.818930+00:00"
+    },
+    "stdout_tail": "                              \"ok\":  true,\n                                 \"seconds\":  0.1\n                             },\n                   \"build\":  {\n                                 \"detail\":  \"skipped\",\n                                 \"ok\":  true,\n                                 \"seconds\":  0\n                             },\n                   \"apps_ready\":  {\n                                      \"detail\":  {\n                                                     \"parent\":  \"device_booted\",\n                                                     \"metro_child\":  true,\n                                                     \"metro_parent\":  true,\n                                                     \"child\":  \"device_booted\"\n                                                 },\n                                      \"ok\":  true,\n                                      \"seconds\":  8.6\n                                  },\n                   \"appium\":  {\n                                  \"detail\":  {\n                                                 \"feature\":  \"pairing\",\n                                                 \"exit\":  1\n                                             },\n                                  \"ok\":  false,\n                                  \"seconds\":  134.9\n                              }\n               },\n    \"api\":  \"ok\",\n    \"apps_ready\":  true,\n    \"appium_steps\":  {\n                         \"paste_code_parent:prepare\":  18,\n                         \"paste_code_parent\":  34,\n                         \"allow_permissions\":  7,\n                         \"go_to_home_child\":  1,\n                         \"go_to_home_parent:prepare\":  9,\n                         \"go_to_home_parent\":  31\n                     },\n    \"appium_log\":  \"C:\\\\Users\\\\pedro\\\\Documents\\\\guardiao-familia\\\\guardiao-familia-mobile-setup\\\\docs\\\\appium-last.log\",\n    \"appium_log_analysis\":  {\n                                \"ok\":  true,\n                                \"analyzed_at\":  \"2026-08-30T03:48:20.965Z\",\n                                \"log_file\":  \"C:\\\\Users\\\\pedro\\\\Documents\\\\guardiao-familia\\\\guardiao-familia-mobile-setup\\\\docs\\\\appium-runs\\\\run-2026-08-30T03-46-07-631Z.log\",\n                                \"line_count\":  67,\n                                \"step_failures\":  {\n                                                      \"go_to_home_parent\":  1\n                                                  },\n                                \"recurring_errors\":  [\n\n                                                     ],\n                                \"webdriver_bursts\":  [\n\n                                                     ],\n                                \"recommendations\":  [\n\n                                                    ]\n                            },\n    \"ok\":  false,\n    \"total_seconds\":  156.5,\n    \"ended\":  \"2026-08-30T00:48:21.0263074-03:00\"\n}\nRelatorio: C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\fast-stack-last.json\n",
+    "seed_context": {
+      "ok": true,
+      "app": "child",
+      "mode": "resume_to_child_home",
+      "feature": "pairing",
+      "resume_from_handoff": true,
+      "skip_appium": false,
+      "single_emulator": false,
+      "handoff_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\stage-handoff.json",
+      "last_step": "copy_code_pairing",
+      "child_home": false,
+      "parent_home": false,
+      "seed_profile": "child_home"
+    }
+  }
+}

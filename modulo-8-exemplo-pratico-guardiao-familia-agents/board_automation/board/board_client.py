@@ -121,9 +121,37 @@ def _graphql(query: str, variables: dict | None = None) -> dict:
     return data["data"]
 
 
+def _issue_from_cache(task_id: str) -> str | None:
+    """Fallback quando `gh issue list` falha (rate limit GraphQL) ou issue nova."""
+    try:
+        from lib.paths import BOARD_IMPORTS_DIR, PROJECT3_ITEM_CACHE_PATH
+
+        if PROJECT3_ITEM_CACHE_PATH.is_file():
+            cache = json.loads(PROJECT3_ITEM_CACHE_PATH.read_text(encoding="utf-8"))
+            entry = cache.get(task_id) or {}
+            num = str(entry.get("issue_number") or "").strip()
+            if num and num != "0":
+                return num
+
+        board_path = BOARD_IMPORTS_DIR / "github-project-3-import.json"
+        if board_path.is_file():
+            board = json.loads(board_path.read_text(encoding="utf-8"))
+            for item in board.get("items") or []:
+                if item.get("id") == task_id:
+                    num = str(item.get("issue_number") or "").strip()
+                    if num and num != "0":
+                        return num
+    except Exception:
+        return None
+    return None
+
+
 def find_issue_number(repo: str, task_id: str, dry_run: bool = False) -> str | None:
     if dry_run:
         return "0"
+    cached = _issue_from_cache(task_id)
+    if cached:
+        return cached
     proc = _gh_run(
         "issue",
         "list",

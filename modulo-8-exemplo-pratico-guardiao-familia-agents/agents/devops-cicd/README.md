@@ -38,7 +38,7 @@
 ## Decisões
 
 - **Gateway:** Status apenas via `emit_status_event`
-- **Handoff:** workflows alterados, impacto em repos em `agents/00-runtime/output/handoffs/{task_id}.json`
+- **Handoff:** workflows alterados, impacto em repos em `agents/00-runtime/output/{task_id}/handoff.json`
 - **ReAct:** claim → editar workflow → validar local/dry-run → `open_pr` (ver `agent.md`)
 - Nunca expor secrets no repositório; nunca mergear sem reviewer
 

@@ -25,7 +25,7 @@ python agents/00-orchestration/scripts/demo/demo_apresentacao.py --task T-P05-00
 
 - Reseta locks/HITL/idempotência da task.  
 - Passos: claim → implement/commit → open_pr → review → QA → merge_pr (HITL).  
-- Gera `agents/00-runtime/output/observability/tasks/{task}.html`.  
+- Gera `agents/00-runtime/system/observability/tasks/{task}.html`.  
 - Tenta atualizar Project #2 a cada Status.
 
 Roteiro: [../apresentacao/APRESENTACAO_LIVE_DEMO.md](../apresentacao/APRESENTACAO_LIVE_DEMO.md).
@@ -80,7 +80,7 @@ Cada passo pode registrar:
 - `findings` (review)  
 - `test_scenarios` (QA)
 
-Arquivos: `agents/00-runtime/output/observability/tasks/{task_id}.json` + `.html`.  
+Arquivos: `agents/00-runtime/system/observability/tasks/{task_id}.json` + `.html`.  
 URL local: `http://127.0.0.1:8765/tasks/{task_id}.html`.
 
 ---

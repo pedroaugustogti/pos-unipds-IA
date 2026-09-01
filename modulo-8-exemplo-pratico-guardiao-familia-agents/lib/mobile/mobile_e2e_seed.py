@@ -6,6 +6,7 @@ import json
 import os
 import shutil
 import subprocess
+import urllib.error
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -15,28 +16,49 @@ from lib.mobile.local_e2e import (
     DEFAULT_PARENT_EMAIL,
     DEFAULT_PARENT_PASSWORD,
     bootstrap_api_stack,
-    run_pairing_smoke_python,
 )
 from lib.mobile.qa_mobile_setup_evidence import setup_root
 
+API_REGISTER_PROFILES = frozenset(
+    {"basic_parent", "parent_home", "child_home", "permissions_resume", "pairing_warm"}
+)
+
 SEED_PROFILES: dict[str, dict[str, Any]] = {
+    "basic_parent": {
+        "summary": "API POST /auth/register + família + 3 filhos (00-seed_app_parent); handoff config_family",
+        "resume_after_step": "config_family",
+        "pairing_cycle": False,
+        "resume_from_handoff": True,
+        "target_app": "child",
+        "seed_script": "00-seed_app_parent",
+    },
     "pairing_warm": {
-        "summary": "API: família+filho+código; Appium PairingCycle (pula config_family)",
+        "summary": "API POST /auth/register + família+filho+código; Appium pairing completo (dual emulator)",
         "resume_after_step": None,
         "pairing_cycle": True,
         "resume_from_handoff": False,
+        "target_app": "dual",
+    },
+    "parent_home": {
+        "summary": "API POST /auth/register + família+filho; Appium parent login → ParentHome",
+        "resume_after_step": "config_family",
+        "pairing_cycle": False,
+        "resume_from_handoff": True,
+        "target_app": "parent",
     },
     "child_home": {
-        "summary": "API: família+filho+código; Appium retoma após paste_code_parent → home child",
+        "summary": "API POST /auth/register + família+filho+código; Appium child paste_code → ChildHome",
+        "resume_after_step": "copy_code_pairing",
+        "pairing_cycle": False,
+        "resume_from_handoff": True,
+        "target_app": "child",
+    },
+    "permissions_resume": {
+        "summary": "API register + pareamento HTTP; Appium child allow_permissions + go_to_home_child",
         "resume_after_step": "paste_code_parent",
         "pairing_cycle": False,
         "resume_from_handoff": True,
-    },
-    "permissions_resume": {
-        "summary": "API: família+filho pareados; Appium só allow_permissions + go_to_home_child",
-        "resume_after_step": "allow_permissions",
-        "pairing_cycle": False,
-        "resume_from_handoff": True,
+        "target_app": "child",
     },
 }
 
@@ -60,7 +82,7 @@ def default_db_seed_config(task_id: str, profile: str = "child_home") -> dict[st
         "profile": profile,
         "family_name": f"QA Evidence {task_id}",
         "child_name": f"Filho QA {slug}",
-        "parent_email": DEFAULT_PARENT_EMAIL,
+        "parent_email": "",
         "parent_password": DEFAULT_PARENT_PASSWORD,
         "api_base_url": DEFAULT_API_BASE,
         "cleanup": True,
@@ -82,75 +104,79 @@ def resolve_db_seed(task: dict[str, Any]) -> dict[str, Any] | None:
     return {**base, **raw, "enabled": True, "task_id": tid}
 
 
-def provision_handoff(
+def _read_existing_handoff(setup: Path | None = None) -> dict[str, Any] | None:
+    path = _handoff_path(setup)
+    if not path.is_file():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return data if isinstance(data, dict) else None
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def _try_reuse_handoff(
     task_id: str,
     *,
     config: dict[str, Any],
-) -> dict[str, Any]:
-    """Garante API+DB e grava stage-handoff.json no mobile-setup."""
-    profile_name = str(config.get("profile") or "child_home")
-    profile = SEED_PROFILES.get(profile_name)
-    if not profile:
-        raise ValueError(f"db_seed profile desconhecido: {profile_name}")
+    profile: dict[str, Any],
+    profile_name: str,
+) -> dict[str, Any] | None:
+    """Reutiliza stage-handoff existente e tenta só renovar pairing code."""
+    if not config.get("reuse_handoff", True):
+        return None
+    existing = _read_existing_handoff()
+    if not existing:
+        return None
+    child_id = str(existing.get("childId") or existing.get("child_id") or "").strip()
+    if not child_id:
+        return None
 
-    steps: list[dict[str, Any]] = []
-    if config.get("bootstrap_api", True):
-        stack = bootstrap_api_stack(seed=True)
-        steps.append({"bootstrap_api_stack": stack})
-        if not stack.get("ok"):
-            return {"ok": False, "error": "bootstrap_api_stack falhou", "steps": steps}
-
-    parent_email = str(config.get("parent_email") or DEFAULT_PARENT_EMAIL)
-    parent_password = str(config.get("parent_password") or DEFAULT_PARENT_PASSWORD)
+    parent_email = str(
+        config.get("parent_email") or existing.get("email") or existing.get("parent_email") or DEFAULT_PARENT_EMAIL
+    )
+    parent_password = str(
+        config.get("parent_password") or existing.get("password") or DEFAULT_PARENT_PASSWORD
+    )
     api_base = str(config.get("api_base_url") or DEFAULT_API_BASE).rstrip("/")
-    family_name = str(config.get("family_name") or f"QA Evidence {task_id}")
-    child_name = str(config.get("child_name") or f"Filho QA {_slug_task(task_id)}")
+    family_name = str(config.get("family_name") or existing.get("familyName") or existing.get("family_name") or f"QA Evidence {task_id}")
+    child_name = str(config.get("child_name") or existing.get("childName") or existing.get("child_name") or f"Filho QA {_slug_task(task_id)}")
+    pairing_code = str(existing.get("pairingCode") or existing.get("pairing_code") or "").strip()
+    refreshed = False
 
-    # Reutiliza smoke Python (login → família → filho → pairing-code)
-    smoke = run_pairing_smoke_python(
-        api_base_url=api_base,
-        parent_email=parent_email,
-        parent_password=parent_password,
-        family_name=family_name,
-        child_name=child_name,
-    )
-    steps.append({"pairing_smoke": smoke})
-    if not smoke.get("ok"):
-        return {"ok": False, "error": smoke.get("error") or "pairing smoke falhou", "steps": steps}
+    try:
+        from lib.mobile.local_e2e import _http_json  # noqa: PLC2701
 
-    report = smoke.get("report") or {}
-    scenarios = report.get("scenarios") or []
-    child_id = ""
-    for sc in scenarios:
-        if sc.get("childId"):
-            child_id = str(sc["childId"])
-            break
+        _, login = _http_json(
+            f"{api_base}/auth/login",
+            method="POST",
+            body={"email": parent_email, "password": parent_password},
+        )
+        token = (login or {}).get("access_token") if isinstance(login, dict) else None
+        if token:
+            _, code_resp = _http_json(
+                f"{api_base}/children/{child_id}/pairing-code",
+                method="POST",
+                token=token,
+                body={},
+            )
+            fresh = str((code_resp or {}).get("pairing_code") or "").strip()
+            if fresh:
+                pairing_code = fresh
+                refreshed = True
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, OSError):
+        if not pairing_code:
+            return None
 
-    # Obter pairing code fresco
-    from lib.mobile.local_e2e import _http_json  # noqa: PLC2701
-
-    _, login = _http_json(
-        f"{api_base}/auth/login",
-        method="POST",
-        body={"email": parent_email, "password": parent_password},
-    )
-    token = (login or {}).get("access_token") if isinstance(login, dict) else None
-    if not token or not child_id:
-        return {"ok": False, "error": "login/child_id ausente após smoke", "steps": steps}
-
-    _, code_resp = _http_json(
-        f"{api_base}/children/{child_id}/pairing-code",
-        method="POST",
-        token=token,
-        body={},
-    )
-    pairing_code = str((code_resp or {}).get("pairing_code") or "").strip()
+    if not refreshed and not config.get("allow_stale_pairing_code"):
+        return None
 
     resume_after = config.get("resume_after_step")
     if resume_after is None:
         resume_after = profile.get("resume_after_step")
 
     handoff: dict[str, Any] = {
+        **existing,
         "task_id": task_id,
         "email": parent_email,
         "password": parent_password,
@@ -163,11 +189,13 @@ def provision_handoff(
         "child_id": child_id,
         "pairingCode": pairing_code,
         "pairing_code": pairing_code,
-        "lastStep": resume_after,
+        "lastStep": resume_after or existing.get("lastStep"),
         "parentHome": False,
         "childHome": False,
         "seed_profile": profile_name,
         "seeded_at": datetime.now(timezone.utc).isoformat(),
+        "reused_handoff": True,
+        "pairing_code_refreshed": refreshed,
     }
 
     setup = setup_root()
@@ -181,10 +209,169 @@ def provision_handoff(
         "profile": profile_name,
         "handoff_path": str(path),
         "handoff": handoff,
-        "pairing_cycle": bool(config.get("pairing_cycle", profile.get("pairing_cycle"))),
-        "resume_from_handoff": bool(
-            config.get("resume_from_handoff", profile.get("resume_from_handoff"))
-        ),
+        "reused_handoff": True,
+        "pairing_code_refreshed": refreshed,
+    }
+
+
+def _seed_child_count(profile_name: str, config: dict[str, Any]) -> int:
+    if config.get("child_count"):
+        return int(config["child_count"])
+    return 3 if profile_name == "basic_parent" else 1
+
+
+def _seed_last_step(profile_name: str, profile: dict[str, Any], config: dict[str, Any]) -> str | None:
+    if "resume_after_step" in config:
+        return config.get("resume_after_step")
+    return profile.get("resume_after_step")
+
+
+def _pair_child_via_api(handoff: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
+    """Pareia filho via POST /pairing/validate (estado DB coerente com Appium)."""
+    from lib.mobile.local_e2e import _http_json  # noqa: PLC2701
+
+    api_base = str(config.get("api_base_url") or DEFAULT_API_BASE).rstrip("/")
+    code = str(handoff.get("pairingCode") or handoff.get("pairing_code") or "").strip()
+    if not code:
+        return {"ok": False, "error": "pairing_code ausente no handoff"}
+    try:
+        _, pair_resp = _http_json(
+            f"{api_base}/pairing/validate",
+            method="POST",
+            body={
+                "code": code,
+                "device_name": "QA Seed API",
+                "platform": "android",
+            },
+        )
+        ok = bool((pair_resp or {}).get("access_token") if isinstance(pair_resp, dict) else False)
+        return {"ok": ok, "mode": "api_pairing_validate"}
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, OSError) as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def _run_seed_app_parent(task_id: str, config: dict[str, Any], *, profile_name: str) -> dict[str, Any]:
+    """Executa appium/00-seed_app_parent/seed.mjs (POST /auth/register + família + filhos)."""
+    setup = setup_root()
+    script = setup / "appium" / "00-seed_app_parent" / "seed.mjs"
+    if not script.is_file():
+        return {"ok": False, "error": f"ausente: {script}"}
+    node = shutil.which("node")
+    if not node:
+        return {"ok": False, "error": "node não encontrado no PATH"}
+
+    profile = SEED_PROFILES.get(profile_name, {})
+    last_step = _seed_last_step(profile_name, profile, config)
+    child_count = _seed_child_count(profile_name, config)
+
+    env = os.environ.copy()
+    env["GF_SEED_TASK_ID"] = task_id
+    env["GF_SEED_PROFILE"] = profile_name
+    env["GF_SEED_CHILD_COUNT"] = str(child_count)
+    env["GF_SEED_LAST_STEP"] = "null" if last_step is None else str(last_step)
+    if config.get("api_base_url"):
+        env["GF_API_BASE_URL"] = str(config["api_base_url"])
+    if config.get("parent_email"):
+        env["GF_SEED_PARENT_EMAIL"] = str(config["parent_email"])
+    if config.get("parent_password"):
+        env["GF_PARENT_PASSWORD"] = str(config["parent_password"])
+    if config.get("family_name"):
+        env["GF_SEED_FAMILY_NAME"] = str(config["family_name"])
+
+    cmd = [
+        node,
+        str(script),
+        "--task-id",
+        task_id,
+        "--profile",
+        profile_name,
+        "--child-count",
+        str(child_count),
+        "--last-step",
+        "null" if last_step is None else str(last_step),
+    ]
+
+    try:
+        proc = subprocess.run(
+            cmd,
+            cwd=str(setup),
+            env=env,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=120,
+        )
+        tail = (proc.stdout or "") + (proc.stderr or "")
+        if proc.returncode != 0:
+            return {
+                "ok": False,
+                "error": tail.strip()[-500:] or f"seed.mjs exit {proc.returncode}",
+                "stdout_tail": tail[-2000:],
+            }
+        handoff = _read_existing_handoff(setup) or {}
+        return {
+            "ok": True,
+            "task_id": task_id,
+            "profile": profile_name,
+            "handoff_path": str(_handoff_path(setup)),
+            "handoff": handoff,
+            "seed_script": "00-seed_app_parent",
+            "registered_via_api": True,
+            "stdout_tail": tail[-1500:],
+        }
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return {"ok": False, "error": str(exc)}
+
+
+def provision_handoff(
+    task_id: str,
+    *,
+    config: dict[str, Any],
+) -> dict[str, Any]:
+    """Garante API+DB e grava stage-handoff.json no mobile-setup."""
+    profile_name = str(config.get("profile") or "child_home")
+    profile = SEED_PROFILES.get(profile_name)
+    if not profile:
+        raise ValueError(f"db_seed profile desconhecido: {profile_name}")
+
+    reused = _try_reuse_handoff(task_id, config=config, profile=profile, profile_name=profile_name)
+    if reused:
+        return reused
+
+    steps: list[dict[str, Any]] = []
+    if config.get("bootstrap_api", True):
+        stack = bootstrap_api_stack(seed=True)
+        steps.append({"bootstrap_api_stack": stack})
+        if not stack.get("ok"):
+            return {"ok": False, "error": "bootstrap_api_stack falhou", "steps": steps}
+
+    if profile_name in API_REGISTER_PROFILES or config.get("seed_script") == "00-seed_app_parent":
+        api_seed = _run_seed_app_parent(task_id, config, profile_name=profile_name)
+        steps.append({"seed_app_parent": api_seed})
+        if not api_seed.get("ok"):
+            return {"ok": False, "error": api_seed.get("error") or "00-seed_app_parent falhou", "steps": steps}
+
+        handoff = dict(api_seed.get("handoff") or {})
+        if profile_name == "permissions_resume":
+            pair = _pair_child_via_api(handoff, config)
+            steps.append({"api_pairing": pair})
+            if not pair.get("ok"):
+                return {"ok": False, "error": pair.get("error") or "api pairing falhou", "steps": steps}
+
+        return {
+            **api_seed,
+            "handoff": handoff,
+            "pairing_cycle": bool(config.get("pairing_cycle", profile.get("pairing_cycle"))),
+            "resume_from_handoff": bool(
+                config.get("resume_from_handoff", profile.get("resume_from_handoff"))
+            ),
+            "steps": steps,
+        }
+
+    return {
+        "ok": False,
+        "error": f"profile {profile_name} requer cadastro via API (00-seed_app_parent)",
         "steps": steps,
     }
 

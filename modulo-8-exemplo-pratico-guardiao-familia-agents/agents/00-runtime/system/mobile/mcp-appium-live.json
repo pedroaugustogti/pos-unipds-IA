@@ -1,0 +1,96 @@
+{
+  "task": "QA-LIVE-MCP",
+  "at": "2026-08-30T20:23:33.752854+00:00",
+  "devices": [
+    "emulator-5554",
+    "emulator-5556"
+  ],
+  "scenarios": [
+    {
+      "name": "C_child_seed_child_only",
+      "ok": false,
+      "checks": [
+        {
+          "name": "C_child_seed_child_only/seed",
+          "ok": true,
+          "detail": "copy_code_pairing"
+        },
+        {
+          "name": "C_child_seed_child_only/suite",
+          "ok": false,
+          "detail": "==> Appium runtime OFF (obrigatorio ate APPS_READY_OK) | ==> Appium feature=pairing (prepare->driver como engine API, apos APPS_READY_OK)"
+        }
+      ],
+      "seconds": 2225.3,
+      "suite": {
+        "ok": false,
+        "returncode": 0,
+        "markers": [
+          "==> Appium runtime OFF (obrigatorio ate APPS_READY_OK)",
+          "==> Appium feature=pairing (prepare->driver como engine API, apos APPS_READY_OK)"
+        ],
+        "handoff_after": {
+          "task_id": "QA-LIVE-EV-01",
+          "email": "admin@guardiao.local",
+          "password": "GuardiaoDev2026!",
+          "parent_email": "admin@guardiao.local",
+          "familyName": "QA Evidence QA-LIVE-EV-01",
+          "family_name": "QA Evidence QA-LIVE-EV-01",
+          "childName": "Filho QA qa-live-ev-01",
+          "child_name": "Filho QA qa-live-ev-01",
+          "childId": "fc45d3cf-8778-40c3-ac02-f03534df9380",
+          "child_id": "fc45d3cf-8778-40c3-ac02-f03534df9380",
+          "pairingCode": "275517",
+          "pairing_code": "275517",
+          "lastStep": "config_family",
+          "parentHome": false,
+          "childHome": false,
+          "childBootReset": false,
+          "childPrimedForPaste": false,
+          "childLaunched": false,
+          "seed_profile": "parent_home",
+          "seeded_at": "2026-08-30T20:22:00.066170+00:00"
+        }
+      }
+    },
+    {
+      "name": "B_parent_seed_login",
+      "ok": false,
+      "checks": [
+        {
+          "name": "B_parent_seed_login/seed",
+          "ok": true,
+          "detail": "config_family"
+        },
+        {
+          "name": "B_parent_seed_login/suite",
+          "ok": false,
+          "detail": "==> Appium runtime OFF (obrigatorio ate APPS_READY_OK) | ==> Appium feature=pairing (prepare->driver como engine API, apos APPS_READY_OK)"
+        }
+      ],
+      "seconds": 90.3,
+      "suite": {
+        "ok": false,
+        "returncode": 1,
+        "markers": [
+          "==> Appium runtime OFF (obrigatorio ate APPS_READY_OK)",
+          "==> Appium feature=pairing (prepare->driver como engine API, apos APPS_READY_OK)"
+        ],
+        "handoff_after": {}
+      }
+    },
+    {
+      "name": "D_dual_pairing",
+      "ok": false,
+      "checks": [
+        {
+          "name": "D_dual_pairing/seed",
+          "ok": false,
+          "detail": "None"
+        }
+      ],
+      "seconds": 0.1
+    }
+  ],
+  "ok": false
+}

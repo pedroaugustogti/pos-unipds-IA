@@ -66,8 +66,10 @@ Template: `docs/templates/PR_TEMPLATE.md`
 Obrigatório documentar:
 - Plataforma (iOS/Android/both)
 - Permissões alteradas
-- Estratégia de implementação
-- Arquivos alterados
+- **Estratégia de codificação** (decisões técnicas, ordem de implementação)
+- **Arquivos alterados** (tabela arquivo × mudança)
+- **Testes unitários** (suite, comando `npm test`, output exit 0)
+- Comentário na issue conforme **sec. 10.1** do ticket antes do `open_pr`
 - Dúvidas (ex.: comportamento background location, sons push)
 
 ## Commit

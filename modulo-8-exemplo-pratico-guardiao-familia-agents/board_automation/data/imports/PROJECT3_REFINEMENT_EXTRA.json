@@ -244,26 +244,23 @@
     "branch": "feat/t-p3-009-child-greeting",
     "agent_responsibilities": {
       "frontend-mobile": [
-        "Criar branch `feat/t-p3-009-child-greeting` a partir da base do repo `guardiao-familia-child`",
-        "Implementar saudação dinâmica no header da `ChildHomeV2` usando `dynamicGreeting()` de `childHome.state.ts`",
-        "Garantir regras: 00:00–11:59 Bom dia · 12:00–17:59 Boa tarde · 18:00–23:59 Boa noite (hora local)",
-        "Criar/ajustar testes unitários em `childHome.state.test.ts` validando os três cenários (manhã, tarde, noite) e bordas 11:59/12:00 e 17:59/18:00",
-        "Propagar `accessibilityLabel` coerente no header",
-        "Abrir PR e disparar evento `open_pr` — **não** executar QA Appium nem merge"
+        "Codificar no repo `guardiao-familia-child` (branch `feat/t-p3-009-child-greeting`, escopo sec. 3)",
+        "Documentar **estratégia de codificação** (centralizar `dynamicGreeting` / helpers, uso em ChildHomeV2)",
+        "Descrever **arquivos alterados**: `childHome.state.ts`, `ChildHomeV2.tsx`, `childHome.state.test.ts`",
+        "Gerar **testes unitários** (manhã/tarde/noite + bordas 11:59/12:00/17:59/18:00) — `npm test -- childHome.state` verde",
+        "Comentário sec. 10.1 + `open_pr` — **não** QA Appium nem merge"
       ],
       "frontend-mobile-reviewer": [
-        "Assumir PR em **Ready for Code Review** (`start_review`)",
-        "Validar qualidade do código entregue pelo `frontend-mobile` (legibilidade, padrões RN, escopo)",
-        "Validar cobertura e assertividade dos testes unitários dos três períodos de saudação",
-        "Identificar gaps, riscos ou melhorias (comentários acionáveis no PR)",
-        "Aprovar com `approve_review` ou devolver com `request_changes` — **não** implementar feature nem rodar Appium"
+        "Avaliar implementação do `frontend-mobile` (diff + sec. 10.1): saudação dinâmica + accessibilityLabel",
+        "Verificar **qualidade de código** RN (legibilidade, escopo, padrões do repo)",
+        "Verificar **cobertura de testes unitários** dos três períodos e bordas de horário",
+        "Comentário sec. 10.2 · `approve_review` ou `request_changes` — **não** implementar nem Appium"
       ],
       "qa-gate": [
-        "MCP sec. 6: `get_handoff` → `start_test` → `query_mobile_flow_rag` → `qa_db_seed(profile=child_home)` → `qa_appium_suite_child(from_db_seed=true)`",
-        "Validar header ChildHomeV2 nos 3 horários (emulador 5556): 08:00 Bom dia · 15:00 Boa tarde · 21:00 Boa noite",
-        "Evidências geradas pela suite MCP: 3 PNG + 3 MP4 + JSON em `agents/00-runtime/output/mobile/qa_evidence/T-P3-009/`",
-        "`qa_db_cleanup` quando `qa.db_seed.cleanup=true`",
-        "Disparar `test_passed` ou `test_failed_bug` com comentário sec. 10.3 — **não** alterar código da feature"
+        "Cenários: `greeting-morning-08h`, `greeting-afternoon-15h`, `greeting-evening-21h` + AC sec. 5 no comentário sec. 10.3",
+        "MCP **guardiao-familia-agents**: `qa_db_seed(basic_parent)` → `qa_appium_suite_child(child_only=true)` → `qa_db_cleanup`",
+        "Anexar evidências **PNG + MP4 + JSON** (ChildHomeV2, emulator-5556) em `qa-gate-({N})/evidence/`",
+        "`test_passed` ou `test_failed_bug` — **não** alterar código"
       ]
     },
     "refinement": {
@@ -271,7 +268,7 @@
       "ac_verification": [
         {"id": "AC-01", "command": "npm test -- childHome.state", "expected": "exit 0 — casos 08:00 Bom dia, 15:00 Boa tarde, 21:00 Boa noite"},
         {"id": "AC-02", "command": "MCP qa_appium_suite_child + relógio 08:00 no emulator-5556", "expected": "header contém Bom dia"},
-        {"id": "AC-03", "command": "MCP qa_appium_suite_child(from_db_seed=true) + evidências", "expected": "3 PNG + 3 MP4 + JSON em agents/00-runtime/output/mobile/qa_evidence/T-P3-009/"}
+        {"id": "AC-03", "command": "MCP qa_appium_suite_child(from_db_seed=true, child_only=true) + evidências", "expected": "3 PNG + 3 MP4 + JSON em agents/00-runtime/output/T-P3-009/qa-gate-({N})/evidence/"}
       ],
       "stop_and_redirect": [
         "Alterar pairing parent → frontend-mobile parent task",

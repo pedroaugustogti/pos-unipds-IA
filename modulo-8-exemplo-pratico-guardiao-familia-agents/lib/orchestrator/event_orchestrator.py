@@ -14,8 +14,13 @@ from board_automation.board.task_router import load_tasks
 from board_automation.board.task_status_workflow import (
     EVENT_TARGET,
     apply_event,
+    is_known_event,
+    is_test_failed_event,
     merge_owner_for_task,
+    parse_event,
+    resolve_event_target,
     resolve_status,
+    start_hint_for_event,
 )
 
 BUG_THRESHOLD = 3
@@ -73,20 +78,9 @@ SKILL_IMPACT: dict[str, dict[str, str]] = {
     },
 }
 
-# Evento → acao esperada do agente chamado
+# Evento role-based → acao esperada do agente chamado (fallback por status em start_hint_for_event)
 EVENT_START_HINT: dict[str, str] = {
-    "claim": "Iniciar implementacao (In Progress)",
-    "start_work": "Retomar implementacao",
-    "open_pr": "Aguardar/assumir fila de code review",
-    "start_review": "Executar checklist de review",
-    "request_changes": "Corrigir CR e reenviar",
-    "resubmit_review": "Re-revisar PR apos correcoes",
-    "approve_review": "Planejar testes (Ready for Test)",
-    "start_test": "Executar suite QA (In Test)",
-    "test_failed_bug": "Corrigir bug reportado pelo QA",
-    "test_passed": "Preparar merge (In Pull Request)",
-    "merge_pr": "Encerrar ciclo (Done)",
-    "reopen": "Reabrir no backlog (Todo)",
+    "orchestrator_enter_in_progress": "Orchestrator claim da task prioritária (Todo → In Progress)",
 }
 
 
@@ -111,6 +105,7 @@ def _default_runtime() -> dict[str, Any]:
         "event_log": [],
         "dispatch_queue": [],
         "hitl_queue": [],
+        "actuation_guards": {},
         "idempotency": {},
     }
 
@@ -132,6 +127,7 @@ def load_runtime(path: Path | None = None) -> dict[str, Any]:
     data.setdefault("event_log", [])
     data.setdefault("dispatch_queue", [])
     data.setdefault("hitl_queue", [])
+    data.setdefault("actuation_guards", {})
     data.setdefault("idempotency", {})
     return data
 
@@ -202,31 +198,15 @@ def resolve_agent_for_status(task: dict, status: str) -> str:
 
 def resolve_agent_for_event(task: dict, event: str) -> str:
     """Agente que deve *assumir* o status *alvo* do evento (handoff / next)."""
-    target = EVENT_TARGET.get(event)
-    if not target:
-        raise ValueError(f"Evento desconhecido: {event}")
+    target = resolve_event_target(event)
     return resolve_agent_for_status(task, target)
 
 
 def acting_agent_for_event(task: dict, event: str) -> str:
-    """Agente que *emite* o evento (assina comentário / from_agent).
-
-    Distinto de resolve_agent_for_event: open_pr é do creator, mas o próximo
-    dono do card (Ready for Code Review) é o reviewer.
-    """
-    creator = normalize_creator_role(task.get("agent_role") or "backend")
-    track = task.get("track") or "produto"
-    if event in ("claim", "start_work", "open_pr", "resubmit_review"):
-        return creator
-    if event in ("start_review", "approve_review", "request_changes"):
-        return reviewer_for(creator)
-    if event in ("start_test", "test_passed", "test_failed_bug"):
-        return QA_GATE_ROLE
-    if event == "merge_pr":
-        return merge_owner_for_task(track)
-    if event == "reopen":
-        return "orchestrator"
-    # fallback: dono do status alvo
+    """Agente que *emite* o evento (assina comentário / from_agent)."""
+    parsed = parse_event(event)
+    if parsed and parsed.get("agent_role"):
+        return parsed["agent_role"]
     return resolve_agent_for_event(task, event)
 
 
@@ -350,7 +330,7 @@ def notify_status_change(
     current = resolve_status(current)
 
     if event:
-        if event not in EVENT_TARGET:
+        if not is_known_event(event):
             return {"ok": False, "error": f"Evento invalido: {event}"}
         target = to_status or apply_event(current, event)
     else:
@@ -365,7 +345,7 @@ def notify_status_change(
     agent_idle = next_agent in idle
 
     bug_info = None
-    if event == "test_failed_bug":
+    if is_test_failed_event(event):
         bug_info = record_bug(task_id, summary, dry_run=dry_run)
 
     notification = {
@@ -377,7 +357,7 @@ def notify_status_change(
         "from": current,
         "to": target,
         "next_agent": next_agent,
-        "start_hint": EVENT_START_HINT.get(str(event), f"Atuar em status {target}"),
+        "start_hint": EVENT_START_HINT.get(event) or start_hint_for_event(event, target),
         "idle_agents": idle,
         "agent_idle": agent_idle,
         "dispatch": None,
@@ -407,28 +387,15 @@ def notify_status_change(
     elif agent_idle and next_agent != "orchestrator":
         if not dry_run:
             set_agent_state(next_agent, "busy", task_id)
-        job_info: dict[str, Any] | None = None
-        if not dry_run:
-            try:
-                from lib.orchestrator.worker_jobs import enqueue_job
-                job_info = enqueue_job(
-                    task_id=task_id,
-                    role=next_agent,
-                    event=str(event),
-                    mirror_runtime_queue=False,
-                )
-            except Exception as exc:  # noqa: BLE001
-                job_info = {"ok": False, "error": str(exc)}
         notification["dispatch"] = {
             "action": "start_task",
             "call_agent": next_agent,
             "task_id": task_id,
             "status": target,
             "hint": notification["start_hint"],
-            "job": job_info,
             "message": (
-                f"Agente `{next_agent}` ocioso — job enfileirado. "
-                f"Rode: python agents/00-orchestration/scripts/worker/worker_run.py --next --role {next_agent}"
+                f"Agente `{next_agent}` ocioso — use pipeline MCP: "
+                f"on_status_event → hitl_guard_actuation → execute_agent_actuation_tool"
             ),
         }
     elif next_agent == "orchestrator":
@@ -484,7 +451,7 @@ def notify_status_change(
 
     # Observabilidade (JSONL + dashboard) — inclui dry_run
     try:
-        from lib.observability.observability import log_from_notification
+        from lib.runtime_log import log_from_notification
         log_from_notification(notification, dry_run=dry_run)
     except Exception as _obs_exc:  # noqa: BLE001
         notification["observability_error"] = str(_obs_exc)
@@ -493,7 +460,7 @@ def notify_status_change(
 
 
 def process_dispatch_queue(limit: int = 5) -> list[dict[str, Any]]:
-    """Tenta despachar itens enfileirados quando o agente fica ocioso."""
+    """Legado: drena dispatch_queue no runtime (sem worker externo)."""
     rt = load_runtime()
     queue = rt.get("dispatch_queue") or []
     remaining = []
@@ -506,26 +473,12 @@ def process_dispatch_queue(limit: int = 5) -> list[dict[str, Any]]:
             dispatched.append({
                 **item,
                 "action": "start_task",
-                "message": f"Fila: chamar `{agent}` para `{item.get('task_id')}`",
+                "message": f"Use pipeline MCP para `{agent}` / `{item.get('task_id')}`",
             })
         else:
             remaining.append(item)
     rt["dispatch_queue"] = remaining
     save_runtime(rt)
-    try:
-        from lib.observability.observability import log_workflow_event
-        for item in dispatched:
-            log_workflow_event(
-                "dispatch_queue",
-                task_id=item.get("task_id"),
-                agent=item.get("agent"),
-                event=item.get("event"),
-                to_status=item.get("status"),
-                dispatch_action="start_task",
-                summary=item.get("message") or "",
-            )
-    except Exception:
-        pass
     return dispatched
 
 
@@ -544,12 +497,12 @@ def emit_board_event(
     task = _task_by_id(task_id)
     if not task:
         return {"ok": False, "error": f"Task {task_id} nao encontrada"}
-    if event not in EVENT_TARGET:
+    if not is_known_event(event):
         return {"ok": False, "error": f"Evento desconhecido: {event}"}
 
     current = get_local_status(task_id) or task.get("board_status") or "Todo"
     current = resolve_status(current)
-    target = resolve_status(EVENT_TARGET[event])
+    target = resolve_status(resolve_event_target(event))
 
     board_result = None
     if apply_board:

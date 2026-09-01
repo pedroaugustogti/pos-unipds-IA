@@ -1,0 +1,31 @@
+{
+  "task_id": "T-P3-009",
+  "type": "greeting_evidence",
+  "emulator": "emulator-5556",
+  "captured_at": "2026-08-30T15:41:22.304410+00:00",
+  "artifacts": [
+    {
+      "scenario": "greeting-morning-08h",
+      "label": "Bom dia",
+      "png": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\mobile\\qa_evidence\\T-P3-009\\greeting-morning-08h.png",
+      "hour": 8,
+      "mp4": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\mobile\\qa_evidence\\T-P3-009\\greeting-morning-08h.mp4"
+    },
+    {
+      "scenario": "greeting-afternoon-15h",
+      "label": "Boa tarde",
+      "png": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\mobile\\qa_evidence\\T-P3-009\\greeting-afternoon-15h.png",
+      "hour": 15,
+      "mp4": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\mobile\\qa_evidence\\T-P3-009\\greeting-afternoon-15h.mp4"
+    },
+    {
+      "scenario": "greeting-evening-21h",
+      "label": "Boa noite",
+      "png": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\mobile\\qa_evidence\\T-P3-009\\greeting-evening-21h.png",
+      "hour": 21,
+      "mp4": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\mobile\\qa_evidence\\T-P3-009\\greeting-evening-21h.mp4"
+    }
+  ],
+  "errors": [],
+  "ok": true
+}

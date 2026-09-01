@@ -6,6 +6,12 @@ import json
 from pathlib import Path
 from typing import Any
 
+from board_automation.board.task_status_workflow import (
+    is_approve_review_event,
+    is_claim_event,
+    is_open_pr_event,
+    is_test_failed_event,
+)
 from lib.gateway.event_contract import EventPayload
 from lib.orchestrator.event_orchestrator import (
     emit_board_event as _emit_board_event_legacy,
@@ -85,11 +91,13 @@ def emit_status_event(
     if isinstance(rb, str) and rb.lower() in ("yes", "true", "1"):
         task = {**task, "release_blocker": True}
 
-    if event == "claim" and not force_hitl_approved:
+    if is_claim_event(event) and not force_hitl_approved:
         from lib.orchestrator.claim_lock import check_claim_allowed
         from lib.core.dependencies import dependencies_satisfied
         from board_automation.board.reviewer_pairs import normalize_creator_role
-        role = normalize_creator_role(from_agent or task.get("agent_role") or "backend")
+        role = normalize_creator_role(task.get("agent_role") or "backend")
+        if from_agent and from_agent != "orchestrator":
+            role = normalize_creator_role(from_agent)
         lock = check_claim_allowed(task_id, role)
         if not lock.get("ok") and lock.get("code") != "already_owned":
             return {"ok": False, "code": lock.get("code"), "lock": lock, "error": lock.get("reason")}
@@ -114,14 +122,14 @@ def emit_status_event(
     if not schema["ok"]:
         return {"ok": False, "code": "schema", "errors": schema["errors"]}
 
-    if event == "open_pr" and not (react_trace or (metrics or {}).get("react_trace")):
+    if is_open_pr_event(event) and not (react_trace or (metrics or {}).get("react_trace")):
         return {
             "ok": False,
             "code": "react_trace_required",
             "error": "open_pr exige react_trace no handoff (politica ReAct).",
         }
 
-    if event == "approve_review" and not force_hitl_approved:
+    if is_approve_review_event(event) and not force_hitl_approved:
         from lib.gateway.handoff import load_handoff
         ho = load_handoff(task_id) or {}
         eg = (ho.get("metrics") or {}).get("eval_gate")
@@ -153,7 +161,7 @@ def emit_status_event(
 
     rt = load_runtime()
     bug_count = int((rt.get("bug_counts") or {}).get(task_id, {}).get("count") or 0)
-    if event == "test_failed_bug":
+    if is_test_failed_event(event):
         bug_count += 1
 
     hitl = evaluate_hitl(task, event, bug_count=bug_count)
@@ -188,8 +196,8 @@ def emit_status_event(
 
     # propose_only: aplica board com evento propose_review se approve_review
     board_event = event
-    if hitl["mode"] == "propose_only" and event == "approve_review" and not force_hitl_approved:
-        board_event = "approve_review"  # status Ready for Test, mas marca proposta
+    if hitl["mode"] == "propose_only" and is_approve_review_event(event) and not force_hitl_approved:
+        board_event = event  # status Ready for Test, mas marca proposta
         # não avança QA automaticamente: enfileira HITL confirm
         result = _emit_board_event_legacy(
             task_id,
@@ -242,7 +250,7 @@ def emit_status_event(
         return result
 
     # Classificação de bug → skill impactada
-    if event == "test_failed_bug" and bug_kind:
+    if is_test_failed_event(event) and bug_kind:
         summary = f"[{bug_kind}] {summary}".strip()
 
     result = _emit_board_event_legacy(

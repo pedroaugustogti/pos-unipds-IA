@@ -23,6 +23,6 @@ GitHub Project, roteamento de tasks, templates de issue e sincronização de sta
 | `templates/` | Issues, mobile flow, GitHub YAML |
 | `schemas/` | `board_events.json` |
 
-Cache: `agents/00-runtime/output/board/`
+Cache: `agents/00-runtime/system/board/`
 
 Import: `from board_automation.board.task_router import load_tasks`

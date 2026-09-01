@@ -1,4 +1,4 @@
-"""StateGraph Fase C — ciclo Kanban com loop até Done/HITL/max_steps."""
+"""LangGraph v2 — orchestrator decide → 55 nós de evento (factory MCP)."""
 
 from __future__ import annotations
 
@@ -8,167 +8,75 @@ from typing import Any, Literal
 
 from langgraph.graph import END, StateGraph
 
-from langgraph_app.ci_nodes import cicd_gate_node, wait_ci_node
-from langgraph_app.nodes import (
-    apply_decision,
-    decide_next,
-    implement_node,
-    load_context,
-    qa_node,
-    review_node,
-    route_task,
+from langgraph_app.event_nodes import (
+    ALL_EVENT_NODES,
+    orchestrator_decide_node,
+    sync_board_node,
 )
+from langgraph_app.event_registry import EVENT_REGISTRY, event_node_id
 from langgraph_app.persist import save_run
-from langgraph_app.state import AgentState
-from langgraph_app.tracing import (
-    build_invoke_config,
-    enrich_run_metadata,
-    ensure_tracing,
-    pipeline_span,
-)
-from lib.paths import MODULE_ROOT, orch_script
+from langgraph_app.state import PipelineState
+from langgraph_app.tracing import build_invoke_config, ensure_tracing, pipeline_span
+from lib.paths import orch_script
 
 
-def _after_context(
-    state: AgentState,
-) -> Literal["implement", "review", "qa", "hitl", "decide", "wait_ci", "cicd_gate", "end"]:
-    if state.get("error") or state.get("done"):
-        return "end"
-    if int(state.get("steps") or 0) >= int(state.get("max_steps") or 20):
-        return "end"
-    status = str(state.get("board_status") or "")
-    if status == "Done":
-        return "end"
-    if status == "In Progress":
-        return "implement"
-    if status == "In Code Review":
-        return "review"
-    if status == "In Test":
-        return "qa"
-    if status == "In Pull Request":
-        return "cicd_gate"
-    if status == "Ready for Test":
-        return "wait_ci"
-    return "decide"
-
-
-def _after_wait_ci(state: AgentState) -> Literal["decide", "apply", "end"]:
-    if state.get("error") or state.get("done") or state.get("ci_waiting"):
-        return "end"
-    dec = state.get("decision") or {}
-    if dec.get("next_event") == "test_failed_bug":
-        return "apply"
-    if state.get("test_ci_ready") or state.get("ci_status") == "green":
-        return "decide"
-    return "end"
-
-
-def _after_cicd_gate(state: AgentState) -> Literal["hitl", "end"]:
-    if state.get("error") or state.get("done") or state.get("ci_waiting"):
-        return "end"
-    if state.get("merge_checks_ok"):
-        return "hitl"
-    return "end"
-
-
-def _after_hitl(state: AgentState) -> Literal["apply", "end"]:
-    if state.get("done"):
-        return "end"
-    # Sempre tenta apply do merge_pr (live pode ficar awaiting_human)
-    if str(state.get("board_status") or "") == "In Pull Request":
-        return "apply"
-    return "end"
-
-
-def _after_apply(state: AgentState) -> Literal["route", "end"]:
+def _should_end(state: PipelineState) -> bool:
     if state.get("error") or state.get("done") or state.get("hitl_pending"):
-        return "end"
-    if int(state.get("steps") or 0) >= int(state.get("max_steps") or 20):
-        return "end"
-    if str(state.get("board_status") or "") == "Done":
-        return "end"
-    return "route"
+        return True
+    if int(state.get("steps") or 0) >= int(state.get("max_steps") or 120):
+        return True
+    return str(state.get("board_status") or "") == "Done"
 
 
-def _hitl_merge(state: AgentState) -> dict[str, Any]:
-    mode = state.get("mode") or "dry_run"
-    with pipeline_span(
-        "hitl",
-        metadata={"task_id": state.get("task_id"), "mode": mode, "board_status": state.get("board_status")},
-    ):
-        msgs = list(state.get("messages") or []) + [f"hitl: prepare merge ({mode})"]
-        return {
-            "decision": {
-                "next_event": "merge_pr",
-                "summary": "Merge apos QA",
-                "rationale": "pipeline Fase C — HITL no merge (agente devops-cicd)",
-                "confidence": 1.0,
-                "needs_human": mode == "live",
-            },
-            "messages": msgs,
-            "steps": int(state.get("steps") or 0) + 1,
-            "react_trace": [
-                {
-                    "thought": "HITL merge",
-                    "action": "hitl_merge",
-                    "observation": mode,
-                    "agent": "devops-cicd",
-                }
-            ],
-        }
+def _after_sync(state: PipelineState) -> Literal["orchestrator_decide", "end"]:
+    return "end" if _should_end(state) else "orchestrator_decide"
+
+
+def _after_decide(state: PipelineState) -> str:
+    if _should_end(state):
+        return "end"
+    node_id = str(state.get("selected_node_id") or "")
+    if node_id and node_id in ALL_EVENT_NODES:
+        return node_id
+    event = str(state.get("selected_event") or "")
+    if event in EVENT_REGISTRY:
+        return event_node_id(event)
+    return "end"
+
+
+def _after_event(state: PipelineState) -> Literal["sync_board", "end"]:
+    return "end" if _should_end(state) else "sync_board"
 
 
 def build_graph():
-    g = StateGraph(AgentState)
-    g.add_node("route", route_task)
-    g.add_node("load_context", load_context)
-    g.add_node("decide", decide_next)
-    g.add_node("implement", implement_node)
-    g.add_node("review", review_node)
-    g.add_node("qa", qa_node)
-    g.add_node("wait_ci", wait_ci_node)
-    g.add_node("cicd_gate", cicd_gate_node)
-    g.add_node("hitl", _hitl_merge)
-    g.add_node("apply", apply_decision)
+    g = StateGraph(PipelineState)
+    g.add_node("sync_board", sync_board_node)
+    g.add_node("orchestrator_decide", orchestrator_decide_node)
 
-    g.set_entry_point("route")
-    g.add_edge("route", "load_context")
+    route_map: dict[str, str] = {"end": END}
+    for node_id, fn in ALL_EVENT_NODES.items():
+        g.add_node(node_id, fn)
+        route_map[node_id] = node_id
+
+    g.set_entry_point("sync_board")
     g.add_conditional_edges(
-        "load_context",
-        _after_context,
-        {
-            "implement": "implement",
-            "review": "review",
-            "qa": "qa",
-            "wait_ci": "wait_ci",
-            "cicd_gate": "cicd_gate",
-            "hitl": "hitl",
-            "decide": "decide",
-            "end": END,
-        },
+        "sync_board",
+        _after_sync,
+        {"orchestrator_decide": "orchestrator_decide", "end": END},
     )
-    g.add_edge("decide", "apply")
-    g.add_edge("implement", "apply")
-    g.add_edge("review", "apply")
-    g.add_edge("qa", "apply")
-    g.add_conditional_edges(
-        "wait_ci",
-        _after_wait_ci,
-        {"decide": "decide", "apply": "apply", "end": END},
-    )
-    g.add_conditional_edges(
-        "cicd_gate",
-        _after_cicd_gate,
-        {"hitl": "hitl", "end": END},
-    )
-    g.add_conditional_edges("hitl", _after_hitl, {"apply": "apply", "end": END})
-    g.add_conditional_edges("apply", _after_apply, {"route": "route", "end": END})
+    g.add_conditional_edges("orchestrator_decide", _after_decide, route_map)
+    for node_id in ALL_EVENT_NODES:
+        g.add_conditional_edges(
+            node_id,
+            _after_event,
+            {"sync_board": "sync_board", "end": END},
+        )
     return g.compile()
 
 
 def _reset_task(task_id: str) -> None:
     path = orch_script("demo", "demo_apresentacao.py")
-    spec = importlib.util.spec_from_file_location("demo_apresentacao_reset", path)
+    spec = importlib.util.spec_from_file_location("demo_reset", path)
     if spec is None or spec.loader is None:
         raise ImportError(str(path))
     mod = importlib.util.module_from_spec(spec)
@@ -188,62 +96,30 @@ def run_once(
     from_zero: bool = False,
 ) -> dict[str, Any]:
     mode = (mode or os.environ.get("GUARDIAO_LANGGRAPH_MODE") or "dry_run").strip()
-    max_steps = int(os.environ.get("GUARDIAO_LANGGRAPH_MAX_STEPS") or "40")
+    max_steps = int(os.environ.get("GUARDIAO_LANGGRAPH_MAX_STEPS") or "120")
     tracing = ensure_tracing()
-
     if from_zero:
         _reset_task(task_id)
 
-    graph = build_graph()
-    initial: AgentState = {
+    initial: PipelineState = {
         "task_id": task_id,
         "title": title,
         "agent_role": agent_role,
         "mode": mode,
         "board_status": "Todo" if from_zero else "",
         "messages": [],
-        "last_tool_results": [],
         "react_trace": [],
-        "hitl_pending": False,
         "done": False,
+        "hitl_pending": False,
+        "human_clearance": mode in ("demo", "dry_run"),
         "steps": 0,
         "max_steps": max_steps,
-        "token_usage": {},
-        "last_llm_usage": None,
-        "error": None,
-        "cycle": 0,
-        "ci_status": "pending",
-        "ci_waiting": False,
-        "pr_url": None,
-        "ci_checks": [],
-        "test_ci_ready": False,
-        "merge_checks_ok": False,
+        "selected_event": "",
+        "selected_node_id": "",
     }
-
-    config = build_invoke_config(
-        task_id=task_id,
-        mode=mode,
-        agent_role=agent_role,
-        title=title,
-    )
-
-    with pipeline_span(
-        f"pipeline:{task_id}",
-        metadata=dict(config.get("metadata") or {}),
-    ):
-        final = graph.invoke(initial, config=config)
-        enrich_run_metadata(
-            {
-                "token_usage": final.get("token_usage") or {},
-                "board_status": final.get("board_status"),
-                "done": bool(final.get("done")) or final.get("board_status") == "Done",
-                "hitl_pending": bool(final.get("hitl_pending")),
-                "model_tier": final.get("model_tier") or {},
-                "steps": final.get("steps"),
-            }
-        )
-
+    config = build_invoke_config(task_id=task_id, mode=mode, agent_role=agent_role, title=title)
+    with pipeline_span(f"pipeline-v2:{task_id}", metadata=dict(config.get("metadata") or {})):
+        final = build_graph().invoke(initial, config=config)
     final["langsmith"] = tracing
-    path = save_run(task_id, final)
-    final["persist_path"] = str(path)
+    final["persist_path"] = str(save_run(task_id, final))
     return final
