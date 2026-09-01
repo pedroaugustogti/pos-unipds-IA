@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import importlib.util
 import os
 from typing import Any, Literal
 
@@ -16,8 +15,8 @@ from langgraph_app.event_nodes import (
 from langgraph_app.event_registry import EVENT_REGISTRY, event_node_id
 from langgraph_app.persist import save_run
 from langgraph_app.state import PipelineState
+from langgraph_app.task_reset import reset_task
 from langgraph_app.tracing import build_invoke_config, ensure_tracing, pipeline_span
-from lib.paths import orch_script
 
 
 def _should_end(state: PipelineState) -> bool:
@@ -74,19 +73,6 @@ def build_graph():
     return g.compile()
 
 
-def _reset_task(task_id: str) -> None:
-    path = orch_script("demo", "demo_apresentacao.py")
-    spec = importlib.util.spec_from_file_location("demo_reset", path)
-    if spec is None or spec.loader is None:
-        raise ImportError(str(path))
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    mod.reset_task(task_id)
-    from board_automation.board.task_action_history import clear_task_history
-
-    clear_task_history(task_id)
-
-
 def run_once(
     task_id: str,
     *,
@@ -99,7 +85,7 @@ def run_once(
     max_steps = int(os.environ.get("GUARDIAO_LANGGRAPH_MAX_STEPS") or "120")
     tracing = ensure_tracing()
     if from_zero:
-        _reset_task(task_id)
+        reset_task(task_id)
 
     initial: PipelineState = {
         "task_id": task_id,

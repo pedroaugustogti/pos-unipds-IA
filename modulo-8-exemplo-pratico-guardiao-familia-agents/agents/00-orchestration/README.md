@@ -20,8 +20,8 @@ Runtime: [`../00-runtime/output/`](../00-runtime/output/)
 | Situação | Ação |
 |----------|------|
 | Rodar uma task ponta a ponta | `scripts/langgraph/langgraph_run.py` |
+| Smoke do pipeline | `scripts/langgraph/smoke_pipeline.py` |
 | Emitir Status manual | `scripts/cli/gateway_cli.py` ou MCP |
-| Demo banca | `scripts/demo/demo_apresentacao.py` |
 | Estender tools | `guardiao_mcp/server.py` + `lib/*` |
 
 Bootstrap: `bootstrap.py` ajusta `PYTHONPATH` para imports.

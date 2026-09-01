@@ -9,6 +9,7 @@
 | `event_registry.py` | Catálogo + pipeline MCP por evento |
 | `event_nodes.py` | Factory de nós + runner MCP (`_run_mcp_tool`) |
 | `graph.py` | StateGraph v2 |
+| `task_reset.py` | Reset de task (`--from-zero`) |
 | `policy.py` | `suggested_event` / `status_after_event` |
 | `llm.py` | LLM structured (fases implement/review) |
 | `schemas.py` | Pydantic verdicts |
