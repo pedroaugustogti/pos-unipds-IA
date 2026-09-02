@@ -64,7 +64,7 @@ flowchart LR
 
 > Reprodução E2E via MCP `guardiao-familia-agents`. Não usar scripts Appium/CLI como caminho principal.
 
-1. `list_mcp_tools()` → `get_handoff` → `start_test` → `query_mobile_flow_rag` → `qa_db_seed` → `qa_appium_suite_*` → evidências → `qa_db_cleanup` → `test_passed`|`test_failed_bug`
+1. `list_mcp_tools()` → `get_handoff` → `qa-gate_in_test` → `query_mobile_flow_rag` → `qa_db_seed` → `qa_appium_suite_*` → evidências → `qa_db_cleanup` → `qa-gate_in_pull_request`|`qa-gate_return_in_progress`
 2. Cenários a validar (pós-suite): _(listar qa_repro_steps — ex. screenshot header, horários)_
 3. Fallback CLI somente se MCP indisponível
 

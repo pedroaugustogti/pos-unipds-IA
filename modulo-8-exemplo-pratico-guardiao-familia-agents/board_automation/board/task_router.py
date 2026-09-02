@@ -33,11 +33,10 @@ AGENT_DEFAULT_REPO = {
     "devops-cicd": "guardiao-familia-api",
     "qa-author": "guardiao-familia-api",
     "qa-gate": "guardiao-familia-api",
-    "qa": "guardiao-familia-api",  # legado CSV
     "stores-release": "guardiao-familia-parent",
 }
 
-# Criadores só claimem cards em Todo (fonte: github-project-2-import.json → fields.Status)
+# Criadores dispatcham cards em Todo (fonte: github-project-*-import.json → fields.Status)
 CREATOR_CLAIMABLE_STATUSES = frozenset({"Todo"})
 
 # Filas por papel (pipeline — não confundir com criação de harness)
@@ -100,15 +99,15 @@ def _map_role(agent: str) -> str:
 
 
 def _csv_roles_for_agent(agent: str) -> set[str]:
-    """Roles no CSV que este agente pode claimar como criador."""
+    """Roles no CSV que este agente pode selecionar como criador."""
     a = _map_role(agent)
     if a == "qa-author":
-        return {"qa", "qa-author"}
+        return {"qa-author", "qa"}  # alias no CSV de classificação
     return {a}
 
 
 def _claimable_statuses(agent: str) -> frozenset[str]:
-    """Status do board a partir dos quais o agent pode selecionar/claim."""
+    """Status do board a partir dos quais o agent pode selecionar/dispatch."""
     a = _map_role(agent)
     if a == "qa-gate":
         return ROLE_QUEUE_STATUSES["qa-gate"]
@@ -147,7 +146,7 @@ def score_task(row: dict, agent: str, sprint_atual: int = 1) -> float:
         or row["agent_role"] == agent
         or row.get("agent_role_secondary") == agent
     )
-    # qa-gate nunca claima Todo de harness — só fila de teste
+    # qa-gate nunca dispatcha Todo de harness — só fila de teste
     if agent == "qa-gate":
         role_match = False
     if role_match:

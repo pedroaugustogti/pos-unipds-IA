@@ -83,7 +83,7 @@ Reinicie o MCP após alterar o JSON ou qualquer arquivo em `tools/`.
 | qa_mobile | `qa_db_seed`, `qa_db_cleanup`, `qa_appium_suite_parent`, `qa_appium_suite_child` |
 | meta | `list_mcp_tools` |
 
-Documentação: [`agents/_shared/MCP_TOOLS.md`](../../_shared/MCP_TOOLS.md) · [`MCP_ROLE_GUIDE.md`](../../_shared/MCP_ROLE_GUIDE.md)
+Documentação: [`../docs/mcp/MCP_TOOLS.md`](../docs/mcp/MCP_TOOLS.md) · [`MCP_ROLE_GUIDE.md`](../docs/mcp/MCP_ROLE_GUIDE.md)
 
 ## Segurança
 

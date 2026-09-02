@@ -1,9 +1,0 @@
-{
-  "step": "allow_permissions",
-  "serial": "emulator-5556",
-  "error": "child ainda em prepairing — rode paste_code_parent antes",
-  "at": "2026-08-30T03:30:24.468Z",
-  "screenshot": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\allow_permissions_2026-08-30T03-30-24-467Z\\screen.png",
-  "pageSource": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\allow_permissions_2026-08-30T03-30-24-467Z\\page-source.xml",
-  "uiDumpError": "adb shell uiautomator dump /sdcard/window_dump.xml failed (137): "
-}

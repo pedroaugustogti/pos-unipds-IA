@@ -263,16 +263,16 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## Handoff entre agentes (não editar — referência)
+        ## Handoff entre agentes (eventos v2 — referência)
         | Status board | Agente ativo | Evento de saída | Próximo agente |
         |--------------|--------------|-----------------|----------------|
-        | Todo | orchestrator | claim | **creator** (acima) |
-        | In Progress | creator | open_pr | {creator}-reviewer |
-        | In Code Review | reviewer | approve_review | qa-gate |
-        | In Code Review | reviewer | request_changes | creator |
-        | In Test | qa-gate | test_passed | devops-cicd / stores-release |
-        | In Test | qa-gate | test_failed_bug | creator |
-        | In Pull Request | merge owner | merge_pr | Done |
+        | Todo | orchestrator | orchestrator_enter_in_progress | **creator** (acima) |
+        | In Progress | creator | {creator}_ready_for_code_review | {creator}-reviewer |
+        | In Code Review | reviewer | {creator}-reviewer_ready_for_test | qa-gate |
+        | In Code Review | reviewer | {creator}-reviewer_return_in_progress | creator |
+        | In Test | qa-gate | qa-gate_in_pull_request | devops-cicd / stores-release |
+        | In Test | qa-gate | qa-gate_return_in_progress | creator |
+        | In Pull Request | merge owner | devops-cicd_done / stores-release_done | Done |
 
   - type: textarea
     id: agent_payload_json

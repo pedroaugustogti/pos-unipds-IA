@@ -6,7 +6,7 @@ import re
 from typing import Any
 
 from lib.core.repo_paths import DEFAULT_PATHS, REPO_ENV, github_repo_url, resolve_repo_path
-from board_automation.board.reviewer_pairs import LEGACY_QA_ROLE, normalize_creator_role
+from board_automation.board.reviewer_pairs import CSV_QA_ROLE_ALIAS, normalize_creator_role
 
 GUARDAO_ROOT = r"C:\Users\pedro\Documents\guardiao-familia"
 

@@ -80,7 +80,7 @@
           "Abrir `test/app.e2e-spec.ts` — teste GET /api/v1/health",
           "Adicionar `expect(res.body.sandboxMarker).toBe('P3-backend')`",
           "Rodar `npm run test:e2e -- --testPathPattern=app.e2e-spec`",
-          "Commit + push branch · PR com PR_TEMPLATE.md · comentário sec.10.1 · `open_pr`"
+          "Commit + push branch · PR com PR_TEMPLATE.md · comentário sec.10.1 · `emit_status_event` (evento role-based v2)"
         ],
         "ac_verification": [
           {
@@ -232,7 +232,7 @@
           "Se houver testID/accessibilityLabel na tagline, atualizar para coerência",
           "Metro: `npx expo start --port 8082` · emulador 5554",
           "Validar visualmente splash · screenshot",
-          "PR + comentário implementação · `open_pr`"
+          "PR + comentário implementação · `emit_status_event` (evento role-based v2)"
         ],
         "ac_verification": [
           {
@@ -323,7 +323,7 @@
           "Estilo inline ou classe: opacity ~0.7, font-size menor",
           "Servir local: `npx serve . -p 4173`",
           "Playwright ou curl HTML contém data-testid",
-          "PR + open_pr"
+          "PR + emit_status_event role-based v2"
         ],
         "ac_verification": [
           {
@@ -413,7 +413,7 @@
           "Opcional: linha comentada em terraform.tfvars.example",
           "cd infra/environments/prod && terraform init -backend=false && terraform validate",
           "PR — body deve dizer: SEM terraform apply",
-          "open_pr"
+          "emit_status_event role-based v2"
         ],
         "ac_verification": [
           {
@@ -504,7 +504,7 @@
           "down: COMMENT ON DATABASE IS NULL ou string anterior",
           "docker compose up postgres · npm run migration:run",
           "npm run migration:revert (validar down)",
-          "PR + open_pr"
+          "PR + emit_status_event role-based v2"
         ],
         "ac_verification": [
           {
@@ -591,7 +591,7 @@
           "No job de test/unit, adicionar env PROJECT3_SANDBOX: 'true'",
           "Adicionar step run: echo 'Project 3 sandbox CI marker' antes dos testes",
           "Validar YAML (actionlint se disponível)",
-          "Push · PR · open_pr"
+          "Push · PR · emit_status_event role-based v2"
         ],
         "ac_verification": [
           {
@@ -677,7 +677,7 @@
           "Criar `test/project3-sandbox.spec.ts` copiando padrão app.e2e-spec health test",
           "Criar `docs/qa/PROJECT3_SANDBOX.md` com AC e comando run",
           "npm run test:e2e -- --testPathPattern=project3-sandbox",
-          "PR + open_pr"
+          "PR + emit_status_event role-based v2"
         ],
         "ac_verification": [
           {
@@ -768,7 +768,7 @@
           "Seções: Version 2.4.2-p3, Changelog (3 bullets), Checklist dry-run stores",
           "NÃO alterar app.json version real",
           "Screenshot do markdown preview ou PNG checklist",
-          "PR + open_pr"
+          "PR + emit_status_event role-based v2"
         ],
         "ac_verification": [
           {

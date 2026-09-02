@@ -11,7 +11,7 @@
         "Abrir `test/app.e2e-spec.ts` — teste GET /api/v1/health",
         "Adicionar `expect(res.body.sandboxMarker).toBe('P3-backend')`",
         "Rodar `npm run test:e2e -- --testPathPattern=app.e2e-spec`",
-        "Commit + push branch · PR com PR_TEMPLATE.md · comentário sec.10.1 · `open_pr`"
+        "Commit + push branch · PR com PR_TEMPLATE.md · comentário sec.10.1 · `emit_status_event` (evento role-based v2)"
       ],
       "ac_verification": [
         {"id": "AC-01", "command": "curl -s http://localhost:3000/api/v1/health | jq .sandboxMarker", "expected": "\"P3-backend\""},
@@ -92,7 +92,7 @@
         "Se houver testID/accessibilityLabel na tagline, atualizar para coerência",
         "Metro: `npx expo start --port 8082` · emulador 5554",
         "Validar visualmente splash · screenshot",
-        "PR + comentário implementação · `open_pr`"
+        "PR + comentário implementação · `emit_status_event` (evento role-based v2)"
       ],
       "ac_verification": [
         {"id": "AC-01", "command": "(visual) emulador parent splash", "expected": "texto Project 3 — Parent OK visível"},
@@ -117,7 +117,7 @@
         "Estilo inline ou classe: opacity ~0.7, font-size menor",
         "Servir local: `npx serve . -p 4173`",
         "Playwright ou curl HTML contém data-testid",
-        "PR + open_pr"
+        "PR + emit_status_event role-based v2"
       ],
       "ac_verification": [
         {"id": "AC-01", "command": "curl -s http://localhost:4173 | findstr p3-sandbox-badge", "expected": "Sandbox P3 Web presente"},
@@ -138,7 +138,7 @@
         "Opcional: linha comentada em terraform.tfvars.example",
         "cd infra/environments/prod && terraform init -backend=false && terraform validate",
         "PR — body deve dizer: SEM terraform apply",
-        "open_pr"
+        "emit_status_event role-based v2"
       ],
       "ac_verification": [
         {"id": "AC-01", "command": "grep project3_sandbox_enabled infra/environments/prod/variables.tf", "expected": "variable block encontrado"},
@@ -163,7 +163,7 @@
         "down: COMMENT ON DATABASE IS NULL ou string anterior",
         "docker compose up postgres · npm run migration:run",
         "npm run migration:revert (validar down)",
-        "PR + open_pr"
+        "PR + emit_status_event role-based v2"
       ],
       "ac_verification": [
         {"id": "AC-01", "command": "npm run migration:run", "expected": "exit 0"},
@@ -183,7 +183,7 @@
         "No job de test/unit, adicionar env PROJECT3_SANDBOX: 'true'",
         "Adicionar step run: echo 'Project 3 sandbox CI marker' antes dos testes",
         "Validar YAML (actionlint se disponível)",
-        "Push · PR · open_pr"
+        "Push · PR · emit_status_event role-based v2"
       ],
       "ac_verification": [
         {"id": "AC-01", "command": "grep PROJECT3_SANDBOX .github/workflows/ci.yml", "expected": "env presente"},
@@ -203,7 +203,7 @@
         "Criar `test/project3-sandbox.spec.ts` copiando padrão app.e2e-spec health test",
         "Criar `docs/qa/PROJECT3_SANDBOX.md` com AC e comando run",
         "npm run test:e2e -- --testPathPattern=project3-sandbox",
-        "PR + open_pr"
+        "PR + emit_status_event role-based v2"
       ],
       "ac_verification": [
         {"id": "AC-01", "command": "npm run test:e2e -- --testPathPattern=project3-sandbox", "expected": "exit 0"},
@@ -227,7 +227,7 @@
         "Seções: Version 2.4.2-p3, Changelog (3 bullets), Checklist dry-run stores",
         "NÃO alterar app.json version real",
         "Screenshot do markdown preview ou PNG checklist",
-        "PR + open_pr"
+        "PR + emit_status_event role-based v2"
       ],
       "ac_verification": [
         {"id": "AC-01", "command": "grep 2.4.2-p3 RELEASE_SANDBOX.md", "expected": "versão presente"},
@@ -248,19 +248,19 @@
         "Documentar **estratégia de codificação** (centralizar `dynamicGreeting` / helpers, uso em ChildHomeV2)",
         "Descrever **arquivos alterados**: `childHome.state.ts`, `ChildHomeV2.tsx`, `childHome.state.test.ts`",
         "Gerar **testes unitários** (manhã/tarde/noite + bordas 11:59/12:00/17:59/18:00) — `npm test -- childHome.state` verde",
-        "Comentário sec. 10.1 + `open_pr` — **não** QA Appium nem merge"
+        "Comentário sec. 10.1 + `emit_status_event` (evento role-based v2) — **não** QA Appium nem merge"
       ],
       "frontend-mobile-reviewer": [
         "Avaliar implementação do `frontend-mobile` (diff + sec. 10.1): saudação dinâmica + accessibilityLabel",
         "Verificar **qualidade de código** RN (legibilidade, escopo, padrões do repo)",
         "Verificar **cobertura de testes unitários** dos três períodos e bordas de horário",
-        "Comentário sec. 10.2 · `approve_review` ou `request_changes` — **não** implementar nem Appium"
+        "Comentário sec. 10.2 · `{reviewer}_ready_for_test` ou `{reviewer}_return_in_progress` — **não** implementar nem Appium"
       ],
       "qa-gate": [
         "Cenários: `greeting-morning-08h`, `greeting-afternoon-15h`, `greeting-evening-21h` + AC sec. 5 no comentário sec. 10.3",
         "MCP **guardiao-familia-agents**: `qa_db_seed(basic_parent)` → `qa_appium_suite_child(child_only=true)` → `qa_db_cleanup`",
         "Anexar evidências **PNG + MP4 + JSON** (ChildHomeV2, emulator-5556) em `qa-gate-({N})/evidence/`",
-        "`test_passed` ou `test_failed_bug` — **não** alterar código"
+        "`qa-gate_in_pull_request` ou `qa-gate_return_in_progress` — **não** alterar código"
       ]
     },
     "refinement": {

@@ -68,7 +68,7 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 - README: [`agents/00-orchestration/langgraph_app/nodes/evt/README.md`](../00-orchestration/langgraph_app/nodes/evt/README.md)
 
 ### `agents/00-orchestration/schemas/`
-- **Papel:** Cópia espelhada em `board_automation/schemas/` quando aplicável.
+- **Papel:** Cópia espelhada removida de `board_automation/schemas/` — use só este arquivo.
 - README: [`agents/00-orchestration/schemas/README.md`](../00-orchestration/schemas/README.md)
 
 ### `agents/00-orchestration/scripts/`
@@ -96,12 +96,11 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 - README: [`agents/00-runtime/system/README.md`](../00-runtime/system/README.md)
 
 ### `agents/01-role-based/`
-- **Papel:** Pastas **creator**, **reviewer**, **qa-gate** e **ops** — prompts, skills e KNOWLEDGE de cada `agent_role`.
+- **Papel:** Pastas **creator**, **reviewer**, **qa-gate** e **ops** — cada `agent_role` com prompt, skill e KNOWLEDGE.
 - README: [`agents/01-role-based/README.md`](../README.md)
 
 ### `agents/01-role-based/backend/`
 - **Papel:** Creator — implementa features, corrige bugs e abre PRs no repositório **guardiao-familia-api** (NestJS).
-- Acionar: Task no board com `agent_role=backend` (ver `TASK_AGENT_MAP.csv`)
 - Acionar: Endpoints REST/GraphQL, módulos NestJS, DTOs, guards, integrações de serviço
 - Acionar: Correções de API consumidas por mobile ou web
 - Decisão: **Gateway:** alterar Status somente via `emit_status_event` (MCP) — nunca editar coluna do board manualmente
@@ -227,17 +226,6 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 - Decisão: **ReAct:** `on_status_event` → `developer_review` → `execute_agent_actuation_tool` (máx. 3 voltas; ver `agent.md`)
 - README: [`agents/01-role-based/frontend-web-reviewer/README.md`](../frontend-web-reviewer/README.md)
 
-### `agents/01-role-based/qa/`
-- **Papel:** Creator — executa e documenta testes **E2E cross-stack** (API + web + mobile) do Guardião Família.
-- Acionar: Task com `agent_role=qa`
-- Acionar: Cenários E2E integrados, regressão entre stacks, evidências de fluxo completo
-- Acionar: Validação pós-implementação antes ou após gate formal
-- Decisão: **Gateway:** eventos role-based `qa-author_in_progress`, `qa-author_ready_for_code_review` via `emit_status_event` (alias CSV `qa`; legado v1 rejeitado)
-- Decisão: **Handoff:** cenários, logs e artefatos em `agents/00-runtime/output/{task_id}/handoff.json`
-- Decisão: **ReAct:** `on_status_event` → `developer_implement` → `execute_agent_actuation_tool` (eventos `qa_*`; ver `agent.md`)
-- Decisão: Não iniciar harness em Todo — responsabilidade do `qa-author`
-- README: [`agents/01-role-based/qa/README.md`](../qa/README.md)
-
 ### `agents/01-role-based/qa-author/`
 - **Papel:** Creator — authora e mantém o **harness de testes** (fixtures, helpers, dados seed, estrutura de suites).
 - Acionar: Task com `agent_role=qa-author`
@@ -269,16 +257,6 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 - Decisão: Status: eventos role-based `qa-gate_in_test`, `qa-gate_in_pull_request`, `qa-gate_return_in_progress`
 - README: [`agents/01-role-based/qa-gate/README.md`](../qa-gate/README.md)
 
-### `agents/01-role-based/qa-reviewer/`
-- **Papel:** Reviewer — revisa planos, evidências e resultados E2E do `qa` e emite veredito via gateway.
-- Acionar: Task em review com handoff do `qa`
-- Acionar: Validação de cobertura de cenários, qualidade de evidências e classificação de bugs
-- Acionar: Disputas sobre pass/fail de testes cross-stack
-- Decisão: **Gateway:** eventos role-based `qa-reviewer_in_code_review`, `qa-reviewer_ready_for_test`, `qa-reviewer_return_in_progress` via `emit_status_event`
-- Decisão: **Handoff:** ler `agents/00-runtime/output/{task_id}/handoff.json` (evidências anexas)
-- Decisão: **ReAct:** `on_status_event` → `developer_review` → `execute_agent_actuation_tool` (máx. 3 voltas; ver `agent.md`)
-- README: [`agents/01-role-based/qa-reviewer/README.md`](../qa-reviewer/README.md)
-
 ### `agents/01-role-based/stores-release/`
 - **Papel:** Creator — prepara e executa releases nas **app stores** (Google Play, App Store) do Guardião Família.
 - Acionar: Task com `agent_role=stores-release`
@@ -304,7 +282,7 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 ## board_automation/
 
 ### `board_automation/`
-- **Papel:** GitHub Project, roteamento de tasks, templates de issue e sincronização de status.
+- **Papel:** GitHub Project, roteamento de tasks, templates de issue e sincronização de status — integrado ao **LangGraph v2** e gateway MCP.
 - README: [`board_automation/README.md`](../../board_automation/README.md)
 
 ### `board_automation/board/`
@@ -332,7 +310,7 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 - README: [`board_automation/docs/README.md`](../../board_automation/docs/README.md)
 
 ### `board_automation/schemas/`
-- **Papel:** Espelho de `agents/00-orchestration/schemas/board_events.json`.
+- **Papel:** Schema canônico: [`../../agents/00-orchestration/schemas/board_events.json`](../../agents/00-orchestration/schemas/board_events.json)
 - README: [`board_automation/schemas/README.md`](../../board_automation/schemas/README.md)
 
 ### `board_automation/scripts/`
@@ -342,10 +320,6 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 ### `board_automation/scripts/cli/`
 - **Papel:** Sempre `--dry-run` primeiro em produção.
 - README: [`board_automation/scripts/cli/README.md`](../../board_automation/scripts/cli/README.md)
-
-### `board_automation/scripts/ops/`
-- **Papel:** Manutenção estrutural de `board_automation/` (moves, reorganização).
-- README: [`board_automation/scripts/ops/README.md`](../../board_automation/scripts/ops/README.md)
 
 ### `board_automation/scripts/seeds/`
 - **Papel:** Logs: `agents/00-runtime/system/board/`
@@ -376,7 +350,7 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 ## docs/
 
 ### `docs/`
-- **Papel:** Índice para **agentes e operadores**: comportamento, operação, autonomia.
+- **Papel:** Índice para **agentes e operadores**: operação, autonomia, templates.
 - README: [`docs/README.md`](../../docs/README.md)
 
 ### `docs/apresentacao/`
@@ -394,10 +368,6 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 ### `docs/autonomia/orquestracao/`
 - **Papel:** Visão completa do fluxo Guardião Família (módulo 8): **onde cada tecnologia entra**, papéis de agentes, modelos LLM, MCP, nós LangGraph e porta única do gateway.
 - README: [`docs/autonomia/orquestracao/README.md`](../../docs/autonomia/orquestracao/README.md)
-
-### `docs/comportamento/`
-- **Papel:** Aponta para `agents/01-role-based/{role}/agent.md` e `SKILL.md` de cada papel.
-- README: [`docs/comportamento/README.md`](../../docs/comportamento/README.md)
 
 ### `docs/live/`
 - **Papel:** Espelho publicado em GitHub Pages (`dashboard.html`, `snapshot.json`).

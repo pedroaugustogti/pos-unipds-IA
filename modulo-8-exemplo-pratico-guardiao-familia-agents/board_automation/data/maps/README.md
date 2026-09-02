@@ -9,3 +9,5 @@
 Env: `GUARDAO_TASK_MAP_CSV` (default `TASK_AGENT_MAP.csv`).
 
 Colunas-chave: `id`, `agent_role`, `agent_role_secondary`, `repo`, `track`, `status_baseline`.
+
+Eventos board v2: [`../../agents/00-orchestration/docs/board/WORKFLOW_BOARD.md`](../../agents/00-orchestration/docs/board/WORKFLOW_BOARD.md)

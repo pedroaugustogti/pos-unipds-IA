@@ -6,7 +6,7 @@ API de domínio do GitHub Project e roteamento de tasks.
 |--------|--------|
 | `task_router.py` | `load_tasks`, `pick_task` por agent_role |
 | `board_client.py` | GitHub Project API |
-| `task_status_workflow.py` | Máquina de estados |
+| `task_status_workflow.py` | Máquina de estados · catálogo eventos v2 role-based |
 | `issue_task_body.py` | Gera body de issue a partir do template |
 | `reviewer_pairs.py` | Creator ↔ reviewer |
 | `task_action_history.py` | Trilha ReAct |

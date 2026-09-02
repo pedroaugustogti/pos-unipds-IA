@@ -96,7 +96,7 @@ flowchart LR
 
 | Gap | Ação |
 |-----|------|
-| Task sem `test_suite` → "Suite tipada OK" | Se `test_suite` vazio: `test_failed_bug` + comentário pedindo backfill issue |
+| Task sem `test_suite` → "Suite tipada OK" | Se `test_suite` vazio: `qa-gate_return_in_progress` + comentário pedindo backfill issue |
 | Live vs dry | Flag `QA_STRICT=1` no `.env` (secção Project #3) |
 
 **Arquivos:** `langgraph_app/nodes.py`, `lib/qa_mobile.py`, `lib/qa_playwright.py`, `tests/test_langgraph_ci.py`.
@@ -122,7 +122,7 @@ flowchart LR
 |------|----------------|
 | Entrada | Board **In Test**; ler `acceptance_hints` + `test_suite` da issue |
 | Execução | Matriz suite → comando; dual emulator quando `qa-mobile-pairing-appium-dual` |
-| Saída | Evidências + `test_passed` / `test_failed_bug`; nunca merge |
+| Saída | Evidências + `qa-gate_in_pull_request` / `qa-gate_return_in_progress`; nunca merge |
 | Validação AC | Checklist 1:1 com AC-NN da issue |
 
 **Aceite:** eval `evals/runner.py` inclui caso qa-gate com mock suite.

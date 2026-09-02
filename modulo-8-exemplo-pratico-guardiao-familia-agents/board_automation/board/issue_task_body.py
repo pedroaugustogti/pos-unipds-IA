@@ -6,6 +6,8 @@ import json
 from typing import Any
 
 from board_automation.board.reviewer_pairs import reviewer_for
+from board_automation.board.task_status_workflow import build_event
+from board_automation.board.reviewer_pairs import normalize_creator_role
 
 GUARDAO_ROOT = r"C:\Users\pedro\Documents\guardiao-familia"
 MODULE8 = "modulo-8-exemplo-pratico-guardiao-familia-agents"
@@ -18,12 +20,30 @@ REDIRECT_TABLE = """| Se precisar de… | Pare e redirecione para |
 | Endpoint NestJS / service | `backend` |
 | App parent/child RN | `frontend-mobile` |
 | Site / backoffice | `frontend-web` |
-| Escrever specs de teste | `qa` |
+| Escrever specs de teste | `qa-author` |
 | Submit stores | `stores-release` |"""
 
 
 def _reviewer(agent_role: str) -> str:
     return reviewer_for(agent_role) or f"{agent_role}-reviewer"
+
+
+def _task_events(agent_role: str, reviewer: str, merge_owner: str) -> dict[str, str]:
+    """Eventos role-based v2 para esta task (gateway / MCP)."""
+    role = normalize_creator_role(agent_role)
+    return {
+        "orchestrator_enter": "orchestrator_enter_in_progress",
+        "creator_in_progress": build_event(role, "In Progress"),
+        "ready_for_cr": build_event(role, "Ready for Code Review"),
+        "in_code_review": build_event(reviewer, "In Code Review"),
+        "ready_for_test": build_event(reviewer, "Ready for Test"),
+        "return_in_progress": build_event(reviewer, "In Progress", return_=True),
+        "resubmit_cr": build_event(role, "In Code Review"),
+        "qa_in_test": build_event("qa-gate", "In Test"),
+        "qa_in_pr": build_event("qa-gate", "In Pull Request"),
+        "qa_return": build_event("qa-gate", "In Progress", return_=True),
+        "merge_done": build_event(merge_owner, "Done"),
+    }
 
 
 def _slug(task_id: str) -> str:
@@ -120,13 +140,13 @@ def format_qa_repro_appium_section(
         "```",
         "1. list_mcp_tools()",
         f"2. get_handoff(task_id=\"{tid}\")",
-        f"3. emit_status_event(task_id=\"{tid}\", event=\"start_test\", dry_run=false)",
+        f"3. emit_status_event(task_id=\"{tid}\", event=\"qa-gate_in_test\", dry_run=false)",
         f"4. query_mobile_flow_rag(query=<feature/tela>, task_id=\"{tid}\")",
         f"5. qa_db_seed(task_id=\"{tid}\", profile=\"{profile}\", use_task_config=true, dry_run=false)",
         f"6. {appium_tool}({appium_args})",
         "   # validar cenários abaixo + evidências PNG/MP4",
         cleanup_note,
-        f"8. emit_status_event(task_id=\"{tid}\", event=\"test_passed\"|\"test_failed_bug\", dry_run=false)",
+        f"8. emit_status_event(task_id=\"{tid}\", event=\"qa-gate_in_pull_request\"|\"qa-gate_return_in_progress\", dry_run=false)",
         "```",
         "",
         "#### Cenários a validar (pós-suite MCP)",
@@ -297,7 +317,7 @@ def format_phase_table(
     review_resp = (
         "Avaliar implementação do creator · qualidade de código · cobertura de testes unitários"
         if "mobile" in reviewer or agent_role == "frontend-mobile"
-        else "Review PR, `approve_review` / `request_changes`"
+        else "Review PR, eventos role-based v2 (ver Anexo A)"
     )
     qa_resp = (
         "Cenários + AC · MCP guardiao-familia-agents · evidências PNG/MP4/JSON"
@@ -307,11 +327,11 @@ def format_phase_table(
     return [
         "| Fase | Board Status | Agente | Responsabilidade | Proibido nesta fase |",
         "|------|--------------|--------|------------------|---------------------|",
-        f"| Claim | Todo → In Progress | **{agent_role}** (creator) | Branch, implementar escopo sec. 3, testes{rag} | Review próprio código |",
+        f"| Dispatch | Todo → In Progress | **{agent_role}** (creator) | Branch, implementar escopo sec. 3, testes{rag} | Review próprio código |",
         f"| Implementar | In Progress | **{agent_role}** | {impl_resp} | {impl_forbid} |",
         f"| Review | In Code Review | **{reviewer}** | {review_resp} | Implementar feature, rodar QA gate |",
         f"| QA | In Test | **qa-gate** | {qa_resp} | Merge PR, alterar código |",
-        f"| Merge | In Pull Request | **{handoff['merge_owner']}** | `merge_pr` após HITL | Alterar código da feature |",
+        f"| Merge | In Pull Request | **{handoff['merge_owner']}** | `{build_event(handoff['merge_owner'], 'Done')}` após HITL | Alterar código da feature |",
     ]
 
 
@@ -327,13 +347,13 @@ def format_qa_mcp_steps(tid: str, profile: str = "child_home", *, child_only: bo
         "| Passo | Tool MCP | Parâmetros |",
         "|-------|----------|------------|",
         f"| 1 | `get_handoff` | `task_id={tid}` |",
-        f"| 2 | `emit_status_event` | `event=start_test`, `dry_run=false` |",
+        f"| 2 | `emit_status_event` | `event=qa-gate_in_test`, `dry_run=false` |",
         f"| 3 | `query_mobile_flow_rag` | `query=<tela/feature>`, `task_id={tid}` |",
         f"| 4 | `qa_db_seed` | `task_id={tid}`, `profile={profile}`, `use_task_config=true`, `dry_run=false` |",
         f"| 5 | `{appium_tool}` | {appium_params} |",
         f"| 6 | (evidência) | screenshots / MP4 conforme AC |",
         f"| 7 | `qa_db_cleanup` | `task_id={tid}`, `dry_run=false` |",
-        f"| 8 | `emit_status_event` | `test_passed` ou `test_failed_bug`, `dry_run=false` |",
+        f"| 8 | `emit_status_event` | `qa-gate_in_pull_request` ou `qa-gate_return_in_progress`, `dry_run=false` |",
         "",
     ]
 
@@ -375,7 +395,7 @@ def format_qa_section(qa: dict[str, Any], tid: str, repo: str) -> list[str]:
         lines.append(how)
         lines.append("```")
         lines.append("")
-    lines.append("**Regra:** se qualquer AC = FAIL → `test_failed_bug` + comentário qa-gate (sec. 10). Não merge.")
+    lines.append("**Regra:** se qualquer AC = FAIL → `qa-gate_return_in_progress` + comentário qa-gate (sec. 10). Não merge.")
     lines.append("")
     return lines
 
@@ -402,7 +422,7 @@ def _format_annex_d_mobile(tid: str, repo: str, qa: dict[str, Any]) -> str:
     evidence = f"agents/00-runtime/output/{tid}/qa-gate-({{N}})/evidence/"
     return f"""## Anexo D — Papel `qa-gate` + evidências mobile (resumo)
 
-**MCP (obrigatório):** `get_handoff` → `start_test` → `qa_db_seed(profile={profile})` → {appium_call} → screenshots/MP4 → `qa_db_cleanup` → `test_passed` | `test_failed_bug`
+**MCP (obrigatório):** `get_handoff` → `qa-gate_in_test` → `qa_db_seed(profile={profile})` → {appium_call} → screenshots/MP4 → `qa_db_cleanup` → `qa-gate_in_pull_request` | `qa-gate_return_in_progress`
 
 {stack}
 
@@ -410,7 +430,7 @@ def _format_annex_d_mobile(tid: str, repo: str, qa: dict[str, Any]) -> str:
 
 **Marcadores de sucesso:** {markers}
 
-**Anti-patterns:** `test_passed` sem evidência visual · Appium sem `APPS_READY_OK` · commitar `stage-handoff.json`"""
+**Anti-patterns:** `qa-gate_in_pull_request` sem evidência visual · Appium sem `APPS_READY_OK` · commitar `stage-handoff.json`"""
 
 
 def format_appendices(
@@ -420,6 +440,7 @@ def format_appendices(
     handoff: dict[str, Any],
     ref: dict[str, Any],
     qa: dict[str, Any],
+    ev: dict[str, str],
 ) -> list[str]:
     tid = task["id"]
     title = task["title"]
@@ -433,10 +454,10 @@ def format_appendices(
 
     annex_d_generic = """## Anexo D — Papel `qa-gate` (resumo)
 
-- Ler handoff + `start_test` via MCP `emit_status_event`
+- Ler handoff + `qa-gate_in_test` via MCP `emit_status_event`
 - Executar suite sec. 6 e validar todos os AC
 - Anexar evidências (screenshot, log, JSON) na issue
-- `test_passed` somente se todos AC PASS · senão `test_failed_bug`
+- `qa-gate_in_pull_request` somente se todos AC PASS · senão `qa-gate_return_in_progress`
 - Não alterar código da feature nem fazer merge"""
 
     annex_b_extra = ""
@@ -450,37 +471,38 @@ def format_appendices(
     return [
         "---",
         "",
-        "## Anexo A — Fluxo board (eventos)",
+        "## Anexo A — Fluxo board (eventos v2 role-based)",
         "",
         "| Evento | Status alvo | Quem dispara |",
         "|--------|-------------|--------------|",
-        f"| `claim` | In Progress | {agent_role} |",
-        f"| `open_pr` | Ready for Code Review | {agent_role} |",
-        f"| `start_review` | In Code Review | {reviewer} |",
-        f"| `approve_review` | Ready for Test | {reviewer} |",
-        f"| `request_changes` | In Progress | {reviewer} |",
-        f"| `resubmit_review` | In Code Review | {agent_role} (pós-correção) |",
-        "| `start_test` | In Test | qa-gate |",
-        "| `test_passed` | In Pull Request | qa-gate |",
-        "| `test_failed_bug` | In Progress | qa-gate |",
-        f"| `merge_pr` | Done | {handoff['merge_owner']} |",
+        f"| `{ev['orchestrator_enter']}` | In Progress | orchestrator |",
+        f"| `{ev['creator_in_progress']}` | In Progress | {agent_role} |",
+        f"| `{ev['ready_for_cr']}` | Ready for Code Review | {agent_role} |",
+        f"| `{ev['in_code_review']}` | In Code Review | {reviewer} |",
+        f"| `{ev['ready_for_test']}` | Ready for Test | {reviewer} |",
+        f"| `{ev['return_in_progress']}` | In Progress | {reviewer} |",
+        f"| `{ev['resubmit_cr']}` | In Code Review | {agent_role} (pós-correção) |",
+        f"| `{ev['qa_in_test']}` | In Test | qa-gate |",
+        f"| `{ev['qa_in_pr']}` | In Pull Request | qa-gate |",
+        f"| `{ev['qa_return']}` | In Progress | qa-gate |",
+        f"| `{ev['merge_done']}` | Done | {handoff['merge_owner']} |",
         "",
         f"## Anexo B — Papel `{agent_role}` (resumo)",
         "",
-        f"- Implementar apenas escopo sec. 3 · eventos MCP: `claim` → `open_pr`{annex_b_extra}",
+        f"- Implementar apenas escopo sec. 3 · eventos MCP: `{ev['creator_in_progress']}` → `{ev['ready_for_cr']}`{annex_b_extra}",
         "- Não executar QA gate nem merge — handoff para reviewer e qa-gate",
         "- Redirecionar trabalho fora do escopo → agente correto (sec. 3)",
         "",
         f"## Anexo C — Papel `{reviewer}` (resumo)",
         "",
-        "- Assumir PR em **Ready for Code Review** (`start_review`)",
+        f"- Assumir PR em **Ready for Code Review** (`{ev['in_code_review']}`)",
         "- Validar escopo sec. 3, qualidade do código e testes do creator",
-        "- `approve_review` → Ready for Test · `request_changes` → In Progress com comentários acionáveis",
+        f"- `{ev['ready_for_test']}` → Ready for Test · `{ev['return_in_progress']}` → In Progress com comentários acionáveis",
         "- Não implementar feature nem rodar suite QA gate",
         "",
         annex_d_mobile if mobile else annex_d_generic,
         "",
-        "## Anexo E — Template PR (preencher no `open_pr`)",
+        f"## Anexo E — Template PR (preencher antes de `{ev['ready_for_cr']}`)",
         "",
         "```markdown",
         "## Resumo",
@@ -546,6 +568,9 @@ def build_agent_payload(task: dict[str, Any]) -> dict[str, Any]:
     tid = task["id"]
     agent_role = task["agent_role"]
     repo = task["repo"]
+    reviewer = _reviewer(agent_role)
+    merge_owner = "stores-release" if task.get("track") == "stores" else "devops-cicd"
+    ev = _task_events(agent_role, reviewer, merge_owner)
     return {
         "task_id": tid,
         "title": task["title"],
@@ -565,10 +590,11 @@ def build_agent_payload(task: dict[str, Any]) -> dict[str, Any]:
         "agent_responsibilities": task.get("agent_responsibilities") or {},
         "handoff_expectations": task.get("handoff_expectations")
         or {
-            "creator_exit_event": "open_pr",
-            "reviewer_exit_event": "approve_review",
-            "qa_exit_event": "test_passed",
-            "merge_owner": "stores-release" if task.get("track") == "stores" else "devops-cicd",
+            "creator_exit_event": ev["ready_for_cr"],
+            "reviewer_exit_event": ev["ready_for_test"],
+            "qa_exit_event": ev["qa_in_pr"],
+            "merge_owner": merge_owner,
+            "merge_exit_event": ev["merge_done"],
         },
     }
 
@@ -608,6 +634,7 @@ def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = 
     reviewer = _reviewer(agent_role)
     payload = build_agent_payload(task)
     handoff = payload["handoff_expectations"]
+    ev = _task_events(agent_role, reviewer, handoff["merge_owner"])
     branch = payload["branch"]
     base = payload["base_branch"]
     repo_path = payload["repo_path"]
@@ -735,11 +762,11 @@ def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = 
         "",
         steps_block,
         "",
-        "**Antes de `open_pr`:**",
+        f"**Antes de `{ev['ready_for_cr']}`:**",
         f"- [ ] Todos os AC verificados localmente (sec. 5)",
         f"- [ ] PR preenchido conforme **Anexo E** (template inline)",
         f"- [ ] Comentário de implementação (sec. 10) na issue",
-        f"- [ ] Board → **Ready for Code Review** · evento open_pr",
+        f"- [ ] Board → **Ready for Code Review** · `emit_status_event` com `{ev['ready_for_cr']}`",
     ]
     if agent_role == "frontend-mobile":
         lines.append("- [ ] Fluxo sec. 2.1 reproduzido no emulador antes do PR")
@@ -760,13 +787,13 @@ def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = 
         "",
         "| De | Para | Evento | Quem dispara |",
         "|----|------|--------|--------------|",
-        f"| Todo | In Progress | `claim` | orchestrator / creator |",
-        f"| In Progress | Ready for Code Review | `open_pr` | **{agent_role}** |",
-        f"| In Code Review | Ready for Test | `approve_review` | **{reviewer}** |",
-        f"| In Code Review | In Progress | `request_changes` | **{reviewer}** |",
-        f"| In Test | In Pull Request | `test_passed` | **qa-gate** |",
-        f"| In Test | In Progress | `test_failed_bug` | **qa-gate** |",
-        f"| In Pull Request | Done | `merge_pr` | **{handoff['merge_owner']}** |",
+        f"| Todo | In Progress | `{ev['orchestrator_enter']}` | orchestrator |",
+        f"| In Progress | Ready for Code Review | `{ev['ready_for_cr']}` | **{agent_role}** |",
+        f"| In Code Review | Ready for Test | `{ev['ready_for_test']}` | **{reviewer}** |",
+        f"| In Code Review | In Progress | `{ev['return_in_progress']}` | **{reviewer}** |",
+        f"| In Test | In Pull Request | `{ev['qa_in_pr']}` | **qa-gate** |",
+        f"| In Test | In Progress | `{ev['qa_return']}` | **qa-gate** |",
+        f"| In Pull Request | Done | `{ev['merge_done']}` | **{handoff['merge_owner']}** |",
         "",
         "## 9. Payload máquina (`agent-task`)",
         "",
@@ -795,7 +822,7 @@ def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = 
         "```markdown",
         conv.get("merge") or _DEFAULT_MERGE,
         "```",
-        *format_appendices(task, agent_role, reviewer, handoff, ref, qa),
+        *format_appendices(task, agent_role, reviewer, handoff, ref, qa, ev),
     ]
     return "\n".join(line for line in lines if line is not None)
 
@@ -828,7 +855,7 @@ _DEFAULT_IMPL = """## [{agent_role}] Implementação
 
 ### Handoff
 PR: 
-→ `{reviewer}` via evento `open_pr`"""
+→ `{reviewer}` via evento role-based v2 (`handoff_expectations.creator_exit_event`)"""
 
 _DEFAULT_REVIEW = """## [{reviewer}] Code Review
 
@@ -852,8 +879,8 @@ _DEFAULT_REVIEW = """## [{reviewer}] Code Review
 - [ ] `npm test` verde no PR
 
 ### Decisão
-- [ ] **approve_review** — segue para qa-gate
-- [ ] **request_changes** — motivo:"""
+- [ ] Emitir evento reviewer `{role}_ready_for_test` — segue para qa-gate
+- [ ] Emitir evento reviewer `{role}_return_in_progress` — motivo:"""
 
 _DEFAULT_QA = """## [qa-gate] QA
 
@@ -872,7 +899,7 @@ _DEFAULT_QA = """## [qa-gate] QA
 
 ### Comandos executados (MCP guardiao-familia-agents — obrigatório)
 ```
-get_handoff → start_test → query_mobile_flow_rag → qa_db_seed → qa_appium_suite_* → qa_db_cleanup → test_passed|test_failed_bug
+get_handoff → qa-gate_in_test → query_mobile_flow_rag → qa_db_seed → qa_appium_suite_* → qa_db_cleanup → qa-gate_in_pull_request|qa-gate_return_in_progress
 ```
 
 ### Evidências (anexar mídias)
@@ -881,11 +908,11 @@ get_handoff → start_test → query_mobile_flow_rag → qa_db_seed → qa_appiu
 - JSON report: `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/`
 
 ### Decisão
-- [ ] **test_passed** — todos AC PASS
-- [ ] **test_failed_bug** — AC falhou:"""
+- [ ] **`qa-gate_in_pull_request`** — todos AC PASS
+- [ ] **`qa-gate_return_in_progress`** — AC falhou:"""
 
 _DEFAULT_MERGE = """## [devops-cicd] Merge
 
 PR merged: 
 CI: green
-Evento: merge_pr → Done"""
+Evento role-based v2: `{ops_role}_done` → Done"""

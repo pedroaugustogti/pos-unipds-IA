@@ -227,7 +227,7 @@ def is_test_passed_event(event: str) -> bool:
 def start_hint_for_event(event: str, target_status: str = "") -> str:
     """Hint de atuação para notificações e playbook."""
     if event == "orchestrator_enter_in_progress":
-        return "Orchestrator claim da task prioritária (Todo → In Progress)"
+        return "Orchestrator dispatch da task prioritária (Todo → In Progress)"
     parsed = parse_event(event) or {}
     status = str(parsed.get("status") or target_status or "")
     if parsed.get("return"):
@@ -340,91 +340,91 @@ STAGE_OWNERS: dict[str, str] = {
     "In Progress": "creator",
     "Ready for Code Review": "reviewer",
     "In Code Review": "reviewer",
-    "Ready for Test": "qa",
-    "In Test": "qa",
+    "Ready for Test": "qa-gate",
+    "In Test": "qa-gate",
     "In Pull Request": "devops-cicd",
     "Done": "orchestrator",
 }
 
-# Detalhe por etapa: quem entra, o que faz, como sai, evento
+# Detalhe por etapa: quem entra, o que faz, como sai, evento v2
 AGENT_STAGES: list[dict[str, str]] = [
     {
         "status": "Todo",
         "owner": "orchestrator",
         "enters": "Backlog priorizado; nenhum agente criador ativo",
-        "does": "Planeja sprint, roteia via TASK_AGENT_MAP, executa claim",
-        "exits": "claim → assign creator + In Progress",
+        "does": "Planeja sprint, roteia via TASK_AGENT_MAP, dispatch prioritário",
+        "exits": "orchestrator_enter_in_progress → In Progress",
         "event_in": "-",
-        "event_out": "claim",
+        "event_out": "orchestrator_enter_in_progress",
         "label": "agent:todo",
     },
     {
         "status": "In Progress",
         "owner": "creator",
-        "enters": "claim | request_changes (CR) | test_failed_bug (QA)",
+        "enters": "orchestrator_enter_in_progress | {reviewer}_return_in_progress | qa-gate_return_in_progress",
         "does": "Implementa/corrige na branch; commit T-XXX; prepara PR",
-        "exits": "open_pr → Ready for Code Review | resubmit_review → In Code Review",
-        "event_in": "claim / request_changes / test_failed_bug",
-        "event_out": "open_pr / resubmit_review",
+        "exits": "{creator}_ready_for_code_review | {creator}_in_code_review (resubmit)",
+        "event_in": "orchestrator_enter_in_progress / *_return_in_progress",
+        "event_out": "{creator}_ready_for_code_review / {creator}_in_code_review",
         "label": "agent:in-progress",
     },
     {
         "status": "Ready for Code Review",
         "owner": "reviewer",
-        "enters": "open_pr (criador abriu PR)",
+        "enters": "{creator}_ready_for_code_review (PR aberto)",
         "does": "Revisor pareado (1:1) assume fila; busca PR por task_id",
-        "exits": "start_review → In Code Review",
-        "event_in": "open_pr",
-        "event_out": "start_review",
+        "exits": "{reviewer}_in_code_review",
+        "event_in": "{creator}_ready_for_code_review",
+        "event_out": "{reviewer}_in_code_review",
         "label": "agent:ready-for-code-review",
     },
     {
         "status": "In Code Review",
         "owner": "reviewer",
-        "enters": "start_review | resubmit_review (correcao CR)",
+        "enters": "{reviewer}_in_code_review | {creator}_in_code_review (correção)",
         "does": "Checklist skill revisor; comenta PR; emite veredito",
-        "exits": "approve_review → Ready for Test | request_changes → In Progress",
-        "event_in": "start_review / resubmit_review",
-        "event_out": "approve_review / request_changes",
+        "exits": "{reviewer}_ready_for_test | {reviewer}_return_in_progress",
+        "event_in": "{reviewer}_in_code_review / {creator}_in_code_review",
+        "event_out": "{reviewer}_ready_for_test / {reviewer}_return_in_progress",
         "label": "agent:in-code-review",
     },
     {
         "status": "Ready for Test",
-        "owner": "qa",
-        "enters": "approve_review (CR aprovado)",
-        "does": "QA planeja cenarios; prepara ambiente/dispositivos",
-        "exits": "start_test → In Test",
-        "event_in": "approve_review",
-        "event_out": "start_test",
+        "owner": "qa-gate",
+        "enters": "{reviewer}_ready_for_test (CR aprovado)",
+        "does": "QA planeja cenários; prepara ambiente/dispositivos",
+        "exits": "qa-gate_in_test",
+        "event_in": "{reviewer}_ready_for_test",
+        "event_out": "qa-gate_in_test",
         "label": "agent:ready-for-test",
     },
     {
         "status": "In Test",
-        "owner": "qa",
-        "enters": "start_test",
+        "owner": "qa-gate",
+        "enters": "qa-gate_in_test",
         "does": "E2E, regressao, evidencias; label type:bug se falhar",
-        "exits": "test_passed → In Pull Request | test_failed_bug → In Progress",
-        "event_in": "start_test",
-        "event_out": "test_passed / test_failed_bug",
+        "exits": "qa-gate_in_pull_request | qa-gate_return_in_progress",
+        "event_in": "qa-gate_in_test",
+        "event_out": "qa-gate_in_pull_request / qa-gate_return_in_progress",
         "label": "agent:in-test",
     },
     {
         "status": "In Pull Request",
         "owner": "devops-cicd",
-        "enters": "test_passed (stores-release se track=stores)",
+        "enters": "qa-gate_in_pull_request (stores-release se track=stores)",
         "does": "Merge queue, CI green, deploy staging/prod conforme task",
-        "exits": "merge_pr → Done",
-        "event_in": "test_passed",
-        "event_out": "merge_pr",
+        "exits": "{ops}_done",
+        "event_in": "qa-gate_in_pull_request",
+        "event_out": "devops-cicd_done / stores-release_done",
         "label": "agent:in-pull-request",
     },
     {
         "status": "Done",
         "owner": "orchestrator",
-        "enters": "merge_pr",
+        "enters": "{ops}_done",
         "does": "Fecha ciclo; metricas; retrospectiva opcional",
         "exits": "-",
-        "event_in": "merge_pr",
+        "event_in": "devops-cicd_done / stores-release_done",
         "event_out": "-",
         "label": "agent:done",
     },
@@ -449,8 +449,8 @@ def stages_for_role(role: str) -> list[dict[str, str]]:
     """Etapas onde o agente e owner ou participa."""
     if role == "orchestrator":
         return [s for s in AGENT_STAGES if s["owner"] == "orchestrator"]
-    if role == "qa":
-        return [s for s in AGENT_STAGES if s["owner"] == "qa"]
+    if role == "qa-gate":
+        return [s for s in AGENT_STAGES if s["owner"] == "qa-gate"]
     if role == "devops-cicd" or role == "stores-release":
         track = "stores" if role == "stores-release" else "produto"
         return [s for s in AGENT_STAGES if s["status"] == "In Pull Request"]
@@ -461,11 +461,11 @@ def stages_for_role(role: str) -> list[dict[str, str]]:
     creator_stages.append({
         "status": "Ready for Code Review",
         "owner": "creator",
-        "enters": "Apos open_pr (aguarda revisor)",
+        "enters": "Após {creator}_ready_for_code_review (aguarda revisor)",
         "does": "Monitora PR; responde duvidas do revisor",
-        "exits": "Revisor assume (start_review)",
-        "event_in": "open_pr",
-        "event_out": "start_review",
+        "exits": "Revisor assume ({reviewer}_in_code_review)",
+        "event_in": "{creator}_ready_for_code_review",
+        "event_out": "{reviewer}_in_code_review",
         "label": "agent:ready-for-code-review",
     })
     return creator_stages
@@ -475,24 +475,24 @@ def mermaid_agent_swimlane() -> str:
     return """```mermaid
 flowchart TB
   subgraph ORCH["🎯 Orchestrator"]
-    T[Todo] -->|claim| IP
+    T[Todo] -->|orchestrator_enter_in_progress| IP
   end
   subgraph CRE["👨‍💻 Creator (agent_role da task)"]
-    IP[In Progress] -->|open_pr| RFC
-    IP -->|resubmit_review| ICR
+    IP[In Progress] -->|{creator}_ready_for_code_review| RFC
+    IP -->|{creator}_in_code_review| ICR
   end
   subgraph REV["🔍 Reviewer (par 1:1)"]
-    RFC[Ready for Code Review] -->|start_review| ICR[In Code Review]
-    ICR -->|approve_review| RFT[Ready for Test]
-    ICR -->|request_changes| IP
+    RFC[Ready for Code Review] -->|{reviewer}_in_code_review| ICR[In Code Review]
+    ICR -->|{reviewer}_ready_for_test| RFT[Ready for Test]
+    ICR -->|{reviewer}_return_in_progress| IP
   end
-  subgraph QA["🧪 QA"]
-    RFT -->|start_test| IT[In Test]
-    IT -->|test_passed| IPR[In Pull Request]
-    IT -->|test_failed_bug| IP
+  subgraph QA["🧪 QA-gate"]
+    RFT -->|qa-gate_in_test| IT[In Test]
+    IT -->|qa-gate_in_pull_request| IPR[In Pull Request]
+    IT -->|qa-gate_return_in_progress| IP
   end
   subgraph OPS["⚙️ DevOps / Stores-release"]
-    IPR -->|merge_pr| D[Done]
+    IPR -->|{ops}_done| D[Done]
   end
   D --> ORCH2[Orchestrator fecha ciclo]
 ```"""
@@ -580,16 +580,16 @@ def mermaid_feature_flow() -> str:
     return """```mermaid
 stateDiagram-v2
   [*] --> Todo
-  Todo --> InProgress: claim
-  InProgress --> ReadyForCodeReview: open PR
-  ReadyForCodeReview --> InCodeReview: start review
-  InCodeReview --> ReadyForTest: approved
-  InCodeReview --> InProgress: changes requested
-  InProgress --> InCodeReview: resubmit (correcao CR)
-  ReadyForTest --> InTest: QA start
-  InTest --> InPullRequest: tests pass
-  InTest --> InProgress: bug found
-  InPullRequest --> Done: merge
+  Todo --> InProgress: orchestrator_enter_in_progress
+  InProgress --> ReadyForCodeReview: creator_ready_for_code_review
+  ReadyForCodeReview --> InCodeReview: reviewer_in_code_review
+  InCodeReview --> ReadyForTest: reviewer_ready_for_test
+  InCodeReview --> InProgress: reviewer_return_in_progress
+  InProgress --> InCodeReview: creator_in_code_review
+  ReadyForTest --> InTest: qa_gate_in_test
+  InTest --> InPullRequest: qa_gate_in_pull_request
+  InTest --> InProgress: qa_gate_return_in_progress
+  InPullRequest --> Done: ops_done
   Done --> [*]
 ```"""
 
@@ -598,14 +598,14 @@ def mermaid_bug_flow() -> str:
     return """```mermaid
 stateDiagram-v2
   [*] --> Todo
-  Todo --> InProgress: claim bug
-  InProgress --> InCodeReview: hotfix direto (opcional)
-  InProgress --> ReadyForCodeReview: open PR
-  ReadyForCodeReview --> InCodeReview: start review
-  InCodeReview --> InProgress: changes requested
-  InProgress --> InCodeReview: resubmit correcao
-  InCodeReview --> InTest: approved (pular fila QA opcional)
-  InTest --> InProgress: regressao / bug
-  InTest --> InPullRequest: OK
-  InPullRequest --> Done: merge
+  Todo --> InProgress: orchestrator_enter_in_progress
+  InProgress --> InCodeReview: creator_in_code_review
+  InProgress --> ReadyForCodeReview: creator_ready_for_code_review
+  ReadyForCodeReview --> InCodeReview: reviewer_in_code_review
+  InCodeReview --> InProgress: reviewer_return_in_progress
+  InProgress --> InCodeReview: creator_in_code_review
+  InCodeReview --> InTest: qa_gate_in_test
+  InTest --> InProgress: qa_gate_return_in_progress
+  InTest --> InPullRequest: qa_gate_in_pull_request
+  InPullRequest --> Done: ops_done
 ```"""

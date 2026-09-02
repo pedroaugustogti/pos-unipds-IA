@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-# Criadores de produto (claim em Todo do próprio agent_role)
+# Criadores de produto (dispatch em Todo do próprio agent_role)
 CREATOR_ROLES = (
     "backend",
     "frontend-mobile",
@@ -14,11 +14,11 @@ CREATOR_ROLES = (
     "stores-release",
 )
 
-# Gate de qualidade na pipeline (Ready for Test / In Test) — não claima features
+# Gate de qualidade na pipeline (Ready for Test / In Test) — não dispatcha features
 QA_GATE_ROLE = "qa-gate"
 
-# Alias legado no CSV: agent_role=qa → qa-author no claim; fila de teste → qa-gate
-LEGACY_QA_ROLE = "qa"
+# Alias no CSV de classificação: agent_role=qa → qa-author
+CSV_QA_ROLE_ALIAS = "qa"
 
 PIPELINE_ROLES = (
     QA_GATE_ROLE,
@@ -27,9 +27,13 @@ PIPELINE_ROLES = (
 
 
 def normalize_creator_role(role: str) -> str:
-    if role == LEGACY_QA_ROLE:
+    if role == CSV_QA_ROLE_ALIAS:
         return "qa-author"
     return role
+
+
+# Retrocompat imports (CSV classifica como "qa")
+LEGACY_QA_ROLE = CSV_QA_ROLE_ALIAS
 
 
 def reviewer_for(creator_role: str) -> str:

@@ -52,5 +52,5 @@ Fora do grafo, use **somente** tools deste servidor (`list_mcp_tools`).
 5. `qa_db_cleanup(task_id, dry_run=false)` após evidências.
 6. Próximo status via `emit_status_event` role-based (ex: `qa-gate_in_pull_request` ou `qa-gate_return_in_progress`).
 
-Catálogo: `list_mcp_tools` · `agents/_shared/MCP_TOOLS.md` · grafo: `agents/00-orchestration/docs/STATEGRAPH_FLOW.md`.
+Catálogo: `list_mcp_tools` · `agents/00-orchestration/docs/mcp/MCP_TOOLS.md` · grafo: `agents/00-orchestration/docs/graph/STATEGRAPH_FLOW.md`.
 """

@@ -35,7 +35,7 @@ Reviewers: `agents/01-role-based/{role}-reviewer/agent.md` + `SKILL.md`, pareado
 
 Resolução de paths: `lib/agent_paths.py`.
 
-Índice de leitura: [../comportamento/README.md](../comportamento/README.md).
+Índice de leitura: [`../agents/01-role-based/README.md`](../agents/01-role-based/README.md).
 
 ### 2.1 Regras embutidas no código
 

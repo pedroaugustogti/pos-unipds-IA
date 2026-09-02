@@ -1,7 +1,5 @@
 # schemas
 
-| Arquivo | Uso |
-|---------|-----|
-| `board_events.json` | Schema eventos do gateway |
+Schema canônico: [`../../agents/00-orchestration/schemas/board_events.json`](../../agents/00-orchestration/schemas/board_events.json)
 
-Espelho de `agents/00-orchestration/schemas/board_events.json`.
+Não manter cópia espelhada nesta pasta.

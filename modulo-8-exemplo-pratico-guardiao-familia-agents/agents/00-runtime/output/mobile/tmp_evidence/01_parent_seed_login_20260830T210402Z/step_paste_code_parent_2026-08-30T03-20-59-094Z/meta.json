@@ -1,9 +1,0 @@
-{
-  "step": "paste_code_parent",
-  "serial": "emulator-5556",
-  "error": "Timeout waiting for left prepairing after submit (20000ms)",
-  "at": "2026-08-30T03:20:59.103Z",
-  "screenshot": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\paste_code_parent_2026-08-30T03-20-59-094Z\\screen.png",
-  "pageSource": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-mobile-setup\\docs\\appium-evidence\\paste_code_parent_2026-08-30T03-20-59-094Z\\page-source.xml",
-  "uiDumpError": "adb shell uiautomator dump /sdcard/window_dump.xml failed (137): "
-}
