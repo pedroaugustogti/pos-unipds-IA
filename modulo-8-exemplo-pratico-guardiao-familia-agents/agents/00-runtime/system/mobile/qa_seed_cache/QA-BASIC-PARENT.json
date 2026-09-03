@@ -41,9 +41,9 @@
       }
     ],
     "child_count": 3,
-    "seed_source": "00-seed_app_parent",
+    "seed_source": "seed_db",
     "updated_at": "2026-08-30T20:11:29.045Z"
   },
-  "seed_script": "00-seed_app_parent",
+  "seed_script": "seed_db",
   "stdout_tail": "SEED_APP_PARENT_START QA-BASIC-PARENT\nSEED_APP_PARENT_REGISTER_SKIP email_exists\nSEED_APP_PARENT_CHILD_OK Filho Alpha qa-basic-parent\nSEED_APP_PARENT_CHILD_OK Filho Beta qa-basic-parent\nSEED_APP_PARENT_CHILD_OK Filho Gamma qa-basic-parent\nSEED_APP_PARENT_OK 3 filhos · admin@guardiao.local\n{\"ok\":true,\"task_id\":\"QA-BASIC-PARENT\",\"api_base\":\"http://127.0.0.1:3000/api/v1\",\"registered\":false,\"email\":\"admin@guardiao.local\",\"family_id\":\"1fd0abbe-23cd-44a7-80b5-92ee2ecde84c\",\"family_name\":\"QA Evidence QA-BASIC-PARENT\",\"children\":[{\"id\":\"92d56e70-c55a-4877-bd93-4793cd9e4196\",\"name\":\"Filho Alpha qa-basic-parent\"},{\"id\":\"8a9d6cba-07c2-4b2a-980f-c2eb7eda047c\",\"name\":\"Filho Beta qa-basic-parent\"},{\"id\":\"30cb7b67-d754-42eb-8a13-81d5bafccedd\",\"name\":\"Filho Gamma qa-basic-parent\"}],\"pairing_code\":\"698291\",\"handoff_path\":\"C:\\\\Users\\\\pedro\\\\Documents\\\\guardiao-familia\\\\guardiao-familia-mobile-setup\\\\docs\\\\stage-handoff.json\",\"seeded_at\":\"2026-08-30T20:11:29.043Z\"}\n"
 }

@@ -25,12 +25,12 @@ API_REGISTER_PROFILES = frozenset(
 
 SEED_PROFILES: dict[str, dict[str, Any]] = {
     "basic_parent": {
-        "summary": "API POST /auth/register + família + 3 filhos (00-seed_app_parent); handoff config_family",
+        "summary": "API POST /auth/register + família + 3 filhos (seed_db); handoff config_family",
         "resume_after_step": "config_family",
         "pairing_cycle": False,
         "resume_from_handoff": True,
         "target_app": "child",
-        "seed_script": "00-seed_app_parent",
+        "seed_script": "seed_db",
     },
     "pairing_warm": {
         "summary": "API POST /auth/register + família+filho+código; Appium pairing completo (dual emulator)",
@@ -250,10 +250,10 @@ def _pair_child_via_api(handoff: dict[str, Any], config: dict[str, Any]) -> dict
         return {"ok": False, "error": str(exc)}
 
 
-def _run_seed_app_parent(task_id: str, config: dict[str, Any], *, profile_name: str) -> dict[str, Any]:
-    """Executa appium/00-seed_app_parent/seed.mjs (POST /auth/register + família + filhos)."""
+def _run_seed_db(task_id: str, config: dict[str, Any], *, profile_name: str) -> dict[str, Any]:
+    """Executa seed_db/seed.mjs (POST /auth/register + família + filhos)."""
     setup = setup_root()
-    script = setup / "appium" / "00-seed_app_parent" / "seed.mjs"
+    script = setup / "seed_db" / "seed.mjs"
     if not script.is_file():
         return {"ok": False, "error": f"ausente: {script}"}
     node = shutil.which("node")
@@ -316,7 +316,7 @@ def _run_seed_app_parent(task_id: str, config: dict[str, Any], *, profile_name: 
             "profile": profile_name,
             "handoff_path": str(_handoff_path(setup)),
             "handoff": handoff,
-            "seed_script": "00-seed_app_parent",
+            "seed_script": "seed_db",
             "registered_via_api": True,
             "stdout_tail": tail[-1500:],
         }
@@ -346,11 +346,12 @@ def provision_handoff(
         if not stack.get("ok"):
             return {"ok": False, "error": "bootstrap_api_stack falhou", "steps": steps}
 
-    if profile_name in API_REGISTER_PROFILES or config.get("seed_script") == "00-seed_app_parent":
-        api_seed = _run_seed_app_parent(task_id, config, profile_name=profile_name)
-        steps.append({"seed_app_parent": api_seed})
+    seed_script = config.get("seed_script")
+    if profile_name in API_REGISTER_PROFILES or seed_script in ("seed_db", "00-seed_app_parent"):
+        api_seed = _run_seed_db(task_id, config, profile_name=profile_name)
+        steps.append({"seed_db": api_seed})
         if not api_seed.get("ok"):
-            return {"ok": False, "error": api_seed.get("error") or "00-seed_app_parent falhou", "steps": steps}
+            return {"ok": False, "error": api_seed.get("error") or "seed_db falhou", "steps": steps}
 
         handoff = dict(api_seed.get("handoff") or {})
         if profile_name == "permissions_resume":
@@ -371,7 +372,7 @@ def provision_handoff(
 
     return {
         "ok": False,
-        "error": f"profile {profile_name} requer cadastro via API (00-seed_app_parent)",
+        "error": f"profile {profile_name} requer cadastro via API (seed_db)",
         "steps": steps,
     }
 
