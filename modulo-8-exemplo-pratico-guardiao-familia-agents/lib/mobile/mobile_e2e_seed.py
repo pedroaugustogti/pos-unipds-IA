@@ -18,6 +18,7 @@ from lib.mobile.local_e2e import (
     bootstrap_api_stack,
 )
 from lib.mobile.qa_mobile_setup_evidence import setup_root
+from lib.mobile.seed_db_scripts import ensure_seed_db_scripts, seed_db_github_tree, seed_db_script_path
 
 API_REGISTER_PROFILES = frozenset(
     {"basic_parent", "parent_home", "child_home", "permissions_resume", "pairing_warm"}
@@ -87,6 +88,7 @@ def default_db_seed_config(task_id: str, profile: str = "child_home") -> dict[st
         "api_base_url": DEFAULT_API_BASE,
         "cleanup": True,
         "bootstrap_api": True,
+        "reuse_handoff": False,
     }
 
 
@@ -101,7 +103,9 @@ def resolve_db_seed(task: dict[str, Any]) -> dict[str, Any] | None:
         return None
     tid = str(task.get("id") or raw.get("task_id") or "T-UNKNOWN")
     base = default_db_seed_config(tid, profile=str(raw.get("profile") or "child_home"))
-    return {**base, **raw, "enabled": True, "task_id": tid}
+    merged = {**base, **raw, "enabled": True, "task_id": tid}
+    merged["reuse_handoff"] = False
+    return merged
 
 
 def _read_existing_handoff(setup: Path | None = None) -> dict[str, Any] | None:
@@ -123,7 +127,7 @@ def _try_reuse_handoff(
     profile_name: str,
 ) -> dict[str, Any] | None:
     """Reutiliza stage-handoff existente e tenta só renovar pairing code."""
-    if not config.get("reuse_handoff", True):
+    if not config.get("reuse_handoff", False):
         return None
     existing = _read_existing_handoff()
     if not existing:
@@ -253,7 +257,14 @@ def _pair_child_via_api(handoff: dict[str, Any], config: dict[str, Any]) -> dict
 def _run_seed_db(task_id: str, config: dict[str, Any], *, profile_name: str) -> dict[str, Any]:
     """Executa seed_db/seed.mjs (POST /auth/register + família + filhos)."""
     setup = setup_root()
-    script = setup / "seed_db" / "seed.mjs"
+    scripts = ensure_seed_db_scripts(setup)
+    if not scripts.get("ok"):
+        return {
+            "ok": False,
+            "error": scripts.get("error") or "seed_db indisponível",
+            "seed_scripts": scripts,
+        }
+    script = seed_db_script_path(setup)
     if not script.is_file():
         return {"ok": False, "error": f"ausente: {script}"}
     node = shutil.which("node")
@@ -317,6 +328,8 @@ def _run_seed_db(task_id: str, config: dict[str, Any], *, profile_name: str) -> 
             "handoff_path": str(_handoff_path(setup)),
             "handoff": handoff,
             "seed_script": "seed_db",
+            "seed_scripts_source": scripts.get("github") or seed_db_github_tree(),
+            "seed_scripts_path": str(script),
             "registered_via_api": True,
             "stdout_tail": tail[-1500:],
         }
@@ -331,6 +344,7 @@ def provision_handoff(
 ) -> dict[str, Any]:
     """Garante API+DB e grava stage-handoff.json no mobile-setup."""
     profile_name = str(config.get("profile") or "child_home")
+    config = {**config, "reuse_handoff": False}
     profile = SEED_PROFILES.get(profile_name)
     if not profile:
         raise ValueError(f"db_seed profile desconhecido: {profile_name}")

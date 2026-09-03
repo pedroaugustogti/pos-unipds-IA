@@ -43,7 +43,7 @@ Fora do grafo, use **somente** tools deste servidor (`list_mcp_tools`).
 
 ## QA mobile (ordem obrigatória)
 1. **task_id = ticket em execução** — não reutilize entre execuções paralelas sem `qa_db_cleanup`.
-2. **Seed (`qa_db_seed`)** — somente quando a massa deve vir da API:
+2. **Seed (`qa_db_seed`)** — somente quando a massa deve vir da API (scripts em `guardiao-familia-mobile-setup/seed_db` — https://github.com/guardiaofamilia/guardiao-familia-mobile-setup/tree/main/seed_db):
    - Conta/família/filho já no Postgres → `qa_db_seed` + suite com `from_db_seed=true`.
    - AC exige cadastro/família **na UI parent** → **não** chame seed; use `qa_appium_suite_parent` com `feature=create_account` ou `config_family`.
    - Validação **somente no child** → seed parent + `qa_appium_suite_child(from_db_seed=true, child_only=true)`.

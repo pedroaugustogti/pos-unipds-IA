@@ -19,6 +19,7 @@ from lib.mobile.mobile_e2e_seed import (
     _reset_handoff_cycle,
 )
 from lib.mobile.mobile_runtime_config import appium_env, stack
+from lib.mobile.seed_db_scripts import ensure_seed_db_scripts, seed_db_github_tree
 from lib.ticket_output import ticket_seed_cache_path
 from lib.mobile.qa_mobile_setup_evidence import collect_artifacts, setup_root, _package
 from board_automation.board.task_router import load_tasks
@@ -208,6 +209,8 @@ def run_db_seed(
     """Cria seed Postgres + stage-handoff para evidências Appium."""
     chosen_profile = profile or "child_home"
     if dry_run:
+        setup = setup_root()
+        scripts = ensure_seed_db_scripts(setup)
         return {
             "ok": True,
             "dry_run": True,
@@ -217,7 +220,9 @@ def run_db_seed(
                 "bootstrap_api": bootstrap_api,
                 "use_task_config": use_task_config,
                 "profiles_available": sorted(SEED_PROFILES),
-                "handoff_path": str(setup_root() / "docs" / "stage-handoff.json"),
+                "handoff_path": str(setup / "docs" / "stage-handoff.json"),
+                "seed_scripts_github": seed_db_github_tree(),
+                "seed_scripts": scripts,
             },
         }
 
@@ -231,6 +236,7 @@ def run_db_seed(
     elif profile:
         config["profile"] = profile
     config["bootstrap_api"] = bootstrap_api
+    config["reuse_handoff"] = False
 
     result = provision_handoff(task_id, config=config)
     if result.get("ok"):

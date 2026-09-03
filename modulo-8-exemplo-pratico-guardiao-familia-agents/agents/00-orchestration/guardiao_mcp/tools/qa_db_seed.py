@@ -8,19 +8,22 @@ from mcp.server.fastmcp import FastMCP
 
 from guardiao_mcp.contract import wrap_call
 from lib.mobile.qa_mobile_mcp import run_db_seed
+from lib.mobile.seed_db_scripts import seed_db_github_tree
 
-DESCRIPTION = """\
+DESCRIPTION = f"""\
 **Quando:** massa de teste via API (Postgres) **sem** cadastro/família na UI.
 
 **Importante:** profiles criam parent via `POST /auth/register` — nunca insira usuários direto no Postgres.
 
 **Não use quando:** AC exige telas de cadastro/família no app parent — use `qa_appium_suite_parent` com `feature` adequado.
 
-**Faz:** bootstrap API → HTTP (família, filho, pairing-code) → `stage-handoff.json` → cache em `output/{task_id}/seed-cache.json`.
+**Faz:** bootstrap API → executa `seed_db/seed.mjs` do [mobile-setup/seed_db]({seed_db_github_tree()}) → `stage-handoff.json` → cache em `output/{{task_id}}/seed-cache.json`.
 
 **Profiles:** pairing_warm | basic_parent | parent_home | child_home | permissions_resume
 
 **Child-only:** seed parent + `qa_appium_suite_child(from_db_seed=true, child_only=true)` — não boota parent 5554.
+
+**Scripts:** sincronizados de `{seed_db_github_tree()}` (local → git pull → GitHub raw).
 
 **Parâmetros:** task_id (obrigatório), profile, use_task_config, bootstrap_api, dry_run.
 
