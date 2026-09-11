@@ -222,8 +222,13 @@ def _try_reuse_handoff(
 
 def _seed_child_count(profile_name: str, config: dict[str, Any]) -> int:
     if config.get("child_count"):
-        return int(config["child_count"])
-    return 3 if profile_name == "basic_parent" else 1
+        return max(1, int(config["child_count"]))
+    env_n = os.environ.get("GF_SEED_CHILD_COUNT", "").strip()
+    if env_n.isdigit():
+        return max(1, int(env_n))
+    # pairing/greeting só usa o 1º filho (antes basic_parent=3)
+    del profile_name
+    return 1
 
 
 def _seed_api_last_step(profile: dict[str, Any]) -> str | None:
@@ -375,7 +380,17 @@ def provision_handoff(
 
     steps: list[dict[str, Any]] = []
     if config.get("bootstrap_api", True):
-        stack = bootstrap_api_stack(seed=True)
+        # Suite/init já sobe API: se /health ok, não repetir migrations+npm seed (~18s).
+        force = bool(config.get("force_bootstrap_api")) or os.environ.get(
+            "GF_FORCE_BOOTSTRAP_API", ""
+        ).strip().lower() in ("1", "true", "yes")
+        nest_seed = bool(config.get("bootstrap_api_seed")) or os.environ.get(
+            "GF_BOOTSTRAP_API_SEED", ""
+        ).strip().lower() in ("1", "true", "yes")
+        stack = bootstrap_api_stack(
+            seed=nest_seed,
+            skip_if_healthy=not force,
+        )
         steps.append({"bootstrap_api_stack": stack})
         if not stack.get("ok"):
             return {"ok": False, "error": "bootstrap_api_stack falhou", "steps": steps}

@@ -640,9 +640,22 @@ def check_prerequisites(*, require_android: bool = False) -> dict[str, Any]:
     return checks
 
 
-def bootstrap_api_stack(*, seed: bool = True) -> dict[str, Any]:
-    """Sobe Postgres/Redis, migrations, seed; API no host se imagem Docker indisponível."""
+def bootstrap_api_stack(*, seed: bool = True, skip_if_healthy: bool = False) -> dict[str, Any]:
+    """Sobe Postgres/Redis, migrations, seed; API no host se imagem Docker indisponível.
+
+    skip_if_healthy=True: se /health já responde, não roda compose/migrations/seed Nest
+    (massa Appium usa seed_db/seed.mjs — não depende do npm run seed).
+    """
     result: dict[str, Any] = {"steps": []}
+    if skip_if_healthy:
+        health = wait_api_health(timeout_sec=3)
+        result["steps"].append({"health_probe": health})
+        if health.get("ok"):
+            result["ok"] = True
+            result["skipped"] = True
+            result["mode"] = "warm_health"
+            return result
+
     if not docker_daemon_ready(timeout_sec=5):
         started = start_docker_desktop()
         result["docker_desktop_started"] = started
@@ -668,9 +681,16 @@ def bootstrap_api_stack(*, seed: bool = True) -> dict[str, Any]:
             result["ok"] = False
             return result
 
+    # Warm repair: só migrate/seed Nest se explicitamente pedido (GF_BOOTSTRAP_API_SEED=1)
+    force_nest_seed = seed or os.environ.get("GF_BOOTSTRAP_API_SEED", "").strip().lower() in (
+        "1",
+        "true",
+        "yes",
+    )
+    # migrations só no cold path (health já falhou ou skip_if_healthy=False sem probe ok)
     mig = run_migrations()
     result["steps"].append({"migrations": mig})
-    if seed:
+    if force_nest_seed:
         sd = run_seed()
         result["steps"].append({"seed": sd})
 

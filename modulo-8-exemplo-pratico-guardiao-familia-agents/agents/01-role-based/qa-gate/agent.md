@@ -35,7 +35,7 @@ Regenerar digest: `python agents/00-orchestration/scripts/ops/build_repo_knowled
 |------|-----------------|
 | `on_status_event` | AC + handoff do revisor |
 | `hitl_guard_actuation` | Antes de `execute` |
-| `qa_validate` | Orquestra init → generate_evidence |
+| `qa_validate` | Orquestra multi-cenário paralelo: init → pipeline → generate por cenário |
 | `qa_init_suite_mobile` | Prep stack + recovery + plan |
 | `qa_generate_evidence` | Seed → Appium → evidências → cleanup |
 | `execute_agent_actuation_tool` | `qa-gate_in_pull_request` ou retrocesso |

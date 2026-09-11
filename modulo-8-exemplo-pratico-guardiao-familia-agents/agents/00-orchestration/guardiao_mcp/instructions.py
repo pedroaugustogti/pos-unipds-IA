@@ -43,12 +43,12 @@ Fora do grafo, use **somente** tools deste servidor (`list_mcp_tools`).
 
 ## QA mobile (ordem obrigatória)
 1. **task_id = ticket em execução** — um ticket por suite; seed/cleanup ficam dentro de `qa_generate_evidence`.
-2. Preferir `qa_validate` (orquestra tudo). Manual:
+2. Preferir `qa_validate(worker_mode=local|docker)` — caminhos distintos (local=host sem container; docker=1 container/cenário). Sem fallback. Manual por cenário:
    - `qa_init_suite_mobile(task_id, suites_mobile={"parent":bool,"child":bool}, dry_run=false)`
    - `qa_pipeline_evidence(actuation_context, apps_ready_ok, scenario_id, dry_run=false)`
    - `qa_generate_evidence(pipeline_result=<retorno do pipeline>, dry_run=false)`
 3. Escopo: `child_only` / `parent_only` / dual conforme ticket (`qa.appium_scope`).
-4. Evidências → `agents/00-runtime/output/{task_id}/qa-gate-({cycle})/evidence/`.
+4. Evidências → `agents/00-runtime/output/{task_id}/qa-gate-({cycle})/evidence/{scenario_id}/`.
 5. Próximo status via `emit_status_event` role-based (ex: `qa-gate_in_pull_request` ou `qa-gate_return_in_progress`).
 
 Catálogo: `list_mcp_tools` · `agents/00-orchestration/docs/mcp/MCP_TOOLS.md` · grafo: `agents/00-orchestration/docs/graph/STATEGRAPH_FLOW.md`.

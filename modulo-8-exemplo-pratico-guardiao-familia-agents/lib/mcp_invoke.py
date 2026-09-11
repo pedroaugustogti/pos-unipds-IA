@@ -67,8 +67,19 @@ def developer_review(actuation_context: str | dict[str, Any], *, mode: str = "")
     return _parse(mcp_server.developer_review(actuation_context=_ctx_json(actuation_context), mode=mode))
 
 
-def qa_validate(actuation_context: str | dict[str, Any], *, mode: str = "") -> dict[str, Any]:
-    return _parse(mcp_server.qa_validate(actuation_context=_ctx_json(actuation_context), mode=mode))
+def qa_validate(
+    actuation_context: str | dict[str, Any],
+    *,
+    mode: str = "",
+    worker_mode: str = "local",
+) -> dict[str, Any]:
+    return _parse(
+        mcp_server.qa_validate(
+            actuation_context=_ctx_json(actuation_context),
+            mode=mode,
+            worker_mode=worker_mode,
+        )
+    )
 
 
 def execute_agent_actuation_tool(

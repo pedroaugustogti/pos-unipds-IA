@@ -66,7 +66,7 @@ Pipeline: `on_status_event` → `hitl_guard_actuation` → `qa_validate` → `ex
 
 | Cenário | Sequência |
 |---------|-----------|
-| **Mobile QA** | `qa_validate` → `qa_init_suite_mobile` → `qa_generate_evidence` (child ou parent) |
+| **Mobile QA** | `qa_validate` multi-cenário paralelo → por cenário `qa_init_suite_mobile` → `qa_generate_evidence` |
 | **Parent UI** | `qa_init_suite_mobile(parent_only=true)` → `qa_generate_evidence` |
 
 Não use fallback CLI (`qa_mobile_evidence.py` / `fast-stack.ps1`).

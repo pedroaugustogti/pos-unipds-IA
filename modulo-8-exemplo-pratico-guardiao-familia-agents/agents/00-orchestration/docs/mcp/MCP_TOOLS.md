@@ -23,6 +23,6 @@ orchestrator_enter_in_progress (opcional)
 | qa_mobile | `qa_init_suite_mobile`, `qa_pipeline_evidence`, `qa_generate_evidence` |
 | meta | `list_mcp_tools` |
 
-`qa_validate` orquestra `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence`.
+`qa_validate` tem dois caminhos (`worker_mode`): **`local`** = workers na máquina host (sem container); **`docker`** = 1 container por `ticket.qa.scenarios`. Paralelo; PASS só se **todos** ok. Sem fallback entre caminhos.
 
 Guia por papel: [`MCP_ROLE_GUIDE.md`](MCP_ROLE_GUIDE.md)

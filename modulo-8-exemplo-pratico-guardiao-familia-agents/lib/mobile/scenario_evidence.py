@@ -240,8 +240,13 @@ def capture_scenario_evidence(
     adb = _adb_bin()
     serial = emulator_serial or stack("child")["emulator"]
     cycle = resolve_agent_cycle(None, "qa-gate")
-    out_dir = qa_evidence_dir(task_id, cycle=cycle)
-    out_dir.mkdir(parents=True, exist_ok=True)
+    base_out = qa_evidence_dir(task_id, cycle=cycle)
+    env_ev = (os.environ.get("GF_APPIUM_EVIDENCE_DIR") or "").strip()
+    # Se worker já apontou pasta do cenário, usar o parent evidence/ como base
+    if env_ev:
+        env_path = Path(env_ev)
+        base_out = env_path.parent if env_path.name.startswith("greeting-") else env_path
+    base_out.mkdir(parents=True, exist_ok=True)
 
     _timeline_append(timeline, "start", task_id=task_id, targets=[t["id"] for t in targets])
 
@@ -277,7 +282,9 @@ def capture_scenario_evidence(
         for scenario in targets:
             sid = scenario["id"]
             label = scenario["label"]
-            png_path = out_dir / f"{sid}.png"
+            out_dir = base_out / sid
+            out_dir.mkdir(parents=True, exist_ok=True)
+            png_path = out_dir / f"capture_{sid}.png"
             _timeline_append(timeline, "period_start", scenario=sid, label=label, hour=scenario["hour"])
 
             date_r = _set_device_time(adb, serial, scenario["adb_date"])
@@ -370,7 +377,7 @@ def capture_scenario_evidence(
         "timeline": timeline,
         "ok": ok,
     }
-    (out_dir / "scenario-manifest.json").write_text(
+    (base_out / "scenario-manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )

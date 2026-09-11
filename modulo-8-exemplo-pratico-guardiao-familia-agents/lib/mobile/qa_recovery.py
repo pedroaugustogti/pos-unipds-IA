@@ -193,7 +193,6 @@ def log_recovery(
     ok: bool | None = None,
     extra: dict[str, Any] | None = None,
 ) -> None:
-    RECOVERY_LOG.parent.mkdir(parents=True, exist_ok=True)
     entry = {
         "ts": _utc_now(),
         "task_id": task_id,
@@ -206,8 +205,19 @@ def log_recovery(
         "ok": ok,
         **(extra or {}),
     }
-    with RECOVERY_LOG.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(entry, ensure_ascii=False, default=str) + "\n")
+    try:
+        RECOVERY_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with RECOVERY_LOG.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(entry, ensure_ascii=False, default=str) + "\n")
+    except OSError:
+        # container com /workspace:ro — não bloqueia a suite
+        alt = Path(os.environ.get("GF_STATUS_DIR") or "/tmp") / "recovery_log.jsonl"
+        try:
+            alt.parent.mkdir(parents=True, exist_ok=True)
+            with alt.open("a", encoding="utf-8") as f:
+                f.write(json.dumps(entry, ensure_ascii=False, default=str) + "\n")
+        except OSError:
+            pass
 
 
 def _kill_listeners_ps(ports: list[int], *, command_match: str = "") -> dict[str, Any]:

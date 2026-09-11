@@ -68,7 +68,7 @@ Leia handoff + PR antes de `developer_review`.
 Papel: `qa-gate`
 
 **Tools:** `on_status_event` → `hitl_guard_actuation` → `qa_validate` → `execute_agent_actuation_tool`  
-**QA mobile:** `qa_validate` → `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence`
+**QA mobile:** `qa_validate(worker_mode=local|docker)` → por cenário `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence` (PASS = todos ok)
 
 **Eventos:**
 
@@ -78,7 +78,7 @@ Papel: `qa-gate`
 | In Pull Request | `qa-gate_in_pull_request` |
 | In Progress | `qa-gate_return_in_progress` |
 
-**Child/parent:** `qa_validate` → `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence`.
+**Child/parent:** `qa_validate` multi-cenário (local|docker) → por cenário `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence`.
 
 ---
 

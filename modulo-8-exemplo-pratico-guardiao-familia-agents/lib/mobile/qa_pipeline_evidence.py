@@ -148,7 +148,7 @@ _FEATURE_PIPELINES: dict[str, list[dict[str, Any]]] = {
             "view_testid": "",
             "action": "launch",
             "fields": [],
-            "delay_ms_after": 2000,
+            "delay_ms_after": 500,
             "exit_condition": {
                 "type": "visible_any",
                 "test_ids": [
@@ -157,8 +157,8 @@ _FEATURE_PIPELINES: dict[str, list[dict[str, Any]]] = {
                     "child-home-v2",
                 ],
             },
-            "hooks": ["dismiss_expo", "grant_os_perms"],
-            "note": "Abrir app child no emulador",
+            "hooks": ["grant_os_perms"],
+            "note": "Abrir app child (dismiss Expo em loop até Continue sumir; waitExit também dismiss)",
             "file": "appium/pairing/paste_code_parent/child-launch.mjs",
         },
         {
@@ -166,8 +166,8 @@ _FEATURE_PIPELINES: dict[str, list[dict[str, Any]]] = {
             "view": "PrePairingScreen",
             "view_testid": "pre-pairing-screen",
             "action": "fill",
-            # required: pm_clear + seed exigem digitar; skip só se view PrePairing ausente (optionalShouldSkip)
-            "optional": False,
+            # optional: warm session já na home → skip; PrePairing visível → digita seed
+            "optional": True,
             "fields": [
                 _field(
                     "pairing_code",
@@ -182,7 +182,7 @@ _FEATURE_PIPELINES: dict[str, list[dict[str, Any]]] = {
                     expected_length=6,
                 ),
             ],
-            "delay_ms_after": 1200,
+            "delay_ms_after": 500,
             # onComplete auto-submete → permissões/home (pairing-submit pode sumir)
             "exit_condition": {
                 "type": "visible_any",
@@ -201,12 +201,12 @@ _FEATURE_PIPELINES: dict[str, list[dict[str, Any]]] = {
             "action": "tap",
             "optional": True,
             "fields": [_field("submit_pairing", "pairing-submit", delay_ms=200)],
-            "delay_ms_after": 1500,
+            "delay_ms_after": 600,
             "exit_condition": {
                 "type": "visible_any",
                 "test_ids": ["permissions-onboarding-screen", "child-home-v2"],
             },
-            "note": "Confirmar pareamento se botão ainda visível (skip se auto-submit já avançou)",
+            "note": "Fallback tap só se botão ainda visível; skip imediato se view já passou (sem view_gate longo)",
             "file": "screens/PrePairingScreen.tsx",
         },
         {
@@ -215,8 +215,8 @@ _FEATURE_PIPELINES: dict[str, list[dict[str, Any]]] = {
             "view_testid": "permissions-onboarding-screen",
             "action": "tap",
             "optional": True,
-            "fields": [_field("allow_permissions", "permissions-continue", delay_ms=400)],
-            "delay_ms_after": 1200,
+            "fields": [_field("allow_permissions", "permissions-continue", delay_ms=200)],
+            "delay_ms_after": 600,
             "exit_condition": {"type": "visible", "test_id": "child-home-v2"},
             "note": "Continuar permissões (skip se já na home)",
             "file": "screens/PermissionsOnboardingScreen.tsx",
@@ -227,7 +227,7 @@ _FEATURE_PIPELINES: dict[str, list[dict[str, Any]]] = {
             "view_testid": "child-home-v2",
             "action": "wait",
             "fields": [_field("home_anchor", "child-home-v2")],
-            "delay_ms_after": 1500,
+            "delay_ms_after": 600,
             "exit_condition": {"type": "visible", "test_id": "greeting-title"},
             "note": "Aguardar home do filho",
             "file": "screens/ChildHomeV2.tsx",
@@ -240,10 +240,10 @@ _FEATURE_PIPELINES: dict[str, list[dict[str, Any]]] = {
             "view_testid": "",
             "action": "launch",
             "fields": [],
-            "delay_ms_after": 2000,
+            "delay_ms_after": 500,
             "exit_condition": {"type": "visible", "test_id": "auth-screen"},
-            "hooks": ["dismiss_expo", "grant_os_perms"],
-            "note": "Abrir app parent no emulador",
+            "hooks": ["grant_os_perms"],
+            "note": "Abrir app parent (dismiss_expo 1x no launch via default)",
             "file": "",
         },
         {
@@ -426,11 +426,16 @@ def build_device_context(app: str, *, launch_exit_test_id: str = "") -> dict[str
             "require_metro": True,
             "hard_stop": False,
             "pm_clear_before_launch": False,
+            "prefer_warm_session": True,
+            # pm clear só com GF_APPIUM_PM_CLEAR=1 — nunca no meio do fluxo warm
+            "pm_clear_if_dirty": False,
+            "reload_mode": "none",
             "dismiss_expo_overlay": True,
             "use_dev_client_url": True,
             "grant_os_permissions": True,
             "dismiss_os_permission_dialogs": True,
-            "reload_after_set_clock": True,
+            # clock pré-launch: sem remount; mid-flow só se greeting falhar
+            "reload_after_set_clock": False,
             "stabilize_between_steps": True,
             "exit_test_id": exit_tid,
             "exit_locator": f"testID:{exit_tid}",
@@ -757,10 +762,11 @@ def _resolve_repo_view(
 
 
 _ALLOWED_HOOKS = frozenset({"dismiss_expo", "force_reload", "grant_os_perms", "stabilize"})
-# Overlay Expo / reload / grants — defaults por action (genérico para qualquer cenário).
-_ACTIONS_DEFAULT_DISMISS_EXPO = frozenset({"launch", "set_clock"})
-_ACTIONS_DEFAULT_FORCE_RELOAD = frozenset({"set_clock"})
-_ACTIONS_DEFAULT_GRANT_OS = frozenset({"launch", "set_clock"})
+# dismiss_expo default no launch; runtime faz loop + waitExit (modal Continue chega atrasada).
+_ACTIONS_DEFAULT_DISMISS_EXPO = frozenset({"launch"})
+# set_clock NÃO força reload — clock pré-launch evita remount; hard só via GF_APPIUM_HARD_RELOAD
+_ACTIONS_DEFAULT_FORCE_RELOAD: frozenset[str] = frozenset()
+_ACTIONS_DEFAULT_GRANT_OS = frozenset({"launch"})
 
 
 def _normalize_hooks(raw: Any, action: str) -> list[str]:
@@ -837,8 +843,8 @@ def _chain_steps(raw_steps: list[dict[str, Any]]) -> tuple[list[dict[str, Any]],
         matrix_err = _validate_field_action_matrix(action, fields) if action else "UNBOUND_ACTION"
         if matrix_err and action:
             violations.append({"step_id": step_id, "reason": matrix_err})
-        if action not in ("launch", "record_start", "record_stop") and not view:
-            # steps de UI precisam de view do repo
+        if action not in ("launch", "set_clock", "record_start", "record_stop") and not view:
+            # steps de UI precisam de view do repo (set_clock pré-launch é ADB-only)
             if action in _ALLOWED_ACTIONS:
                 violations.append({"step_id": step_id, "reason": "UNBOUND_VIEW:no_repo_screen"})
 
@@ -889,6 +895,7 @@ def _chain_steps(raw_steps: list[dict[str, Any]]) -> tuple[list[dict[str, Any]],
 
 
 def _greeting_prepare_steps(scenario_id: str, start_order: int) -> list[dict[str, Any]]:
+    """Pré-launch: ajusta relógio do device antes de abrir o app (sem remount/forceStop)."""
     m = _GREETING_RE.match(scenario_id.strip())
     if not m:
         return []
@@ -898,22 +905,25 @@ def _greeting_prepare_steps(scenario_id: str, start_order: int) -> list[dict[str
         {
             "feature_step_id": f"greeting.set_clock.{period}",
             "order": start_order,
-            "view": "ChildHomeV2",
-            "view_testid": "child-home-v2",
+            "view": "",
+            "view_testid": "",
             "action": "set_clock",
             "fields": [
                 _field(
                     "device_time",
-                    "child-home-v2",
+                    "",
                     value_from="scenario.clock",
                     value=clock,
                     delay_ms=0,
                 ),
             ],
-            "delay_ms_after": 500,
-            "exit_condition": {"type": "visible", "test_id": "greeting-title"},
-            "hooks": ["dismiss_expo", "force_reload", "grant_os_perms"],
-            "note": f"Ajustar relógio do emulador para {clock} ({_GREETING_LABEL.get(period, period)}) + force reload",
+            "delay_ms_after": 200,
+            "exit_condition": {},
+            "hooks": [],
+            "note": (
+                f"Pré-launch: relógio {clock} ({_GREETING_LABEL.get(period, period)}) "
+                "antes de abrir o app — sem reload/forceStop"
+            ),
             "file": "screens/childHome.state.ts",
         }
     ]
@@ -1084,15 +1094,16 @@ def build_scenario_pipeline(
         else ("parent-home" if app == "parent" else "child-home-v2")
     )
 
-    greeting_raw = _greeting_prepare_steps(scenario_id, start_order=len(nav_raw) + 1)
+    # Fluxo único: clock → launch → pairing/nav → capture (saudação correta no 1º mount)
+    greeting_raw = _greeting_prepare_steps(scenario_id, start_order=1)
     capture_raw = _capture_steps(
         scenario_id=scenario_id,
         target_element=target_element,
-        start_order=len(nav_raw) + len(greeting_raw) + 1,
+        start_order=len(greeting_raw) + len(nav_raw) + 1,
         screenshot=screenshot,
         app=app,
     )
-    steps, violations = _chain_steps([*nav_raw, *greeting_raw, *capture_raw])
+    steps, violations = _chain_steps([*greeting_raw, *nav_raw, *capture_raw])
 
     description = _description_for_scenario(
         scenario_id,

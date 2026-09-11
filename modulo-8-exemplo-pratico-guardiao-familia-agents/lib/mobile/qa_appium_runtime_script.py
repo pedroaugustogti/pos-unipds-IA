@@ -277,6 +277,9 @@ def build_appium_script_source(
             "require_metro": bool(launch_cfg.get("require_metro", True)),
             "hard_stop": bool(launch_cfg.get("hard_stop", False)),
             "pm_clear_before_launch": bool(launch_cfg.get("pm_clear_before_launch", False)),
+            "prefer_warm_session": bool(launch_cfg.get("prefer_warm_session", True)),
+            "pm_clear_if_dirty": bool(launch_cfg.get("pm_clear_if_dirty", True)),
+            "reload_mode": str(launch_cfg.get("reload_mode") or "soft"),
             "dismiss_expo_overlay": bool(launch_cfg.get("dismiss_expo_overlay", True)),
             "use_dev_client_url": bool(launch_cfg.get("use_dev_client_url", True)),
             "grant_os_permissions": bool(launch_cfg.get("grant_os_permissions", True)),
@@ -311,8 +314,9 @@ import {{
   activateApp,
   createDriver,
   forceStop,
+  resumeDevClient,
 }} from '../_shared/driver.mjs';
-import {{ adb, adbOk }} from '../_shared/adb.mjs';
+import {{ adb, adbOk, getForegroundPackage }} from '../_shared/adb.mjs';
 import {{
   dismissPermissionControllerAdb,
   grantChildPermissionsAdb,
@@ -323,6 +327,13 @@ import {{ assertMetroReady }} from '../_shared/metro.mjs';
 import {{ findVisible, tapCenter, waitEditTexts, waitVisible }} from '../_shared/ui.mjs';
 
 const PIPE = {embedded};
+
+/** true após o único openDevClient do step launch (evita launch duplo). */
+let APP_LAUNCHED = false;
+/** Sessão Appium ativa — deleteSession só no finally. */
+let DRIVER_ALIVE = false;
+/** set_clock rodou antes do launch — precisa de 1 remount para Date() pegar a hora. */
+let CLOCK_SET_PRE_LAUNCH = false;
 
 /** View atualmente confirmada — evita re-scan da mesma tela. */
 let READY_VIEW = '';
@@ -362,8 +373,54 @@ function invalidateViewGate(reason) {{
 }}
 
 async function runDismissExpo(driver, serial) {{
-  await dismissExpoDevOverlayAdb(serial).catch(() => undefined);
-  if (driver) await dismissExpoDevOverlay(driver, serial).catch(() => undefined);
+  let hit = false;
+  const adbHit = await dismissExpoDevOverlayAdb(serial).catch(() => false);
+  if (adbHit) hit = true;
+  if (driver) {{
+    const dHit = await dismissExpoDevOverlay(driver, serial).catch(() => false);
+    if (dHit) hit = true;
+  }}
+  if (hit) log('dismiss_expo hit');
+  return hit;
+}}
+
+/** Modal Expo (Continue) — loop curto; sai cedo se tela do app já visível. */
+async function dismissExpoUntilClear(driver, serial, {{ timeoutMs = 4_000 }} = {{}}) {{
+  if (PIPE.launch?.dismiss_expo_overlay === false) return false;
+  const deadline = Date.now() + timeoutMs;
+  let any = false;
+  let clearStreak = 0;
+  while (Date.now() < deadline) {{
+    const hit = await runDismissExpo(driver, serial);
+    if (hit) {{
+      any = true;
+      clearStreak = 0;
+      await delay(200);
+      continue;
+    }}
+    // sem overlay: se já há tela conhecida, não esperar 2º poll
+    const known = await findVisible(driver, [
+      ...compactTestIdSelectors('pre-pairing-screen'),
+      ...compactTestIdSelectors('child-home-v2'),
+      ...compactTestIdSelectors('greeting-title'),
+      ...compactTestIdSelectors('permissions-onboarding-screen'),
+      ...compactTestIdSelectors('auth-screen'),
+    ]);
+    if (known) {{
+      if (any) log('dismiss_expo cleared (app visible)');
+      return any;
+    }}
+    if (any) {{
+      clearStreak += 1;
+      if (clearStreak >= 1) {{
+        log('dismiss_expo cleared');
+        return true;
+      }}
+    }}
+    await delay(250);
+  }}
+  if (any) log('dismiss_expo timeout after hits');
+  return any;
 }}
 
 /** Grants OS perms (child: location/notif; parent: notifications) — genérico. */
@@ -393,13 +450,198 @@ async function stabilizeUi(driver, serial, {{ dismissExpo = false }} = {{}}) {{
 }}
 
 async function forceReloadApp(driver, serial, appPackage, appActivity, label) {{
-  log('force_reload');
+  // Só via GF_APPIUM_HARD_RELOAD / reload_mode=hard — mata processo (parece crash).
+  log('force_reload (hard)');
   invalidateViewGate('force_reload');
   await forceStop(serial, appPackage).catch(() => undefined);
-  await delay(900);
+  await delay(250);
+  APP_LAUNCHED = false;
   await openDevClient(serial, appPackage, appActivity, label);
-  await delay(1200);
-  await runDismissExpo(driver, serial);
+  APP_LAUNCHED = true;
+  await delay(400);
+  await dismissExpoUntilClear(driver, serial, {{ timeoutMs: 2_500 }});
+}}
+
+/**
+ * Soft remount: deeplink/activate SEM force-stop (preserva processo e sessão Appium).
+ */
+async function softReloadApp(driver, serial, appPackage, appActivity, label) {{
+  log('soft_reload resume');
+  invalidateViewGate('soft_reload');
+  if (PIPE.dev_client_url) {{
+    await resumeDevClient({{
+      serial,
+      appPackage,
+      appActivity,
+      devClientUrl: PIPE.dev_client_url,
+      label,
+    }}).catch(() => openDevClient(serial, appPackage, appActivity, label));
+  }} else {{
+    await activateApp({{ serial, appPackage, appActivity, label }});
+  }}
+  await delay(350);
+  await dismissExpoUntilClear(driver, serial, {{ timeoutMs: 2_000 }});
+}}
+
+function hardReloadAllowed() {{
+  const env = String(process.env.GF_APPIUM_HARD_RELOAD || '').toLowerCase();
+  if (env === '1' || env === 'true' || env === 'yes') return true;
+  return String(PIPE.launch?.reload_mode || '').toLowerCase() === 'hard';
+}}
+
+/**
+ * Remount pós-clock só se a saudação ainda estiver errada.
+ * Default: soft; forceStop só com hard explícito. Sem hard_retry em cascata.
+ */
+async function reloadAfterClock(driver, serial, appPackage, appActivity, label, hhmm) {{
+  const want = greetingWantFromClock(hhmm);
+  if (await waitGreeting(driver, want, 2_000)) {{
+    log('set_clock greeting ok — sem reload');
+    return 'none';
+  }}
+  await softReloadApp(driver, serial, appPackage, appActivity, label);
+  if (await waitGreeting(driver, want, 8_000)) return 'soft';
+  if (!hardReloadAllowed()) {{
+    log('set_clock soft miss — hard reload desligado (GF_APPIUM_HARD_RELOAD=1 para forçar)');
+    return 'soft_miss';
+  }}
+  await forceReloadApp(driver, serial, appPackage, appActivity, label);
+  if (await waitGreeting(driver, want, 8_000)) return 'hard';
+  return 'hard_miss';
+}}
+
+const KNOWN_UI_SELECTORS = () => [
+  ...compactTestIdSelectors('pre-pairing-screen'),
+  ...compactTestIdSelectors('pairing-code-input'),
+  ...compactTestIdSelectors('permissions-onboarding-screen'),
+  ...compactTestIdSelectors('child-home-v2'),
+  ...compactTestIdSelectors('greeting-title'),
+  ...compactTestIdSelectors('auth-screen'),
+];
+
+/** Cold clear só se explicitamente pedido (nunca no caminho warm padrão). */
+async function escalatePmClearIfDirty(driver, serial, appPackage, appActivity, label) {{
+  if (!PIPE.launch?.pm_clear_if_dirty) return false;
+  if (PIPE.launch?.pm_clear_before_launch) return false;
+  const env = String(process.env.GF_APPIUM_PM_CLEAR_IF_DIRTY || '').toLowerCase();
+  if (!(env === '1' || env === 'true' || env === 'yes')) {{
+    // flag no pipeline sem env: ainda assim exige tela desconhecida por 8s (não 1.5s)
+  }}
+  const settleUntil = Date.now() + 8_000;
+  while (Date.now() < settleUntil) {{
+    const onKnown = await findVisible(driver, KNOWN_UI_SELECTORS());
+    if (onKnown) {{
+      log('warm: tela conhecida — sem pm clear');
+      return false;
+    }}
+    await delay(400);
+  }}
+  log('warm dirty — escalating pm clear (pm_clear_if_dirty)');
+  await adb(serial, 'shell', 'pm', 'clear', appPackage).catch(() => undefined);
+  await delay(800);
+  APP_LAUNCHED = false;
+  if (PIPE.launch?.grant_os_permissions !== false) {{
+    await grantOsPermissions(serial, appPackage, PIPE.app);
+  }}
+  await openDevClient(serial, appPackage, appActivity, label);
+  APP_LAUNCHED = true;
+  await delay(400);
+  await dismissExpoUntilClear(driver, serial, {{ timeoutMs: 2_500 }});
+  invalidateViewGate('pm_clear_dirty');
+  return true;
+}}
+
+function greetingWantFromClock(hhmm) {{
+  // Alinhado a childHome.state: <12 Bom dia · <18 Boa tarde · senão Boa noite
+  const h = Number(String(hhmm || '12:00').split(':')[0] || 12);
+  if (h < 12) return 'Bom dia';
+  if (h < 18) return 'Boa tarde';
+  return 'Boa noite';
+}}
+
+async function readDeviceHm(serial) {{
+  const raw = await adbOk(serial, 'shell', 'date', '+%H:%M').catch(() => '');
+  return String(raw || '').trim();
+}}
+
+async function readDeviceTzOffsetMin(serial) {{
+  const z = String(await adbOk(serial, 'shell', 'date', '+%z').catch(() => '') || '').trim();
+  const m = z.match(/^([+-])(\\d{{2}})(\\d{{2}})$/);
+  if (!m) return 0;
+  const sign = m[1] === '-' ? -1 : 1;
+  return sign * (Number(m[2]) * 60 + Number(m[3]));
+}}
+
+async function ensureDeviceTimezone(serial) {{
+  const tz = String(process.env.GF_DEVICE_TZ || 'America/Sao_Paulo').trim() || 'America/Sao_Paulo';
+  await adb(serial, 'shell', 'setprop', 'persist.sys.timezone', tz).catch(() => undefined);
+  await adb(serial, 'shell', 'su', '0', 'setprop', 'persist.sys.timezone', tz).catch(() => undefined);
+  // alguns images: service call alarm
+  await adb(serial, 'shell', 'service', 'call', 'alarm', '3', 's16', tz).catch(() => undefined);
+  log('device_tz', tz);
+}}
+
+async function setClock(serial, hhmm) {{
+  const m = String(hhmm || '').match(/^(\\d{{1,2}}):(\\d{{2}})$/);
+  if (!m) return false;
+  const hh = Number(m[1]);
+  const mm = Number(m[2]);
+  const H = String(hh).padStart(2, '0');
+  const M = String(mm).padStart(2, '0');
+
+  await adb(serial, 'shell', 'settings', 'put', 'global', 'auto_time', '0').catch(() => undefined);
+  await adb(serial, 'shell', 'settings', 'put', 'global', 'auto_time_zone', '0').catch(() => undefined);
+  await ensureDeviceTimezone(serial);
+
+  const now = new Date();
+  const y = now.getFullYear();
+  const mo = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  // toybox interpreta como hora LOCAL do device
+  const toy = `${{mo}}${{d}}${{H}}${{M}}${{y}}.00`;
+
+  const trySet = async (args) => {{
+    await adb(serial, ...args).catch(() => undefined);
+    const got = await readDeviceHm(serial);
+    if (got.startsWith(`${{H}}:`)) {{
+      log('set_clock ok', got, 'want', `${{H}}:${{M}}`);
+      return true;
+    }}
+    return false;
+  }};
+
+  if (await trySet(['shell', 'su', '0', 'date', toy])) return true;
+  if (await trySet(['shell', 'su', 'root', 'date', toy])) return true;
+  if (await trySet(['shell', 'date', toy])) return true;
+
+  // Epoch absoluto: UTC = local_desejada - offset_do_device
+  // (corrige host BR vs emulator UTC — 15h BR virava 18h UTC → Boa noite)
+  const offMin = await readDeviceTzOffsetMin(serial);
+  const utcMs = Date.UTC(y, now.getMonth(), now.getDate(), hh, mm, 0) - offMin * 60 * 1000;
+  const epoch = Math.floor(utcMs / 1000);
+  if (await trySet(['shell', 'su', '0', 'date', '@' + String(epoch)])) return true;
+  if (await trySet(['shell', 'su', 'root', 'date', '@' + String(epoch)])) return true;
+  if (await trySet(['shell', 'date', '@' + String(epoch)])) return true;
+
+  const got = await readDeviceHm(serial);
+  log('set_clock FAIL', `want=${{H}}:${{M}} got=${{got || '?'}} tzOff=${{offMin}}`);
+  return false;
+}}
+
+async function greetingMatches(driver, want) {{
+  const el = await findVisible(driver, compactTestIdSelectors('greeting-title'));
+  if (!el || !want) return false;
+  const blob = await elementTextBlob(el);
+  return blob.includes(String(want));
+}}
+
+async function waitGreeting(driver, want, timeoutMs = 1_500) {{
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {{
+    if (await greetingMatches(driver, want)) return true;
+    await delay(200);
+  }}
+  return false;
 }}
 
 /**
@@ -422,14 +664,17 @@ async function awaitViewGate(driver, step, serial, {{ soft = false }} = {{}}) {{
   }}
 
   log('view_gate wait', tid, step.step_id);
-  const timeoutMs = Number(gate?.timeout_ms || 25_000);
+  // optional/soft: poll curto — view já passou não deve consumir timeout cheio
+  const baseTimeout = Number(gate?.timeout_ms || 25_000);
+  const timeoutMs = (soft || step.optional) ? Math.min(baseTimeout, 1_500) : baseTimeout;
   const deadline = Date.now() + timeoutMs;
   let tick = 0;
   while (Date.now() < deadline) {{
     tick += 1;
     // stabilize só a cada 3 polls — evita loop adb/Appium pesado
     if (tick === 1 || tick % 3 === 0) {{
-      await stabilizeUi(driver, serial, {{ dismissExpo: stepWants(step, 'dismiss_expo') }});
+      // view_gate nunca faz dismiss_expo — overlay só no launch / pós-reload
+      await stabilizeUi(driver, serial, {{ dismissExpo: false }});
     }}
     const el = await findVisible(driver, selectors);
     if (el) {{
@@ -540,31 +785,43 @@ async function runTap(driver, field) {{
 
 /**
  * Espera exit_condition (próxima view / âncora).
- * Poll enxuto: seletores compactos + stabilize intercalado.
+ * Poll enxuto; maxMs opcional (launch usa teto menor).
  */
-async function waitExit(driver, step, serial, {{ soft = false }} = {{}}) {{
+async function waitExit(driver, step, serial, {{ soft = false, maxMs = null }} = {{}}) {{
   const list = Array.isArray(step.exit_selectors) ? step.exit_selectors : [];
-  const dismiss = stepWants(step, 'dismiss_expo');
   if (!list.length) {{
-    if (dismiss) await runDismissExpo(driver, serial);
     return true;
   }}
-  const deadline = Date.now() + 25_000;
+  const baseExitMs = Number(maxMs) > 0 ? Number(maxMs) : 25_000;
+  const deadline = Date.now() + ((soft || step.optional) ? Math.min(baseExitMs, 2_000) : baseExitMs);
+  const allowDismiss = PIPE.launch?.dismiss_expo_overlay !== false;
   let tick = 0;
   while (Date.now() < deadline) {{
     tick += 1;
-    if (dismiss && (tick === 1 || tick % 3 === 0)) {{
-      await stabilizeUi(driver, serial, {{ dismissExpo: true }});
+    // dismiss só a cada 3 ticks (custo ADB); tick 1 sempre
+    if (allowDismiss && (tick === 1 || tick % 3 === 0)) {{
+      await runDismissExpo(driver, serial);
+    }} else if (tick === 1 || tick % 3 === 0) {{
+      await stabilizeUi(driver, serial, {{ dismissExpo: false }});
     }}
     const el = await findVisible(driver, list);
     if (el) {{
-      // Se exit aponta para um único test_id de view, marca como ready
       const ec = step.exit_condition || {{}};
-      const nextTid = String(ec.test_id || (Array.isArray(ec.test_ids) && ec.test_ids.length === 1 ? ec.test_ids[0] : '') || '').trim();
-      if (nextTid) READY_VIEW = nextTid;
+      const candidates = [];
+      if (ec.test_id) candidates.push(String(ec.test_id));
+      if (Array.isArray(ec.test_ids)) candidates.push(...ec.test_ids.map(String));
+      for (const cand of candidates) {{
+        const t = String(cand || '').trim();
+        if (!t) continue;
+        const hit = await findVisible(driver, compactTestIdSelectors(t));
+        if (hit) {{
+          READY_VIEW = t;
+          break;
+        }}
+      }}
       return true;
     }}
-    await delay(400);
+    await delay(300);
   }}
   const msg = `exit_condition timeout step=${{step.step_id}} testID=${{step.view_testid || '?'}}`;
   if (soft || step.optional) {{
@@ -593,23 +850,40 @@ async function stepTargetsVisible(driver, step) {{
   return false;
 }}
 
-/** Settle + view_gate antes de skip optional (sem loop de field search cego). */
+/**
+ * Optional: probe rápido — se a view/targets já sumiram (fluxo avançou), skip sem
+ * esperar view_gate cheio. O pipeline já avança por view; não re-polla tela passada.
+ */
 async function optionalShouldSkip(driver, step) {{
   if (!step.optional) return false;
-  if (step.view_gate || step.view_testid) {{
-    const gateOk = await awaitViewGate(driver, step, serialRef(), {{ soft: true }});
-    if (!gateOk) return true;
-    await delay(250);
-    if (await stepTargetsVisible(driver, step)) return false;
-    await delay(400);
-    return !(await stepTargetsVisible(driver, step));
+
+  const tid = String(step.view_gate?.test_id || step.view_testid || '').trim();
+  const viewSelectors = tid
+    ? (Array.isArray(step.view_gate?.selectors) && step.view_gate.selectors.length
+        ? step.view_gate.selectors
+        : compactTestIdSelectors(tid))
+    : [];
+
+  // Já estamos em outra view marcada pelo exit anterior → skip imediato
+  if (tid && READY_VIEW && READY_VIEW !== tid) {{
+    log(`optional skip ${{step.step_id}}: READY_VIEW=${{READY_VIEW}} != ${{tid}}`);
+    return true;
   }}
-  await delay(400);
-  await stabilizeUi(driver, serialRef());
-  for (let i = 0; i < 3; i += 1) {{
-    if (await stepTargetsVisible(driver, step)) return false;
-    await delay(350);
+
+  // Probe único (sem loop/timeout): view ainda na tela?
+  if (viewSelectors.length) {{
+    const viewEl = await findVisible(driver, viewSelectors);
+    if (!viewEl) {{
+      log(`optional skip ${{step.step_id}}: view ${{tid}} ausente`);
+      return true;
+    }}
   }}
+
+  // View presente (ou sem gate): targets do step ainda existem?
+  if (await stepTargetsVisible(driver, step)) return false;
+  await delay(200);
+  if (await stepTargetsVisible(driver, step)) return false;
+  log(`optional skip ${{step.step_id}}: targets ausentes`);
   return true;
 }}
 
@@ -717,27 +991,6 @@ async function rePairIfNeeded(driver, serial, appPackage, appActivity) {{
   return true;
 }}
 
-async function setClock(serial, hhmm) {{
-  const m = String(hhmm || '').match(/^(\\d{{1,2}}):(\\d{{2}})$/);
-  if (!m) return;
-  const hh = m[1].padStart(2, '0');
-  const mm = m[2];
-  await adb(serial, 'shell', 'settings', 'put', 'global', 'auto_time', '0').catch(() => undefined);
-  await adb(serial, 'shell', 'settings', 'put', 'global', 'auto_time_zone', '0').catch(() => undefined);
-  let ok = false;
-  await adb(serial, 'shell', 'su', '0', 'date', `${{hh}}${{mm}}`).then(() => {{ ok = true; }}).catch(() => undefined);
-  if (!ok) {{
-    await adb(serial, 'shell', 'date', `${{hh}}${{mm}}00`).then(() => {{ ok = true; }}).catch(() => undefined);
-  }}
-  if (!ok) {{
-    const now = new Date();
-    now.setHours(Number(hh), Number(mm), 0, 0);
-    const epoch = Math.floor(now.getTime() / 1000);
-    await adb(serial, 'shell', 'su', '0', 'date', '@' + String(epoch)).catch(() => undefined);
-  }}
-  log('set_clock', `${{hh}}:${{mm}}`);
-}}
-
 async function capturePng(driver, outDir, name) {{
   await mkdir(outDir, {{ recursive: true }});
   const png = path.join(outDir, `${{name}}.png`);
@@ -763,11 +1016,37 @@ async function openDevClient(serial, appPackage, appActivity, label) {{
   await activateApp({{ serial, appPackage, appActivity, label }});
 }}
 
+/**
+ * Um único open por run. Se já houver UI conhecida / foreground, não re-dispara deeplink.
+ */
+async function ensureAppOpenOnce(driver, serial, appPackage, appActivity, label) {{
+  if (APP_LAUNCHED) {{
+    const known = await findVisible(driver, KNOWN_UI_SELECTORS());
+    if (known) {{
+      log('launch skip — app já aberto com UI conhecida');
+      return 'skip';
+    }}
+  }}
+  const fg = await getForegroundPackage(serial).catch(() => '');
+  if (fg === appPackage) {{
+    const known = await findVisible(driver, KNOWN_UI_SELECTORS());
+    if (known) {{
+      log('launch skip — já foreground com UI');
+      APP_LAUNCHED = true;
+      return 'foreground';
+    }}
+  }}
+  await openDevClient(serial, appPackage, appActivity, label);
+  APP_LAUNCHED = true;
+  return 'opened';
+}}
+
 async function applyStepHooksBefore(driver, step, serial, appPackage, appActivity) {{
   if (stepWants(step, 'grant_os_perms') || PIPE.launch?.grant_os_permissions) {{
     await grantOsPermissions(serial, appPackage, PIPE.app);
   }}
-  await stabilizeUi(driver, serial, {{ dismissExpo: stepWants(step, 'dismiss_expo') }});
+  // dismiss_expo não roda aqui — só no launch (após open) e em forceReloadApp
+  await stabilizeUi(driver, serial, {{ dismissExpo: false }});
 }}
 
 async function main() {{
@@ -780,128 +1059,207 @@ async function main() {{
 
   let driver = null;
   const timeline = [];
+  const boot = [];
+  const runStarted = Date.now();
   const artifacts = {{ screenshots: [], video: null, script_meta: path.join(outDir, 'runtime-pipeline.json') }};
   await writeFile(artifacts.script_meta, JSON.stringify(PIPE, null, 2), 'utf8');
 
+  async function markBoot(name, fn) {{
+    const t0 = Date.now();
+    try {{
+      const out = await fn();
+      boot.push({{ phase: name, ok: true, duration_ms: Date.now() - t0, at: new Date().toISOString() }});
+      return out;
+    }} catch (e) {{
+      boot.push({{ phase: name, ok: false, duration_ms: Date.now() - t0, error: String(e?.message || e), at: new Date().toISOString() }});
+      throw e;
+    }}
+  }}
+
   try {{
+    // Boot mínimo até sessão — grant/video depois do open (no step launch)
     if (PIPE.launch?.require_metro && PIPE.metro_port) {{
-      await assertMetroReady(Number(PIPE.metro_port));
+      await markBoot('metro_ready', () => assertMetroReady(Number(PIPE.metro_port)));
     }}
     for (const p of (PIPE.adb_reverse_ports || [])) {{
-      await adb(serial, 'reverse', `tcp:${{p}}`, `tcp:${{p}}`).catch(() => undefined);
+      await markBoot(`adb_reverse_${{p}}`, () => adb(serial, 'reverse', `tcp:${{p}}`, `tcp:${{p}}`).catch(() => undefined));
     }}
     if (PIPE.launch?.pm_clear_before_launch) {{
       log('pm clear', appPackage);
-      await adb(serial, 'shell', 'pm', 'clear', appPackage).catch(() => undefined);
-      await delay(1500);
+      await markBoot('pm_clear', async () => {{
+        await adb(serial, 'shell', 'pm', 'clear', appPackage).catch(() => undefined);
+        await delay(800);
+      }});
     }} else if (PIPE.launch?.hard_stop) {{
-      await forceStop(serial, appPackage).catch(() => undefined);
+      await markBoot('force_stop', () => forceStop(serial, appPackage).catch(() => undefined));
     }}
-    if (PIPE.launch?.grant_os_permissions !== false) {{
-      await grantOsPermissions(serial, appPackage, PIPE.app);
-    }}
-    driver = await createDriver({{
+    // createDriver cedo — não bloquear open com grant/video prévios
+    driver = await markBoot('create_appium_session', () => createDriver({{
       serial,
       appPackage,
       appActivity: PIPE.activity,
       host,
       port,
-    }});
+    }}));
+    DRIVER_ALIVE = true;
 
-    if (PIPE.video_record) {{
+    const hasLaunchStep = (PIPE.steps || []).some((s) => {{
+      const a = String(s.action || '').toLowerCase();
+      return a === 'launch' || (a === 'navigate' && Number(s.order) === 1);
+    }});
+    if (PIPE.video_record && !hasLaunchStep) {{
       process.env.GF_APPIUM_FLOW_VIDEO = '1';
-      await startFlowVideo(driver);
+      await markBoot('start_flow_video', () => startFlowVideo(driver));
+      artifacts.videoStarted = true;
     }}
 
     for (const step of PIPE.steps) {{
       const action = String(step.action || 'navigate').toLowerCase();
+      const stepT0 = Date.now();
+      const entry = {{
+        step_id: step.step_id,
+        order: step.order,
+        action,
+        view: step.view || null,
+        view_testid: step.view_testid,
+        view_gate: step.view_gate || null,
+        hooks: step.hooks || [],
+        optional: !!step.optional,
+        at: new Date().toISOString(),
+        started_ms: stepT0 - runStarted,
+      }};
       log(`step ${{step.order}} ${{step.step_id}} action=${{action}} view=${{step.view || '-'}} gate=${{step.view_testid || '-'}} hooks=${{(step.hooks || []).join(',') || '-'}} optional=${{!!step.optional}}`);
-      timeline.push({{ step_id: step.step_id, action, view_testid: step.view_testid, view_gate: step.view_gate || null, hooks: step.hooks || [], optional: !!step.optional, at: new Date().toISOString() }});
+      timeline.push(entry);
+
+      const finishStep = (extra = {{}}) => {{
+        entry.duration_ms = Date.now() - stepT0;
+        Object.assign(entry, extra);
+      }};
 
       if (action === 'launch' || (action === 'navigate' && Number(step.order) === 1)) {{
         invalidateViewGate('launch');
-        await applyStepHooksBefore(driver, step, serial, appPackage, PIPE.activity);
-        if (stepWants(step, 'dismiss_expo')) {{
-          await runDismissExpo(driver, serial);
-          await runDismissExpo(driver, serial);
+        let openMode;
+        if (CLOCK_SET_PRE_LAUNCH) {{
+          // Um deeplink após clock: 1º mount do RN lê Date() correta (sem forceStop).
+          await openDevClient(serial, appPackage, PIPE.activity, PIPE.app);
+          APP_LAUNCHED = true;
+          CLOCK_SET_PRE_LAUNCH = false;
+          openMode = 'opened_after_clock';
+        }} else {{
+          openMode = await ensureAppOpenOnce(driver, serial, appPackage, PIPE.activity, PIPE.app);
         }}
-        await openDevClient(serial, appPackage, PIPE.activity, PIPE.app);
-        await delay(step.delay_ms_after || 1000);
-        await waitExit(driver, step, serial);
+        entry.launch_mode = openMode;
+        if (stepWants(step, 'grant_os_perms') || PIPE.launch?.grant_os_permissions) {{
+          await grantOsPermissions(serial, appPackage, PIPE.app);
+        }}
+        if (stepWants(step, 'dismiss_expo') || PIPE.launch?.dismiss_expo_overlay !== false) {{
+          await dismissExpoUntilClear(driver, serial, {{ timeoutMs: 3_000 }});
+        }}
+        if (PIPE.launch?.pm_clear_if_dirty) {{
+          await escalatePmClearIfDirty(driver, serial, appPackage, PIPE.activity, PIPE.app);
+        }}
+        if (PIPE.video_record && !artifacts.videoStarted) {{
+          process.env.GF_APPIUM_FLOW_VIDEO = '1';
+          await markBoot('start_flow_video', () => startFlowVideo(driver));
+          artifacts.videoStarted = true;
+        }}
+        await delay(step.delay_ms_after || 200);
+        await waitExit(driver, step, serial, {{ maxMs: 12_000 }});
+        finishStep();
         continue;
       }}
 
       if (await optionalShouldSkip(driver, step)) {{
         log(`skip optional step ${{step.step_id}} — view/target ausente após settle`);
-        timeline[timeline.length - 1].skipped = true;
+        finishStep({{ skipped: true }});
         continue;
       }}
 
       if (action === 'fill') {{
         await applyStepHooksBefore(driver, step, serial, appPackage, PIPE.activity);
         if (!(await awaitViewGate(driver, step, serial, {{ soft: !!step.optional }}))) {{
-          if (step.optional) continue;
+          if (step.optional) {{ finishStep({{ skipped: true, reason: 'view_gate' }}); continue; }}
           throw new Error(`view_gate required for ${{step.step_id}}`);
         }}
         try {{
           for (const field of step.fields || []) await runFill(driver, field);
         }} catch (e) {{
-          if (step.optional) {{ log(`skip optional fill ${{step.step_id}}`, String(e?.message || e)); continue; }}
+          if (step.optional) {{ log(`skip optional fill ${{step.step_id}}`, String(e?.message || e)); finishStep({{ skipped: true }}); continue; }}
           throw e;
         }}
-        await delay(step.delay_ms_after || 800);
-        await waitExit(driver, step, serial, {{ soft: !!step.optional }});
+        await delay(step.delay_ms_after || 400);
+        await waitExit(driver, step, serial, {{ soft: !!step.optional, maxMs: step.optional ? 2_000 : 12_000 }});
+        finishStep();
         continue;
       }}
 
       if (action === 'tap') {{
         await applyStepHooksBefore(driver, step, serial, appPackage, PIPE.activity);
         if (!(await awaitViewGate(driver, step, serial, {{ soft: !!step.optional }}))) {{
-          if (step.optional) continue;
+          if (step.optional) {{ finishStep({{ skipped: true, reason: 'view_gate' }}); continue; }}
           throw new Error(`view_gate required for ${{step.step_id}}`);
         }}
         try {{
           for (const field of step.fields || []) await runTap(driver, field);
         }} catch (e) {{
-          if (step.optional) {{ log(`skip optional tap ${{step.step_id}}`, String(e?.message || e)); continue; }}
+          if (step.optional) {{ log(`skip optional tap ${{step.step_id}}`, String(e?.message || e)); finishStep({{ skipped: true }}); continue; }}
           throw e;
         }}
-        await delay(step.delay_ms_after || 800);
-        await waitExit(driver, step, serial, {{ soft: !!step.optional }});
+        await delay(step.delay_ms_after || 400);
+        await waitExit(driver, step, serial, {{ soft: !!step.optional, maxMs: step.optional ? 2_000 : 12_000 }});
+        finishStep();
         continue;
       }}
 
       if (action === 'set_clock') {{
         const clockField = (step.fields || [])[0] || {{}};
-        await setClock(serial, clockField.value || '08:00');
-        const doReload =
-          stepWants(step, 'force_reload') || PIPE.launch?.reload_after_set_clock !== false;
-        if (stepWants(step, 'grant_os_perms') || PIPE.launch?.grant_os_permissions !== false) {{
-          await grantOsPermissions(serial, appPackage, PIPE.app);
-        }}
-        if (doReload) {{
-          await forceReloadApp(driver, serial, appPackage, PIPE.activity, PIPE.app);
-          await rePairIfNeeded(driver, serial, appPackage, PIPE.activity);
+        const hhmm = clockField.value || '08:00';
+        await setClock(serial, hhmm);
+        // Pré-launch: só ADB — app ainda não montou Date(); sem reload/forceStop.
+        // Mid-flow: remount só se greeting errada e reload_after_set_clock/force_reload.
+        if (!APP_LAUNCHED) {{
+          CLOCK_SET_PRE_LAUNCH = true;
+          entry.reload_mode = 'pre_launch';
+          log('set_clock pre_launch', hhmm);
         }} else {{
-          if (stepWants(step, 'dismiss_expo')) await runDismissExpo(driver, serial);
-          await openDevClient(serial, appPackage, PIPE.activity, PIPE.app);
+          const wantsReload =
+            stepWants(step, 'force_reload') || PIPE.launch?.reload_after_set_clock === true;
+          if (wantsReload) {{
+            if (stepWants(step, 'grant_os_perms')) {{
+              await grantOsPermissions(serial, appPackage, PIPE.app);
+            }}
+            const modeUsed = await reloadAfterClock(
+              driver, serial, appPackage, PIPE.activity, PIPE.app, hhmm,
+            );
+            entry.reload_mode = modeUsed;
+            if (modeUsed === 'hard' || modeUsed === 'hard_miss') {{
+              await rePairIfNeeded(driver, serial, appPackage, PIPE.activity);
+            }}
+          }} else {{
+            entry.reload_mode = 'skipped_config';
+            log('set_clock skipped_config', hhmm);
+          }}
         }}
-        await delay(step.delay_ms_after || 800);
-        await waitExit(driver, step, serial);
+        await delay(step.delay_ms_after || 200);
+        if (APP_LAUNCHED) {{
+          await waitExit(driver, step, serial, {{ maxMs: 4_000 }});
+        }}
+        finishStep();
         continue;
       }}
 
       if (action === 'wait' || action === 'navigate') {{
         await applyStepHooksBefore(driver, step, serial, appPackage, PIPE.activity);
         await awaitViewGate(driver, step, serial);
-        await waitExit(driver, step, serial);
-        await delay(step.delay_ms_after || 1000);
+        await waitExit(driver, step, serial, {{ maxMs: 12_000 }});
+        await delay(step.delay_ms_after || 500);
+        finishStep();
         continue;
       }}
 
       if (action === 'capture') {{
         await awaitViewGate(driver, step, serial);
-        await stabilizeUi(driver, serial);
+        await stabilizeUi(driver, serial, {{ dismissExpo: false }});
         const assertField = (step.fields || [])[0];
         if (assertField) {{
           const el = await findFieldElement(driver, assertField, 12_000);
@@ -915,11 +1273,13 @@ async function main() {{
           log('CAPTURE_OK', png);
         }}
         await delay(step.delay_ms_after || 500);
+        finishStep();
         continue;
       }}
 
       log(`ação desconhecida: ${{action}} — ignorada`);
       await delay(step.delay_ms_after || 500);
+      finishStep({{ skipped: true, reason: 'unknown_action' }});
     }}
 
     if (PIPE.video_record && driver) {{
@@ -932,7 +1292,13 @@ async function main() {{
       task_id: PIPE.task_id,
       scenario_id: PIPE.scenario_id,
       artifacts,
+      boot,
       timeline,
+      timing: {{
+        total_runtime_ms: Date.now() - runStarted,
+        boot_total_ms: boot.reduce((a, b) => a + (Number(b.duration_ms) || 0), 0),
+        steps_total_ms: timeline.reduce((a, b) => a + (Number(b.duration_ms) || 0), 0),
+      }},
       evidence_dir: outDir,
     }};
     await writeFile(path.join(outDir, 'runtime-result.json'), JSON.stringify(result, null, 2), 'utf8');
@@ -945,7 +1311,13 @@ async function main() {{
       error: msg,
       task_id: PIPE.task_id,
       scenario_id: PIPE.scenario_id,
+      boot,
       timeline,
+      timing: {{
+        total_runtime_ms: Date.now() - runStarted,
+        boot_total_ms: boot.reduce((a, b) => a + (Number(b.duration_ms) || 0), 0),
+        steps_total_ms: timeline.reduce((a, b) => a + (Number(b.duration_ms) || 0), 0),
+      }},
       artifacts,
     }};
     try {{
@@ -962,14 +1334,42 @@ async function main() {{
     console.log(JSON.stringify(fail));
     process.exitCode = 1;
   }} finally {{
-    if (driver) {{
+    // Único ponto que encerra a sessão Appium — nunca no meio dos steps
+    if (driver && DRIVER_ALIVE) {{
       try {{ await driver.deleteSession(); }} catch {{ /* ignore */ }}
+      DRIVER_ALIVE = false;
     }}
   }}
 }}
 
 await main();
 '''
+
+
+def _resolve_scenario_evidence_dir(
+    *,
+    task_id: str,
+    scenario_id: str,
+    evidence_dir: Path | None = None,
+) -> Path:
+    """Pasta de mídia por cenário: GF_APPIUM_EVIDENCE_DIR > arg > qa-gate-(N)/evidence/{scenario}.
+
+    O orchestrator já seta GF_APPIUM_EVIDENCE_DIR=.../evidence/{scenario_id}.
+    Sem env, nunca gravar flat em evidence/ (evita overwrite entre cenários).
+    """
+    if evidence_dir is not None:
+        out = Path(evidence_dir)
+    else:
+        env = (os.environ.get("GF_APPIUM_EVIDENCE_DIR") or "").strip()
+        if env:
+            out = Path(env)
+        else:
+            cycle = resolve_agent_cycle(None, "qa-gate")
+            base = qa_evidence_dir(task_id, cycle=cycle)
+            safe = re.sub(r"[^a-zA-Z0-9._-]+", "_", scenario_id or "scenario").strip("._") or "scenario"
+            out = base / safe
+    out.mkdir(parents=True, exist_ok=True)
+    return out
 
 
 def write_runtime_script(
@@ -985,9 +1385,11 @@ def write_runtime_script(
     root = appium_root()
     runtime_dir = root / "_runtime"
     runtime_dir.mkdir(parents=True, exist_ok=True)
-    cycle = resolve_agent_cycle(None, "qa-gate")
-    out_dir = evidence_dir or qa_evidence_dir(task_id, cycle=cycle)
-    out_dir.mkdir(parents=True, exist_ok=True)
+    out_dir = _resolve_scenario_evidence_dir(
+        task_id=task_id,
+        scenario_id=scenario_id,
+        evidence_dir=evidence_dir,
+    )
 
     stamp = _now_stamp()
     safe_sid = re.sub(r"[^a-zA-Z0-9._-]+", "_", scenario_id or "scenario")

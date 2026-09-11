@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import os
+import time
 from pathlib import Path
 from typing import Any
 
@@ -52,14 +53,33 @@ def _seed_values_from_handoff(handoff_file: str = "") -> dict[str, str]:
 
 
 def _with_pairing_clean_launch(device: dict[str, Any] | None, *, feature: str, app: str) -> dict[str, Any] | None:
-    """Pairing child: pm clear antes do launch para evitar estado sujo."""
+    """Pairing child: sessão warm (noReset); um launch; sem pm_clear/forceStop no caminho feliz.
+
+    Override: GF_APPIUM_PM_CLEAR=1 → pm_clear + hard_stop (cold).
+    Default: clock pré-launch no pipeline; reload/forceStop só se GF_APPIUM_HARD_RELOAD=1.
+    """
     if not isinstance(device, dict) or not device:
         return device
     if app != "child" or feature != "pairing":
         return device
     launch = dict(device.get("launch") or {})
-    launch["pm_clear_before_launch"] = True
-    launch["hard_stop"] = True
+    force_clear = os.environ.get("GF_APPIUM_PM_CLEAR", "").strip().lower() in ("1", "true", "yes")
+    if force_clear:
+        launch["pm_clear_before_launch"] = True
+        launch["hard_stop"] = True
+        launch["prefer_warm_session"] = False
+        launch["pm_clear_if_dirty"] = False
+        launch["reload_mode"] = "hard"
+        launch["reload_after_set_clock"] = True
+    else:
+        if "pm_clear_before_launch" not in launch:
+            launch["pm_clear_before_launch"] = False
+        if "hard_stop" not in launch:
+            launch["hard_stop"] = False
+        launch["prefer_warm_session"] = True
+        launch["pm_clear_if_dirty"] = False
+        launch.setdefault("reload_mode", "none")
+        launch.setdefault("reload_after_set_clock", False)
     return {**device, "launch": launch}
 
 
@@ -141,6 +161,8 @@ def _summarize_return(
         return {
             "ticket_id": ticket_id,
             "scenario_id": scenario_id,
+            "ok": True,
+            "blocking_reason": None,
             "screenshot": _evidence_slot(
                 path="",
                 err_type="",
@@ -159,6 +181,8 @@ def _summarize_return(
         return {
             "ticket_id": ticket_id,
             "scenario_id": scenario_id,
+            "ok": False,
+            "blocking_reason": fail_type,
             "screenshot": _evidence_slot(
                 path="",
                 err_type=shot_err,
@@ -202,12 +226,21 @@ def _summarize_return(
     else:
         vid = _evidence_slot(path=mp4)
 
-    # se execução Appium falhou e já não há path, reforça erro nos slots pedidos
-    if not runtime.get("ok") and runtime_err:
-        if want_shot and not shot["evidence"] and not shot["error_runtime"]["type"]:
-            shot = _evidence_slot(path="", err_type=str(runtime.get("blocking_reason") or "RUNTIME_APPIUM_FAIL"), description=runtime_err)
-        if want_video and not vid["evidence"] and not vid["error_runtime"]["type"]:
-            vid = _evidence_slot(path="", err_type=str(runtime.get("blocking_reason") or "RUNTIME_APPIUM_FAIL"), description=runtime_err)
+    # se execução Appium falhou: NÃO tratar capture_FAIL/flow_fail como PASS
+    if not runtime.get("ok"):
+        err_type = str(runtime.get("blocking_reason") or "RUNTIME_APPIUM_FAIL")
+        if want_shot:
+            shot = _evidence_slot(
+                path=str(shot.get("evidence") or ""),
+                err_type=err_type if not shot["error_runtime"]["type"] else shot["error_runtime"]["type"],
+                description=runtime_err or shot["error_runtime"].get("description") or "Appium runtime fail",
+            )
+        if want_video:
+            vid = _evidence_slot(
+                path=str(vid.get("evidence") or ""),
+                err_type=err_type if not vid["error_runtime"]["type"] else vid["error_runtime"]["type"],
+                description=runtime_err or vid["error_runtime"].get("description") or "Appium runtime fail",
+            )
 
     if scenario_ev is not None and want_shot and not scenario_ev.get("ok") and not shot["evidence"]:
         shot = _evidence_slot(
@@ -221,10 +254,25 @@ def _summarize_return(
         "scenario_id": scenario_id,
         "screenshot": shot,
         "video_record": vid,
+        "ok": _slots_ok(shot, vid) and bool(runtime.get("ok", True)),
+        "blocking_reason": None if (bool(runtime.get("ok", True)) and _slots_ok(shot, vid)) else (
+            str(runtime.get("blocking_reason") or runtime_err or "EVIDENCE_FAIL")
+        ),
+        "pre_script": runtime.get("pre_script"),
+        "runtime_timing": ((runtime.get("execution") or {}).get("result") or {}).get("timing")
+        or runtime.get("timing"),
     }
 
 
+def _slots_ok(shot: dict[str, Any], vid: dict[str, Any]) -> bool:
+    shot_err = str((shot.get("error_runtime") or {}).get("type") or "")
+    vid_err = str((vid.get("error_runtime") or {}).get("type") or "")
+    return not shot_err and not vid_err
+
+
 def _summary_ok(summary: dict[str, Any]) -> bool:
+    if "ok" in summary:
+        return bool(summary.get("ok"))
     shot_err = str((summary.get("screenshot") or {}).get("error_runtime", {}).get("type") or "")
     vid_err = str((summary.get("video_record") or {}).get("error_runtime", {}).get("type") or "")
     # "not_requested" fica só em description
@@ -469,15 +517,21 @@ def run_qa_generate_evidence(
         )
 
     phases: list[dict[str, Any]] = []
+    pre_t0 = time.perf_counter()
     log_recovery(task_id=tid or "evidence", phase="qa_generate_evidence_start", ok=True)
 
+    t0 = time.perf_counter()
     suite_gate = _verify_suite_prepared(
         apps_ready_ok=ready,
         child_only=bool(child_only) and app != "parent",
         parent_only=app == "parent",
         device=device,
     )
-    phases.append({"phase": "verify_suite_prepared", **suite_gate})
+    phases.append({
+        "phase": "verify_suite_prepared",
+        **suite_gate,
+        "duration_ms": int((time.perf_counter() - t0) * 1000),
+    })
     if not suite_gate.get("ok"):
         return _fail(
             tid,
@@ -487,17 +541,25 @@ def run_qa_generate_evidence(
             str(suite_gate.get("reason") or suite_gate.get("detail") or "stack não pronta"),
         )
 
+    t0 = time.perf_counter()
     live = _appium_status()
-    phases.append({"phase": "verify_appium_session", "ok": True, "mode": "warm" if live.get("ok") else "cold", "live": live})
+    phases.append({
+        "phase": "verify_appium_session",
+        "ok": True,
+        "mode": "warm" if live.get("ok") else "cold",
+        "live": live,
+        "duration_ms": int((time.perf_counter() - t0) * 1000),
+    })
 
     if tid:
         cache = _seed_cache_path(tid)
         if cache.is_file():
             cache.unlink(missing_ok=True)
-            phases.append({"phase": "purge_seed_cache", "ok": True})
+            phases.append({"phase": "purge_seed_cache", "ok": True, "duration_ms": 0})
     _reset_handoff_cycle(_stage_handoff_path())
-    phases.append({"phase": "purge_credentials_file", "ok": True})
+    phases.append({"phase": "purge_credentials_file", "ok": True, "duration_ms": 0})
 
+    t0 = time.perf_counter()
     seed_prep = _apply_tier(
         "T3",
         tid,
@@ -506,7 +568,11 @@ def run_qa_generate_evidence(
         dry_run=False,
         child_only=bool(child_only) if app == "child" else True,
     )
-    phases.append({"phase": "qa_db_seed", **seed_prep})
+    phases.append({
+        "phase": "qa_db_seed",
+        **seed_prep,
+        "duration_ms": int((time.perf_counter() - t0) * 1000),
+    })
     if not seed_prep.get("ok"):
         return _fail(
             tid,
@@ -516,6 +582,7 @@ def run_qa_generate_evidence(
             str(seed_prep.get("error") or seed_prep.get("detail") or "seed falhou"),
         )
 
+    t0 = time.perf_counter()
     seed_ctx = resolve_from_db_seed(
         "child" if app == "child" else "parent",
         task_id=tid,
@@ -528,6 +595,7 @@ def run_qa_generate_evidence(
         "ok": bool(seed_ctx.get("ok")),
         "pairing_code_present": seed_ctx.get("pairing_code_present"),
         "feature": feature,
+        "duration_ms": int((time.perf_counter() - t0) * 1000),
     })
     if not seed_ctx.get("ok"):
         return _fail(
@@ -560,6 +628,7 @@ def run_qa_generate_evidence(
 
     serial = str((device or {}).get("serial") or stack(app)["emulator"])
     bundle = str((device or {}).get("bundle_id") or stack(app)["bundle_id"])
+    t0 = time.perf_counter()
     if app == "parent":
         if _package_installed(serial, bundle):
             apk_gate: dict[str, Any] = {"ok": True, "rebuilt": False, "serial": serial}
@@ -592,7 +661,11 @@ def run_qa_generate_evidence(
                 "serial": serial,
                 "bundle": bundle,
             }
-    phases.append({"phase": "apk_open_or_rebuild", **apk_gate})
+    phases.append({
+        "phase": "apk_open_or_rebuild",
+        **apk_gate,
+        "duration_ms": int((time.perf_counter() - t0) * 1000),
+    })
     if not apk_gate.get("ok"):
         return _fail(
             tid,
@@ -601,6 +674,15 @@ def run_qa_generate_evidence(
             "APK_REBUILD_FAIL",
             str(apk_gate.get("error") or "apk não instalado"),
         )
+
+    pre_script = {
+        "total_ms": int((time.perf_counter() - pre_t0) * 1000),
+        "phases": [
+            {"phase": p.get("phase"), "ok": p.get("ok"), "duration_ms": p.get("duration_ms")}
+            for p in phases
+            if p.get("phase")
+        ],
+    }
 
     # --- gera + executa script Appium a partir do pipeline ---
     prev_skip = os.environ.get("GF_SKIP_PRECHECK")
@@ -621,6 +703,9 @@ def run_qa_generate_evidence(
             os.environ.pop("GF_SKIP_PRECHECK", None)
         else:
             os.environ["GF_SKIP_PRECHECK"] = prev_skip
+
+    if isinstance(runtime, dict):
+        runtime["pre_script"] = pre_script
 
     phases.append({
         "phase": "generate_and_run_appium_script",
