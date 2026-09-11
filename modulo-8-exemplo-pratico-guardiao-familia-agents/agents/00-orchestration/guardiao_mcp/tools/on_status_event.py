@@ -13,15 +13,17 @@ DESCRIPTION = """\
 **Quando:** após `emit_status_event` ou antes de atuar (status já atualizado).
 
 **Faz:**
-1. Resolve evento role-based
-2. Identifica `acting_agent` e `assigned_agent`
-3. Lê ticket no board (GitHub Project → fallback JSON)
-4. Extrai `ticket` por papel: AC, escopo, arquivos, QA, merge, user_flow
+1. Resolve evento role-based e identifica `acting_agent` / `assigned_agent`
+2. Enriquece ticket (board JSON local + bloco `agent-task` da issue GitHub)
+3. Extrai `ticket` por papel: AC, escopo, arquivos, QA, merge, user_flow
+4. Varre repo local (`suggested_files`) e monta **`actuation_prompt`** completo
 5. Anexa `handoff`, `ci`, `model_tier`, `playbook` (skill, passos ReAct)
 
 **Parâmetros:** task_id + event **ou** agent_role + board_status (+ return_event).
 
-**Retorno:** `assigned_agent`, `target_status`, `ticket`, `playbook`, `handoff`.
+**Retorno:** `assigned_agent`, `target_status`, `ticket`, `playbook`, `actuation_prompt`, `actuation_prompt_meta`, `handoff`.
+
+**Uso:** passe o JSON retornado (ou só `actuation_prompt`) para `execute_agent_actuation_tool` / fases LLM.
 
 **Não altera board** — somente leitura/contexto. Handoff canônico: `agents/00-runtime/output/{task_id}/handoff.json`.
 """

@@ -1,4 +1,4 @@
-"""Registro e reexportação das 14 tools MCP."""
+"""Registro e reexportação das tools MCP."""
 
 from __future__ import annotations
 
@@ -17,10 +17,9 @@ _TOOL_MODULES = (
     "developer_implement",
     "developer_review",
     "qa_validate",
-    "qa_db_seed",
-    "qa_db_cleanup",
-    "qa_appium_suite_parent",
-    "qa_appium_suite_child",
+    "qa_generate_evidence",
+    "qa_pipeline_evidence",
+    "qa_init_suite_mobile",
     "list_mcp_tools",
 )
 
@@ -42,10 +41,9 @@ from .list_mcp_tools import list_mcp_tools  # noqa: E402
 from .list_status_events import list_status_events  # noqa: E402
 from .on_status_event import on_status_event  # noqa: E402
 from .orchestrator_enter_in_progress import orchestrator_enter_in_progress  # noqa: E402
-from .qa_appium_suite_child import qa_appium_suite_child  # noqa: E402
-from .qa_appium_suite_parent import qa_appium_suite_parent  # noqa: E402
-from .qa_db_cleanup import qa_db_cleanup  # noqa: E402
-from .qa_db_seed import qa_db_seed  # noqa: E402
+from .qa_generate_evidence import qa_generate_evidence  # noqa: E402
+from .qa_init_suite_mobile import qa_init_suite_mobile  # noqa: E402
+from .qa_pipeline_evidence import qa_pipeline_evidence  # noqa: E402
 from .qa_validate import qa_validate  # noqa: E402
 
 __all__ = [

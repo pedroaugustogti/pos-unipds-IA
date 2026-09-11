@@ -91,20 +91,16 @@ def execute_agent_actuation_tool(
     )
 
 
-def qa_db_seed(**kwargs: Any) -> dict[str, Any]:
-    return _parse(mcp_server.qa_db_seed(**kwargs))
+def qa_init_suite_mobile(**kwargs: Any) -> dict[str, Any]:
+    return _parse(mcp_server.qa_init_suite_mobile(**kwargs))
 
 
-def qa_db_cleanup(**kwargs: Any) -> dict[str, Any]:
-    return _parse(mcp_server.qa_db_cleanup(**kwargs))
+def qa_pipeline_evidence(**kwargs: Any) -> dict[str, Any]:
+    return _parse(mcp_server.qa_pipeline_evidence(**kwargs))
 
 
-def qa_appium_suite_parent(**kwargs: Any) -> dict[str, Any]:
-    return _parse(mcp_server.qa_appium_suite_parent(**kwargs))
-
-
-def qa_appium_suite_child(**kwargs: Any) -> dict[str, Any]:
-    return _parse(mcp_server.qa_appium_suite_child(**kwargs))
+def qa_generate_evidence(**kwargs: Any) -> dict[str, Any]:
+    return _parse(mcp_server.qa_generate_evidence(**kwargs))
 
 
 def list_mcp_catalog() -> dict[str, Any]:

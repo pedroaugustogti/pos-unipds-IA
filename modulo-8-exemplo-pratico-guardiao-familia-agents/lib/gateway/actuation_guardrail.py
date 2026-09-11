@@ -3,53 +3,18 @@
 from __future__ import annotations
 
 import hashlib
-import re
 import time
 from typing import Any
 
 from board_automation.board.reviewer_pairs import QA_GATE_ROLE, normalize_creator_role, reviewer_for
 from board_automation.board.task_status_workflow import build_event, merge_owner_for_task
-from lib.gateway.hitl_gates import evaluate_hitl, is_high_risk_task
+from lib.gateway.policy_violations import POLICY_VERSION, scan_policy_violations
 from lib.orchestrator.event_actuation_runner import normalize_actuation_context
 from lib.orchestrator.event_orchestrator import load_runtime, save_runtime
 from lib.paths import AGENTS_DIR
 
 POLICY_PATH = AGENTS_DIR / "00-orchestration" / "docs" / "policy" / "ACTUATION_GUARDRAIL_POLICY.md"
-POLICY_VERSION = "1.0"
 GUARD_TTL_SEC = 3600
-
-PROMPT_INJECTION_PATTERNS: tuple[tuple[re.Pattern[str], str], ...] = (
-    (re.compile(r"ignore\s+(all\s+)?(previous|prior)\s+instructions", re.I), "Prompt injection: ignorar instruções anteriores"),
-    (re.compile(r"disregard\s+(the\s+)?(policy|guardrail|rules)", re.I), "Prompt injection: desconsiderar política"),
-    (re.compile(r"you\s+are\s+now\s+", re.I), "Prompt injection: redefinição de papel"),
-    (re.compile(r"act\s+as\s+(dan|jailbreak|unrestricted)", re.I), "Prompt injection: jailbreak"),
-    (re.compile(r"do\s+not\s+(tell|inform|notify)\s+(the\s+)?(human|user|board)", re.I), "Prompt injection: ocultar ação do humano"),
-    (re.compile(r"fake\s+(qa|test|evidence|result)", re.I), "Prompt injection: falsificar evidência"),
-)
-
-CRITICAL_BEHAVIOR_PATTERNS: tuple[tuple[re.Pattern[str], str, str], ...] = (
-    (re.compile(r"bypass\s+hitl", re.I), "critical", "Contorno explícito de HITL"),
-    (re.compile(r"skip\s+hitl_guard", re.I), "critical", "Pular guardrail de atuação"),
-    (re.compile(r"force\s+push\s+(main|master)", re.I), "critical", "Force push em branch protegida"),
-    (re.compile(r"terraform\s+destroy", re.I), "critical", "Destruição de infraestrutura"),
-    (re.compile(r"drop\s+(table|database)", re.I), "critical", "DROP em banco de dados"),
-    (re.compile(r"deploy\s+to\s+prod(uction)?\s+without", re.I), "critical", "Deploy prod sem gate"),
-)
-
-HIGH_BEHAVIOR_PATTERNS: tuple[tuple[re.Pattern[str], str, str], ...] = (
-    (re.compile(r"skip\s+tests?", re.I), "high", "Pular testes"),
-    (re.compile(r"without\s+(appium|evidence|qa)", re.I), "high", "Avançar sem evidência QA"),
-    (re.compile(r"approve\s+merge\s+without\s+review", re.I), "high", "Merge sem review"),
-    (re.compile(r"edit\s+do_not_touch", re.I), "high", "Editar arquivos proibidos"),
-    (re.compile(r"ignore\s+out_of_scope", re.I), "high", "Ignorar fora de escopo"),
-)
-
-SECRET_PATTERNS: tuple[re.Pattern[str], ...] = (
-    re.compile(r"sk-[a-zA-Z0-9]{20,}"),
-    re.compile(r"AKIA[0-9A-Z]{16}"),
-    re.compile(r"-----BEGIN\s+(RSA\s+)?PRIVATE\s+KEY-----"),
-    re.compile(r"eyJ[a-zA-Z0-9_-]{20,}\.[a-zA-Z0-9_-]{20,}\."),
-)
 
 
 def load_guardrail_policy() -> str:
@@ -97,44 +62,9 @@ def _guard_context_key(ctx: dict[str, Any]) -> str:
     return hashlib.sha256(raw.encode()).hexdigest()[:16]
 
 
-def _scan_patterns(blob: str) -> list[dict[str, Any]]:
-    findings: list[dict[str, Any]] = []
-    for pattern, message in PROMPT_INJECTION_PATTERNS:
-        if pattern.search(blob):
-            findings.append({"severity": "critical", "category": "prompt_injection", "message": message})
-    for pattern, severity, message in CRITICAL_BEHAVIOR_PATTERNS:
-        if pattern.search(blob):
-            findings.append({"severity": severity, "category": "critical_behavior", "message": message})
-    for pattern, severity, message in HIGH_BEHAVIOR_PATTERNS:
-        if pattern.search(blob):
-            findings.append({"severity": severity, "category": "risky_behavior", "message": message})
-    for pattern in SECRET_PATTERNS:
-        if pattern.search(blob):
-            findings.append({
-                "severity": "critical",
-                "category": "secret_leak",
-                "message": "Possível segredo/credencial no contexto",
-            })
-            break
-    return findings
-
-
-def _importance_score(findings: list[dict[str, Any]], *, ctx: dict[str, Any], mode: str) -> int:
-    score = 0
+def _importance_score(findings: list[dict[str, Any]]) -> int:
     weights = {"critical": 100, "high": 40, "medium": 15}
-    for f in findings:
-        score += weights.get(str(f.get("severity")), 10)
-    board_task = ctx.get("board_task") or {}
-    ticket = ctx.get("ticket") or {}
-    task = {**board_task, **ticket, "agent_role": ctx.get("creator_role") or board_task.get("agent_role")}
-    if is_high_risk_task(task):
-        score += 20
-    if task.get("release_blocker"):
-        score += 30
-    target = str(ctx.get("target_status") or "")
-    if target == "In Pull Request" and mode == "live":
-        score += 50
-    return score
+    return sum(weights.get(str(f.get("severity")), 10) for f in findings)
 
 
 def _predicted_emit_event(ctx: dict[str, Any]) -> str:
@@ -153,13 +83,11 @@ def _predicted_emit_event(ctx: dict[str, Any]) -> str:
     return str(ctx.get("event") or "noop")
 
 
-def _should_block(findings: list[dict[str, Any]], importance_score: int) -> bool:
+def _should_block(findings: list[dict[str, Any]]) -> bool:
+    """Bloqueia atuação somente quando há violação de policy."""
     if any(f.get("severity") == "critical" for f in findings):
         return True
-    if importance_score >= 100:
-        return True
-    high_count = sum(1 for f in findings if f.get("severity") == "high")
-    if importance_score >= 60 or high_count >= 2:
+    if any(f.get("severity") == "high" for f in findings):
         return True
     return False
 
@@ -184,13 +112,11 @@ def _notify_board(ctx: dict[str, Any], result: dict[str, Any], *, dry_run: bool)
     ]
     for f in result.get("findings") or []:
         lines.append(f"- **[{f.get('severity')}]** {f.get('message')}")
-    if result.get("hitl_reason"):
-        lines.append(f"\n**HITL adicional:** {result['hitl_reason']}")
     lines.extend(
         [
             "",
             "### Ação humana",
-            "1. Triar risco no board",
+            "1. Triar violação de policy no board",
             "2. Chamar `hitl_guard_actuation` com `human_clearance=true` e `clearance_note`",
             "3. Usar o `guard_pass_id` retornado em `execute_agent_actuation_tool`",
             "",
@@ -286,28 +212,14 @@ def evaluate_actuation_guard(
     clearance_note: str = "",
     dry_run: bool = True,
 ) -> dict[str, Any]:
-    """Valida contexto contra ACTUATION_GUARDRAIL_POLICY antes da atuação."""
+    """Valida contexto contra policy antes da atuação (somente violações disparam HITL)."""
+    del mode  # legado — bloqueio baseado só em findings
     ctx = normalize_actuation_context(actuation_context)
     blob = _context_blob(ctx)
-    findings = _scan_patterns(blob)
+    findings = scan_policy_violations(blob)
 
-    board_task = ctx.get("board_task") or {}
-    ticket = ctx.get("ticket") or {}
-    task = {**board_task, **ticket, "agent_role": ctx.get("creator_role") or board_task.get("agent_role")}
-    predicted_event = _predicted_emit_event(ctx)
-    hitl = evaluate_hitl(task, predicted_event)
-    hitl_reason = ""
-    if hitl.get("required"):
-        hitl_reason = hitl.get("reason") or ""
-        sev = "critical" if hitl.get("mode") == "block_until_human" else "high"
-        findings.append({
-            "severity": sev,
-            "category": "hitl_gate",
-            "message": hitl_reason,
-        })
-
-    importance_score = _importance_score(findings, ctx=ctx, mode=mode)
-    blocked = _should_block(findings, importance_score)
+    importance_score = _importance_score(findings)
+    blocked = _should_block(findings)
     guard_context_key = _guard_context_key(ctx)
 
     if human_clearance and blocked:
@@ -317,6 +229,13 @@ def evaluate_actuation_guard(
             "category": "human_clearance",
             "message": clearance_note or "Clearance humano registrado",
         })
+
+    from lib.gateway.hitl_gates import evaluate_hitl
+
+    board_task = ctx.get("board_task") or {}
+    ticket = ctx.get("ticket") or {}
+    task = {**board_task, **ticket, "agent_role": ctx.get("creator_role") or board_task.get("agent_role")}
+    hitl = evaluate_hitl(task, _predicted_emit_event(ctx), context_text=blob)
 
     result: dict[str, Any] = {
         "ok": True,
@@ -332,7 +251,7 @@ def evaluate_actuation_guard(
         "policy_path": str(POLICY_PATH),
         "guard_context_key": guard_context_key,
         "hitl": hitl,
-        "hitl_reason": hitl_reason,
+        "hitl_reason": hitl.get("reason") or "",
         "human_clearance": human_clearance,
     }
 
@@ -342,7 +261,7 @@ def evaluate_actuation_guard(
         result["board_notified"] = bool(board.get("ok"))
         result["board_comment"] = board
         result["message"] = (
-            "Fluxo interrompido — contexto bloqueado pelo guardrail. "
+            "Fluxo interrompido — violação de policy no contexto. "
             "Triagem humana no board; depois hitl_guard_actuation(human_clearance=true)."
         )
         return result

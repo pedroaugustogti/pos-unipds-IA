@@ -1,17 +1,13 @@
-"""Approval Gates humanos — eventos role-based v2."""
+"""Approval Gates humanos — somente quando policy é violada (v2)."""
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
-from lib.gateway.v2_events import (
-    is_creator_ready_for_code_review,
-    is_ops_done,
-    is_qa_in_pull_request,
-    is_qa_return_to_in_progress,
-    is_reviewer_ready_for_test,
-)
+from lib.gateway.policy_violations import hitl_from_policy_findings, scan_policy_violations
 
+# Mantido para roteamento de modelo / telemetria — não dispara HITL.
 HIGH_RISK_KEYWORDS = (
     "sos",
     "pagamento",
@@ -21,7 +17,7 @@ HIGH_RISK_KEYWORDS = (
     "consent",
     "auth",
     "terraform",
-    "prod",
+    "production",
     "release",
     "store",
 )
@@ -39,7 +35,7 @@ def _text_blob(task: dict[str, Any]) -> str:
     parts = [
         str(task.get("title") or ""),
         str(task.get("id") or ""),
-        str(task.get("epic") or ""),
+        str(task.get("epic") or task.get("epic_id") or ""),
         str(task.get("track") or ""),
         str(task.get("agent_role") or ""),
     ]
@@ -47,16 +43,46 @@ def _text_blob(task: dict[str, Any]) -> str:
 
 
 def is_high_risk_task(task: dict[str, Any]) -> bool:
+    """Classificação operacional (model tier) — não determina HITL."""
     role = (task.get("agent_role") or "").lower()
     if role in HIGH_RISK_ROLES:
         return True
     if task.get("release_blocker"):
         return True
     blob = _text_blob(task)
-    if any(k in blob for k in HIGH_RISK_KEYWORDS):
+    if any(re.search(rf"\b{re.escape(k)}\b", blob) for k in HIGH_RISK_KEYWORDS):
         return True
-    epic = str(task.get("epic") or "")
+    epic = str(task.get("epic") or task.get("epic_id") or "")
     return any(epic.startswith(p) for p in HIGH_RISK_EPIC_PREFIXES)
+
+
+def _context_blob(
+    task: dict[str, Any],
+    event: str,
+    *,
+    summary: str = "",
+    context_text: str = "",
+    metrics: dict[str, Any] | None = None,
+) -> str:
+    parts = [
+        str(task.get("title") or ""),
+        str(task.get("id") or ""),
+        str(event or ""),
+        str(summary or ""),
+        str(context_text or ""),
+        " ".join(str(x) for x in (task.get("acceptance_criteria") or [])),
+        " ".join(str(x) for x in (task.get("in_scope") or [])),
+        " ".join(str(x) for x in (task.get("out_of_scope") or [])),
+        " ".join(str(x) for x in (task.get("do_not_touch") or [])),
+    ]
+    for step in (metrics or {}).get("react_trace") or []:
+        if isinstance(step, dict):
+            parts.append(str(step.get("thought") or ""))
+            parts.append(str(step.get("action") or ""))
+            parts.append(str(step.get("observation") or ""))
+        else:
+            parts.append(str(step))
+    return "\n".join(parts)
 
 
 def evaluate_hitl(
@@ -66,56 +92,27 @@ def evaluate_hitl(
     bug_count: int = 0,
     bug_threshold: int = 3,
     proposed_verdict: str | None = None,
+    summary: str = "",
+    context_text: str = "",
+    metrics: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Decide se o evento role-based pode ser aplicado automaticamente ou exige humano."""
-    reasons: list[str] = []
-    mode = "auto"
+    """
+    HITL somente quando scan de policy encontra violação no contexto do evento.
 
-    if is_ops_done(event):
-        reasons.append("Merge é irreversível no fluxo do board — Approval Gate humano obrigatório.")
-        mode = "block_until_human"
+    Metadados (high_risk, release_blocker, tipo de evento, bug_count) não disparam HITL.
+    """
+    del bug_count, bug_threshold, proposed_verdict  # legado — ignorado
 
-    if task.get("release_blocker") in (True, "yes", "true", "True", 1, "1"):
-        if is_reviewer_ready_for_test(event) or is_qa_in_pull_request(event) or is_ops_done(event):
-            reasons.append("Card com release_blocker=True — HITL obrigatório.")
-            mode = "block_until_human" if is_ops_done(event) else "propose_only"
-
-    if is_reviewer_ready_for_test(event) and is_high_risk_task(task):
-        reasons.append(
-            "Review aprovado por agente LLM em task de alto risco — veredito só como proposta."
-        )
-        if mode == "auto":
-            mode = "propose_only"
-
-    if is_qa_return_to_in_progress(event) and bug_count >= bug_threshold:
-        reasons.append(
-            f"Blocker automático após {bug_count} bugs — triagem humana obrigatória."
-        )
-        mode = "block_until_human"
-
-    if is_creator_ready_for_code_review(event) and is_high_risk_task(task) and proposed_verdict == "skip_tests":
-        reasons.append("PR de alto risco sem evidência de testes.")
-        mode = "block_until_human"
-
-    required = mode != "auto"
-    human_action = {
-        "auto": "Nenhuma — seguir automação.",
-        "propose_only": (
-            "Humano confirma ou rejeita o veredito proposto no PR/board "
-            "(reemitir o mesmo evento role-based com hitl_approved ou hitl_rejected)."
-        ),
-        "block_until_human": (
-            "Humano decide no board/PR; reemitir o evento role-based após hitl_approved."
-        ),
-    }[mode]
-
-    return {
-        "required": required,
-        "mode": mode,
-        "reasons": reasons,
-        "reason": " | ".join(reasons) if reasons else "",
-        "human_action": human_action,
-        "task_id": task.get("id"),
-        "event": event,
-        "high_risk": is_high_risk_task(task),
-    }
+    blob = _context_blob(
+        task,
+        event,
+        summary=summary,
+        context_text=context_text,
+        metrics=metrics,
+    )
+    findings = scan_policy_violations(blob)
+    return hitl_from_policy_findings(
+        findings,
+        task_id=str(task.get("id") or ""),
+        event=event,
+    )

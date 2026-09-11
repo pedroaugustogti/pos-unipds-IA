@@ -257,9 +257,10 @@
         "Comentário sec. 10.2 · `{reviewer}_ready_for_test` ou `{reviewer}_return_in_progress` — **não** implementar nem Appium"
       ],
       "qa-gate": [
-        "Cenários: `greeting-morning-08h`, `greeting-afternoon-15h`, `greeting-evening-21h` + AC sec. 5 no comentário sec. 10.3",
-        "MCP **guardiao-familia-agents**: `qa_db_seed(basic_parent)` → `qa_appium_suite_child(child_only=true)` → `qa_db_cleanup`",
-        "Anexar evidências **PNG + MP4 + JSON** (ChildHomeV2, emulator-5556) em `qa-gate-({N})/evidence/`",
+        "Cenários + `qa.evidence_pipeline` (guia `qa_validate`): greeting-morning-08h / afternoon-15h / evening-21h + AC sec. 5 no comentário sec. 10.3",
+        "MCP: `qa_validate(task_id=T-P3-009)` — resolve seed→ensure→suite→capture(3 PNG)+1 MP4→cleanup a partir do ticket",
+        "Appium: abrir child → pairing (código do seed) → permissões → ChildHomeV2 (`childHome=true` antes dos prints)",
+        "Anexar **1 MP4 do fluxo** + **3 PNG** (Bom dia/Boa tarde/Boa noite) + JSON em `qa-gate-({N})/evidence/`",
         "`qa-gate_in_pull_request` ou `qa-gate_return_in_progress` — **não** alterar código"
       ]
     },
@@ -267,8 +268,8 @@
       "do_not_touch": ["SOS button", "screen time card", "pairing API contracts"],
       "ac_verification": [
         {"id": "AC-01", "command": "npm test -- childHome.state", "expected": "exit 0 — casos 08:00 Bom dia, 15:00 Boa tarde, 21:00 Boa noite"},
-        {"id": "AC-02", "command": "MCP qa_appium_suite_child + relógio 08:00 no emulator-5556", "expected": "header contém Bom dia"},
-        {"id": "AC-03", "command": "MCP qa_appium_suite_child(from_db_seed=true, child_only=true) + evidências", "expected": "3 PNG + 3 MP4 + JSON em agents/00-runtime/output/T-P3-009/qa-gate-({N})/evidence/"}
+        {"id": "AC-02", "command": "MCP seed→ensure→suite + relógio 08:00 no emulator-5556", "expected": "PNG greeting-morning-08h com Bom dia"},
+        {"id": "AC-03", "command": "MCP qa_validate / qa_mobile_with_recovery + evidências", "expected": "1 MP4 fluxo + 3 PNG saudações + JSON em agents/00-runtime/output/T-P3-009/qa-gate-({N})/evidence/"}
       ],
       "stop_and_redirect": [
         "Alterar pairing parent → frontend-mobile parent task",

@@ -25,11 +25,13 @@ Paths via `lib/repo_paths.py`. **Não usar Detox/Maestro** — padronizado Appiu
 
 ## Evidências mobile — referência
 
-Skill dedicada: **[MOBILE_SETUP_EVIDENCE.md](MOBILE_SETUP_EVIDENCE.md)** (autor) · execução gate em `qa-gate/scripts/`.
+Skill dedicada: **[MOBILE_SETUP_EVIDENCE.md](MOBILE_SETUP_EVIDENCE.md)** (autor) · execução gate em `qa_validate` / tools MCP.
 
-```powershell
-python agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py --task T-XXX --feature pairing --mode cycle
 ```
+qa_db_seed → qa_ensure_stack_mobile → qa_appium_suite_* → qa_db_cleanup
+```
+
+Não execute `fast-stack.ps1` nem scripts Python de evidência fora de `lib/mcp_invoke.py`.
 
 Engine: `C:\Users\pedro\Documents\guardiao-familia\guardiao-familia-mobile-setup` (`GUARDAO_MOBILE_SETUP_PATH`).
 
@@ -38,8 +40,8 @@ Engine: `C:\Users\pedro\Documents\guardiao-familia\guardiao-familia-mobile-setup
 | Camada | Ferramenta | Repo / path |
 |--------|------------|-------------|
 | API unit/integration | Jest, Supertest | `guardiao-familia-api` |
-| Mobile E2E Android | Appium 2 + fast-stack | **`guardiao-familia-mobile-setup`** |
-| Evidências PNG/MP4 mobile | `qa_mobile_evidence.py` | Ver [MOBILE_SETUP_EVIDENCE.md](MOBILE_SETUP_EVIDENCE.md) |
+| Mobile E2E Android | Appium 2 via MCP | **`qa_ensure_stack_mobile` + `qa_appium_suite_*`** |
+| Evidências PNG/MP4 mobile | tools MCP | Ver [MOBILE_SETUP_EVIDENCE.md](MOBILE_SETUP_EVIDENCE.md) |
 | API pairing smoke | `task36-pairing-v2.e2e.mjs` | api (smoke rápido, não substitui UI) |
 | Web | Playwright | backoffice, site |
 | Push/SOS E2E | emulador + mock FCM | parent |
@@ -86,10 +88,7 @@ Review pareado: **`qa-author-reviewer`** · gate pós-review: **`qa-gate`**
 
 ## Ambiente local mobile
 
-```powershell
-python agents/01-role-based/qa-gate/scripts/local_e2e_smoke.py check
-python agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py --task T-XXX --mode check
-```
+Stack e Appium **somente** via MCP: `qa_validate` → `qa_init_suite_mobile` → `qa_generate_evidence`.
 
 ## Casos de teste — pareamento (referência)
 

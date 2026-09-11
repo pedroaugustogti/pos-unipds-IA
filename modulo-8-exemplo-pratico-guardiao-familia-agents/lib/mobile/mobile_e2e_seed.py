@@ -175,9 +175,10 @@ def _try_reuse_handoff(
     if not refreshed and not config.get("allow_stale_pairing_code"):
         return None
 
-    resume_after = config.get("resume_after_step")
-    if resume_after is None:
-        resume_after = profile.get("resume_after_step")
+    api_last_step = profile.get("resume_after_step")
+    resume_target = _seed_resume_target(profile, config)
+    if resume_target is None:
+        resume_target = str(existing.get("resume_target") or "") or None
 
     handoff: dict[str, Any] = {
         **existing,
@@ -193,7 +194,8 @@ def _try_reuse_handoff(
         "child_id": child_id,
         "pairingCode": pairing_code,
         "pairing_code": pairing_code,
-        "lastStep": resume_after or existing.get("lastStep"),
+        "lastStep": api_last_step or existing.get("lastStep"),
+        "resume_target": resume_target,
         "parentHome": False,
         "childHome": False,
         "seed_profile": profile_name,
@@ -224,10 +226,15 @@ def _seed_child_count(profile_name: str, config: dict[str, Any]) -> int:
     return 3 if profile_name == "basic_parent" else 1
 
 
-def _seed_last_step(profile_name: str, profile: dict[str, Any], config: dict[str, Any]) -> str | None:
-    if "resume_after_step" in config:
-        return config.get("resume_after_step")
+def _seed_api_last_step(profile: dict[str, Any]) -> str | None:
+    """Estado real do handoff após seed API (não meta Appium da issue)."""
     return profile.get("resume_after_step")
+
+
+def _seed_resume_target(_profile: dict[str, Any], config: dict[str, Any]) -> str | None:
+    """Não usa meta de resume Appium — fluxo vem do ticket a cada qa_validate."""
+    del _profile, config
+    return None
 
 
 def _pair_child_via_api(handoff: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
@@ -272,14 +279,17 @@ def _run_seed_db(task_id: str, config: dict[str, Any], *, profile_name: str) -> 
         return {"ok": False, "error": "node não encontrado no PATH"}
 
     profile = SEED_PROFILES.get(profile_name, {})
-    last_step = _seed_last_step(profile_name, profile, config)
+    api_last_step = _seed_api_last_step(profile)
+    resume_target = _seed_resume_target(profile, config)
     child_count = _seed_child_count(profile_name, config)
 
     env = os.environ.copy()
     env["GF_SEED_TASK_ID"] = task_id
     env["GF_SEED_PROFILE"] = profile_name
     env["GF_SEED_CHILD_COUNT"] = str(child_count)
-    env["GF_SEED_LAST_STEP"] = "null" if last_step is None else str(last_step)
+    env["GF_SEED_LAST_STEP"] = "null" if api_last_step is None else str(api_last_step)
+    env["GF_SEED_API_LAST_STEP"] = env["GF_SEED_LAST_STEP"]
+    env["GF_SEED_RESUME_TARGET"] = "null" if resume_target is None else str(resume_target)
     if config.get("api_base_url"):
         env["GF_API_BASE_URL"] = str(config["api_base_url"])
     if config.get("parent_email"):
@@ -299,7 +309,9 @@ def _run_seed_db(task_id: str, config: dict[str, Any], *, profile_name: str) -> 
         "--child-count",
         str(child_count),
         "--last-step",
-        "null" if last_step is None else str(last_step),
+        "null" if api_last_step is None else str(api_last_step),
+        "--resume-target",
+        "null" if resume_target is None else str(resume_target),
     ]
 
     try:
@@ -321,6 +333,14 @@ def _run_seed_db(task_id: str, config: dict[str, Any], *, profile_name: str) -> 
                 "stdout_tail": tail[-2000:],
             }
         handoff = _read_existing_handoff(setup) or {}
+        api_step = api_last_step or profile.get("resume_after_step")
+        if api_step and handoff.get("lastStep") != api_step:
+            handoff["lastStep"] = api_step
+        if resume_target and handoff.get("resume_target") != resume_target:
+            handoff["resume_target"] = resume_target
+        if handoff.get("lastStep") or handoff.get("resume_target"):
+            path = _handoff_path(setup)
+            path.write_text(json.dumps(handoff, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         return {
             "ok": True,
             "task_id": task_id,

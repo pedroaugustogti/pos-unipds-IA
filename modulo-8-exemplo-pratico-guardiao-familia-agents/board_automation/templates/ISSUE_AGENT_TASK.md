@@ -68,13 +68,30 @@ Creator valida no emulador manualmente; **qa-gate** reproduz via **MCP** (sec. 2
 | Campo | Exemplo |
 |-------|---------|
 | test_suite | `qa-mobile-child-appium` — Appium no app child (seed parent no DB; `child_only=true`) |
-| Cenários | IDs ou slugs (`greeting-morning-08h`, …) |
-| Evidências | `screenshot_png`, `video_mp4`, `json_report` |
+| Cenários | Slugs estáveis (`greeting-morning-08h`, …) — **inferem a pipeline** |
+| Evidências | `screenshot_png`, `video_mp4`, `json_report` + **scopes** abaixo |
 | MCP | `guardiao-familia-agents` quando mobile |
+
+### Pipeline de evidências (obrigatório no ticket — MCP só lê `task_id`)
+
+Não passar pipeline como parâmetro da tool. Preencher no backlog / `agent-task`:
+
+| Campo | Exemplo | Efeito |
+|-------|---------|--------|
+| `qa.scenarios` | `greeting-morning-08h`, `greeting-afternoon-15h`, `greeting-evening-21h` | Plugin + steps |
+| `qa.evidence.video_scope` | `appium_flow_pairing_to_home` | 1 MP4 no Appium (fluxo) |
+| `qa.evidence.screenshot_scope` | `child_home_greeting_per_period` | PNG pós-home por período |
+| `qa.evidence.greeting_video` | `false` | Sem MP4 por saudação |
+| Pré-condição | `childHome=true` | Capture só após suite |
+| Fases | `prepare` → `capture` → `finalize` | Contínua |
+
+**Slugs:** `greeting-*-NNh` → clock → relaunch → wait saudação → PNG. Outros prefixos = novos plugins em `lib/mobile`.
+
+O gerador `issue_task_body.format_qa_section` renderiza esta tabela automaticamente a partir do JSON `qa`.
 
 ### Mobile com `qa.db_seed` (child-only)
 
-Sequência MCP (8 passos): `get_handoff` → `qa-gate_in_test` → `query_mobile_flow_rag` → `qa_db_seed(profile=basic_parent)` → `qa_appium_suite_child(from_db_seed=true, child_only=true)` → evidências → `qa_db_cleanup` → `qa-gate_in_pull_request`|`qa-gate_return_in_progress`
+Sequência MCP: `get_handoff` → `qa-gate_in_test` → `query_mobile_flow_rag` → `qa_db_seed(profile=basic_parent)` → `qa_ensure_stack_mobile` → `qa_appium_suite_child(from_db_seed=true, child_only=true)` → **evidência inferida** → `qa_db_cleanup` → `qa-gate_in_pull_request`|`qa-gate_return_in_progress`
 
 Profiles seed: `basic_parent` · `parent_home` · `child_home` · `permissions_resume` · `pairing_warm` (dual)
 
@@ -113,7 +130,15 @@ Regras em `refinement.stop_and_redirect` — exemplos:
   "qa": {
     "test_suite": "qa-custom",
     "scenarios": [],
-    "evidence": { "screenshot_png": false, "video_mp4": false, "json_report": true },
+    "evidence": {
+      "screenshot_png": false,
+      "video_mp4": false,
+      "json_report": true,
+      "video_scope": "",
+      "screenshot_scope": "",
+      "greeting_video": false,
+      "scenarios_count": 0
+    },
     "db_seed": { "enabled": false },
     "how_to_run": ""
   },

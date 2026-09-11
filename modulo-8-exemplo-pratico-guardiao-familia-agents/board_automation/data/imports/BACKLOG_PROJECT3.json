@@ -7,7 +7,7 @@
   "comment_conventions": {
     "implementation": "## [{agent_role}] Implementação\n\n**Status board:** In Progress → Ready for Code Review\n\n### Estratégia de codificação\n1. _(decisões técnicas: onde centralizar lógica, helpers, padrões RN)_\n2. _(ordem de implementação e trade-offs)_\n\n### O que foi feito\n- \n\n### Arquivos alterados\n| Arquivo | Mudança |\n|---------|--------|\n| | |\n\n### Testes unitários\n- [ ] Criados/ajustados em: `path/do/teste.test.ts`\n- [ ] Comando: `npm test -- <suite>`\n- [ ] Output: exit 0\n\n### Como validar localmente\n```\n\n```\n\n### Handoff\n→ `{reviewer}` via evento `emit_status_event` (evento role-based v2)",
     "review": "## [{reviewer}] Code Review\n\n**Status board:** In Code Review → Ready for Test\n\n### Escopo verificado (implementação do creator)\n- [ ] Diff alinhado ao comentário sec. 10.1 e escopo sec. 3\n- [ ] Estratégia de codificação coerente\n- [ ] Sem secrets / credenciais\n\n### Qualidade de código\n| Critério | OK | Notas |\n|----------|----|-------|\n| Correção / lógica | | |\n| Legibilidade / padrões | | |\n| Escopo (só suggested_files) | | |\n\n### Cobertura de testes unitários\n- [ ] Testes cobrem AC e bordas\n- [ ] Assertivas adequadas\n- [ ] `npm test` verde no PR\n\n### Decisão\n- [ ] **{reviewer}_ready_for_test** — segue para qa-gate\n- [ ] **{reviewer}_return_in_progress** — motivo:\n",
-    "qa": "## [qa-gate] QA\n\n**Status board:** In Test → In Pull Request (ou In Progress se fail)\n\n### Cenários de teste (sec. 6)\n| Cenário | Passos | Resultado esperado |\n|---------|--------|------------------|\n| | | |\n\n### Critérios de aceite\n| ID | Critério | Resultado | Evidência |\n|----|----------|-----------|----------|\n| AC-01 | | PASS / FAIL | PNG/MP4 abaixo |\n\n### Comandos executados (MCP guardiao-familia-agents — obrigatório)\n```\nget_handoff → qa-gate_in_test → query_mobile_flow_rag → qa_db_seed → qa_appium_suite_* → qa_db_cleanup → qa-gate_in_pull_request|qa-gate_return_in_progress\n```\n\n### Evidências (anexar mídias)\n- Screenshot PNG:\n- Vídeo MP4:\n- JSON report em `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/`\n\n### Decisão\n- [ ] **qa-gate_in_pull_request** — todos AC PASS\n- [ ] **qa-gate_return_in_progress** — AC falhou:\n",
+    "qa": "## [qa-gate] QA\n\n**Status board:** In Test → In Pull Request (ou In Progress se fail)\n\n### Cenários de teste (sec. 6)\n| Cenário | Passos | Resultado esperado |\n|---------|--------|------------------|\n| | | |\n\n### Critérios de aceite\n| ID | Critério | Resultado | Evidência |\n|----|----------|-----------|----------|\n| AC-01 | | PASS / FAIL | PNG/MP4 abaixo |\n| AC-02 | | PASS / FAIL | |\n\n### Comandos executados (MCP guardiao-familia-agents — obrigatório)\n```\nget_handoff → qa-gate_in_test → query_mobile_flow_rag → qa_db_seed → qa_ensure_stack_mobile → qa_appium_suite_* → (evidência inferida do ticket) → qa_db_cleanup → qa-gate_in_pull_request|qa-gate_return_in_progress\n```\n\n### Pipeline de evidências (planejada no ticket — MCP infere via `task_id`)\nPreencher no backlog/`agent-task` → a tool **não** pede pipeline como parâmetro.\n\n| Campo | Exemplo | Efeito |\n|-------|---------|--------|\n| `qa.scenarios` | `greeting-morning-08h`, `greeting-afternoon-15h`, `greeting-evening-21h` | Plugin + steps |\n| `qa.evidence.screenshot_png` | `true` | Exige PNG |\n| `qa.evidence.video_mp4` | `true` | Exige MP4 |\n| `qa.evidence.json_report` | `true` | Manifest JSON |\n| `qa.evidence.video_scope` | `appium_flow_pairing_to_home` | 1 MP4 no Appium (fluxo) |\n| `qa.evidence.screenshot_scope` | `child_home_greeting_per_period` | PNG pós-home por período |\n| `qa.evidence.greeting_video` | `false` | Sem MP4 por saudação |\n| Pré-condição | `childHome=true` | Capture só após suite OK |\n| Fases | `prepare` → `capture` → `finalize` | Pipeline contínua |\n\n**Slugs:** `greeting-*-NNh` → clock → relaunch → wait saudação → PNG. Outros prefixos = novos plugins.\n\n### Evidências (anexar mídias)\n- Screenshot PNG:\n- Vídeo MP4:\n- JSON report: `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/` (+ `scenario-manifest.json`)\n\n### Decisão\n- [ ] **`qa-gate_in_pull_request`** — todos AC PASS\n- [ ] **`qa-gate_return_in_progress`** — AC falhou:\n",
     "merge": "## [devops-cicd] Merge / Release\n\n**Status board:** In Pull Request → Done\n\n- PR merged: \n- CI green: \n- Deploy N/A (sandbox)\n\nEvento: `devops-cicd_done`"
   },
   "tasks": [
@@ -417,8 +417,9 @@
         ],
         "qa-gate": [
           "Definir/confirmar **cenários de teste** e **critérios de aceite** (sec. 5 + sec. 6) no comentário sec. 10.3",
-          "Executar **somente via MCP** `guardiao-familia-agents` (`get_handoff` → `qa-gate_in_test` → `qa_db_seed` → `qa_appium_suite_child(child_only=true)` → `qa_db_cleanup`)",
-          "Anexar **mídias de evidência**: PNG + MP4 + JSON em `agents/00-runtime/output/T-P3-009/qa-gate-({N})/evidence/`",
+          "MCP: `qa_validate(task_id=T-P3-009)` — guia `qa.evidence_pipeline` (seed→ensure→suite→3 PNG+1 MP4→cleanup)",
+          "Appium child deve: (a) abrir app · (b) pairing com código do seed · (c) permissões · (d) ChildHomeV2",
+          "Anexar evidências: **1 MP4 do fluxo Appium** + **3 PNG** (Bom dia / Boa tarde / Boa noite) + JSON em `agents/00-runtime/output/T-P3-009/qa-gate-({N})/evidence/`",
           "Disparar `qa-gate_in_pull_request` ou `qa-gate_return_in_progress` — **não** alterar código da feature"
         ]
       },
@@ -443,13 +444,13 @@
           "i18n EN/ES"
         ],
         "state_before": "ChildHomeV2 usa `dynamicGreeting()` importado de `childHome.state.ts`, mas a validação visual dos 3 períodos não está documentada nas evidências de QA do Project 3.",
-        "state_after": "Header da home child mostra exatamente um dos três textos conforme hora; testes unitários verdes; evidências QA com PNG+MP4 para manhã, tarde e noite na ChildHomeV2 (seed parent no DB + Appium child-only).",
+        "state_after": "Header da home child mostra exatamente um dos três textos conforme hora; testes unitários verdes; evidências QA: 1 MP4 do fluxo (abrir→pairing→permissões→home) + 3 PNG das saudações (seed parent + Appium child-only).",
         "acceptance_hints": [
           "AC-01: Entre 00:00–11:59 o header mostra prefixo Bom dia",
           "AC-02: Entre 12:00–17:59 o header mostra prefixo Boa tarde",
           "AC-03: Entre 18:00–23:59 o header mostra prefixo Boa noite",
           "AC-04: `npm test -- childHome.state` passa com casos manhã/tarde/noite",
-          "AC-05: QA anexa 3 PNG (um por período) + 3 MP4 na ChildHomeV2 (Appium child-only; massa via seed parent)"
+          "AC-05: QA anexa 1 MP4 do fluxo Appium (pairing→home) + 3 PNG (Bom dia/Boa tarde/Boa noite) + JSON (massa via `qa_db_seed` + stack via `qa_ensure_stack_mobile`)"
         ],
         "implementation_steps": [
           "git checkout -b feat/t-p3-009-child-greeting",
@@ -460,28 +461,32 @@
         ],
         "user_flow": {
           "app": "guardiao-familia-child",
-          "entry_point": "App child com família já seedada no Postgres (`qa_db_seed` profile `basic_parent`)",
+          "entry_point": "App child após `qa_db_seed(profile=basic_parent)` — seed cria parent/família/código; **não** deixa o child já na home",
           "emulator": "emulator-5556",
           "metro_port": 9090,
           "target_screen": "child:ChildHomeV2",
           "target_element": "header.greetingTitle (Bom dia|Boa tarde|Boa noite, {nome}!)",
           "preconditions": [
-            "Stack: API + Postgres + emulador child (5556) — **sem** emulador parent",
-            "`qa_db_seed(profile=basic_parent)` concluído; child abre direto na home via `child_only=true`"
+            "Stack child-only: API + Postgres + emulator-5556 + Metro :9090 + APK instalado — via `qa_ensure_stack_mobile(child_only=true)` (**sem** emulador parent)",
+            "`qa_db_seed(profile=basic_parent)` concluiu com pairing code no handoff (`lastStep` tipicamente `config_family`)",
+            "Appium feature efetiva: `pairing` (trim child-only) → paste_code → allow_permissions → go_to_home_child"
           ],
           "steps": [
-            {"order": 1, "screen": "Child PrePairing", "user_action": "Colar código 6 dígitos", "system_behavior": "Valida pareamento", "file": "screens/PrePairingScreen.tsx"},
-            {"order": 2, "screen": "PermissionsOnboarding", "user_action": "Conceder localização", "system_behavior": "Avança onboarding", "file": "screens/PermissionsOnboardingScreen.tsx"},
-            {"order": 3, "screen": "ChildHomeV2", "user_action": "Visualizar header azul", "system_behavior": "Saudação dinâmica + nome", "file": "screens/ChildHomeV2.tsx"}
+            {"order": 1, "screen": "Child launch", "user_action": "Abrir app child no emulator-5556", "system_behavior": "Appium inicia sessão / lança pacote", "file": "appium pairing run"},
+            {"order": 2, "screen": "Child PrePairing", "user_action": "Colar código 6 dígitos do seed", "system_behavior": "Valida pareamento com API", "file": "screens/PrePairingScreen.tsx"},
+            {"order": 3, "screen": "PermissionsOnboarding", "user_action": "Conceder permissões necessárias", "system_behavior": "Avança onboarding", "file": "screens/PermissionsOnboardingScreen.tsx"},
+            {"order": 4, "screen": "ChildHomeV2", "user_action": "Visualizar header azul", "system_behavior": "Saudação dinâmica + nome; handoff `childHome=true`", "file": "screens/ChildHomeV2.tsx"}
           ],
           "qa_repro_steps": [
-            "Após `qa_appium_suite_child(from_db_seed=true, child_only=true)`: confirmar ChildHomeV2 visível no emulator-5556",
-            "Emulador 5556 às 08:00 → header exibe **Bom dia** (screenshot MCP)",
-            "Emulador 5556 às 15:00 → header exibe **Boa tarde** (screenshot MCP)",
-            "Emulador 5556 às 21:00 → header exibe **Boa noite** (screenshot MCP)",
-            "MP4 por período gerado pela suite MCP (home child + ajuste de relógio)"
+            "1. `qa_db_seed(task_id=T-P3-009, profile=basic_parent, dry_run=false)`",
+            "2. `qa_ensure_stack_mobile(task_id=T-P3-009, child_only=true, dry_run=false)` — API/boot/Metro/APK/apps_ready",
+            "3. `qa_appium_suite_child(from_db_seed=true, task_id=T-P3-009, child_only=true, skip_appium=false, dry_run=false)` — abre app → pairing (seed) → permissões → home",
+            "4a. Evidência **vídeo**: MP4 do fluxo Appium do passo 3 (pairing→home) no pacote `qa-gate-({N})/evidence/`",
+            "4b. Evidência **prints**: após home, cenários `greeting-morning-08h` / `greeting-afternoon-15h` / `greeting-evening-21h` → 3 PNG (Bom dia / Boa tarde / Boa noite)",
+            "5. `qa_db_cleanup(task_id=T-P3-009, dry_run=false)`",
+            "Alternativa composta: `qa_mobile_with_recovery(task_id=T-P3-009, child_only=true, dry_run=false)` (ou `qa_validate` na fase In Test)"
           ],
-          "mermaid": "flowchart LR\n  seed[qa_db_seed basic_parent] --> child[App child 5556]\n  child --> home[ChildHomeV2 header]"
+          "mermaid": "flowchart LR\n  seed[qa_db_seed basic_parent] --> ensure[qa_ensure_stack_mobile]\n  ensure --> appium[qa_appium_suite_child pairing]\n  appium --> home[ChildHomeV2]\n  home --> png[3 PNG saudações]\n  appium --> mp4[1 MP4 fluxo]"
         }
       },
       "qa": {
@@ -498,18 +503,50 @@
           "json_report": true,
           "ci_link": false,
           "scenarios_count": 3,
-          "video_scope": "child_home_greeting_per_period"
+          "screenshot_scope": "child_home_greeting_per_period",
+          "video_scope": "appium_flow_pairing_to_home",
+          "greeting_video": false
+        },
+        "evidence_pipeline": {
+          "guide_for": "qa_validate",
+          "note": "MCP recebe só task_id; resolve este plano a partir do ticket (sem params extras de pipeline).",
+          "execution_order": [
+            "qa_db_seed(profile=basic_parent)",
+            "qa_ensure_stack_mobile(child_only=true)",
+            "qa_appium_suite_child(from_db_seed=true, child_only=true) → 1 MP4 appium_flow_pairing_to_home",
+            "capture_scenario_evidence(prepare→capture→finalize) → 3 PNG child_home_greeting_per_period",
+            "qa_db_cleanup"
+          ],
+          "precondition": "suite Appium OK nesta execucao (fluxo pairing->home) antes da captura",
+          "capture_phases": ["prepare", "capture", "finalize"],
+          "artifacts": {
+            "mp4": {
+              "count": 1,
+              "scope": "appium_flow_pairing_to_home",
+              "source": "Appium startRecordingScreen (pairing→home)"
+            },
+            "png": {
+              "count": 3,
+              "scope": "child_home_greeting_per_period",
+              "scenarios": [
+                "greeting-morning-08h",
+                "greeting-afternoon-15h",
+                "greeting-evening-21h"
+              ],
+              "labels": ["Bom dia", "Boa tarde", "Boa noite"]
+            },
+            "json": true
+          }
         },
         "db_seed": {
           "enabled": true,
           "profile": "basic_parent",
           "family_name": "QA Evidence T-P3-009",
           "child_name": "Filho QA T-P3-009",
-          "resume_after_step": "go_to_home_child",
           "cleanup": true,
           "bootstrap_api": true
         },
-        "how_to_run": "MCP obrigatório (sec. 6): qa_db_seed(profile=basic_parent) → qa_appium_suite_child(from_db_seed=true, child_only=true). Fallback CLI somente se MCP indisponível."
+        "how_to_run": "MCP: qa_validate(task_id=T-P3-009) na fase In Test — guia = qa.evidence_pipeline + qa.scenarios + qa.evidence.* (1 MP4 fluxo + 3 PNG saudações). Equivalente: qa_mobile_with_recovery ou cadeia seed→ensure→suite→capture→cleanup."
       }
     }
   ]

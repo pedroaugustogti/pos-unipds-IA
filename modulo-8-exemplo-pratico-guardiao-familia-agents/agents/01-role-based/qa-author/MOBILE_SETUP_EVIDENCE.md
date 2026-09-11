@@ -1,8 +1,8 @@
 ---
 name: guardiao-qa-mobile-setup-evidence
 description: >-
-  Gera evidências PNG/MP4 e logs via guardiao-familia-mobile-setup (fast-stack + Appium).
-  Obrigatório para tickets frontend-mobile em Ready for Test e regressão de pareamento.
+  Gera evidências PNG/MP4 via MCP (`qa_ensure_stack_mobile` + `qa_appium_suite_*`).
+  Não executar fast-stack.ps1 nem scripts Python fora das tools MCP.
 ---
 
 # QA — Evidências mobile (Appium / mobile-setup)
@@ -11,7 +11,7 @@ description: >-
 Path canônico: `C:\Users\pedro\Documents\guardiao-familia\guardiao-familia-mobile-setup`  
 Env: `GUARDAO_MOBILE_SETUP_PATH`
 
-> Não usar `guardiao-familia-api/test/appium/` para novas evidências — engine migrado para mobile-setup (`appium/` + `scripts/fast-stack.ps1`).
+> Não usar `guardiao-familia-api/test/appium/` para novas evidências. Engine: mobile-setup. Orquestração **somente MCP**: `qa_db_seed` → `qa_ensure_stack_mobile` → `qa_appium_suite_*` → `qa_db_cleanup`. Não rode `fast-stack.ps1` nem scripts `.py` fora dessas tools.
 
 Documentação da suite: `mobile-setup/docs/ESTRUTURA.md`.
 
@@ -32,7 +32,7 @@ Consultar plano de evidência: `crew/output/mobile_evidence_guide_merged.json` o
 Docker/API → emuladores dual (5554/5556) → Metro 8082/9090 → build APK → APPS_READY → Appium :4723 → feature
 ```
 
-Orquestrador: `scripts/fast-stack.ps1` (idempotente — pula fases já UP).
+Orquestrador: **MCP tools** (`qa_ensure_stack_mobile` + `qa_appium_suite_*`). `fast-stack.ps1` é folha (Boot|Metro|Smoke|Appium), nunca `-Phase All` / `-PairingCycle`.
 
 ## DB seed (evitar cadastro/pairing do zero)
 
@@ -41,14 +41,14 @@ Quando o ticket define `qa.db_seed.enabled: true`, o pipeline:
 1. **Bootstrap** — Docker API/Postgres/Redis (`bootstrap_api_stack`)
 2. **Seed API** — login parent → família → filho → `pairing-code` (`run_pairing_smoke_python`)
 3. **Handoff** — grava `mobile-setup/docs/stage-handoff.json` com `lastStep` do profile
-4. **Appium** — `-ResumeFromHandoff` ou `-PairingCycle` conforme profile
+4. **Appium** — `qa_appium_suite_child` / `qa_appium_suite_parent` (folha Appium; stack já ready)
 5. **Cleanup** — purge Postgres (`purge-appium-test-users.py`) + reset handoff (após evidências)
 
-| Profile | O que pula | Appium flags |
+| Profile | O que pula | Appium (MCP) |
 |---------|------------|--------------|
-| `pairing_warm` | `config_family` (família já na API) | `-PairingCycle` |
-| `child_home` | cadastro + paste_code (retoma permissões→home) | `-ResumeFromHandoff` · `lastStep=paste_code_parent` |
-| `permissions_resume` | até `allow_permissions` | `-ResumeFromHandoff` · `lastStep=allow_permissions` |
+| `pairing_warm` | `config_family` (família já na API) | `qa_appium_suite_child(feature=pairing)` |
+| `child_home` | cadastro + paste_code (retoma permissões→home) | `qa_appium_suite_child(from_db_seed=true)` |
+| `permissions_resume` | até `allow_permissions` | `qa_appium_suite_child(from_db_seed=true)` |
 
 **Dependências:** Docker · `GUARDAO_MOBILE_SETUP_PATH` · emuladores 5554/5556 · `psycopg` (script purge) · Node (opcional, `reset-handoff-cycle.mjs`)
 
@@ -65,52 +65,22 @@ qa:
     bootstrap_api: true
 ```
 
-Cleanup manual: `python agents/01-role-based/qa-gate/scripts/mobile_e2e_seed.py --task T-XXX --cleanup-only`
+Cleanup: `qa_db_cleanup(task_id, dry_run=false)` — não rode scripts Python de seed/cleanup fora da tool MCP.
 
-## Comandos — módulo 8 (preferido)
+## Comandos — somente MCP
 
-```powershell
-cd modulo-8-exemplo-pratico-guardiao-familia-agents
-
-# Seed DB + handoff (pula cadastro manual — ver ticket qa.db_seed)
-python agents/01-role-based/qa-gate/scripts/mobile_e2e_seed.py --task T-P04-001 --profile child_home
-
-# Check + captura evidências para task (empacota em crew/output/evidence/{task_id}/)
-python agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py --task T-P04-001 --mode check
-
-# Regressão pareamento completa (cold: sobe tudo)
-python agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py --task T-P04-001 --feature pairing --mode full
-
-# Ciclo quente (emuladores já up, ~80s)
-python agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py --task T-P04-001 --feature pairing --mode cycle
-
-# Tela/step isolado (stack já em APPS_READY_OK)
-python agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py --task T-P04-001 --feature copy_code_pairing --mode smoke --skip-build
+```
+qa_db_seed(task_id="T-P3-009", use_task_config=true, dry_run=false)
+qa_ensure_stack_mobile(task_id="T-P3-009", child_only=true, dry_run=false)
+qa_appium_suite_child(from_db_seed=true, task_id="T-P3-009", child_only=true, skip_appium=false, dry_run=false)
+qa_db_cleanup(task_id="T-P3-009", dry_run=false)
 ```
 
-Publicar na issue:
+Cadeia com recovery: `qa_validate (init→generate_evidence)(task_id="T-P3-009", dry_run=false)`.
 
-```powershell
-python agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py --task T-P04-001 --feature pairing --mode cycle --comment-issue
-```
+LangGraph / `qa_validate` já invocam essas tools via `lib/mcp_invoke.py`. Não execute `fast-stack.ps1`, `qa_mobile_evidence.py` nem `mobile_e2e_seed.py` fora desse envelope.
 
-## Comandos — mobile-setup direto
-
-```powershell
-cd C:\Users\pedro\Documents\guardiao-familia\guardiao-familia-mobile-setup
-
-# Primeira vez / stack fria
-.\scripts\fast-stack.ps1
-
-# Só Appium pairing (infra já up)
-$env:GF_APPIUM_FEATURE = "pairing"
-.\scripts\fast-stack.ps1 -Phase Smoke -SkipBuild
-
-# Re-pareamento rápido
-.\scripts\fast-stack.ps1 -PairingCycle -PairingLog docs\pairing-cycle-last.log
-```
-
-Features Appium (`GF_APPIUM_FEATURE` ou `--feature`):
+Features Appium (`feature` nas tools MCP):
 
 | Feature | Uso típico |
 |---------|------------|
@@ -146,7 +116,7 @@ Features Appium (`GF_APPIUM_FEATURE` ou `--feature`):
 ```powershell
 # Parent (durante o fluxo Appium)
 adb -s emulator-5554 shell screenrecord /sdcard/qa-parent.mp4
-# ... executar fast-stack / pairing ...
+# ... fluxo Appium via MCP (qa_appium_suite_*) ...
 adb -s emulator-5554 pull /sdcard/qa-parent.mp4 crew/output/evidence/T-XXX/parent-flow.mp4
 
 # Child (pareamento P0)
@@ -154,7 +124,7 @@ adb -s emulator-5556 shell screenrecord /sdcard/qa-child.mp4
 adb -s emulator-5556 pull /sdcard/qa-child.mp4 crew/output/evidence/T-XXX/child-flow.mp4
 ```
 
-Ou: `python agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py --task T-XXX --feature pairing --mode cycle --record-video`
+Ou: tool MCP `qa_appium_suite_child` / `qa_validate (init→generate_evidence)` (evidência empacotada no output da task).
 
 Limite ADB: ~3 min / arquivo; fluxos longos gravar por step.
 
@@ -163,26 +133,27 @@ Limite ADB: ~3 min / arquivo; fluxos longos gravar por step.
 1. Discovery: `python agents/01-role-based/qa-gate/scripts/qa_discover_mobile_flows.py --app both`
 2. Guia evidência: arquivos static em `agents/00-runtime/system/mobile/guides/mobile_evidence_guide_*.json`
 3. Implementar/ajustar spec se necessário — **execução E2E via mobile-setup**, não API repo
-4. Rodar `qa_mobile_evidence.py` e anexar `manifest.json` ao PR
+4. Rodar `qa_validate` / `qa_validate (init→generate_evidence)` e anexar `manifest.json` ao PR
 
 ## Fluxo QA Gate (Ready for Test)
 
 1. Ler handoff: `crew/output/handoffs/{task_id}.json` (PR + repo)
 2. Se `repo` ∈ `{guardiao-familia-parent, guardiao-familia-child}` → **rodar evidência mobile**
-3. Validar: `fast-stack-last.json` → `ok: true` e marcador `PAIRING_COMPLETE` no log (fluxo pairing)
+3. Validar: envelope MCP `ok=true` (`suite_ok` + `evidence_ok`) e marcador `PAIRING_COMPLETE` no log (fluxo pairing)
 4. Checar PNG/MP4 no pacote `crew/output/evidence/{task_id}/`
 5. `test_passed` só com evidências anexadas à issue; senão `test_failed_bug` com paths dos logs
 
 ## Integração Python (agentes / LangGraph)
 
 ```python
-from lib.mobile.qa_mobile_setup_evidence import run_mobile_evidence, collect_artifacts, format_evidence_comment
+from lib.mcp_invoke import qa_init_suite_mobile, qa_generate_evidence
 
-out = run_mobile_evidence(task_id="T-P04-001", feature="pairing", mode="cycle")
-comment = format_evidence_comment(out)
+# use qa_validate or:
+# init → pipeline → generate(pipeline_result=...)
+
 ```
 
-Delegação baixo nível: `lib/mobile_setup_client.py` (`run_pairing`, `run_python`, `setup_root()`).
+Não importe `qa_recovery` / `run_appium_suite` nem execute `fast-stack.ps1` fora de `mcp_invoke`.
 
 ## Pré-requisitos
 
@@ -194,10 +165,11 @@ Delegação baixo nível: `lib/mobile_setup_client.py` (`run_pairing`, `run_pyth
 ## Anti-patterns
 
 - Marcar `test_passed` sem PNG quando ticket mobile exige evidência visual
-- Rodar `appium/*/run.mjs` sem `fast-stack` (sem `APPS_READY_OK`)
+- Rodar `appium/*/run.mjs` ou `fast-stack.ps1` fora das tools MCP (sem `APPS_READY_OK` via `qa_ensure_stack_mobile`)
+- Rodar scripts `.py` de seed/evidência/observabilidade sem passar por `lib/mcp_invoke.py`
 - Commitar `stage-handoff.json` (contém credenciais de teste)
 - Usar emulador single para fluxos pairing dual sem `-Single` explícito e aceite documentado
 
 ## Palavras-chave
 
-`evidência`, `screenshot`, `screenrecord`, `appium`, `mobile-setup`, `fast-stack`, `pairing-cycle`, `frontend-mobile`, `E2E Android`
+`evidência`, `screenshot`, `appium`, `mobile-setup`, `qa_ensure_stack_mobile`, `qa_appium_suite_child`, `frontend-mobile`, `E2E Android`

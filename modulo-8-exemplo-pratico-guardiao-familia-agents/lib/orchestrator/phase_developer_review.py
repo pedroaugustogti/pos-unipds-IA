@@ -8,7 +8,7 @@ from typing import Any
 
 from board_automation.board.reviewer_pairs import normalize_creator_role, reviewer_for
 from board_automation.board.task_status_workflow import build_event
-from lib.orchestrator.phase_context import load_actuation, read_agent_docs, task_from_ctx
+from lib.orchestrator.phase_context import load_actuation, phase_llm_prompt, read_agent_docs, task_from_ctx
 from lib.paths import ORCHESTRATION_DIR
 
 if str(ORCHESTRATION_DIR) not in sys.path:
@@ -16,23 +16,12 @@ if str(ORCHESTRATION_DIR) not in sys.path:
 
 
 def _review_prompt(ctx: dict[str, Any], docs: dict[str, str]) -> str:
-    ticket = ctx.get("ticket") or {}
-    handoff = ctx.get("handoff") or {}
-    return (
-        "Voce e code reviewer do Guardiao Familia.\n"
-        f"Task: {ctx.get('task_id')} — {ticket.get('title')}\n"
-        f"Creator: {ticket.get('creator_role')} | Reviewer: {docs['agent_role']}\n"
-        f"AC: {ticket.get('acceptance_criteria')}\n"
-        f"In scope: {ticket.get('in_scope')}\n"
-        f"Do not touch: {ticket.get('do_not_touch')}\n"
-        f"PR: {handoff.get('pr_url') or 'n/a'}\n"
-        f"Handoff summary: {handoff.get('summary') or ''}\n"
-        f"Implement notes: {(handoff.get('metrics') or {}).get('executed')}\n\n"
-        "## Skill reviewer\n"
-        f"{docs['skill'][:3000]}\n\n"
-        "Avalie: melhores praticas, quebra de padrao arquitetural, "
-        "manutenibilidade e cobertura de testes. "
-        "Verdict: approve ou request_changes."
+    return phase_llm_prompt(
+        ctx,
+        suffix=(
+            "Avalie: melhores praticas, quebra de padrao arquitetural, "
+            "manutenibilidade e cobertura de testes. Verdict: approve ou request_changes."
+        ),
     )
 
 

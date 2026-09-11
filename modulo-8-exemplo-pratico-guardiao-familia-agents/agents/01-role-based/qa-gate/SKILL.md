@@ -16,8 +16,8 @@ Consulte [`./KNOWLEDGE.md`](./KNOWLEDGE.md) — mapa de decisão de **todas** as
 | Repo GitHub | Harness gate | Evidência |
 |-------------|--------------|-----------|
 | `guardiao-familia-api` | Jest, Supertest, `test/appium/` | logs CI + API smoke |
-| `guardiao-familia-parent` | Appium (`qa_appium_suite_parent`) | PNG/MP4 + manifest |
-| `guardiao-familia-child` | Appium (`qa_appium_suite_child`) | PNG/MP4 + manifest |
+| `guardiao-familia-parent` | Appium (`qa_generate_evidence`, parent_only) | PNG/MP4 + manifest |
+| `guardiao-familia-child` | Appium (`qa_generate_evidence`, child_only) | PNG/MP4 + manifest |
 | `guardiao-familia-backoffice` | Playwright | report JSON |
 | `guardiao-familia-site` | Playwright | report JSON |
 
@@ -28,8 +28,8 @@ Paths via `lib/repo_paths.py` · scripts: `agents/01-role-based/qa-gate/scripts/
 | Camada | Ferramenta | Notas |
 |--------|------------|-------|
 | Orquestração MCP | `qa_validate` | Fase principal do gate |
-| Mobile E2E | Appium 2 + `guardiao-familia-mobile-setup` | `qa_appium_suite_*` |
-| Massa de dados | `qa_db_seed` / `qa_db_cleanup` | Postgres API |
+| Mobile E2E | Appium 2 + `guardiao-familia-mobile-setup` | `qa_init_suite_mobile` → `qa_generate_evidence` |
+| Massa de dados | embutida em `qa_generate_evidence` | Postgres API |
 | Evidências | `manifest.json` | `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/` |
 
 Ver [MOBILE_SETUP_EVIDENCE.md](../qa-author/MOBILE_SETUP_EVIDENCE.md) para setup emuladores.
@@ -66,14 +66,10 @@ Pipeline: `on_status_event` → `hitl_guard_actuation` → `qa_validate` → `ex
 
 | Cenário | Sequência |
 |---------|-----------|
-| **Child-only** | `qa_db_seed(profile=basic_parent)` → `qa_appium_suite_child(child_only=true, from_db_seed=true)` → evidência → `qa_db_cleanup` |
-| **Parent UI** | `qa_appium_suite_parent(feature=...)` (sem seed parent) |
+| **Mobile QA** | `qa_validate` → `qa_init_suite_mobile` → `qa_generate_evidence` (child ou parent) |
+| **Parent UI** | `qa_init_suite_mobile(parent_only=true)` → `qa_generate_evidence` |
 
-Fallback CLI:
-
-```powershell
-python agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py --task {task_id} --feature pairing --mode cycle
-```
+Não use fallback CLI (`qa_mobile_evidence.py` / `fast-stack.ps1`).
 
 Só emitir `qa-gate_in_pull_request` com pacote em `.../evidence/manifest.json` válido.
 

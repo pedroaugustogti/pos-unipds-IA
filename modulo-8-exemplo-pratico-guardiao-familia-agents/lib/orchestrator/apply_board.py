@@ -123,7 +123,12 @@ def apply_decision(state: dict[str, Any]) -> dict[str, Any]:
     if is_merge_event(event) and mode == "demo":
         kwargs["force_hitl_approved"] = True
 
-    out = mcp_emit_status_event(state["task_id"], event, summary=dec.get("summary") or "", **kwargs)
+    out = mcp_emit_status_event(
+        task_id=state["task_id"],
+        event=event,
+        summary=dec.get("summary") or "",
+        **kwargs,
+    )
     results.append(out)
     awaiting = (out.get("result") or {}).get("status") == "awaiting_human"
     board = (out.get("result") or {}).get("board") or out.get("board") or {}

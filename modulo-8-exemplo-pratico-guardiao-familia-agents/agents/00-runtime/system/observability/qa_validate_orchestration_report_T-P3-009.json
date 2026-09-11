@@ -1,0 +1,130 @@
+{
+  "generated_at": "2026-09-11T00:27:25.543102+00:00",
+  "task_id": "T-P3-009",
+  "scenario_focus": "greeting-morning-08h",
+  "orchestration": "MCP on_status_event → qa_validate → qa_init_suite_mobile → qa_pipeline_evidence → qa_generate_evidence",
+  "entry": "lib.mcp_invoke.on_status_event + qa_validate(mode=live)",
+  "phases": [
+    {
+      "phase": "mcp_on_status_event",
+      "ok": true,
+      "elapsed_sec": 1.445,
+      "error": null,
+      "has_ticket_qa": true,
+      "qa_scenarios": [
+        "greeting-morning-08h",
+        "greeting-afternoon-15h",
+        "greeting-evening-21h"
+      ],
+      "task_id": "T-P3-009"
+    },
+    {
+      "phase": "mcp_qa_validate_live",
+      "ok": true,
+      "elapsed_sec": 123.407,
+      "error": null,
+      "entry_tool": "qa_validate",
+      "mode": "live",
+      "decision": {
+        "next_event": "qa-gate_in_pull_request",
+        "summary": "QA PASS — evidencias MCP validadas",
+        "rationale": "qa_validate",
+        "confidence": 0.95,
+        "needs_human": false
+      },
+      "blocking_reason": null,
+      "executed": [
+        "qa_init_suite_mobile",
+        "qa_pipeline_evidence",
+        "qa_generate_evidence"
+      ],
+      "suite_ok": true,
+      "evidence_ok": true,
+      "mcp_steps": [
+        {
+          "tool": "qa_init_suite_mobile",
+          "ok": true,
+          "apps_ready_ok": true,
+          "scenario_id": null,
+          "blocking_reason": null
+        },
+        {
+          "tool": "qa_pipeline_evidence",
+          "ok": true,
+          "apps_ready_ok": true,
+          "scenario_id": "greeting-morning-08h",
+          "blocking_reason": null
+        },
+        {
+          "tool": "qa_generate_evidence",
+          "ok": true,
+          "apps_ready_ok": null,
+          "scenario_id": "greeting-morning-08h",
+          "blocking_reason": null
+        }
+      ],
+      "package_dir": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\qa-gate-(1)\\evidence",
+      "evidence_paths": [
+        "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\00-runtime\\output\\T-P3-009\\qa-gate-(1)\\evidence"
+      ],
+      "ac_validation": {
+        "summary": "AC avaliados pelo resultado MCP",
+        "all_passed": true,
+        "ac_checks": [
+          {
+            "criterion": "AC-01: Entre 00:00–11:59 o header mostra prefixo Bom dia",
+            "status": "pass",
+            "evidence": "mcp_chain"
+          },
+          {
+            "criterion": "AC-02: Entre 12:00–17:59 o header mostra prefixo Boa tarde",
+            "status": "pass",
+            "evidence": "mcp_chain"
+          },
+          {
+            "criterion": "AC-03: Entre 18:00–23:59 o header mostra prefixo Boa noite",
+            "status": "pass",
+            "evidence": "mcp_chain"
+          },
+          {
+            "criterion": "AC-04: `npm test -- childHome.state` passa com casos manhã/tarde/noite",
+            "status": "pass",
+            "evidence": "mcp_chain"
+          },
+          {
+            "criterion": "AC-05: QA anexa 1 MP4 do fluxo Appium (pairing→home) + 3 PNG (Bom dia/Boa tarde/Boa noite) + JSON (massa via `qa_db_seed` + stack via `qa_ensure_stack_mobile`)",
+            "status": "pass",
+            "evidence": "mcp_chain"
+          }
+        ]
+      },
+      "scenario_id": "greeting-morning-08h",
+      "pipeline_binding": {
+        "ok": true,
+        "source": "feature:pairing",
+        "violations": [],
+        "ticket_notes": [
+          "Abrir app child no emulator-5556",
+          "Appium inicia sessão / lança pacote",
+          "Colar código 6 dígitos do seed",
+          "Valida pareamento com API",
+          "Conceder permissões necessárias",
+          "Avança onboarding",
+          "Visualizar header azul",
+          "Saudação dinâmica + nome; handoff `childHome=true`"
+        ]
+      },
+      "pipeline_steps_count": 7,
+      "has_ticket_qa_in_pipeline": true
+    }
+  ],
+  "verdict": {
+    "orchestration_contract_ok": true,
+    "live_execution_ok": true,
+    "mcp_chain_complete": true,
+    "overall": "PASS",
+    "notes": [
+      "Cadeia MCP completa a partir de on_status_event."
+    ]
+  }
+}

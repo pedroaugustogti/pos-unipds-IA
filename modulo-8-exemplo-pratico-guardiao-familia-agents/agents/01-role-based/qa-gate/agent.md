@@ -35,19 +35,15 @@ Regenerar digest: `python agents/00-orchestration/scripts/ops/build_repo_knowled
 |------|-----------------|
 | `on_status_event` | AC + handoff do revisor |
 | `hitl_guard_actuation` | Antes de `execute` |
-| `qa_validate` | Orquestra QA completo |
-| `qa_db_seed` / `qa_db_cleanup` | Massa API / purge |
-| `qa_appium_suite_parent` / `_child` | Evidências Appium |
+| `qa_validate` | Orquestra init → generate_evidence |
+| `qa_init_suite_mobile` | Prep stack + recovery + plan |
+| `qa_generate_evidence` | Seed → Appium → evidências → cleanup |
 | `execute_agent_actuation_tool` | `qa-gate_in_pull_request` ou retrocesso |
 
 
 ## Evidências mobile (gate)
 
-Para PRs em `guardiao-familia-parent` ou `guardiao-familia-child` — **preferir MCP acima**; fallback:
-
-```powershell
-python agents/01-role-based/qa-gate/scripts/qa_mobile_evidence.py --task {task_id} --feature pairing --mode cycle
-```
+Para PRs em `guardiao-familia-parent` ou `guardiao-familia-child` — **somente MCP** (`qa_validate` → init → generate_evidence). Não rode `qa_mobile_evidence.py` nem `fast-stack.ps1`.
 
 Só emitir `test_passed` com pacote em `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/manifest.json`.
 

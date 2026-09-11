@@ -37,13 +37,17 @@ from lib.core.agent_registry import AGENT_PROFILES, resolve_agent_for_task
 from lib.core.model_tier import select_model
 from lib.core.react_policy import CREATOR_STEPS, QA_GATE_STEPS, REVIEWER_STEPS, max_iterations_for
 from lib.gateway.handoff import load_handoff
+from lib.orchestrator.actuation_prompt_builder import build_actuation_prompt
+from lib.orchestrator.issue_ticket_enrichment import enrich_task_ticket
 
 
 def _load_task(task_id: str) -> dict[str, Any] | None:
     task = get_board_task(task_id)
-    if task:
-        return task
-    return next((t for t in load_router_tasks() if t.get("id") == task_id), None)
+    if not task:
+        task = next((t for t in load_router_tasks() if t.get("id") == task_id), None)
+    if not task:
+        return None
+    return enrich_task_ticket(task)
 
 
 def resolve_event_string(
@@ -147,12 +151,23 @@ def _extract_ticket_slice(task: dict[str, Any], agent_role: str) -> dict[str, An
         if isinstance(raw_seed, dict) and raw_seed.get("profile"):
             profile = str(raw_seed["profile"])
         child_only = _qa_appium_child_only(repo, qa)
+        db_seed_block = dict(raw_seed) if isinstance(raw_seed, dict) else {}
+        if not db_seed_block:
+            db_seed_block = {
+                "enabled": True,
+                "profile": profile,
+                "cleanup": True,
+                "bootstrap_api": True,
+            }
+        elif not db_seed_block.get("enabled"):
+            db_seed_block = {**db_seed_block, "enabled": True}
         return {
             **common,
             "qa": {
                 "test_suite": qa.get("test_suite"),
                 "scenarios": list(qa.get("scenarios") or []),
                 "evidence": dict(qa.get("evidence") or {}),
+                "db_seed": db_seed_block,
                 "db_seed_profile": profile,
                 "child_only": child_only,
                 "appium_scope": qa.get("appium_scope"),
@@ -161,9 +176,9 @@ def _extract_ticket_slice(task: dict[str, Any], agent_role: str) -> dict[str, An
                     "get_handoff",
                     "emit_status_event(qa-gate_in_test)",
                     "query_mobile_flow_rag",
-                    f"qa_db_seed(profile={profile})",
-                    "qa_appium_suite_child(child_only=true)" if child_only else "qa_appium_suite_*",
-                    "qa_db_cleanup",
+                    "qa_init_suite_mobile",
+                    "qa_pipeline_evidence",
+                    "qa_generate_evidence",
                     "emit_status_event(qa-gate_in_pull_request|qa-gate_return_in_progress)",
                 ],
             },
@@ -244,7 +259,7 @@ def prepare_actuation_for_event(
 
     ticket_slice = _extract_ticket_slice(task, assigned)
 
-    return {
+    ctx_for_prompt: dict[str, Any] = {
         "ok": True,
         "task_id": tid,
         "event": resolved_event,
@@ -276,4 +291,13 @@ def prepare_actuation_for_event(
         "agent_profile": AGENT_PROFILES.get(assigned) or AGENT_PROFILES.get(normalize_creator_role(assigned)),
         "ticket": ticket_slice,
         "playbook": _playbook_for_role(assigned, resolved_event, target_status),
+    }
+    prompt_bundle = build_actuation_prompt(ctx_for_prompt)
+
+    return {
+        **ctx_for_prompt,
+        "actuation_prompt": prompt_bundle["markdown"],
+        "actuation_prompt_meta": {
+            k: v for k, v in prompt_bundle.items() if k != "markdown"
+        },
     }

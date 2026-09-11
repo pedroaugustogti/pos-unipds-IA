@@ -1,0 +1,456 @@
+{
+  "ok": true,
+  "task_id": "T-P3-009",
+  "event": "qa-gate_in_test",
+  "event_kind": "advance",
+  "target_status": "In Test",
+  "event_agent": "qa-gate",
+  "acting_agent": "qa-gate",
+  "assigned_agent": "qa-gate",
+  "creator_role": "frontend-mobile",
+  "board_task": {
+    "id": "T-P3-009",
+    "title": "[T-P3-009] Child home: saudação dinâmica por horário no cabeçalho",
+    "board_status": "Todo",
+    "board_source": "github:project#3",
+    "agent_role": "frontend-mobile",
+    "agent_role_secondary": "",
+    "repo": "guardiao-familia-child",
+    "track": "produto",
+    "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-child/issues/109",
+    "issue_number": "109"
+  },
+  "routing": {
+    "resolved": {
+      "agent_role": "frontend-mobile",
+      "agent_role_secondary": "",
+      "in_scope": true,
+      "redirected": false,
+      "match_reason": "mobile,repo=guardiao-familia-child",
+      "repo": "guardiao-familia-child",
+      "repo_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-child"
+    },
+    "match_reason": "mobile,repo=guardiao-familia-child"
+  },
+  "handoff": {},
+  "ci": {
+    "ci_status": "pending",
+    "pr_url": null,
+    "branch": null,
+    "checks": [],
+    "workflow_run_id": null,
+    "check_suite_id": null,
+    "last_signal": null,
+    "updated_at": null,
+    "summary": ""
+  },
+  "model_tier": {
+    "tier": "low",
+    "purpose": "implement_low",
+    "model": "openai/gpt-4o-mini",
+    "note": "implementacao padrao (orquestracao)",
+    "uses_llm": true,
+    "cursor_model": "composer-2.5",
+    "max_tokens": 4096,
+    "max_tool_calls": 3
+  },
+  "agent_profile": {
+    "label": "QA gate (pipeline)",
+    "repos": "{'guardiao-familia-child', 'guardiao-familia-site', 'guardiao-familia-parent', 'guardiao-familia-api', 'guardiao-familia-backoffice'}",
+    "tracks": "set()",
+    "stack": "Playwright, Appium, smoke API — evidências na issue",
+    "path_hint": "lib/qa_playwright.py, lib/qa_mobile.py (orquestrador)",
+    "branch": "n/a",
+    "pipeline_only": true
+  },
+  "ticket": {
+    "task_id": "T-P3-009",
+    "title": "[T-P3-009] Child home: saudação dinâmica por horário no cabeçalho",
+    "creator_role": "frontend-mobile",
+    "reviewer_role": "frontend-mobile-reviewer",
+    "track": "produto",
+    "repo": "guardiao-familia-child",
+    "repo_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-child",
+    "branch": "feat/t-p3-009-sandbox",
+    "base_branch": "master",
+    "epic_id": "E-P3 Project 3 Sandbox",
+    "depends_on": [],
+    "release_blocker": false,
+    "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-child/issues/109",
+    "issue_number": "109",
+    "acceptance_criteria": [
+      "AC-01: Entre 00:00–11:59 o header mostra prefixo Bom dia",
+      "AC-02: Entre 12:00–17:59 o header mostra prefixo Boa tarde",
+      "AC-03: Entre 18:00–23:59 o header mostra prefixo Boa noite",
+      "AC-04: `npm test -- childHome.state` passa com casos manhã/tarde/noite",
+      "AC-05: QA anexa 1 MP4 do fluxo Appium (pairing→home) + 3 PNG (Bom dia/Boa tarde/Boa noite) + JSON (massa via `qa_db_seed` + stack via `qa_ensure_stack_mobile`)"
+    ],
+    "ac_verification": [
+      {
+        "id": "AC-01",
+        "command": "npm test -- childHome.state",
+        "expected": "exit 0 — casos 08:00 Bom dia, 15:00 Boa tarde, 21:00 Boa noite"
+      },
+      {
+        "id": "AC-02",
+        "command": "MCP: seed → ensure → qa_appium_suite_child(child_only) + relógio 08:00",
+        "expected": "header contém Bom dia (PNG greeting-morning-08h)"
+      },
+      {
+        "id": "AC-03",
+        "command": "MCP qa_validate / qa_mobile_with_recovery + evidências",
+        "expected": "1 MP4 fluxo Appium + 3 PNG saudações + JSON em agents/00-runtime/output/T-P3-009/qa-gate-({N})/evidence/"
+      }
+    ],
+    "in_scope": [
+      "Centralizar `dynamicGreeting()` em `childHome.state.ts` (única fonte)",
+      "ChildHomeV2: `greetingTitle` = `{dynamicGreeting()}, {nome}!` no header azul",
+      "Regras: 00:00–11:59 Bom dia · 12:00–17:59 Boa tarde · 18:00–23:59 Boa noite (hora local)",
+      "Testes unitários cobrindo os 3 períodos + bordas 11:59/12:00 e 17:59/18:00",
+      "Propagar `accessibilityLabel` coerente no header"
+    ],
+    "out_of_scope": [
+      "Alterar app parent",
+      "Mudar layout SOS / tempo de tela / locais seguros",
+      "i18n EN/ES"
+    ],
+    "suggested_files": [
+      "screens/ChildHomeV2.tsx",
+      "screens/childHome.state.ts",
+      "screens/__tests__/childHome.state.test.ts"
+    ],
+    "do_not_touch": [
+      "SOS button",
+      "screen time card",
+      "pairing API contracts"
+    ],
+    "implementation_steps": [
+      "git checkout -b feat/t-p3-009-child-greeting",
+      "Revisar `dynamicGreeting` em childHome.state.ts e uso em ChildHomeV2.tsx",
+      "Ajustar testes em childHome.state.test.ts se necessário",
+      "Validar no emulador child (5556) com mock de hora ou ajuste manual do relógio",
+      "Abrir PR com screenshots de referência"
+    ],
+    "context_summary": "O cabeçalho azul da ChildHome (ChildHomeV2) exibe saudação + nome do filho. Garantir que o texto alterna entre Bom dia, Boa tarde e Boa noite conforme hora local do dispositivo.",
+    "technical_notes": "",
+    "user_story": "Como criança, quero ver uma saudação adequada ao horário no topo da home, para me sentir acolhida no app.",
+    "stop_and_redirect": [
+      "Alterar pairing parent → frontend-mobile parent task",
+      "Mudar API health → backend T-P3-001"
+    ],
+    "agent_responsibilities": [],
+    "qa": {
+      "test_suite": "qa-mobile-child-appium",
+      "scenarios": [
+        "greeting-morning-08h",
+        "greeting-afternoon-15h",
+        "greeting-evening-21h"
+      ],
+      "evidence": {
+        "screenshot_png": true,
+        "video_mp4": true,
+        "json_report": true,
+        "ci_link": false,
+        "scenarios_count": 3,
+        "screenshot_scope": "child_home_greeting_per_period",
+        "video_scope": "appium_flow_pairing_to_home",
+        "greeting_video": false
+      },
+      "db_seed": {
+        "enabled": true,
+        "profile": "basic_parent",
+        "family_name": "QA Evidence T-P3-009",
+        "child_name": "Filho QA T-P3-009",
+        "cleanup": true,
+        "bootstrap_api": true
+      },
+      "db_seed_profile": "basic_parent",
+      "child_only": true,
+      "appium_scope": "child_only",
+      "how_to_run": "MCP: qa_validate(task_id=T-P3-009) na fase In Test — guia = qa.evidence_pipeline + qa.scenarios + qa.evidence.* (1 MP4 fluxo + 3 PNG saudações). Equivalente: qa_mobile_with_recovery ou cadeia seed→ensure→suite→capture→cleanup.",
+      "mcp_sequence": [
+        "get_handoff",
+        "emit_status_event(qa-gate_in_test)",
+        "query_mobile_flow_rag",
+        "qa_init_suite_mobile",
+        "qa_pipeline_evidence",
+        "qa_generate_evidence",
+        "emit_status_event(qa-gate_in_pull_request|qa-gate_return_in_progress)"
+      ]
+    },
+    "user_flow": {
+      "app": "guardiao-familia-child",
+      "entry_point": "App child após `qa_db_seed(profile=basic_parent)` — seed cria parent/família/código; **não** deixa o child já na home",
+      "emulator": "emulator-5556",
+      "metro_port": 9090,
+      "target_screen": "child:ChildHomeV2",
+      "target_element": "header.greetingTitle (Bom dia|Boa tarde|Boa noite, {nome}!)",
+      "preconditions": [
+        "Stack child-only: API + Postgres + emulator-5556 + Metro :9090 + APK instalado — via `qa_ensure_stack_mobile(child_only=true)` (**sem** emulador parent)",
+        "`qa_db_seed(profile=basic_parent)` concluiu com pairing code no handoff (`lastStep` tipicamente `config_family`)",
+        "Appium feature efetiva: `pairing` (trim child-only) → paste_code → allow_permissions → go_to_home_child"
+      ],
+      "steps": [
+        {
+          "order": 1,
+          "screen": "Child launch",
+          "user_action": "Abrir app child no emulator-5556",
+          "system_behavior": "Appium inicia sessão / lança pacote",
+          "file": "appium pairing run"
+        },
+        {
+          "order": 2,
+          "screen": "Child PrePairing",
+          "user_action": "Colar código 6 dígitos do seed",
+          "system_behavior": "Valida pareamento com API",
+          "file": "screens/PrePairingScreen.tsx"
+        },
+        {
+          "order": 3,
+          "screen": "PermissionsOnboarding",
+          "user_action": "Conceder permissões necessárias",
+          "system_behavior": "Avança onboarding",
+          "file": "screens/PermissionsOnboardingScreen.tsx"
+        },
+        {
+          "order": 4,
+          "screen": "ChildHomeV2",
+          "user_action": "Visualizar header azul",
+          "system_behavior": "Saudação dinâmica + nome; handoff `childHome=true`",
+          "file": "screens/ChildHomeV2.tsx"
+        }
+      ],
+      "qa_repro_steps": [
+        "1. `qa_db_seed(task_id=T-P3-009, profile=basic_parent, dry_run=false)`",
+        "2. `qa_ensure_stack_mobile(task_id=T-P3-009, child_only=true, dry_run=false)` — API/boot/Metro/APK/apps_ready",
+        "3. `qa_appium_suite_child(from_db_seed=true, task_id=T-P3-009, child_only=true, skip_appium=false, dry_run=false)` — abre app → pairing (seed) → permissões → home",
+        "4a. Evidência **vídeo**: MP4 do fluxo Appium do passo 3 (pairing→home) no pacote `qa-gate-({N})/evidence/`",
+        "4b. Evidência **prints**: após home, cenários `greeting-morning-08h` / `greeting-afternoon-15h` / `greeting-evening-21h` → 3 PNG (Bom dia / Boa tarde / Boa noite)",
+        "5. `qa_db_cleanup(task_id=T-P3-009, dry_run=false)`",
+        "Alternativa composta: `qa_mobile_with_recovery(task_id=T-P3-009, child_only=true, dry_run=false)` (ou `qa_validate` na fase In Test)"
+      ],
+      "mermaid": "flowchart LR\n  seed[qa_db_seed basic_parent] --> ensure[qa_ensure_stack_mobile]\n  ensure --> appium[qa_appium_suite_child pairing]\n  appium --> home[ChildHomeV2]\n  home --> png[3 PNG saudações]\n  appium --> mp4[1 MP4 fluxo]"
+    }
+  },
+  "playbook": {
+    "start_hint": "Executar suite QA (In Test)",
+    "react_steps": [
+      "load_handoff",
+      "run_suite",
+      "pass_or_bug"
+    ],
+    "max_iterations": 3,
+    "stages": [
+      {
+        "status": "Ready for Test",
+        "owner": "qa-gate",
+        "enters": "{reviewer}_ready_for_test (CR aprovado)",
+        "does": "QA planeja cenários; prepara ambiente/dispositivos",
+        "exits": "qa-gate_in_test",
+        "event_in": "{reviewer}_ready_for_test",
+        "event_out": "qa-gate_in_test",
+        "label": "agent:ready-for-test"
+      },
+      {
+        "status": "In Test",
+        "owner": "qa-gate",
+        "enters": "qa-gate_in_test",
+        "does": "E2E, regressao, evidencias; label type:bug se falhar",
+        "exits": "qa-gate_in_pull_request | qa-gate_return_in_progress",
+        "event_in": "qa-gate_in_test",
+        "event_out": "qa-gate_in_pull_request / qa-gate_return_in_progress",
+        "label": "agent:in-test"
+      }
+    ],
+    "agent_prompt": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\01-role-based\\qa-gate\\agent.md",
+    "skill_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\01-role-based\\qa-gate\\SKILL.md"
+  },
+  "actuation_prompt_meta": {
+    "assigned_agent": "qa-gate",
+    "target_status": "In Test",
+    "repo_scan": {
+      "repo": "guardiao-familia-child",
+      "repo_path": "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-child",
+      "repo_available": true,
+      "files": [
+        {
+          "path": "screens/ChildHomeV2.tsx",
+          "exists": true,
+          "symbols": [
+            "ChildHomeV2",
+            "it("
+          ],
+          "snippet": [
+            "import { useCallback, useEffect, useMemo, useRef, useState } from 'react';",
+            "import * as Location from 'expo-location';",
+            "import {",
+            "  AccessibilityInfo,",
+            "  ActivityIndicator,",
+            "  Animated,",
+            "  AppState,",
+            "  Easing,",
+            "  Modal,",
+            "  Platform,",
+            "  Linking,",
+            "  Pressable,",
+            "  ScrollView,",
+            "  StatusBar,",
+            "  StyleSheet,",
+            "  Text,",
+            "  View,",
+            "} from 'react-native';",
+            "import { useSafeAreaInsets } from 'react-native-safe-area-context';",
+            "import { LinearGradient } from 'expo-linear-gradient';",
+            "import { getServerOrigin } from '../lib/apiBase';",
+            "import { useChildRealtime } from '../hooks/useChildRealtime';",
+            "import { useLocationReporter } from '../hooks/useLocationReporter';",
+            "import { useCurrentLocation } from '../hooks/useCurrentLocation';",
+            "import {",
+            "  appendBreadcrumbPoint,",
+            "  buildBreadcrumbHistoryItem,",
+            "  computeBreadcrumbDistanceMeters,",
+            "  loadBreadcrumbStore,",
+            "  MAX_BREADCRUMB_HISTORY_ITEMS,",
+            "  saveBreadcrumbStore,",
+            "  type BreadcrumbHistoryItem,",
+            "  type BreadcrumbPoint,",
+            "} from '../lib/breadcrumbTrailStore';",
+            "import * as deviceApi from '../lib/deviceApi';",
+            "import {",
+            "  fetchFamilyGuardians,",
+            "  fetchFamilyLocations,",
+            "  type FamilyGuardian,",
+            "} from '../lib/familyLocationsApi';",
+            "import {",
+            "  fetchDailyMissions,",
+            "  fetchGamificationProfile,",
+            "  type DailyMissionItem,",
+            "  type GamificationProfile,"
+          ]
+        },
+        {
+          "path": "screens/childHome.state.ts",
+          "exists": true,
+          "symbols": [
+            "dynamicGreeting",
+            "export function",
+            "export const"
+          ],
+          "snippet": [
+            "import type { HomeTabId } from '../components/home/TabBar';",
+            "",
+            "export type HomeDataStatus = 'idle' | 'loading' | 'success' | 'empty' | 'error';",
+            "",
+            "export type HomeUiState = {",
+            "  status: HomeDataStatus;",
+            "  activeTab: HomeTabId;",
+            "  toastMessage: string | null;",
+            "  toastVisible: boolean;",
+            "};",
+            "",
+            "type HomeUiAction =",
+            "  | { type: 'LOAD_START' }",
+            "  | { type: 'LOAD_SUCCESS'; hasContent: boolean }",
+            "  | { type: 'LOAD_ERROR'; message: string }",
+            "  | { type: 'TAB_PRESS'; tab: HomeTabId }",
+            "  | { type: 'SHOW_TOAST'; message: string }",
+            "  | { type: 'HIDE_TOAST' };",
+            "",
+            "export const INITIAL_HOME_UI_STATE: HomeUiState = {",
+            "  status: 'idle',",
+            "  activeTab: 'home',",
+            "  toastMessage: null,",
+            "  toastVisible: false,",
+            "};",
+            "",
+            "export function homeUiReducer(state: HomeUiState, action: HomeUiAction): HomeUiState {",
+            "  switch (action.type) {",
+            "    case 'LOAD_START':",
+            "      return {",
+            "        ...state,",
+            "        status: 'loading',",
+            "      };",
+            "    case 'LOAD_SUCCESS':",
+            "      return {",
+            "        ...state,",
+            "        status: action.hasContent ? 'success' : 'empty',",
+            "      };",
+            "    case 'LOAD_ERROR':",
+            "      return {",
+            "        ...state,",
+            "        status: 'error',",
+            "        toastMessage: action.message,",
+            "        toastVisible: true,",
+            "      };"
+          ]
+        },
+        {
+          "path": "screens/__tests__/childHome.state.test.ts",
+          "exists": true,
+          "symbols": [
+            "dynamicGreeting",
+            "describe(",
+            "it("
+          ],
+          "snippet": [
+            "import {",
+            "  computeScreenTimeTotals,",
+            "  dynamicGreeting,",
+            "  estimateRenderUnits,",
+            "  formatPtDate,",
+            "  getHomeAccessibilityTargets,",
+            "  homeUiReducer,",
+            "  INITIAL_HOME_UI_STATE,",
+            "  prependCappedMessage,",
+            "} from '../childHome.state';",
+            "",
+            "describe('ChildHome state (mock) — issue #37', () => {",
+            "  it('CT-37.01 loading: LOAD_START define status loading', () => {",
+            "    const next = homeUiReducer(INITIAL_HOME_UI_STATE, { type: 'LOAD_START' });",
+            "    expect(next.status).toBe('loading');",
+            "  });",
+            "",
+            "  it('CT-37.02 success: LOAD_SUCCESS com conteudo define success', () => {",
+            "    const next = homeUiReducer(INITIAL_HOME_UI_STATE, {",
+            "      type: 'LOAD_SUCCESS',",
+            "      hasContent: true,",
+            "    });",
+            "    expect(next.status).toBe('success');",
+            "  });",
+            "",
+            "  it('CT-37.03 empty: LOAD_SUCCESS sem conteudo define empty', () => {",
+            "    const next = homeUiReducer(INITIAL_HOME_UI_STATE, {",
+            "      type: 'LOAD_SUCCESS',",
+            "      hasContent: false,",
+            "    });",
+            "    expect(next.status).toBe('empty');",
+            "  });",
+            "",
+            "  it('CT-37.04 error: LOAD_ERROR define error + toast visível', () => {",
+            "    const next = homeUiReducer(INITIAL_HOME_UI_STATE, {",
+            "      type: 'LOAD_ERROR',",
+            "      message: 'Falha de rede',",
+            "    });",
+            "    expect(next.status).toBe('error');",
+            "    expect(next.toastVisible).toBe(true);",
+            "    expect(next.toastMessage).toBe('Falha de rede');",
+            "  });",
+            "",
+            "  it('CT-37.05 navegação: TAB_PRESS atualiza aba ativa', () => {",
+            "    const next = homeUiReducer(INITIAL_HOME_UI_STATE, {"
+          ]
+        }
+      ],
+      "notes": [
+        "package.json presente — validar scripts de teste antes do PR.",
+        "Root: C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-child"
+      ]
+    },
+    "skill_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\01-role-based\\qa-gate\\SKILL.md",
+    "agent_prompt_path": "C:\\Users\\pedro\\Documents\\pos-unipds\\pos-unipds-IA\\modulo-8-exemplo-pratico-guardiao-familia-agents\\agents\\01-role-based\\qa-gate\\agent.md",
+    "next_event_hint": "qa-gate_in_pull_request",
+    "char_count": 10944
+  },
+  "actuation_prompt_len": 10943,
+  "actuation_prompt_preview": "# Prompt de atuação — qa-gate\n\n## Situação do board\n- **Task:** `T-P3-009` — [T-P3-009] Child home: saudação dinâmica por horário no cabeçalho\n- **Evento emitido:** `qa-gate_in_test`\n- **Status alvo:** `In Test`\n- **Agente atuante:** `qa-gate` (emissor do evento: `qa-gate`)\n- **Issue:** #109 · Repo: `guardiao-familia-child`\n- **Board status atual:** `Todo`\n\n## Sua missão nesta fase\nExecutar suite QA (In Test)\n\n### Responsabilidades (qa-gate)\n- Executar suite QA/Appium conforme ticket\n- Validar A"
+}

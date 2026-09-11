@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 from typing import Any
 
@@ -167,20 +168,106 @@ def _list_github_project_items(*, query: str = "") -> list[dict[str, Any]]:
     return []
 
 
+def _load_issue_cache_entry(task_id: str) -> dict[str, Any]:
+    """Cache canônico task_id → issue/project_item (project3_item_cache.json)."""
+    try:
+        from lib.paths import BOARD_IMPORTS_DIR, PROJECT3_ITEM_CACHE_PATH
+
+        if PROJECT3_ITEM_CACHE_PATH.is_file():
+            cache = json.loads(PROJECT3_ITEM_CACHE_PATH.read_text(encoding="utf-8"))
+            entry = cache.get(task_id)
+            if isinstance(entry, dict):
+                return entry
+
+        board_path = BOARD_IMPORTS_DIR / "github-project-3-import.json"
+        if board_path.is_file():
+            board = json.loads(board_path.read_text(encoding="utf-8"))
+            for item in board.get("items") or []:
+                if str(item.get("id") or "") == task_id:
+                    return {
+                        "task_id": task_id,
+                        "issue_number": str(item.get("issue_number") or ""),
+                        "issue_url": str(item.get("issue_url") or ""),
+                        "project_item_id": str(
+                            item.get("project_item_id") or item.get("fields", {}).get("Project Item Id") or ""
+                        ),
+                    }
+    except Exception:  # noqa: BLE001
+        pass
+    return {}
+
+
+def _collect_github_project_items(task_id: str) -> list[dict[str, Any]]:
+    tid = str(task_id or "").strip()
+    if not tid:
+        return []
+    seen: set[str] = set()
+    matches: list[dict[str, Any]] = []
+    for item in _list_github_project_items(query=tid):
+        if _parse_task_id(str(item.get("title") or "")) != tid:
+            continue
+        item_id = str(item.get("id") or "")
+        if item_id and item_id in seen:
+            continue
+        if item_id:
+            seen.add(item_id)
+        matches.append(item)
+    if matches:
+        return matches
+    for item in _list_github_project_items():
+        if _parse_task_id(str(item.get("title") or "")) != tid:
+            continue
+        item_id = str(item.get("id") or "")
+        if item_id and item_id in seen:
+            continue
+        if item_id:
+            seen.add(item_id)
+        matches.append(item)
+    return matches
+
+
+def _pick_project_item(task_id: str, items: list[dict[str, Any]]) -> dict[str, Any] | None:
+    if not items:
+        return None
+    if len(items) == 1:
+        return items[0]
+
+    cache = _load_issue_cache_entry(task_id)
+    cache_item_id = str(cache.get("project_item_id") or "").strip()
+    cache_issue = str(cache.get("issue_number") or "").strip()
+
+    if cache_item_id:
+        for item in items:
+            if str(item.get("id") or "") == cache_item_id:
+                return item
+
+    if cache_issue:
+        for item in items:
+            content = item.get("content") if isinstance(item.get("content"), dict) else {}
+            if str(content.get("number") or "") == cache_issue:
+                return item
+
+    # fallback: maior issue_number (issue mais recente)
+    def _issue_num(item: dict[str, Any]) -> int:
+        content = item.get("content") if isinstance(item.get("content"), dict) else {}
+        try:
+            return int(content.get("number") or 0)
+        except (TypeError, ValueError):
+            return 0
+
+    return max(items, key=_issue_num)
+
+
 def fetch_github_project_task(task_id: str) -> dict[str, Any] | None:
     """Lê task ao vivo do GitHub Project configurado em .env (ORG + PROJECT_NUMBER)."""
     tid = str(task_id or "").strip()
     if not tid:
         return None
 
-    # Busca direcionada (menos paginação / rate limit)
-    for item in _list_github_project_items(query=tid):
-        if _parse_task_id(str(item.get("title") or "")) == tid:
-            return _github_project_item_to_task(item)
-
-    for item in _list_github_project_items():
-        if _parse_task_id(str(item.get("title") or "")) == tid:
-            return _github_project_item_to_task(item)
+    items = _collect_github_project_items(tid)
+    picked = _pick_project_item(tid, items)
+    if picked:
+        return _github_project_item_to_task(picked)
     return None
 
 

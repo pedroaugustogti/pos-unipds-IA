@@ -1,6 +1,6 @@
 # MCP por papel — Guardião Família v2
 
-Servidor: `guardiao_mcp` · 14 tools · [`MCP_TOOLS.md`](MCP_TOOLS.md) · `list_mcp_tools`
+Servidor: `guardiao_mcp` · 12 tools · [`MCP_TOOLS.md`](MCP_TOOLS.md) · `list_mcp_tools`
 
 ## Pipeline comum (manual ou via LangGraph v2)
 
@@ -19,8 +19,9 @@ on_status_event → hitl_guard_actuation → [fase] → execute_agent_actuation_
 | `developer_review` | phase | Review estruturado (reviewer) |
 | `qa_validate` | phase | QA + evidências (qa-gate) |
 | `orchestrator_enter_in_progress` | orchestrator | Claim Todo → In Progress |
-| `qa_db_seed` / `qa_db_cleanup` | qa_mobile | Massa Postgres + cleanup |
-| `qa_appium_suite_parent` / `_child` | qa_mobile | Suites Appium |
+| `qa_init_suite_mobile` | qa_mobile | Prep stack + recovery + plan |
+| `qa_pipeline_evidence` | qa_mobile | scenario_pipeline (suites/screenshot/video/description) |
+| `qa_generate_evidence` | qa_mobile | Gera script Appium runtime + evidências |
 
 **Regras:** `dry_run=true` por padrão · sem eventos legados (`claim`, `open_pr`, `test_passed`) · handoff em `agents/00-runtime/output/{task_id}/handoff.json`
 
@@ -67,7 +68,7 @@ Leia handoff + PR antes de `developer_review`.
 Papel: `qa-gate`
 
 **Tools:** `on_status_event` → `hitl_guard_actuation` → `qa_validate` → `execute_agent_actuation_tool`  
-**QA mobile (dentro de `qa_validate` ou manual):** `qa_db_seed` → `qa_appium_suite_*` → `qa_db_cleanup`
+**QA mobile:** `qa_validate` → `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence`
 
 **Eventos:**
 
@@ -77,7 +78,7 @@ Papel: `qa-gate`
 | In Pull Request | `qa-gate_in_pull_request` |
 | In Progress | `qa-gate_return_in_progress` |
 
-**Child-only:** `qa_db_seed(profile=basic_parent)` + `qa_appium_suite_child(child_only=true, from_db_seed=true)`.
+**Child/parent:** `qa_validate` → `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence`.
 
 ---
 

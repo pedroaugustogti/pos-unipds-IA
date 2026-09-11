@@ -13,11 +13,14 @@ DESCRIPTION = """\
 
 **Entrada:** `actuation_context` com AC e config QA.
 
-**Faz:**
-1. Orquestra MCP: `qa_db_seed` → `qa_appium_suite_*` → `qa_db_cleanup` (quando aplicável)
-2. Coleta evidências e valida AC (`ac_validation`)
+**Orquestra MCP:**
+1. `qa_init_suite_mobile` → `apps_ready_ok`
+2. `qa_pipeline_evidence(actuation_context, apps_ready_ok, scenario_id)` → retorno completo
+3. `qa_generate_evidence(pipeline_result=<retorno do pipeline>)` — gera script Appium + evidências
 
-**Retorno:** `mcp_steps`, `evidence_paths`, `ac_validation`, `decision` (`qa-gate_in_pull_request` | `qa-gate_return_in_progress`).
+**Entrada:** retorno de `on_status_event` (`actuation_context`).
+
+**Retorno:** `suites_mobile`, `mcp_steps`, `evidence_paths`, `ac_validation`, `decision`.
 """
 
 

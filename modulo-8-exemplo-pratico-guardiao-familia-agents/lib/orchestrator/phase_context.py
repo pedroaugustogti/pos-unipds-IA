@@ -26,20 +26,38 @@ def read_agent_docs(ctx: dict[str, Any]) -> dict[str, str]:
     }
 
 
-def task_from_ctx(ctx: dict[str, Any]) -> dict[str, Any]:
+def phase_llm_prompt(ctx: dict[str, Any], *, suffix: str = "") -> str:
+    """Usa actuation_prompt de on_status_event; fallback mínimo se ausente."""
+    base = str(ctx.get("actuation_prompt") or "").strip()
+    if base:
+        return f"{base}\n\n{suffix}".strip() if suffix else base
+    docs = read_agent_docs(ctx)
     ticket = ctx.get("ticket") or {}
-    board = ctx.get("board_task") or {}
+    return (
+        f"Task: {ctx.get('task_id')} — {ticket.get('title')}\n"
+        f"Role: {docs['agent_role']}\n"
+        f"AC: {ticket.get('acceptance_criteria')}\n"
+        f"{suffix}"
+    ).strip()
+
+
+def task_from_ctx(ctx: dict[str, Any]) -> dict[str, Any]:
+    """Extrai task só do actuation_context (ticket) — sem load_tasks."""
+    ticket = ctx.get("ticket") if isinstance(ctx.get("ticket"), dict) else {}
+    qa = ticket.get("qa") if isinstance(ticket.get("qa"), dict) else {}
     return {
-        "id": ctx.get("task_id") or ticket.get("task_id") or board.get("id"),
-        "title": ticket.get("title") or board.get("title") or "",
-        "agent_role": ticket.get("creator_role") or board.get("agent_role") or ctx.get("assigned_agent"),
-        "board_status": ctx.get("target_status") or board.get("board_status") or "Todo",
-        "repo": ticket.get("repo") or board.get("repo") or "",
-        "track": ticket.get("track") or board.get("track") or "produto",
+        "id": ctx.get("task_id") or ticket.get("task_id") or "",
+        "title": ticket.get("title") or ctx.get("title") or "",
+        "agent_role": ticket.get("creator_role") or ctx.get("assigned_agent") or "",
+        "board_status": ctx.get("target_status") or "Todo",
+        "repo": ticket.get("repo") or "",
+        "track": ticket.get("track") or "produto",
         "acceptance_criteria": list(ticket.get("acceptance_criteria") or []),
         "in_scope": list(ticket.get("in_scope") or []),
         "out_of_scope": list(ticket.get("out_of_scope") or []),
         "do_not_touch": list(ticket.get("do_not_touch") or []),
         "suggested_files": list(ticket.get("suggested_files") or []),
-        "qa": ticket.get("qa") if isinstance(ticket.get("qa"), dict) else {},
+        "qa": qa,
+        "user_flow": ticket.get("user_flow") if isinstance(ticket.get("user_flow"), dict) else {},
+        "refinement": ticket.get("refinement") if isinstance(ticket.get("refinement"), dict) else {},
     }

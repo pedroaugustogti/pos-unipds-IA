@@ -695,11 +695,15 @@ def _start_api_on_host(api: Path) -> dict[str, Any]:
         "REDIS_URL": "redis://127.0.0.1:6379",
         "PORT": "3000",
     }
+    merged = {**os.environ, **env}
+    use_shell = os.name == "nt"
+    cmd: str | list[str] = "npm run start:dev" if use_shell else ["npm", "run", "start:dev"]
     proc = subprocess.Popen(
-        ["npm", "run", "start:dev"],
+        cmd,
         cwd=str(api),
-        env={**os.environ, **env},
+        env=merged,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
+        shell=use_shell,
     )
     return {"ok": True, "pid": proc.pid, "mode": "host"}

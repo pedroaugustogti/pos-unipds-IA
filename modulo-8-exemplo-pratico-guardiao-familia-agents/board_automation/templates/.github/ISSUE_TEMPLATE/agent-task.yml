@@ -186,25 +186,63 @@ body:
   - type: textarea
     id: qa_scenarios
     attributes:
-      label: "Cenários QA / IDs Appium (obrigatório se E2E)"
-      description: "Ex.: S0, S0.1, 1 (pairing) ou passos numerados"
+      label: "Cenários QA / slugs (obrigatório se E2E — inferem a pipeline)"
+      description: "Slugs estáveis. Ex. greeting → pipeline pós-home automática. Um por linha."
       placeholder: |
-        - S0: login parent
-        - 1: pairing happy path (dual emulator 5554+5556)
+        greeting-morning-08h
+        greeting-afternoon-15h
+        greeting-evening-21h
 
   - type: checkboxes
     id: evidence_required
     attributes:
       label: Evidências obrigatórias (qa-gate anexa na issue)
       options:
-        - label: Screenshot PNG (Playwright ou Appium)
+        - label: Screenshot PNG (Playwright ou Appium / pós-home)
           required: false
-        - label: Vídeo MP4 (Appium startRecordingScreen)
+        - label: Vídeo MP4 (Appium startRecordingScreen ou per_period)
           required: false
-        - label: Report JSON da suite
+        - label: Report JSON da suite (+ scenario-manifest)
           required: false
         - label: Log CI / workflow link
           required: false
+
+  - type: dropdown
+    id: evidence_video_scope
+    attributes:
+      label: "Pipeline vídeo (video_scope) — MCP infere sem param extra"
+      description: "Onde gravar o MP4. Deixe vazio se não houver vídeo."
+      options:
+        - "(nenhum)"
+        - appium_flow_pairing_to_home
+        - appium_flow_generic
+        - per_period
+    validations:
+      required: false
+
+  - type: dropdown
+    id: evidence_screenshot_scope
+    attributes:
+      label: "Pipeline PNG (screenshot_scope)"
+      description: "Matriz de prints pós-suite. greeting → prepare/capture/finalize."
+      options:
+        - "(nenhum)"
+        - child_home_greeting_per_period
+        - child_home_single
+        - parent_home_single
+    validations:
+      required: false
+
+  - type: dropdown
+    id: evidence_greeting_video
+    attributes:
+      label: "MP4 por saudação (greeting_video)"
+      description: "false = só 1 MP4 do fluxo Appium (recomendado T-P3-009)"
+      options:
+        - "false"
+        - "true"
+    validations:
+      required: false
 
   - type: dropdown
     id: db_seed_profile
@@ -213,6 +251,7 @@ body:
       description: "Evita cadastro/config/família do zero — ver agents/01-role-based/qa-gate/scripts/mobile_e2e_seed.py"
       options:
         - "(desabilitado)"
+        - basic_parent
         - child_home
         - pairing_warm
         - permissions_resume
@@ -228,11 +267,10 @@ body:
   - type: textarea
     id: how_to_run
     attributes:
-      label: "Como rodar localmente (obrigatório)"
+      label: "Como rodar (MCP preferencial; CLI só fallback)"
       placeholder: |
-        docker compose -f docker-compose.dev.yml up -d postgres redis
-        npm run migration:run && npm run seed
-        powershell -File agents/01-role-based/qa-gate/scripts/local_e2e_stack.ps1 -Mode Full
+        MCP: qa_db_seed → qa_ensure_stack_mobile → qa_appium_suite_child → evidência inferida do ticket → qa_db_cleanup
+        (pipeline PNG/MP4 vem de scenarios + evidence.* acima)
     validations:
       required: true
 

@@ -79,7 +79,7 @@ def _normalize_qa_repro_steps(steps: list[str], *, mobile: bool) -> list[str]:
     if out:
         return out
     return [
-        "Após `qa_appium_suite_*`: confirmar `target_element` visível",
+        "Após `qa_generate_evidence`: confirmar `target_element` visível",
         "Screenshot + MP4 conforme AC (gerados pela suite MCP)",
     ]
 
@@ -114,39 +114,31 @@ def format_qa_repro_appium_section(
     repo: str = "",
 ) -> list[str]:
     """Secção 2.1 — reprodução QA/Appium sempre via MCP."""
-    raw_seed = qa.get("db_seed")
-    profile = _qa_db_seed_profile(repo, qa) if repo else "child_home"
-    if isinstance(raw_seed, dict) and raw_seed.get("profile") and not repo:
-        profile = str(raw_seed["profile"])
     child_only = _qa_appium_child_only(repo, qa) if repo else False
-    appium_tool = "qa_appium_suite_child" if profile != "pairing_warm" else "qa_appium_suite_parent"
-    appium_args = f'from_db_seed=true, task_id="{tid}", dry_run=false'
-    if child_only and appium_tool == "qa_appium_suite_child":
-        appium_args += ", child_only=true"
-    cleanup_note = (
-        f"7. qa_db_cleanup(task_id=\"{tid}\", dry_run=false)  # qa.db_seed.cleanup=true"
-        if isinstance(raw_seed, dict) and raw_seed.get("cleanup")
-        else f"7. qa_db_cleanup(task_id=\"{tid}\", dry_run=false)  # se qa.db_seed.cleanup=true"
-    )
+    parent_only = (not child_only) and str(qa.get("appium_scope") or "") == "parent_only"
+    if parent_only:
+        suites_json = '{"parent":true,"child":false}'
+    elif child_only:
+        suites_json = '{"parent":false,"child":true}'
+    else:
+        suites_json = '{"parent":true,"child":true}'
 
     lines = [
         "### Reproduzir (QA / Appium)",
         "",
         "> **Regra:** reprodução E2E/Appium é **sempre via MCP** (`guardiao-familia-agents`). "
-        "Não usar `qa_mobile_evidence.py`, Appium CLI ou `adb` como caminho principal — "
-        "executar a sequência abaixo (detalhe na **sec. 6** e **Anexo D**). "
-        "Fallback CLI somente se `list_mcp_tools()` falhar.",
+        "Não usar `qa_mobile_evidence.py`, `fast-stack.ps1`, Appium CLI ou `adb` fora das tools MCP. "
+        "Executar a sequência abaixo (detalhe na **sec. 6** e **Anexo D**).",
         "",
         "```",
         "1. list_mcp_tools()",
         f"2. get_handoff(task_id=\"{tid}\")",
         f"3. emit_status_event(task_id=\"{tid}\", event=\"qa-gate_in_test\", dry_run=false)",
         f"4. query_mobile_flow_rag(query=<feature/tela>, task_id=\"{tid}\")",
-        f"5. qa_db_seed(task_id=\"{tid}\", profile=\"{profile}\", use_task_config=true, dry_run=false)",
-        f"6. {appium_tool}({appium_args})",
-        "   # validar cenários abaixo + evidências PNG/MP4",
-        cleanup_note,
-        f"8. emit_status_event(task_id=\"{tid}\", event=\"qa-gate_in_pull_request\"|\"qa-gate_return_in_progress\", dry_run=false)",
+        f"5. init = qa_init_suite_mobile(task_id=\"{tid}\", suites_mobile='{suites_json}', dry_run=false)",
+        "6. qa_generate_evidence(pipeline_result=<retorno qa_pipeline_evidence>, dry_run=false)",
+        "   # seed + Appium + evidências PNG/MP4 + cleanup embutidos",
+        f"7. emit_status_event(task_id=\"{tid}\", event=\"qa-gate_in_pull_request\"|\"qa-gate_return_in_progress\", dry_run=false)",
         "```",
         "",
         "#### Cenários a validar (pós-suite MCP)",
@@ -299,10 +291,10 @@ def format_phase_table(
     mobile = _is_mobile_qa(repo, qa)
     child_only = _qa_appium_child_only(repo, qa)
     qa_cell = (
-        "MCP `qa_db_seed(basic_parent)` → `qa_appium_suite_child(child_only=true)` → evidências → `qa_db_cleanup`"
+        "MCP `qa_init_suite_mobile` → `qa_generate_evidence` (child_only)"
         if child_only
         else (
-            "MCP `qa_db_seed` → `qa_appium_suite_*` → evidências → `qa_db_cleanup`"
+            "MCP `qa_init_suite_mobile` → `qa_generate_evidence`"
             if mobile
             else "Executar suite sec. 6 + evidências"
         )
@@ -336,31 +328,126 @@ def format_phase_table(
 
 
 def format_qa_mcp_steps(tid: str, profile: str = "child_home", *, child_only: bool = False) -> list[str]:
-    appium_tool = "qa_appium_suite_child" if profile != "pairing_warm" else "qa_appium_suite_parent"
-    appium_params = f"`from_db_seed=true`, `task_id={tid}`, `dry_run=false`"
-    if child_only and appium_tool == "qa_appium_suite_child":
-        appium_params += ", `child_only=true`"
+    del profile  # profile fica no ticket (qa.db_seed); seed embutido em generate_evidence
+    scope = f"`child_only={str(child_only).lower()}`"
     return [
         "",
-        "### DB seed + suite (MCP — obrigatório)",
+        "### Suite mobile (MCP — obrigatório)",
         "",
         "| Passo | Tool MCP | Parâmetros |",
         "|-------|----------|------------|",
         f"| 1 | `get_handoff` | `task_id={tid}` |",
         f"| 2 | `emit_status_event` | `event=qa-gate_in_test`, `dry_run=false` |",
         f"| 3 | `query_mobile_flow_rag` | `query=<tela/feature>`, `task_id={tid}` |",
-        f"| 4 | `qa_db_seed` | `task_id={tid}`, `profile={profile}`, `use_task_config=true`, `dry_run=false` |",
-        f"| 5 | `{appium_tool}` | {appium_params} |",
-        f"| 6 | (evidência) | screenshots / MP4 conforme AC |",
-        f"| 7 | `qa_db_cleanup` | `task_id={tid}`, `dry_run=false` |",
-        f"| 8 | `emit_status_event` | `qa-gate_in_pull_request` ou `qa-gate_return_in_progress`, `dry_run=false` |",
+        f"| 4 | `qa_init_suite_mobile` | `task_id={tid}`, {scope}, `dry_run=false` |",
+        f"| 5 | `qa_generate_evidence` | `actuation_context` + `apps_ready_ok`, `dry_run=false` |",
+        f"| 6 | (evidência) | Inferida de `qa.scenarios` + `qa.evidence.*` (embutida no generate) |",
+        f"| 7 | `emit_status_event` | `qa-gate_in_pull_request` ou `qa-gate_return_in_progress`, `dry_run=false` |",
         "",
     ]
 
 
+def format_evidence_pipeline_section(qa: dict[str, Any], tid: str) -> list[str]:
+    """Mapeamento planejado da pipeline de evidências — inferido de qa.scenarios + qa.evidence."""
+    ev = qa.get("evidence") if isinstance(qa.get("evidence"), dict) else {}
+    scenarios = [str(s).strip() for s in (qa.get("scenarios") or []) if str(s).strip()]
+    video_scope = str(ev.get("video_scope") or "").strip() or "_(definir: appium_flow_* | per_period)_"
+    screenshot_scope = str(ev.get("screenshot_scope") or "").strip() or "_(definir: child_home_* | …)_"
+    greeting_video = bool(ev.get("greeting_video"))
+    png = bool(ev.get("screenshot_png"))
+    mp4 = bool(ev.get("video_mp4"))
+    json_report = bool(ev.get("json_report", True))
+    scenarios_count = ev.get("scenarios_count")
+    if scenarios_count is None:
+        scenarios_count = len(scenarios)
+
+    # Inferência de pipeline a partir dos slugs (contrato estável)
+    has_greeting = any(str(s).lower().startswith("greeting-") for s in scenarios)
+    if has_greeting and not str(ev.get("screenshot_scope") or "").strip():
+        screenshot_scope = "child_home_greeting_per_period"
+    if has_greeting and not str(ev.get("video_scope") or "").strip() and mp4:
+        video_scope = "appium_flow_pairing_to_home"
+
+    if "appium_flow" in str(video_scope).lower() or "pairing_to_home" in str(video_scope).lower():
+        video_phase = "Appium `startRecordingScreen` (1 MP4 pairing→home)"
+    elif "per_period" in str(video_scope).lower() or greeting_video:
+        video_phase = "Pós-home: MP4 por cenário (screenrecord)"
+    elif mp4:
+        video_phase = "MP4 obrigatório — definir `video_scope`"
+    else:
+        video_phase = "Sem MP4"
+
+    if has_greeting or "greeting" in str(screenshot_scope).lower():
+        capture_phase = (
+            "`prepare` (clock/reverse) → `capture` (date→relaunch→wait UI→PNG por slug) → `finalize` (restore clock)"
+        )
+        precondition = "`suite Appium OK` nesta execução antes da captura"
+    elif png:
+        capture_phase = "Captura PNG pós-suite conforme `screenshot_scope` / slugs"
+        precondition = "Suite Appium OK (ou gate visual equivalente)"
+    else:
+        capture_phase = "Sem matriz de PNG (só JSON/log se aplicável)"
+        precondition = "—"
+
+    slug_hint = (
+        ", ".join(f"`{s}`" for s in scenarios[:8])
+        if scenarios
+        else "`greeting-morning-08h`, `greeting-afternoon-15h`, `greeting-evening-21h` (exemplo)"
+    )
+    evidence_dir = f"agents/00-runtime/output/{tid}/qa-gate-({{N}})/evidence/"
+    pipe = qa.get("evidence_pipeline") if isinstance(qa.get("evidence_pipeline"), dict) else {}
+    exec_order = [str(s).strip() for s in (pipe.get("execution_order") or []) if str(s).strip()]
+    guide_for = str(pipe.get("guide_for") or "qa_validate").strip() or "qa_validate"
+
+    lines = [
+        "",
+        "### Pipeline de evidências (planejada no ticket — MCP infere, sem parâmetros extras)",
+        "",
+        f"Guia de execução para **`{guide_for}`** (`qa_init_suite_mobile` → `qa_generate_evidence`): só `task_id` + este bloco `qa`.",
+        "",
+    ]
+    if exec_order:
+        lines.extend(
+            [
+                f"**Ordem canônica (`qa.evidence_pipeline` → `{guide_for}`):**",
+                "",
+                *[f"{i}. {step}" for i, step in enumerate(exec_order, start=1)],
+                "",
+            ]
+        )
+    lines.extend(
+        [
+            "| Campo ticket | Valor | Efeito na pipeline |",
+            "|--------------|-------|--------------------|",
+            f"| `qa.scenarios` | {slug_hint} | Plugin + steps (`greeting-*-NNh` → matriz de hora) |",
+            f"| `qa.evidence.scenarios_count` | `{scenarios_count}` | Quantidade mínima de artefatos de cenário |",
+            f"| `qa.evidence.screenshot_png` | `{str(png).lower()}` | Exige PNG no envelope |",
+            f"| `qa.evidence.video_mp4` | `{str(mp4).lower()}` | Exige MP4 no envelope |",
+            f"| `qa.evidence.json_report` | `{str(json_report).lower()}` | Manifest / report JSON |",
+            f"| `qa.evidence.video_scope` | `{video_scope}` | {video_phase} |",
+            f"| `qa.evidence.screenshot_scope` | `{screenshot_scope}` | Escopo dos prints |",
+            f"| `qa.evidence.greeting_video` | `{str(greeting_video).lower()}` | MP4 por saudação (default false se fluxo Appium) |",
+            f"| Pré-condição capture | {precondition} | Bloqueia pós-suite se false |",
+            f"| Fases capture | {capture_phase} | Ordem canônica |",
+            f"| Artefatos | `{evidence_dir}` | Pacote qa-gate |",
+            "",
+            "**Contrato de slugs (sem parâmetros na tool):**",
+            "",
+            "| Prefixo slug | Pipeline inferida |",
+            "|--------------|-------------------|",
+            "| `greeting-*-NNh` | pós-`childHome`: clock → relaunch → wait saudação (Bom dia / Boa tarde / Boa noite) → PNG |",
+            "| _(outros)_ | Estender plugin em `lib/mobile/scenario_evidence` / evidence pipeline |",
+            "",
+        ]
+    )
+    return lines
+
+
 def format_qa_section(qa: dict[str, Any], tid: str, repo: str) -> list[str]:
     ev = qa.get("evidence") or {}
-    ev_list = [k.replace("_", " ") for k, v in ev.items() if v] or ["json report"]
+    ev_list = [k.replace("_", " ") for k, v in ev.items() if v and k not in (
+        "video_scope", "screenshot_scope", "greeting_video", "scenarios_count",
+    )] or ["json report"]
     mobile = _is_mobile_qa(repo, qa)
     raw_seed = qa.get("db_seed")
     profile = _qa_db_seed_profile(repo, qa)
@@ -378,18 +465,18 @@ def format_qa_section(qa: dict[str, Any], tid: str, repo: str) -> list[str]:
     if child_only:
         lines.append(
             "| Execução Appium | **Somente app child** (`emulator-5556`, `child_only=true`) — "
-            f"massa parent/família via `qa_db_seed(profile={profile})`; não abrir emulador parent |"
+            f"massa parent/família via seed embutido (`profile={profile}`); não abrir emulador parent |"
         )
     if mobile:
         lines.append("| MCP server | `guardiao-familia-agents` (`list_mcp_tools`) |")
     lines.append("| Referência QA | **Anexo D** (qa-gate + evidências) |")
     if mobile:
         lines.extend(format_qa_mcp_steps(tid, profile, child_only=child_only))
+    lines.extend(format_evidence_pipeline_section(qa, tid))
     lines.extend(format_db_seed_section(qa, tid))
     how = (qa.get("how_to_run") or "").strip()
-    if how:
-        label = "**Fallback CLI (somente se MCP indisponível):**" if mobile else "**Comando principal:**"
-        lines.append(label)
+    if how and not mobile:
+        lines.append("**Comando principal:**")
         lines.append("")
         lines.append("```powershell")
         lines.append(how)
@@ -403,34 +490,30 @@ def format_qa_section(qa: dict[str, Any], tid: str, repo: str) -> list[str]:
 def _format_annex_d_mobile(tid: str, repo: str, qa: dict[str, Any]) -> str:
     child_only = _qa_appium_child_only(repo, qa)
     profile = _qa_db_seed_profile(repo, qa)
-    appium_call = (
-        "`qa_appium_suite_child(from_db_seed=true, child_only=true)`"
-        if child_only
-        else "`qa_appium_suite_child(from_db_seed=true)`"
-    )
     if child_only:
         stack = (
             f"**Stack Appium:** somente child (`emulator-5556`, Metro `:9090`) + Docker API/Postgres — "
-            f"parent/família via `qa_db_seed(profile={profile})`; **não** subir emulador parent (5554)"
+            f"massa parent/família via seed embutido (`profile={profile}`); **não** subir emulador parent (5554)"
         )
-        markers = "`fast-stack-last.json` → `ok: true` · log com `SMOKE_CHILD_OK` · ChildHomeV2 visível"
+        markers = "`qa_generate_evidence` ok · log com `SMOKE_CHILD_OK` · ChildHomeV2 visível"
     else:
         stack = (
-            "**Stack:** Docker API/Postgres · emuladores 5554+5556 · `fast-stack.ps1` no mobile-setup · Appium dual"
+            "**Stack:** Docker API/Postgres · emuladores conforme escopo · "
+            "MCP `qa_init_suite_mobile` + `qa_generate_evidence`"
         )
-        markers = "`fast-stack-last.json` → `ok: true` · log com `PAIRING_COMPLETE` / `SMOKE_CHILD_OK`"
+        markers = "`qa_generate_evidence` ok · log com `PAIRING_COMPLETE` / `SMOKE_CHILD_OK`"
     evidence = f"agents/00-runtime/output/{tid}/qa-gate-({{N}})/evidence/"
     return f"""## Anexo D — Papel `qa-gate` + evidências mobile (resumo)
 
-**MCP (obrigatório):** `get_handoff` → `qa-gate_in_test` → `qa_db_seed(profile={profile})` → {appium_call} → screenshots/MP4 → `qa_db_cleanup` → `qa-gate_in_pull_request` | `qa-gate_return_in_progress`
+**MCP (obrigatório):** `get_handoff` → `qa-gate_in_test` → `qa_init_suite_mobile` → `qa_generate_evidence` → **pipeline de evidências (sec. 6)** → `qa-gate_in_pull_request` | `qa-gate_return_in_progress`
 
 {stack}
 
-**Evidências:** PNG + MP4 + JSON em `{evidence}`
+**Evidências:** PNG + MP4 + JSON em `{evidence}` — escopos em `qa.evidence.video_scope` / `screenshot_scope` / `qa.scenarios` (MCP: `actuation_context` + `apps_ready_ok`)
 
 **Marcadores de sucesso:** {markers}
 
-**Anti-patterns:** `qa-gate_in_pull_request` sem evidência visual · Appium sem `APPS_READY_OK` · commitar `stage-handoff.json`"""
+**Anti-patterns:** `qa-gate_in_pull_request` sem evidência visual · Appium sem `apps_ready` · commitar `stage-handoff.json` · passar pipeline como param da tool"""
 
 
 def format_appendices(
@@ -899,13 +982,30 @@ _DEFAULT_QA = """## [qa-gate] QA
 
 ### Comandos executados (MCP guardiao-familia-agents — obrigatório)
 ```
-get_handoff → qa-gate_in_test → query_mobile_flow_rag → qa_db_seed → qa_appium_suite_* → qa_db_cleanup → qa-gate_in_pull_request|qa-gate_return_in_progress
+get_handoff → qa-gate_in_test → query_mobile_flow_rag → qa_init_suite_mobile → qa_generate_evidence → qa-gate_in_pull_request|qa-gate_return_in_progress
 ```
 
+### Pipeline de evidências (planejada no ticket — MCP infere via `task_id`)
+Preencher no backlog/`agent-task` → a tool **não** pede pipeline como parâmetro.
+
+| Campo | Exemplo | Efeito |
+|-------|---------|--------|
+| `qa.scenarios` | `greeting-morning-08h`, `greeting-afternoon-15h`, `greeting-evening-21h` | Plugin + steps |
+| `qa.evidence.screenshot_png` | `true` | Exige PNG |
+| `qa.evidence.video_mp4` | `true` | Exige MP4 |
+| `qa.evidence.json_report` | `true` | Manifest JSON |
+| `qa.evidence.video_scope` | `appium_flow_pairing_to_home` | 1 MP4 no Appium (fluxo) |
+| `qa.evidence.screenshot_scope` | `child_home_greeting_per_period` | PNG pós-home por período |
+| `qa.evidence.greeting_video` | `false` | Sem MP4 por saudação |
+| Pré-condição | `childHome=true` | Capture só após suite OK |
+| Fases | `prepare` → `capture` → `finalize` | Pipeline contínua |
+
+**Slugs:** `greeting-*-NNh` → clock → relaunch → wait saudação → PNG. Outros prefixos = novos plugins.
+
 ### Evidências (anexar mídias)
-- Screenshot PNG: 
-- Vídeo MP4: 
-- JSON report: `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/`
+- Screenshot PNG:
+- Vídeo MP4:
+- JSON report: `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/` (+ `scenario-manifest.json`)
 
 ### Decisão
 - [ ] **`qa-gate_in_pull_request`** — todos AC PASS

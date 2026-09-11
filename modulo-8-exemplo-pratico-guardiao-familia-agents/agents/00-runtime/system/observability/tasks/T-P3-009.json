@@ -1,6 +1,6 @@
 {
   "task_id": "T-P3-009",
-  "updated_at": "2026-09-01T02:47:01.479594+00:00",
+  "updated_at": "2026-09-03T14:06:01.690198+00:00",
   "steps": [
     {
       "id": "step-1",
@@ -155,8 +155,50 @@
       "observation": "**Foco da execucao:** In Code Review -> Ready for Test\n**Resultado operacional:** ok\n**Modelo:** `n/a` · **purpose:** — · **tokens:** in=0 out=0 **total=0**",
       "executed": [],
       "ok": true
+    },
+    {
+      "id": "step-12",
+      "uid": "ae8a496a-6c46-4b7f-a7ba-6e081cc5960d",
+      "at": "2026-09-03T13:50:56.929258+00:00",
+      "agent": "frontend-mobile",
+      "event": "frontend-mobile_ready_for_code_review",
+      "from_status": "In Progress",
+      "to_status": "Ready for Code Review",
+      "thought": "Time-zone / DST edge cases on device (mitigate with Date.getHours only); Existing header layout may need minor flex/typography tweak for longer Portuguese strings; No i18n scope – strings kept hardcoded per ticket",
+      "action": "MCP emit_status_event(frontend-mobile_ready_for_code_review) dry_run",
+      "observation": "**Foco da execucao:** In Progress -> Ready for Code Review\n**Resultado operacional:** ok\n**Modelo:** `n/a` · **purpose:** — · **tokens:** in=0 out=0 **total=0**",
+      "executed": [],
+      "ok": true
+    },
+    {
+      "id": "step-13",
+      "uid": "1acfd9c1-00ae-49ab-87d1-158d614e5e2e",
+      "at": "2026-09-03T13:57:48.584623+00:00",
+      "agent": "frontend-mobile-reviewer",
+      "event": "frontend-mobile-reviewer_ready_for_test",
+      "from_status": "In Code Review",
+      "to_status": "Ready for Test",
+      "thought": "A função dynamicGreeting foi centralizada corretamente em childHome.state.ts.; Os testes unitários cobrem todos os períodos do dia, incluindo os limites de transição.; O código segue as diretrizes de acessibilidade, com a propagação do accessibilityLabel.",
+      "action": "MCP emit_status_event(frontend-mobile-reviewer_ready_for_test) dry_run",
+      "observation": "**Foco da execucao:** In Code Review -> Ready for Test\n**Resultado operacional:** ok\n**Modelo:** `n/a` · **purpose:** — · **tokens:** in=0 out=0 **total=0**",
+      "executed": [],
+      "ok": true
+    },
+    {
+      "id": "step-14",
+      "uid": "cad3fa87-7d01-4ab7-9bcc-5d0246ab0b72",
+      "at": "2026-09-03T14:06:01.690198+00:00",
+      "agent": "qa-gate",
+      "event": "qa-gate_in_pull_request",
+      "from_status": "In Test",
+      "to_status": "In Pull Request",
+      "thought": "qa_validate",
+      "action": "MCP emit_status_event(qa-gate_in_pull_request) dry_run",
+      "observation": "**Foco da execucao:** In Test -> In Pull Request\n**Resultado operacional:** ok\n**Modelo:** `n/a` · **purpose:** — · **tokens:** in=0 out=0 **total=0**",
+      "executed": [],
+      "ok": true
     }
   ],
-  "final_status": "Ready for Test",
+  "final_status": "In Pull Request",
   "detail_url": "tasks/T-P3-009.html"
 }

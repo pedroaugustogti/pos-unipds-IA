@@ -166,7 +166,13 @@ def emit_status_event(
     if is_qa_return_to_in_progress(event):
         bug_count += 1
 
-    hitl = evaluate_hitl(task, event, bug_count=bug_count)
+    hitl = evaluate_hitl(
+        task,
+        event,
+        bug_count=bug_count,
+        summary=summary,
+        metrics=metrics,
+    )
     if force_hitl_approved:
         hitl = {**hitl, "required": False, "mode": "auto", "reason": "hitl_approved override"}
 

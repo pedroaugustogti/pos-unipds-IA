@@ -1,7 +1,7 @@
 """Instruções globais do servidor MCP."""
 
 SERVER_INSTRUCTIONS = """\
-Servidor MCP do Guardião Família (módulo 8) — **14 tools** usadas pelo LangGraph v2 e pelo Cursor.
+Servidor MCP do Guardião Família (módulo 8) — **12 tools** usadas pelo LangGraph v2 e pelo Cursor.
 
 ## LangGraph v2 (automação)
 Grafo: `sync_board` → `orchestrator_decide` → 55 nós `evt_*` (`langgraph_app/registry/`).
@@ -30,7 +30,7 @@ Fora do grafo, use **somente** tools deste servidor (`list_mcp_tools`).
 - Pular `on_status_event` — perde ticket, skill, handoff e playbook.
 - Pular `hitl_guard_actuation` — `execute` rejeita sem `guard_pass_id`.
 - Eventos legados (`claim`, `open_pr`, `test_passed`) — use `{agent_role}_{status_slug}`.
-- Appium fora de `qa_validate` sem seguir a ordem da seção QA mobile.
+- Appium fora de `qa_validate` / `qa_init_suite_mobile` → `qa_generate_evidence`.
 
 ## Fluxo manual por papel
 | Papel | Sequência |
@@ -42,15 +42,14 @@ Fora do grafo, use **somente** tools deste servidor (`list_mcp_tools`).
 | orchestrator | `orchestrator_enter_in_progress` (Todo) ou deixar o grafo v2 decidir |
 
 ## QA mobile (ordem obrigatória)
-1. **task_id = ticket em execução** — não reutilize entre execuções paralelas sem `qa_db_cleanup`.
-2. **Seed (`qa_db_seed`)** — somente quando a massa deve vir da API (scripts em `guardiao-familia-mobile-setup/seed_db` — https://github.com/guardiaofamilia/guardiao-familia-mobile-setup/tree/main/seed_db):
-   - Conta/família/filho já no Postgres → `qa_db_seed` + suite com `from_db_seed=true`.
-   - AC exige cadastro/família **na UI parent** → **não** chame seed; use `qa_appium_suite_parent` com `feature=create_account` ou `config_family`.
-   - Validação **somente no child** → seed parent + `qa_appium_suite_child(from_db_seed=true, child_only=true)`.
-3. Suite conforme app alvo e flags (`child_only`, `parent_only`, `feature`, `from_db_seed`).
+1. **task_id = ticket em execução** — um ticket por suite; seed/cleanup ficam dentro de `qa_generate_evidence`.
+2. Preferir `qa_validate` (orquestra tudo). Manual:
+   - `qa_init_suite_mobile(task_id, suites_mobile={"parent":bool,"child":bool}, dry_run=false)`
+   - `qa_pipeline_evidence(actuation_context, apps_ready_ok, scenario_id, dry_run=false)`
+   - `qa_generate_evidence(pipeline_result=<retorno do pipeline>, dry_run=false)`
+3. Escopo: `child_only` / `parent_only` / dual conforme ticket (`qa.appium_scope`).
 4. Evidências → `agents/00-runtime/output/{task_id}/qa-gate-({cycle})/evidence/`.
-5. `qa_db_cleanup(task_id, dry_run=false)` após evidências.
-6. Próximo status via `emit_status_event` role-based (ex: `qa-gate_in_pull_request` ou `qa-gate_return_in_progress`).
+5. Próximo status via `emit_status_event` role-based (ex: `qa-gate_in_pull_request` ou `qa-gate_return_in_progress`).
 
 Catálogo: `list_mcp_tools` · `agents/00-orchestration/docs/mcp/MCP_TOOLS.md` · grafo: `agents/00-orchestration/docs/graph/STATEGRAPH_FLOW.md`.
 """

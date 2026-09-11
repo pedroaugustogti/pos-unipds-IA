@@ -63,7 +63,7 @@ def uses_mcp_appium_suite(task: dict[str, Any]) -> bool:
 
 
 def wants_mobile_setup_evidence(task: dict[str, Any]) -> bool:
-    """Task exige fast-stack / evidências Appium (MCP ou fallback CLI)."""
+    """Task exige evidências Appium via MCP (`qa_appium_suite_*`)."""
     qa = _qa(task)
     evidence = _evidence(task)
     how = str(qa.get("how_to_run") or "").lower()
@@ -108,33 +108,120 @@ def is_mobile_e2e_task(task: dict[str, Any]) -> bool:
     return any(k in title for k in keys)
 
 
-def mobile_setup_evidence_params(task: dict[str, Any]) -> dict[str, Any]:
-    """Parâmetros para fallback CLI `qa_mobile_evidence.py` (quando MCP indisponível)."""
+def resolve_appium_feature_from_ticket(task: dict[str, Any]) -> str:
+    """Feature Appium a partir do ticket — sem resume/estado de handoff."""
     qa = _qa(task)
-    evidence = _evidence(task)
+    explicit = str(qa.get("appium_feature") or "").strip()
+    if explicit:
+        return explicit
+    pipe = qa.get("evidence_pipeline") if isinstance(qa.get("evidence_pipeline"), dict) else {}
+    for step in pipe.get("execution_order") or []:
+        s = str(step).lower()
+        if "qa_appium_suite" in s or "pairing" in s:
+            return "pairing"
+        if "go_to_home_child" in s:
+            return "go_to_home_child"
     how = str(qa.get("how_to_run") or "")
     m_feat = re.search(r"--feature\s+([^\s]+)", how)
-    feature = (m_feat.group(1) if m_feat else "pairing").strip("'\"")
+    if m_feat:
+        return m_feat.group(1).strip("'\"")
+    if is_appium_child_only(task) or test_suite(task) == "qa-mobile-child-appium":
+        return "pairing"
+    if is_appium_parent_only(task):
+        return "login"
+    db_seed = qa.get("db_seed") if isinstance(qa.get("db_seed"), dict) else {}
+    if db_seed.get("enabled") or db_seed.get("profile"):
+        return "pairing"
+    return "pairing"
+
+
+def resolve_evidence_pipeline(task: dict[str, Any]) -> dict[str, Any]:
+    """Plano de evidências para `qa_validate` — ticket `qa.evidence_pipeline` + scopes."""
+    qa = _qa(task)
+    evidence = _evidence(task)
+    scenarios = [str(s).strip() for s in (qa.get("scenarios") or []) if str(s).strip()]
+    pipe = qa.get("evidence_pipeline") if isinstance(qa.get("evidence_pipeline"), dict) else {}
+    video_scope = str(evidence.get("video_scope") or "").strip()
+    screenshot_scope = str(evidence.get("screenshot_scope") or "").strip()
+    has_greeting = any(s.lower().startswith("greeting-") for s in scenarios)
+    if has_greeting and not screenshot_scope:
+        screenshot_scope = "child_home_greeting_per_period"
+    if has_greeting and not video_scope and bool(evidence.get("video_mp4")):
+        video_scope = "appium_flow_pairing_to_home"
+    artifacts = pipe.get("artifacts") if isinstance(pipe.get("artifacts"), dict) else {}
+    return {
+        "guide_for": str(pipe.get("guide_for") or "qa_validate"),
+        "execution_order": list(pipe.get("execution_order") or []),
+        "precondition": str(
+            pipe.get("precondition")
+            or ("suite Appium OK (child na home) antes da captura" if has_greeting else "")
+        ),
+        "capture_phases": list(pipe.get("capture_phases") or ["prepare", "capture", "finalize"]),
+        "scenarios": scenarios,
+        "appium_feature": resolve_appium_feature_from_ticket(task),
+        "video_scope": video_scope,
+        "screenshot_scope": screenshot_scope,
+        "greeting_video": bool(evidence.get("greeting_video")),
+        "screenshot_png": bool(evidence.get("screenshot_png")),
+        "video_mp4": bool(evidence.get("video_mp4")),
+        "json_report": bool(evidence.get("json_report", True)),
+        "scenarios_count": int(evidence.get("scenarios_count") or len(scenarios) or 0),
+        "artifacts": artifacts,
+        "note": str(pipe.get("note") or ""),
+    }
+
+
+def mobile_setup_evidence_params(task: dict[str, Any]) -> dict[str, Any]:
+    """Parâmetros da suite Appium MCP (`qa_init_suite_mobile` / `qa_generate_evidence`)."""
+    qa = _qa(task)
+    evidence = _evidence(task)
+    feature = resolve_appium_feature_from_ticket(task)
     mode = "cycle"
+    how = str(qa.get("how_to_run") or "")
     m_mode = re.search(r"--mode\s+([^\s]+)", how)
     if m_mode:
         mode = m_mode.group(1).strip("'\"")
-    if test_suite(task) == "qa-mobile-child-appium":
-        feature = feature if m_feat else "go_to_home_child"
-    db_seed = qa.get("db_seed") if isinstance(qa.get("db_seed"), dict) else {}
-    resume = str(db_seed.get("resume_after_step") or "").strip()
-    if resume and not m_feat:
-        feature = resume
+    suites = resolve_suites_mobile(task)
     return {
         "feature": feature,
         "mode": mode,
-        "record_video": bool(evidence.get("video_mp4")),
+        "record_video": bool(evidence.get("video_mp4"))
+        or "appium_flow" in str(evidence.get("video_scope") or "").lower(),
         "skip_build": True,
         "package": True,
-        "timeout_sec": int(__import__("os").environ.get("GUARDAO_MOBILE_EVIDENCE_TIMEOUT") or "1200"),
-        "child_only": is_appium_child_only(task),
-        "parent_only": is_appium_parent_only(task),
+        "timeout_sec": int(__import__("os").environ.get("GUARDAO_MOBILE_EVIDENCE_TIMEOUT") or "900"),
+        "child_only": bool(suites.get("child")) and not bool(suites.get("parent")),
+        "parent_only": bool(suites.get("parent")) and not bool(suites.get("child")),
+        "suites_mobile": suites,
     }
+
+
+def resolve_suites_mobile(task: dict[str, Any]) -> dict[str, bool]:
+    """Identifica suites a iniciar: parent, child ou ambos."""
+    qa = _qa(task)
+    scope = appium_scope(task)
+    suite = test_suite(task)
+    if scope == "parent_only" or is_appium_parent_only(task):
+        return {"parent": True, "child": False}
+    if scope == "child_only" or is_appium_child_only(task) or suite == "qa-mobile-child-appium":
+        return {"parent": False, "child": True}
+    if scope in ("dual", "both", "parent_child") or suite == "qa-mobile-pairing-appium-dual":
+        return {"parent": True, "child": True}
+    if is_mobile_pairing_task(task):
+        return {"parent": True, "child": True}
+    repo = repo_name(task)
+    if "guardiao-familia-parent" in repo and "child" not in repo:
+        return {"parent": True, "child": False}
+    if "guardiao-familia-child" in repo:
+        return {"parent": False, "child": True}
+    # default conservador: child
+    explicit = qa.get("suites_mobile") if isinstance(qa.get("suites_mobile"), dict) else None
+    if explicit is not None:
+        return {
+            "parent": bool(explicit.get("parent")),
+            "child": bool(explicit.get("child")),
+        }
+    return {"parent": False, "child": True}
 
 
 def run_mobile_pairing_validation(task_id: str, *, full_ui: bool = False) -> dict[str, Any]:

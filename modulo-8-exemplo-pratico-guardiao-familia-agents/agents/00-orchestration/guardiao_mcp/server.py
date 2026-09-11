@@ -27,10 +27,9 @@ from guardiao_mcp.tools import (  # noqa: E402
     list_status_events,
     on_status_event,
     orchestrator_enter_in_progress,
-    qa_appium_suite_child,
-    qa_appium_suite_parent,
-    qa_db_cleanup,
-    qa_db_seed,
+    qa_generate_evidence,
+    qa_init_suite_mobile,
+    qa_pipeline_evidence,
     qa_validate,
     register_all,
 )
@@ -54,10 +53,9 @@ __all__ = [
     "developer_implement",
     "developer_review",
     "qa_validate",
-    "qa_db_seed",
-    "qa_db_cleanup",
-    "qa_appium_suite_parent",
-    "qa_appium_suite_child",
+    "qa_init_suite_mobile",
+    "qa_pipeline_evidence",
+    "qa_generate_evidence",
     "list_mcp_tools",
 ]
 
