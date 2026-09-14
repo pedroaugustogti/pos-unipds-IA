@@ -74,5 +74,6 @@ python agents/00-orchestration/scripts/cli/gateway_cli.py emit --task T-P3-009 -
 - **Status:** só via `emit_status_event`
 - **Handoff:** `agents/00-runtime/output/{task_id}/handoff.json`
 - **Skill canônica:** `01-role-based/{role}/SKILL.md`
+- **QA mobile (qa-gate):** `qa_validate` → por cenário `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence` — ver [`01-role-based/qa-gate/README.md`](01-role-based/qa-gate/README.md)
 
 Bootstrap: `bootstrap.py` ajusta `PYTHONPATH` para imports.

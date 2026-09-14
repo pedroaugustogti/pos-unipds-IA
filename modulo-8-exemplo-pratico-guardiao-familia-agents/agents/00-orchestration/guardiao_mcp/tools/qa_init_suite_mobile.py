@@ -17,6 +17,8 @@ DESCRIPTION = """\
 
 **Fluxo:** Wave A (api∥adb∥emulator) → Wave B (metro∥apk) → Appium; recovery máx. 3/check.
 
+**Metro:** além de `/status`, compara fingerprint git do repo (screens/App.tsx/…) com o último bundle servido; se o código mudou, reinicia Metro e regrava o fingerprint.
+
 **Retorno contrato:**
 ```
 task_id, apps_ready_ok,

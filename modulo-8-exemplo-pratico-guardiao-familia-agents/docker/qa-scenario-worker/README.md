@@ -33,7 +33,9 @@ docker run --rm --privileged --device /dev/kvm \
 
 ## Orquestração
 
-`qa_validate` → `run_scenario_orchestrator`:
+`qa_validate(worker_mode=docker)` → `run_scenario_orchestrator` — **mesma cadeia por cenário** que no host:
+
+`qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence`
 
 | Env | Default | Efeito |
 |-----|---------|--------|
@@ -41,6 +43,10 @@ docker run --rm --privileged --device /dev/kvm \
 | `GF_QA_SCENARIO_IMAGE` | `guardiao-qa-scenario-worker:latest` | imagem |
 | `GF_QA_SCENARIO_MAX_PARALLEL` | N cenários | paralelismo |
 
-Status por cenário: `status/{scenario_id}.json` (`phase=done`, `ok`, `blocking_reason`).
+Status por cenário: `status/{scenario_id}.json` (`phase=done`, `ok`, `blocking_reason`, `mcp_steps`).
+
+Evidência: volume `.../evidence/{scenario_id}/` (PNG/MP4, `generated-appium-script.mjs`).
 
 Gate: **PASS somente se todos** os cenários `ok=true`.
+
+Fluxo completo no host: [`lib/mobile/README.md`](../../lib/mobile/README.md) · gate: [`agents/01-role-based/qa-gate/README.md`](../../agents/01-role-based/qa-gate/README.md)

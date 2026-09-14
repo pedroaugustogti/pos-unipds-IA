@@ -13,7 +13,7 @@ Evolução do módulo 7 com HITL, multi-agent e gates enterprise.
 | [`agents/00-orchestration/docs/`](agents/00-orchestration/docs/README.md) | Docs compartilhados (MCP, board, grafo, routing, policy) |
 | [`agents/00-runtime/`](agents/00-runtime/) | Artefatos por ticket (`output/`) e estado global (`system/`) |
 | [`board_automation/`](board_automation/) | Board GitHub, reconcile, templates de issue |
-| [`lib/`](lib/) | Gateway, orchestrator, `mcp_invoke`, mobile |
+| [`lib/`](lib/) | Gateway, orchestrator, `mcp_invoke`, [`lib/mobile/`](lib/mobile/) (`qa_validate` chain) |
 | [`docs/`](docs/) | Autonomia, operação, templates PR/review |
 | [`.env.example`](.env.example) | Variáveis de ambiente |
 

@@ -142,6 +142,7 @@ def run_single_scenario_chain(
             "checks_child": init.get("checks_child"),
             "timeline": init.get("timeline"),
             "appium_mode": init.get("appium_mode"),
+            "metro_bundle_refreshed": bool(init.get("metro_bundle_refreshed")),
             "duration_ms": init_ms,
             "emulator_ready_ts": emu_ready_ts,
         }
@@ -171,6 +172,7 @@ def run_single_scenario_chain(
         actuation_context=ctx,
         apps_ready_ok=apps_ready_ok,
         scenario_id=scenario_id,
+        metro_bundle_refreshed=bool(init.get("metro_bundle_refreshed")),
         dry_run=False,
     )
     pipe_ms = int((time.perf_counter() - t_pipe) * 1000)

@@ -35,6 +35,7 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 - Decisão: **Status:** só via `emit_status_event`
 - Decisão: **Handoff:** `agents/00-runtime/output/{task_id}/handoff.json`
 - Decisão: **Skill canônica:** `01-role-based/{role}/SKILL.md`
+- Decisão: **QA mobile (qa-gate):** `qa_validate` → por cenário `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence` — ver [`01-role-based/qa-gate/README.md`](01-role-based/qa-gate/README.md)
 - README: [`agents/README.md`](../README.md)
 
 ### `agents/00-orchestration/`
@@ -56,7 +57,7 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 - README: [`agents/00-orchestration/evals/datasets/README.md`](../00-orchestration/evals/datasets/README.md)
 
 ### `agents/00-orchestration/guardiao_mcp/`
-- **Papel:** Fachada MCP sobre `lib/*` — **14 tools**. Status **só** via `emit_status_event` (eventos role-based).
+- **Papel:** Fachada MCP sobre `lib/*` — **13 tools**. Status **só** via `emit_status_event` (eventos role-based).
 - README: [`agents/00-orchestration/guardiao_mcp/README.md`](../00-orchestration/guardiao_mcp/README.md)
 
 ### `agents/00-orchestration/langgraph_app/`
@@ -193,6 +194,7 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 - Decisão: **Handoff:** PR, branch, screenshots ou dúvidas em `agents/00-runtime/output/{task_id}/handoff.json`
 - Decisão: **ReAct:** `on_status_event` → `developer_implement` → `execute_agent_actuation_tool` (eventos `frontend-mobile_*`; ver `agent.md`)
 - Decisão: Nunca mergear; não alterar Terraform ou harness de QA
+- Decisão: Após implementação, o **qa-gate** valida com `qa_validate` (Metro fingerprint + reload se código local mudou) — evidência em `output/{task_id}/qa-gate-({N})/evidence/`
 - README: [`agents/01-role-based/frontend-mobile/README.md`](../frontend-mobile/README.md)
 
 ### `agents/01-role-based/frontend-mobile-reviewer/`
@@ -235,6 +237,8 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 - Decisão: **Handoff:** arquivos alterados, contratos de seed em `agents/00-runtime/output/{task_id}/handoff.json`
 - Decisão: **ReAct:** `on_status_event` → `developer_implement` → `execute_agent_actuation_tool` (eventos `qa-author_*`; ver `agent.md`)
 - Decisão: Harness deve ser reutilizável pelo `qa-gate` sem duplicar lógica
+- Decisão: **Execução E2E no gate:** o `qa-gate` chama só `qa_validate` — cadeia `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence` (ver [`qa-gate/README.md`](../qa-gate/README.md))
+- Decisão: Specs/plugins de cenário (`qa.scenarios`, pipeline no ticket) devem alinhar com `lib/mobile/qa_pipeline_evidence.py`
 - README: [`agents/01-role-based/qa-author/README.md`](../qa-author/README.md)
 
 ### `agents/01-role-based/qa-author-reviewer/`
@@ -249,12 +253,11 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 
 ### `agents/01-role-based/qa-gate/`
 - **Título:** qa-gate
-- **Papel:** Gate de qualidade da pipeline — executa testes e evidências após review.
-- Decisão: **MCP:** `on_status_event` → `qa_validate` → `execute` — suites em `KNOWLEDGE.md`
 - Decisão: Não iniciar harness em Todo — responsabilidade do `qa-author` (`orchestrator_enter_in_progress`)
-- Decisão: Mobile child: **seed parent** (`basic_parent`/`parent_home`) → `qa_appium_suite_child(child_only=true)` → evidência → cleanup
-- Decisão: Mobile parent UI: sem seed → `qa_appium_suite_parent(feature=...)`
-- Decisão: Status: eventos role-based `qa-gate_in_test`, `qa-gate_in_pull_request`, `qa-gate_return_in_progress`
+- Decisão: Massa (`qa.db_seed`) e cleanup vêm do ticket; inferidos em `qa_generate_evidence`
+- Decisão: Evidências: `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/{scenario}/`
+- Decisão: Status: `qa-gate_in_test`, `qa-gate_in_pull_request`, `qa-gate_return_in_progress`
+- Decisão: Não rodar `fast-stack.ps1` nem `qa_appium_suite_*` fora do envelope `qa_validate`
 - README: [`agents/01-role-based/qa-gate/README.md`](../qa-gate/README.md)
 
 ### `agents/01-role-based/stores-release/`
@@ -400,6 +403,7 @@ Servidor: `guardiao_mcp` · [`../../00-orchestration/docs/mcp/MCP_TOOLS.md`](../
 - README: [`lib/gateway/README.md`](../../lib/gateway/README.md)
 
 ### `lib/mobile/`
+- **Papel:** Orquestração canônica do gate mobile: tool MCP **`qa_validate`** (`lib/orchestrator/phase_qa_validate.py`) → **`qa_scenario_chain`** → por item em `ticket.qa.scenarios`:
 - README: [`lib/mobile/README.md`](../../lib/mobile/README.md)
 
 ### `lib/orchestrator/`

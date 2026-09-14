@@ -64,7 +64,8 @@ flowchart LR
 
 > Reprodução E2E via MCP `guardiao-familia-agents`. Não usar scripts Appium/CLI como caminho principal.
 
-1. `list_mcp_tools()` → `get_handoff` → `qa-gate_in_test` → `query_mobile_flow_rag` → `qa_db_seed` → `qa_appium_suite_*` → evidências → `qa_db_cleanup` → `qa-gate_in_pull_request`|`qa-gate_return_in_progress`
+1. `on_status_event(qa-gate, In Test)` → `hitl_guard_actuation` → `qa_validate(mode=live)` → `execute_agent_actuation_tool` → `qa-gate_in_pull_request`|`qa-gate_return_in_progress`
+   - Por cenário (interno ao `qa_validate`): `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence`
 2. Cenários a validar (pós-suite): _(listar qa_repro_steps — ex. screenshot header, horários)_
 3. Fallback CLI somente se MCP indisponível
 
@@ -76,7 +77,7 @@ flowchart LR
 |--------|----------------|
 | **frontend-mobile** | Seguir passos para localizar arquivo; não editar tela errada |
 | **frontend-mobile-reviewer** | Confirmar diff só afeta `target_screen` / navigation citada |
-| **qa-gate** | Executar sec. 2.1 via **MCP** (`qa_appium_suite_*`); evidência deve mostrar último step |
+| **qa-gate** | Executar sec. 2.1 via **MCP** (`qa_validate`); evidência deve mostrar último step |
 
 Se o fluxo real no repo **divergir** do ticket → comentar issue e pedir correção do mapa **antes** de codar.
 
@@ -122,10 +123,10 @@ Camada semântica para **agentes LLM** consultarem fluxos, labels e telas.
 |-------|---------|
 | 1. Discovery (SQLite) | `python agents/01-role-based/qa-gate/scripts/qa_discover_mobile_flows.py --app both` |
 | 2. Ingest + embed | `python agents/01-role-based/qa-gate/scripts/ingest_mobile_flows_rag.py --ensure-postgres` |
-| 3. Consulta MCP | tool `query_mobile_flow_rag(query="splash tagline parent")` |
+| 3. Consulta RAG | `python -m lib.mobile.mobile_flow_rag` ou script `ingest_mobile_flows_rag.py` (não é tool MCP) |
 
 **Postgres:** mesmo Docker da API (`127.0.0.1:5432/guardiao_familia`) · extensão `vector` · embeddings via OpenRouter (`GUARDAO_EMBED_MODEL`, default `text-embedding-3-small`, 1536d).
 
 **Env:** `GUARDAO_DATABASE_URL` · `OPENROUTER_API_KEY` (dev offline: `--fake-embed`)
 
-Cada chunk inclui passos **0→N**, arquivo, rota App.tsx e metadados JSON — usado em tickets (sec. 2.1) e no LangGraph via MCP.
+Cada chunk inclui passos **0→N**, arquivo, rota App.tsx e metadados JSON — usado em tickets (sec. 2.1) e em prompts de atuação (não é tool MCP).

@@ -8,3 +8,4 @@ T-P3-006,CI: step label PROJECT3_SANDBOX no workflow,devops-cicd,,infraestrutura
 T-P3-007,QA spec: teste sandboxMarker health,qa,backend,produto,guardiao-familia-api,E-P3,1,7,1,7.0,3.5,todo,False,"track=produto,repo=guardiao-familia-api,epic=E-P3",T-P3-001
 T-P3-008,Stores: RELEASE_SANDBOX.md versão P3,stores-release,,stores,guardiao-familia-parent,E-P3,1,8,1,5.0,2.5,todo,False,"track=stores,repo=guardiao-familia-parent,epic=E-P3",
 T-P3-009,Child home: saudação dinâmica por horário no cabeçalho,frontend-mobile,,produto,guardiao-familia-child,E-P3,1,9,2,8.0,4.0,todo,False,"track=produto,repo=guardiao-familia-child,epic=E-P3,greeting=time-of-day",
+T-P3-010,Child home: botão SOS com label único centralizado,frontend-mobile,,produto,guardiao-familia-child,E-P3,1,10,1,7.5,3.5,todo,False,"track=produto,repo=guardiao-familia-child,epic=E-P3,sos=button-layout",

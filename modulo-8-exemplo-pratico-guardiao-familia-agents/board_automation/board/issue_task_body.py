@@ -132,13 +132,12 @@ def format_qa_repro_appium_section(
         "",
         "```",
         "1. list_mcp_tools()",
-        f"2. get_handoff(task_id=\"{tid}\")",
-        f"3. emit_status_event(task_id=\"{tid}\", event=\"qa-gate_in_test\", dry_run=false)",
-        f"4. query_mobile_flow_rag(query=<feature/tela>, task_id=\"{tid}\")",
-        f"5. init = qa_init_suite_mobile(task_id=\"{tid}\", suites_mobile='{suites_json}', dry_run=false)",
-        "6. qa_generate_evidence(pipeline_result=<retorno qa_pipeline_evidence>, dry_run=false)",
-        "   # seed + Appium + evidências PNG/MP4 + cleanup embutidos",
-        f"7. emit_status_event(task_id=\"{tid}\", event=\"qa-gate_in_pull_request\"|\"qa-gate_return_in_progress\", dry_run=false)",
+        f"2. on_status_event(task_id=\"{tid}\", role=\"qa-gate\", status=\"In Test\", dry_run=false)",
+        "3. hitl_guard_actuation(dry_run=false)",
+        f"4. qa_validate(actuation_context=<ctx>, mode=live, worker_mode=local, dry_run=false)",
+        "   # por cenário: qa_init_suite_mobile → qa_pipeline_evidence → qa_generate_evidence",
+        "5. execute_agent_actuation_tool(dry_run=false)",
+        f"6. emit_status_event(task_id=\"{tid}\", event=\"qa-gate_in_pull_request\"|\"qa-gate_return_in_progress\", dry_run=false)",
         "```",
         "",
         "#### Cenários a validar (pós-suite MCP)",
@@ -216,7 +215,7 @@ def format_user_flow_section(
 
     return [
         "",
-        "## 2.1 Fluxo do usuário até a funcionalidade *(frontend-mobile — obrigatório)*",
+        "### User flow (reprodução)",
         db_note,
         "",
         "> Creator e qa-gate **seguem os passos abaixo** (user flow obrigatório: `app`, `entry_point`, `preconditions`, `steps`, `target_screen`, `target_element`, `emulator`, `metro_port`).",
@@ -336,13 +335,11 @@ def format_qa_mcp_steps(tid: str, profile: str = "child_home", *, child_only: bo
         "",
         "| Passo | Tool MCP | Parâmetros |",
         "|-------|----------|------------|",
-        f"| 1 | `get_handoff` | `task_id={tid}` |",
-        f"| 2 | `emit_status_event` | `event=qa-gate_in_test`, `dry_run=false` |",
-        f"| 3 | `query_mobile_flow_rag` | `query=<tela/feature>`, `task_id={tid}` |",
-        f"| 4 | `qa_init_suite_mobile` | `task_id={tid}`, {scope}, `dry_run=false` |",
-        f"| 5 | `qa_generate_evidence` | `actuation_context` + `apps_ready_ok`, `dry_run=false` |",
-        f"| 6 | (evidência) | Inferida de `qa.scenarios` + `qa.evidence.*` (embutida no generate) |",
-        f"| 7 | `emit_status_event` | `qa-gate_in_pull_request` ou `qa-gate_return_in_progress`, `dry_run=false` |",
+        f"| 1 | `on_status_event` | `role=qa-gate`, `status=In Test`, `task_id={tid}` |",
+        f"| 2 | `hitl_guard_actuation` | confirma atuação |",
+        f"| 3 | `qa_validate` | `mode=live`, {scope} — orquestra init/pipeline/generate |",
+        f"| 4 | `execute_agent_actuation_tool` | aplica decisão do gate |",
+        f"| 5 | `emit_status_event` | `qa-gate_in_pull_request` ou `qa-gate_return_in_progress` |",
         "",
     ]
 
@@ -389,11 +386,17 @@ def format_evidence_pipeline_section(qa: dict[str, Any], tid: str) -> list[str]:
         capture_phase = "Sem matriz de PNG (só JSON/log se aplicável)"
         precondition = "—"
 
-    slug_hint = (
-        ", ".join(f"`{s}`" for s in scenarios[:8])
-        if scenarios
-        else "`greeting-morning-08h`, `greeting-afternoon-15h`, `greeting-evening-21h` (exemplo)"
-    )
+    slug_hint = ", ".join(f"`{s}`" for s in scenarios[:8]) if scenarios else "_(definir qa.scenarios)_"
+
+    def _slug_pipeline_effect() -> str:
+        if has_greeting:
+            return "Plugin greeting: matriz de hora (clock → relaunch → wait saudação → PNG)"
+        if any("sos" in s.lower() for s in scenarios):
+            return "PNG pós-home no elemento `testID=\"sos-button\"`"
+        if screenshot_scope == "child_home_single":
+            return "PNG único na ChildHomeV2 após suite/seed"
+        return "Captura conforme `screenshot_scope` e slugs desta task"
+
     evidence_dir = f"agents/00-runtime/output/{tid}/qa-gate-({{N}})/evidence/"
     pipe = qa.get("evidence_pipeline") if isinstance(qa.get("evidence_pipeline"), dict) else {}
     exec_order = [str(s).strip() for s in (pipe.get("execution_order") or []) if str(s).strip()]
@@ -415,31 +418,38 @@ def format_evidence_pipeline_section(qa: dict[str, Any], tid: str) -> list[str]:
                 "",
             ]
         )
-    lines.extend(
-        [
-            "| Campo ticket | Valor | Efeito na pipeline |",
-            "|--------------|-------|--------------------|",
-            f"| `qa.scenarios` | {slug_hint} | Plugin + steps (`greeting-*-NNh` → matriz de hora) |",
-            f"| `qa.evidence.scenarios_count` | `{scenarios_count}` | Quantidade mínima de artefatos de cenário |",
-            f"| `qa.evidence.screenshot_png` | `{str(png).lower()}` | Exige PNG no envelope |",
-            f"| `qa.evidence.video_mp4` | `{str(mp4).lower()}` | Exige MP4 no envelope |",
-            f"| `qa.evidence.json_report` | `{str(json_report).lower()}` | Manifest / report JSON |",
-            f"| `qa.evidence.video_scope` | `{video_scope}` | {video_phase} |",
-            f"| `qa.evidence.screenshot_scope` | `{screenshot_scope}` | Escopo dos prints |",
+    table_rows = [
+        "| Campo ticket | Valor | Efeito na pipeline |",
+        "|--------------|-------|--------------------|",
+        f"| `qa.scenarios` | {slug_hint} | {_slug_pipeline_effect()} |",
+        f"| `qa.evidence.scenarios_count` | `{scenarios_count}` | Quantidade mínima de artefatos de cenário |",
+        f"| `qa.evidence.screenshot_png` | `{str(png).lower()}` | Exige PNG no envelope |",
+        f"| `qa.evidence.video_mp4` | `{str(mp4).lower()}` | Exige MP4 no envelope |",
+        f"| `qa.evidence.json_report` | `{str(json_report).lower()}` | Manifest / report JSON |",
+        f"| `qa.evidence.video_scope` | `{video_scope or '—'}` | {video_phase} |",
+        f"| `qa.evidence.screenshot_scope` | `{screenshot_scope}` | Escopo dos prints |",
+        f"| Pré-condição capture | {precondition} | Bloqueia pós-suite se false |",
+        f"| Fases capture | {capture_phase} | Ordem canônica |",
+        f"| Artefatos | `{evidence_dir}` | Pacote qa-gate |",
+    ]
+    if has_greeting:
+        table_rows.insert(
+            8,
             f"| `qa.evidence.greeting_video` | `{str(greeting_video).lower()}` | MP4 por saudação (default false se fluxo Appium) |",
-            f"| Pré-condição capture | {precondition} | Bloqueia pós-suite se false |",
-            f"| Fases capture | {capture_phase} | Ordem canônica |",
-            f"| Artefatos | `{evidence_dir}` | Pacote qa-gate |",
-            "",
-            "**Contrato de slugs (sem parâmetros na tool):**",
-            "",
-            "| Prefixo slug | Pipeline inferida |",
-            "|--------------|-------------------|",
-            "| `greeting-*-NNh` | pós-`childHome`: clock → relaunch → wait saudação (Bom dia / Boa tarde / Boa noite) → PNG |",
-            "| _(outros)_ | Estender plugin em `lib/mobile/scenario_evidence` / evidence pipeline |",
-            "",
-        ]
-    )
+        )
+    lines.extend(table_rows)
+    lines.append("")
+    if has_greeting:
+        lines.extend(
+            [
+                "**Contrato greeting (só tasks com slugs `greeting-*-NNh`):**",
+                "",
+                "| Prefixo slug | Pipeline inferida |",
+                "|--------------|-------------------|",
+                "| `greeting-*-NNh` | pós-`childHome`: clock → relaunch → wait saudação → PNG |",
+                "",
+            ]
+        )
     return lines
 
 
@@ -505,7 +515,7 @@ def _format_annex_d_mobile(tid: str, repo: str, qa: dict[str, Any]) -> str:
     evidence = f"agents/00-runtime/output/{tid}/qa-gate-({{N}})/evidence/"
     return f"""## Anexo D — Papel `qa-gate` + evidências mobile (resumo)
 
-**MCP (obrigatório):** `get_handoff` → `qa-gate_in_test` → `qa_init_suite_mobile` → `qa_generate_evidence` → **pipeline de evidências (sec. 6)** → `qa-gate_in_pull_request` | `qa-gate_return_in_progress`
+**MCP (obrigatório):** `on_status_event` → `hitl_guard_actuation` → `qa_validate` → `execute_agent_actuation_tool` → `qa-gate_in_pull_request` | `qa-gate_return_in_progress`
 
 {stack}
 
@@ -549,7 +559,7 @@ def format_appendices(
         metro = defaults.get("metro_port", 8082)
         annex_b_extra = f"""
 - Repo desta task: `{repo}` · Metro **{metro}** · emulador **{emu}**
-- Antes de codar: `query_mobile_flow_rag` (MCP) para fluxo 0→N e arquivos de tela"""
+- Antes de codar: RAG em `lib/mobile/mobile_flow_rag.py` (Postgres/pgvector) para fluxo 0→N e arquivos de tela"""
 
     return [
         "---",
@@ -705,10 +715,286 @@ def _enrich_refinement_from_db(task: dict[str, Any]) -> dict[str, Any]:
     return ref
 
 
+def _role_bullets(items: list[str] | str | None) -> list[str]:
+    if not items:
+        return []
+    if isinstance(items, str):
+        return [items]
+    return [str(x) for x in items if str(x).strip()]
+
+
+def format_meta_section(
+    task: dict[str, Any],
+    payload: dict[str, Any],
+    reviewer: str,
+    handoff: dict[str, Any],
+) -> list[str]:
+    tid = task["id"]
+    agent_role = task["agent_role"]
+    repo = task["repo"]
+    depends = task.get("depends_on")
+    dep_block = f"`{depends}`" if depends else "—"
+    ev = _task_events(agent_role, reviewer, handoff["merge_owner"])
+    return [
+        "## Meta",
+        "",
+        "| Campo | Valor |",
+        "|-------|-------|",
+        f"| Task ID | `{tid}` |",
+        f"| Creator | `{agent_role}` |",
+        f"| Reviewer | `{reviewer}` |",
+        f"| QA | `qa-gate` |",
+        f"| Merge | `{handoff['merge_owner']}` |",
+        f"| Repo | `{repo}` |",
+        f"| Branch | `{payload['branch']}` (base: `{payload['base_branch']}`) |",
+        f"| Depends on | {dep_block} |",
+        "",
+        "| Evento saída | Agente |",
+        "|--------------|--------|",
+        f"| `{ev['ready_for_cr']}` | {agent_role} |",
+        f"| `{ev['ready_for_test']}` / `{ev['return_in_progress']}` | {reviewer} |",
+        f"| `{ev['qa_in_pr']}` / `{ev['qa_return']}` | qa-gate |",
+        f"| `{ev['merge_done']}` | {handoff['merge_owner']} |",
+        "",
+    ]
+
+
+def format_refinement_section(ref: dict[str, Any]) -> list[str]:
+    in_scope = "\n".join(f"- {x}" for x in (ref.get("in_scope") or [])) or "- _(in_scope)_"
+    out_scope = "\n".join(f"- {x}" for x in (ref.get("out_of_scope") or [])) or "- _(out_of_scope)_"
+    do_not = "\n".join(f"- `{f}`" for f in (ref.get("do_not_touch") or [])) or "- _(nenhum)_"
+    stop_rules = ref.get("stop_and_redirect") or [
+        "Dependência bloqueante não Done → não implementar",
+        "Escopo fora do ticket → redirecionar agente correto",
+    ]
+    stop_block = "\n".join(f"- {r}" for r in stop_rules)
+    state_before = ref.get("state_before") or "_(state_before)_"
+    state_after = ref.get("state_after") or "_(state_after)_"
+    user_story = ref.get("user_story") or ""
+    technical = ref.get("technical_notes") or "—"
+    lines = [
+        "## Refinamento",
+        "",
+        "> Contexto técnico e de produto para **todos** os agentes. Sem passos de implementação nem QA.",
+        "",
+        ref.get("context_summary") or "",
+        "",
+    ]
+    if user_story:
+        lines.extend([f"**User story:** {user_story}", ""])
+    lines.extend(
+        [
+            "### Estado",
+            "",
+            f"**Antes:** {state_before}",
+            "",
+            f"**Depois:** {state_after}",
+            "",
+            "### Escopo",
+            "",
+            "**Dentro:**",
+            in_scope,
+            "",
+            "**Fora:**",
+            out_scope,
+            "",
+            "**Não editar:**",
+            do_not,
+            "",
+            "### Notas técnicas",
+            "",
+            technical,
+            "",
+            "### Parar e redirecionar",
+            "",
+            stop_block,
+            "",
+            REDIRECT_TABLE,
+            "",
+        ]
+    )
+    return lines
+
+
+def format_implementation_section(
+    task: dict[str, Any],
+    ref: dict[str, Any],
+    payload: dict[str, Any],
+    ev: dict[str, str],
+) -> list[str]:
+    agent_role = task["agent_role"]
+    repo_path = payload["repo_path"]
+    branch = payload["branch"]
+    base = payload["base_branch"]
+    steps = ref.get("implementation_steps") or []
+    steps_block = (
+        "\n".join(f"{i + 1}. {s}" if not str(s)[0].isdigit() else s for i, s in enumerate(steps))
+        if steps
+        else "_(ver in_scope + suggested_files)_"
+    )
+    files = "\n".join(f"- `{f}`" for f in (ref.get("suggested_files") or [])) or "- _(suggested_files)_"
+    resp = _role_bullets((task.get("agent_responsibilities") or {}).get(agent_role))
+    if not resp:
+        resp = [
+            "Implementar apenas o escopo do refinamento",
+            "Testes unitários verdes antes do handoff",
+            "Não rodar QA Appium nem merge",
+        ]
+    lines = [
+        f"## Implementação — `{agent_role}`",
+        "",
+        "> Guia de caminho para o agente desenvolvedor.",
+        "",
+        "### Responsabilidades",
+        "",
+        *[f"- {r}" for r in resp],
+        "",
+        "### Branch",
+        "",
+        "```powershell",
+        f"cd {repo_path}",
+        "git fetch origin",
+        f"git checkout {base}",
+        f"git pull origin {base}",
+        f"git checkout -b {branch}",
+        "```",
+        "",
+        "### Passos",
+        "",
+        steps_block,
+        "",
+        "### Arquivos sugeridos",
+        "",
+        files,
+        "",
+        "### Saída",
+        "",
+        f"- Evento: `{ev['ready_for_cr']}`",
+        "- PR com estratégia, arquivos alterados e testes",
+        "",
+    ]
+    return lines
+
+
+def format_qa_lean_section(
+    task: dict[str, Any],
+    ref: dict[str, Any],
+    qa: dict[str, Any],
+    tid: str,
+    repo: str,
+) -> list[str]:
+    ac_rows = ref.get("acceptance_hints") or []
+    ac_checklist = "\n".join(
+        f"- [ ] **{a.split(':')[0]}:** {':'.join(a.split(':')[1:]).strip()}"
+        if ":" in a
+        else f"- [ ] {a}"
+        for a in ac_rows
+    ) or "- _(acceptance_hints)_"
+    ac_verify = ref.get("ac_verification") or []
+    if ac_verify:
+        verify_lines = ["| AC | Como verificar | Esperado |", "|----|----------------|----------|"]
+        for v in ac_verify:
+            verify_lines.append(
+                f"| {v.get('id', '?')} | `{v.get('command', '')}` | {v.get('expected', '')} |"
+            )
+        ac_verify_block = "\n".join(verify_lines)
+    else:
+        ac_verify_block = "_(ac_verification)_"
+    scenarios = qa.get("scenarios") or []
+    scenario_rows = "\n".join(f"- `{s}`" for s in scenarios) or "- _(scenarios)_"
+    resp = _role_bullets((task.get("agent_responsibilities") or {}).get("qa-gate"))
+    if not resp:
+        resp = [
+            "Executar cenários e validar critérios de aceite",
+            "Coletar evidências (PNG/MP4/JSON)",
+            "Não alterar código da feature",
+        ]
+    how = (qa.get("how_to_run") or "").strip() or f"MCP: `qa_validate(task_id={tid})`"
+    lines = [
+        "## QA — `qa-gate`",
+        "",
+        "> Cenários de teste, critérios de aceite e evidências.",
+        "",
+        "### Responsabilidades",
+        "",
+        *[f"- {r}" for r in resp],
+        "",
+        "### Cenários",
+        "",
+        scenario_rows,
+        "",
+        "### Critérios de aceite",
+        "",
+        ac_checklist,
+        "",
+        "### Verificação",
+        "",
+        ac_verify_block,
+        "",
+        *format_evidence_pipeline_section(qa, tid),
+        *format_db_seed_section(qa, tid),
+        "",
+        "### Execução",
+        "",
+        how,
+        "",
+    ]
+    if _is_mobile_qa(repo, qa):
+        lines.extend(format_user_flow_section(ref, repo, "frontend-mobile", tid=tid, qa=qa))
+    return lines
+
+
+def format_review_section(
+    task: dict[str, Any],
+    ref: dict[str, Any],
+    reviewer: str,
+    ev: dict[str, str],
+) -> list[str]:
+    creator = task["agent_role"]
+    resp = _role_bullets((task.get("agent_responsibilities") or {}).get(reviewer))
+    if not resp:
+        resp = [
+            "Analisar diff/PR do creator — não implementar",
+            "Validar qualidade de código e testes unitários",
+            "Não rodar QA Appium",
+        ]
+    files = "\n".join(f"- `{f}`" for f in (ref.get("suggested_files") or [])) or "- _(suggested_files)_"
+    ac_rows = ref.get("acceptance_hints") or []
+    ac_brief = "\n".join(f"- {a}" for a in ac_rows[:6]) or "- _(acceptance_hints)_"
+    lines = [
+        f"## Review — `{reviewer}`",
+        "",
+        "> Analisar **apenas** o que foi implementado (diff + PR).",
+        "",
+        "### Responsabilidades",
+        "",
+        *[f"- {r}" for r in resp],
+        "",
+        "### Foco",
+        "",
+        f"**Creator:** `{creator}`",
+        "",
+        f"**Estado esperado:** {ref.get('state_after') or '_(state_after)_'}",
+        "",
+        "**Critérios de aceite (referência):**",
+        ac_brief,
+        "",
+        "**Arquivos no escopo:**",
+        files,
+        "",
+        "### Saída",
+        "",
+        f"- Aprovar: `{ev['ready_for_test']}`",
+        f"- Retornar: `{ev['return_in_progress']}`",
+        "",
+    ]
+    return lines
+
+
 def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = None) -> str:
-    """Corpo markdown completo para issue — fonte única template + P3 seed."""
+    """Corpo markdown enxuto — blocos separados por papel (orquestração por status)."""
+    del conventions  # templates de comentário ficam nos agent prompts, não no ticket
     task = {**task, "refinement": _enrich_refinement_from_db(task)}
-    conv = conventions or {}
     ref = task.get("refinement") or {}
     qa = task.get("qa") or {}
     tid = task["id"]
@@ -718,194 +1004,21 @@ def build_issue_body(task: dict[str, Any], conventions: dict[str, str] | None = 
     payload = build_agent_payload(task)
     handoff = payload["handoff_expectations"]
     ev = _task_events(agent_role, reviewer, handoff["merge_owner"])
-    branch = payload["branch"]
-    base = payload["base_branch"]
-    repo_path = payload["repo_path"]
-
-    # --- seções estruturadas ---
-    ac_rows = ref.get("acceptance_hints") or []
-    ac_checklist = "\n".join(
-        f"- [ ] **{a.split(':')[0]}:** {':'.join(a.split(':')[1:]).strip()}"
-        if ":" in a
-        else f"- [ ] {a}"
-        for a in ac_rows
-    )
-
-    ac_verify = ref.get("ac_verification") or []
-    if ac_verify:
-        verify_lines = ["| AC | Como verificar | Output esperado |", "|----|----------------|-----------------|"]
-        for v in ac_verify:
-            verify_lines.append(
-                f"| {v.get('id', '?')} | `{v.get('command', '')}` | {v.get('expected', '')} |"
-            )
-        ac_verify_block = "\n".join(verify_lines)
-    else:
-        ac_verify_block = "_(preencher ac_verification no backlog)_"
-
-    steps = ref.get("implementation_steps") or []
-    steps_block = "\n".join(f"{i + 1}. {s}" if not s[0].isdigit() else s for i, s in enumerate(steps)) if steps else "_(ver in_scope + suggested_files)_"
-
-    in_scope = "\n".join(f"- {x}" for x in (ref.get("in_scope") or []))
-    out_scope = "\n".join(f"- {x}" for x in (ref.get("out_of_scope") or []))
-    files = "\n".join(f"- `{f}`" for f in (ref.get("suggested_files") or []))
-    do_not = "\n".join(f"- `{f}`" for f in (ref.get("do_not_touch") or [])) or "- _(nenhum além de out_of_scope)_"
-
-    stop_rules = ref.get("stop_and_redirect") or [
-        "Tocar arquivo fora de suggested_files sem AC explícito → comentar issue e redirecionar",
-        "Precisar de terraform apply / deploy prod → parar; não executar",
-        "Dependência bloqueante não Done → não implementar; comentar blocker",
-    ]
-    stop_block = "\n".join(f"- {r}" for r in stop_rules)
-
-    state_before = ref.get("state_before") or "_(descrever comportamento/código atual)_"
-    state_after = ref.get("state_after") or "_(descrever comportamento/código após merge)_"
-
-    depends = task.get("depends_on")
-    dep_block = f"`{depends}` deve estar **Done** antes de iniciar." if depends else "Nenhuma."
-
-    impl_tpl = (conv.get("implementation") or _DEFAULT_IMPL).replace("{agent_role}", agent_role).replace("{reviewer}", reviewer)
-    review_tpl = (conv.get("review") or _DEFAULT_REVIEW).replace("{reviewer}", reviewer)
 
     lines = [
         f"# [{tid}] {task['title']}",
         "",
-        "> **Leia secções 0–9 antes de codar.** Não invente paths, endpoints ou AC.",
-        "",
-        "---",
-        "",
-        "## 0. Quem faz o quê (não confundir papéis)",
-        "",
-        *format_phase_table(agent_role, reviewer, handoff, repo, qa),
-        "",
-        "Fluxo board: ver **Anexo A** (eventos) e sec. 8.",
-        *format_agent_responsibilities_section(task, reviewer),
-        "",
-        "## 1. Identificação",
-        "",
-        "| Campo | Valor |",
-        "|-------|-------|",
-        f"| Task ID | `{tid}` |",
-        f"| Creator | `{agent_role}` |",
-        f"| Reviewer | `{reviewer}` |",
-        f"| QA | `qa-gate` |",
-        f"| Merge owner | `{handoff['merge_owner']}` |",
-        f"| Trilha | `{task.get('track', 'produto')}` |",
-        f"| Repo | `{repo}` |",
-        f"| Path local | `{repo_path}` |",
-        f"| Branch | `{branch}` (base: `{base}`) |",
-        f"| Depends on | {dep_block} |",
-        "",
-        "## 2. Estado atual → estado desejado",
-        "",
-        "### Antes (não assumir — verificar no repo)",
-        "",
-        state_before,
-        "",
-        "### Depois (Definition of Done creator)",
-        "",
-        state_after,
-        "",
-        "### Contexto",
-        "",
-        ref.get("context_summary", ""),
-        "",
-        ref.get("user_story") and f"**User story:** {ref.get('user_story')}" or "",
-        "",
-        "### Notas técnicas (factos)",
-        "",
-        ref.get("technical_notes") or "Ver arquivos sugeridos e AC.",
-        *format_user_flow_section(ref, repo, agent_role, tid=tid, qa=qa),
-        "",
-        "## 3. Escopo rígido",
-        "",
-        "### Dentro do escopo (só isto)",
-        in_scope,
-        "",
-        "### Fora do escopo",
-        out_scope,
-        "",
-        "### Arquivos permitidos (suggested_files)",
-        files,
-        "",
-        "### Não editar",
-        do_not,
-        "",
-        "### Redirecionamento",
-        REDIRECT_TABLE,
-        "",
-        "## 4. Passo a passo — creator (`{agent_role}`)",
-        "",
-        "```powershell",
-        f"cd {repo_path}",
-        f"git fetch origin",
-        f"git checkout {base}",
-        f"git pull origin {base}",
-        f"git checkout -b {branch}",
-        "```",
-        "",
-        steps_block,
-        "",
-        f"**Antes de `{ev['ready_for_cr']}`:**",
-        f"- [ ] Todos os AC verificados localmente (sec. 5)",
-        f"- [ ] PR preenchido conforme **Anexo E** (template inline)",
-        f"- [ ] Comentário de implementação (sec. 10) na issue",
-        f"- [ ] Board → **Ready for Code Review** · `emit_status_event` com `{ev['ready_for_cr']}`",
-    ]
-    if agent_role == "frontend-mobile":
-        lines.append("- [ ] Fluxo sec. 2.1 reproduzido no emulador antes do PR")
-    lines += [
-        "",
-        "## 5. Critérios de aceite + verificação",
-        "",
-        ac_checklist,
-        "",
-        ac_verify_block,
-        "",
-        *format_qa_section(qa, tid, repo),
-        "## 7. Parar e pedir ajuda (anti-alucinação)",
-        "",
-        stop_block,
-        "",
-        "## 8. Handoff / eventos board",
-        "",
-        "| De | Para | Evento | Quem dispara |",
-        "|----|------|--------|--------------|",
-        f"| Todo | In Progress | `{ev['orchestrator_enter']}` | orchestrator |",
-        f"| In Progress | Ready for Code Review | `{ev['ready_for_cr']}` | **{agent_role}** |",
-        f"| In Code Review | Ready for Test | `{ev['ready_for_test']}` | **{reviewer}** |",
-        f"| In Code Review | In Progress | `{ev['return_in_progress']}` | **{reviewer}** |",
-        f"| In Test | In Pull Request | `{ev['qa_in_pr']}` | **qa-gate** |",
-        f"| In Test | In Progress | `{ev['qa_return']}` | **qa-gate** |",
-        f"| In Pull Request | Done | `{ev['merge_done']}` | **{handoff['merge_owner']}** |",
-        "",
-        "## 9. Payload máquina (`agent-task`)",
+        *format_meta_section(task, payload, reviewer, handoff),
+        *format_refinement_section(ref),
+        *format_implementation_section(task, ref, payload, ev),
+        *format_qa_lean_section(task, ref, qa, tid, repo),
+        *format_review_section(task, ref, reviewer, ev),
+        "## Payload (`agent-task`)",
         "",
         "```agent-task",
         json.dumps(payload, ensure_ascii=False, indent=2),
         "```",
         "",
-        "## 10. Templates de comentário (obrigatório por fase)",
-        "",
-        "### 10.1 Implementação — `{agent_role}`",
-        "```markdown",
-        impl_tpl,
-        "```",
-        "",
-        "### 10.2 Code Review — `{reviewer}`",
-        "```markdown",
-        review_tpl,
-        "```",
-        "",
-        "### 10.3 QA — `qa-gate`",
-        "```markdown",
-        conv.get("qa") or _DEFAULT_QA,
-        "```",
-        "",
-        "### 10.4 Merge — `{handoff['merge_owner']}`",
-        "```markdown",
-        conv.get("merge") or _DEFAULT_MERGE,
-        "```",
-        *format_appendices(task, agent_role, reviewer, handoff, ref, qa, ev),
     ]
     return "\n".join(line for line in lines if line is not None)
 
@@ -982,7 +1095,7 @@ _DEFAULT_QA = """## [qa-gate] QA
 
 ### Comandos executados (MCP guardiao-familia-agents — obrigatório)
 ```
-get_handoff → qa-gate_in_test → query_mobile_flow_rag → qa_init_suite_mobile → qa_generate_evidence → qa-gate_in_pull_request|qa-gate_return_in_progress
+on_status_event(qa-gate,In Test) → hitl_guard_actuation → qa_validate(live) → execute_agent_actuation_tool → qa-gate_in_pull_request|qa-gate_return_in_progress
 ```
 
 ### Pipeline de evidências (planejada no ticket — MCP infere via `task_id`)

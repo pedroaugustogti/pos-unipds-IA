@@ -10,7 +10,7 @@ Código de domínio do pipeline MCP + LangGraph. Board GitHub: [`board_automatio
 | [`gateway/`](gateway/) | Status, handoff, HITL, guardrail de atuação |
 | [`orchestrator/`](orchestrator/) | Runtime, actuation MCP, claim lock, fases |
 | [`ci/`](ci/) | Sinais CI → gateway |
-| [`mobile/`](mobile/) | Appium, seed QA, RAG de fluxos |
+| [`mobile/`](mobile/) | `qa_validate` → init → pipeline → generate; Appium, Metro bundle, RAG |
 | [`site/`](site/) | Tasks web (hero) |
 
 Raiz: `paths.py`, `env_load.py`, `ticket_output.py`, `runtime_log.py`.

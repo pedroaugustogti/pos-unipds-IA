@@ -35,9 +35,10 @@ Regenerar digest: `python agents/00-orchestration/scripts/ops/build_repo_knowled
 |------|-----------------|
 | `on_status_event` | AC + handoff do revisor |
 | `hitl_guard_actuation` | Antes de `execute` |
-| `qa_validate` | Orquestra multi-cenário paralelo: init → pipeline → generate por cenário |
-| `qa_init_suite_mobile` | Prep stack + recovery + plan |
-| `qa_generate_evidence` | Seed → Appium → evidências → cleanup |
+| `qa_validate` | Orquestra QA por cenário |
+| `qa_init_suite_mobile` | Stack + apps_ready |
+| `qa_pipeline_evidence` / `qa_generate_evidence` | Evidências Appium |
+| `qa_db_cleanup` | Purge pós-evidência |
 | `execute_agent_actuation_tool` | `qa-gate_in_pull_request` ou retrocesso |
 
 
@@ -57,9 +58,9 @@ Lê handoff do revisor (`agents/00-runtime/output/{task_id}/handoff.json`) com P
 
 ## ReAct (máx. 3)
 
-1. `get_handoff` + `emit_status_event` `start_test`  
-2. Definir **cenários** e **critérios de aceite** (sec. 5/6) · executar suite via **MCP guardiao-familia-agents**  
-3. Anexar **evidências** (PNG, MP4, JSON) na issue · comentário sec. **10.3** · `test_passed` ou `test_failed_bug`  
+1. `on_status_event` (qa-gate, In Test) → `hitl_guard_actuation` → `qa_validate(mode=live)`  
+2. Validar **cenários** e **critérios de aceite** (sec. 5/6) — evidências em `agents/00-runtime/output/{task_id}/qa-gate-({N})/evidence/`  
+3. `execute_agent_actuation_tool` · comentário sec. **10.3** · `qa-gate_in_pull_request` ou `qa-gate_return_in_progress`  
 
 ## Bugs
 

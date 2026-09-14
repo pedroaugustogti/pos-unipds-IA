@@ -1,5 +1,5 @@
 name: "Agent Task — Guardião Família"
-description: Ticket completo para agentes autônomos (implementação → review → QA → merge)
+description: Ticket enxuto por papel (refinamento · implementação · QA · review)
 title: "[T-XXX-NNN] "
 labels:
   - agent:todo
@@ -7,25 +7,21 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## Instruções
-        Preencha **todos** os campos obrigatórios. O orquestrador LangGraph, o `TASK_AGENT_MAP.csv` e o **qa-gate** consomem este conteúdo.
-        O corpo completo da issue é gerado por `board_automation/board/issue_task_body.py` (sem links `.md` — conteúdo inline + Anexos A–E).
-        Referência: issue [#103 T-P3-009](https://github.com/guardiaofamilia/guardiao-familia-child/issues/103).
+        Corpo gerado por `board_automation/board/issue_task_body.py`.
+        Blocos separados para a orquestração extrair contexto por status/agente.
 
   - type: input
     id: task_id
     attributes:
-      label: "Task ID (obrigatório)"
-      description: "Formato T-XXX-NNN — deve bater com TASK_AGENT_MAP.csv"
-      placeholder: "T-P05-003"
+      label: Task ID
+      placeholder: "T-P3-009"
     validations:
       required: true
 
   - type: dropdown
     id: agent_role
     attributes:
-      label: "Agent role primário (creator)"
-      description: "Quem implementa em In Progress"
+      label: Creator (implementa)
       options:
         - backend
         - frontend-mobile
@@ -33,25 +29,8 @@ body:
         - cloud-infra
         - database
         - devops-cicd
-        - qa
-        - stores-release
     validations:
       required: true
-
-  - type: dropdown
-    id: agent_role_secondary
-    attributes:
-      label: "Agent role secundário (opcional)"
-      options:
-        - "(nenhum)"
-        - backend
-        - frontend-mobile
-        - frontend-web
-        - cloud-infra
-        - database
-        - devops-cicd
-        - qa
-        - stores-release
 
   - type: dropdown
     id: track
@@ -67,9 +46,8 @@ body:
   - type: input
     id: repo
     attributes:
-      label: Repo alvo (GitHub)
-      description: "Ex.: guardiao-familia-api"
-      placeholder: guardiao-familia-api
+      label: Repo alvo
+      placeholder: guardiao-familia-child
     validations:
       required: true
 
@@ -77,108 +55,112 @@ body:
     id: epic_id
     attributes:
       label: Épico
-      placeholder: "E-P05"
+      placeholder: "E-P3"
     validations:
       required: true
 
-  - type: input
-    id: repo_path
+  - type: markdown
     attributes:
-      label: Path local (Windows)
-      description: "Base C:\\Users\\pedro\\Documents\\guardiao-familia\\..."
-      placeholder: "C:\\Users\\pedro\\Documents\\guardiao-familia\\guardiao-familia-api"
+      value: |
+        ## Refinamento (todos os agentes)
+        Contexto de produto e técnico — sem passos de implementação nem QA.
 
   - type: textarea
     id: context_summary
     attributes:
-      label: "Contexto (obrigatório)"
-      description: "2–5 frases factuais — o que existe hoje e o que muda. Sem suposições."
-      placeholder: "Hoje X. Esta task entrega Y para Z."
+      label: Contexto
+      description: O que existe hoje e o que muda (2–5 frases factuais)
     validations:
       required: true
 
   - type: textarea
     id: user_story
     attributes:
-      label: User story (opcional)
-      placeholder: "Como [pai/mãe/filho], quero [ação], para [benefício]."
+      label: User story
+      placeholder: "Como [persona], quero [ação], para [benefício]."
 
   - type: textarea
-    id: user_flow_map
+    id: state_before
     attributes:
-      label: "Fluxo do usuário até a funcionalidade (obrigatório se frontend-mobile)"
-      description: "Campos: app, entry_point, preconditions, steps[], target_screen, target_element, emulator, metro_port, qa_repro_steps[]. Reprodução QA/Appium (sec. 2.1) — **sempre MCP** `guardiao-familia-agents`; qa_repro_steps = cenários pós-suite, não comandos CLI"
-      placeholder: |
-        App: guardiao-familia-parent
-        Entry: cold start
-        Emulador: 5554 · Metro: 8082
-        | # | Tela | Ação | Comportamento | Arquivo |
-        | 1 | ParentSplashScreen | Abrir app | Splash exibido | screens/ParentSplashScreen.tsx |
-        Alvo: tagline Text → "Project 3 — Parent OK"
+      label: Estado antes
+      description: Comportamento/código atual (verificar no repo)
 
-        ### Reproduzir (QA / Appium) — via MCP
-        1. qa_db_seed → qa_appium_suite_* (sec. 6)
-        2. Validar elemento alvo + screenshot
-        3. MP4 se AC exigir
+  - type: textarea
+    id: state_after
+    attributes:
+      label: Estado depois (DoD creator)
 
   - type: textarea
     id: in_scope
     attributes:
-      label: "Dentro do escopo (obrigatório — lista)"
-      description: "Um item por linha"
-      placeholder: |
-        - Alterar módulo X
-        - Atualizar testes Y
+      label: Dentro do escopo (um item por linha)
     validations:
       required: true
 
   - type: textarea
     id: out_of_scope
     attributes:
-      label: "Fora do escopo (obrigatório — redirecionar agente)"
-      description: "Se tocar isto, comentar na issue e redirecionar (sec. 3 e 7 — ex.: Terraform → cloud-infra, mobile → frontend-mobile)"
-      placeholder: |
-        - Terraform → cloud-infra
-        - Apps mobile → frontend-mobile
+      label: Fora do escopo (um item por linha)
     validations:
       required: true
+
+  - type: textarea
+    id: do_not_touch
+    attributes:
+      label: Não editar (um path por linha)
+
+  - type: textarea
+    id: technical_notes
+    attributes:
+      label: Notas técnicas
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Implementação (creator)
+        Guia de caminho — branch, passos e arquivos sugeridos.
 
   - type: textarea
     id: suggested_files
     attributes:
-      label: "Arquivos / paths sugeridos (obrigatório)"
-      description: "Um path por linha — reduz alucinação do LLM"
-      placeholder: |
-        src/modules/foo/foo.service.ts
-        test/foo.spec.ts
+      label: Arquivos sugeridos (um path por linha)
     validations:
       required: true
 
   - type: textarea
+    id: implementation_steps
+    attributes:
+      label: Passos de implementação (um por linha)
+      placeholder: |
+        git checkout -b feat/t-xxx-...
+        Ajustar módulo X
+        npm test -- suite
+
+  - type: markdown
+    attributes:
+      value: |
+        ## QA (qa-gate)
+        Cenários, critérios de aceite e evidências — não alterar código.
+
+  - type: textarea
     id: acceptance_criteria
     attributes:
-      label: "Critérios de aceite — checklist QA (obrigatório)"
-      description: "Testável, binário (PASS/FAIL). Um critério por linha."
+      label: Critérios de aceite (um por linha, testável PASS/FAIL)
       placeholder: |
-        - [ ] AC-01: POST /api/v1/foo retorna 201 com body válido
-        - [ ] AC-02: Playwright home exibe texto X
-        - [ ] AC-03: Appium cenário 1 pareamento PASS
+        AC-01: Entre 00:00–11:59 header mostra Bom dia
+        AC-02: npm test -- childHome.state exit 0
     validations:
       required: true
 
   - type: dropdown
     id: test_suite
     attributes:
-      label: Suite de teste QA (qa-gate)
-      description: "Qual runner o qa-gate deve executar"
+      label: Suite QA
       options:
-        - "(nenhuma — definir manualmente)"
-        - qa-site-hero-playwright
-        - qa-mobile-pairing-api
-        - qa-mobile-pairing-appium-dual
         - qa-mobile-child-appium
+        - qa-mobile-pairing-appium-dual
+        - qa-site-hero-playwright
         - qa-api-jest-unit
-        - qa-api-jest-integration
         - qa-custom
     validations:
       required: true
@@ -186,8 +168,7 @@ body:
   - type: textarea
     id: qa_scenarios
     attributes:
-      label: "Cenários QA / slugs (obrigatório se E2E — inferem a pipeline)"
-      description: "Slugs estáveis. Ex. greeting → pipeline pós-home automática. Um por linha."
+      label: Cenários (slugs, um por linha)
       placeholder: |
         greeting-morning-08h
         greeting-afternoon-15h
@@ -196,131 +177,54 @@ body:
   - type: checkboxes
     id: evidence_required
     attributes:
-      label: Evidências obrigatórias (qa-gate anexa na issue)
+      label: Evidências obrigatórias
       options:
-        - label: Screenshot PNG (Playwright ou Appium / pós-home)
-          required: false
-        - label: Vídeo MP4 (Appium startRecordingScreen ou per_period)
-          required: false
-        - label: Report JSON da suite (+ scenario-manifest)
-          required: false
-        - label: Log CI / workflow link
-          required: false
-
-  - type: dropdown
-    id: evidence_video_scope
-    attributes:
-      label: "Pipeline vídeo (video_scope) — MCP infere sem param extra"
-      description: "Onde gravar o MP4. Deixe vazio se não houver vídeo."
-      options:
-        - "(nenhum)"
-        - appium_flow_pairing_to_home
-        - appium_flow_generic
-        - per_period
-    validations:
-      required: false
+        - label: Screenshot PNG
+        - label: Vídeo MP4
+        - label: Report JSON
 
   - type: dropdown
     id: evidence_screenshot_scope
     attributes:
-      label: "Pipeline PNG (screenshot_scope)"
-      description: "Matriz de prints pós-suite. greeting → prepare/capture/finalize."
+      label: screenshot_scope
       options:
         - "(nenhum)"
         - child_home_greeting_per_period
         - child_home_single
-        - parent_home_single
-    validations:
-      required: false
 
   - type: dropdown
-    id: evidence_greeting_video
+    id: evidence_video_scope
     attributes:
-      label: "MP4 por saudação (greeting_video)"
-      description: "false = só 1 MP4 do fluxo Appium (recomendado T-P3-009)"
+      label: video_scope
       options:
-        - "false"
-        - "true"
-    validations:
-      required: false
+        - "(nenhum)"
+        - appium_flow_pairing_to_home
+        - per_period
 
   - type: dropdown
     id: db_seed_profile
     attributes:
-      label: "DB seed Appium (opcional)"
-      description: "Evita cadastro/config/família do zero — ver agents/01-role-based/qa-gate/scripts/mobile_e2e_seed.py"
+      label: DB seed (mobile)
       options:
         - "(desabilitado)"
         - basic_parent
         - child_home
         - pairing_warm
-        - permissions_resume
-
-  - type: checkboxes
-    id: db_seed_cleanup
-    attributes:
-      label: Cleanup pós-evidência
-      options:
-        - label: Purge Postgres + reset stage-handoff após coleta
-          required: false
 
   - type: textarea
-    id: how_to_run
+    id: user_flow_map
     attributes:
-      label: "Como rodar (MCP preferencial; CLI só fallback)"
-      placeholder: |
-        MCP: qa_db_seed → qa_ensure_stack_mobile → qa_appium_suite_child → evidência inferida do ticket → qa_db_cleanup
-        (pipeline PNG/MP4 vem de scenarios + evidence.* acima)
-    validations:
-      required: true
-
-  - type: textarea
-    id: local_env
-    attributes:
-      label: Pré-requisitos de ambiente
-      placeholder: |
-        - Docker Desktop
-        - ANDROID_HOME + AVD Pixel API 34 (5554, 5556)
-        - Dev clients parent (8082) e child (9090) instalados
-
-  - type: textarea
-    id: depends_on
-    attributes:
-      label: Dependências (tasks bloqueantes)
-      description: "IDs T-XXX-NNN, um por linha, ou 'nenhuma'"
-      placeholder: "T-I08-011"
-
-  - type: checkboxes
-    id: release_blocker
-    attributes:
-      label: Release
-      options:
-        - label: Release blocker
-          required: false
+      label: User flow mobile (se frontend-mobile)
+      description: app, emulator, target_screen, target_element, steps — para reprodução QA
 
   - type: markdown
     attributes:
       value: |
-        ## Handoff entre agentes (eventos v2 — referência)
-        | Status board | Agente ativo | Evento de saída | Próximo agente |
-        |--------------|--------------|-----------------|----------------|
-        | Todo | orchestrator | orchestrator_enter_in_progress | **creator** (acima) |
-        | In Progress | creator | {creator}_ready_for_code_review | {creator}-reviewer |
-        | In Code Review | reviewer | {creator}-reviewer_ready_for_test | qa-gate |
-        | In Code Review | reviewer | {creator}-reviewer_return_in_progress | creator |
-        | In Test | qa-gate | qa-gate_in_pull_request | devops-cicd / stores-release |
-        | In Test | qa-gate | qa-gate_return_in_progress | creator |
-        | In Pull Request | merge owner | devops-cicd_done / stores-release_done | Done |
+        ## Review (reviewer)
+        Analisa apenas diff/PR — não implementa nem roda QA.
 
   - type: textarea
-    id: agent_payload_json
+    id: depends_on
     attributes:
-      label: "Payload JSON (opcional — preencher se criar via script)"
-      description: "Bloco `agent-task` para parsers — schema na sec. 9 da issue (gerado por issue_task_body.py)"
-      render: json
-      placeholder: |
-        {
-          "task_id": "T-XXX-NNN",
-          "agent_role": "backend",
-          "acceptance_hints": ["AC-01: ..."]
-        }
+      label: Dependências (task IDs bloqueantes)
+      placeholder: "nenhuma"

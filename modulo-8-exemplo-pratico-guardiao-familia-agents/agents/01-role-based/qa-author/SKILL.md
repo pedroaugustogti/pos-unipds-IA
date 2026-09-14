@@ -28,7 +28,7 @@ Paths via `lib/repo_paths.py`. **Não usar Detox/Maestro** — padronizado Appiu
 Skill dedicada: **[MOBILE_SETUP_EVIDENCE.md](MOBILE_SETUP_EVIDENCE.md)** (autor) · execução gate em `qa_validate` / tools MCP.
 
 ```
-qa_db_seed → qa_ensure_stack_mobile → qa_appium_suite_* → qa_db_cleanup
+qa_validate(task_id) → qa_init_suite_mobile → qa_pipeline_evidence → qa_generate_evidence
 ```
 
 Não execute `fast-stack.ps1` nem scripts Python de evidência fora de `lib/mcp_invoke.py`.
@@ -40,7 +40,7 @@ Engine: `C:\Users\pedro\Documents\guardiao-familia\guardiao-familia-mobile-setup
 | Camada | Ferramenta | Repo / path |
 |--------|------------|-------------|
 | API unit/integration | Jest, Supertest | `guardiao-familia-api` |
-| Mobile E2E Android | Appium 2 via MCP | **`qa_ensure_stack_mobile` + `qa_appium_suite_*`** |
+| Mobile E2E Android | Appium 2 via MCP | **`qa_validate` → init → pipeline → generate** |
 | Evidências PNG/MP4 mobile | tools MCP | Ver [MOBILE_SETUP_EVIDENCE.md](MOBILE_SETUP_EVIDENCE.md) |
 | API pairing smoke | `task36-pairing-v2.e2e.mjs` | api (smoke rápido, não substitui UI) |
 | Web | Playwright | backoffice, site |
@@ -55,7 +55,7 @@ python agents/01-role-based/qa-gate/scripts/qa_discover_mobile_flows.py --app bo
 python agents/01-role-based/qa-gate/scripts/ingest_mobile_flows_rag.py
 ```
 
-Registra fluxos em `data/mobile_user_flows.db`; agentes consultam via MCP `query_mobile_flow_rag`.
+Registra fluxos em `data/mobile_user_flows.db`; consulta semântica via `lib/mobile/mobile_flow_rag.py` (não é tool MCP).
 
 ## Fora do escopo → redirecionar
 

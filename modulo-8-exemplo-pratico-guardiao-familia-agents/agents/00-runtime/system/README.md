@@ -9,7 +9,7 @@ Pasta **efêmera** (`.gitignore`). Estado compartilhado entre tickets — **não
 | `board/` | Cache GitHub Project |
 | `audit/` | `audit-trail.jsonl` |
 | `observability/` | `snapshot.json`, `tasks/*.json` |
-| `mobile/` | Guides RAG, dumps UI, caches legados |
+| `mobile/` | Guides RAG, `metro_bundle_state.json` (fingerprint Metro), dumps UI |
 | `handoffs/` | Espelho legado (migração); canônico: `output/{ticket}/handoff.json` |
 
 Paths: `lib/paths.py` (`RUNTIME_SYSTEM_DIR`)

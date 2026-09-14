@@ -25,4 +25,6 @@ orchestrator_enter_in_progress (opcional)
 
 `qa_validate` tem dois caminhos (`worker_mode`): **`local`** = workers na máquina host (sem container); **`docker`** = 1 container por `ticket.qa.scenarios`. Paralelo; PASS só se **todos** ok. Sem fallback entre caminhos.
 
-Guia por papel: [`MCP_ROLE_GUIDE.md`](MCP_ROLE_GUIDE.md)
+**Por cenário (interno):** `qa_init_suite_mobile` (`apps_ready_ok`, Metro + fingerprint git) → `qa_pipeline_evidence` (`device`, `reload_mode=hard` se bundle stale/dirty) → `qa_generate_evidence` (seed + Appium + PNG/MP4). Estado Metro: `agents/00-runtime/system/mobile/metro_bundle_state.json`.
+
+Guia por papel: [`MCP_ROLE_GUIDE.md`](MCP_ROLE_GUIDE.md) · código: [`../../../../lib/mobile/README.md`](../../../../lib/mobile/README.md)

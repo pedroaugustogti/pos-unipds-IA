@@ -46,7 +46,7 @@ Regenerar digest: `python agents/00-orchestration/scripts/ops/build_repo_knowled
 
 ## ReAct (máx. 3)
 
-1. `get_handoff` + `emit_status_event` `start_review`  
+1. Ler handoff em `agents/00-runtime/output/{task_id}/handoff.json` + `emit_status_event` do revisor  
 2. checklist NestJS  
 3. `emit_status_event` `approve_review` (proposta se alto risco) **ou** `request_changes`  
 

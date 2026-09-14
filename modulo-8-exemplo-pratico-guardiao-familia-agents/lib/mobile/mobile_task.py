@@ -57,13 +57,8 @@ def is_appium_parent_only(task: dict[str, Any]) -> bool:
     return appium_scope(task) == "parent_only"
 
 
-def uses_mcp_appium_suite(task: dict[str, Any]) -> bool:
-    """Tasks com escopo explícito devem usar `run_appium_suite` (honra child_only/parent_only)."""
-    return is_appium_child_only(task) or is_appium_parent_only(task)
-
-
 def wants_mobile_setup_evidence(task: dict[str, Any]) -> bool:
-    """Task exige evidências Appium via MCP (`qa_appium_suite_*`)."""
+    """Task exige evidências Appium via MCP (`qa_validate` / `qa_generate_evidence`)."""
     qa = _qa(task)
     evidence = _evidence(task)
     how = str(qa.get("how_to_run") or "").lower()
@@ -117,7 +112,7 @@ def resolve_appium_feature_from_ticket(task: dict[str, Any]) -> str:
     pipe = qa.get("evidence_pipeline") if isinstance(qa.get("evidence_pipeline"), dict) else {}
     for step in pipe.get("execution_order") or []:
         s = str(step).lower()
-        if "qa_appium_suite" in s or "pairing" in s:
+        if "qa_generate_evidence" in s or "qa_appium_suite" in s or "pairing" in s:
             return "pairing"
         if "go_to_home_child" in s:
             return "go_to_home_child"

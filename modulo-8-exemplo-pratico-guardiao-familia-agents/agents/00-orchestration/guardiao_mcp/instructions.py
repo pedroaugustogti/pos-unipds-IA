@@ -1,7 +1,7 @@
 """Instruções globais do servidor MCP."""
 
 SERVER_INSTRUCTIONS = """\
-Servidor MCP do Guardião Família (módulo 8) — **12 tools** usadas pelo LangGraph v2 e pelo Cursor.
+Servidor MCP do Guardião Família (módulo 8) — **13 tools** usadas pelo LangGraph v2 e pelo Cursor.
 
 ## LangGraph v2 (automação)
 Grafo: `sync_board` → `orchestrator_decide` → 55 nós `evt_*` (`langgraph_app/registry/`).

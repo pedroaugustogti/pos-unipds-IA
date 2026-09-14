@@ -55,7 +55,7 @@ Só cards `Todo` do papel QA (CSV legado `qa` → qa-author).
 ## ReAct (máx. 4)
 
 1. `emit_status_event` `claim` + ler aceite da feature alvo  
-2. escrever/ajustar testes (`query_mobile_flow_rag` se mobile)  
+2. escrever/ajustar testes (RAG mobile em `lib/mobile/mobile_flow_rag.py` se necessário)  
 3. rodar localmente o subset  
 4. `emit_status_event` `open_pr` com como rodar + riscos flaky  
 

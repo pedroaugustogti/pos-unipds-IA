@@ -97,9 +97,10 @@ def qa_gate_block() -> str:
 |------|--------|
 | `on_status_event` | AC, config QA, handoff do revisor |
 | `hitl_guard_actuation` | Antes de `execute` |
-| `qa_validate` | Orquestra seed + Appium + AC |
-| `qa_db_seed` / `qa_db_cleanup` | Massa API / purge pós-evidência |
-| `qa_appium_suite_parent` / `_child` | Evidências mobile |
+| `qa_validate` | Orquestra QA por cenário (init → pipeline → generate) |
+| `qa_init_suite_mobile` | Stack mobile + `apps_ready_ok` |
+| `qa_pipeline_evidence` / `qa_generate_evidence` | Appium + PNG/MP4 por cenário |
+| `qa_db_cleanup` | Purge pós-evidência (se ticket pedir) |
 | `execute_agent_actuation_tool` | Emite pass/fail role-based |
 
 | Status | Evento |
@@ -190,9 +191,10 @@ AGENT_MCP_QA_GATE = f"""\
 |------|-----------------|
 | `on_status_event` | AC + handoff do revisor |
 | `hitl_guard_actuation` | Antes de `execute` |
-| `qa_validate` | Orquestra QA completo |
-| `qa_db_seed` / `qa_db_cleanup` | Massa API / purge |
-| `qa_appium_suite_parent` / `_child` | Evidências Appium |
+| `qa_validate` | Orquestra QA por cenário |
+| `qa_init_suite_mobile` | Stack + apps_ready |
+| `qa_pipeline_evidence` / `qa_generate_evidence` | Evidências Appium |
+| `qa_db_cleanup` | Purge pós-evidência |
 | `execute_agent_actuation_tool` | `qa-gate_in_pull_request` ou retrocesso |
 """
 

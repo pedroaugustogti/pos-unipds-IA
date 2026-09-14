@@ -40,6 +40,8 @@
 - **Handoff:** arquivos alterados, contratos de seed em `agents/00-runtime/output/{task_id}/handoff.json`
 - **ReAct:** `on_status_event` → `developer_implement` → `execute_agent_actuation_tool` (eventos `qa-author_*`; ver `agent.md`)
 - Harness deve ser reutilizável pelo `qa-gate` sem duplicar lógica
+- **Execução E2E no gate:** o `qa-gate` chama só `qa_validate` — cadeia `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence` (ver [`qa-gate/README.md`](../qa-gate/README.md))
+- Specs/plugins de cenário (`qa.scenarios`, pipeline no ticket) devem alinhar com `lib/mobile/qa_pipeline_evidence.py`
 
 ## Ver também
 

@@ -83,7 +83,7 @@
       "AC-02: Entre 12:00–17:59 o header mostra prefixo Boa tarde",
       "AC-03: Entre 18:00–23:59 o header mostra prefixo Boa noite",
       "AC-04: `npm test -- childHome.state` passa com casos manhã/tarde/noite",
-      "AC-05: QA anexa 1 MP4 do fluxo Appium (pairing→home) + 3 PNG (Bom dia/Boa tarde/Boa noite) + JSON (massa via `qa_db_seed` + stack via `qa_ensure_stack_mobile`)"
+      "AC-05: QA anexa 1 MP4 do fluxo Appium (pairing→home) + 3 PNG (Bom dia/Boa tarde/Boa noite) + JSON (evidências via `qa_validate` — cadeia init→pipeline→generate)"
     ],
     "ac_verification": [
       {
@@ -93,12 +93,12 @@
       },
       {
         "id": "AC-02",
-        "command": "MCP: seed → ensure → qa_appium_suite_child(child_only) + relógio 08:00",
+        "command": "MCP qa_validate + relógio 08:00 no emulator-5556",
         "expected": "header contém Bom dia (PNG greeting-morning-08h)"
       },
       {
         "id": "AC-03",
-        "command": "MCP qa_validate / qa_mobile_with_recovery + evidências",
+        "command": "MCP qa_validate(task_id=T-P3-009, mode=live) + evidências",
         "expected": "1 MP4 fluxo Appium + 3 PNG saudações + JSON em agents/00-runtime/output/T-P3-009/qa-gate-({N})/evidence/"
       }
     ],
@@ -167,7 +167,7 @@
       "db_seed_profile": "basic_parent",
       "child_only": true,
       "appium_scope": "child_only",
-      "how_to_run": "MCP: qa_validate(task_id=T-P3-009) na fase In Test — guia = qa.evidence_pipeline + qa.scenarios + qa.evidence.* (1 MP4 fluxo + 3 PNG saudações). Equivalente: qa_mobile_with_recovery ou cadeia seed→ensure→suite→capture→cleanup.",
+      "how_to_run": "MCP: qa_validate(task_id=T-P3-009, mode=live) — guia = qa.evidence_pipeline; por cenário: qa_init_suite_mobile → qa_pipeline_evidence → qa_generate_evidence.",
       "mcp_sequence": [
         "get_handoff",
         "emit_status_event(qa-gate_in_test)",
@@ -186,7 +186,7 @@
       "target_screen": "child:ChildHomeV2",
       "target_element": "header.greetingTitle (Bom dia|Boa tarde|Boa noite, {nome}!)",
       "preconditions": [
-        "Stack child-only: API + Postgres + emulator-5556 + Metro :9090 + APK instalado — via `qa_ensure_stack_mobile(child_only=true)` (**sem** emulador parent)",
+        "Stack child-only: API + Postgres + emulator-5556 + Metro :9090 + APK instalado — via `qa_init_suite_mobile` (`apps_ready_ok`, child-only — **sem** emulador parent)",
         "`qa_db_seed(profile=basic_parent)` concluiu com pairing code no handoff (`lastStep` tipicamente `config_family`)",
         "Appium feature efetiva: `pairing` (trim child-only) → paste_code → allow_permissions → go_to_home_child"
       ],
@@ -221,15 +221,11 @@
         }
       ],
       "qa_repro_steps": [
-        "1. `qa_db_seed(task_id=T-P3-009, profile=basic_parent, dry_run=false)`",
-        "2. `qa_ensure_stack_mobile(task_id=T-P3-009, child_only=true, dry_run=false)` — API/boot/Metro/APK/apps_ready",
-        "3. `qa_appium_suite_child(from_db_seed=true, task_id=T-P3-009, child_only=true, skip_appium=false, dry_run=false)` — abre app → pairing (seed) → permissões → home",
-        "4a. Evidência **vídeo**: MP4 do fluxo Appium do passo 3 (pairing→home) no pacote `qa-gate-({N})/evidence/`",
-        "4b. Evidência **prints**: após home, cenários `greeting-morning-08h` / `greeting-afternoon-15h` / `greeting-evening-21h` → 3 PNG (Bom dia / Boa tarde / Boa noite)",
-        "5. `qa_db_cleanup(task_id=T-P3-009, dry_run=false)`",
-        "Alternativa composta: `qa_mobile_with_recovery(task_id=T-P3-009, child_only=true, dry_run=false)` (ou `qa_validate` na fase In Test)"
+        "1. `on_status_event(task_id=T-P3-009, event=qa-gate_in_test)`",
+        "2. `qa_validate(task_id=T-P3-009, mode=live)` — por cenário: `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence`",
+        "3. Evidências em `qa-gate-({N})/evidence/{scenario}/` — 1 MP4 fluxo + 3 PNG saudações"
       ],
-      "mermaid": "flowchart LR\n  seed[qa_db_seed basic_parent] --> ensure[qa_ensure_stack_mobile]\n  ensure --> appium[qa_appium_suite_child pairing]\n  appium --> home[ChildHomeV2]\n  home --> png[3 PNG saudações]\n  appium --> mp4[1 MP4 fluxo]"
+      "mermaid": "flowchart LR\n  validate[qa_validate] --> init[qa_init_suite_mobile]\n  init --> pipe[qa_pipeline_evidence]\n  pipe --> gen[qa_generate_evidence]\n  gen --> png[3 PNG saudações]\n  gen --> mp4[1 MP4 fluxo]"
     }
   },
   "playbook": {

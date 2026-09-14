@@ -1179,11 +1179,24 @@ def _device_from_pipeline(pipeline: dict[str, Any]) -> dict[str, Any]:
     return device
 
 
+def _apply_metro_bundle_reload(device: dict[str, Any] | None) -> dict[str, Any] | None:
+    """Após refresh do Metro, força reload hard no launch para pegar JS atualizado."""
+    if not isinstance(device, dict):
+        return device
+    launch = dict(device.get("launch") or {})
+    launch["reload_mode"] = "hard"
+    launch["hard_stop"] = True
+    launch["prefer_warm_session"] = False
+    launch["reload_after_set_clock"] = True
+    return {**device, "launch": launch}
+
+
 def run_qa_pipeline_evidence(
     actuation_context: dict[str, Any] | str | None = None,
     *,
     apps_ready_ok: bool = False,
     scenario_id: str = "",
+    metro_bundle_refreshed: bool = False,
     dry_run: bool = False,
 ) -> dict[str, Any]:
     """Gera scenario_pipeline só se apps_ready_ok=true."""
@@ -1256,6 +1269,15 @@ def run_qa_pipeline_evidence(
 
     pipeline = build_scenario_pipeline(task=task, scenario_id=resolved_sid, ctx=ctx)
     device = _device_from_pipeline(pipeline)
+    needs_hard_reload = metro_bundle_refreshed
+    if not needs_hard_reload and isinstance(device, dict):
+        from lib.mobile.metro_bundle_state import assess_metro_bundle
+
+        app_id = str(device.get("app") or "child")
+        bundle = assess_metro_bundle(app_id)
+        needs_hard_reload = int((bundle.get("current") or {}).get("dirty_count") or 0) > 0
+    if needs_hard_reload:
+        device = _apply_metro_bundle_reload(device)
     binding = pipeline.get("binding") if isinstance(pipeline.get("binding"), dict) else {}
     if not binding.get("ok", True):
         return {

@@ -104,26 +104,71 @@ def build_actuation_prompt(ctx: dict[str, Any]) -> dict[str, Any]:
         ]
 
     repo = str(ticket.get("repo") or board.get("repo") or "")
-    suggested = list(ticket.get("suggested_files") or [])
+    if assigned.endswith("-reviewer"):
+        rf_files = (ticket.get("review_focus") or {}).get("suggested_files") or []
+        suggested = list(rf_files)
+    else:
+        suggested = list(ticket.get("suggested_files") or [])
     repo_scan = scan_repo_context(repo, suggested)
 
     qa_block = ""
-    if isinstance(ticket.get("qa"), dict) and ticket["qa"]:
+    if assigned == "qa-gate" and isinstance(ticket.get("qa"), dict) and ticket["qa"]:
         qa = ticket["qa"]
         qa_block = (
             f"### QA (qa-gate)\n"
             f"- Suite: `{qa.get('test_suite')}`\n"
             f"- Cenários: {qa.get('scenarios')}\n"
-            f"- MCP: {qa.get('mcp_sequence') or qa.get('how_to_run')}\n"
+            f"- Execução: {qa.get('how_to_run') or qa.get('mcp_sequence')}\n"
+        )
+
+    review_block = ""
+    if assigned.endswith("-reviewer") and isinstance(ticket.get("review_focus"), dict):
+        rf = ticket["review_focus"]
+        review_block = (
+            "### Foco da revisão\n"
+            f"- Creator: `{rf.get('creator_role')}`\n"
+            f"- Estado esperado: {rf.get('state_after')}\n"
+            f"- Arquivos: {rf.get('suggested_files')}\n"
+            f"- AC: {rf.get('acceptance_criteria')}\n"
         )
 
     user_flow = ticket.get("user_flow")
     user_flow_block = ""
-    if isinstance(user_flow, dict) and user_flow:
+    if isinstance(user_flow, dict) and user_flow and assigned in ("qa-gate", ticket.get("creator_role")):
         user_flow_block = (
             "### User flow (mobile)\n"
             f"- App: `{user_flow.get('app')}` · Emulator: `{user_flow.get('emulator')}` · Metro: `{user_flow.get('metro_port')}`\n"
             f"- Alvo: `{user_flow.get('target_screen')}` → `{user_flow.get('target_element')}`\n"
+        )
+
+    impl_block = ""
+    if assigned in (ticket.get("creator_role"), board.get("agent_role")):
+        impl_block = (
+            "### Passos de implementação (creator)\n"
+            f"{_bullet(list(ticket.get('implementation_steps') or []))}\n"
+        )
+
+    ac_block = ""
+    if assigned.endswith("-reviewer"):
+        rf = ticket.get("review_focus") or {}
+        ac_block = f"### Critérios de aceite (referência)\n{_bullet(list(rf.get('acceptance_criteria') or []))}\n"
+    else:
+        verify_lines = [
+            f"{v.get('id')}: {v.get('command')} → {v.get('expected')}"
+            for v in (ticket.get("ac_verification") or [])
+            if isinstance(v, dict)
+        ]
+        ac_block = (
+            f"### Critérios de aceite\n{_bullet(list(ticket.get('acceptance_criteria') or []))}\n"
+            f"### Verificação dos AC\n{_bullet(verify_lines)}\n"
+        )
+
+    scope_block = ""
+    if not assigned.endswith("-reviewer"):
+        scope_block = (
+            f"### Dentro do escopo\n{_bullet(list(ticket.get('in_scope') or []))}\n"
+            f"### Fora do escopo\n{_bullet(list(ticket.get('out_of_scope') or []))}\n"
+            f"### Não editar (do_not_touch)\n{_bullet(list(ticket.get('do_not_touch') or []))}\n"
         )
 
     prompt = f"""# Prompt de atuação — {assigned}
@@ -153,27 +198,13 @@ def build_actuation_prompt(ctx: dict[str, Any]) -> dict[str, Any]:
 ### User story
 {ticket.get("user_story") or "_(n/a)_"}
 
-### Dentro do escopo
-{_bullet(list(ticket.get("in_scope") or []))}
-
-### Fora do escopo
-{_bullet(list(ticket.get("out_of_scope") or []))}
-
-### Não editar (do_not_touch)
-{_bullet(list(ticket.get("do_not_touch") or []))}
-
-### Critérios de aceite
-{_bullet(list(ticket.get("acceptance_criteria") or []))}
-
-### Verificação dos AC
-{_bullet([f"{v.get('id')}: {v.get('command')} → {v.get('expected')}" for v in (ticket.get("ac_verification") or []) if isinstance(v, dict)])}
-
+{scope_block}
+{ac_block}
 ### Arquivos sugeridos
 {_bullet(suggested)}
 
-### Passos de implementação (creator)
-{_bullet(list(ticket.get("implementation_steps") or []))}
-
+{impl_block}
+{review_block}
 {user_flow_block}
 {qa_block}
 

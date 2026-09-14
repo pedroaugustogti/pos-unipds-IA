@@ -27,12 +27,14 @@ from typing import Any
 from lib.mobile.local_e2e import bootstrap_api_stack, resolve_android_home
 from lib.mobile.mobile_runtime_config import stack
 from lib.mobile.qa_mobile_mcp import _emulator_ready
+from lib.mobile.metro_bundle_state import assess_metro_bundle, record_metro_bundle_served
 from lib.mobile.qa_recovery import (
     _api_health_ok,
     _metro_ready,
     _package_installed,
     _repair_stack_stage,
     _run_fast_stack_phase,
+    _wait_metro_ready,
     log_recovery,
     stop_appium_only,
     stop_metro_only,
@@ -503,8 +505,30 @@ def _probe_check(name: str, *, app: str = "child") -> dict[str, Any]:
         ok = _emulator_ready(serial)
         return {"check": name, "ok": ok, "detail": serial if ok else f"{serial} not device"}
     if name == "metro":
-        ok = _metro_ready(metro)
-        return {"check": name, "ok": ok, "detail": f":{metro}"}
+        if not _metro_ready(metro):
+            return {"check": name, "ok": False, "detail": f":{metro} down"}
+        bundle = assess_metro_bundle(app)
+        if bundle.get("stale"):
+            dirty = int((bundle.get("current") or {}).get("dirty_count") or 0)
+            dirty_hint = f", {dirty} file(s) changed" if dirty else ""
+            return {
+                "check": name,
+                "ok": False,
+                "detail": (
+                    f":{metro} bundle_stale ({bundle.get('reason')}{dirty_hint}) "
+                    f"served={bundle.get('served_fingerprint', '')[:16]} "
+                    f"current={bundle.get('current_fingerprint', '')[:16]}"
+                ),
+                "bundle_stale": True,
+                "bundle": bundle,
+                "error_type": "metro_bundle_stale",
+            }
+        return {
+            "check": name,
+            "ok": True,
+            "detail": f":{metro} fresh ({bundle.get('current_fingerprint', '')[:20]})",
+            "bundle": bundle,
+        }
     if name == "apk":
         ok = _package_installed(serial, bundle) if _emulator_ready(serial) else False
         return {
@@ -528,6 +552,7 @@ def _repair_check(
     name: str,
     *,
     app: str,
+    task_id: str,
     skip_build: bool,
     feature: str,
     timeout_sec: int,
@@ -567,7 +592,9 @@ def _repair_check(
         return {"ok": bool(repair.get("ok")), "check": name, "actions": actions, "error": repair.get("error")}
 
     if name == "metro":
-        stop_metro_only()
+        bundle_before = assess_metro_bundle(app)
+        actions.append({"metro_bundle_before": bundle_before})
+        stop_metro_only(int(stack(app)["metro_port"]))
         if parent_only:
             repair = _run_fast_stack_phase(
                 "Metro", child_only=False, parent_only=True, skip_build=True,
@@ -579,7 +606,25 @@ def _repair_check(
                 feature=feature, timeout_sec=timeout_sec,
             )
         actions.append(repair)
-        return {"ok": bool(repair.get("ok")), "check": name, "actions": actions, "error": repair.get("error")}
+        ok = bool(repair.get("ok"))
+        port = int(stack(app)["metro_port"])
+        if ok and not _wait_metro_ready(port, attempts=12, delay_sec=2.0):
+            ok = False
+            repair = {**repair, "error": "metro_not_ready_after_bundle_refresh"}
+        if ok:
+            recorded = record_metro_bundle_served(app, task_id=task_id)
+            actions.append({"metro_bundle_recorded": recorded})
+        return {
+            "ok": ok,
+            "check": name,
+            "actions": actions,
+            "error": repair.get("error"),
+            "detail": (
+                f"metro refreshed for {bundle_before.get('reason') or 'bundle_sync'}"
+                if ok
+                else repair.get("error")
+            ),
+        }
 
     if name == "apk":
         if parent_only:
@@ -619,6 +664,18 @@ def _emit(q: Queue, event: dict[str, Any]) -> None:
     event = {**event, "ts": _now()}
     q.put(event)
     _append_init_log({"phase": "event", **event})
+
+
+def _metro_bundle_refreshed(timeline: list[dict[str, Any]]) -> bool:
+    """True se algum repair metro gravou bundle novo nesta execução."""
+    return any(
+        isinstance(ev, dict)
+        and ev.get("type") == "repair_result"
+        and ev.get("check") == "metro"
+        and ev.get("ok")
+        and "metro refreshed" in str(ev.get("detail") or "").lower()
+        for ev in timeline
+    )
 
 
 def _fmt_time_exec(seconds: float) -> str:
@@ -751,6 +808,7 @@ def _init_one_app(
             repair = _repair_check(
                 check,
                 app=app,
+                task_id=task_id,
                 skip_build=skip_build,
                 feature=feature,
                 timeout_sec=timeout_sec,
@@ -1044,6 +1102,8 @@ def run_qa_init_suite_mobile(
             return {}
         return {k: v for k, v in block.items() if k != "error_runtime"}
 
+    metro_bundle_refreshed = _metro_bundle_refreshed(timeline)
+
     out: dict[str, Any] = {
         "ok": apps_ready_ok,
         "task_id": task_id,
@@ -1051,6 +1111,7 @@ def run_qa_init_suite_mobile(
         "suites_mobile": suites,
         "apps_ready": apps_ready_ok,
         "apps_ready_ok": apps_ready_ok,
+        "metro_bundle_refreshed": metro_bundle_refreshed,
         "checks_parent": checks_parent,
         "checks_child": checks_child,
         "appium_mode": appium_mode,

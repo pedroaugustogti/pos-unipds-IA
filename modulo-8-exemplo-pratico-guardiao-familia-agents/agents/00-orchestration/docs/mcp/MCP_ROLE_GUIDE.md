@@ -68,7 +68,7 @@ Leia handoff + PR antes de `developer_review`.
 Papel: `qa-gate`
 
 **Tools:** `on_status_event` → `hitl_guard_actuation` → `qa_validate` → `execute_agent_actuation_tool`  
-**QA mobile:** `qa_validate(worker_mode=local|docker)` → por cenário `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence` (PASS = todos ok)
+**QA mobile:** `qa_validate(worker_mode=local|docker)` → por cenário `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence` (PASS = todos ok). Init valida Metro com fingerprint do repo; pipeline força reload hard quando o bundle foi refrescado ou há working tree dirty.
 
 **Eventos:**
 

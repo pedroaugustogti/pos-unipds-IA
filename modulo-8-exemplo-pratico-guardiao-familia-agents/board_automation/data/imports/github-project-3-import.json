@@ -811,8 +811,8 @@
       "title": "Child home: saudação dinâmica por horário no cabeçalho",
       "repository": "guardiao-familia-child",
       "type": "Issue",
-      "issue_number": "109",
-      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-child/issues/109",
+      "issue_number": "110",
+      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-child/issues/110",
       "fields": {
         "Status": "Todo",
         "Trilha": "produto",
@@ -824,7 +824,7 @@
         "Release Blocker": "no",
         "Priority Rank": 9,
         "Repo alvo": "guardiao-familia-child",
-        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg5Q4tA"
+        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg6pJJY"
       },
       "labels": [
         "agent:frontend-mobile"
@@ -856,7 +856,7 @@
           "AC-02: Entre 12:00–17:59 o header mostra prefixo Boa tarde",
           "AC-03: Entre 18:00–23:59 o header mostra prefixo Boa noite",
           "AC-04: `npm test -- childHome.state` passa com casos manhã/tarde/noite",
-          "AC-05: QA anexa 1 MP4 do fluxo Appium (pairing→home) + 3 PNG (Bom dia/Boa tarde/Boa noite) + JSON (massa via `qa_db_seed` + stack via `qa_ensure_stack_mobile`)"
+          "AC-05: QA anexa 1 MP4 do fluxo Appium (pairing→home) + 3 PNG (Bom dia/Boa tarde/Boa noite) + JSON (evidências via `qa_validate` (cadeia `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence`))"
         ],
         "implementation_steps": [
           "git checkout -b feat/t-p3-009-child-greeting",
@@ -873,7 +873,7 @@
           "target_screen": "child:ChildHomeV2",
           "target_element": "header.greetingTitle (Bom dia|Boa tarde|Boa noite, {nome}!)",
           "preconditions": [
-            "Stack child-only: API + Postgres + emulator-5556 + Metro :9090 + APK instalado — via `qa_ensure_stack_mobile(child_only=true)` (**sem** emulador parent)",
+            "Stack child-only: API + Postgres + emulator-5556 + Metro :9090 + APK instalado — via `qa_init_suite_mobile` (`apps_ready_ok`, child-only — **sem** emulador parent)",
             "`qa_db_seed(profile=basic_parent)` concluiu com pairing code no handoff (`lastStep` tipicamente `config_family`)",
             "Appium feature efetiva: `pairing` (trim child-only) → paste_code → allow_permissions → go_to_home_child"
           ],
@@ -908,15 +908,11 @@
             }
           ],
           "qa_repro_steps": [
-            "1. `qa_db_seed(task_id=T-P3-009, profile=basic_parent, dry_run=false)`",
-            "2. `qa_ensure_stack_mobile(task_id=T-P3-009, child_only=true, dry_run=false)` — API/boot/Metro/APK/apps_ready",
-            "3. `qa_appium_suite_child(from_db_seed=true, task_id=T-P3-009, child_only=true, skip_appium=false, dry_run=false)` — abre app → pairing (seed) → permissões → home",
-            "4a. Evidência **vídeo**: MP4 do fluxo Appium do passo 3 (pairing→home) no pacote `qa-gate-({N})/evidence/`",
-            "4b. Evidência **prints**: após home, cenários `greeting-morning-08h` / `greeting-afternoon-15h` / `greeting-evening-21h` → 3 PNG (Bom dia / Boa tarde / Boa noite)",
-            "5. `qa_db_cleanup(task_id=T-P3-009, dry_run=false)`",
-            "Alternativa composta: `qa_mobile_with_recovery(task_id=T-P3-009, child_only=true, dry_run=false)` (ou `qa_validate` na fase In Test)"
+            "1. `on_status_event(task_id=T-P3-009, event=qa-gate_in_test)`",
+            "2. `qa_validate(task_id=T-P3-009, mode=live)` — por cenário: `qa_init_suite_mobile` → `qa_pipeline_evidence` → `qa_generate_evidence`",
+            "3. Evidências em `qa-gate-({N})/evidence/{scenario}/` — 1 MP4 fluxo + 3 PNG saudações (inferido de `qa.scenarios` + `qa.evidence.*`)"
           ],
-          "mermaid": "flowchart LR\n  seed[qa_db_seed basic_parent] --> ensure[qa_ensure_stack_mobile]\n  ensure --> appium[qa_appium_suite_child pairing]\n  appium --> home[ChildHomeV2]\n  home --> png[3 PNG saudações]\n  appium --> mp4[1 MP4 fluxo]"
+          "mermaid": "flowchart LR\n  validate[qa_validate] --> init[qa_init_suite_mobile]\n  init --> pipe[qa_pipeline_evidence]\n  pipe --> gen[qa_generate_evidence]\n  gen --> png[3 PNG saudações]\n  gen --> mp4[1 MP4 fluxo]"
         },
         "do_not_touch": [
           "SOS button",
@@ -931,13 +927,13 @@
           },
           {
             "id": "AC-02",
-            "command": "MCP: seed → ensure → qa_appium_suite_child(child_only) + relógio 08:00",
-            "expected": "header contém Bom dia (PNG greeting-morning-08h)"
+            "command": "MCP qa_validate + relógio 08:00 no emulator-5556",
+            "expected": "PNG greeting-morning-08h com Bom dia"
           },
           {
             "id": "AC-03",
-            "command": "MCP qa_validate / qa_mobile_with_recovery + evidências",
-            "expected": "1 MP4 fluxo Appium + 3 PNG saudações + JSON em agents/00-runtime/output/T-P3-009/qa-gate-({N})/evidence/"
+            "command": "MCP qa_validate(task_id=T-P3-009, mode=live) + evidências",
+            "expected": "1 MP4 fluxo + 3 PNG saudações + JSON em agents/00-runtime/output/T-P3-009/qa-gate-({N})/evidence/"
           }
         ],
         "stop_and_redirect": [
@@ -967,14 +963,17 @@
           "guide_for": "qa_validate",
           "note": "MCP recebe só task_id; resolve este plano a partir do ticket (sem params extras de pipeline).",
           "execution_order": [
-            "qa_db_seed(profile=basic_parent)",
-            "qa_ensure_stack_mobile(child_only=true)",
-            "qa_appium_suite_child(from_db_seed=true, child_only=true) → 1 MP4 appium_flow_pairing_to_home",
-            "capture_scenario_evidence(prepare→capture→finalize) → 3 PNG child_home_greeting_per_period",
+            "qa_init_suite_mobile(child_only=true, apps_ready_ok)",
+            "qa_pipeline_evidence",
+            "qa_generate_evidence → 1 MP4 appium_flow_pairing_to_home + 3 PNG child_home_greeting_per_period",
             "qa_db_cleanup"
           ],
           "precondition": "suite Appium OK nesta execucao (fluxo pairing->home) antes da captura",
-          "capture_phases": ["prepare", "capture", "finalize"],
+          "capture_phases": [
+            "prepare",
+            "capture",
+            "finalize"
+          ],
           "artifacts": {
             "mp4": {
               "count": 1,
@@ -989,7 +988,11 @@
                 "greeting-afternoon-15h",
                 "greeting-evening-21h"
               ],
-              "labels": ["Bom dia", "Boa tarde", "Boa noite"]
+              "labels": [
+                "Bom dia",
+                "Boa tarde",
+                "Boa noite"
+              ]
             },
             "json": true
           }
@@ -1002,9 +1005,180 @@
           "cleanup": true,
           "bootstrap_api": true
         },
-        "how_to_run": "MCP: qa_validate(task_id=T-P3-009) na fase In Test — guia = qa.evidence_pipeline + qa.scenarios + qa.evidence.* (1 MP4 fluxo + 3 PNG saudações). Equivalente: qa_mobile_with_recovery ou cadeia seed→ensure→suite→capture→cleanup."
+        "how_to_run": "MCP: qa_validate(task_id=T-P3-009, mode=live) — guia = qa.evidence_pipeline; por cenário: qa_init_suite_mobile → qa_pipeline_evidence → qa_generate_evidence."
+      }
+    },
+    {
+      "id": "T-P3-010",
+      "title": "Child home: botão SOS com label único centralizado",
+      "repository": "guardiao-familia-child",
+      "type": "Issue",
+      "issue_number": "111",
+      "issue_url": "https://github.com/guardiaofamilia/guardiao-familia-child/issues/111",
+      "fields": {
+        "Status": "In Progress",
+        "Trilha": "produto",
+        "Epic": "E-P3 Project 3 Sandbox",
+        "Sprint": 1,
+        "Story Points": 1,
+        "RICE Score": 7.5,
+        "WSJF": 3.5,
+        "Release Blocker": "no",
+        "Priority Rank": 10,
+        "Repo alvo": "guardiao-familia-child",
+        "Project Item Id": "PVTI_lADOEDZbAM4BhlJDzg6pVB0"
+      },
+      "labels": [
+        "agent:frontend-mobile"
+      ],
+      "refinement": {
+        "context_summary": "Na ChildHomeV2 o botão SOS exibe dois blocos informativos: dentro do gradiente (emoji + \"SOS\") e ao lado (\"Emergência\" + subtítulo). O objetivo é um único label centralizado no botão.",
+        "user_story": "Como criança, quero ver um botão SOS claro e simples, para pedir ajuda sem confusão visual.",
+        "suggested_files": [
+          "screens/ChildHomeV2.tsx",
+          "components/home/SOSButton.tsx",
+          "screens/__tests__/childHome.state.test.ts"
+        ],
+        "in_scope": [
+          "Unificar labels do botão SOS na home (ChildHomeV2): um texto centralizado no botão",
+          "Remover `sosBannerTextWrap` lateral ou textos duplicados no Pressable `testID=\"sos-button\"`",
+          "Centralizar conteúdo (ícone + label único) no botão vermelho",
+          "Preservar comportamento de toque e loading (`sosBusy`)",
+          "Atualizar testes/accessibility se listarem textos removidos"
+        ],
+        "out_of_scope": [
+          "Fluxo SOS ativo / modal / countdown",
+          "Alterar API SOS ou notificações",
+          "Mudar saudação dinâmica (T-P3-009)",
+          "App parent"
+        ],
+        "do_not_touch": [
+          "lib/sosApi.ts",
+          "components/sos/SOSActiveScreen.tsx"
+        ],
+        "state_before": "Botão SOS na home mostra emoji+\"SOS\" no gradiente e, ao lado, título \"Emergência\" + subtítulo explicativo — dois blocos informativos.",
+        "state_after": "Botão SOS exibe apenas um label informativo centralizado no botão; sem texto lateral redundante; screenshot QA comprova layout.",
+        "acceptance_hints": [
+          "AC-01: Na ChildHomeV2 existe apenas um label informativo visível no botão SOS (centralizado)",
+          "AC-02: Não há bloco lateral \"Emergência\" / subtítulo duplicado ao lado do botão",
+          "AC-03: `testID=\"sos-button\"` permanece funcional para Appium",
+          "AC-04: QA anexa 1 PNG do botão SOS na home (child-only, seed + screenshot)"
+        ],
+        "ac_verification": [
+          {
+            "id": "AC-01",
+            "command": "Inspeção visual emulador 5556 / ChildHomeV2",
+            "expected": "Um único label centralizado no botão SOS"
+          },
+          {
+            "id": "AC-02",
+            "command": "grep/layout ChildHomeV2 Pressable sos-button",
+            "expected": "Sem sosBannerTextWrap com título/subtítulo lateral"
+          },
+          {
+            "id": "AC-03",
+            "command": "Appium find testID sos-button",
+            "expected": "Elemento encontrado e clicável"
+          },
+          {
+            "id": "AC-04",
+            "command": "MCP qa_validate(task_id=T-P3-010) child_only",
+            "expected": "1 PNG em agents/00-runtime/output/T-P3-010/qa-gate-({N})/evidence/sos-button-centered-label/"
+          }
+        ],
+        "implementation_steps": [
+          "git checkout -b feat/t-p3-010-child-sos-button-layout",
+          "Em ChildHomeV2.tsx: refatorar Pressable `testID=\"sos-button\"` — remover textos laterais, centralizar label único",
+          "Revisar SOSButton.tsx (modo overlay) para consistência visual se necessário",
+          "Ajustar estilos (`sosMainButton*`, remover ou esvaziar `sosBannerTextWrap`)",
+          "Validar no emulador child (5556) e abrir PR com screenshot"
+        ],
+        "user_flow": {
+          "app": "guardiao-familia-child",
+          "entry_point": "ChildHomeV2 após seed `child_home` — child já na home",
+          "emulator": "emulator-5556",
+          "metro_port": 9090,
+          "target_screen": "child:ChildHomeV2",
+          "target_element": "testID sos-button — label único centralizado",
+          "preconditions": [
+            "Stack child-only validada por `qa_init_suite_mobile` (`apps_ready_ok`)",
+            "`qa_db_seed(profile=child_home)` — massa + child na home (sem emulador parent)"
+          ],
+          "steps": [
+            {
+              "order": 1,
+              "screen": "Child launch",
+              "user_action": "Abrir app child",
+              "system_behavior": "Sessão Appium / seed resume",
+              "file": "ChildHomeV2"
+            },
+            {
+              "order": 2,
+              "screen": "ChildHomeV2",
+              "user_action": "Visualizar botão SOS",
+              "system_behavior": "Label único centralizado visível",
+              "file": "screens/ChildHomeV2.tsx"
+            }
+          ],
+          "qa_repro_steps": [
+            "Após suite/seed: localizar `testID=\"sos-button\"` na home",
+            "Screenshot PNG do botão SOS mostrando label único centralizado"
+          ]
+        }
+      },
+      "qa": {
+        "test_suite": "qa-mobile-child-appium",
+        "appium_scope": "child_only",
+        "scenarios": [
+          "sos-button-centered-label"
+        ],
+        "evidence": {
+          "screenshot_png": true,
+          "video_mp4": false,
+          "json_report": true,
+          "ci_link": false,
+          "scenarios_count": 1,
+          "screenshot_scope": "child_home_single",
+          "video_scope": "",
+          "greeting_video": false
+        },
+        "evidence_pipeline": {
+          "guide_for": "qa_validate",
+          "execution_order": [
+            "qa_init_suite_mobile(child_only=true, apps_ready_ok)",
+            "qa_pipeline_evidence",
+            "qa_generate_evidence → 1 PNG sos-button-centered-label",
+            "qa_db_cleanup"
+          ],
+          "precondition": "child na home com botão SOS visível",
+          "capture_phases": [
+            "capture"
+          ],
+          "artifacts": {
+            "png": {
+              "count": 1,
+              "scope": "child_home_single",
+              "scenarios": [
+                "sos-button-centered-label"
+              ],
+              "labels": [
+                "Botão SOS label único"
+              ]
+            },
+            "json": true
+          }
+        },
+        "db_seed": {
+          "enabled": true,
+          "profile": "child_home",
+          "family_name": "QA Evidence T-P3-010",
+          "child_name": "Filho QA T-P3-010",
+          "cleanup": true,
+          "bootstrap_api": true
+        },
+        "how_to_run": "MCP: qa_validate(task_id=T-P3-010) — child-only, seed child_home, 1 PNG do botão SOS (sem MP4)."
       }
     }
   ],
-  "generated": "2026-08-31"
+  "generated": "2026-09-12"
 }

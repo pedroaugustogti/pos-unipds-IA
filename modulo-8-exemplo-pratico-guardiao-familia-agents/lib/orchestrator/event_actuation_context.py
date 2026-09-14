@@ -86,6 +86,25 @@ def _playbook_for_role(agent_role: str, event: str, target_status: str) -> dict[
     }
 
 
+def _ticket_meta(enriched: dict[str, Any], payload: dict[str, Any], creator: str) -> dict[str, Any]:
+    return {
+        "task_id": enriched.get("id"),
+        "title": enriched.get("title"),
+        "creator_role": creator,
+        "reviewer_role": reviewer_for(creator),
+        "track": enriched.get("track") or "produto",
+        "repo": str(enriched.get("repo") or ""),
+        "repo_path": payload.get("repo_path"),
+        "branch": payload.get("branch"),
+        "base_branch": payload.get("base_branch"),
+        "epic_id": enriched.get("epic_id") or "",
+        "depends_on": payload.get("depends_on") or [],
+        "release_blocker": bool(payload.get("release_blocker")),
+        "issue_url": enriched.get("issue_url"),
+        "issue_number": enriched.get("issue_number"),
+    }
+
+
 def _extract_ticket_slice(task: dict[str, Any], agent_role: str) -> dict[str, Any]:
     """Campos do ticket relevantes para o papel que vai atuar."""
     enriched = {**task, "refinement": _enrich_refinement_from_db(task)}
@@ -95,51 +114,37 @@ def _extract_ticket_slice(task: dict[str, Any], agent_role: str) -> dict[str, An
     repo = str(enriched.get("repo") or "")
     creator = normalize_creator_role(str(enriched.get("agent_role") or "backend"))
     responsibilities = enriched.get("agent_responsibilities") or {}
-
-    common = {
-        "task_id": enriched.get("id"),
-        "title": enriched.get("title"),
-        "creator_role": creator,
-        "reviewer_role": reviewer_for(creator),
-        "track": enriched.get("track") or "produto",
-        "repo": repo,
-        "repo_path": payload.get("repo_path"),
-        "branch": payload.get("branch"),
-        "base_branch": payload.get("base_branch"),
-        "epic_id": enriched.get("epic_id") or "",
-        "depends_on": payload.get("depends_on") or [],
-        "release_blocker": bool(payload.get("release_blocker")),
-        "issue_url": enriched.get("issue_url"),
-        "issue_number": enriched.get("issue_number"),
-        "acceptance_criteria": list(ref.get("acceptance_hints") or []),
-        "ac_verification": list(ref.get("ac_verification") or []),
-        "in_scope": list(ref.get("in_scope") or []),
-        "out_of_scope": list(ref.get("out_of_scope") or []),
-        "suggested_files": list(ref.get("suggested_files") or []),
-        "do_not_touch": list(ref.get("do_not_touch") or []),
-        "implementation_steps": list(ref.get("implementation_steps") or []),
-        "context_summary": ref.get("context_summary") or "",
-        "technical_notes": ref.get("technical_notes") or "",
-        "user_story": ref.get("user_story") or "",
-        "stop_and_redirect": list(ref.get("stop_and_redirect") or []),
-        "agent_responsibilities": responsibilities.get(agent_role)
-        or responsibilities.get(f"{creator}-reviewer")
-        or responsibilities.get(QA_GATE_ROLE)
-        or [],
-    }
+    meta = _ticket_meta(enriched, payload, creator)
+    role_resp = responsibilities.get(agent_role) or []
 
     if agent_role in CREATOR_ROLES:
-        common["user_flow"] = ref.get("user_flow") if agent_role == "frontend-mobile" else None
-        common["handoff_expectations"] = payload.get("handoff_expectations") or {}
-        return common
+        return {
+            **meta,
+            "context_summary": ref.get("context_summary") or "",
+            "technical_notes": ref.get("technical_notes") or "",
+            "user_story": ref.get("user_story") or "",
+            "state_before": ref.get("state_before"),
+            "state_after": ref.get("state_after"),
+            "in_scope": list(ref.get("in_scope") or []),
+            "out_of_scope": list(ref.get("out_of_scope") or []),
+            "suggested_files": list(ref.get("suggested_files") or []),
+            "do_not_touch": list(ref.get("do_not_touch") or []),
+            "stop_and_redirect": list(ref.get("stop_and_redirect") or []),
+            "implementation_steps": list(ref.get("implementation_steps") or []),
+            "acceptance_criteria": list(ref.get("acceptance_hints") or []),
+            "agent_responsibilities": role_resp,
+            "user_flow": ref.get("user_flow") if agent_role == "frontend-mobile" else None,
+            "handoff_expectations": payload.get("handoff_expectations") or {},
+        }
 
     if agent_role.endswith("-reviewer"):
         return {
-            **common,
+            **meta,
+            "agent_responsibilities": role_resp or responsibilities.get(f"{creator}-reviewer") or [],
             "review_focus": {
                 "creator_role": creator,
-                "suggested_files": common["suggested_files"],
-                "acceptance_criteria": common["acceptance_criteria"],
+                "suggested_files": list(ref.get("suggested_files") or []),
+                "acceptance_criteria": list(ref.get("acceptance_hints") or []),
                 "state_before": ref.get("state_before"),
                 "state_after": ref.get("state_after"),
             },
@@ -161,8 +166,18 @@ def _extract_ticket_slice(task: dict[str, Any], agent_role: str) -> dict[str, An
             }
         elif not db_seed_block.get("enabled"):
             db_seed_block = {**db_seed_block, "enabled": True}
+        tid = str(enriched.get("id") or "")
+        how_to = str(qa.get("how_to_run") or "").strip()
+        if not how_to and tid:
+            how_to = (
+                f"MCP: qa_validate(task_id={tid}, mode=live) — "
+                "por cenário: qa_init_suite_mobile → qa_pipeline_evidence → qa_generate_evidence"
+            )
         return {
-            **common,
+            **meta,
+            "acceptance_criteria": list(ref.get("acceptance_hints") or []),
+            "ac_verification": list(ref.get("ac_verification") or []),
+            "agent_responsibilities": role_resp or responsibilities.get(QA_GATE_ROLE) or [],
             "qa": {
                 "test_suite": qa.get("test_suite"),
                 "scenarios": list(qa.get("scenarios") or []),
@@ -171,14 +186,12 @@ def _extract_ticket_slice(task: dict[str, Any], agent_role: str) -> dict[str, An
                 "db_seed_profile": profile,
                 "child_only": child_only,
                 "appium_scope": qa.get("appium_scope"),
-                "how_to_run": qa.get("how_to_run"),
+                "how_to_run": how_to or qa.get("how_to_run"),
                 "mcp_sequence": [
-                    "get_handoff",
-                    "emit_status_event(qa-gate_in_test)",
-                    "query_mobile_flow_rag",
-                    "qa_init_suite_mobile",
-                    "qa_pipeline_evidence",
-                    "qa_generate_evidence",
+                    "on_status_event(qa-gate, In Test)",
+                    "hitl_guard_actuation",
+                    "qa_validate(mode=live)",
+                    "execute_agent_actuation_tool",
                     "emit_status_event(qa-gate_in_pull_request|qa-gate_return_in_progress)",
                 ],
             },
@@ -187,7 +200,7 @@ def _extract_ticket_slice(task: dict[str, Any], agent_role: str) -> dict[str, An
 
     if agent_role in ("devops-cicd", "stores-release"):
         return {
-            **common,
+            **meta,
             "merge": {
                 "merge_owner": merge_owner_for_task(str(enriched.get("track") or "produto")),
                 "requires_hitl": True,
@@ -197,7 +210,8 @@ def _extract_ticket_slice(task: dict[str, Any], agent_role: str) -> dict[str, An
 
     if agent_role == "orchestrator":
         return {
-            **common,
+            **meta,
+            "context_summary": ref.get("context_summary") or "",
             "routing": {
                 "creator_role": creator,
                 "match_reason": enriched.get("match_reason"),
@@ -205,7 +219,7 @@ def _extract_ticket_slice(task: dict[str, Any], agent_role: str) -> dict[str, An
             },
         }
 
-    return common
+    return meta
 
 
 def prepare_actuation_for_event(

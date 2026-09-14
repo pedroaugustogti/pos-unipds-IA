@@ -41,6 +41,7 @@
 - **Handoff:** PR, branch, screenshots ou dúvidas em `agents/00-runtime/output/{task_id}/handoff.json`
 - **ReAct:** `on_status_event` → `developer_implement` → `execute_agent_actuation_tool` (eventos `frontend-mobile_*`; ver `agent.md`)
 - Nunca mergear; não alterar Terraform ou harness de QA
+- Após implementação, o **qa-gate** valida com `qa_validate` (Metro fingerprint + reload se código local mudou) — evidência em `output/{task_id}/qa-gate-({N})/evidence/`
 
 ## Ver também
 

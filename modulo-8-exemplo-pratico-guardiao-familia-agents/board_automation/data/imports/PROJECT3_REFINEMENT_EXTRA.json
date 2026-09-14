@@ -258,7 +258,7 @@
       ],
       "qa-gate": [
         "Cenários + `qa.evidence_pipeline` (guia `qa_validate`): greeting-morning-08h / afternoon-15h / evening-21h + AC sec. 5 no comentário sec. 10.3",
-        "MCP: `qa_validate(task_id=T-P3-009)` — resolve seed→ensure→suite→capture(3 PNG)+1 MP4→cleanup a partir do ticket",
+        "MCP: `qa_validate(task_id=T-P3-009, mode=live)` — por cenário: init → pipeline → generate (seed/cleanup embutidos)",
         "Appium: abrir child → pairing (código do seed) → permissões → ChildHomeV2 (`childHome=true` antes dos prints)",
         "Anexar **1 MP4 do fluxo** + **3 PNG** (Bom dia/Boa tarde/Boa noite) + JSON em `qa-gate-({N})/evidence/`",
         "`qa-gate_in_pull_request` ou `qa-gate_return_in_progress` — **não** alterar código"
@@ -268,8 +268,8 @@
       "do_not_touch": ["SOS button", "screen time card", "pairing API contracts"],
       "ac_verification": [
         {"id": "AC-01", "command": "npm test -- childHome.state", "expected": "exit 0 — casos 08:00 Bom dia, 15:00 Boa tarde, 21:00 Boa noite"},
-        {"id": "AC-02", "command": "MCP seed→ensure→suite + relógio 08:00 no emulator-5556", "expected": "PNG greeting-morning-08h com Bom dia"},
-        {"id": "AC-03", "command": "MCP qa_validate / qa_mobile_with_recovery + evidências", "expected": "1 MP4 fluxo + 3 PNG saudações + JSON em agents/00-runtime/output/T-P3-009/qa-gate-({N})/evidence/"}
+        {"id": "AC-02", "command": "MCP qa_validate(live) + cenário greeting-morning-08h (relógio 08:00)", "expected": "PNG greeting-morning-08h com Bom dia"},
+        {"id": "AC-03", "command": "MCP qa_validate(task_id=T-P3-009, mode=live) + evidências", "expected": "1 MP4 fluxo + 3 PNG saudações + JSON em agents/00-runtime/output/T-P3-009/qa-gate-({N})/evidence/"}
       ],
       "stop_and_redirect": [
         "Alterar pairing parent → frontend-mobile parent task",

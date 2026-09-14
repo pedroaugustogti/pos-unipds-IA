@@ -81,7 +81,7 @@ Toda issue `frontend-mobile` deve incluir sec. **2.1** no corpo (gerada por `lib
 
 Template: [`board_automation/templates/MOBILE_USER_FLOW_TEMPLATE.md`](../../board_automation/templates/MOBILE_USER_FLOW_TEMPLATE.md)
 
-**Consulta RAG:** antes de codar, invocar MCP `query_mobile_flow_rag` com título da task + tela alvo — retorna fluxo 0→N, arquivos e similaridade.
+**Consulta RAG:** antes de codar, usar `lib/mobile/mobile_flow_rag.py` (ou fluxo do ticket sec. 2.1) com título da task + tela alvo.
 
 **Não implementar** se o mapa estiver vazio ou divergir do código em `App.tsx` — corrigir ticket ou re-rodar discovery.
 
