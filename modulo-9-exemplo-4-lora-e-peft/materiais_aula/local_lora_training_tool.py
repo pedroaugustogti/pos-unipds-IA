@@ -17,7 +17,13 @@ import json
 import subprocess
 from pathlib import Path
 
-DATASET_ORIGEM = Path(__file__).parent.parent / "modulo-03-fine-tuning-via-api" / "dataset-treinado.jsonl"
+# Local pos-unipds-IA: dataset do Ex.3 (materiais_aula)
+DATASET_ORIGEM = (
+    Path(__file__).resolve().parents[2]
+    / "modulo-9-exemplo-3-fine-tuning-via-api"
+    / "materiais_aula"
+    / "dataset-treinado.jsonl"
+)
 DIR_DADOS_MLX = Path(__file__).parent / "mlx-data"
 
 

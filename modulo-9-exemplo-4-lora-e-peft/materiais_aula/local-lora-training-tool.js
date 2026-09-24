@@ -23,7 +23,15 @@ const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 
-const DATASET_ORIGEM = path.join(__dirname, '..', 'modulo-03-fine-tuning-via-api', 'dataset-treinado.jsonl');
+// Local pos-unipds-IA: dataset do Ex.3 (materiais_aula)
+const DATASET_ORIGEM = path.join(
+  __dirname,
+  '..',
+  '..',
+  'modulo-9-exemplo-3-fine-tuning-via-api',
+  'materiais_aula',
+  'dataset-treinado.jsonl'
+);
 const DIR_DADOS_MLX = path.join(__dirname, 'mlx-data');
 
 /* ============================================================================
