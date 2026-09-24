@@ -18,7 +18,13 @@ Uso: python3 m3_dataset_scaling_tool.py
 import importlib.util
 from pathlib import Path
 
-_M2_2_PATH = Path(__file__).parent.parent / "modulo-02-preparacao-datasets" / "dataset_cleaning_balancing_tool.py"
+# Local pos-unipds-IA: Ex.2 limpeza/balanceamento (materiais_aula)
+_M2_2_PATH = (
+    Path(__file__).resolve().parents[2]
+    / "modulo-9-exemplo-2-preparacao-datasets"
+    / "materiais_aula"
+    / "dataset_cleaning_balancing_tool.py"
+)
 _spec = importlib.util.spec_from_file_location("dataset_cleaning_balancing_tool", _M2_2_PATH)
 m22 = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(m22)

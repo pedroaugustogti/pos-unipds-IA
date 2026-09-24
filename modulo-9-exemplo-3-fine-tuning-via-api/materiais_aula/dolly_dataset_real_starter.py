@@ -43,7 +43,16 @@ import os
 import sys
 
 _AQUI = os.path.dirname(os.path.abspath(__file__))
-_CAMINHO_M22 = os.path.join(_AQUI, "..", "modulo-02-preparacao-datasets", "dataset_cleaning_balancing_tool.py")
+_CAMINHO_M22 = os.path.normpath(
+    os.path.join(
+        _AQUI,
+        "..",
+        "..",
+        "modulo-9-exemplo-2-preparacao-datasets",
+        "materiais_aula",
+        "dataset_cleaning_balancing_tool.py",
+    )
+)
 _spec = importlib.util.spec_from_file_location("dataset_cleaning_balancing_tool", _CAMINHO_M22)
 m2 = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(m2)

@@ -39,7 +39,14 @@
 const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
-const m2 = require('../modulo-02-preparacao-datasets/dataset-cleaning-balancing-tool.js');
+const m2 = require(path.join(
+  __dirname,
+  '..',
+  '..',
+  'modulo-9-exemplo-2-preparacao-datasets',
+  'materiais_aula',
+  'dataset-cleaning-balancing-tool.js'
+));
 
 const CATEGORIAS_COMPATIVEIS = ['information_extraction', 'closed_qa', 'summarization'];
 const CASO = 'dolly-instruction-tuning';
