@@ -208,6 +208,25 @@ Relatórios didáticos: cada exemplo em `docs/RELATORIO_DIDATICO_AULA.md` · Sca
 
 ---
 
+## Módulo 9 — Processamento de Dados e Fine-Tuning (Amplitude Seguros)
+
+**O que você aprende:** decidir **quando fine-tunar**, preparar datasets com privacidade, treinar via API e **LoRA/PEFT**, avaliar modelos (harness, A/B, NPV) e fechar o ciclo com o **projeto final Amplitude Seguros**.
+
+| Exemplo | Pasta | Principais aprendizados |
+|---------|-------|-------------------------|
+| 1 | [`modulo-9-exemplo-1-decision-framework`](./modulo-9-exemplo-1-decision-framework/) | **Decision Framework** — quando fine-tunar, zoo de tecnicas e casos Amplitude Seguros ([modulo-01 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo09-processamento-de-dados-e-fine-tuning-de-modelos/modulo-01-decision-framework)) |
+| 2 | [`modulo-9-exemplo-2-preparacao-datasets`](./modulo-9-exemplo-2-preparacao-datasets/) | **Preparacao de Datasets** — extracao multimodal, limpeza, PII gate e JSONL Amplitude ([modulo-02 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo09-processamento-de-dados-e-fine-tuning-de-modelos/modulo-02-preparacao-datasets)) |
+| 3 | [`modulo-9-exemplo-3-fine-tuning-via-api`](./modulo-9-exemplo-3-fine-tuning-via-api/) | **Fine-Tuning via API** — upload, automation, Dolly/Vertex e model card ([modulo-03 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo09-processamento-de-dados-e-fine-tuning-de-modelos/modulo-03-fine-tuning-via-api)) |
+| 4 | [`modulo-9-exemplo-4-lora-e-peft`](./modulo-9-exemplo-4-lora-e-peft/) | **LoRA e PEFT** — tradeoff full vs LoRA, treino local/Colab e adapters ([modulo-04 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo09-processamento-de-dados-e-fine-tuning-de-modelos/modulo-04-lora-e-peft)) |
+| 5 | [`modulo-9-exemplo-5-avaliacao-modelos`](./modulo-9-exemplo-5-avaliacao-modelos/) | **Avaliacao de Modelos** — harness, A/B de dominio, overfitting e NPV ([modulo-05 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo09-processamento-de-dados-e-fine-tuning-de-modelos/modulo-05-avaliacao-modelos)) |
+| 6 | [`modulo-9-exemplo-6-projeto-final`](./modulo-9-exemplo-6-projeto-final/) | **Projeto Final** — assistente Amplitude, escala de dataset e verificacao ([modulo-06 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo09-processamento-de-dados-e-fine-tuning-de-modelos/modulo-06-projeto-final)) |
+
+**Competências do módulo:** decision framework de fine-tuning; preparação e limpeza de datasets; PII scrubbing; fine-tuning via API; LoRA/PEFT; evaluation harness; escala e verificação de modelo em produção.
+
+Scaffold via [`run_delivery_modulo9.py`](./modulo-4-exemplo-1-agente-ia-contratos/runtime/run_delivery_modulo9.py)
+
+---
+
 ## Requisitos gerais
 
 | Recurso | Onde é necessário |

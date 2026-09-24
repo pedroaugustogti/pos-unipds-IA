@@ -224,6 +224,115 @@ def _topicos_didaticos(slug: str, estrutura: dict, proximo: dict) -> list[dict]:
             },
         ])
 
+    if "decision-framework" in slug_l and "ai-first" not in slug_l:
+        topicos.extend([
+            {
+                "titulo": "Quando fine-tunar",
+                "conceito": "Checklist e zoo de tecnicas (FT full, LoRA, GRPO) para decidir custo x ganho.",
+                "exemplo": "python decision_framework_tool.py && cat fine-tuning-types-cheatsheet.md",
+            },
+            {
+                "titulo": "Casos Amplitude Seguros",
+                "conceito": "Cenarios de dominio (auto/saude) para justificar ou rejeitar fine-tuning.",
+                "exemplo": "cat amplitude-seguros-casos.json decision-framework-checklist.md",
+            },
+        ])
+
+    if "preparacao-datasets" in slug_l or "documentos-brutos" in slug_l:
+        topicos.extend([
+            {
+                "titulo": "Pipeline de dados",
+                "conceito": "Extracao multimodal, limpeza, balanceamento e scoring de relevancia.",
+                "exemplo": "python extracao_llm_multimodal_tool.py && python dataset_cleaning_balancing_tool.py",
+            },
+            {
+                "titulo": "PII scrubbing gate",
+                "conceito": "Gate de privacidade antes de montar JSONL de treino.",
+                "exemplo": "python pii_scrubbing_gate_tool.py",
+            },
+            {
+                "titulo": "Dataset Amplitude",
+                "conceito": "JSONL de treino pronto + documentos brutos de referencia.",
+                "exemplo": "cat dataset-amplitude-seguros.jsonl",
+            },
+        ])
+
+    if "fine-tuning-via-api" in slug_l:
+        topicos.extend([
+            {
+                "titulo": "Upload e tracking",
+                "conceito": "Subir dataset, acompanhar job e registrar hiperparametros via API.",
+                "exemplo": "python dataset_upload_and_tracking_tool.py && python finetuning_automation_tool.py",
+            },
+            {
+                "titulo": "Pipeline Dolly/Vertex",
+                "conceito": "Starter Dolly + pipeline Vertex como alternativa real de treino.",
+                "exemplo": "python dolly_vertex_pipeline.py",
+            },
+            {
+                "titulo": "Model card",
+                "conceito": "Documentar modelo treinado (Amplitude auto/saude) pos-job.",
+                "exemplo": "cat model-card-amplitude-auto-saude-m3-200.md",
+            },
+        ])
+
+    if "lora-e-peft" in slug_l:
+        topicos.extend([
+            {
+                "titulo": "LoRA vs full FT",
+                "conceito": "Tradeoff de rank, VRAM e qualidade; adapters PEFT.",
+                "exemplo": "python full_vs_lora_tradeoff_tool.py && python adapter_comparison_tool.py",
+            },
+            {
+                "titulo": "Treino local/Colab",
+                "conceito": "Notebooks e tools HF para treinar LoRA sem cluster.",
+                "exemplo": "python local_lora_training_tool.py",
+            },
+            {
+                "titulo": "Config de rank",
+                "conceito": "YAML de rank 16 e preview de API gerenciada LoRA.",
+                "exemplo": "cat lora-rank16-config.yaml",
+            },
+        ])
+
+    if "avaliacao-modelos" in slug_l:
+        topicos.extend([
+            {
+                "titulo": "Evaluation harness",
+                "conceito": "Suite de avaliacao local + LLM-as-judge e stress de overfitting.",
+                "exemplo": "python model_evaluation_harness_tool.py && python overfitting_stress_test_tool.py",
+            },
+            {
+                "titulo": "A/B e dominio",
+                "conceito": "Tradeoff auto vs saude e veredito de escala.",
+                "exemplo": "python ab_and_domain_tradeoff_tool.py",
+            },
+            {
+                "titulo": "NPV real vs projetado",
+                "conceito": "Comparar retorno medido com projecao de negocio.",
+                "exemplo": "python npv_real_vs_projetado_tool.py && cat resultado-medido.json",
+            },
+        ])
+
+    if "projeto-final" in slug_l:
+        topicos.extend([
+            {
+                "titulo": "Assistente Amplitude",
+                "conceito": "Fechar o ciclo: dataset de producao, decisoes de arquitetura e chamada ao modelo.",
+                "exemplo": "python chamar_modelo_local.py && cat decisoes-de-arquitetura.md",
+            },
+            {
+                "titulo": "Escala e verificacao",
+                "conceito": "Scaling do dataset e verificacao do modelo apos escala.",
+                "exemplo": "python m6_dataset_scaling_tool.py && python m6_scaled_model_verification_tool.py",
+            },
+            {
+                "titulo": "Geracao sintetica",
+                "conceito": "Guia para expandir dados via LLM com reavaliacao pos-escala.",
+                "exemplo": "cat guia-geracao-sintetica-via-llm.md guia-reavaliacao-pos-escala.md",
+            },
+        ])
+
     if not topicos:
         topicos.append({
             "titulo": proximo.get("titulo_atividade", "Atividade UNIPDS"),

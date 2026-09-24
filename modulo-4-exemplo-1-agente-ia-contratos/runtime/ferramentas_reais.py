@@ -30,6 +30,7 @@ MAPA_MODULOS_UNIPDS = {
     6: "modulo06-aiops-engenharia-agentica",
     7: "modulo07-ferramentas-de-ia-para-gestao-de-projetos",
     8: "modulo08-arquitetura-de-sistemas-com-ia",
+    9: "modulo09-processamento-de-dados-e-fine-tuning-de-modelos",
 }
 
 
@@ -123,7 +124,12 @@ def _listar_atividades_unipds(pasta_unipds: str) -> list[dict]:
 
         m_modulo = re.match(r"^modulo-0?(\d+)(?:-(.+))?$", nome, re.I)
         if m_modulo:
-            subdirs = [s for s in _github_listar(caminho) if not s.endswith("-template")]
+            itens = _github_conteudo(caminho)
+            subdirs = [
+                s["name"] for s in itens
+                if s.get("type") == "dir" and not s["name"].endswith("-template")
+            ]
+            tem_arquivos = any(s.get("type") == "file" for s in itens)
             z_subdirs = sorted(s for s in subdirs if s.endswith("-z"))
             if z_subdirs:
                 alvo = z_subdirs[0]
@@ -133,7 +139,7 @@ def _listar_atividades_unipds(pasta_unipds: str) -> list[dict]:
                     "aula_unipds": nome,
                     "slug": _slug_de_aula(alvo),
                 })
-            elif len(subdirs) == 1:
+            elif len(subdirs) == 1 and not tem_arquivos:
                 atividades.append({
                     "nome": subdirs[0],
                     "caminho_unipds": f"{caminho}/{subdirs[0]}",
