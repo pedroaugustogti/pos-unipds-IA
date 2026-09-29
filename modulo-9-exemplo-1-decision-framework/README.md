@@ -4,7 +4,7 @@ Adaptação local da atividade UNIPDS **Engenharia de IA Aplicada** — caso **A
 
 **Referência UNIPDS:** [modulo-01-decision-framework](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo09-processamento-de-dados-e-fine-tuning-de-modelos/modulo-01-decision-framework)
 
-**Relatório completo da aula:** [`docs/RELATORIO_DIDATICO_AULA.md`](docs/RELATORIO_DIDATICO_AULA.md)
+**Relatório completo da aula:** [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md)
 
 ---
 
@@ -31,7 +31,7 @@ Escada antes de treinar: **prompt → context/RAG → Agent Skills → fine-tuni
 | **1.2 Decisão financeira** | `decision_framework_tool.py` / `.js` + `amplitude-seguros-casos.json` | LGPD → AHP → NPV → Monte Carlo → Real Options |
 | **1.3 Zoo de técnicas** | `fine-tuning-types-cheatsheet.md` + demos GRPO + HTML | 7 tipos com custo, hardware e caso real |
 
-Detalhamento, diagramas e pesos AHP: [`docs/RELATORIO_DIDATICO_AULA.md`](docs/RELATORIO_DIDATICO_AULA.md).
+Detalhamento, diagramas e pesos AHP: [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md).
 
 ---
 
@@ -58,7 +58,7 @@ Demo GRPO (opcional, Ollama local): `python grpo_verifiable_reward_demo.py`
 
 Os mesmos conceitos desta aula (Pergunta 0, 4 perguntas, analogia Auto/Saúde/Atendimento, zoo de técnicas) foram aplicados ao exemplo prático **Guardião Família agents** — LangGraph v2 + MCP (`developer_implement`, `qa_validate`), para decidir se agentes de implementação e QA precisam de **FT** ou **RAG** a fim de gerar código/evidências **customizados ao projeto**, sem depender do modelo nativo.
 
-→ Relatório de aplicação: [`docs/APLICACAO_M9_AO_GUARDIAO_M8.md`](docs/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+→ Relatório de aplicação: [`docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
 → Pasta M8: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../modulo-8-exemplo-pratico-guardiao-familia-agents/)
 
 | Analogia Amplitude (esta aula) | Subtarefa Guardião (M8) | Decisão |
@@ -77,8 +77,12 @@ Os mesmos conceitos desta aula (Pergunta 0, 4 perguntas, analogia Auto/Saúde/At
 modulo-9-exemplo-1-decision-framework/
 ├── README.md                          # este arquivo
 ├── docs/
-│   ├── RELATORIO_DIDATICO_AULA.md     # relatório da aula (Amplitude / 3 camadas)
-│   └── APLICACAO_M9_AO_GUARDIAO_M8.md # framework M9 → Guardião M8 (FT vs RAG)
+│   ├── exemplo_aula/            # FT Amplitude Auto + Saúde
+│   │   ├── RELATORIO_DIDATICO_AULA.md
+│   │   └── FT_AMPLITUDE_E_SAUDE.md
+│   └── exemplo_real/            # RAG + prompt Guardião M8
+│       ├── APLICACAO_*.md
+│       └── RAG_PROMPT_GUARDIAO.md
 └── materiais_aula/                    # artefatos UNIPDS + demos
     ├── decision-framework-checklist.md
     ├── amplitude-seguros-casos.json
@@ -118,7 +122,7 @@ modulo-9-exemplo-1-decision-framework/
 - [ ] Aplicar as 4 perguntas — uma vermelha basta para não treinar
 - [ ] Explicar Auto = sim, Saúde = esperar, Atendimento = prompt+RAG
 - [ ] Citar LGPD como gate **não compensável** por NPV alto
-- [ ] Relacionar esta aula ao Guardião M8 via [`APLICACAO_M9_AO_GUARDIAO_M8.md`](docs/APLICACAO_M9_AO_GUARDIAO_M8.md)
+- [ ] Relacionar esta aula ao Guardião M8 via [`APLICACAO_M9_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)
 
 ---
 
@@ -138,5 +142,5 @@ modulo-9-exemplo-1-decision-framework/
 
 | Doc | Conteúdo |
 |-----|----------|
-| [`docs/RELATORIO_DIDATICO_AULA.md`](docs/RELATORIO_DIDATICO_AULA.md) | Relatório didático completo (Amplitude, 3 camadas, roteiro, zoo) |
-| [`docs/APLICACAO_M9_AO_GUARDIAO_M8.md`](docs/APLICACAO_M9_AO_GUARDIAO_M8.md) | Mesmo framework aplicado ao exemplo prático Guardião (M8) — FT vs RAG no LangGraph/MCP |
+| [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md) | Relatório didático completo (Amplitude, 3 camadas, roteiro, zoo) |
+| [`docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md) | Mesmo framework aplicado ao exemplo prático Guardião (M8) — FT vs RAG no LangGraph/MCP |

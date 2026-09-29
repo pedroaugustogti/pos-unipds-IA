@@ -173,7 +173,7 @@ python grpo_verifiable_reward_demo.py
 
 Os mesmos conceitos (Pergunta 0, 4 perguntas, analogia Amplitude, zoo de técnicas) foram aplicados ao exemplo prático **Guardião Família agents** (LangGraph + MCP):
 
-→ [`APLICACAO_M9_AO_GUARDIAO_M8.md`](./APLICACAO_M9_AO_GUARDIAO_M8.md)
+→ [`APLICACAO_M9_AO_GUARDIAO_M8.md`](../exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)
 
 **Resumo da decisão exportada:** fine-tuning do código/API/views do Guardião = **não**; estratégia dominante = **RAG + tools MCP de retrieval** no orquestrador; LoRA só se, depois do RAG, o formato de plano/evidência ainda falhar de forma sistemática.
 

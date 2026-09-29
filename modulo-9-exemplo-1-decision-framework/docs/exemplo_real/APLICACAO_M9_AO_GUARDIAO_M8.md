@@ -1,6 +1,6 @@
 # Aplicação do Decision Framework (M9) ao exemplo prático Guardião Família (M8)
 
-> **Este documento deixa explícito:** os conceitos do **Módulo 9 — Exemplo 1** (`decision-framework`, Amplitude Seguros) foram aplicados ao **exemplo prático do Módulo 8** — [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../../modulo-8-exemplo-pratico-guardiao-familia-agents/).
+> **Este documento deixa explícito:** os conceitos do **Módulo 9 — Exemplo 1** (`decision-framework`, Amplitude Seguros) foram aplicados ao **exemplo prático do Módulo 8** — [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../../../modulo-8-exemplo-pratico-guardiao-familia-agents/).
 >
 > Objetivo da aplicação: decidir se agentes de **implementação** e **QA** (LangGraph + MCP) precisam de **fine-tuning** ou de **estratégia RAG** para gerar código/evidências customizados ao projeto Guardião — **sem depender do conhecimento nativo do modelo**.
 
@@ -11,7 +11,7 @@
 | `fine-tuning-types-cheatsheet.md` (zoo LoRA/QLoRA/GRPO…) | Ordem de técnicas: RAG primeiro; LoRA só se formato ainda falhar |
 | Caso Amplitude Seguros | Caso Guardião Família (API + parent/child + LangGraph/MCP) |
 
-Relatório didático da aula Amplitude: [`RELATORIO_DIDATICO_AULA.md`](./RELATORIO_DIDATICO_AULA.md)
+Relatório didático da aula Amplitude: [`RELATORIO_DIDATICO_AULA.md`](../exemplo_aula/RELATORIO_DIDATICO_AULA.md)
 
 ---
 
@@ -154,8 +154,8 @@ Ticket / evento LangGraph (M8)
 | Cheatsheet / zoo | Ordem de técnicas sem pular para LoRA |
 | Escada prompt→RAG→skills→FT | Roadmap do orquestrador LangGraph/MCP |
 
-Pasta M8: [`../../modulo-8-exemplo-pratico-guardiao-familia-agents/`](../../modulo-8-exemplo-pratico-guardiao-familia-agents/)  
-Aula M9 Ex.1: [`../`](../) · Relatório Amplitude: [`RELATORIO_DIDATICO_AULA.md`](./RELATORIO_DIDATICO_AULA.md)
+Pasta M8: [`../../../modulo-8-exemplo-pratico-guardiao-familia-agents/`](../../../modulo-8-exemplo-pratico-guardiao-familia-agents/)  
+Aula M9 Ex.1: [`../`](../../) · Relatório Amplitude: [`RELATORIO_DIDATICO_AULA.md`](../exemplo_aula/RELATORIO_DIDATICO_AULA.md)
 
 ---
 
