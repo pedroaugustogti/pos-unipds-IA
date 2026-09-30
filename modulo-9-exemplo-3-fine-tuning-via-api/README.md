@@ -4,7 +4,7 @@ Adaptação local da atividade UNIPDS **Engenharia de IA Aplicada** — caso **A
 
 **Referência UNIPDS:** [modulo-03-fine-tuning-via-api](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo09-processamento-de-dados-e-fine-tuning-de-modelos/modulo-03-fine-tuning-via-api)
 
-**Relatório completo da aula:** [`docs/RELATORIO_DIDATICO_AULA.md`](docs/RELATORIO_DIDATICO_AULA.md)
+**Relatório completo da aula:** [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md)
 
 **Ponte com Ex.1–2:** o Decision Framework aprovou **Auto** (e, 9 meses depois, **Saúde**); o Ex.2 preparou o JSONL. Esta aula **executa o treino gerenciado** (upload → job → hiperparâmetros → automação → model card).
 
@@ -34,7 +34,7 @@ Rodar (ou simular com evidência publicada) um **fine-tuning supervisionado via 
 
 Setup opcional: `gcp-setup-companion.md` · Alternativa real: `dataset-real-alternativo-companion.md` + `dolly_*`.
 
-Detalhamento: [`docs/RELATORIO_DIDATICO_AULA.md`](docs/RELATORIO_DIDATICO_AULA.md).
+Detalhamento: [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md).
 
 ---
 
@@ -74,8 +74,8 @@ python m3_dataset_scaling_tool.py
 
 O Ex.1 disse **não** fine-tunar código Guardião; o Ex.2 prepara o **corpus RAG**. Esta aula mostra o que seria um FT **só se** o gate de formato (caso Auto) passasse — e como operar job gerenciado com segurança.
 
-→ Relatório: [`docs/APLICACAO_M9_EX3_AO_GUARDIAO_M8.md`](docs/APLICACAO_M9_EX3_AO_GUARDIAO_M8.md)  
-→ Ex.1 FT vs RAG: [`../modulo-9-exemplo-1-decision-framework/docs/APLICACAO_M9_AO_GUARDIAO_M8.md`](../modulo-9-exemplo-1-decision-framework/docs/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+→ Relatório: [`docs/exemplo_real/APLICACAO_M9_EX3_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX3_AO_GUARDIAO_M8.md)  
+→ Ex.1 FT vs RAG: [`../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
 → M8: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../modulo-8-exemplo-pratico-guardiao-familia-agents/)
 
 | Peça Ex.3 | Uso no Guardião M8 |
@@ -95,8 +95,12 @@ O Ex.1 disse **não** fine-tunar código Guardião; o Ex.2 prepara o **corpus RA
 modulo-9-exemplo-3-fine-tuning-via-api/
 ├── README.md
 ├── docs/
-│   ├── RELATORIO_DIDATICO_AULA.md
-│   └── APLICACAO_M9_EX3_AO_GUARDIAO_M8.md
+│   ├── exemplo_aula/            # FT Amplitude Auto + Saúde
+│   │   ├── RELATORIO_DIDATICO_AULA.md
+│   │   └── FT_AMPLITUDE_E_SAUDE.md
+│   └── exemplo_real/            # RAG + prompt Guardião M8
+│       ├── APLICACAO_*.md
+│       └── RAG_PROMPT_GUARDIAO.md
 └── materiais_aula/
     ├── gcp-setup-companion.md
     ├── m3_dataset_scaling_tool.py / .js
@@ -141,7 +145,7 @@ modulo-9-exemplo-3-fine-tuning-via-api/
 - [ ] Citar o incidente `epoch_count=0` e a mitigação client-side
 - [ ] Relacionar reavaliação Saúde ao Real Options do Ex.1
 - [ ] Distinguir caminho local/simulado vs job real com custo
-- [ ] Relacionar esta aula ao Guardião via [`APLICACAO_M9_EX3_AO_GUARDIAO_M8.md`](docs/APLICACAO_M9_EX3_AO_GUARDIAO_M8.md)
+- [ ] Relacionar esta aula ao Guardião via [`APLICACAO_M9_EX3_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX3_AO_GUARDIAO_M8.md)
 
 ---
 
@@ -161,5 +165,5 @@ modulo-9-exemplo-3-fine-tuning-via-api/
 
 | Doc | Conteúdo |
 |-----|----------|
-| [`docs/RELATORIO_DIDATICO_AULA.md`](docs/RELATORIO_DIDATICO_AULA.md) | Relatório didático (camadas, pipeline, model card) |
-| [`docs/APLICACAO_M9_EX3_AO_GUARDIAO_M8.md`](docs/APLICACAO_M9_EX3_AO_GUARDIAO_M8.md) | Operação via API / governança → Guardião M8 (HITL, versionamento) |
+| [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md) | Relatório didático (camadas, pipeline, model card) |
+| [`docs/exemplo_real/APLICACAO_M9_EX3_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX3_AO_GUARDIAO_M8.md) | Operação via API / governança → Guardião M8 (HITL, versionamento) |

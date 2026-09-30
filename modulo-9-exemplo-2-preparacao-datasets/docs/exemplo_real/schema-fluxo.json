@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "guardiao-rag-fluxo",
+  "title": "Fluxo tipado do Guardião",
+  "description": "Consulta do RAG e o caminho de views até o fim da funcionalidade. Cada item de pre_requisitos é uma view (ou chamada) na ordem de navegação. Os componentes dizem o que preencher, o evento, o intervalo e a ação, com test_id, tipo e url copiados dos rag-*.jsonl. resultado é o estado final que prova sucesso.",
+  "type": "object",
+  "required": ["flow_id", "consulta", "app", "pre_requisitos", "resultado", "prompt_context"],
+  "properties": {
+    "flow_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+$"
+    },
+    "consulta": { "type": "string", "minLength": 3 },
+    "app": {
+      "enum": ["parent", "child", "backoffice"],
+      "description": "App em que a funcionalidade termina."
+    },
+    "pre_requisitos": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Caminho completo, na ordem, até o último passo antes do estado em resultado.",
+      "items": { "$ref": "#/$defs/navegacao" }
+    },
+    "resultado": {
+      "description": "Estado final que prova sucesso. Pode ser o resumo em texto ou o objeto tipado com test_id, rota ou endpoint.",
+      "oneOf": [
+        { "type": "string", "minLength": 8 },
+        { "$ref": "#/$defs/resultado" }
+      ]
+    },
+    "prompt_context": { "type": "string" }
+  },
+  "$defs": {
+    "componente": {
+      "type": "object",
+      "required": ["ordem", "test_id", "tipo", "preenchimento", "evento", "intervalo_ms", "acao"],
+      "properties": {
+        "ordem": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Ordem de acesso do componente dentro da view."
+        },
+        "test_id": {
+          "type": "string",
+          "description": "testID do componente na tela."
+        },
+        "tipo": { "enum": ["button", "input", "text", "view", "checkbox"] },
+        "preenchimento": {
+          "type": ["string", "null"],
+          "description": "null se não há campo. Se houver, seed.<chave> (o valor vem do handoff)."
+        },
+        "evento": {
+          "enum": ["press", "changeText", "submit", "none"],
+          "description": "Evento que dispara o componente e libera o próximo."
+        },
+        "intervalo_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Espera depois desta ação, antes do próximo componente."
+        },
+        "acao": { "enum": ["launch", "fill", "tap", "wait", "capture"] },
+        "endpoint": {
+          "type": ["string", "null"],
+          "description": "components[].endpoint ou null."
+        },
+        "pattern": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "acao": { "const": "fill" } }, "required": ["acao"] },
+          "then": {
+            "properties": {
+              "tipo": { "enum": ["input", "button"] },
+              "evento": { "enum": ["changeText", "submit"] },
+              "preenchimento": { "type": "string", "pattern": "^seed\\.[a-z0-9_]+$" }
+            },
+            "required": ["preenchimento"]
+          }
+        },
+        {
+          "if": { "properties": { "acao": { "const": "tap" } }, "required": ["acao"] },
+          "then": {
+            "properties": {
+              "tipo": { "enum": ["button", "checkbox"] },
+              "evento": { "const": "press" },
+              "preenchimento": { "type": "null" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "acao": { "const": "wait" } }, "required": ["acao"] },
+          "then": {
+            "properties": {
+              "evento": { "const": "none" },
+              "preenchimento": { "type": "null" }
+            }
+          }
+        }
+      ]
+    },
+    "navegacao": {
+      "type": "object",
+      "required": ["ordem", "comportamento"],
+      "properties": {
+        "ordem": { "type": "integer", "minimum": 1 },
+        "flow_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]*(\\.[a-z0-9_]+)+$",
+          "description": "Fluxo que precisa ser executado neste ponto do caminho, antes dos componentes desta view."
+        },
+        "fonte": { "enum": ["mobile", "api", "backoffice"] },
+        "app": { "enum": ["parent", "child", "backoffice"] },
+        "view_id": {
+          "type": "string",
+          "description": "Identificador da tela no app."
+        },
+        "screen_file": {
+          "type": "string",
+          "description": "Arquivo da tela no repositório do app."
+        },
+        "comportamento": {
+          "type": "string",
+          "description": "O que a view faz neste ponto do caminho."
+        },
+        "componentes": {
+          "type": "array",
+          "description": "Só os componentes que o fluxo precisa acessar nesta view. Vazio quando o passo é apenas o launch.",
+          "items": { "$ref": "#/$defs/componente" }
+        },
+        "method": { "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
+        "url": { "type": "string", "pattern": "^/api/v1/.+" },
+        "route": { "type": "string" },
+        "funcao": { "type": "string" },
+        "evento": { "enum": ["press", "changeText", "submit", "none"] },
+        "intervalo_ms": { "type": "integer", "minimum": 0 },
+        "acao": { "enum": ["launch", "fill", "tap", "wait", "capture", "chamar"] }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["fonte"],
+            "properties": { "fonte": { "const": "mobile" } },
+            "not": { "required": ["flow_id"] }
+          },
+          "then": { "required": ["view_id", "app", "componentes"] }
+        },
+        {
+          "if": { "required": ["view_id"] },
+          "then": { "required": ["screen_file"] }
+        },
+        {
+          "if": { "properties": { "fonte": { "const": "api" } }, "required": ["fonte"] },
+          "then": {
+            "required": ["method", "url", "acao", "intervalo_ms"],
+            "properties": { "acao": { "const": "chamar" } }
+          }
+        },
+        {
+          "if": { "properties": { "fonte": { "const": "backoffice" } }, "required": ["fonte"] },
+          "then": {
+            "required": ["route", "funcao", "method", "url", "acao", "intervalo_ms"],
+            "properties": { "acao": { "const": "chamar" } }
+          }
+        }
+      ]
+    },
+    "resultado": {
+      "type": "object",
+      "required": ["criterio"],
+      "description": "Estado final da funcionalidade. O fluxo só é sucesso se este critério bater.",
+      "properties": {
+        "fonte": { "enum": ["mobile", "api", "backoffice"] },
+        "app": { "enum": ["parent", "child", "backoffice"] },
+        "view_id": { "type": "string" },
+        "test_id": { "type": "string" },
+        "tipo": { "enum": ["button", "input", "text", "view", "checkbox"] },
+        "estado": { "enum": ["visivel"] },
+        "method": { "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
+        "url": { "type": "string" },
+        "route": { "type": "string" },
+        "criterio": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "fonte": { "const": "mobile" } }, "required": ["fonte"] },
+          "then": { "required": ["app", "view_id", "test_id", "tipo", "estado"] }
+        },
+        {
+          "if": { "properties": { "fonte": { "const": "api" } }, "required": ["fonte"] },
+          "then": { "required": ["method", "url"] }
+        },
+        {
+          "if": { "properties": { "fonte": { "const": "backoffice" } }, "required": ["fonte"] },
+          "then": { "required": ["route"] }
+        }
+      ]
+    }
+  }
+}

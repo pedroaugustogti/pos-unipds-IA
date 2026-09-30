@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "guardiao-rag-api-endpoint",
+  "title": "Endpoint da API do Guardião",
+  "description": "Um chunk de RAG por operação HTTP. Prefixo global real: /api/v1. chamado_por lista parent, child e backoffice; pode ter mais de um.",
+  "type": "object",
+  "required": ["method", "url", "chamado_por", "entrada", "saida", "resumo_contexto", "prompt_context"],
+  "properties": {
+    "method": { "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
+    "url": { "type": "string" },
+    "controller": { "type": "string" },
+    "chamado_por": {
+      "type": "array",
+      "uniqueItems": true,
+      "description": "Quem chama a rota. Vazio só quando não há app nem role (ex.: webhook).",
+      "items": { "enum": ["parent", "child", "backoffice"] }
+    },
+    "entrada": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["nome", "onde", "tipo", "obrigatorio", "pattern", "contexto"],
+        "properties": {
+          "nome": { "type": "string" },
+          "onde": { "enum": ["body", "path", "query"] },
+          "tipo": { "type": "string" },
+          "obrigatorio": { "type": "boolean" },
+          "pattern": { "type": "string" },
+          "contexto": { "type": "string" }
+        }
+      }
+    },
+    "saida": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["nome", "tipo", "contexto"],
+        "properties": {
+          "nome": { "type": "string" },
+          "tipo": { "type": "string" },
+          "contexto": { "type": "string" }
+        }
+      }
+    },
+    "resumo_contexto": { "type": "string" },
+    "prompt_context": { "type": "string" }
+  }
+}

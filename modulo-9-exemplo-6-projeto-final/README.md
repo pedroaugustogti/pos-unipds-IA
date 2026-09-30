@@ -1,39 +1,31 @@
-# Atividade: Projeto Final Amplitude
+# Módulo 9 — Exemplo 6: Projeto Final Amplitude
 
-Este diretório é o **Módulo 9 — Exemplo 6** (`modulo-9-exemplo-6-projeto-final`) — adaptação local da atividade da pós-graduação **Engenharia de IA Aplicada (UNIPDS)**.
+Adaptação local da atividade UNIPDS — fecha o ciclo Auto + Saúde.
 
-Referência UNIPDS: [modulo-06-projeto-final](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo09-processamento-de-dados-e-fine-tuning-de-modelos/modulo-06-projeto-final)
+**Referência UNIPDS:** [modulo-06-projeto-final](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo09-processamento-de-dados-e-fine-tuning-de-modelos/modulo-06-projeto-final)
 
-## Objetivo
+**Aula (FT em escala):** [`docs/exemplo_aula/FT_AMPLITUDE_E_SAUDE.md`](docs/exemplo_aula/FT_AMPLITUDE_E_SAUDE.md) · relatório [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md)
 
-Implementar Projeto Final Amplitude conforme material UNIPDS Amplitude Seguros
+**Guardião (RAG + prompt):** [`docs/exemplo_real/RAG_PROMPT_GUARDIAO.md`](docs/exemplo_real/RAG_PROMPT_GUARDIAO.md) · aplicação [`docs/exemplo_real/APLICACAO_M9_EX6_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX6_AO_GUARDIAO_M8.md)
 
-## Pré-requisitos
-
-| Recurso | Uso |
-|---------|-----|
-| Consulte o material UNIPDS | Base técnica da atividade |
-| `.env` | Copie de `.env.example` quando existir (nunca commite segredos) |
-
-## Configuração
+Dataset de produção ~3.000, assistente que separa domínio, verificação com o harness do Ex.5.
 
 ```bash
-cd modulo-9-exemplo-6-projeto-final
-# Siga as instrucoes do README UNIPDS abaixo e adapte ao seu ambiente local
+cd modulo-9-exemplo-6-projeto-final/materiais_aula
+python m6_dataset_scaling_tool.py
 ```
 
-## Como executar
+## Estrutura
 
-1. Leia o material base UNIPDS (seção abaixo)
-2. Configure dependências e variáveis de ambiente
-3. Execute os passos da atividade
-4. Valide os critérios de sucesso
-
-## Critérios de sucesso
-
-- [ ] Pasta criada no padrão `modulo-9-exemplo-6-*`
-- [ ] README local com objetivo, passo a passo e critérios de sucesso
-- [ ] Atividade executada conforme material UNIPDS
-- [ ] README raiz do `pos-unipds-IA` atualizado
-- [ ] `.env` não commitado (apenas `.env.example` quando aplicável)
-
+```
+modulo-9-exemplo-6-projeto-final/
+├── README.md
+├── docs/
+│   ├── exemplo_aula/            # FT Amplitude Auto + Saúde
+│   │   ├── RELATORIO_DIDATICO_AULA.md
+│   │   └── FT_AMPLITUDE_E_SAUDE.md
+│   └── exemplo_real/            # RAG + prompt Guardião M8
+│       ├── APLICACAO_M9_EX6_AO_GUARDIAO_M8.md
+│       └── RAG_PROMPT_GUARDIAO.md
+└── materiais_aula/
+```

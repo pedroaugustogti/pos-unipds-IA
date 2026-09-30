@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "guardiao-rag-backoffice-page",
+  "title": "Página do back-office do Guardião",
+  "description": "Um chunk de RAG por página Next.js. As ações apontam para endpoints /api/v1 via lib/adminApi.ts.",
+  "type": "object",
+  "required": ["route", "label", "page_file", "accessed_from", "navigates_to", "acoes", "prompt_context"],
+  "properties": {
+    "route": { "type": "string", "description": "Caminho App Router, sem o grupo (admin) ou (auth)." },
+    "label": { "type": "string", "description": "Rótulo do menu em AdminShell, ou o próprio path." },
+    "page_file": { "type": "string" },
+    "accessed_from": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "De onde a página é aberta. AdminShell quando está no menu."
+    },
+    "navigates_to": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "acoes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["funcao", "endpoint", "acao"],
+        "properties": {
+          "funcao": { "type": "string", "description": "Função exportada por lib/adminApi.ts" },
+          "endpoint": {
+            "type": ["string", "null"],
+            "description": "METHOD /api/v1/... ou null"
+          },
+          "acao": { "type": "string" }
+        }
+      }
+    },
+    "prompt_context": { "type": "string" }
+  }
+}

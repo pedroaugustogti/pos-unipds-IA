@@ -4,7 +4,7 @@ Adaptação local da atividade UNIPDS **Engenharia de IA Aplicada** — caso **A
 
 **Referência UNIPDS:** [modulo-02-preparacao-datasets](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo09-processamento-de-dados-e-fine-tuning-de-modelos/modulo-02-preparacao-datasets)
 
-**Relatório completo da aula:** [`docs/RELATORIO_DIDATICO_AULA.md`](docs/RELATORIO_DIDATICO_AULA.md)
+**Relatório completo da aula:** [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md)
 
 **Ponte com Ex.1:** esta aula resolve o gargalo da **p3** (dado suficiente) e o degrau técnico de **PII** depois do gate LGPD do Decision Framework.
 
@@ -32,7 +32,7 @@ Montar um **dataset de fine-tuning de qualidade** a partir de documentos brutos:
 | **2.1 Privacidade** | `pii_scrubbing_gate_tool.py` · `privacy-preserving-finetuning-companion.md` | Scrub PII/PHI depois do gate LGPD do Ex.1; DP-SGD / federado / memorização |
 | **2.2 Limpeza e diversidade** | `dataset_cleaning_balancing_tool.py` · `de-para-bibliotecas-de-mercado.md` · `dataset-amplitude-seguros.jsonl` | MinHash+LSH, amostragem por temperatura, entropia/Hill |
 
-Detalhamento e roteiro: [`docs/RELATORIO_DIDATICO_AULA.md`](docs/RELATORIO_DIDATICO_AULA.md).
+Detalhamento e roteiro: [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md).
 
 ---
 
@@ -71,8 +71,8 @@ python dataset_cleaning_balancing_tool.py
 
 O Ex.1 decidiu: no Guardião, **não fine-tunar código/views** — investir em **RAG**. Esta aula (Ex.2) é o **como preparar o corpus** que alimenta esse RAG (e, se um dia houver FT de formato, o JSONL limpo).
 
-→ Relatório de aplicação: [`docs/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md`](docs/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md)  
-→ Decisão FT vs RAG (Ex.1): [`../modulo-9-exemplo-1-decision-framework/docs/APLICACAO_M9_AO_GUARDIAO_M8.md`](../modulo-9-exemplo-1-decision-framework/docs/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+→ Relatório de aplicação: [`docs/exemplo_real/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md)  
+→ Decisão FT vs RAG (Ex.1): [`../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
 → Pasta M8: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../modulo-8-exemplo-pratico-guardiao-familia-agents/)
 
 | Peça Ex.2 | Uso no Guardião M8 |
@@ -92,8 +92,12 @@ O Ex.1 decidiu: no Guardião, **não fine-tunar código/views** — investir em 
 modulo-9-exemplo-2-preparacao-datasets/
 ├── README.md
 ├── docs/
-│   ├── RELATORIO_DIDATICO_AULA.md
-│   └── APLICACAO_M9_EX2_AO_GUARDIAO_M8.md
+│   ├── exemplo_aula/            # FT Amplitude Auto + Saúde
+│   │   ├── RELATORIO_DIDATICO_AULA.md
+│   │   └── FT_AMPLITUDE_E_SAUDE.md
+│   └── exemplo_real/            # RAG + prompt Guardião M8
+│       ├── APLICACAO_*.md
+│       └── RAG_PROMPT_GUARDIAO.md
 └── materiais_aula/
     ├── data_relevance_scoring_tool.py / .js
     ├── extraction_to_jsonl_tool.py / .js
@@ -138,7 +142,7 @@ modulo-9-exemplo-2-preparacao-datasets/
 - [ ] Rodar o gate de relevância e citar um candidato **rejeitado**
 - [ ] Gerar JSONL via OCR a partir de `documentos-brutos/`
 - [ ] Aplicar o gate de PII e relacionar ao companion (DP / federado / memorização)
-- [ ] Relacionar esta aula ao Guardião M8 (ingest RAG) via [`APLICACAO_M9_EX2_AO_GUARDIAO_M8.md`](docs/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md)
+- [ ] Relacionar esta aula ao Guardião M8 (ingest RAG) via [`APLICACAO_M9_EX2_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md)
 
 ---
 
@@ -158,5 +162,5 @@ modulo-9-exemplo-2-preparacao-datasets/
 
 | Doc | Conteúdo |
 |-----|----------|
-| [`docs/RELATORIO_DIDATICO_AULA.md`](docs/RELATORIO_DIDATICO_AULA.md) | Relatório didático (pipeline, PII, limpeza, roteiro) |
-| [`docs/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md`](docs/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md) | Preparação de dados Ex.2 → corpus RAG do Guardião M8 |
+| [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md) | Relatório didático (pipeline, PII, limpeza, roteiro) |
+| [`docs/exemplo_real/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md) | Preparação de dados Ex.2 → corpus RAG do Guardião M8 |

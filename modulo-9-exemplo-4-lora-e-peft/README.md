@@ -4,7 +4,7 @@ Adaptação local da atividade UNIPDS **Engenharia de IA Aplicada** — caso **A
 
 **Referência UNIPDS:** [modulo-04-lora-e-peft](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo09-processamento-de-dados-e-fine-tuning-de-modelos/modulo-04-lora-e-peft)
 
-**Relatório completo da aula:** [`docs/RELATORIO_DIDATICO_AULA.md`](docs/RELATORIO_DIDATICO_AULA.md)
+**Relatório completo da aula:** [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md)
 
 **Ponte com Ex.1–3:** o Decision Framework aprovou o caso; o Ex.2 limpou o JSONL; o Ex.3 treinou via API gerenciada. Esta aula responde: **e se o volume for pequeno demais pro custo fixo de GPU na nuvem?** → LoRA/PEFT local, rank e tradeoff vs full FT.
 
@@ -35,7 +35,7 @@ Comparar **full fine-tuning vs LoRA**, treinar (ou analisar) adaptadores locais,
 
 Setup / Mac vs Colab: `guia-execucao-local-modulo-4-companion.md`.
 
-Detalhamento: [`docs/RELATORIO_DIDATICO_AULA.md`](docs/RELATORIO_DIDATICO_AULA.md).
+Detalhamento: [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md).
 
 ---
 
@@ -73,8 +73,8 @@ python full_vs_lora_tradeoff_tool.py
 
 Ex.1–3: **RAG, não FT de código**. Ex.4 acrescenta: se um dia houver FT **estreito de formato**, preferir **adaptador LoRA** (leve, versionável, swapavel) a full FT do “cérebro” do monorepo.
 
-→ Relatório: [`docs/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md`](docs/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md)  
-→ Ex.1 FT vs RAG: [`../modulo-9-exemplo-1-decision-framework/docs/APLICACAO_M9_AO_GUARDIAO_M8.md`](../modulo-9-exemplo-1-decision-framework/docs/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+→ Relatório: [`docs/exemplo_real/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md)  
+→ Ex.1 FT vs RAG: [`../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
 → M8: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../modulo-8-exemplo-pratico-guardiao-familia-agents/)
 
 | Peça Ex.4 | Uso no Guardião M8 |
@@ -94,8 +94,12 @@ Ex.1–3: **RAG, não FT de código**. Ex.4 acrescenta: se um dia houver FT **es
 modulo-9-exemplo-4-lora-e-peft/
 ├── README.md
 ├── docs/
-│   ├── RELATORIO_DIDATICO_AULA.md
-│   └── APLICACAO_M9_EX4_AO_GUARDIAO_M8.md
+│   ├── exemplo_aula/            # FT Amplitude Auto + Saúde
+│   │   ├── RELATORIO_DIDATICO_AULA.md
+│   │   └── FT_AMPLITUDE_E_SAUDE.md
+│   └── exemplo_real/            # RAG + prompt Guardião M8
+│       ├── APLICACAO_*.md
+│       └── RAG_PROMPT_GUARDIAO.md
 └── materiais_aula/
     ├── regional_lora_vs_cloud_npv.py / .js
     ├── local_lora_training_tool.py / .js / HF
@@ -136,7 +140,7 @@ modulo-9-exemplo-4-lora-e-peft/
 - [ ] Distinguir caminho MLX (Mac) vs Colab/HF
 - [ ] Relacionar rank do adapter a tamanho/capacidade
 - [ ] Citar o tradeoff full vs LoRA (qualidade × infra)
-- [ ] Relacionar esta aula ao Guardião via [`APLICACAO_M9_EX4_AO_GUARDIAO_M8.md`](docs/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md)
+- [ ] Relacionar esta aula ao Guardião via [`APLICACAO_M9_EX4_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md)
 
 ---
 
@@ -156,5 +160,5 @@ modulo-9-exemplo-4-lora-e-peft/
 
 | Doc | Conteúdo |
 |-----|----------|
-| [`docs/RELATORIO_DIDATICO_AULA.md`](docs/RELATORIO_DIDATICO_AULA.md) | Relatório didático (camadas, pipeline, Mac vs Colab) |
-| [`docs/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md`](docs/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md) | LoRA/PEFT → Guardião M8 (adapter leve vs FT de código) |
+| [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md) | Relatório didático (camadas, pipeline, Mac vs Colab) |
+| [`docs/exemplo_real/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md) | LoRA/PEFT → Guardião M8 (adapter leve vs FT de código) |
