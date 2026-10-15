@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 EXEMPLO_REAL = Path(__file__).resolve().parents[2]
+GUARDIAO_ROOT = Path(r"C:\Users\pedro\Documents\guardiao-familia")
 FLOW_PATH = EXEMPLO_REAL / "rag-fluxo-parent.jsonl"
 SESSAO_PATH = Path(__file__).resolve().parents[1] / "sessao_appium.json"
 
