@@ -9,7 +9,7 @@ O fechamento da Amplitude escala um **formato** já aprovado. No Guardião o equ
 | Verificação com o harness do Ex.5 | `qa_validate` depois de reindexar |
 | Template de prompt | [`prompt.md`](./prompt.md) |
 
-Base: [`APLICACAO_M9_AO_GUARDIAO_M8.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+Base: [`aplicacao.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/01-guardiao/aplicacao.md)  
 Avaliação: [`aplicacao.md`](../../../../modulo-9-exemplo-5-avaliacao-modelos/docs/exemplo_real/01-guardiao/aplicacao.md)
 
 | Hipótese | Decisão |

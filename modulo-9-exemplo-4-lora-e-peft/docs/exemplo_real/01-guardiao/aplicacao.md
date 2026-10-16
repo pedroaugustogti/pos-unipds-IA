@@ -13,7 +13,7 @@
 | Mesmo dataset, outro runtime | Corpus RAG pode alimentar eval/FT de formato sem misturar schemas de código |
 | Preview LoRA gerenciado | Se um dia houver FT, API + adapter > treinar pesos do repo |
 
-Decisão base: [`APLICACAO_M9_AO_GUARDIAO_M8.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+Decisão base: [`aplicacao.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/01-guardiao/aplicacao.md)  
 API/governança: [`aplicacao.md`](../../../../modulo-9-exemplo-3-fine-tuning-via-api/docs/exemplo_real/01-guardiao/aplicacao.md)
 
 ---

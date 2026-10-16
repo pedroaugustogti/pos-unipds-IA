@@ -72,7 +72,7 @@ python dataset_cleaning_balancing_tool.py
 O Ex.1 decidiu: no Guardião, **não fine-tunar código/views** — investir em **RAG**. Esta aula (Ex.2) é o **como preparar o corpus** que alimenta esse RAG (e, se um dia houver FT de formato, o JSONL limpo).
 
 → Relatório de aplicação: [`docs/exemplo_real/01-guardiao/aplicacao.md`](docs/exemplo_real/01-guardiao/aplicacao.md)  
-→ Decisão FT vs RAG (Ex.1): [`../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+→ Decisão FT vs RAG (Ex.1): [`../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/01-guardiao/aplicacao.md`](../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/01-guardiao/aplicacao.md)  
 → Pasta M8: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../modulo-8-exemplo-pratico-guardiao-familia-agents/)
 
 | Peça Ex.2 | Uso no Guardião M8 |

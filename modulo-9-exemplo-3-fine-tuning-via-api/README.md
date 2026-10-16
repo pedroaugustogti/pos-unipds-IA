@@ -75,7 +75,7 @@ python m3_dataset_scaling_tool.py
 O Ex.1 disse **não** fine-tunar código Guardião; o Ex.2 prepara o **corpus RAG**. Esta aula mostra o que seria um FT **só se** o gate de formato (caso Auto) passasse — e como operar job gerenciado com segurança.
 
 → Relatório: [`docs/exemplo_real/01-guardiao/aplicacao.md`](docs/exemplo_real/01-guardiao/aplicacao.md)  
-→ Ex.1 FT vs RAG: [`../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+→ Ex.1 FT vs RAG: [`../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/01-guardiao/aplicacao.md`](../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/01-guardiao/aplicacao.md)  
 → M8: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../modulo-8-exemplo-pratico-guardiao-familia-agents/)
 
 | Peça Ex.3 | Uso no Guardião M8 |

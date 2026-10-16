@@ -11,7 +11,7 @@
 | PII scrub + companion | Higienizar logs/evidências/tickets antes de indexar |
 | Dedup + balance + diversidade | Evitar fluxos duplicados; equilibrar parent/child/API no vetor |
 
-Decisão FT vs RAG (Ex.1): [`APLICACAO_M9_AO_GUARDIAO_M8.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)
+Decisão FT vs RAG (Ex.1): [`aplicacao.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/01-guardiao/aplicacao.md)
 
 ---
 

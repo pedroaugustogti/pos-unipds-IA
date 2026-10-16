@@ -15,7 +15,7 @@
 | Reavaliação periódica (Saúde) | Reabrir checklist FT vs RAG quando corpus amadurecer |
 | Dolly como dataset paralelo | Não misturar schemas (fluxos mobile ≠ código API) |
 
-Decisão base: [`APLICACAO_M9_AO_GUARDIAO_M8.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+Decisão base: [`aplicacao.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/01-guardiao/aplicacao.md)  
 Corpus: [`aplicacao.md`](../../../../modulo-9-exemplo-2-preparacao-datasets/docs/exemplo_real/01-guardiao/aplicacao.md)
 
 ---

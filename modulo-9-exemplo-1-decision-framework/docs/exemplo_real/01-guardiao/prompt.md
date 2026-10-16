@@ -1,6 +1,6 @@
-# Etapa 1 — decidir RAG + prompt (Guardião M8)
+# Guardião — decidir RAG + prompt
 
-Fonte da decisão: [`APLICACAO_M9_AO_GUARDIAO_M8.md`](./APLICACAO_M9_AO_GUARDIAO_M8.md).
+Fonte da decisão: [`aplicacao.md`](./aplicacao.md).
 
 Mesmo checklist da aula (`decision-framework-checklist.md`). Uma vermelha nas perguntas 1–4 impede fine-tuning.
 
@@ -32,4 +32,4 @@ Tarefa avaliada: o agente de implementação/QA produzir código e evidência **
 2. Indexar fluxos e o recorte de código que a skill aponta.  
 3. Medir retrieval + `qa_validate` **antes** de falar em treino.
 
-Guardião: [`../../../modulo-8-exemplo-pratico-guardiao-familia-agents/`](../../../modulo-8-exemplo-pratico-guardiao-familia-agents/)
+Guardião: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../../../../modulo-8-exemplo-pratico-guardiao-familia-agents/)

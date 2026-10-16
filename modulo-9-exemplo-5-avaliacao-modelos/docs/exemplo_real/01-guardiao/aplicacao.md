@@ -9,7 +9,7 @@ Avaliar **não** autoriza fine-tuning do código. Autoriza promover índice, ski
 | LLM-as-judge vs schema | `qa_validate` olha contrato |
 | Veredito antes de escalar | Não reindexar o monorepo inteiro porque um piloto passou |
 
-Base: [`APLICACAO_M9_AO_GUARDIAO_M8.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)
+Base: [`aplicacao.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/01-guardiao/aplicacao.md)
 
 Etapa de execução: [`prompt.md`](./prompt.md)
 

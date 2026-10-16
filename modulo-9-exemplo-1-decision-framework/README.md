@@ -58,7 +58,7 @@ Demo GRPO (opcional, Ollama local): `python grpo_verifiable_reward_demo.py`
 
 Os mesmos conceitos desta aula (Pergunta 0, 4 perguntas, analogia Auto/Saúde/Atendimento, zoo de técnicas) foram aplicados ao exemplo prático **Guardião Família agents** — LangGraph v2 + MCP (`developer_implement`, `qa_validate`), para decidir se agentes de implementação e QA precisam de **FT** ou **RAG** a fim de gerar código/evidências **customizados ao projeto**, sem depender do modelo nativo.
 
-→ Relatório de aplicação: [`docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+→ Relatório de aplicação: [`docs/exemplo_real/01-guardiao/aplicacao.md`](docs/exemplo_real/01-guardiao/aplicacao.md)  
 → Pasta M8: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../modulo-8-exemplo-pratico-guardiao-familia-agents/)
 
 | Analogia Amplitude (esta aula) | Subtarefa Guardião (M8) | Decisão |
@@ -80,9 +80,9 @@ modulo-9-exemplo-1-decision-framework/
 │   ├── exemplo_aula/            # FT Amplitude Auto + Saúde
 │   │   ├── RELATORIO_DIDATICO_AULA.md
 │   │   └── FT_AMPLITUDE_E_SAUDE.md
-│   └── exemplo_real/            # RAG + prompt Guardião M8
-│       ├── APLICACAO_*.md
-│       └── RAG_PROMPT_GUARDIAO.md
+│   └── exemplo_real/            # Guardião: gate FT vs RAG
+│       ├── README.md
+│       └── 01-guardiao/
 └── materiais_aula/                    # artefatos UNIPDS + demos
     ├── decision-framework-checklist.md
     ├── amplitude-seguros-casos.json
@@ -122,7 +122,7 @@ modulo-9-exemplo-1-decision-framework/
 - [ ] Aplicar as 4 perguntas — uma vermelha basta para não treinar
 - [ ] Explicar Auto = sim, Saúde = esperar, Atendimento = prompt+RAG
 - [ ] Citar LGPD como gate **não compensável** por NPV alto
-- [ ] Relacionar esta aula ao Guardião M8 via [`APLICACAO_M9_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)
+- [ ] Relacionar esta aula ao Guardião M8 via [`aplicacao.md`](docs/exemplo_real/01-guardiao/aplicacao.md)
 
 ---
 
@@ -143,4 +143,4 @@ modulo-9-exemplo-1-decision-framework/
 | Doc | Conteúdo |
 |-----|----------|
 | [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md) | Relatório didático completo (Amplitude, 3 camadas, roteiro, zoo) |
-| [`docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md) | Mesmo framework aplicado ao exemplo prático Guardião (M8) — FT vs RAG no LangGraph/MCP |
+| [`docs/exemplo_real/01-guardiao/aplicacao.md`](docs/exemplo_real/01-guardiao/aplicacao.md) | Mesmo framework aplicado ao exemplo prático Guardião (M8) — FT vs RAG no LangGraph/MCP |

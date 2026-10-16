@@ -74,7 +74,7 @@ python full_vs_lora_tradeoff_tool.py
 Ex.1–3: **RAG, não FT de código**. Ex.4 acrescenta: se um dia houver FT **estreito de formato**, preferir **adaptador LoRA** (leve, versionável, swapavel) a full FT do “cérebro” do monorepo.
 
 → Relatório: [`docs/exemplo_real/01-guardiao/aplicacao.md`](docs/exemplo_real/01-guardiao/aplicacao.md)  
-→ Ex.1 FT vs RAG: [`../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+→ Ex.1 FT vs RAG: [`../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/01-guardiao/aplicacao.md`](../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/01-guardiao/aplicacao.md)  
 → M8: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../modulo-8-exemplo-pratico-guardiao-familia-agents/)
 
 | Peça Ex.4 | Uso no Guardião M8 |
