@@ -229,6 +229,22 @@ Scaffold via [`run_delivery_modulo9.py`](./modulo-4-exemplo-1-agente-ia-contrato
 
 ---
 
+## Módulo 10 — Segurança e Governança em IA
+
+**O que você aprende:** responsabilidade humana em sistemas de IA e segurança de dados, incluindo prompt injection.
+
+| Exemplo | Pasta | Principais aprendizados |
+|---------|-------|-------------------------|
+| 1 | [`modulo-10-exemplo-1-aspectos-humanos-eticos`](./modulo-10-exemplo-1-aspectos-humanos-eticos/) | **Aspectos humanos e éticos** — estudo de caso de responsabilidade. No Guardião o ato irreversível para no HITL ([aplicação](./modulo-10-exemplo-1-aspectos-humanos-eticos/docs/exemplo_real/01-guardiao/aplicacao.md)) ([modulo4 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo10-seguranca-governanca-ia/modulo4-aspectos-humanos-eticos)) |
+| 2 | [`modulo-10-exemplo-2-seguranca-dados`](./modulo-10-exemplo-2-seguranca-dados/) | **Segurança de dados** — manual e demonstração de injeção indireta. No Guardião o trecho do RAG não vira instrução ([aplicação](./modulo-10-exemplo-2-seguranca-dados/docs/exemplo_real/01-guardiao/aplicacao.md)) ([modulo5 UNIPDS](https://github.com/unipds-engenharia-de-ia-aplicada/engenharia-de-software-com-ia-aplicada/tree/main/modulo10-seguranca-governanca-ia/modulo5-seguranca-dados)) |
+
+
+**Competências do módulo:** aspectos humanos e éticos; segurança de dados; prompt injection.
+
+Scaffold via [`run_delivery_modulo10.py`](./modulo-4-exemplo-1-agente-ia-contratos/runtime/run_delivery_modulo10.py)
+
+---
+
 ## Requisitos gerais
 
 | Recurso | Onde é necessário |

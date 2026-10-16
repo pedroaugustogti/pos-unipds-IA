@@ -31,6 +31,7 @@ MAPA_MODULOS_UNIPDS = {
     7: "modulo07-ferramentas-de-ia-para-gestao-de-projetos",
     8: "modulo08-arquitetura-de-sistemas-com-ia",
     9: "modulo09-processamento-de-dados-e-fine-tuning-de-modelos",
+    10: "modulo10-seguranca-governanca-ia",
 }
 
 
@@ -155,6 +156,16 @@ def _listar_atividades_unipds(pasta_unipds: str) -> list[dict]:
                 })
             continue
 
+        m_colado = re.match(r"^modulo(\d+)-(.+)$", nome, re.I)
+        if m_colado:
+            atividades.append({
+                "nome": nome,
+                "caminho_unipds": caminho,
+                "aula_unipds": nome,
+                "slug": m_colado.group(2),
+            })
+            continue
+
         m = re.match(r"^(\d+)-", nome)
         if not m:
             continue
@@ -184,13 +195,17 @@ def _listar_atividades_unipds(pasta_unipds: str) -> list[dict]:
                 "slug": _slug_de_aula(nome),
             })
 
-    atividades.sort(key=lambda a: (
-        int(m.group(1) or m.group(2) or m.group(3))
-        if (m := re.search(r"(?:^aula0?(\d+)|^(\d+)-|^modulo-0?(\d+))", a["aula_unipds"], re.I))
-        and (m.group(1) or m.group(2) or m.group(3))
-        else 999,
-        a["nome"],
-    ))
+    def _ordem_aula(aula: str) -> int:
+        m = re.search(
+            r"(?:^aula0?(\d+)|^(\d+)-|^modulo-0?(\d+)|^modulo(\d+)-)",
+            aula,
+            re.I,
+        )
+        if not m:
+            return 999
+        return int(next(g for g in m.groups() if g))
+
+    atividades.sort(key=lambda a: (_ordem_aula(a["aula_unipds"]), a["nome"]))
     return atividades
 
 
