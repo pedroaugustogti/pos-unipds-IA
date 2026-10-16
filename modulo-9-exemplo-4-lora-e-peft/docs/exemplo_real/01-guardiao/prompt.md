@@ -1,4 +1,4 @@
-# Etapa 4 — prompt pack no lugar do adapter (Guardião M8)
+# Guardião — prompt no lugar do adapter
 
 LoRA no Guardião seria um adapter de **formato** (plano, evidência JSON), nunca dos pesos do código. Enquanto o RAG resolver, o “adapter” é a skill versionada.
 
@@ -15,4 +15,4 @@ LoRA no Guardião seria um adapter de **formato** (plano, evidência JSON), nunc
 
 Só se, depois do corpus do Ex.2 e do prompt do Ex.3, o eval do Ex.5 mostrar falha **de formato** repetida (JSON de evidência/plano) e não falha de retrieval. Aí o adapter é estreito e descartável.
 
-Contexto: [`APLICACAO_M9_EX4_AO_GUARDIAO_M8.md`](./APLICACAO_M9_EX4_AO_GUARDIAO_M8.md)
+Contexto: [`aplicacao.md`](./aplicacao.md)

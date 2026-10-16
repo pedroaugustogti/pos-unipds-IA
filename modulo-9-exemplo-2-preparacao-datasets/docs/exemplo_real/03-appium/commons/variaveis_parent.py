@@ -3,7 +3,7 @@ from pathlib import Path
 
 EXEMPLO_REAL = Path(__file__).resolve().parents[2]
 GUARDIAO_ROOT = Path(r"C:\Users\pedro\Documents\guardiao-familia")
-FLOW_PATH = EXEMPLO_REAL / "rag-fluxo-parent.jsonl"
+FLOW_PATH = EXEMPLO_REAL / "02-corpus" / "fluxo-parent.jsonl"
 SESSAO_PATH = Path(__file__).resolve().parents[1] / "sessao_appium.json"
 
 APPIUM_URL = os.environ.get("GF_APPIUM_URL", "http://127.0.0.1:4723").rstrip("/")

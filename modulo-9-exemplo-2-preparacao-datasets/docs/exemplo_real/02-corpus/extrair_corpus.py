@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Extrai rag-api.jsonl e rag-backoffice.jsonl a partir dos repositórios."""
+"""Extrai api.jsonl e backoffice.jsonl a partir dos repositórios."""
 import json
 import re
 from pathlib import Path
@@ -8,7 +8,7 @@ API = Path(r"C:\Users\pedro\Documents\guardiao-familia\guardiao-familia-api\src"
 PARENT = Path(r"C:\Users\pedro\Documents\guardiao-familia\guardiao-familia-parent")
 CHILD = Path(r"C:\Users\pedro\Documents\guardiao-familia\guardiao-familia-child")
 BACKOFFICE = Path(r"C:\Users\pedro\Documents\guardiao-familia\guardiao-familia-backoffice")
-OUT = Path(r"c:\Users\pedro\Documents\pos-unipds\pos-unipds-IA\modulo-9-exemplo-2-preparacao-datasets\docs\exemplo_real")
+OUT = Path(__file__).resolve().parent
 
 HTTP_RE = re.compile(r"@(Get|Post|Put|Patch|Delete)\(\s*(?:'([^']*)'|\"([^\"]*)\"|`([^`]*)`)?\s*\)")
 CTRL_RE = re.compile(r"@Controller\(\s*(?:'([^']*)'|\"([^\"]*)\"|`([^`]*)`)?\s*\)")
@@ -369,8 +369,8 @@ def main():
     api_rows.sort(key=lambda r: (r["url"], r["method"]))
     backoffice.sort(key=lambda r: r["route"])
     outputs = (
-        ("rag-api.jsonl", api_rows),
-        ("rag-backoffice.jsonl", backoffice),
+        ("api.jsonl", api_rows),
+        ("backoffice.jsonl", backoffice),
     )
     for name, rows in outputs:
         path = OUT / name

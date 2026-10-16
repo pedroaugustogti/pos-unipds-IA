@@ -73,7 +73,7 @@ python full_vs_lora_tradeoff_tool.py
 
 Ex.1–3: **RAG, não FT de código**. Ex.4 acrescenta: se um dia houver FT **estreito de formato**, preferir **adaptador LoRA** (leve, versionável, swapavel) a full FT do “cérebro” do monorepo.
 
-→ Relatório: [`docs/exemplo_real/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md)  
+→ Relatório: [`docs/exemplo_real/01-guardiao/aplicacao.md`](docs/exemplo_real/01-guardiao/aplicacao.md)  
 → Ex.1 FT vs RAG: [`../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
 → M8: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../modulo-8-exemplo-pratico-guardiao-familia-agents/)
 
@@ -97,9 +97,9 @@ modulo-9-exemplo-4-lora-e-peft/
 │   ├── exemplo_aula/            # FT Amplitude Auto + Saúde
 │   │   ├── RELATORIO_DIDATICO_AULA.md
 │   │   └── FT_AMPLITUDE_E_SAUDE.md
-│   └── exemplo_real/            # RAG + prompt Guardião M8
-│       ├── APLICACAO_*.md
-│       └── RAG_PROMPT_GUARDIAO.md
+│   └── exemplo_real/            # Guardião: adapter leve vs FT de código
+│       ├── README.md
+│       └── 01-guardiao/
 └── materiais_aula/
     ├── regional_lora_vs_cloud_npv.py / .js
     ├── local_lora_training_tool.py / .js / HF
@@ -140,7 +140,7 @@ modulo-9-exemplo-4-lora-e-peft/
 - [ ] Distinguir caminho MLX (Mac) vs Colab/HF
 - [ ] Relacionar rank do adapter a tamanho/capacidade
 - [ ] Citar o tradeoff full vs LoRA (qualidade × infra)
-- [ ] Relacionar esta aula ao Guardião via [`APLICACAO_M9_EX4_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md)
+- [ ] Relacionar esta aula ao Guardião via [`aplicacao.md`](docs/exemplo_real/01-guardiao/aplicacao.md)
 
 ---
 
@@ -161,4 +161,5 @@ modulo-9-exemplo-4-lora-e-peft/
 | Doc | Conteúdo |
 |-----|----------|
 | [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md) | Relatório didático (camadas, pipeline, Mac vs Colab) |
-| [`docs/exemplo_real/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX4_AO_GUARDIAO_M8.md) | LoRA/PEFT → Guardião M8 (adapter leve vs FT de código) |
+| [`docs/exemplo_real/README.md`](docs/exemplo_real/README.md) | Índice do exemplo real |
+| [`docs/exemplo_real/01-guardiao/aplicacao.md`](docs/exemplo_real/01-guardiao/aplicacao.md) | LoRA/PEFT no Guardião: adapter leve, sem FT de código |

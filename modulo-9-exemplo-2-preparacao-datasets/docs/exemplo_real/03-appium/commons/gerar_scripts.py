@@ -17,9 +17,9 @@ except ImportError:
 
 
 def ids_fluxo() -> list[str]:
-    """flow_id de cada linha em rag-fluxo-*.jsonl."""
+    """flow_id de cada linha em 02-corpus/fluxo-*.jsonl."""
     ids = []
-    for caminho in sorted(EXEMPLO_REAL.glob("rag-fluxo-*.jsonl")):
+    for caminho in sorted((EXEMPLO_REAL / "02-corpus").glob("fluxo-*.jsonl")):
         for linha in caminho.read_text(encoding="utf-8").splitlines():
             if linha.strip():
                 ids.append(json.loads(linha)["flow_id"])
@@ -29,7 +29,7 @@ def ids_fluxo() -> list[str]:
 def pasta_do_script(flow_id: str):
     """Uma pasta por fluxo, derivada só do flow_id."""
     nome = "rag-" + flow_id.replace(".", "-")
-    return EXEMPLO_REAL / "fluxo_automatizado" / nome
+    return EXEMPLO_REAL / "03-appium" / nome
 
 
 def texto_do_script(flow_id: str) -> str:
@@ -56,7 +56,7 @@ def gerar(flow_ids: list[str] | None = None) -> list[str]:
         pasta.mkdir(parents=True, exist_ok=True)
         destino = pasta / f"{flow_id}.py"
         destino.write_text(texto_do_script(flow_id), encoding="utf-8", newline="\n")
-        escritos.append(str(destino.relative_to(EXEMPLO_REAL / "fluxo_automatizado")))
+        escritos.append(str(destino.relative_to(EXEMPLO_REAL / "03-appium")))
     return escritos
 
 

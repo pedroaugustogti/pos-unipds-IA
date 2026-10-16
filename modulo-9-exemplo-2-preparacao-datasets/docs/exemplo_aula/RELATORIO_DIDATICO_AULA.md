@@ -73,8 +73,8 @@ Nos 4 documentos sintéticos de `documentos-brutos/`: **12/12 campos** nos dois 
 modulo-9-exemplo-2-preparacao-datasets/
 ├── README.md
 ├── docs/
-│   ├── RELATORIO_DIDATICO_AULA.md
-│   └── APLICACAO_M9_EX2_AO_GUARDIAO_M8.md
+│   ├── exemplo_aula/RELATORIO_DIDATICO_AULA.md
+│   └── exemplo_real/01-guardiao/aplicacao.md
 └── materiais_aula/
     ├── data_relevance_scoring_tool.py / .js
     ├── extraction_to_jsonl_tool.py / .js
@@ -136,7 +136,7 @@ python dataset_cleaning_balancing_tool.py
 
 ## 8. Aplicação ao Módulo 8 (prático)
 
-→ [`APLICACAO_M9_EX2_AO_GUARDIAO_M8.md`](../exemplo_real/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md)
+→ [`aplicacao.md`](../exemplo_real/01-guardiao/aplicacao.md)
 
 **Resumo:** as mesmas etapas (relevância → extração tipada → PII → limpeza) aplicam-se ao corpus que alimenta `mobile_flow_rag` / code index do Guardião — alinhado à decisão do Ex.1 de **RAG, não FT de código**.
 

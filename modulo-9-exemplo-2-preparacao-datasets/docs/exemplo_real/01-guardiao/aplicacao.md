@@ -1,6 +1,6 @@
-# Aplicação do Ex.2 (Preparação de Datasets) ao Guardião Família (M8)
+# Guardião — aplicação do Ex.2
 
-> **Este documento deixa explícito:** os conhecimentos do **Módulo 9 — Exemplo 2** (pipeline de dados Amplitude) complementam a decisão do **Ex.1** aplicada ao exemplo prático [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../../../modulo-8-exemplo-pratico-guardiao-familia-agents/).
+> **Este documento deixa explícito:** os conhecimentos do **Módulo 9 — Exemplo 2** (pipeline de dados Amplitude) complementam a decisão do **Ex.1** aplicada ao exemplo prático [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../../../../modulo-8-exemplo-pratico-guardiao-familia-agents/).
 >
 > O Ex.1 concluiu: **não fine-tunar** código/API/views do Guardião — investir em **RAG + MCP**. O Ex.2 responde: **como preparar o corpus** que esse RAG (e eventual FT de formato) consome.
 
@@ -11,7 +11,7 @@
 | PII scrub + companion | Higienizar logs/evidências/tickets antes de indexar |
 | Dedup + balance + diversidade | Evitar fluxos duplicados; equilibrar parent/child/API no vetor |
 
-Decisão FT vs RAG (Ex.1): [`../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)
+Decisão FT vs RAG (Ex.1): [`APLICACAO_M9_AO_GUARDIAO_M8.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)
 
 ---
 
@@ -70,8 +70,8 @@ Peças já no M8 (ainda fora do caminho MCP crítico): `lib/mobile/mobile_flow_r
 | Companion PII | Compliance no ingest |
 | Cleaning/balancing | Higiene e cobertura do corpus RAG |
 
-Pasta M8: [`../../../modulo-8-exemplo-pratico-guardiao-familia-agents/`](../../../modulo-8-exemplo-pratico-guardiao-familia-agents/)  
-Aula Ex.2: [`../`](../../) · Relatório: [`RELATORIO_DIDATICO_AULA.md`](../exemplo_aula/RELATORIO_DIDATICO_AULA.md)
+Pasta M8: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../../../../modulo-8-exemplo-pratico-guardiao-familia-agents/)  
+Aula Ex.2: [`../`](../../../) · Relatório: [`RELATORIO_DIDATICO_AULA.md`](../../exemplo_aula/RELATORIO_DIDATICO_AULA.md)
 
 ---
 

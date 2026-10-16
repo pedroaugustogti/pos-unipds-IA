@@ -31,4 +31,4 @@ Artefato de execução: [`FT_AMPLITUDE_E_SAUDE.md`](./FT_AMPLITUDE_E_SAUDE.md).
 | Ex.1 | Projeção que o custo real corrige |
 | Ex.3 / Ex.4 | Modelo e adapter avaliados |
 | Ex.6 | Executa o “escalar” |
-| Guardião | [`../exemplo_real/RAG_PROMPT_GUARDIAO.md`](../exemplo_real/RAG_PROMPT_GUARDIAO.md) |
+| Guardião | [`../exemplo_real/01-guardiao/prompt.md`](../exemplo_real/01-guardiao/prompt.md) |

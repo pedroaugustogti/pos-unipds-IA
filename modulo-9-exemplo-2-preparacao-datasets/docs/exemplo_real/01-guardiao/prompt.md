@@ -1,4 +1,4 @@
-# Etapa 2 — corpus do RAG (Guardião M8)
+# Guardião — corpus do RAG
 
 Mesma higiene do dataset Amplitude, aplicada ao índice. Não é fine-tuning.
 
@@ -27,20 +27,21 @@ Um chunk de view não entra no índice de endpoint.
 
 | Schema | Dataset | Unidade |
 |--------|---------|---------|
-| [`schema-backoffice.json`](./schema-backoffice.json) | [`rag-backoffice.jsonl`](./rag-backoffice.jsonl) | Uma página Next do back-office |
-| [`schema-api.json`](./schema-api.json) | [`rag-api.jsonl`](./rag-api.jsonl) | Uma operação `/api/v1/...`. `chamado_por` é lista: `parent`, `child`, `backoffice` |
+| [`fluxo.schema.json`](../02-corpus/fluxo.schema.json) | [`fluxo-parent.jsonl`](../02-corpus/fluxo-parent.jsonl), [`fluxo-child.jsonl`](../02-corpus/fluxo-child.jsonl), [`fluxo-backoffice.jsonl`](../02-corpus/fluxo-backoffice.jsonl) | Um fluxo de navegação |
+| [`backoffice.schema.json`](../02-corpus/backoffice.schema.json) | [`backoffice.jsonl`](../02-corpus/backoffice.jsonl) | Uma página Next do back-office |
+| [`api.schema.json`](../02-corpus/api.schema.json) | [`api.jsonl`](../02-corpus/api.jsonl) | Uma operação `/api/v1/...`. `chamado_por` é lista: `parent`, `child`, `backoffice` |
 
 Na página do back-office cada ação é uma função de `lib/adminApi.ts` e o endpoint que ela chama. O rótulo do menu vem de `AdminShell`.
 
 `chamado_por` deixou de ser a string `ambos`. Parent e child juntos viram `["parent","child"]`. Rota só do painel fica `["backoffice"]`. Webhook sem cliente fica lista vazia.
 
-Varredura da API, dos apps e de `guardiao-familia-backoffice`, refeita por [`_extract_rag.py`](./_extract_rag.py):
+Varredura da API, dos apps e de `guardiao-familia-backoffice`, refeita por [`extrair_corpus.py`](../02-corpus/extrair_corpus.py):
 
 | Arquivo | Registros |
 |---------|-----------|
-| `rag-api.jsonl` | 324 operações. 151 só back-office; 169 incluem back-office na lista. |
-| `rag-backoffice.jsonl` | 14 páginas. Financeiro está “Em breve”; plan-config lê catálogo local, sem `/admin`. |
+| `api.jsonl` | 324 operações. 151 só back-office; 169 incluem back-office na lista. |
+| `backoffice.jsonl` | 14 páginas. Financeiro está “Em breve”; plan-config lê catálogo local, sem `/admin`. |
 
-Login vive em `lib/authApi.ts` e consta no JSONL da API. O caminho das telas parent e child fica em `rag-fluxo-parent.jsonl` e `rag-fluxo-child.jsonl`, no campo `screen_file`.
+Login vive em `lib/authApi.ts` e consta no JSONL da API. O caminho das telas parent e child fica em `fluxo-parent.jsonl` e `fluxo-child.jsonl`, no campo `screen_file`. O schema desses fluxos é `fluxo.schema.json`.
 
-Contexto: [`APLICACAO_M9_EX2_AO_GUARDIAO_M8.md`](./APLICACAO_M9_EX2_AO_GUARDIAO_M8.md)
+Contexto: [`aplicacao.md`](./aplicacao.md)

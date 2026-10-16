@@ -1,4 +1,4 @@
-# Etapa 6 — prompt de atuação com RAG (Guardião M8)
+# Guardião — prompt de atuação com RAG
 
 Template alinhado ao que `build_actuation_prompt` já monta. O retrieval preenche `{trechos}`. A skill do papel preenche `{skill}` e `{agent_md}`.
 
@@ -34,4 +34,4 @@ Cada trecho traz path ou flow_id. Não invente arquivo que não esteja aqui.
 2. Rodar de novo o checklist do Ex.5 (caso retido por superfície).  
 3. Tratar queda de score como drift, não como “já tinha passado”.
 
-Contexto: [`APLICACAO_M9_EX6_AO_GUARDIAO_M8.md`](./APLICACAO_M9_EX6_AO_GUARDIAO_M8.md)
+Contexto: [`aplicacao.md`](./aplicacao.md)

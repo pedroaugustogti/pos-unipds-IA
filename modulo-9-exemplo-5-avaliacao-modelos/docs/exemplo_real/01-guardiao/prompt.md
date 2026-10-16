@@ -1,4 +1,4 @@
-# Etapa 5 — avaliar RAG e prompt (Guardião M8)
+# Guardião — avaliar RAG e prompt
 
 Promover índice ou skill sem caso retido é o mesmo erro de escalar um fine-tune pela loss.
 
@@ -16,4 +16,4 @@ Promover índice ou skill sem caso retido é o mesmo erro de escalar um fine-tun
 
 O índice acerta o trecho que acabou de ser ingerido e erra o layout novo. Isso é overfitting de corpus — crescer o índice (Ex.6) sem essa suite piora o caso.
 
-Contexto: [`APLICACAO_M9_EX5_AO_GUARDIAO_M8.md`](./APLICACAO_M9_EX5_AO_GUARDIAO_M8.md)
+Contexto: [`aplicacao.md`](./aplicacao.md)

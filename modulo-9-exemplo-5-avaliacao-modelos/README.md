@@ -6,7 +6,7 @@ Adaptação local da atividade UNIPDS — caso **Amplitude Seguros**.
 
 **Aula (FT Auto + Saúde):** [`docs/exemplo_aula/FT_AMPLITUDE_E_SAUDE.md`](docs/exemplo_aula/FT_AMPLITUDE_E_SAUDE.md) · relatório [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md)
 
-**Guardião (RAG + prompt):** [`docs/exemplo_real/RAG_PROMPT_GUARDIAO.md`](docs/exemplo_real/RAG_PROMPT_GUARDIAO.md) · aplicação [`docs/exemplo_real/APLICACAO_M9_EX5_AO_GUARDIAO_M8.md`](docs/exemplo_real/APLICACAO_M9_EX5_AO_GUARDIAO_M8.md)
+**Guardião (RAG + prompt):** [`docs/exemplo_real/01-guardiao/prompt.md`](docs/exemplo_real/01-guardiao/prompt.md) · aplicação [`docs/exemplo_real/01-guardiao/aplicacao.md`](docs/exemplo_real/01-guardiao/aplicacao.md)
 
 Mede o fine-tuning com teste retido, A/B Auto vs Saúde, overfitting e veredito de escala. Job verde não basta.
 
@@ -27,8 +27,8 @@ modulo-9-exemplo-5-avaliacao-modelos/
 │   ├── exemplo_aula/            # FT Amplitude Auto + Saúde
 │   │   ├── RELATORIO_DIDATICO_AULA.md
 │   │   └── FT_AMPLITUDE_E_SAUDE.md
-│   └── exemplo_real/            # RAG + prompt Guardião M8
-│       ├── APLICACAO_M9_EX5_AO_GUARDIAO_M8.md
-│       └── RAG_PROMPT_GUARDIAO.md
+│   └── exemplo_real/            # Guardião: eval antes de promover RAG
+│       ├── README.md
+│       └── 01-guardiao/
 └── materiais_aula/
 ```

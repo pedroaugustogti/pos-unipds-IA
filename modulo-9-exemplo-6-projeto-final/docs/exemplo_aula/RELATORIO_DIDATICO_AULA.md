@@ -24,4 +24,4 @@ Artefato de execução: [`FT_AMPLITUDE_E_SAUDE.md`](./FT_AMPLITUDE_E_SAUDE.md).
 | Ex.2 | Filtro do dataset grande |
 | Ex.4 | Adapter na chamada local |
 | Ex.5 | Veredito e harness |
-| Guardião | [`../exemplo_real/RAG_PROMPT_GUARDIAO.md`](../exemplo_real/RAG_PROMPT_GUARDIAO.md) |
+| Guardião | [`../exemplo_real/01-guardiao/prompt.md`](../exemplo_real/01-guardiao/prompt.md) |

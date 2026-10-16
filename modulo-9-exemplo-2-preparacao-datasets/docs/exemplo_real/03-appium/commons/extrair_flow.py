@@ -16,7 +16,7 @@ except ImportError:
 
 def extrair_flow(flow_id: str) -> dict:
     app = flow_id.split(".", 1)[0]
-    path = EXEMPLO_REAL / f"rag-fluxo-{app}.jsonl"
+    path = EXEMPLO_REAL / "02-corpus" / f"fluxo-{app}.jsonl"
     if not path.exists():
         raise SystemExit(f"arquivo de fluxo nao encontrado: {path.name}")
     for line in path.read_text(encoding="utf-8").splitlines():

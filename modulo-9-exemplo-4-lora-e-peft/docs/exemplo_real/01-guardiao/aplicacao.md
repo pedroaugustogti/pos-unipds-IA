@@ -1,6 +1,6 @@
-# Aplicação do Ex.4 (LoRA e PEFT) ao Guardião Família (M8)
+# Guardião — aplicação do Ex.4
 
-> **Este documento deixa explícito:** os conhecimentos do **Módulo 9 — Exemplo 4** (LoRA/PEFT, rank, treino local vs full FT) complementam Ex.1–3 no exemplo prático [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../../../modulo-8-exemplo-pratico-guardiao-familia-agents/).
+> **Este documento deixa explícito:** os conhecimentos do **Módulo 9 — Exemplo 4** (LoRA/PEFT, rank, treino local vs full FT) complementam Ex.1–3 no exemplo prático [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../../../../modulo-8-exemplo-pratico-guardiao-familia-agents/).
 >
 > Ex.1: **RAG, não FT de código**. Ex.2: **corpus**. Ex.3: **operar FT gerenciado com segurança**. Ex.4: **se** treinar formato, preferir **adapter leve e versionável** — não full FT do monorepo.
 
@@ -13,8 +13,8 @@
 | Mesmo dataset, outro runtime | Corpus RAG pode alimentar eval/FT de formato sem misturar schemas de código |
 | Preview LoRA gerenciado | Se um dia houver FT, API + adapter > treinar pesos do repo |
 
-Decisão base: [`../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
-API/governança: [`../../../modulo-9-exemplo-3-fine-tuning-via-api/docs/exemplo_real/01-guardiao/aplicacao.md`](../../../modulo-9-exemplo-3-fine-tuning-via-api/docs/exemplo_real/01-guardiao/aplicacao.md)
+Decisão base: [`APLICACAO_M9_AO_GUARDIAO_M8.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+API/governança: [`aplicacao.md`](../../../../modulo-9-exemplo-3-fine-tuning-via-api/docs/exemplo_real/01-guardiao/aplicacao.md)
 
 ---
 
@@ -65,8 +65,8 @@ Ex.4 **não** autoriza “LoRar o monorepo” — autoriza pensar em **artefatos
 | `mlx-adapters*` / rank | Modelo mental de artefato versionável |
 | `full_vs_lora_tradeoff` | Argumento contra full FT no ciclo ágil |
 
-Pasta M8: [`../../../modulo-8-exemplo-pratico-guardiao-familia-agents/`](../../../modulo-8-exemplo-pratico-guardiao-familia-agents/)  
-Aula Ex.4: [`../`](../../) · Relatório: [`RELATORIO_DIDATICO_AULA.md`](../exemplo_aula/RELATORIO_DIDATICO_AULA.md)
+Pasta M8: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../../../../modulo-8-exemplo-pratico-guardiao-familia-agents/)  
+Aula Ex.4: [`../`](../../../) · Relatório: [`RELATORIO_DIDATICO_AULA.md`](../../exemplo_aula/RELATORIO_DIDATICO_AULA.md)
 
 ---
 

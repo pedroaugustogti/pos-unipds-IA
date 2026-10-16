@@ -68,7 +68,7 @@ Full FT do Gemma do curso pede ~15GB+ unificado no Mac; checkpoint full (~2GB) n
 2. Confirmar path do JSONL Ex.3 e (se Mac) converter/treinar; senão abrir notebook Colab.  
 3. Comparar ranks e adapters versionados.  
 4. Ler companions de execução e tradeoff full vs LoRA.  
-5. Ligar ao Guardião via `APLICACAO_M9_EX4_AO_GUARDIAO_M8.md`.
+5. Ligar ao Guardião via `docs/exemplo_real/01-guardiao/aplicacao.md`.
 
 ---
 
