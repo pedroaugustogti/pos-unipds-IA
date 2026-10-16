@@ -1,6 +1,8 @@
 **/.env
 **/.env.*
 !**/.env.example
+**/*-key.json
+**/ft-amplitude-key.json
 **/node_modules/
 **/github-token.local
 **/respostas/

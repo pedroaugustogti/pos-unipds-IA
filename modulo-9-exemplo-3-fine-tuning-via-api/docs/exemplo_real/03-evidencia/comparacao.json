@@ -1,0 +1,56 @@
+{
+  "amostra": {
+    "auto": 10,
+    "saude": 10,
+    "fonte": "dataset-treinado.jsonl"
+  },
+  "base": {
+    "modelo": "gemini-2.5-flash",
+    "exemplos": 20,
+    "json_completo_ok": 0,
+    "campos_ok": 0,
+    "campos_total": 60,
+    "falhas": [
+      {
+        "dominio": "auto",
+        "erro": "resposta sem objeto JSON"
+      },
+      {
+        "dominio": "auto",
+        "erro": "resposta sem objeto JSON"
+      },
+      {
+        "dominio": "auto",
+        "erro": "resposta sem objeto JSON"
+      },
+      {
+        "dominio": "auto",
+        "erro": "resposta sem objeto JSON"
+      },
+      {
+        "dominio": "auto",
+        "erro": "resposta sem objeto JSON"
+      },
+      {
+        "dominio": "auto",
+        "erro": "resposta sem objeto JSON"
+      },
+      {
+        "dominio": "auto",
+        "erro": "resposta sem objeto JSON"
+      },
+      {
+        "dominio": "auto",
+        "erro": "resposta sem objeto JSON"
+      }
+    ]
+  },
+  "fine_tunado": {
+    "modelo": "endpoint/4438733389134036992",
+    "exemplos": 20,
+    "json_completo_ok": 20,
+    "campos_ok": 60,
+    "campos_total": 60,
+    "falhas": []
+  }
+}

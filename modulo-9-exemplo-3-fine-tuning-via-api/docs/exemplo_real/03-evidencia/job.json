@@ -1,0 +1,21 @@
+{
+  "name": "projects/1056438185728/locations/us-central1/tuningJobs/2795543575301980160",
+  "tunedModelDisplayName": "amplitude-auto-saude-m3-200",
+  "baseModel": "gemini-2.5-flash",
+  "supervisedTuningSpec": {
+    "trainingDatasetUri": "gs://fine-tuning-via-api-amplitude/m3-amplitude-auto-saude-200.jsonl",
+    "hyperParameters": {
+      "epochCount": "3",
+      "learningRateMultiplier": 5
+    }
+  },
+  "state": "JOB_STATE_SUCCEEDED",
+  "createTime": "2026-10-15T23:37:41.949779Z",
+  "startTime": "2026-10-15T23:38:53.213022Z",
+  "endTime": "2026-10-16T03:06:17.432577Z",
+  "updateTime": "2026-10-16T03:06:17.432577Z",
+  "tunedModel": {
+    "model": "projects/1056438185728/locations/us-central1/models/5106774663938179072@1",
+    "endpoint": "projects/1056438185728/locations/us-central1/endpoints/4438733389134036992"
+  }
+}

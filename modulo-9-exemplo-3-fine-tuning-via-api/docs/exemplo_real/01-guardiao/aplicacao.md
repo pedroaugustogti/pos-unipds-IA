@@ -1,8 +1,10 @@
-# Aplicação do Ex.3 (Fine-Tuning via API) ao Guardião Família (M8)
+# Guardião — aplicação do Ex.3
 
-> **Este documento deixa explícito:** os conhecimentos do **Módulo 9 — Exemplo 3** (job gerenciado, HP, automação, model card) complementam Ex.1–2 no exemplo prático [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../../../modulo-8-exemplo-pratico-guardiao-familia-agents/).
+> **Este documento deixa explícito:** os conhecimentos do **Módulo 9 — Exemplo 3** (job gerenciado, HP, automação, model card) complementam Ex.1–2 no exemplo prático [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../../../../modulo-8-exemplo-pratico-guardiao-familia-agents/).
 >
 > Ex.1: **RAG, não FT de código**. Ex.2: **preparar corpus**. Ex.3: **como operar um FT com segurança *se* o gate de formato um dia passar** — e padrões de governança úteis **mesmo sem treinar**.
+>
+> A prática de job gerenciado desta aula usa o JSONL da Amplitude já pronto, não o corpus do Guardião: [`passo-a-passo.md`](../02-amplitude/passo-a-passo.md).
 
 | Origem (M9 Ex.3) | Destino (M8 prático) |
 |------------------|----------------------|
@@ -13,8 +15,8 @@
 | Reavaliação periódica (Saúde) | Reabrir checklist FT vs RAG quando corpus amadurecer |
 | Dolly como dataset paralelo | Não misturar schemas (fluxos mobile ≠ código API) |
 
-Decisão base: [`../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md`](../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
-Corpus: [`../../../modulo-9-exemplo-2-preparacao-datasets/docs/exemplo_real/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md`](../../../modulo-9-exemplo-2-preparacao-datasets/docs/exemplo_real/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md)
+Decisão base: [`APLICACAO_M9_AO_GUARDIAO_M8.md`](../../../../modulo-9-exemplo-1-decision-framework/docs/exemplo_real/APLICACAO_M9_AO_GUARDIAO_M8.md)  
+Corpus: [`APLICACAO_M9_EX2_AO_GUARDIAO_M8.md`](../../../../modulo-9-exemplo-2-preparacao-datasets/docs/exemplo_real/APLICACAO_M9_EX2_AO_GUARDIAO_M8.md)
 
 ---
 
@@ -69,8 +71,8 @@ Ex.3 **não** autoriza treinar o “cérebro Guardião” na Vertex — autoriza
 | Reavaliação Saúde | Ciclo de vida da decisão FT vs RAG |
 | Scaling 200 | Lembra que corpus RAG também precisa escala + higiene (Ex.2) |
 
-Pasta M8: [`../../../modulo-8-exemplo-pratico-guardiao-familia-agents/`](../../../modulo-8-exemplo-pratico-guardiao-familia-agents/)  
-Aula Ex.3: [`../`](../../) · Relatório: [`RELATORIO_DIDATICO_AULA.md`](../exemplo_aula/RELATORIO_DIDATICO_AULA.md)
+Pasta M8: [`modulo-8-exemplo-pratico-guardiao-familia-agents`](../../../../modulo-8-exemplo-pratico-guardiao-familia-agents/)  
+Aula Ex.3: [`../`](../../../) · Relatório: [`RELATORIO_DIDATICO_AULA.md`](../../exemplo_aula/RELATORIO_DIDATICO_AULA.md)
 
 ---
 

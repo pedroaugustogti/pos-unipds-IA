@@ -66,8 +66,8 @@ Exemplo publicado (`model-card-amplitude-auto-saude-m3-200.md`): base `gemini-2.
 modulo-9-exemplo-3-fine-tuning-via-api/
 ├── README.md
 ├── docs/
-│   ├── RELATORIO_DIDATICO_AULA.md
-│   └── APLICACAO_M9_EX3_AO_GUARDIAO_M8.md
+│   ├── exemplo_aula/RELATORIO_DIDATICO_AULA.md
+│   └── exemplo_real/01-guardiao/aplicacao.md
 └── materiais_aula/
     ├── gcp-setup-companion.md
     ├── m3_dataset_scaling_tool.py / .js
@@ -128,7 +128,7 @@ python m3_dataset_scaling_tool.py
 
 ## 8. Aplicação ao Módulo 8
 
-→ [`APLICACAO_M9_EX3_AO_GUARDIAO_M8.md`](../exemplo_real/APLICACAO_M9_EX3_AO_GUARDIAO_M8.md)
+→ [`aplicacao.md`](../exemplo_real/01-guardiao/aplicacao.md)
 
 ---
 

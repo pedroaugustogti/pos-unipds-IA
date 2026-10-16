@@ -1,4 +1,4 @@
-# Etapa 3 — operar o prompt com trava (Guardião M8)
+# Guardião — prompt e travas do Ex.3
 
 Não há job Vertex para o Guardião. A disciplina do Ex.3 vira governança da **montagem do prompt** e das tools MCP.
 
@@ -25,4 +25,4 @@ O retrieval (fluxo mobile ou código) entra como **contexto citado**, não como 
 
 Registrar: fontes do índice, data da ingestão, modelo de embedding, hash do conteúdo. Job “verde” no Ex.3 não provava qualidade; índice “atualizado” também não — a medição é o Ex.5.
 
-Contexto: [`APLICACAO_M9_EX3_AO_GUARDIAO_M8.md`](./APLICACAO_M9_EX3_AO_GUARDIAO_M8.md)
+Contexto: [`aplicacao.md`](./aplicacao.md)
