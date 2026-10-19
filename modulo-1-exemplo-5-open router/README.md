@@ -22,9 +22,11 @@ bash request.sh
 
 ### Critérios de sucesso
 
-- [ ] Resposta JSON válida da API
-- [ ] Modelo alterado com sucesso
-- [ ] Cabeçalhos opcionais (`HTTP-Referer`, `X-Title`) compreendidos
+- [x] Resposta JSON válida da API
+- [x] Modelo alterado com sucesso
+- [x] Cabeçalhos opcionais (`HTTP-Referer`, `X-Title`) compreendidos
+
+
 
 ## Relação com o Módulo 1
 

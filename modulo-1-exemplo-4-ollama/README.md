@@ -24,9 +24,11 @@ Ajuste modelo e prompt em `request.sh`.
 
 ### Critérios de sucesso
 
-- [ ] Ollama responde em `/v1/chat/completions`
-- [ ] Você troca o modelo no script com sucesso
-- [ ] Entende como reutilizar o padrão em SDKs OpenAI
+- [x] Ollama responde em `/v1/chat/completions`
+- [x] Você troca o modelo no script com sucesso
+- [x] Entende como reutilizar o padrão em SDKs OpenAI
+
+
 
 ## Relação com o Módulo 1
 
