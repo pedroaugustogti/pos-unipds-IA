@@ -47,6 +47,7 @@ A separação entre instrução de sistema e texto recuperado não impede o segu
 | 2.2 Demonstração | `Demonstração.ipynb`                         | Injeção indireta e jailbreak por personagem |
 | 2.3 Leitura      | `[SEGURANCA_DADOS.md](./SEGURANCA_DADOS.md)` | O que registrar dos dois materiais          |
 | 2.4 Temas        | `[TEMAS_DA_AULA.md](./TEMAS_DA_AULA.md)`     | Tensões do tabuleiro e da demonstração      |
+| 2.5 OWASP        | [`OWASP_TOP10_LLM.md`](./OWASP_TOP10_LLM.md) | Dez riscos de aplicação com LLM e casos reais |
 
 
 
