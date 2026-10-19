@@ -40,6 +40,16 @@ EXEMPLOS = [
             f"([modulo5 UNIPDS]({UNIPDS_URL}/modulo5-seguranca-dados))"
         ),
     },
+    {
+        "numero": 3,
+        "slug": "custo-financeiro",
+        "aula": "custo-financeiro",
+        "titulo": "Custo financeiro",
+        "resumo": (
+            "**Custo financeiro** — operacao, incidente e controle de governanca "
+            "(exemplo local; UNIPDS do modulo 10 nao publica pasta dedicada)"
+        ),
+    },
 ]
 
 
