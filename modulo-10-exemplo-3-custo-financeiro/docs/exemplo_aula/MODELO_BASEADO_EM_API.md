@@ -56,4 +56,4 @@ O provedor hospeda o modelo. A aplicação envia prompt e recebe texto (ou embed
 | Contexto e tools incham o prompt | Mais tokens por request, mesma linearidade |
 | Margem bruta do produto < custo médio de API | Viabilidade: mudar modelo, cache, RAG mais curto ou serving próprio |
 
-Relatório da aula: [`RELATORIO_DIDATICO_AULA.md`](./RELATORIO_DIDATICO_AULA.md).
+Táticas para cortar a fatura: [`TATICAS_REDUCAO_CUSTOS.md`](./TATICAS_REDUCAO_CUSTOS.md). Relatório da aula: [`RELATORIO_DIDATICO_AULA.md`](./RELATORIO_DIDATICO_AULA.md).

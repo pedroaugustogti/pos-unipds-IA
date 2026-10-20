@@ -14,6 +14,7 @@ Medir três bolsos (operação, falha, governança), distinguir CapEx de OpEx e 
 | [`CUSTO_FINANCEIRO.md`](./CUSTO_FINANCEIRO.md) | O que registrar: chamada, incidente, controle, loop e energia |
 | [`DILEMA_ECONOMICO_IA.md`](./DILEMA_ECONOMICO_IA.md) | CapEx vs OpEx, escala e viabilidade |
 | [`MODELO_BASEADO_EM_API.md`](./MODELO_BASEADO_EM_API.md) | Sem overhead, pay-as-you-go e conta linear |
+| [`TATICAS_REDUCAO_CUSTOS.md`](./TATICAS_REDUCAO_CUSTOS.md) | Caching, quantização, routing e RAG eficiente |
 
 ## Três bolsos
 
@@ -45,6 +46,8 @@ CapEx não some se o produto engasga. OpEx não para se o produto decola. A esca
 
 Snapchat My AI e Character.AI mostram escala rápida com OpEx material. Duolingo Max monta feature paga sem treinar foundation model. Perplexity multiplica chamadas por pergunta (resposta + busca). Quando o volume justifica, empresas migram de GPT-4 para Llama em produção: o preço unitário da API ficou maior que o serving próprio.
 
+Quando a fatura linear aperta, entram as quatro táticas ([`TATICAS_REDUCAO_CUSTOS.md`](./TATICAS_REDUCAO_CUSTOS.md)): caching (Anthropic/OpenAI/Gemini), quantização (llama.cpp, TensorRT), routing (Haiku/mini vs Sonnet/GPT-4o; Portkey, Not Diamond) e RAG com rerank (Cohere, top-k baixo).
+
 Regulação e risco de consumo: [`TIPOS_DE_REGULACAO.md`](../../../modulo-10-exemplo-2-seguranca-dados/docs/exemplo_aula/TIPOS_DE_REGULACAO.md) · [`OWASP_TOP10_LLM.md`](../../../modulo-10-exemplo-2-seguranca-dados/docs/exemplo_aula/OWASP_TOP10_LLM.md) (item 10).
 
 ## Camadas didáticas
@@ -54,7 +57,8 @@ Regulação e risco de consumo: [`TIPOS_DE_REGULACAO.md`](../../../modulo-10-exe
 | 3.1 Leitura | [`CUSTO_FINANCEIRO.md`](./CUSTO_FINANCEIRO.md) | O que medir |
 | 3.2 Dilema | [`DILEMA_ECONOMICO_IA.md`](./DILEMA_ECONOMICO_IA.md) | CapEx, OpEx, escala e exemplos de mercado |
 | 3.3 API | [`MODELO_BASEADO_EM_API.md`](./MODELO_BASEADO_EM_API.md) | Sem overhead, pay-as-you-go e fatura linear |
-| 3.4 Relatório | este arquivo | Síntese da aula |
+| 3.4 Redução | [`TATICAS_REDUCAO_CUSTOS.md`](./TATICAS_REDUCAO_CUSTOS.md) | Caching, quantização, routing e RAG eficiente |
+| 3.5 Relatório | este arquivo | Síntese da aula |
 
 ## Ponte
 
