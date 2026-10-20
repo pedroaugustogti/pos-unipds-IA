@@ -15,6 +15,7 @@ Medir três bolsos (operação, falha, governança), distinguir CapEx de OpEx e 
 | [`DILEMA_ECONOMICO_IA.md`](./DILEMA_ECONOMICO_IA.md) | CapEx vs OpEx, escala e viabilidade |
 | [`MODELO_BASEADO_EM_API.md`](./MODELO_BASEADO_EM_API.md) | Sem overhead, pay-as-you-go e conta linear |
 | [`TATICAS_REDUCAO_CUSTOS.md`](./TATICAS_REDUCAO_CUSTOS.md) | Caching, quantização, routing e RAG eficiente |
+| [`PUE_E_IMPACTO_AMBIENTAL.md`](./PUE_E_IMPACTO_AMBIENTAL.md) | PUE, escala nacional, custo elétrico e desmatamento |
 
 ## Três bolsos
 
@@ -58,7 +59,8 @@ Regulação e risco de consumo: [`TIPOS_DE_REGULACAO.md`](../../../modulo-10-exe
 | 3.2 Dilema | [`DILEMA_ECONOMICO_IA.md`](./DILEMA_ECONOMICO_IA.md) | CapEx, OpEx, escala e exemplos de mercado |
 | 3.3 API | [`MODELO_BASEADO_EM_API.md`](./MODELO_BASEADO_EM_API.md) | Sem overhead, pay-as-you-go e fatura linear |
 | 3.4 Redução | [`TATICAS_REDUCAO_CUSTOS.md`](./TATICAS_REDUCAO_CUSTOS.md) | Caching, quantização, routing e RAG eficiente |
-| 3.5 Relatório | este arquivo | Síntese da aula |
+| 3.5 PUE | [`PUE_E_IMPACTO_AMBIENTAL.md`](./PUE_E_IMPACTO_AMBIENTAL.md) | Energia da instalação, custo e equivalente florestal |
+| 3.6 Relatório | este arquivo | Síntese da aula |
 
 ## Ponte
 

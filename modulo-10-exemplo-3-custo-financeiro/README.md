@@ -4,7 +4,7 @@ Adaptação local — o preço de operar, falhar e governar sistemas de IA.
 
 **Referência UNIPDS:** o repositório oficial do módulo 10 traz só aspectos humanos e segurança de dados. Este exemplo fecha o ciclo de governança com custo, alinhado às ferramentas sugeridas no README da UNIPDS (mapa de data centers e energia).
 
-**Aula (custo e governança):** [`docs/exemplo_aula/CUSTO_FINANCEIRO.md`](docs/exemplo_aula/CUSTO_FINANCEIRO.md) · CapEx/OpEx [`docs/exemplo_aula/DILEMA_ECONOMICO_IA.md`](docs/exemplo_aula/DILEMA_ECONOMICO_IA.md) · API [`docs/exemplo_aula/MODELO_BASEADO_EM_API.md`](docs/exemplo_aula/MODELO_BASEADO_EM_API.md) · redução [`docs/exemplo_aula/TATICAS_REDUCAO_CUSTOS.md`](docs/exemplo_aula/TATICAS_REDUCAO_CUSTOS.md) · relatório [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md)
+**Aula (custo e governança):** [`docs/exemplo_aula/CUSTO_FINANCEIRO.md`](docs/exemplo_aula/CUSTO_FINANCEIRO.md) · CapEx/OpEx [`docs/exemplo_aula/DILEMA_ECONOMICO_IA.md`](docs/exemplo_aula/DILEMA_ECONOMICO_IA.md) · API [`docs/exemplo_aula/MODELO_BASEADO_EM_API.md`](docs/exemplo_aula/MODELO_BASEADO_EM_API.md) · redução [`docs/exemplo_aula/TATICAS_REDUCAO_CUSTOS.md`](docs/exemplo_aula/TATICAS_REDUCAO_CUSTOS.md) · PUE [`docs/exemplo_aula/PUE_E_IMPACTO_AMBIENTAL.md`](docs/exemplo_aula/PUE_E_IMPACTO_AMBIENTAL.md) · relatório [`docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md`](docs/exemplo_aula/RELATORIO_DIDATICO_AULA.md)
 
 **Guardião (orçamento do ato):** [`docs/exemplo_real/01-guardiao/prompt.md`](docs/exemplo_real/01-guardiao/prompt.md) · aplicação [`docs/exemplo_real/01-guardiao/aplicacao.md`](docs/exemplo_real/01-guardiao/aplicacao.md)
 
@@ -21,7 +21,8 @@ modulo-10-exemplo-3-custo-financeiro/
 │   │   ├── CUSTO_FINANCEIRO.md
 │   │   ├── DILEMA_ECONOMICO_IA.md
 │   │   ├── MODELO_BASEADO_EM_API.md
-│   │   └── TATICAS_REDUCAO_CUSTOS.md   # caching, quantização, routing, RAG
+│   │   ├── TATICAS_REDUCAO_CUSTOS.md   # caching, quantização, routing, RAG
+│   │   └── PUE_E_IMPACTO_AMBIENTAL.md
 │   └── exemplo_real/            # Guardião: orçamento do ato e do loop
 │       ├── README.md
 │       └── 01-guardiao/

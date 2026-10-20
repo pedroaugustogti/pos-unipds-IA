@@ -29,4 +29,4 @@ Referências sugeridas no README UNIPDS do módulo 10:
 | Falha | Cupom indevido, fila enviesada, prompt vazado | Soft law alerta; hard law e o tribunal cobram |
 | Governança | `hitl_guard_actuation`, reindex, eval com vs sem retrieval | Controle que parece “custo morto” até o incidente |
 
-CapEx e OpEx: [`DILEMA_ECONOMICO_IA.md`](./DILEMA_ECONOMICO_IA.md). Relatório: [`RELATORIO_DIDATICO_AULA.md`](./RELATORIO_DIDATICO_AULA.md).
+CapEx e OpEx: [`DILEMA_ECONOMICO_IA.md`](./DILEMA_ECONOMICO_IA.md). PUE e desmatamento: [`PUE_E_IMPACTO_AMBIENTAL.md`](./PUE_E_IMPACTO_AMBIENTAL.md). Relatório: [`RELATORIO_DIDATICO_AULA.md`](./RELATORIO_DIDATICO_AULA.md).
