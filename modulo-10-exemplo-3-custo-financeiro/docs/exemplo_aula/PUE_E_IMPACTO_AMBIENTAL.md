@@ -1,11 +1,13 @@
 # PUE e impacto ambiental — escala nacional
 
-O PUE mede quanto da energia do data center realmente alimenta os servidores de TI. Quanto mais perto de 1,0, menos refrigeração e infra “morta”. Este relatório aplica a fórmula a um cenário mínimo de sistema nacional e traduz o overhead em custo e em equivalente de desmatamento (ordem de grandeza didática).
+O **PUE** (*Power Usage Effectiveness*, em português: efetividade do uso de energia) mede quanto da energia do data center realmente alimenta os servidores de TI. Quanto mais perto de 1,0, menos refrigeração e infra “morta”. Este relatório aplica a fórmula a um cenário mínimo de sistema nacional e traduz o overhead em custo e em equivalente de desmatamento (ordem de grandeza didática).
 
 Leitura: `[CUSTO_FINANCEIRO.md](./CUSTO_FINANCEIRO.md)` · `[DILEMA_ECONOMICO_IA.md](./DILEMA_ECONOMICO_IA.md)`.  
 Fonte da definição: [Nature — npj Clean Water](https://www.nature.com/articles/s41545-021-00101-w). Mapas: `[materiais_aula](../../materiais_aula/README.md)`.
 
 ## Definição e fórmula
+
+**PUE** = *Power Usage Effectiveness* (efetividade do uso de energia).
 
 ```text
 PUE = energia total da instalação
