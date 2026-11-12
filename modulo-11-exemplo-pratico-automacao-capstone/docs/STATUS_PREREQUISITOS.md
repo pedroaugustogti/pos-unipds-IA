@@ -1,12 +1,12 @@
-# Status dos pré-requisitos — 2026-11-12 (pós-automação)
+# Status dos pré-requisitos — 2026-11-12 (pós-produção)
 
-> Checklist completo marcado: [`CHECKLIST_PREREQUISITOS.md`](./CHECKLIST_PREREQUISITOS.md)
+> Checklist: [`CHECKLIST_PREREQUISITOS.md`](./CHECKLIST_PREREQUISITOS.md) · scripts: [`../scripts/README_PREREQ.md`](../scripts/README_PREREQ.md)
 
-Legenda: ✅ feito · 🟡 parcial · ⬜ falta · ⏸ opcional depois
+Legenda: ✅ feito · 🟡 parcial · ⏸ opcional / HITL depois
 
-Scripts: [`../scripts/README_PREREQ.md`](../scripts/README_PREREQ.md) · estado: `evidencias/preflight/state.json`
-
-**Projeto GCP:** `ai-researcher-cap-pedro` (#149442222162) · billing `014662-97FB95-F155D4`
+**Projeto GCP:** `ai-researcher-cap-pedro` (#149442222162)  
+**Repo Capstone:** [pedroaugustogti/capstone-project-ai-researcher](https://github.com/pedroaugustogti/capstone-project-ai-researcher)  
+**`capstone:check`:** **11/11** contra `https://ai-researcher-api-xsjfcd5t3a-uc.a.run.app`
 
 ---
 
@@ -14,50 +14,29 @@ Scripts: [`../scripts/README_PREREQ.md`](../scripts/README_PREREQ.md) · estado:
 
 | Bloco | Status | Nota |
 |-------|--------|------|
-| **0** Contas | ✅ | Serper+Langfuse+Grafana + **Firebase** no projeto Capstone |
-| **1** Instalação | ✅ | pnpm **11.20**, firebase **15.36**, uv **0.13.7**, playwright **1.62**, vector **0.8.7**, cloud-sql-proxy **2.21** |
-| **2** Auth | ✅ | gcloud + ADC + gh + **firebase** (`pedroaugusto.gti@gmail.com`) |
-| **3** Fundação GCP | ✅ | SQL+WIF+SA+GH vars no repo **pedroaugustogti/capstone-project-ai-researcher** |
-| **4** `.env` | ✅ | keys presentes (P6=ok); Postgres host **:5434** |
-| **5** MCP | ✅ | merge `playwright-capstone`, `langfuse-docs`, `angular-cli-capstone` (reiniciar MCP no Cursor) |
-| **6** Skills | 🟡 | no clone |
-| **7** Stack local | ✅ | seed **80** docs + API `:3001` + web `:4200` + chat smoke ABEV OK |
-| **8** Produção CI | ✅/🟡 | Deploy Actions verde; Hosting+Cloud Run OK; check 8/11 |
-| **9** Evidências | 🟡 | runner existe; regenerar depois do chat |
+| **0** Contas | ✅ | Serper + Langfuse + Grafana + Firebase |
+| **1** Instalação | ✅ | pnpm 11.20, firebase, uv, playwright, vector, cloud-sql-proxy |
+| **2** Auth | ✅ | gcloud + ADC + gh + firebase |
+| **3** Fundação GCP | ✅ | SQL + WIF + SA + GH Variables no fork pessoal |
+| **4** `.env` | ✅ | keys + `GRAFANA_URL` / `GRAFANA_CLOUD_DASH` (`glsa_*`) / `ALERTA_EMAIL` |
+| **5** MCP | ✅ | merge Capstone (reiniciar MCP no Cursor se necessário) |
+| **6** Skills | 🟡 | documentadas no clone |
+| **7** Stack local | ✅ | seed 80 docs + API `:3001` + web `:4200` + smoke ABEV |
+| **8** Produção CI | ✅ | Actions verde · Hosting · Cloud Run · check **11/11** |
+| **9** Evidências | ✅ | preflight P1–P8 + run aulas 1–24 |
 
 ---
 
-## Já eliminado nesta sessão
+## Produção
 
-- [x] Scripts orquestrador P1–P9 (`run_prereq_plan.ps1`)
-- [x] P1 bootstrap (Docker ligado)
-- [x] P6 `.env` keys check
-- [x] P3 MCP Capstone mesclado (+ backup `.cursor/mcp.json.bak-*`)
-- [x] P5 Artifact Registry `ai-researcher` @ `us-central1`
-- [x] Postgres Capstone na porta **5434** + migrations
+| Recurso | Valor |
+|---------|--------|
+| Hosting | https://ai-researcher-cap-pedro.web.app |
+| Cloud Run | https://ai-researcher-api-xsjfcd5t3a-uc.a.run.app |
+| Langfuse | Observations API v2 (traces OK) |
+| Grafana | dashboard `ai-researcher-api-operacional` + alerta 429 |
 
-## Ainda falta (próximos comandos)
+## HITL restante
 
-```powershell
-cd modulo-11-exemplo-pratico-automacao-capstone
-
-# Seed real (Vertex) — depois: pnpm.cmd seed no workspace full
-# ou:
-powershell -File .\scripts\up_local.ps1 -SkipInstall
-
-# Cloud SQL (custo — confirme):
-powershell -File .\scripts\gcp_fundacao.ps1 -Phase sql -ConfirmSql
-
-# Dev local:
-cd workspace\capstone-project-ai-researcher
-pnpm.cmd dev
-```
-
-| Item | Ação |
-|------|------|
-| Seed + chat smoke | ✅ 80 docs + health ok + chat SSE ABEV |
-| Firebase no projeto | ✅ login + addfirebase + `.firebaserc` + site Hosting |
-| Cloud SQL + secret | ✅ instance+db+user+vector+secret+migrate/seed |
-| GH Variables | após WIF |
-| Reiniciar MCP Cursor | Settings → MCP |
-| pnpm 11 | `corepack prepare pnpm@11.20.0 --activate` (opc.) |
+- [ ] Teardown GCP (apagar Cloud SQL / Run / secrets) quando não precisar mais do custo
+- [ ] Reiniciar MCP no Cursor após mudanças em `.cursor/mcp.json`

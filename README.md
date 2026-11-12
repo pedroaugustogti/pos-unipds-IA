@@ -245,6 +245,29 @@ Scaffold via [`run_delivery_modulo10.py`](./modulo-4-exemplo-1-agente-ia-contrat
 
 ---
 
+## Módulo 11 — Projeto Integrador (Capstone AI Researcher)
+
+**O que você aprende:** construir ponta a ponta o **AI Researcher** — chatbot de investimentos com RAG CVM, julgamento de contexto, fallback web, MCP, frontend Angular e observabilidade no GCP.
+
+**Repos (fork pessoal):** [`pedroaugustogti/capstone-project-ai-researcher`](https://github.com/pedroaugustogti/capstone-project-ai-researcher) · **upstream UNIPDS:** [`capstone-project-ai-researcher`](https://github.com/unipds-engenharia-de-ia-aplicada/capstone-project-ai-researcher) · seed: [`ai-researcher-seed`](https://github.com/unipds-engenharia-de-ia-aplicada/ai-researcher-seed)
+
+**Produção (2026-11-12):** [Hosting](https://ai-researcher-cap-pedro.web.app) + [Cloud Run API](https://ai-researcher-api-xsjfcd5t3a-uc.a.run.app) · GCP `ai-researcher-cap-pedro` · `capstone:check` **11/11** (Langfuse v2, Grafana SA, WIF/Actions).
+
+| Exemplo | Pasta | Principais aprendizados |
+|---------|-------|-------------------------|
+| 1 | [`modulo-11-exemplo-1-setup-deploy-inicial`](./modulo-11-exemplo-1-setup-deploy-inicial/) | **Setup e deploy inicial** — CLAUDE.md, GCP, Actions, corpus CVM, walking skeleton (aulas 1–7). No Guardião: skeleton MCP + HITL ([aplicação](./modulo-11-exemplo-1-setup-deploy-inicial/docs/exemplo_real/01-guardiao/aplicacao.md)) |
+| 2 | [`modulo-11-exemplo-2-orquestracao-cognitiva`](./modulo-11-exemplo-2-orquestracao-cognitiva/) | **Orquestração cognitiva** — pgvector, retrieve/grade, Serper, guard do loop, answer SSE (aulas 8–13). No Guardião: retrieve não vira instrução ([aplicação](./modulo-11-exemplo-2-orquestracao-cognitiva/docs/exemplo_real/01-guardiao/aplicacao.md)) |
+| 3 | [`modulo-11-exemplo-3-qualidade-resiliencia-mcp`](./modulo-11-exemplo-3-qualidade-resiliencia-mcp/) | **Qualidade, resiliência e MCP** — testes sem rede, circuit breaker, erros, servidor MCP (aulas 14–17). No Guardião: MCP role-based do M8 ([aplicação](./modulo-11-exemplo-3-qualidade-resiliencia-mcp/docs/exemplo_real/01-guardiao/aplicacao.md)) |
+| 4 | [`modulo-11-exemplo-4-frontend`](./modulo-11-exemplo-4-frontend/) | **Frontend** — chat streaming, painel do grafo, disclaimer e E2E no CI (aulas 18–21). No Guardião: UI não esconde HITL ([aplicação](./modulo-11-exemplo-4-frontend/docs/exemplo_real/01-guardiao/aplicacao.md)) |
+| 5 | [`modulo-11-exemplo-5-observabilidade-producao`](./modulo-11-exemplo-5-observabilidade-producao/) | **Observabilidade e produção** — Langfuse, budget/rate limit, README e teardown GCP (aulas 22–24). No Guardião: orçamento do ticket ([aplicação](./modulo-11-exemplo-5-observabilidade-producao/docs/exemplo_real/01-guardiao/aplicacao.md)) |
+| prático | [`modulo-11-exemplo-pratico-automacao-capstone`](./modulo-11-exemplo-pratico-automacao-capstone/) | **Automação + evidências + deploy** — pré-req P0–P9, 24 aulas, Hosting/Run, check 11/11 · [README](./modulo-11-exemplo-pratico-automacao-capstone/README.md) · [status](./modulo-11-exemplo-pratico-automacao-capstone/docs/STATUS_PREREQUISITOS.md) · [mapa](./modulo-11-exemplo-pratico-automacao-capstone/docs/MAPA_AUTOMACAO.md) |
+
+**Competências do módulo:** RAG corretivo; pgvector/HNSW; LangGraph.js; MCP; Cloud Run + WIF; frontend com streaming; observabilidade e custo.
+
+Scaffold via [`run_delivery_modulo11.py`](./modulo-4-exemplo-1-agente-ia-contratos/runtime/run_delivery_modulo11.py) · Automação: [`modulo-11-exemplo-pratico-automacao-capstone`](./modulo-11-exemplo-pratico-automacao-capstone/)
+
+---
+
 ## Requisitos gerais
 
 | Recurso | Onde é necessário |
@@ -255,8 +278,9 @@ Scaffold via [`run_delivery_modulo10.py`](./modulo-4-exemplo-1-agente-ia-contrat
 | **Docker + Minikube** | **Módulo 6 M13** — stack local Nexus (imagem, K8s, LocalStack, UI) |
 | **`.env`** | Chaves OpenRouter, Neo4j, etc. (copiar de `.env.example` quando existir) |
 | **LangGraph Studio** | `npm run langgraph:serve` nos projetos do Módulo 2 e no **Módulo 3 Exemplo 9** |
-| **Cursor / VS Code** | Módulo 3 (MCP e Skills); Módulo 5 Ex. 5 (Playwright MCP); Ex. 6 (BragBot + Genkit UI) |
+| **Cursor / VS Code** | Módulo 3 (MCP e Skills); Módulo 5 Ex. 5 (Playwright MCP); Ex. 6 (BragBot + Genkit UI); **Módulo 11** Capstone MCP |
 | **FFmpeg** | Módulo 3 Exemplo 4 (skills de vídeo) |
+| **gcloud + Firebase + Docker** | **Módulo 11** Capstone (Cloud Run, Hosting, Postgres local/Cloud SQL) |
 
 ## MCP configurado no workspace
 
