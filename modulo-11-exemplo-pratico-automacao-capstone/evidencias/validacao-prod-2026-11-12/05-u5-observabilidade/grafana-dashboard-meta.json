@@ -1,0 +1,13 @@
+{
+  "uid": "ai-researcher-api-operacional",
+  "metaFolder": "General",
+  "version": 1,
+  "url": "https://amberokapi2767.grafana.net/d/ai-researcher-api-operacional",
+  "title": "AI Researcher — Operação da API",
+  "panels": [
+    "Taxa de requisições por rota",
+    "Latência p95 por rota",
+    "Taxa de erro (5xx) por rota",
+    "Requisições por status"
+  ]
+}

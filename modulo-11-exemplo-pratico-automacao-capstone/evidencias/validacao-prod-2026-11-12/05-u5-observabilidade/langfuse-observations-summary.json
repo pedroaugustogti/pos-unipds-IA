@@ -1,0 +1,32 @@
+{
+  "count": 5,
+  "meta": {
+    "cursor": "eyJsYXN0U3RhcnRUaW1lVG8iOiIyMDI2LTExLTEyVDE1OjI1OjIzLjM5NloiLCJsYXN0VHJhY2VJZCI6IjBkNjk1MTQ0NTk0ZWFhNmU4MDc4M2RhOGNlMjZjODJlIiwibGFzdElkIjoiNzZmOGU1OTkxMGYyNmY4NiJ9"
+  },
+  "sample": [
+    {
+      "id": "03ad72f21877415a",
+      "type": "GENERATION",
+      "name": "ChatVertexAI",
+      "traceId": "0d695144594eaa6e80783da8ce26c82e",
+      "startTime": "2026-11-12T15:25:24.521Z",
+      "model": null
+    },
+    {
+      "id": "cc64a731b6bcb39a",
+      "type": "SPAN",
+      "name": "answer",
+      "traceId": "0d695144594eaa6e80783da8ce26c82e",
+      "startTime": "2026-11-12T15:25:24.52Z",
+      "model": null
+    },
+    {
+      "id": "e36b93edb7cc3e89",
+      "type": "SPAN",
+      "name": "RunnableLambda",
+      "traceId": "0d695144594eaa6e80783da8ce26c82e",
+      "startTime": "2026-11-12T15:25:24.518Z",
+      "model": null
+    }
+  ]
+}

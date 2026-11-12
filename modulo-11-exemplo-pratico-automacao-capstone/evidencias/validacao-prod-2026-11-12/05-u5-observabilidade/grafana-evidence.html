@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Grafana evidence</title>
+  <style>
+    body { font: 16px/1.45 system-ui; background: #111827; color: #e5e7eb; padding: 32px; max-width: 900px }
+    h1 { color: #67e8f9; margin: 0 0 8px }
+    .ok { color: #34d399 }
+    code { background: #1f2937; padding: 2px 6px; border-radius: 4px }
+    .card { background: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 16px; margin: 12px 0 }
+    li { margin: 6px 0 }
+  </style>
+</head>
+<body>
+  <h1>AI Researcher — Operação da API</h1>
+  <p class="ok">Dashboard Grafana Cloud OK via API Service Account (glsa_*)</p>
+  <p>URL: <code>https://amberokapi2767.grafana.net/d/ai-researcher-api-operacional</code></p>
+  <p>Folder: <code>General</code> · version 1</p>
+  <div class="card">
+    <strong>Painéis</strong>
+    <ul>
+      <li>Taxa de requisições por rota</li>
+      <li>Latência p95 por rota</li>
+      <li>Taxa de erro (5xx) por rota</li>
+      <li>Requisições por status</li>
+    </ul>
+  </div>
+  <div class="card">
+    <strong>Alerta de abuso (rate limit)</strong>
+    <ul>
+      <li>Abuso: taxa de 429 acima do normal · uid <code>fg435yv2bcmioa</code> · group <code>abuso</code></li>
+    </ul>
+  </div>
+</body>
+</html>

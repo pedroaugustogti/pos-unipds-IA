@@ -1,0 +1,31 @@
+$ tsx scripts/capstone-check.ts "--url" "https://ai-researcher-api-xsjfcd5t3a-uc.a.run.app"
+ERROR: gcloud crashed (SSLError): HTTPSConnectionPool(host='us-central1-run.googleapis.com', port=443): Max retries exceeded with url: /apis/serving.knative.dev/v1/namespaces/ai-researcher-cap-pedro/revisions?alt=json&labelSelector=serving.knative.dev%2Fservice+%3D+ai-researcher-api (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Basic Constraints of CA cert not marked critical (_ssl.c:1032)')))
+
+gcloud's default CA certificates failed to verify your connection, which can happen if you are behind a proxy or firewall.
+To use a custom CA certificates file, please run the following command:
+  gcloud config set core/custom_ca_certs_file /path/to/ca_certs
+
+If you would like to report this issue, please run the following command:
+  gcloud feedback
+
+To check gcloud for common problems, please run the following command:
+  gcloud info --run-diagnostics
+(node:40328) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+━━━━ CAPSTONE CHECK · @pedroaugustogti ━━━━
+Projeto: AI Researcher          12/11, 12:39
+
+✅  1. Endpoint público     351ms · HTTPS válido
+✅  2. Deploy automatizado  há 0h · GitHub Actions
+✅  3. Segredos protegidos  nenhuma credencial exposta
+✅  4. Testes no CI         job "test": success
+✅  5. Degradação graciosa  200 · pergunta que depende de busca externa não derrubou o serviço
+✅  6. Traces no Langfuse   observations v2 com dados nas últimas 24h (1+ no page)
+✅  7. Rate limiting + alerta 429 confirmado na rajada, alerta de abuso configurado no Grafana
+✅  8. Rollback disponível  3 revisions prontas — rollback tem pra onde reverter (via REST; gcloud CLI: Command failed: gcloud run revisions list --service=ai-researcher-api --region=us-central1 --project=ai-researcher-cap-pedro --format=json)
+✅  9. Custo por pergunta   /metrics expõe llm_cost_usd_total
+✅  10. Guardrail            recusa corretamente
+✅  11. README com arquitetura seção de arquitetura com diagrama Mermaid presente
+
+SCORE: 11/11
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

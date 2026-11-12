@@ -87,7 +87,7 @@ Repos: [seed](https://github.com/unipds-engenharia-de-ia-aplicada/ai-researcher-
 - [ ] Explicar como o painel deduz o próximo nó
 - [ ] Dizer por que o disclaimer é incondicional
 - [ ] Explicar por que o E2E do CI usa modo demo
-- [ ] Ponte Guardião: [`../docs/exemplo_real/01-guardiao/aplicacao.md`](../docs/exemplo_real/01-guardiao/aplicacao.md)
+- [ ] Exemplo real Capstone: [`../exemplo_real/README.md`](../exemplo_real/README.md)
 
 ## Relatório didático da unidade
 

@@ -1,0 +1,8 @@
+
+name                        ready created
+----                        ----- -------
+ai-researcher-api-00004-vud True  12/11/2026 15:14:33
+ai-researcher-api-00002-cat True  12/11/2026 14:42:59
+ai-researcher-api-00001-4hq True  12/11/2026 14:39:02
+
+

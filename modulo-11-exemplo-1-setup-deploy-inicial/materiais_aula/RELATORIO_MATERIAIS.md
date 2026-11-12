@@ -93,7 +93,7 @@ Do **primeiro commit** ao **primeiro deploy na nuvem**, ainda sem o cérebro do 
 - [ ] Nomear as 7 peças do mapa GCP e o papel de cada uma
 - [ ] Explicar WIF em uma frase
 - [ ] Distinguir seed × projeto completo
-- [ ] Anotar a ponte Guardião em [`../docs/exemplo_real/01-guardiao/aplicacao.md`](../docs/exemplo_real/01-guardiao/aplicacao.md)
+- [ ] Seguir o guia Capstone em [`../exemplo_real/README.md`](../exemplo_real/README.md)
 
 ## Relatório didático da unidade
 

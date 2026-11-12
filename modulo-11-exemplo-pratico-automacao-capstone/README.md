@@ -5,7 +5,7 @@ Guia e **execução com evidências** das 24 aulas do Capstone (AI Researcher) v
 **Caso (fork pessoal):** [pedroaugustogti/capstone-project-ai-researcher](https://github.com/pedroaugustogti/capstone-project-ai-researcher)  
 **Upstream UNIPDS:** [capstone-project-ai-researcher](https://github.com/unipds-engenharia-de-ia-aplicada/capstone-project-ai-researcher) · seed: [ai-researcher-seed](https://github.com/unipds-engenharia-de-ia-aplicada/ai-researcher-seed)
 
-**Aulas teóricas (U1–U5):** `modulo-11-exemplo-1` … `exemplo-5`.
+**Aulas teóricas (U1–U5):** `modulo-11-exemplo-1` … `exemplo-5` · **RAG corretivo:** `modulo-11-exemplo-6-rag-corretivo` · **exemplo_real Capstone:** cada `docs/exemplo_real/README.md`.
 
 ## Status (2026-11-12)
 
@@ -31,6 +31,7 @@ Clone do projeto completo: `workspace/capstone-project-ai-researcher/` (**gitign
 | [`evidencias/LATEST`](evidencias/LATEST) | Ponteiro da última run de aulas |
 | `evidencias/preflight/` | P1–P8 (GCP, WIF, Firebase, deploy) |
 | `evidencias/run-2026-11-11T220837Z/` | 24 pastas `aula-XX/` + `summary.json` |
+| [`evidencias/validacao-prod-2026-11-12/`](evidencias/validacao-prod-2026-11-12/README.md) | Validação produção U1–U5 + screenshots + `capstone:check` |
 | [`scripts/run_evidencias_capstone.py`](scripts/run_evidencias_capstone.py) | Regenera evidências locais |
 
 ```powershell

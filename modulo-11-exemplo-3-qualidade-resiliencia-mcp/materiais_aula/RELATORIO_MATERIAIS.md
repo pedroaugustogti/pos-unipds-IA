@@ -87,7 +87,7 @@ retry               →  com teto — nunca loop infinito
 - [ ] Desenhar estados do circuit breaker
 - [ ] Ler um erro padronizado e dizer se é retryable
 - [ ] Listar ao menos uma tool MCP do agente
-- [ ] Ponte Guardião: [`../docs/exemplo_real/01-guardiao/aplicacao.md`](../docs/exemplo_real/01-guardiao/aplicacao.md)
+- [ ] Exemplo real Capstone: [`../exemplo_real/README.md`](../exemplo_real/README.md)
 
 ## Relatório didático da unidade
 

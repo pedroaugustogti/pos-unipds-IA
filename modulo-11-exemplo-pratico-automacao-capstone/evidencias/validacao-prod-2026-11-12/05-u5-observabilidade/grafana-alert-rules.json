@@ -1,0 +1,27 @@
+[
+  {
+    "title": "assertified_gma_alert_watcher",
+    "uid": "4de58a06-4596-5338-a656-acdbb5bcdc70",
+    "condition": "threshold"
+  },
+  {
+    "title": "RequestRateAnomaly",
+    "uid": "a1427f4d-2ca6-5b3e-9800-e61f6f62666c",
+    "condition": "threshold"
+  },
+  {
+    "title": "ErrorRatioAnomaly",
+    "uid": "d77aabd2-fcbd-5d13-8b4d-54d72d1f42f7",
+    "condition": "threshold"
+  },
+  {
+    "title": "InboundClientErrorAnomaly",
+    "uid": "73798ee8-9941-5729-883a-cee03d73d735",
+    "condition": "threshold"
+  },
+  {
+    "title": "ErrorRatioBreach",
+    "uid": "681bb3b0-d73c-541c-a4a8-c633c0d1489c",
+    "condition": "threshold"
+  }
+]

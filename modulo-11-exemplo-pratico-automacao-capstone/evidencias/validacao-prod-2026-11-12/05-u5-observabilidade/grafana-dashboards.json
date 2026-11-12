@@ -1,0 +1,284 @@
+[
+  {
+    "id": 4201576966467584,
+    "uid": "ai-researcher-api-operacional",
+    "orgId": 1,
+    "title": "AI Researcher — Operação da API",
+    "uri": "db/ai-researcher-e28094-operacao-da-api",
+    "url": "/d/ai-researcher-api-operacional/ai-researcher-e28094-operacao-da-api",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "ai-researcher",
+      "g3"
+    ],
+    "isStarred": false,
+    "description": "RED (rate, erro, duração) por rota HTTP do apps/api, via OpenTelemetry (OTLP push). Não duplica o que o Langfuse já mostra (custo/tokens por chamada de LLM) — foco aqui é saúde do serviço.",
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063379810557952,
+    "uid": "ce0501b6-9c33-4198-865e-3ba683f077e4",
+    "orgId": 1,
+    "title": "Alert Groups Insights",
+    "uri": "db/alert-groups-insights",
+    "url": "/d/ce0501b6-9c33-4198-865e-3ba683f077e4/alert-groups-insights",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "alert groups",
+      "irm",
+      "oncall"
+    ],
+    "isStarred": false,
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063386169122816,
+    "uid": "34205013-2244-413c-8143-372c186508c3",
+    "orgId": 1,
+    "title": "Billing/Usage",
+    "uri": "db/billing-usage",
+    "url": "/d/34205013-2244-413c-8143-372c186508c3/billing-usage",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "billing",
+      "grafanacloud"
+    ],
+    "isStarred": false,
+    "folderId": 4063384735989760,
+    "folderUid": "eg41sz9g3qepsb",
+    "folderTitle": "GrafanaCloud",
+    "folderUrl": "/dashboards/f/eg41sz9g3qepsb/grafanacloud",
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063396059291648,
+    "uid": "cardinality-management",
+    "orgId": 1,
+    "title": "Cardinality management - 1 - overview",
+    "uri": "db/cardinality-management-1-overview",
+    "url": "/d/cardinality-management/cardinality-management-1-overview",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "cardinality-management",
+      "grafanacloud"
+    ],
+    "isStarred": false,
+    "folderId": 4063384735989760,
+    "folderUid": "eg41sz9g3qepsb",
+    "folderTitle": "GrafanaCloud",
+    "folderUrl": "/dashboards/f/eg41sz9g3qepsb/grafanacloud",
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063394989744128,
+    "uid": "cardinality-management-metrics-detail",
+    "orgId": 1,
+    "title": "Cardinality management - 2 - metrics",
+    "uri": "db/cardinality-management-2-metrics",
+    "url": "/d/cardinality-management-metrics-detail/cardinality-management-2-metrics",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "cardinality-management",
+      "grafanacloud"
+    ],
+    "isStarred": false,
+    "folderId": 4063384735989760,
+    "folderUid": "eg41sz9g3qepsb",
+    "folderTitle": "GrafanaCloud",
+    "folderUrl": "/dashboards/f/eg41sz9g3qepsb/grafanacloud",
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063393911808000,
+    "uid": "cardinality-management-label-detail",
+    "orgId": 1,
+    "title": "Cardinality management - 3 - labels",
+    "uri": "db/cardinality-management-3-labels",
+    "url": "/d/cardinality-management-label-detail/cardinality-management-3-labels",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "cardinality-management",
+      "grafanacloud"
+    ],
+    "isStarred": false,
+    "folderId": 4063384735989760,
+    "folderUid": "eg41sz9g3qepsb",
+    "folderTitle": "GrafanaCloud",
+    "folderUrl": "/dashboards/f/eg41sz9g3qepsb/grafanacloud",
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063397145616384,
+    "uid": "4_D6mSh4z",
+    "orgId": 1,
+    "title": "Cloud Logs Export Insights",
+    "uri": "db/cloud-logs-export-insights",
+    "url": "/d/4_D6mSh4z/cloud-logs-export-insights",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [],
+    "isStarred": false,
+    "description": "Cloud logs export insights",
+    "folderId": 4063384735989760,
+    "folderUid": "eg41sz9g3qepsb",
+    "folderTitle": "GrafanaCloud",
+    "folderUrl": "/dashboards/f/eg41sz9g3qepsb/grafanacloud",
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063381035294720,
+    "uid": "7936a101-44dc-443b-9889-0646afd608d1",
+    "orgId": 1,
+    "title": "Incident Insights",
+    "uri": "db/incident-insights",
+    "url": "/d/7936a101-44dc-443b-9889-0646afd608d1/incident-insights",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "grafana-incident",
+      "insights"
+    ],
+    "isStarred": false,
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063387389665280,
+    "uid": "XU8HAD5Gk",
+    "orgId": 1,
+    "title": "Usage Insights - 1 - Overview",
+    "uri": "db/usage-insights-1-overview",
+    "url": "/d/XU8HAD5Gk/usage-insights-1-overview",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "grafanacloud"
+    ],
+    "isStarred": false,
+    "description": "This is a Usage Insights dashboard expecting Grafana events in logfmt instead of json.",
+    "folderId": 4063384735989760,
+    "folderUid": "eg41sz9g3qepsb",
+    "folderTitle": "GrafanaCloud",
+    "folderUrl": "/dashboards/f/eg41sz9g3qepsb/grafanacloud",
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063389541343232,
+    "uid": "AEbrOO2Mz",
+    "orgId": 1,
+    "title": "Usage Insights - 2 - Data sources",
+    "uri": "db/usage-insights-2-data-sources",
+    "url": "/d/AEbrOO2Mz/usage-insights-2-data-sources",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "grafanacloud"
+    ],
+    "isStarred": false,
+    "description": "Dashboard surfacing details on datasource usage in Grafana Cloud. Uses provisioned Loki and Prometheus datasources.",
+    "folderId": 4063384735989760,
+    "folderUid": "eg41sz9g3qepsb",
+    "folderTitle": "GrafanaCloud",
+    "folderUrl": "/dashboards/f/eg41sz9g3qepsb/grafanacloud",
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063392791928832,
+    "uid": "MpmkYhRVz",
+    "orgId": 1,
+    "title": "Usage Insights - 3 - Query Errors",
+    "uri": "db/usage-insights-3-query-errors",
+    "url": "/d/MpmkYhRVz/usage-insights-3-query-errors",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "grafanacloud"
+    ],
+    "isStarred": false,
+    "description": "A dashboard for visualizing and analyzing query errors.",
+    "folderId": 4063384735989760,
+    "folderUid": "eg41sz9g3qepsb",
+    "folderTitle": "GrafanaCloud",
+    "folderUrl": "/dashboards/f/eg41sz9g3qepsb/grafanacloud",
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063388484378624,
+    "uid": "ntS5Ujs7z",
+    "orgId": 1,
+    "title": "Usage Insights - 4 - Alertmanager",
+    "uri": "db/usage-insights-4-alertmanager",
+    "url": "/d/ntS5Ujs7z/usage-insights-4-alertmanager",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "alertmanager",
+      "grafanacloud"
+    ],
+    "isStarred": false,
+    "folderId": 4063384735989760,
+    "folderUid": "eg41sz9g3qepsb",
+    "folderTitle": "GrafanaCloud",
+    "folderUrl": "/dashboards/f/eg41sz9g3qepsb/grafanacloud",
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063391718187008,
+    "uid": "cdn9jukg55bswb",
+    "orgId": 1,
+    "title": "Usage Insights - 5 - Metrics Ingestion",
+    "uri": "db/usage-insights-5-metrics-ingestion",
+    "url": "/d/cdn9jukg55bswb/usage-insights-5-metrics-ingestion",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "grafanacloud"
+    ],
+    "isStarred": false,
+    "description": "This is a Usage Insights dashboard that shows stats about metrics ingestion and discard rates for metric samples, exemplars and metadata.",
+    "folderId": 4063384735989760,
+    "folderUid": "eg41sz9g3qepsb",
+    "folderTitle": "GrafanaCloud",
+    "folderUrl": "/dashboards/f/eg41sz9g3qepsb/grafanacloud",
+    "sortMeta": 0,
+    "isDeleted": false
+  },
+  {
+    "id": 4063390631862272,
+    "uid": "cdybdibbio2dcd",
+    "orgId": 1,
+    "title": "Usage Insights - 6 - Loki Query Fair Usage Drilldown",
+    "uri": "db/usage-insights-6-loki-query-fair-usage-drilldown",
+    "url": "/d/cdybdibbio2dcd/usage-insights-6-loki-query-fair-usage-drilldown",
+    "slug": "",
+    "type": "dash-db",
+    "tags": [
+      "grafanacloud"
+    ],
+    "isStarred": false,
+    "description": "This dashboard exists to help identify queries that are heavy hitters relative to your Query Fair Usage Ratio.",
+    "folderId": 4063384735989760,
+    "folderUid": "eg41sz9g3qepsb",
+    "folderTitle": "GrafanaCloud",
+    "folderUrl": "/dashboards/f/eg41sz9g3qepsb/grafanacloud",
+    "sortMeta": 0,
+    "isDeleted": false
+  }
+]

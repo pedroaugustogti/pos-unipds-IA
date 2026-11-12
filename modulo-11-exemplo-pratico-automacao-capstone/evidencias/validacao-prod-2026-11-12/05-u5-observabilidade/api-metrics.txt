@@ -1,0 +1,11 @@
+# HELP llm_tokens_total Tokens consumidos por nó do grafo, modelo e tipo (input/output), a partir do usage_metadata real de cada chamada
+# TYPE llm_tokens_total counter
+llm_tokens_total{node="grade",model="gemini-3.5-flash-lite",kind="input"} 2520
+llm_tokens_total{node="grade",model="gemini-3.5-flash-lite",kind="output"} 117
+llm_tokens_total{node="answer",model="gemini-3.6-flash",kind="input"} 1516
+llm_tokens_total{node="answer",model="gemini-3.6-flash",kind="output"} 1484
+
+# HELP llm_cost_usd_total Custo acumulado em USD por nó do grafo e modelo, calculado a partir do usage_metadata real de cada chamada
+# TYPE llm_cost_usd_total counter
+llm_cost_usd_total{node="grade",model="gemini-3.5-flash-lite"} 0.0010485
+llm_cost_usd_total{node="answer",model="gemini-3.6-flash"} 0.013404000000000001

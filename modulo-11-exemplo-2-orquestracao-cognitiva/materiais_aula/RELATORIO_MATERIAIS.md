@@ -114,7 +114,7 @@ Repos: [seed](https://github.com/unipds-engenharia-de-ia-aplicada/ai-researcher-
 - [ ] Explicar HNSW vs busca exata
 - [ ] Desenhar aresta grade → answer | web
 - [ ] Dizer onde o guard corta o loop
-- [ ] Ponte Guardião: [`../docs/exemplo_real/01-guardiao/aplicacao.md`](../docs/exemplo_real/01-guardiao/aplicacao.md)
+- [ ] Exemplo real Capstone: [`../exemplo_real/README.md`](../exemplo_real/README.md)
 
 ## Relatório didático da unidade
 
