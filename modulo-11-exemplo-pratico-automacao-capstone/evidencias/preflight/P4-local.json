@@ -1,0 +1,15 @@
+﻿{
+    "phase":  "P4-local",
+    "status":  "ok",
+    "result":  {
+                   "docker":  true,
+                   "install":  false,
+                   "migrate":  true,
+                   "seed":  false,
+                   "note":  [
+                                "DEMO mode — skip seed",
+                                "playwright install skipped"
+                            ]
+               },
+    "updated":  "2026-11-12T12:33:15.6379085Z"
+}

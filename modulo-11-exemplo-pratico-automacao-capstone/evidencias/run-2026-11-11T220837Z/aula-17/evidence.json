@@ -1,0 +1,50 @@
+{
+  "aula": 17,
+  "titulo": "Servidor MCP",
+  "ferramenta_video_aula": "MCP stdio/HTTP do Capstone",
+  "status": "executado",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": ".agents\\skills\\angular-developer\\references\\mcp.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\mcp-server\\package.json",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\mcp-server\\tsconfig.json",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\mcp-server\\src\\http-route.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\mcp-server\\src\\http-route.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\mcp-server\\src\\http.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\mcp-server\\src\\index.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\mcp-server\\src\\server.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    }
+  ],
+  "notas": "Expor tools do agente. Mapeamento por artefato no workspace clonado."
+}

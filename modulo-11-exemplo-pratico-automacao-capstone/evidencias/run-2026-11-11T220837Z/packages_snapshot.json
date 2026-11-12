@@ -1,0 +1,69 @@
+[
+  {
+    "package": "agent",
+    "ts_sample": [
+      "packages\\agent\\drizzle.config.ts",
+      "packages\\agent\\src\\embeddings.test.ts",
+      "packages\\agent\\src\\embeddings.ts",
+      "packages\\agent\\src\\graph-deps.test.ts",
+      "packages\\agent\\src\\graph-deps.ts",
+      "packages\\agent\\src\\graph.test.ts",
+      "packages\\agent\\src\\graph.ts",
+      "packages\\agent\\src\\index.ts",
+      "packages\\agent\\src\\llm-demo.test.ts",
+      "packages\\agent\\src\\llm-demo.ts",
+      "packages\\agent\\src\\llm.ts",
+      "packages\\agent\\src\\answer\\format-resposta.test.ts",
+      "packages\\agent\\src\\answer\\format-resposta.ts",
+      "packages\\agent\\src\\db\\client.ts",
+      "packages\\agent\\src\\db\\migrate.ts"
+    ]
+  },
+  {
+    "package": "contracts",
+    "ts_sample": [
+      "packages\\contracts\\src\\chat.test.ts",
+      "packages\\contracts\\src\\chat.ts",
+      "packages\\contracts\\src\\health.test.ts",
+      "packages\\contracts\\src\\health.ts",
+      "packages\\contracts\\src\\index.ts",
+      "packages\\contracts\\src\\problem.test.ts",
+      "packages\\contracts\\src\\problem.ts",
+      "packages\\contracts\\src\\retrieve.test.ts",
+      "packages\\contracts\\src\\retrieve.ts"
+    ]
+  },
+  {
+    "package": "corpus",
+    "ts_sample": [
+      "packages\\corpus\\src\\empresas.ts",
+      "packages\\corpus\\src\\types.ts",
+      "packages\\corpus\\src\\collect\\cvm-urls.ts",
+      "packages\\corpus\\src\\collect\\fetch-cvm.ts",
+      "packages\\corpus\\src\\collect\\parse-csv.test.ts",
+      "packages\\corpus\\src\\collect\\parse-csv.ts",
+      "packages\\corpus\\src\\collect\\report.ts",
+      "packages\\corpus\\src\\collect\\run.ts",
+      "packages\\corpus\\src\\collect\\select-quarters.test.ts",
+      "packages\\corpus\\src\\collect\\select-quarters.ts",
+      "packages\\corpus\\src\\normalize\\to-canonical.test.ts",
+      "packages\\corpus\\src\\normalize\\to-canonical.ts",
+      "packages\\corpus\\src\\paragraphs\\template.test.ts",
+      "packages\\corpus\\src\\paragraphs\\template.ts"
+    ]
+  },
+  {
+    "package": "mcp-server",
+    "ts_sample": [
+      "packages\\mcp-server\\src\\http-route.test.ts",
+      "packages\\mcp-server\\src\\http-route.ts",
+      "packages\\mcp-server\\src\\http.ts",
+      "packages\\mcp-server\\src\\index.ts",
+      "packages\\mcp-server\\src\\server.test.ts",
+      "packages\\mcp-server\\src\\server.ts",
+      "packages\\mcp-server\\src\\stdio.ts",
+      "packages\\mcp-server\\src\\tools\\perguntar.test.ts",
+      "packages\\mcp-server\\src\\tools\\perguntar.ts"
+    ]
+  }
+]

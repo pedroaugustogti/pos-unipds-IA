@@ -1,0 +1,30 @@
+{
+  "aula": 3,
+  "titulo": "Tour pelo Google Cloud",
+  "ferramenta_video_aula": "GCP Console / gcloud / docs infra",
+  "status": "parcial",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": "pasta infra/",
+      "ok": true,
+      "detalhe": "presente"
+    },
+    {
+      "nome": "infra/README.md",
+      "ok": true,
+      "detalhe": "mapa GCP / provisionamento"
+    },
+    {
+      "nome": "docker-compose pgvector",
+      "ok": true,
+      "detalhe": "image pgvector/pgvector:pg16"
+    },
+    {
+      "nome": "firebase.json",
+      "ok": true,
+      "detalhe": "Firebase Hosting"
+    }
+  ],
+  "notas": "Arquitetura no repo; Console GCP = HITL/Playwright assistido."
+}

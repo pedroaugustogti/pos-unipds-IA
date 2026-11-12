@@ -1,0 +1,22 @@
+{
+  "phase": "P5-project",
+  "status": "ok",
+  "projectId": "ai-researcher-cap-pedro",
+  "projectNumber": "149442222162",
+  "name": "Capstone AI Researcher",
+  "lifecycleState": "ACTIVE",
+  "billingAccount": "014662-97FB95-F155D4",
+  "billingEnabled": true,
+  "note": "ai-researcher-capstone was globally taken; used ai-researcher-cap-pedro",
+  "apis_enabled": [
+    "run.googleapis.com",
+    "sqladmin.googleapis.com",
+    "artifactregistry.googleapis.com",
+    "secretmanager.googleapis.com",
+    "iam.googleapis.com",
+    "iamcredentials.googleapis.com",
+    "aiplatform.googleapis.com",
+    "cloudbuild.googleapis.com",
+    "firebase.googleapis.com"
+  ]
+}

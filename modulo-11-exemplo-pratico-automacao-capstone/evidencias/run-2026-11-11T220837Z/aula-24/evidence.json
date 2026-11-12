@@ -1,0 +1,25 @@
+{
+  "aula": 24,
+  "titulo": "README + teardown",
+  "ferramenta_video_aula": "Mermaid + Console GCP",
+  "status": "parcial",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": "README seed",
+      "ok": true,
+      "detalhe": "docs no seed"
+    },
+    {
+      "nome": "README full",
+      "ok": true,
+      "detalhe": "C:\\Users\\Pedro Augusto\\Documents\\pos-unipds-IA\\modulo-11-exemplo-pratico-automacao-capstone\\workspace\\capstone-project-ai-researcher\\README.md"
+    },
+    {
+      "nome": "busca por artefato",
+      "ok": false,
+      "detalhe": "nenhum path com ['README']"
+    }
+  ],
+  "notas": "Teardown = HITL. Mapeamento por artefato no workspace clonado."
+}

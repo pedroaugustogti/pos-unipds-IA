@@ -1,0 +1,13 @@
+{
+  "phase": "P1-gcloud",
+  "status": "ok",
+  "sdk": "Google Cloud SDK 565.0.0",
+  "account_active": "pedroaugusto.gti@gmail.com",
+  "adc": "updated",
+  "billing_open": ["014662-97FB95-F155D4 Minha conta de faturamento"],
+  "notes": [
+    "gcloud already installed; SSL fixed via config/windows-roots.pem + CLOUDSDK_PYTHON",
+    "helper: scripts/gcloud_env.ps1",
+    "no Capstone project yet — create ai-researcher-capstone next"
+  ]
+}

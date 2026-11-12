@@ -1,0 +1,35 @@
+{
+  "aula": 1,
+  "titulo": "Bem-vindo ao Capstone / RAG corretivo",
+  "ferramenta_video_aula": "GitHub + material PDF/slides",
+  "status": "executado",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": "seed presente",
+      "ok": true,
+      "detalhe": "C:\\Users\\Pedro Augusto\\Documents\\pos-unipds-IA\\modulo-11-exemplo-pratico-automacao-capstone\\workspace\\ai-researcher-seed"
+    },
+    {
+      "nome": "remote origin seed",
+      "ok": true,
+      "cmd": [
+        "git",
+        "remote",
+        "get-url",
+        "origin"
+      ],
+      "cwd": "C:\\Users\\Pedro Augusto\\Documents\\pos-unipds-IA\\modulo-11-exemplo-pratico-automacao-capstone\\workspace\\ai-researcher-seed",
+      "exit": 0,
+      "stdout": "https://github.com/unipds-engenharia-de-ia-aplicada/ai-researcher-seed.git\n",
+      "stderr": "",
+      "detalhe": "https://github.com/unipds-engenharia-de-ia-aplicada/ai-researcher-seed.git"
+    },
+    {
+      "nome": "diagramas U1 no monorepo",
+      "ok": true,
+      "detalhe": "C:\\Users\\Pedro Augusto\\Documents\\pos-unipds-IA\\modulo-11-exemplo-1-setup-deploy-inicial\\materiais_aula"
+    }
+  ],
+  "notas": "Clone do seed + confirmação dos diagramas 1.1 no exemplo teórico."
+}

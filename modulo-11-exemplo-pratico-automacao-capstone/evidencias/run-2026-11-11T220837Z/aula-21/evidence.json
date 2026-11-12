@@ -1,0 +1,35 @@
+{
+  "aula": 21,
+  "titulo": "Disclaimer + E2E",
+  "ferramenta_video_aula": "Playwright Test",
+  "status": "executado",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": ".agents\\skills\\angular-developer\\references\\e2e-testing.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\web\\playwright.config.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\web\\e2e\\chat-happy-path.spec.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\web\\e2e\\tsconfig.json",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "prompts_aula\\aula-4.4-disclaimer-e-e2e.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    }
+  ],
+  "notas": "Modo demo no CI. Mapeamento por artefato no workspace clonado."
+}

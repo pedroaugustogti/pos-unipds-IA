@@ -1,0 +1,22 @@
+﻿{
+    "phase":  "P6-env",
+    "status":  "ok",
+    "missing":  [
+
+                ],
+    "updated":  "2026-11-12T12:28:07.5711389Z",
+    "present":  {
+                    "DATABASE_URL":  true,
+                    "GOOGLE_CLOUD_PROJECT_ID":  true,
+                    "GOOGLE_CLOUD_LOCATION":  true,
+                    "MODEL_GRADE":  true,
+                    "MODEL_ANSWER":  true,
+                    "MODEL_EMBEDDING":  true,
+                    "SERPER_API_KEY":  true,
+                    "LANGFUSE_PUBLIC_KEY":  true,
+                    "LANGFUSE_SECRET_KEY":  true,
+                    "LANGFUSE_BASE_URL":  true,
+                    "OTEL_EXPORTER_OTLP_ENDPOINT":  true,
+                    "OTEL_EXPORTER_OTLP_HEADERS":  true
+                }
+}

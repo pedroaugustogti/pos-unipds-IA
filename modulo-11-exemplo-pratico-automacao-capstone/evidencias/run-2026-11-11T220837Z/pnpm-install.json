@@ -1,0 +1,12 @@
+{
+  "cmd": [
+    "pnpm",
+    "install",
+    "--frozen-lockfile"
+  ],
+  "ok": false,
+  "exit": -1,
+  "error": "[WinError 2] O sistema não pode encontrar o arquivo especificado",
+  "stdout": "",
+  "stderr": ""
+}

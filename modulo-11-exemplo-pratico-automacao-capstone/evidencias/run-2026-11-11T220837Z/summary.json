@@ -1,0 +1,103 @@
+{
+  "timestamp_utc": "2026-11-11T220837Z",
+  "aulas": [
+    {
+      "aula": 1,
+      "status": "executado"
+    },
+    {
+      "aula": 2,
+      "status": "executado"
+    },
+    {
+      "aula": 3,
+      "status": "parcial"
+    },
+    {
+      "aula": 4,
+      "status": "executado"
+    },
+    {
+      "aula": 5,
+      "status": "parcial"
+    },
+    {
+      "aula": 6,
+      "status": "hitl"
+    },
+    {
+      "aula": 7,
+      "status": "parcial"
+    },
+    {
+      "aula": 8,
+      "status": "parcial"
+    },
+    {
+      "aula": 9,
+      "status": "executado"
+    },
+    {
+      "aula": 10,
+      "status": "parcial"
+    },
+    {
+      "aula": 11,
+      "status": "executado"
+    },
+    {
+      "aula": 12,
+      "status": "executado"
+    },
+    {
+      "aula": 13,
+      "status": "executado"
+    },
+    {
+      "aula": 14,
+      "status": "executado"
+    },
+    {
+      "aula": 15,
+      "status": "executado"
+    },
+    {
+      "aula": 16,
+      "status": "executado"
+    },
+    {
+      "aula": 17,
+      "status": "executado"
+    },
+    {
+      "aula": 18,
+      "status": "executado"
+    },
+    {
+      "aula": 19,
+      "status": "executado"
+    },
+    {
+      "aula": 20,
+      "status": "executado"
+    },
+    {
+      "aula": 21,
+      "status": "executado"
+    },
+    {
+      "aula": 22,
+      "status": "parcial"
+    },
+    {
+      "aula": 23,
+      "status": "parcial"
+    },
+    {
+      "aula": 24,
+      "status": "parcial"
+    }
+  ],
+  "seed": "C:\\Users\\Pedro Augusto\\Documents\\pos-unipds-IA\\modulo-11-exemplo-pratico-automacao-capstone\\workspace\\ai-researcher-seed",
+  "full": "C:\\Users\\Pedro Augusto\\Documents\\pos-unipds-IA\\modulo-11-exemplo-pratico-automacao-capstone\\workspace\\capstone-project-ai-researcher"
+}

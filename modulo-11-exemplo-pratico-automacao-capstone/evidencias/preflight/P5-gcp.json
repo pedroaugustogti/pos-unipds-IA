@@ -1,0 +1,47 @@
+{
+  "phase": "P5-gcp",
+  "updated": "2026-11-12T14:10:32.6820390Z",
+  "region": "us-central1",
+  "proxyPort": 5435,
+  "instance": "ai-researcher-db",
+  "connectionName": "ai-researcher-cap-pedro:us-central1:ai-researcher-db",
+  "project": "ai-researcher-cap-pedro",
+  "steps": [
+    {
+      "ok": true,
+      "detail": "create exit=0",
+      "name": "cloud-sql-instance"
+    },
+    {
+      "ok": true,
+      "detail": "ai_researcher",
+      "name": "cloud-sql-db"
+    },
+    {
+      "ok": true,
+      "detail": "created",
+      "name": "cloud-sql-user"
+    },
+    {
+      "ok": true,
+      "detail": "127.0.0.1:5435 pid=",
+      "name": "cloud-sql-proxy"
+    },
+    {
+      "ok": true,
+      "detail": "CREATE EXTENSION vector",
+      "name": "pgvector"
+    },
+    {
+      "ok": true,
+      "detail": "database-url",
+      "name": "secret-create"
+    },
+    {
+      "ok": true,
+      "detail": "database-url latest (unix socket)",
+      "name": "secret-version"
+    }
+  ],
+  "secret": "database-url"
+}

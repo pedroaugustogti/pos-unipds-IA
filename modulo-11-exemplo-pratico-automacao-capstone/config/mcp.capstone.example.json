@@ -1,0 +1,63 @@
+{
+  "_comment": "Mesclar no .cursor/mcp.json do workspace ou no .mcp.json do seed Capstone. Troque paths/env antes de usar.",
+  "mcpServers": {
+    "github-cli": {
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}/.cursor/github-mcp.ps1"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--isolated",
+        "--save-session",
+        "--output-dir",
+        "${workspaceFolder}/modulo-11-exemplo-pratico-automacao-capstone/.playwright-mcp"
+      ]
+    },
+    "playwright-test-capstone": {
+      "_comment": "Aponte --config para o playwright.config do ai-researcher (web E2E). Exige deps instaladas no clone do Capstone.",
+      "command": "npx",
+      "args": [
+        "playwright",
+        "run-test-mcp-server",
+        "--config",
+        "${CAPSTONE_ROOT}/apps/web/playwright.config.ts"
+      ]
+    },
+    "angular-cli-capstone": {
+      "_comment": "Rodar a partir do apps/web do Capstone.",
+      "command": "npx",
+      "args": ["-y", "@angular/cli", "mcp"],
+      "cwd": "${CAPSTONE_ROOT}/apps/web"
+    },
+    "langfuse-docs": {
+      "url": "https://langfuse.com/api/mcp"
+    },
+    "langfuse": {
+      "_comment": "Requer LANGFUSE_PUBLIC_KEY / LANGFUSE_SECRET_KEY / LANGFUSE_HOST no ambiente.",
+      "command": "uvx",
+      "args": ["langfuse-mcp"],
+      "env": {
+        "LANGFUSE_PUBLIC_KEY": "${LANGFUSE_PUBLIC_KEY}",
+        "LANGFUSE_SECRET_KEY": "${LANGFUSE_SECRET_KEY}",
+        "LANGFUSE_HOST": "${LANGFUSE_HOST}"
+      }
+    },
+    "capstone-agent": {
+      "_comment": "MCP do próprio AI Researcher (aula 17). Ajuste o launcher do seed/projeto completo.",
+      "command": "npm",
+      "args": ["run", "mcp:stdio"],
+      "cwd": "${CAPSTONE_ROOT}"
+    }
+  },
+  "_google_mcp_hint": "Cloud Run / Cloud SQL / gcloud: use os MCP remotos oficiais Google (google/mcp) ou gcloud CLI com HITL em create/delete. Não versionar service-account JSON.",
+  "_serper_hint": "Não há MCP oficial Serper. Opções: (1) env SERPER_API_KEY no app; (2) tool web_search no MCP do Capstone."
+}

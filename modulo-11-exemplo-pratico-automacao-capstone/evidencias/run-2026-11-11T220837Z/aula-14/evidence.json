@@ -1,0 +1,50 @@
+{
+  "aula": 14,
+  "titulo": "Testando o grafo sem rede",
+  "ferramenta_video_aula": "Vitest / modo demo",
+  "status": "executado",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": ".agents\\skills\\angular-developer\\references\\e2e-testing.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": ".agents\\skills\\angular-developer\\references\\router-testing.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": ".agents\\skills\\angular-developer\\references\\testing-fundamentals.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\app.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\error-handler.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\observability\\otel-metrics.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\routes\\chat-event.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\routes\\chat.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    }
+  ],
+  "notas": "CI sem Vertex/Serper. Mapeamento por artefato no workspace clonado."
+}

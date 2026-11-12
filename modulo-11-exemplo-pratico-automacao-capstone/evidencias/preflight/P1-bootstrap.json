@@ -1,0 +1,39 @@
+﻿{
+    "phase":  "P1-bootstrap",
+    "status":  "ok",
+    "checks":  {
+                   "node":  {
+                                "detail":  "v24.22.2",
+                                "ok":  true
+                            },
+                   "pnpm":  {
+                                "detail":  "10.6.2",
+                                "ok":  true
+                            },
+                   "git":  {
+                               "detail":  "git version 2.56.0.windows.4",
+                               "ok":  true
+                           },
+                   "gh":  {
+                              "detail":  "github.com   ✓ Logged in to github.com account pedroaugustogti (keyring)   - Active account: true",
+                              "ok":  true
+                          },
+                   "gcloud":  {
+                                  "detail":  "Google Cloud SDK 565.0.0",
+                                  "ok":  true
+                              },
+                   "docker":  {
+                                  "detail":  "daemon up",
+                                  "ok":  true
+                              },
+                   "seed":  {
+                                "detail":  "C:\\Users\\Pedro Augusto\\Documents\\pos-unipds-IA\\modulo-11-exemplo-pratico-automacao-capstone\\workspace\\ai-researcher-seed",
+                                "ok":  true
+                            },
+                   "full":  {
+                                "detail":  "C:\\Users\\Pedro Augusto\\Documents\\pos-unipds-IA\\modulo-11-exemplo-pratico-automacao-capstone\\workspace\\capstone-project-ai-researcher",
+                                "ok":  true
+                            }
+               },
+    "updated":  "2026-11-12T12:29:42.7511359Z"
+}

@@ -1,0 +1,25 @@
+{
+  "aula": 16,
+  "titulo": "Erros padronizados",
+  "ferramenta_video_aula": "contracts/API errors",
+  "status": "executado",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": ".agents\\skills\\langfuse\\references\\error-analysis.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\error-handler.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\error-handler.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    }
+  ],
+  "notas": "JSON de erro estável. Mapeamento por artefato no workspace clonado."
+}

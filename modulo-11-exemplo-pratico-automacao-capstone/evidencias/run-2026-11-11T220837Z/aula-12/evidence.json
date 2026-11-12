@@ -1,0 +1,50 @@
+{
+  "aula": 12,
+  "titulo": "Grafo + guard do loop",
+  "ferramenta_video_aula": "LangGraph aresta condicional",
+  "status": "executado",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": ".agents\\skills\\angular-developer\\references\\route-guards.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": ".claude\\skills\\langgraph-node\\SKILL.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\web\\src\\app\\graph\\graph-panel\\graph-panel.spec.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\web\\src\\app\\graph\\graph-panel\\graph-panel.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\web\\src\\app\\state\\graph-step.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\web\\src\\app\\state\\graph-store.spec.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\web\\src\\app\\state\\graph-store.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\agent\\src\\graph-deps.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    }
+  ],
+  "notas": "Guard por código. Mapeamento por artefato no workspace clonado."
+}

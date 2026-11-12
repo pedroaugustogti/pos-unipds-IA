@@ -1,0 +1,41 @@
+{
+  "hosting": "https://ai-researcher-cap-pedro.web.app",
+  "cloudRun": "https://ai-researcher-api-xsjfcd5t3a-uc.a.run.app",
+  "phase": "P8-deploy-prod",
+  "capstoneCheck": {
+    "notes": "Langfuse API 410; Grafana vars ausentes; gcloud ENOENT no PATH do check",
+    "fail": [
+      6,
+      7,
+      8
+    ],
+    "pass": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      9,
+      10,
+      11
+    ],
+    "score": "8/11"
+  },
+  "health": {
+    "api": "ok",
+    "hostingProxy": "ok",
+    "database": "ok"
+  },
+  "invoker": "allUsers roles/run.invoker",
+  "deployRun": "https://github.com/pedroaugustogti/capstone-project-ai-researcher/actions/runs/43238604836",
+  "deployConclusion": "success",
+  "secrets": [
+    "database-url",
+    "serper-api-key",
+    "langfuse-public-key",
+    "langfuse-secret-key",
+    "otel-exporter-otlp-headers"
+  ],
+  "updated": "2026-11-12T14:46:55.1089339Z",
+  "when": "2026-11-12T11:46:55.1038615-03:00"
+}

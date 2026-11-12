@@ -1,0 +1,30 @@
+{
+  "aula": 4,
+  "titulo": "GitHub e GitHub Actions / WIF",
+  "ferramenta_video_aula": "GitHub Actions + WIF",
+  "status": "executado",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": "deploy.yml",
+      "ok": true,
+      "detalhe": "workflow presente"
+    },
+    {
+      "nome": "WIF no workflow",
+      "ok": true,
+      "detalhe": "google-github-actions/auth"
+    },
+    {
+      "nome": "id-token: write",
+      "ok": true,
+      "detalhe": "permissions OIDC"
+    },
+    {
+      "nome": "jobs test+deploy",
+      "ok": true,
+      "detalhe": "test → deploy"
+    }
+  ],
+  "notas": "Workflow inspecionado; binding IAM GCP permanece HITL."
+}

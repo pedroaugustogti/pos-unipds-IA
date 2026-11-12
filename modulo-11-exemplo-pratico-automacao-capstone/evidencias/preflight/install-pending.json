@@ -1,0 +1,9 @@
+﻿{
+  "updated": "2026-11-12T12:42:20Z",
+  "pnpm": { "ok": true, "version": "11.20.0", "note": "npm i -g (corepack EPERM on C:\\BEES\\node)" },
+  "firebase-tools": { "ok": true, "version": "15.36.0" },
+  "uv": { "ok": true, "version": "0.13.7", "path": "%USERPROFILE%\\.local\\bin" },
+  "playwright": { "ok": true, "version": "1.62.1" },
+  "postgres-vector": { "ok": true, "version": "0.8.7" },
+  "cloud-sql-proxy": { "ok": true, "version": "2.21.2" }
+}

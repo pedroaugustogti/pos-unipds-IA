@@ -1,0 +1,25 @@
+{
+  "aula": 20,
+  "titulo": "Painel do grafo",
+  "ferramenta_video_aula": "GraphStore frontend",
+  "status": "executado",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": "apps\\web\\src\\app\\state\\graph-store.spec.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\web\\src\\app\\state\\graph-store.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "prompts_aula\\aula-4.3-painel-do-grafo.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    }
+  ],
+  "notas": "Eventos de raciocínio. Mapeamento por artefato no workspace clonado."
+}

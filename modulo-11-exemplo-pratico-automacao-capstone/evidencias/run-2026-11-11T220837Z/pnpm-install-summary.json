@@ -1,0 +1,13 @@
+{
+  "nome": "pnpm install --frozen-lockfile",
+  "ok": false,
+  "detalhe": "[WinError 2] O sistema não pode encontrar o arquivo especificado",
+  "cmd": [
+    "pnpm",
+    "install",
+    "--frozen-lockfile"
+  ],
+  "exit": -1,
+  "stdout": "",
+  "stderr": ""
+}

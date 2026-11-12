@@ -1,0 +1,182 @@
+[
+  {
+    "file": "aula-1.5-corpus-cvm.md",
+    "bytes": 844,
+    "head": [
+      "# Aula 1.5 — Corpus CVM",
+      "## Cena 3 — Criar o pacote `packages/corpus`",
+      "Terminal na raiz do repositório, branch `starter`."
+    ]
+  },
+  {
+    "file": "aula-1.6-fundacao-gcp.md",
+    "bytes": 2197,
+    "head": [
+      "# Aula 1.6 — Fundação GCP",
+      "Antes dos prompts, rode os dois logins direto no terminal, fora do Claude Code:",
+      "```bash"
+    ]
+  },
+  {
+    "file": "aula-1.7-walking-skeleton-e-deploy-zero.md",
+    "bytes": 2806,
+    "head": [
+      "# Aula 1.7 — Walking Skeleton e Deploy Zero",
+      "## Cena 2 — `apps/api` com `/api/health`",
+      "```text"
+    ]
+  },
+  {
+    "file": "aula-2.1-pgvector-hnsw-e-seed.md",
+    "bytes": 1239,
+    "head": [
+      "# Aula 2.1 — pgvector, HNSW e o seed do corpus",
+      "## Cena 6 — Schema da tabela `documentos`",
+      "Terminal em `packages/agent`, depois da tag `v1`."
+    ]
+  },
+  {
+    "file": "aula-2.2-nos-retrieve-e-grade.md",
+    "bytes": 1528,
+    "head": [
+      "# Aula 2.2 — Os nós retrieve e grade",
+      "## Cena 2 — O nó `retrieve`",
+      "Terminal em `packages/agent`, Postgres local no ar."
+    ]
+  },
+  {
+    "file": "aula-2.3-serper.md",
+    "bytes": 1013,
+    "head": [
+      "# Aula 2.3 — Serper",
+      "## Cena 5 — `SearchProvider` com Serper e Google Custom Search",
+      "Terminal em `packages/agent`."
+    ]
+  },
+  {
+    "file": "aula-2.4-fallback-busca-web.md",
+    "bytes": 1208,
+    "head": [
+      "# Aula 2.4 — Fallback pra busca web e o upsert retroativo",
+      "## Cena 3 — O nó `web_search`",
+      "Terminal em `packages/agent`."
+    ]
+  },
+  {
+    "file": "aula-2.5-grafo-real.md",
+    "bytes": 1099,
+    "head": [
+      "# Aula 2.5 — O grafo real: aresta condicional e o guard do loop",
+      "## Cena 2 — Montar o grafo com LangGraph",
+      "Terminal em `packages/agent`."
+    ]
+  },
+  {
+    "file": "aula-2.6-no-answer-guardrail-e-sse.md",
+    "bytes": 2434,
+    "head": [
+      "# Aula 2.6 — O nó answer, citação obrigatória, guardrail por código e streaming SSE",
+      "## Cena 3 — O nó `answer`",
+      "Terminal em `packages/agent`."
+    ]
+  },
+  {
+    "file": "aula-3.1-testando-o-grafo-sem-rede.md",
+    "bytes": 1536,
+    "head": [
+      "# Aula 3.1 — Testando o grafo sem rede",
+      "## Cena 5 — Testes do coletor CVM",
+      "Terminal na raiz do repositório."
+    ]
+  },
+  {
+    "file": "aula-3.2-circuit-breaker-e-degradacao.md",
+    "bytes": 1845,
+    "head": [
+      "# Aula 3.2 — Circuit breaker, retry e degradação graciosa",
+      "## Cena 3 — Resiliência no `SearchProvider`",
+      "Terminal na raiz do repositório."
+    ]
+  },
+  {
+    "file": "aula-3.3-problem-json.md",
+    "bytes": 778,
+    "head": [
+      "# Aula 3.3 — Erros padronizados em application/problem+json",
+      "## Cena 3 — Error handler central",
+      "Terminal na raiz do repositório."
+    ]
+  },
+  {
+    "file": "aula-3.4-servidor-mcp.md",
+    "bytes": 3743,
+    "head": [
+      "# Aula 3.4 — O servidor MCP",
+      "## Cena 3 — Tool `perguntar`, transporte stdio",
+      "Terminal na raiz do repositório."
+    ]
+  },
+  {
+    "file": "aula-4.1-claude-design-e-skill-frontend-design.md",
+    "bytes": 2236,
+    "head": [
+      "# Aula 4.1 — Do protótipo no Claude Design à skill frontend-design",
+      "## Cena 3 — Protótipo inicial (Claude Design)",
+      "Enviado no **Claude Design** (`claude.ai/design`), num projeto novo."
+    ]
+  },
+  {
+    "file": "aula-4.2-chat-streaming-e-citacoes.md",
+    "bytes": 3287,
+    "head": [
+      "# Aula 4.2 — Chat com streaming e citações clicáveis",
+      "## Cena 3 — Roteamento: Chat na raiz, health check em `/health`",
+      "```text"
+    ]
+  },
+  {
+    "file": "aula-4.3-painel-do-grafo.md",
+    "bytes": 1273,
+    "head": [
+      "# Aula 4.3 — Painel de estado do grafo em tempo real",
+      "## Cena 3 — `GraphStore`",
+      "```text"
+    ]
+  },
+  {
+    "file": "aula-4.4-disclaimer-e-e2e.md",
+    "bytes": 1639,
+    "head": [
+      "# Aula 4.4 — Disclaimer, guardrail visual e o E2E no CI",
+      "## Cena 3 — Faixa de disclaimer",
+      "```text"
+    ]
+  },
+  {
+    "file": "aula-5.1-langfuse.md",
+    "bytes": 678,
+    "head": [
+      "# Aula 5.1 — Langfuse: tour e instrumentação por nó",
+      "## Cena 3 — Instrumentar o grafo",
+      "Antes do prompt, `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY` e `LANGFUSE_BASE_URL` precisam estar no `~/.zshrc` (Cena 2)."
+    ]
+  },
+  {
+    "file": "aula-5.2-metrics-budget-e-rate-limit.md",
+    "bytes": 2031,
+    "head": [
+      "# Aula 5.2 — /metrics, budget de tokens e rate limiting",
+      "## Cena 2 — Contadores de tokens e custo",
+      "```text"
+    ]
+  },
+  {
+    "file": "aula-5.3-readme.md",
+    "bytes": 788,
+    "head": [
+      "# Aula 5.3 — README e desligando o ambiente pelo Console do GCP",
+      "## Cena 2 — README com diagramas Mermaid",
+      "```text"
+    ]
+  }
+]

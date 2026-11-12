@@ -1,0 +1,50 @@
+{
+  "aula": 22,
+  "titulo": "Langfuse",
+  "ferramenta_video_aula": "Langfuse SDK + MCP",
+  "status": "parcial",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": ".agents\\skills\\langfuse\\SKILL.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": ".agents\\skills\\langfuse\\references\\ci-cd.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": ".agents\\skills\\langfuse\\references\\cli.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": ".agents\\skills\\langfuse\\references\\error-analysis.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": ".agents\\skills\\langfuse\\references\\instrumentation.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": ".agents\\skills\\langfuse\\references\\judge-calibration.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": ".agents\\skills\\langfuse\\references\\prompt-engineering.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": ".agents\\skills\\langfuse\\references\\prompt-migration.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    }
+  ],
+  "notas": "Spans por nó. Mapeamento por artefato no workspace clonado."
+}

@@ -1,0 +1,58 @@
+{
+  "aula": 7,
+  "titulo": "Walking Skeleton e Deploy Zero",
+  "ferramenta_video_aula": "Docker + Actions + Cloud Run/Firebase",
+  "status": "parcial",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": "apps/api",
+      "ok": true,
+      "detalhe": "API Fastify"
+    },
+    {
+      "nome": "apps/web",
+      "ok": true,
+      "detalhe": "Angular"
+    },
+    {
+      "nome": "capstone:check script",
+      "ok": true,
+      "detalhe": "validação pós-deploy"
+    },
+    {
+      "nome": "docker CLI",
+      "ok": true,
+      "detalhe": "presente"
+    },
+    {
+      "nome": "docker compose up postgres",
+      "ok": false,
+      "detalhe": "pgvector local",
+      "cmd": [
+        "docker",
+        "compose",
+        "up",
+        "-d",
+        "postgres"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.\n"
+    },
+    {
+      "nome": "compose ps",
+      "ok": false,
+      "detalhe": "",
+      "cmd": [
+        "docker",
+        "compose",
+        "ps"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.\n"
+    }
+  ],
+  "notas": "Postgres local via compose quando Docker disponível; deploy cloud = HITL/Actions."
+}

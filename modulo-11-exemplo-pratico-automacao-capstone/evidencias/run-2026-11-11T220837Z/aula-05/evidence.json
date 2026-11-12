@@ -1,0 +1,25 @@
+{
+  "aula": 5,
+  "titulo": "Corpus CVM",
+  "ferramenta_video_aula": "script collect + portal CVM",
+  "status": "parcial",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": "packages/corpus",
+      "ok": true,
+      "detalhe": "C:\\Users\\Pedro Augusto\\Documents\\pos-unipds-IA\\modulo-11-exemplo-pratico-automacao-capstone\\workspace\\ai-researcher-seed\\packages\\corpus"
+    },
+    {
+      "nome": "script collect",
+      "ok": true,
+      "detalhe": "pnpm collect"
+    },
+    {
+      "nome": "data/",
+      "ok": true,
+      "detalhe": "dados/corpus"
+    }
+  ],
+  "notas": "Pacote presente; collect completo pode exigir rede/LLM conforme seed."
+}

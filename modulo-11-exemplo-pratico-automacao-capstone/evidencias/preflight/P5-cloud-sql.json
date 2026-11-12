@@ -1,0 +1,20 @@
+{
+  "when": "2026-11-12T11:18:56.9666511-03:00",
+  "edition": "ENTERPRISE",
+  "database": "ai_researcher",
+  "user": "app_user",
+  "secretVersion": 3,
+  "seed": "80 docs",
+  "connectionName": "ai-researcher-cap-pedro:us-central1:ai-researcher-db",
+  "instance": "ai-researcher-db",
+  "region": "us-central1",
+  "phase": "P5-cloud-sql",
+  "tier": "db-f1-micro",
+  "migrate": "ok",
+  "vector": "0.8.5",
+  "note": "cloud-sql-proxy TLS fails on this Windows host (unknown authority); admin via authorized IP + sslmode=no-verify; prod secret uses unix socket for Cloud Run",
+  "state": "RUNNABLE",
+  "secret": "database-url",
+  "project": "ai-researcher-cap-pedro",
+  "updated": "2026-11-12T14:18:56.9711903Z"
+}

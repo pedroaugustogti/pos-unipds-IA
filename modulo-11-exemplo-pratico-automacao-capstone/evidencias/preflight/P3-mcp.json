@@ -1,0 +1,13 @@
+﻿{
+    "updated":  "2026-11-12T12:28:07.6586473Z",
+    "note":  "Restart Cursor MCP servers after merge. Langfuse MCP with secrets: set via user env, not mcp.json.",
+    "added":  [
+                  "playwright-capstone",
+                  "langfuse-docs",
+                  "angular-cli-capstone"
+              ],
+    "skills_present":  true,
+    "backup":  "C:\\Users\\Pedro Augusto\\Documents\\pos-unipds-IA\\.cursor\\mcp.json.bak-20261112092807",
+    "status":  "ok",
+    "phase":  "P3-mcp"
+}

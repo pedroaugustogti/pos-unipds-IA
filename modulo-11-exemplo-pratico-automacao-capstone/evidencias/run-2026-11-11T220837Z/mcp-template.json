@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "path": "C:\\Users\\Pedro Augusto\\Documents\\pos-unipds-IA\\modulo-11-exemplo-pratico-automacao-capstone\\config\\mcp.capstone.example.json",
+  "servers": [
+    "github-cli",
+    "playwright",
+    "playwright-test-capstone",
+    "angular-cli-capstone",
+    "langfuse-docs",
+    "langfuse",
+    "capstone-agent"
+  ]
+}

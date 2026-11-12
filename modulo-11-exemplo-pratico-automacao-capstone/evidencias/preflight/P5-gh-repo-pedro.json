@@ -1,0 +1,16 @@
+{
+  "updated": "2026-11-12T14:27:39.4731219Z",
+  "upstream": "unipds-engenharia-de-ia-aplicada/capstone-project-ai-researcher",
+  "visibility": "PRIVATE",
+  "status": "ok",
+  "githubVariables": [
+    "GCP_PROJECT_ID",
+    "GCP_WIF_PROVIDER",
+    "GCP_DEPLOY_SERVICE_ACCOUNT"
+  ],
+  "githubRepo": "pedroaugustogti/capstone-project-ai-researcher",
+  "url": "https://github.com/pedroaugustogti/capstone-project-ai-researcher",
+  "phase": "P5-gh-repo-pedro",
+  "when": "2026-11-12T11:27:39.4686792-03:00",
+  "wifAttributeCondition": "assertion.repository=='pedroaugustogti/capstone-project-ai-researcher'"
+}

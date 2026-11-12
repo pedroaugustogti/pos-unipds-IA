@@ -1,0 +1,12 @@
+workspace/
+node_modules/
+**/node_modules/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+config/windows-roots.pem
+.playwright-mcp/
+evidencias/**/tmp-*
+**/tmp-*.mjs

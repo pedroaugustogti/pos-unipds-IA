@@ -1,0 +1,15 @@
+{
+  "aula": 15,
+  "titulo": "Circuit breaker / retry",
+  "ferramenta_video_aula": "resilience libs / código",
+  "status": "executado",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": "prompts_aula\\aula-3.2-circuit-breaker-e-degradacao.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    }
+  ],
+  "notas": "Degradação graciosa. Mapeamento por artefato no workspace clonado."
+}

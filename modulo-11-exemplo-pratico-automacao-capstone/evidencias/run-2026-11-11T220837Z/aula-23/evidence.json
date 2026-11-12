@@ -1,0 +1,50 @@
+{
+  "aula": 23,
+  "titulo": "Métricas / budget / rate limit",
+  "ferramenta_video_aula": "Prometheus-like + callbacks",
+  "status": "parcial",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": ".agents\\skills\\angular-developer\\references\\loading-strategies.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": ".agents\\skills\\angular-developer\\references\\rendering-strategies.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\rate-limit.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\observability\\otel-metrics.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\observability\\otel-metrics.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\routes\\metrics.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\routes\\metrics.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\agent\\src\\db\\migrate.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    }
+  ],
+  "notas": "Controle de custo. Mapeamento por artefato no workspace clonado."
+}

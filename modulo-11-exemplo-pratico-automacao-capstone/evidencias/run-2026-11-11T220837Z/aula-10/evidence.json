@@ -1,0 +1,25 @@
+{
+  "aula": 10,
+  "titulo": "Serper",
+  "ferramenta_video_aula": "Serper API",
+  "status": "parcial",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": "packages\\agent\\src\\search\\serper.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\agent\\src\\search\\serper.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "prompts_aula\\aula-2.3-serper.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    }
+  ],
+  "notas": "Busca web; key = Secret/HITL. Mapeamento por artefato no workspace clonado."
+}

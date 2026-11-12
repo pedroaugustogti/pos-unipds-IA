@@ -1,0 +1,25 @@
+{
+  "aula": 2,
+  "titulo": "CLAUDE.md e AI Dev Skills",
+  "ferramenta_video_aula": "Claude Code / skills (arquivo)",
+  "status": "executado",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": "CLAUDE.md",
+      "ok": true,
+      "detalhe": ".claude\\CLAUDE.md"
+    },
+    {
+      "nome": "skills .claude",
+      "ok": true,
+      "detalhe": "angular-component, angular-developer, angular-new-app, fastify-route, langgraph-node"
+    },
+    {
+      "nome": "skills .agents",
+      "ok": true,
+      "detalhe": "angular-developer, angular-new-app"
+    }
+  ],
+  "notas": "Inventário de skills do seed."
+}

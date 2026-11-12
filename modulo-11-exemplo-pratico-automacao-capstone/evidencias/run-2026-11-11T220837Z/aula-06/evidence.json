@@ -1,0 +1,25 @@
+{
+  "aula": 6,
+  "titulo": "Fundação GCP",
+  "ferramenta_video_aula": "gcloud + prompts IaC",
+  "status": "hitl",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": "infra/README.md",
+      "ok": true,
+      "detalhe": "passos de fundação"
+    },
+    {
+      "nome": "Dockerfile API",
+      "ok": true,
+      "detalhe": "imagem Cloud Run"
+    },
+    {
+      "nome": "gcloud disponível",
+      "ok": true,
+      "detalhe": "C:\\Users\\Pedro Augusto\\AppData\\Local\\Google\\Cloud SDK\\google-cloud-sdk\\bin\\gcloud.CMD"
+    }
+  ],
+  "notas": "Provisionamento real Cloud SQL/Secrets = HITL (custo)."
+}

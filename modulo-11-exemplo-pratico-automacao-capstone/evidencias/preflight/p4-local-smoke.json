@@ -1,0 +1,22 @@
+{
+  "chat": {
+    "status": 200,
+    "nodes": [
+      "retrieve",
+      "grade",
+      "webSearch",
+      "retrieve",
+      "grade",
+      "answer"
+    ],
+    "ticker": "ABEV"
+  },
+  "seed": "80 docs",
+  "health": {
+    "database": "ok",
+    "status": "ok"
+  },
+  "when": "2026-11-12T10:10:02.4429380-03:00",
+  "api": "http://127.0.0.1:3001",
+  "web": "http://localhost:4200"
+}

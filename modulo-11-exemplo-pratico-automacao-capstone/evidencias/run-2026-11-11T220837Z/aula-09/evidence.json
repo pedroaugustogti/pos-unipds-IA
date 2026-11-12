@@ -1,0 +1,50 @@
+{
+  "aula": 9,
+  "titulo": "Os nós retrieve e grade",
+  "ferramenta_video_aula": "LangGraph.js",
+  "status": "executado",
+  "timestamp_utc": "2026-11-11T220837Z",
+  "checks": [
+    {
+      "nome": ".agents\\skills\\langfuse\\references\\trace-evaluator-upgrade.md",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "apps\\api\\src\\routes\\debug-retrieve.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\agent\\src\\db\\retrieve-demo.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\agent\\src\\db\\retrieve-demo.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\agent\\src\\db\\retrieve-similar.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\agent\\src\\db\\retrieve-similar.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\agent\\src\\nodes\\grade.test.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    },
+    {
+      "nome": "packages\\agent\\src\\nodes\\grade.ts",
+      "ok": true,
+      "detalhe": "em capstone-project-ai-researcher"
+    }
+  ],
+  "notas": "Nós cognitivos no grafo. Mapeamento por artefato no workspace clonado."
+}

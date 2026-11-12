@@ -1,0 +1,35 @@
+{
+  "workloadIdentityUser": "ok",
+  "provider": "github-actions-provider",
+  "computeSecretAccessor": "ok",
+  "githubVariables": {
+    "reason": "pedroaugustogti has pull only on org repo",
+    "status": "blocked_403",
+    "commands": [
+      "pwsh -File .\\scripts\\set_gh_vars.ps1"
+    ],
+    "values": {
+      "GCP_PROJECT_ID": "ai-researcher-cap-pedro",
+      "GCP_WIF_PROVIDER": "projects/149442222162/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider",
+      "GCP_DEPLOY_SERVICE_ACCOUNT": "github-actions-deployer@ai-researcher-cap-pedro.iam.gserviceaccount.com"
+    }
+  },
+  "when": "2026-11-12T11:22:35.1927908-03:00",
+  "attributeCondition": "assertion.repository=='unipds-engenharia-de-ia-aplicada/capstone-project-ai-researcher'",
+  "phase": "P5-wif",
+  "pool": "github-actions-pool",
+  "roles": [
+    "roles/run.admin",
+    "roles/artifactregistry.writer",
+    "roles/iam.serviceAccountUser",
+    "roles/cloudsql.client",
+    "roles/secretmanager.secretAccessor",
+    "roles/cloudbuild.builds.editor",
+    "roles/firebasehosting.admin"
+  ],
+  "serviceAccount": "github-actions-deployer@ai-researcher-cap-pedro.iam.gserviceaccount.com",
+  "providerResource": "projects/149442222162/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-provider",
+  "projectNumber": "149442222162",
+  "updated": "2026-11-12T14:22:35.1980634Z",
+  "project": "ai-researcher-cap-pedro"
+}
