@@ -38,6 +38,7 @@ python run_delivery_modulo7.py  # módulo 7 M01
 python run_delivery_modulo8.py    # módulo 8 completo (5 exemplos TrialForge)
 python run_delivery_modulo9.py    # módulo 9 completo (6 exemplos Amplitude Seguros)
 python run_delivery_modulo10.py   # módulo 10 (segurança e governança)
+python run_delivery_modulo11.py   # módulo 11 Capstone (AI Researcher, 5 unidades)
 python run_delivery_proxima_aula.py  # módulo 4 (padrão)
 ```
 
