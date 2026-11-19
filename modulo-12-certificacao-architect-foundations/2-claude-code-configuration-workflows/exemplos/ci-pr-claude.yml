@@ -1,0 +1,62 @@
+# Exemplo didático — sessions isoladas por job (CCAR-F 3.6)
+# Cada `claude -p` = nova instance. NÃO use --resume entre implement e review.
+
+name: PR Claude gates
+on:
+  pull_request:
+
+jobs:
+  review-correctness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: claude-review-correctness
+          path: prev/
+      - name: Correctness review (NEW session)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          PREV=$(cat prev/review.json 2>/dev/null || echo '{"findings":[]}')
+          claude -p "You are a CORRECTNESS reviewer only (not the author).
+          Previous findings: $PREV
+          Review the PR diff. Emit findings JSON only.
+          Do not restate previous findings unless still unfixed." \
+            --output-format json \
+            --json-schema "$(cat .claude/ci/finding-schema.json)" \
+            > review-correctness.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: claude-review-correctness
+          path: review-correctness.json
+
+  review-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Security review (NEW session)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          claude -p "You are a SECURITY reviewer only.
+          Focus: secrets, authz, payment side effects.
+          Emit findings JSON only." \
+            --output-format json \
+            --json-schema "$(cat .claude/ci/finding-schema.json)" \
+            > review-security.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: claude-review-security
+          path: review-security.json
+
+  gate:
+    needs: [review-correctness, review-security]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: reviews/
+      - name: Fail on high
+        run: python scripts/gate_reviews.py reviews/

@@ -33,6 +33,7 @@ MAPA_MODULOS_UNIPDS = {
     9: "modulo09-processamento-de-dados-e-fine-tuning-de-modelos",
     10: "modulo10-seguranca-governanca-ia",
     11: "modulo11-projeto-integrador-capstone",
+    12: "modulo12-certificacao-architect-foundations",
 }
 
 

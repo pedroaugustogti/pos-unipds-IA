@@ -1,0 +1,27 @@
+# Playbook didático (host/API) — NÃO é tipo oficial do Claude Code
+id: refund_damaged
+triggers:
+  - intent: refund
+  - order_status: delivered
+policy_ref: refund_limits_v3
+steps:
+  - id: verify
+    tools: [lookup_customer, lookup_order]
+  - id: investigate
+    optional_tasks: [photo_check]
+  - id: gate_refund
+    tool: process_refund
+    gate: pre_tool_use_refund
+  - id: hitl
+    when: gate_result == hitl
+    require: handoff_summary
+continuity:
+  resume_if: [phase == wait_hitl, facts_valid]
+  fork_if: [ab_strategy_requested]
+  fresh_if: [external_refund_already_done, head_sha_changed]
+case_facts:
+  - customer_id
+  - order_id
+  - amount
+  - phase
+  - auto_refund_limit
