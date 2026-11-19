@@ -1,7 +1,7 @@
 # Resumo geral — CCAR-F (pré-prova)
 
 > Índice do módulo: [`../../README.md`](../../README.md) · Mapa 30 tasks: [`../../README.md#mapa-dos-30-tasks`](../../README.md#mapa-dos-30-tasks) · Cenários `*b-*`: [`../../README.md#revisão--cenários-b--e-exemplos`](../../README.md#revisão--cenários-b--e-exemplos)  
-> Cheat sheet: [`../../CCAR-F-Cheat-Sheet-PT.md`](../../CCAR-F-Cheat-Sheet-PT.md) · CertPrep: https://certprep.pratechlabs.com/claude/ccar-f/learn/  
+> Cheat sheet: [`./CCAR-F-Cheat-Sheet-PT.md`](./CCAR-F-Cheat-Sheet-PT.md) · CertPrep: https://certprep.pratechlabs.com/claude/ccar-f/learn/  
 > Estudo **independente** — não afiliado à Anthropic.
 
 ---
@@ -181,7 +181,7 @@ Extra: `43b` · liga `tool_choice_intake.py`
 
 | Dia | Ação |
 |-----|------|
-| 16 | Este resumo + [`CCAR-F-Cheat-Sheet-PT.md`](../../CCAR-F-Cheat-Sheet-PT.md) + anti-padrões |
+| 16 | Este resumo + [`CCAR-F-Cheat-Sheet-PT.md`](./CCAR-F-Cheat-Sheet-PT.md) + anti-padrões |
 | 17 | Simulado 01 timed |
 | 18 | Gaps → pasta do domínio + `*b-cenarios-*` |
 | 19 | Simulado 02 |

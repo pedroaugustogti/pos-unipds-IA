@@ -27,7 +27,7 @@ Trilha prática de preparação para a certificação **Claude Certified Archite
 - **30 tasks** em 5 domínios (7+5+6+6+6)
 - Prep Academy: Building with Claude API · Intro MCP · Claude Code in Action
 
-Cheat sheet local: [`CCAR-F-Cheat-Sheet-PT.md`](./CCAR-F-Cheat-Sheet-PT.md)
+Cheat sheet local: [`6-resumo-e-simulados/conteudo/CCAR-F-Cheat-Sheet-PT.md`](./6-resumo-e-simulados/conteudo/CCAR-F-Cheat-Sheet-PT.md)
 
 ---
 
@@ -231,5 +231,5 @@ Fine-tune · auth/billing de conta · hosting MCP · internals/RLHF · embedding
 - Exam: https://anthropic-partners.skilljar.com/claude-certified-architect-foundations-certification  
 - Learn: https://certprep.pratechlabs.com/claude/ccar-f/learn/  
 - Cheat sheet online: https://certprep.pratechlabs.com/claude/ccar-f/learn/cheat-sheet/  
-- Cheat sheet PT local: [`CCAR-F-Cheat-Sheet-PT.md`](./CCAR-F-Cheat-Sheet-PT.md)  
+- Cheat sheet PT local: [`6-resumo-e-simulados/conteudo/CCAR-F-Cheat-Sheet-PT.md`](./6-resumo-e-simulados/conteudo/CCAR-F-Cheat-Sheet-PT.md)  
 - Exam Guide PDF / FAQ (Partner Academy)
