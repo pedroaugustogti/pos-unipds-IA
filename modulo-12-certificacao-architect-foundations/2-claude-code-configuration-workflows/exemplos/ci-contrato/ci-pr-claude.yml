@@ -1,0 +1,115 @@
+# Contrato CI — boas práticas CCAR-F 3.6 + 4.1
+# - claude -p (sem hang)
+# - instance separada por pass (correctness ≠ security)
+# - JSON + schema
+# - previous findings no prompt
+# - gate em código (não “trust the prose”)
+
+name: PR Claude review contract
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+env:
+  ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+jobs:
+  review-correctness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: claude-review-correctness
+          path: prev-correctness/
+
+      - name: Build prompt + run Claude (-p, NEW session)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          PREV='{"findings":[]}'
+          if [ -f prev-correctness/review-correctness.json ]; then
+            PREV=$(cat prev-correctness/review-correctness.json)
+          fi
+          DIFF=$(gh pr diff "${{ github.event.pull_request.number }}" || git diff origin/${{ github.base_ref }}...HEAD)
+
+          # snippet de testes existentes (ajuste paths do repo)
+          TESTS=""
+          if [ -f tests/billing/test_refund_policy.py ]; then
+            TESTS=$(sed -n '1,120p' tests/billing/test_refund_policy.py)
+          fi
+
+          PROMPT=$(sed \
+            -e "s|{{PREV_FINDINGS_JSON}}|$PREV|g" \
+            -e "s|{{EXISTING_TESTS_SNIPPET}}|$TESTS|g" \
+            -e "s|{{PR_DIFF}}|$DIFF|g" \
+            .claude/ci/PROMPT_CORRECTNESS.md)
+
+          # Sem --resume → session isolada do implement
+          claude -p "$PROMPT" \
+            --output-format json \
+            --json-schema "$(cat .claude/ci/finding-schema.json)" \
+            > review-correctness.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: claude-review-correctness
+          path: review-correctness.json
+
+  review-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: claude-review-security
+          path: prev-security/
+
+      - name: Security pass (-p, NEW session)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          PREV='{"findings":[]}'
+          if [ -f prev-security/review-security.json ]; then
+            PREV=$(cat prev-security/review-security.json)
+          fi
+          DIFF=$(gh pr diff "${{ github.event.pull_request.number }}" || git diff origin/${{ github.base_ref }}...HEAD)
+
+          PROMPT=$(sed \
+            -e "s|{{PREV_FINDINGS_JSON}}|$PREV|g" \
+            -e "s|{{PR_DIFF}}|$DIFF|g" \
+            .claude/ci/PROMPT_SECURITY.md)
+
+          claude -p "$PROMPT" \
+            --output-format json \
+            --json-schema "$(cat .claude/ci/finding-schema.json)" \
+            > review-security.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: claude-review-security
+          path: review-security.json
+
+  gate:
+    needs: [review-correctness, review-security]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: reviews/
+      - name: Fail on high
+        run: python .claude/ci/gate_reviews.py reviews/

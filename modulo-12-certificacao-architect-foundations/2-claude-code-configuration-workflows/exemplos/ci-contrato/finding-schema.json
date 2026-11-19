@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ClaudeCIReviewFindings",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "run_meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pass": {
+          "type": "string",
+          "enum": ["correctness", "security"]
+        },
+        "commit": { "type": "string" }
+      },
+      "required": ["pass"]
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "description": "Stable id, e.g. refund-limit-op"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["correctness", "security", "payment_side_effects"]
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          },
+          "file": { "type": "string" },
+          "line": { "type": "integer", "minimum": 1 },
+          "message": { "type": "string", "minLength": 8, "maxLength": 400 },
+          "evidence": {
+            "type": "string",
+            "description": "Short quote or reason tied to the diff"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["new", "still_open", "resolved_candidate"],
+            "description": "vs previous findings when provided"
+          }
+        },
+        "required": [
+          "rule_id",
+          "category",
+          "severity",
+          "file",
+          "line",
+          "message",
+          "evidence",
+          "status"
+        ]
+      }
+    }
+  },
+  "required": ["findings"]
+}
